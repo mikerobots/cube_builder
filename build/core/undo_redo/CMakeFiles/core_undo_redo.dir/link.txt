@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libcore_undo_redo.a CMakeFiles/core_undo_redo.dir/HistoryManager.cpp.o CMakeFiles/core_undo_redo.dir/Transaction.cpp.o CMakeFiles/core_undo_redo.dir/CompositeCommand.cpp.o CMakeFiles/core_undo_redo.dir/VoxelCommands.cpp.o CMakeFiles/core_undo_redo.dir/SelectionCommands.cpp.o CMakeFiles/core_undo_redo.dir/StateSnapshot.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libcore_undo_redo.a

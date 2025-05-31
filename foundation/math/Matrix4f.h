@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vector3f.h"
+#include "Vector4f.h"
 #include <cmath>
 #include <string>
 
@@ -61,6 +62,15 @@ public:
             (m[0] * vec.x + m[1] * vec.y + m[2] * vec.z + m[3]) / w,
             (m[4] * vec.x + m[5] * vec.y + m[6] * vec.z + m[7]) / w,
             (m[8] * vec.x + m[9] * vec.y + m[10] * vec.z + m[11]) / w
+        );
+    }
+    
+    Vector4f operator*(const Vector4f& vec) const {
+        return Vector4f(
+            m[0] * vec.x + m[1] * vec.y + m[2] * vec.z + m[3] * vec.w,
+            m[4] * vec.x + m[5] * vec.y + m[6] * vec.z + m[7] * vec.w,
+            m[8] * vec.x + m[9] * vec.y + m[10] * vec.z + m[11] * vec.w,
+            m[12] * vec.x + m[13] * vec.y + m[14] * vec.z + m[15] * vec.w
         );
     }
 

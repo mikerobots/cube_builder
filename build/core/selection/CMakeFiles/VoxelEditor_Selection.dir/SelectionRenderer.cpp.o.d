@@ -962,6 +962,7 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionRenderer.cpp.o: \
   /Users/michaelhalloran/cube_edit/core/rendering/../camera/Camera.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Matrix4f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/core/selection/../rendering/ShaderManager.h \

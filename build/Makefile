@@ -308,6 +308,84 @@ VoxelEditor_Selection_Tests/fast:
 	$(MAKE) $(MAKESILENT) -f core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build
 .PHONY : VoxelEditor_Selection_Tests/fast
 
+#=============================================================================
+# Target rules for targets named core_undo_redo
+
+# Build rule for target.
+core_undo_redo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core_undo_redo
+.PHONY : core_undo_redo
+
+# fast build rule for target.
+core_undo_redo/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/build
+.PHONY : core_undo_redo/fast
+
+#=============================================================================
+# Target rules for targets named test_undo_redo
+
+# Build rule for target.
+test_undo_redo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_undo_redo
+.PHONY : test_undo_redo
+
+# fast build rule for target.
+test_undo_redo/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build.make core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build
+.PHONY : test_undo_redo/fast
+
+#=============================================================================
+# Target rules for targets named test_simple_command
+
+# Build rule for target.
+test_simple_command: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_simple_command
+.PHONY : test_simple_command
+
+# fast build rule for target.
+test_simple_command/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build
+.PHONY : test_simple_command/fast
+
+#=============================================================================
+# Target rules for targets named test_history_manager
+
+# Build rule for target.
+test_history_manager: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_history_manager
+.PHONY : test_history_manager
+
+# fast build rule for target.
+test_history_manager/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build
+.PHONY : test_history_manager/fast
+
+#=============================================================================
+# Target rules for targets named core_surface_gen
+
+# Build rule for target.
+core_surface_gen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core_surface_gen
+.PHONY : core_surface_gen
+
+# fast build rule for target.
+core_surface_gen/fast:
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/build
+.PHONY : core_surface_gen/fast
+
+#=============================================================================
+# Target rules for targets named test_surface_gen
+
+# Build rule for target.
+test_surface_gen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_surface_gen
+.PHONY : test_surface_gen
+
+# fast build rule for target.
+test_surface_gen/fast:
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build
+.PHONY : test_surface_gen/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -331,6 +409,12 @@ help:
 	@echo "... VoxelEditor_Selection_Tests"
 	@echo "... VoxelEditor_VoxelData"
 	@echo "... VoxelEditor_VoxelData_Tests"
+	@echo "... core_surface_gen"
+	@echo "... core_undo_redo"
+	@echo "... test_history_manager"
+	@echo "... test_simple_command"
+	@echo "... test_surface_gen"
+	@echo "... test_undo_redo"
 .PHONY : help
 
 

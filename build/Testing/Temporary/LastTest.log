@@ -1,0 +1,93 @@
+Start testing: May 31 17:59 EDT
+----------------------------------------------------------
+239/241 Testing: test_undo_redo
+239/241 Test: test_undo_redo
+Command: "/Users/michaelhalloran/cube_edit/build/core/undo_redo/tests/test_undo_redo"
+Directory: /Users/michaelhalloran/cube_edit/build/core/undo_redo/tests
+"test_undo_redo" start time: May 31 17:59 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250430-4705-6kzjyz/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 9 tests from 4 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from CommandTest
+[ RUN      ] CommandTest.BasicExecuteUndo
+[       OK ] CommandTest.BasicExecuteUndo (0 ms)
+[----------] 1 test from CommandTest (0 ms total)
+
+[----------] 3 tests from HistoryManagerTest
+[ RUN      ] HistoryManagerTest.BasicUndoRedo
+[       OK ] HistoryManagerTest.BasicUndoRedo (0 ms)
+[ RUN      ] HistoryManagerTest.RedoStackClear
+[       OK ] HistoryManagerTest.RedoStackClear (0 ms)
+[ RUN      ] HistoryManagerTest.HistoryLimit
+[       OK ] HistoryManagerTest.HistoryLimit (0 ms)
+[----------] 3 tests from HistoryManagerTest (0 ms total)
+
+[----------] 2 tests from CompositeCommandTest
+[ RUN      ] CompositeCommandTest.BasicComposite
+[       OK ] CompositeCommandTest.BasicComposite (0 ms)
+[ RUN      ] CompositeCommandTest.PartialFailure
+[2025-05-31 17:59:14.067] [ERROR] CompositeCommand: Command FailingCommand failed
+[       OK ] CompositeCommandTest.PartialFailure (0 ms)
+[----------] 2 tests from CompositeCommandTest (0 ms total)
+
+[----------] 3 tests from TransactionTest
+[ RUN      ] TransactionTest.BasicTransaction
+[       OK ] TransactionTest.BasicTransaction (0 ms)
+[ RUN      ] TransactionTest.AutoRollback
+[       OK ] TransactionTest.AutoRollback (0 ms)
+[ RUN      ] TransactionTest.ManualRollback
+[       OK ] TransactionTest.ManualRollback (0 ms)
+[----------] 3 tests from TransactionTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 4 test suites ran. (0 ms total)
+[  PASSED  ] 9 tests.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_undo_redo" end time: May 31 17:59 EDT
+"test_undo_redo" time elapsed: 00:00:00
+----------------------------------------------------------
+
+240/241 Testing: test_simple_command
+240/241 Test: test_simple_command
+Command: "/Users/michaelhalloran/cube_edit/build/core/undo_redo/tests/test_simple_command"
+Directory: /Users/michaelhalloran/cube_edit/build/core/undo_redo/tests
+"test_simple_command" start time: May 31 17:59 EDT
+Output:
+----------------------------------------------------------
+Running main() from /private/tmp/googletest-20250430-4705-6kzjyz/googletest-1.17.0/googletest/src/gtest_main.cc
+[==========] Running 4 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from SimpleCommandTest
+[ RUN      ] SimpleCommandTest.ExecuteAndUndo
+[       OK ] SimpleCommandTest.ExecuteAndUndo (0 ms)
+[----------] 1 test from SimpleCommandTest (0 ms total)
+
+[----------] 1 test from CompositeCommandTest
+[ RUN      ] CompositeCommandTest.ExecuteMultiple
+[       OK ] CompositeCommandTest.ExecuteMultiple (0 ms)
+[----------] 1 test from CompositeCommandTest (0 ms total)
+
+[----------] 2 tests from TransactionTest
+[ RUN      ] TransactionTest.CommitTransaction
+[       OK ] TransactionTest.CommitTransaction (0 ms)
+[ RUN      ] TransactionTest.RollbackTransaction
+[       OK ] TransactionTest.RollbackTransaction (0 ms)
+[----------] 2 tests from TransactionTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 3 test suites ran. (0 ms total)
+[  PASSED  ] 4 tests.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_simple_command" end time: May 31 17:59 EDT
+"test_simple_command" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 31 17:59 EDT

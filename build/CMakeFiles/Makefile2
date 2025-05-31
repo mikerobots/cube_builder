@@ -86,6 +86,8 @@ core/all: core/camera/all
 core/all: core/rendering/all
 core/all: core/input/all
 core/all: core/selection/all
+core/all: core/undo_redo/all
+core/all: core/surface_gen/all
 .PHONY : core/all
 
 # Recursive "preinstall" directory target.
@@ -94,6 +96,8 @@ core/preinstall: core/camera/preinstall
 core/preinstall: core/rendering/preinstall
 core/preinstall: core/input/preinstall
 core/preinstall: core/selection/preinstall
+core/preinstall: core/undo_redo/preinstall
+core/preinstall: core/surface_gen/preinstall
 .PHONY : core/preinstall
 
 # Recursive "clean" directory target.
@@ -102,6 +106,8 @@ core/clean: core/camera/clean
 core/clean: core/rendering/clean
 core/clean: core/input/clean
 core/clean: core/selection/clean
+core/clean: core/undo_redo/clean
+core/clean: core/surface_gen/clean
 .PHONY : core/clean
 
 #=============================================================================
@@ -229,6 +235,74 @@ core/selection/tests/preinstall:
 # Recursive "clean" directory target.
 core/selection/tests/clean: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean
 .PHONY : core/selection/tests/clean
+
+#=============================================================================
+# Directory level rules for directory core/surface_gen
+
+# Recursive "all" directory target.
+core/surface_gen/all: core/surface_gen/CMakeFiles/core_surface_gen.dir/all
+core/surface_gen/all: core/surface_gen/tests/all
+.PHONY : core/surface_gen/all
+
+# Recursive "preinstall" directory target.
+core/surface_gen/preinstall: core/surface_gen/tests/preinstall
+.PHONY : core/surface_gen/preinstall
+
+# Recursive "clean" directory target.
+core/surface_gen/clean: core/surface_gen/CMakeFiles/core_surface_gen.dir/clean
+core/surface_gen/clean: core/surface_gen/tests/clean
+.PHONY : core/surface_gen/clean
+
+#=============================================================================
+# Directory level rules for directory core/surface_gen/tests
+
+# Recursive "all" directory target.
+core/surface_gen/tests/all: core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/all
+.PHONY : core/surface_gen/tests/all
+
+# Recursive "preinstall" directory target.
+core/surface_gen/tests/preinstall:
+.PHONY : core/surface_gen/tests/preinstall
+
+# Recursive "clean" directory target.
+core/surface_gen/tests/clean: core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/clean
+.PHONY : core/surface_gen/tests/clean
+
+#=============================================================================
+# Directory level rules for directory core/undo_redo
+
+# Recursive "all" directory target.
+core/undo_redo/all: core/undo_redo/CMakeFiles/core_undo_redo.dir/all
+core/undo_redo/all: core/undo_redo/tests/all
+.PHONY : core/undo_redo/all
+
+# Recursive "preinstall" directory target.
+core/undo_redo/preinstall: core/undo_redo/tests/preinstall
+.PHONY : core/undo_redo/preinstall
+
+# Recursive "clean" directory target.
+core/undo_redo/clean: core/undo_redo/CMakeFiles/core_undo_redo.dir/clean
+core/undo_redo/clean: core/undo_redo/tests/clean
+.PHONY : core/undo_redo/clean
+
+#=============================================================================
+# Directory level rules for directory core/undo_redo/tests
+
+# Recursive "all" directory target.
+core/undo_redo/tests/all: core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all
+core/undo_redo/tests/all: core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all
+core/undo_redo/tests/all: core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all
+.PHONY : core/undo_redo/tests/all
+
+# Recursive "preinstall" directory target.
+core/undo_redo/tests/preinstall:
+.PHONY : core/undo_redo/tests/preinstall
+
+# Recursive "clean" directory target.
+core/undo_redo/tests/clean: core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/clean
+core/undo_redo/tests/clean: core/undo_redo/tests/CMakeFiles/test_simple_command.dir/clean
+core/undo_redo/tests/clean: core/undo_redo/tests/CMakeFiles/test_history_manager.dir/clean
+.PHONY : core/undo_redo/tests/clean
 
 #=============================================================================
 # Directory level rules for directory core/voxel_data
@@ -805,6 +879,174 @@ VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selecti
 core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean:
 	$(MAKE) $(MAKESILENT) -f core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean
 .PHONY : core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean
+
+#=============================================================================
+# Target rules for target core/undo_redo/CMakeFiles/core_undo_redo.dir
+
+# All Build rule for target.
+core/undo_redo/CMakeFiles/core_undo_redo.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/undo_redo/CMakeFiles/core_undo_redo.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
+core/undo_redo/CMakeFiles/core_undo_redo.dir/all: core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=70,71,72,73,74,75,76 "Built target core_undo_redo"
+.PHONY : core/undo_redo/CMakeFiles/core_undo_redo.dir/all
+
+# Build rule for subdir invocation for target.
+core/undo_redo/CMakeFiles/core_undo_redo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 19
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/undo_redo/CMakeFiles/core_undo_redo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/undo_redo/CMakeFiles/core_undo_redo.dir/rule
+
+# Convenience name for target.
+core_undo_redo: core/undo_redo/CMakeFiles/core_undo_redo.dir/rule
+.PHONY : core_undo_redo
+
+# clean rule for target.
+core/undo_redo/CMakeFiles/core_undo_redo.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/clean
+.PHONY : core/undo_redo/CMakeFiles/core_undo_redo.dir/clean
+
+#=============================================================================
+# Target rules for target core/undo_redo/tests/CMakeFiles/test_undo_redo.dir
+
+# All Build rule for target.
+core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
+core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all: core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all: core/undo_redo/CMakeFiles/core_undo_redo.dir/all
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build.make core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build.make core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=86,87 "Built target test_undo_redo"
+.PHONY : core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all
+
+# Build rule for subdir invocation for target.
+core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 21
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/rule
+
+# Convenience name for target.
+test_undo_redo: core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/rule
+.PHONY : test_undo_redo
+
+# clean rule for target.
+core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build.make core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/clean
+.PHONY : core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/clean
+
+#=============================================================================
+# Target rules for target core/undo_redo/tests/CMakeFiles/test_simple_command.dir
+
+# All Build rule for target.
+core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
+core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all: core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all: core/undo_redo/CMakeFiles/core_undo_redo.dir/all
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make core/undo_redo/tests/CMakeFiles/test_simple_command.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=79,80 "Built target test_simple_command"
+.PHONY : core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all
+
+# Build rule for subdir invocation for target.
+core/undo_redo/tests/CMakeFiles/test_simple_command.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 21
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/undo_redo/tests/CMakeFiles/test_simple_command.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/undo_redo/tests/CMakeFiles/test_simple_command.dir/rule
+
+# Convenience name for target.
+test_simple_command: core/undo_redo/tests/CMakeFiles/test_simple_command.dir/rule
+.PHONY : test_simple_command
+
+# clean rule for target.
+core/undo_redo/tests/CMakeFiles/test_simple_command.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make core/undo_redo/tests/CMakeFiles/test_simple_command.dir/clean
+.PHONY : core/undo_redo/tests/CMakeFiles/test_simple_command.dir/clean
+
+#=============================================================================
+# Target rules for target core/undo_redo/tests/CMakeFiles/test_history_manager.dir
+
+# All Build rule for target.
+core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
+core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all: core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all: core/undo_redo/CMakeFiles/core_undo_redo.dir/all
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make core/undo_redo/tests/CMakeFiles/test_history_manager.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=77,78 "Built target test_history_manager"
+.PHONY : core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all
+
+# Build rule for subdir invocation for target.
+core/undo_redo/tests/CMakeFiles/test_history_manager.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 21
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/undo_redo/tests/CMakeFiles/test_history_manager.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/undo_redo/tests/CMakeFiles/test_history_manager.dir/rule
+
+# Convenience name for target.
+test_history_manager: core/undo_redo/tests/CMakeFiles/test_history_manager.dir/rule
+.PHONY : test_history_manager
+
+# clean rule for target.
+core/undo_redo/tests/CMakeFiles/test_history_manager.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make core/undo_redo/tests/CMakeFiles/test_history_manager.dir/clean
+.PHONY : core/undo_redo/tests/CMakeFiles/test_history_manager.dir/clean
+
+#=============================================================================
+# Target rules for target core/surface_gen/CMakeFiles/core_surface_gen.dir
+
+# All Build rule for target.
+core/surface_gen/CMakeFiles/core_surface_gen.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=65,66,67,68,69 "Built target core_surface_gen"
+.PHONY : core/surface_gen/CMakeFiles/core_surface_gen.dir/all
+
+# Build rule for subdir invocation for target.
+core/surface_gen/CMakeFiles/core_surface_gen.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 7
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/surface_gen/CMakeFiles/core_surface_gen.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/surface_gen/CMakeFiles/core_surface_gen.dir/rule
+
+# Convenience name for target.
+core_surface_gen: core/surface_gen/CMakeFiles/core_surface_gen.dir/rule
+.PHONY : core_surface_gen
+
+# clean rule for target.
+core/surface_gen/CMakeFiles/core_surface_gen.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/clean
+.PHONY : core/surface_gen/CMakeFiles/core_surface_gen.dir/clean
+
+#=============================================================================
+# Target rules for target core/surface_gen/tests/CMakeFiles/test_surface_gen.dir
+
+# All Build rule for target.
+core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/all: core/surface_gen/CMakeFiles/core_surface_gen.dir/all
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=81,82,83,84,85 "Built target test_surface_gen"
+.PHONY : core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/all
+
+# Build rule for subdir invocation for target.
+core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 12
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/rule
+
+# Convenience name for target.
+test_surface_gen: core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/rule
+.PHONY : test_surface_gen
+
+# clean rule for target.
+core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/clean
+.PHONY : core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

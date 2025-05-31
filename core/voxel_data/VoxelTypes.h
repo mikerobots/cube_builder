@@ -150,7 +150,7 @@ struct WorkspaceConstraints {
 };
 
 // Calculate maximum grid dimensions for a given resolution and workspace size
-Math::Vector3i calculateMaxGridDimensions(VoxelResolution resolution, const Math::Vector3f& workspaceSize) {
+inline Math::Vector3i calculateMaxGridDimensions(VoxelResolution resolution, const Math::Vector3f& workspaceSize) {
     float voxelSize = getVoxelSize(resolution);
     
     return Math::Vector3i(
@@ -161,7 +161,7 @@ Math::Vector3i calculateMaxGridDimensions(VoxelResolution resolution, const Math
 }
 
 // Check if a grid position is within workspace bounds
-bool isPositionInBounds(const Math::Vector3i& gridPos, VoxelResolution resolution, const Math::Vector3f& workspaceSize) {
+inline bool isPositionInBounds(const Math::Vector3i& gridPos, VoxelResolution resolution, const Math::Vector3f& workspaceSize) {
     Math::Vector3i maxDims = calculateMaxGridDimensions(resolution, workspaceSize);
     
     return gridPos.x >= 0 && gridPos.x < maxDims.x &&

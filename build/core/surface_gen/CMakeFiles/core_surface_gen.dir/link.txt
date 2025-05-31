@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libcore_surface_gen.a CMakeFiles/core_surface_gen.dir/SurfaceTypes.cpp.o CMakeFiles/core_surface_gen.dir/MeshBuilder.cpp.o CMakeFiles/core_surface_gen.dir/DualContouring.cpp.o CMakeFiles/core_surface_gen.dir/SurfaceGenerator.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libcore_surface_gen.a

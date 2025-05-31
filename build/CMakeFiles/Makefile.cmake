@@ -20,6 +20,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/michaelhalloran/cube_edit/core/rendering/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/selection/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/selection/tests/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/surface_gen/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/surface_gen/tests/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/undo_redo/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/undo_redo/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt"
@@ -102,6 +106,10 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "core/input/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   "core/selection/CMakeFiles/CMakeDirectoryInformation.cmake"
   "core/selection/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/undo_redo/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/undo_redo/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/surface_gen/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/surface_gen/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -120,4 +128,10 @@ set(CMAKE_DEPEND_INFO_FILES
   "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/DependInfo.cmake"
   "core/selection/CMakeFiles/VoxelEditor_Selection.dir/DependInfo.cmake"
   "core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/DependInfo.cmake"
+  "core/undo_redo/CMakeFiles/core_undo_redo.dir/DependInfo.cmake"
+  "core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/DependInfo.cmake"
+  "core/undo_redo/tests/CMakeFiles/test_simple_command.dir/DependInfo.cmake"
+  "core/undo_redo/tests/CMakeFiles/test_history_manager.dir/DependInfo.cmake"
+  "core/surface_gen/CMakeFiles/core_surface_gen.dir/DependInfo.cmake"
+  "core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/DependInfo.cmake"
   )
