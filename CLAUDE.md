@@ -10,3 +10,10 @@ subsystem as you are working on them. You will keep track of what
 you are working on with the TODO.md file.  The TODO.md files will have
 a list of everything you have accomplished, and the next thing to do.
 
+## Git Repository
+
+This project has a remote repository. After committing changes, remember to push them to the remote:
+```
+git push -u origin master
+```
+

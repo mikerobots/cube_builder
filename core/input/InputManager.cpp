@@ -7,7 +7,7 @@
 namespace VoxelEditor {
 namespace Input {
 
-InputManager::InputManager(Events::EventDispatcher* eventDispatcher)
+InputManager::InputManager(VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : m_eventDispatcher(eventDispatcher)
     , m_enabled(true)
     , m_initialized(false)
@@ -512,7 +512,7 @@ void InputManager::triggerAction(const std::string& actionName, const ActionCont
 }
 
 bool InputManager::checkInputTrigger(const InputTrigger& trigger, const MouseEvent& event) const {
-    if (trigger.type != InputTriggerType::Mouse) {
+    if (trigger.device != InputDevice::Mouse) {
         return false;
     }
     
@@ -520,14 +520,14 @@ bool InputManager::checkInputTrigger(const InputTrigger& trigger, const MouseEve
         return false;
     }
     
-    bool buttonPressed = m_mouseHandler->isButtonPressed(trigger.mouseButton);
-    bool modifiersMatch = (m_currentState.modifiers == trigger.modifiers);
+    bool buttonPressed = m_mouseHandler->isButtonPressed(trigger.input.mouseButton);
+    bool modifiersMatch = (m_currentState.modifiers == trigger.requiredModifiers);
     
     return buttonPressed && modifiersMatch;
 }
 
 bool InputManager::checkInputTrigger(const InputTrigger& trigger, const KeyEvent& event) const {
-    if (trigger.type != InputTriggerType::Key) {
+    if (trigger.device != InputDevice::Keyboard) {
         return false;
     }
     
@@ -535,14 +535,14 @@ bool InputManager::checkInputTrigger(const InputTrigger& trigger, const KeyEvent
         return false;
     }
     
-    bool keyPressed = m_keyboardHandler->isKeyPressed(trigger.key);
-    bool modifiersMatch = (m_currentState.modifiers == trigger.modifiers);
+    bool keyPressed = m_keyboardHandler->isKeyPressed(trigger.input.keyCode);
+    bool modifiersMatch = (m_currentState.modifiers == trigger.requiredModifiers);
     
     return keyPressed && modifiersMatch;
 }
 
 bool InputManager::checkInputTrigger(const InputTrigger& trigger, TouchGesture gesture) const {
-    if (trigger.type != InputTriggerType::Touch) {
+    if (trigger.device != InputDevice::Touch) {
         return false;
     }
     
@@ -550,11 +550,11 @@ bool InputManager::checkInputTrigger(const InputTrigger& trigger, TouchGesture g
         return false;
     }
     
-    return m_touchHandler->isGestureActive(trigger.touchGesture);
+    return m_touchHandler->isGestureActive(trigger.input.touchGesture);
 }
 
 bool InputManager::checkInputTrigger(const InputTrigger& trigger, VRGesture gesture) const {
-    if (trigger.type != InputTriggerType::VR) {
+    if (trigger.device != InputDevice::VRHands) {
         return false;
     }
     
@@ -562,7 +562,7 @@ bool InputManager::checkInputTrigger(const InputTrigger& trigger, VRGesture gest
         return false;
     }
     
-    return m_vrHandler->isVRGestureActive(trigger.vrGesture);
+    return m_vrHandler->isVRGestureActive(trigger.input.vrGesture);
 }
 
 ActionContext InputManager::createActionContext(const ActionBinding& binding, bool pressed, float value) const {

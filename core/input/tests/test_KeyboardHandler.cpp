@@ -1,15 +1,21 @@
 #include <gtest/gtest.h>
 #include "../KeyboardHandler.h"
-#include "../../foundation/events/EventDispatcher.h"
+#include "../../../foundation/events/EventDispatcher.h"
+#include "../../../foundation/events/EventBase.h"
+#include <vector>
 
 using namespace VoxelEditor::Input;
+
+// The events are already defined in KeyboardHandler.h, so we just use those
+using namespace VoxelEditor::Input::Events;
 
 class MockEventDispatcher : public VoxelEditor::Events::EventDispatcher {
 public:
     mutable std::vector<std::string> dispatchedEvents;
     
     template<typename EventType>
-    void dispatch(const EventType&) const {
+    void dispatch(const EventType& event) {
+        VoxelEditor::Events::EventDispatcher::dispatch(event);
         dispatchedEvents.push_back(typeid(EventType).name());
     }
 };

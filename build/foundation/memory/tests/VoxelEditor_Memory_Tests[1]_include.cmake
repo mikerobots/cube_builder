@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build/foundation/memory/tests/VoxelEditor_Memory_Tests[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build/foundation/memory/tests/VoxelEditor_Memory_Tests[1]_tests.cmake")
+else()
+  add_test(VoxelEditor_Memory_Tests_NOT_BUILT VoxelEditor_Memory_Tests_NOT_BUILT)
+endif()

@@ -6,8 +6,8 @@ set(INPUT_TEST_SOURCES
     test_MouseHandler.cpp
     test_KeyboardHandler.cpp
     test_TouchHandler.cpp
-    test_VRInputHandler.cpp
-    # test_InputManager.cpp    # When full implementation is added
+    # test_VRInputHandler.cpp   # When implementation is added
+    # test_InputManager.cpp     # When full implementation is added
 )
 
 add_executable(VoxelEditor_Input_Tests ${INPUT_TEST_SOURCES})

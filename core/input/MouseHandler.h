@@ -5,6 +5,7 @@
 #include "../camera/Camera.h"
 #include "../../foundation/math/Ray.h"
 #include "../../foundation/math/Vector2i.h"
+#include "../../foundation/events/EventBase.h"
 #include <array>
 #include <chrono>
 
@@ -20,7 +21,7 @@ namespace Input {
 
 class MouseHandler : public InputHandler {
 public:
-    explicit MouseHandler(Events::EventDispatcher* eventDispatcher = nullptr);
+    explicit MouseHandler(::VoxelEditor::Events::EventDispatcher* eventDispatcher = nullptr);
     ~MouseHandler() = default;
     
     // InputHandler interface
@@ -144,7 +145,7 @@ private:
 // Mouse event types for the event system
 namespace Events {
     
-    struct MouseClickEvent {
+    struct MouseClickEvent : public ::VoxelEditor::Events::EventBase {
         MouseButton button;
         Math::Vector2f position;
         int clickCount;
@@ -154,9 +155,11 @@ namespace Events {
         MouseClickEvent(MouseButton btn, const Math::Vector2f& pos, int count, ModifierFlags mods = ModifierFlags::None)
             : button(btn), position(pos), clickCount(count), modifiers(mods)
             , timestamp(std::chrono::high_resolution_clock::now()) {}
+            
+        const char* getEventType() const override { return "MouseClickEvent"; }
     };
     
-    struct MouseDragEvent {
+    struct MouseDragEvent : public ::VoxelEditor::Events::EventBase {
         MouseButton button;
         Math::Vector2f startPosition;
         Math::Vector2f currentPosition;
@@ -168,9 +171,11 @@ namespace Events {
             : button(btn), startPosition(start), currentPosition(current)
             , delta(current - start), modifiers(mods)
             , timestamp(std::chrono::high_resolution_clock::now()) {}
+            
+        const char* getEventType() const override { return "MouseDragEvent"; }
     };
     
-    struct MouseMoveEvent {
+    struct MouseMoveEvent : public ::VoxelEditor::Events::EventBase {
         Math::Vector2f position;
         Math::Vector2f delta;
         ModifierFlags modifiers;
@@ -179,9 +184,11 @@ namespace Events {
         MouseMoveEvent(const Math::Vector2f& pos, const Math::Vector2f& d, ModifierFlags mods = ModifierFlags::None)
             : position(pos), delta(d), modifiers(mods)
             , timestamp(std::chrono::high_resolution_clock::now()) {}
+            
+        const char* getEventType() const override { return "MouseMoveEvent"; }
     };
     
-    struct MouseWheelEvent {
+    struct MouseWheelEvent : public ::VoxelEditor::Events::EventBase {
         float delta;
         Math::Vector2f position;
         ModifierFlags modifiers;
@@ -190,6 +197,8 @@ namespace Events {
         MouseWheelEvent(float d, const Math::Vector2f& pos, ModifierFlags mods = ModifierFlags::None)
             : delta(d), position(pos), modifiers(mods)
             , timestamp(std::chrono::high_resolution_clock::now()) {}
+            
+        const char* getEventType() const override { return "MouseWheelEvent"; }
     };
     
 }

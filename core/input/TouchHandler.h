@@ -4,7 +4,9 @@
 #include "InputTypes.h"
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <memory>
+#include <chrono>
 
 namespace VoxelEditor {
 namespace Input {
@@ -14,7 +16,7 @@ class GestureRecognizer;
 
 class TouchHandler : public InputHandler {
 public:
-    explicit TouchHandler(Events::EventDispatcher* eventDispatcher = nullptr);
+    explicit TouchHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher = nullptr);
     ~TouchHandler();
     
     // InputHandler interface
@@ -27,6 +29,13 @@ public:
     bool hasTouches() const;
     size_t getTouchCount() const;
     TouchPoint getTouchById(int id) const;
+    bool isGestureDetected(TouchGesture gesture) const;
+    
+    // Gesture data queries
+    Math::Vector2f getPanDelta() const;
+    float getPinchScale() const;
+    float getRotationAngle() const;
+    Math::Vector2f getGestureCenter() const;
     
     // Gesture recognition
     void enableGesture(TouchGesture gesture, bool enabled);
@@ -126,6 +135,29 @@ private:
     float m_rotationThreshold;
     float m_longPressTimeout;
     float m_sensitivity;
+    float m_doubleTapTimeout;
+    float m_panThreshold;
+    
+    // Touch tracking
+    std::vector<TouchPoint> m_activeTouches;
+    std::unordered_map<int, TimePoint> m_touchStartTimes;
+    std::unordered_map<int, Math::Vector2f> m_touchStartPositions;
+    
+    // Gesture state
+    std::unordered_set<TouchGesture> m_activeGestures;
+    std::vector<TouchGesture> m_detectedGestures;
+    std::unordered_map<TouchGesture, bool> m_enabledGestures;
+    
+    // Pinch gesture data
+    float m_pinchStartDistance;
+    
+    // Rotation gesture data
+    float m_rotationStartAngle;
+    float m_rotationAngle;
+    
+    // Tap detection
+    TimePoint m_lastTapTime;
+    Math::Vector2f m_lastTapPosition;
     
     // Event processing methods
     void handleTouchBegin(const TouchEvent& event);
@@ -170,6 +202,18 @@ private:
     void dispatchSwipeEvent(const Math::Vector2f& start, const Math::Vector2f& end, const Math::Vector2f& velocity);
     void dispatchPinchEvent(const Math::Vector2f& center, float scale, float velocity);
     void dispatchPanEvent(const Math::Vector2f& delta, const Math::Vector2f& velocity);
+    
+    // Gesture detection helpers
+    void detectGestures();
+    void detectPanGesture();
+    void detectPinchGesture();
+    void detectRotationGesture();
+    void checkForTap(const TouchPoint& touch);
+    void checkForDoubleTap(const TouchPoint& touch);
+    void initializePinchGesture();
+    void initializeRotationGesture();
+    void updateGestureRecognition(float deltaTime);
+    void cleanupOldTouches();
 };
 
 // Simple gesture recognizer

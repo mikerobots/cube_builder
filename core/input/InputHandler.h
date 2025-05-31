@@ -9,7 +9,7 @@ namespace Input {
 // Base class for all input handlers
 class InputHandler {
 public:
-    explicit InputHandler(Events::EventDispatcher* eventDispatcher = nullptr)
+    explicit InputHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher = nullptr)
         : m_eventDispatcher(eventDispatcher), m_enabled(true) {}
     
     virtual ~InputHandler() = default;
@@ -28,8 +28,8 @@ public:
     virtual bool isEnabled() const { return m_enabled; }
     
     // Event dispatcher access
-    void setEventDispatcher(Events::EventDispatcher* dispatcher) { m_eventDispatcher = dispatcher; }
-    Events::EventDispatcher* getEventDispatcher() const { return m_eventDispatcher; }
+    void setEventDispatcher(VoxelEditor::Events::EventDispatcher* dispatcher) { m_eventDispatcher = dispatcher; }
+    VoxelEditor::Events::EventDispatcher* getEventDispatcher() const { return m_eventDispatcher; }
     
 protected:
     // Helper to dispatch events if dispatcher is available
@@ -40,7 +40,7 @@ protected:
         }
     }
     
-    Events::EventDispatcher* m_eventDispatcher;
+    VoxelEditor::Events::EventDispatcher* m_eventDispatcher;
     bool m_enabled;
 };
 

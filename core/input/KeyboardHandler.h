@@ -2,6 +2,7 @@
 
 #include "InputHandler.h"
 #include "InputTypes.h"
+#include "../../foundation/events/EventBase.h"
 #include <array>
 #include <string>
 #include <unordered_map>
@@ -11,7 +12,7 @@ namespace Input {
 
 class KeyboardHandler : public InputHandler {
 public:
-    explicit KeyboardHandler(Events::EventDispatcher* eventDispatcher = nullptr);
+    explicit KeyboardHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher = nullptr);
     ~KeyboardHandler() = default;
     
     // InputHandler interface
@@ -122,7 +123,7 @@ private:
 // Keyboard event types for the event system
 namespace Events {
     
-    struct KeyPressEvent {
+    struct KeyPressEvent : public VoxelEditor::Events::Event<KeyPressEvent> {
         KeyCode key;
         ModifierFlags modifiers;
         bool repeat;
@@ -133,7 +134,7 @@ namespace Events {
             , timestamp(std::chrono::high_resolution_clock::now()) {}
     };
     
-    struct KeyReleaseEvent {
+    struct KeyReleaseEvent : public VoxelEditor::Events::Event<KeyReleaseEvent> {
         KeyCode key;
         ModifierFlags modifiers;
         TimePoint timestamp;
@@ -143,7 +144,7 @@ namespace Events {
             , timestamp(std::chrono::high_resolution_clock::now()) {}
     };
     
-    struct KeyCombinationEvent {
+    struct KeyCombinationEvent : public VoxelEditor::Events::Event<KeyCombinationEvent> {
         KeyCombination combination;
         bool pressed;
         TimePoint timestamp;
@@ -153,7 +154,7 @@ namespace Events {
             , timestamp(std::chrono::high_resolution_clock::now()) {}
     };
     
-    struct TextInputEvent {
+    struct TextInputEvent : public VoxelEditor::Events::Event<TextInputEvent> {
         std::string text;
         TimePoint timestamp;
         
@@ -161,7 +162,7 @@ namespace Events {
             : text(t), timestamp(std::chrono::high_resolution_clock::now()) {}
     };
     
-    struct KeyActionEvent {
+    struct KeyActionEvent : public VoxelEditor::Events::Event<KeyActionEvent> {
         std::string action;
         KeyCode key;
         ModifierFlags modifiers;

@@ -21,7 +21,7 @@ class VRInputHandler;
 
 class InputManager {
 public:
-    explicit InputManager(Events::EventDispatcher* eventDispatcher = nullptr);
+    explicit InputManager(VoxelEditor::Events::EventDispatcher* eventDispatcher = nullptr);
     ~InputManager();
     
     // Disable copy/move for singleton-like behavior
@@ -132,7 +132,7 @@ public:
     
 private:
     // Core components
-    Events::EventDispatcher* m_eventDispatcher;
+    VoxelEditor::Events::EventDispatcher* m_eventDispatcher;
     
     // Input handlers
     std::unique_ptr<MouseHandler> m_mouseHandler;

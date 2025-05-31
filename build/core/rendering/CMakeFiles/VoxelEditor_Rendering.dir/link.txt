@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libVoxelEditor_Rendering.a CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libVoxelEditor_Rendering.a

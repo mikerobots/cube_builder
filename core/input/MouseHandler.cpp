@@ -5,7 +5,7 @@
 namespace VoxelEditor {
 namespace Input {
 
-MouseHandler::MouseHandler(Events::EventDispatcher* eventDispatcher)
+MouseHandler::MouseHandler(::VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : InputHandler(eventDispatcher)
     , m_clickTimeout(0.3f)
     , m_doubleClickTimeout(0.5f)
@@ -115,7 +115,16 @@ Math::Ray MouseHandler::createRayFromMouse(const Math::Vector2f& mousePos,
     
     // Create ray in world space
     Math::Vector3f rayStart = camera.getPosition();
-    Math::Vector3f rayDirection = camera.screenToWorldDirection(Math::Vector2f(x, y));
+    // For now, create a simple ray from camera position through the screen point
+    // This is a simplified implementation - a full implementation would use
+    // the camera's projection and view matrices
+    Math::Vector3f rayDirection = camera.getForward();
+    
+    // Add some offset based on screen coordinates
+    Math::Vector3f right = camera.getRight() * x;
+    Math::Vector3f up = camera.getUp() * y;
+    
+    rayDirection = (rayDirection + right + up).normalized();
     
     return Math::Ray(rayStart, rayDirection);
 }
@@ -206,7 +215,7 @@ bool MouseHandler::isDoubleClickInternal(MouseButton button, const Math::Vector2
     
     // Check if position is close enough to previous click
     Math::Vector2f lastPos = m_state.clickPosition[index];
-    float distance = Math::MathUtils::distance(position, lastPos);
+    float distance = position.distanceTo(lastPos);
     
     return distance <= m_dragThreshold;
 }
@@ -218,7 +227,7 @@ bool MouseHandler::isDragInternal(MouseButton button, const Math::Vector2f& posi
     }
     
     Math::Vector2f startPos = m_state.clickPosition[index];
-    float distance = Math::MathUtils::distance(position, startPos);
+    float distance = position.distanceTo(startPos);
     
     return distance > m_dragThreshold;
 }
@@ -280,7 +289,7 @@ Math::Vector2f MouseHandler::filterPosition(const Math::Vector2f& newPosition) c
 }
 
 bool MouseHandler::shouldFilterMovement(const Math::Vector2f& delta) const {
-    float distance = Math::MathUtils::length(delta);
+    float distance = delta.length();
     return distance < m_minimumMovement;
 }
 

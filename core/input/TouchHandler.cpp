@@ -4,16 +4,31 @@
 namespace VoxelEditor {
 namespace Input {
 
-TouchHandler::TouchHandler(Events::EventDispatcher* eventDispatcher)
+TouchHandler::TouchHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : InputHandler(eventDispatcher)
     , m_tapTimeout(0.3f)
     , m_doubleTapTimeout(0.5f)
-    , m_tapThreshold(20.0f)
+    , m_tapRadius(20.0f)
     , m_pinchThreshold(50.0f)
     , m_panThreshold(10.0f)
     , m_rotationThreshold(0.1f)
-    , m_sensitivity(1.0f) {
+    , m_sensitivity(1.0f)
+    , m_swipeThreshold(100.0f)
+    , m_longPressTimeout(1.0f)
+    , m_pinchStartDistance(0.0f)
+    , m_rotationStartAngle(0.0f)
+    , m_rotationAngle(0.0f) {
+    // Initialize enabled gestures - all enabled by default
+    m_enabledGestures[TouchGesture::Tap] = true;
+    m_enabledGestures[TouchGesture::DoubleTap] = true;
+    m_enabledGestures[TouchGesture::LongPress] = true;
+    m_enabledGestures[TouchGesture::Pan] = true;
+    m_enabledGestures[TouchGesture::Pinch] = true;
+    m_enabledGestures[TouchGesture::Rotation] = true;
+    m_enabledGestures[TouchGesture::Swipe] = true;
 }
+
+TouchHandler::~TouchHandler() = default;
 
 void TouchHandler::processTouchEvent(const TouchEvent& event) {
     if (!isEnabled()) {
@@ -85,7 +100,7 @@ float TouchHandler::getPinchScale() const {
     if (m_activeTouches.size() >= 2) {
         Math::Vector2f pos1 = m_activeTouches[0].position;
         Math::Vector2f pos2 = m_activeTouches[1].position;
-        float currentDistance = Math::MathUtils::distance(pos1, pos2);
+        float currentDistance = pos1.distanceTo(pos2);
         
         if (m_pinchStartDistance > 0.0f) {
             return currentDistance / m_pinchStartDistance;
@@ -117,7 +132,7 @@ int TouchHandler::getTouchCount() const {
 void TouchHandler::handleTouchBegin(const TouchEvent& event) {
     // Add new touches
     for (const auto& point : event.points) {
-        if (point.state == TouchState::Pressed) {
+        if (point.state == Input::TouchState::Pressed) {
             m_activeTouches.push_back(point);
             
             // Record touch start time for gesture recognition
@@ -166,7 +181,7 @@ void TouchHandler::handleTouchUpdate(const TouchEvent& event) {
 void TouchHandler::handleTouchEnd(const TouchEvent& event) {
     // Remove ended touches
     for (const auto& point : event.points) {
-        if (point.state == TouchState::Released) {
+        if (point.state == Input::TouchState::Released) {
             auto it = std::remove_if(m_activeTouches.begin(), m_activeTouches.end(),
                 [point](const TouchPoint& touch) { return touch.id == point.id; });
             m_activeTouches.erase(it, m_activeTouches.end());
@@ -226,7 +241,7 @@ void TouchHandler::detectPanGesture() {
     }
     
     const TouchPoint& touch = m_activeTouches[0];
-    float distance = Math::MathUtils::length(touch.delta);
+    float distance = touch.delta.length();
     
     if (distance > m_panThreshold) {
         if (m_activeGestures.find(TouchGesture::Pan) == m_activeGestures.end()) {
@@ -249,7 +264,7 @@ void TouchHandler::detectPinchGesture() {
     
     Math::Vector2f pos1 = m_activeTouches[0].position;
     Math::Vector2f pos2 = m_activeTouches[1].position;
-    float currentDistance = Math::MathUtils::distance(pos1, pos2);
+    float currentDistance = pos1.distanceTo(pos2);
     
     if (m_pinchStartDistance > 0.0f) {
         float distanceChange = std::abs(currentDistance - m_pinchStartDistance);
@@ -285,18 +300,18 @@ void TouchHandler::detectRotationGesture() {
     
     if (m_rotationStartAngle != 0.0f) {
         float angleDiff = std::abs(currentAngle - m_rotationStartAngle);
-        if (angleDiff > Math::MathUtils::PI) {
-            angleDiff = 2.0f * Math::MathUtils::PI - angleDiff;
+        if (angleDiff > Math::PI) {
+            angleDiff = 2.0f * Math::PI - angleDiff;
         }
         
         if (angleDiff > m_rotationThreshold) {
-            if (m_activeGestures.find(TouchGesture::Rotate) == m_activeGestures.end()) {
-                m_activeGestures.insert(TouchGesture::Rotate);
-                m_detectedGestures.push_back(TouchGesture::Rotate);
+            if (m_activeGestures.find(TouchGesture::Rotation) == m_activeGestures.end()) {
+                m_activeGestures.insert(TouchGesture::Rotation);
+                m_detectedGestures.push_back(TouchGesture::Rotation);
                 
                 // Dispatch gesture event
                 if (m_eventDispatcher) {
-                    Events::TouchGestureEvent gestureEvent(TouchGesture::Rotate, getGestureCenter());
+                    Events::TouchGestureEvent gestureEvent(TouchGesture::Rotation, getGestureCenter());
                     m_eventDispatcher->dispatch(gestureEvent);
                 }
             }
@@ -391,11 +406,13 @@ void TouchHandler::initializeRotationGesture() {
 void TouchHandler::updateGestureRecognition(float deltaTime) {
     // Update gesture timing and states
     // This could include gesture smoothing, filtering, etc.
+    // For now, just a placeholder
 }
 
 void TouchHandler::cleanupOldTouches() {
     // Clean up any tracking data for touches that are no longer active
     // This helps prevent memory leaks from long-running sessions
+    // For now, just a placeholder
 }
 
 std::string TouchHandler::touchGestureToString(TouchGesture gesture) {
@@ -426,6 +443,69 @@ TouchGesture TouchHandler::touchGestureFromString(const std::string& str) {
     if (str == "FourFingerTap") return TouchGesture::FourFingerTap;
     if (str == "TwoFingerPan") return TouchGesture::TwoFingerPan;
     return TouchGesture::Tap; // Default fallback
+}
+
+bool TouchHandler::isValidTouchGesture(TouchGesture gesture) {
+    switch (gesture) {
+        case TouchGesture::Tap:
+        case TouchGesture::DoubleTap:
+        case TouchGesture::LongPress:
+        case TouchGesture::Pan:
+        case TouchGesture::Pinch:
+        case TouchGesture::Rotate:
+        case TouchGesture::Swipe:
+        case TouchGesture::ThreeFingerTap:
+        case TouchGesture::FourFingerTap:
+        case TouchGesture::TwoFingerPan:
+            return true;
+        default:
+            return false;
+    }
+}
+
+TouchPoint TouchHandler::getTouchById(int id) const {
+    for (const auto& touch : m_activeTouches) {
+        if (touch.id == id) {
+            return touch;
+        }
+    }
+    return TouchPoint(); // Return default touch point if not found
+}
+
+void TouchHandler::enableGesture(TouchGesture gesture, bool enabled) {
+    m_enabledGestures[gesture] = enabled;
+}
+
+bool TouchHandler::isGestureEnabled(TouchGesture gesture) const {
+    auto it = m_enabledGestures.find(gesture);
+    return it != m_enabledGestures.end() ? it->second : false;
+}
+
+Math::Vector2f TouchHandler::getGestureCenter(TouchGesture gesture) const {
+    // For now, just return the general gesture center
+    return getGestureCenter();
+}
+
+float TouchHandler::getGestureScale(TouchGesture gesture) const {
+    if (gesture == TouchGesture::Pinch) {
+        return getPinchScale();
+    }
+    return 1.0f;
+}
+
+float TouchHandler::getGestureRotation(TouchGesture gesture) const {
+    if (gesture == TouchGesture::Rotate) {
+        return getRotationAngle();
+    }
+    return 0.0f;
+}
+
+Math::Vector2f TouchHandler::getGestureVelocity(TouchGesture gesture) const {
+    if (gesture == TouchGesture::Pan && !m_activeTouches.empty()) {
+        // Simple velocity calculation - could be improved
+        return m_activeTouches[0].delta;
+    }
+    return Math::Vector2f::zero();
 }
 
 }

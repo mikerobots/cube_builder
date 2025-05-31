@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build/core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build/core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake")
+else()
+  add_test(VoxelEditor_Camera_Tests_NOT_BUILT VoxelEditor_Camera_Tests_NOT_BUILT)
+endif()

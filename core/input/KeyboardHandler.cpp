@@ -3,7 +3,7 @@
 namespace VoxelEditor {
 namespace Input {
 
-KeyboardHandler::KeyboardHandler(Events::EventDispatcher* eventDispatcher)
+KeyboardHandler::KeyboardHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : InputHandler(eventDispatcher)
     , m_textInputEnabled(false)
     , m_repeatEnabled(true)
