@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Vector3f.h"
+#include "Vector2f.h"
+#include "Vector2i.h"
 
 // Forward declaration to avoid circular dependencies
 namespace VoxelEditor { namespace Math { class Matrix4f; }}

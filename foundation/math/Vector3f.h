@@ -25,6 +25,11 @@ public:
     Vector3f operator*(float scalar) const {
         return Vector3f(x * scalar, y * scalar, z * scalar);
     }
+    
+    // Element-wise multiplication
+    Vector3f operator*(const Vector3f& other) const {
+        return Vector3f(x * other.x, y * other.y, z * other.z);
+    }
 
     Vector3f operator/(float scalar) const {
         float inv = 1.0f / scalar;

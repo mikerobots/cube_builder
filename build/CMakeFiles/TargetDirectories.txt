@@ -73,3 +73,11 @@
 /Users/michaelhalloran/cube_edit/build/core/input/tests/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build/core/input/tests/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build/core/input/tests/CMakeFiles/rebuild_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/CMakeFiles/VoxelEditor_Selection.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/CMakeFiles/test.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/CMakeFiles/edit_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/CMakeFiles/rebuild_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/tests/CMakeFiles/test.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/tests/CMakeFiles/edit_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/selection/tests/CMakeFiles/rebuild_cache.dir

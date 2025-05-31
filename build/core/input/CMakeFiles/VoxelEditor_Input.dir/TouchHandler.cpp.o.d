@@ -928,5 +928,6 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.o: \
   /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
+  /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventBase.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/unordered_set \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/MathUtils.h

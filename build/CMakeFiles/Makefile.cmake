@@ -18,6 +18,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/michaelhalloran/cube_edit/core/input/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/rendering/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/rendering/tests/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/selection/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/selection/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt"
@@ -98,6 +100,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "core/rendering/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   "core/input/CMakeFiles/CMakeDirectoryInformation.cmake"
   "core/input/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/selection/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/selection/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -114,4 +118,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/DependInfo.cmake"
   "core/input/CMakeFiles/VoxelEditor_Input.dir/DependInfo.cmake"
   "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/DependInfo.cmake"
+  "core/selection/CMakeFiles/VoxelEditor_Selection.dir/DependInfo.cmake"
+  "core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/DependInfo.cmake"
   )

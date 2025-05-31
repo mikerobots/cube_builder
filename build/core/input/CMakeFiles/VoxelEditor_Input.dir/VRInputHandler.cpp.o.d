@@ -929,4 +929,5 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Ray.h \
+  /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventBase.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/MathUtils.h

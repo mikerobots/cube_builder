@@ -260,6 +260,30 @@ test_TouchHandler.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.s
 .PHONY : test_TouchHandler.cpp.s
 
+test_VRInputHandler.o: test_VRInputHandler.cpp.o
+.PHONY : test_VRInputHandler.o
+
+# target to build an object file
+test_VRInputHandler.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o
+.PHONY : test_VRInputHandler.cpp.o
+
+test_VRInputHandler.i: test_VRInputHandler.cpp.i
+.PHONY : test_VRInputHandler.i
+
+# target to preprocess a source file
+test_VRInputHandler.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.i
+.PHONY : test_VRInputHandler.cpp.i
+
+test_VRInputHandler.s: test_VRInputHandler.cpp.s
+.PHONY : test_VRInputHandler.s
+
+# target to generate assembly for a file
+test_VRInputHandler.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.s
+.PHONY : test_VRInputHandler.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -285,6 +309,9 @@ help:
 	@echo "... test_TouchHandler.o"
 	@echo "... test_TouchHandler.i"
 	@echo "... test_TouchHandler.s"
+	@echo "... test_VRInputHandler.o"
+	@echo "... test_VRInputHandler.i"
+	@echo "... test_VRInputHandler.s"
 .PHONY : help
 
 

@@ -139,13 +139,43 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.s"
 	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/input/TouchHandler.cpp -o CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.s
 
+core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o: core/input/CMakeFiles/VoxelEditor_Input.dir/flags.make
+core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o: /Users/michaelhalloran/cube_edit/core/input/VRInputHandler.cpp
+core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o: core/input/CMakeFiles/VoxelEditor_Input.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o -MF CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o.d -o CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o -c /Users/michaelhalloran/cube_edit/core/input/VRInputHandler.cpp
+
+core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/input/VRInputHandler.cpp > CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.i
+
+core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/input/VRInputHandler.cpp -o CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.s
+
+core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o: core/input/CMakeFiles/VoxelEditor_Input.dir/flags.make
+core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o: /Users/michaelhalloran/cube_edit/core/input/InputManager.cpp
+core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o: core/input/CMakeFiles/VoxelEditor_Input.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o -MF CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o.d -o CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o -c /Users/michaelhalloran/cube_edit/core/input/InputManager.cpp
+
+core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/input/InputManager.cpp > CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.i
+
+core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/input && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/input/InputManager.cpp -o CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.s
+
 # Object files for target VoxelEditor_Input
 VoxelEditor_Input_OBJECTS = \
 "CMakeFiles/VoxelEditor_Input.dir/InputTypes.cpp.o" \
 "CMakeFiles/VoxelEditor_Input.dir/InputMapping.cpp.o" \
 "CMakeFiles/VoxelEditor_Input.dir/MouseHandler.cpp.o" \
 "CMakeFiles/VoxelEditor_Input.dir/KeyboardHandler.cpp.o" \
-"CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.o"
+"CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.o" \
+"CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o" \
+"CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o"
 
 # External object files for target VoxelEditor_Input
 VoxelEditor_Input_EXTERNAL_OBJECTS =
@@ -155,9 +185,11 @@ core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/I
 core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/MouseHandler.cpp.o
 core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/KeyboardHandler.cpp.o
 core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.o
+core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o
+core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o
 core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/build.make
 core/input/libVoxelEditor_Input.a: core/input/CMakeFiles/VoxelEditor_Input.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libVoxelEditor_Input.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX static library libVoxelEditor_Input.a"
 	cd /Users/michaelhalloran/cube_edit/build/core/input && $(CMAKE_COMMAND) -P CMakeFiles/VoxelEditor_Input.dir/cmake_clean_target.cmake
 	cd /Users/michaelhalloran/cube_edit/build/core/input && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Input.dir/link.txt --verbose=$(VERBOSE)
 

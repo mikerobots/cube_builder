@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/michaelhalloran/cube_edit/core/input/tests/test_KeyboardHandler.cpp" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp.o" "gcc" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp.o.d"
   "/Users/michaelhalloran/cube_edit/core/input/tests/test_MouseHandler.cpp" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_MouseHandler.cpp.o" "gcc" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_MouseHandler.cpp.o.d"
   "/Users/michaelhalloran/cube_edit/core/input/tests/test_TouchHandler.cpp" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.o" "gcc" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.o.d"
+  "/Users/michaelhalloran/cube_edit/core/input/tests/test_VRInputHandler.cpp" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o" "gcc" "core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o.d"
   )
 
 # Targets to which this target links.

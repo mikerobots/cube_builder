@@ -3,6 +3,8 @@
 #include "Vector3f.h"
 #include "Ray.h"
 #include <algorithm>
+#include <array>
+#include <vector>
 
 namespace VoxelEditor {
 namespace Math {
@@ -45,6 +47,7 @@ public:
     Vector3f getExtents() const {
         return getSize() * 0.5f;
     }
+    
 
     float getVolume() const {
         Vector3f size = getSize();

@@ -12,6 +12,7 @@ namespace Rendering {
 
 // Forward declarations
 class RenderState;
+enum class VertexAttribute;
 
 // Resource information structures
 struct BufferInfo {
@@ -255,13 +256,13 @@ private:
     void cleanupDeletedResources();
     
     // Debug callback
-    static void GLAPIENTRY debugCallback(uint32_t source, uint32_t type, uint32_t id, 
-                                       uint32_t severity, int length, 
-                                       const char* message, const void* userParam);
+    static void debugCallback(uint32_t source, uint32_t type, uint32_t id, 
+                             uint32_t severity, int length, 
+                             const char* message, const void* userParam);
 };
 
 // Vertex attribute structure
-struct VertexAttribute {
+struct VertexAttributeInfo {
     int location;
     int size;           // Number of components (1-4)
     uint32_t type;      // GL_FLOAT, GL_INT, etc.
@@ -269,24 +270,24 @@ struct VertexAttribute {
     int stride;
     size_t offset;
     
-    VertexAttribute(int loc, int sz, uint32_t tp, bool norm, int str, size_t off)
+    VertexAttributeInfo(int loc, int sz, uint32_t tp, bool norm, int str, size_t off)
         : location(loc), size(sz), type(tp), normalized(norm), stride(str), offset(off) {}
     
     // Common vertex attributes
-    static VertexAttribute Position(int stride, size_t offset = 0) {
-        return VertexAttribute(0, 3, 0x1406 /* GL_FLOAT */, false, stride, offset); // Position
+    static VertexAttributeInfo Position(int stride, size_t offset = 0) {
+        return VertexAttributeInfo(0, 3, 0x1406 /* GL_FLOAT */, false, stride, offset); // Position
     }
     
-    static VertexAttribute Normal(int stride, size_t offset) {
-        return VertexAttribute(1, 3, 0x1406 /* GL_FLOAT */, false, stride, offset); // Normal
+    static VertexAttributeInfo Normal(int stride, size_t offset) {
+        return VertexAttributeInfo(1, 3, 0x1406 /* GL_FLOAT */, false, stride, offset); // Normal
     }
     
-    static VertexAttribute TexCoord(int stride, size_t offset) {
-        return VertexAttribute(2, 2, 0x1406 /* GL_FLOAT */, false, stride, offset); // TexCoord
+    static VertexAttributeInfo TexCoord(int stride, size_t offset) {
+        return VertexAttributeInfo(2, 2, 0x1406 /* GL_FLOAT */, false, stride, offset); // TexCoord
     }
     
-    static VertexAttribute Color(int stride, size_t offset) {
-        return VertexAttribute(3, 4, 0x1406 /* GL_FLOAT */, false, stride, offset); // Color
+    static VertexAttributeInfo Color(int stride, size_t offset) {
+        return VertexAttributeInfo(3, 4, 0x1406 /* GL_FLOAT */, false, stride, offset); // Color
     }
 };
 

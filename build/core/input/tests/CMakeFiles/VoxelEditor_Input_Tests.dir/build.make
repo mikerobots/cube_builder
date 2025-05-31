@@ -139,13 +139,28 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.s:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.s"
 	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/input/tests/test_TouchHandler.cpp -o CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.s
 
+core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/flags.make
+core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o: /Users/michaelhalloran/cube_edit/core/input/tests/test_VRInputHandler.cpp
+core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o -MF CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o.d -o CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o -c /Users/michaelhalloran/cube_edit/core/input/tests/test_VRInputHandler.cpp
+
+core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/input/tests/test_VRInputHandler.cpp > CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.i
+
+core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/input/tests/test_VRInputHandler.cpp -o CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.s
+
 # Object files for target VoxelEditor_Input_Tests
 VoxelEditor_Input_Tests_OBJECTS = \
 "CMakeFiles/VoxelEditor_Input_Tests.dir/test_InputTypes.cpp.o" \
 "CMakeFiles/VoxelEditor_Input_Tests.dir/test_InputMapping.cpp.o" \
 "CMakeFiles/VoxelEditor_Input_Tests.dir/test_MouseHandler.cpp.o" \
 "CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp.o" \
-"CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.o"
+"CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.o" \
+"CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o"
 
 # External object files for target VoxelEditor_Input_Tests
 VoxelEditor_Input_Tests_EXTERNAL_OBJECTS =
@@ -155,13 +170,14 @@ core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEdito
 core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_MouseHandler.cpp.o
 core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp.o
 core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.o
+core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o
 core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make
 core/input/tests/VoxelEditor_Input_Tests: core/input/libVoxelEditor_Input.a
 core/input/tests/VoxelEditor_Input_Tests: /opt/homebrew/lib/libgtest.a
 core/input/tests/VoxelEditor_Input_Tests: /opt/homebrew/lib/libgtest_main.a
 core/input/tests/VoxelEditor_Input_Tests: /opt/homebrew/lib/libgtest.a
 core/input/tests/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable VoxelEditor_Input_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable VoxelEditor_Input_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Input_Tests.dir/link.txt --verbose=$(VERBOSE)
 	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Input_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build/core/input/tests/VoxelEditor_Input_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build/core/input/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Input_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build/core/input/tests/VoxelEditor_Input_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
 

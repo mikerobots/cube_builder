@@ -4,14 +4,15 @@
 #include "../math/Vector3f.h"
 #include "../math/Vector3i.h"
 
+// Forward declaration
 namespace VoxelEditor {
-namespace Events {
-
-// Forward declarations for voxel data types
 namespace VoxelData {
-    struct VoxelPosition;
     enum class VoxelResolution : uint8_t;
 }
+}
+
+namespace VoxelEditor {
+namespace Events {
 
 class VoxelChangedEvent : public Event<VoxelChangedEvent> {
 public:

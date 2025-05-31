@@ -140,6 +140,30 @@ VoxelEditor_Input/fast:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/build
 .PHONY : VoxelEditor_Input/fast
 
+InputManager.o: InputManager.cpp.o
+.PHONY : InputManager.o
+
+# target to build an object file
+InputManager.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o
+.PHONY : InputManager.cpp.o
+
+InputManager.i: InputManager.cpp.i
+.PHONY : InputManager.i
+
+# target to preprocess a source file
+InputManager.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.i
+.PHONY : InputManager.cpp.i
+
+InputManager.s: InputManager.cpp.s
+.PHONY : InputManager.s
+
+# target to generate assembly for a file
+InputManager.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.s
+.PHONY : InputManager.cpp.s
+
 InputMapping.o: InputMapping.cpp.o
 .PHONY : InputMapping.o
 
@@ -260,6 +284,30 @@ TouchHandler.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.s
 .PHONY : TouchHandler.cpp.s
 
+VRInputHandler.o: VRInputHandler.cpp.o
+.PHONY : VRInputHandler.o
+
+# target to build an object file
+VRInputHandler.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o
+.PHONY : VRInputHandler.cpp.o
+
+VRInputHandler.i: VRInputHandler.cpp.i
+.PHONY : VRInputHandler.i
+
+# target to preprocess a source file
+VRInputHandler.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.i
+.PHONY : VRInputHandler.cpp.i
+
+VRInputHandler.s: VRInputHandler.cpp.s
+.PHONY : VRInputHandler.s
+
+# target to generate assembly for a file
+VRInputHandler.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.s
+.PHONY : VRInputHandler.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -270,6 +318,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... VoxelEditor_Input"
+	@echo "... InputManager.o"
+	@echo "... InputManager.i"
+	@echo "... InputManager.s"
 	@echo "... InputMapping.o"
 	@echo "... InputMapping.i"
 	@echo "... InputMapping.s"
@@ -285,6 +336,9 @@ help:
 	@echo "... TouchHandler.o"
 	@echo "... TouchHandler.i"
 	@echo "... TouchHandler.s"
+	@echo "... VRInputHandler.o"
+	@echo "... VRInputHandler.i"
+	@echo "... VRInputHandler.s"
 .PHONY : help
 
 

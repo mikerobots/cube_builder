@@ -972,6 +972,9 @@ foundation/events/tests/CMakeFiles/VoxelEditor_Events_Tests.dir/test_EventDispat
   /Users/michaelhalloran/cube_edit/foundation/events/tests/../CommonEvents.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \
+  /Users/michaelhalloran/cube_edit/foundation/events/tests/../../../core/voxel_data/VoxelTypes.h \
+  /Users/michaelhalloran/cube_edit/foundation/events/tests/../../../core/voxel_data/../../foundation/math/Vector3f.h \
+  /Users/michaelhalloran/cube_edit/foundation/events/tests/../../../core/voxel_data/../../foundation/math/Vector3i.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/thread \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__thread/formatter.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__thread/this_thread.h \

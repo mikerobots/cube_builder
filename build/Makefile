@@ -282,6 +282,32 @@ VoxelEditor_Input_Tests/fast:
 	$(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build
 .PHONY : VoxelEditor_Input_Tests/fast
 
+#=============================================================================
+# Target rules for targets named VoxelEditor_Selection
+
+# Build rule for target.
+VoxelEditor_Selection: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Selection
+.PHONY : VoxelEditor_Selection
+
+# fast build rule for target.
+VoxelEditor_Selection/fast:
+	$(MAKE) $(MAKESILENT) -f core/selection/CMakeFiles/VoxelEditor_Selection.dir/build.make core/selection/CMakeFiles/VoxelEditor_Selection.dir/build
+.PHONY : VoxelEditor_Selection/fast
+
+#=============================================================================
+# Target rules for targets named VoxelEditor_Selection_Tests
+
+# Build rule for target.
+VoxelEditor_Selection_Tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Selection_Tests
+.PHONY : VoxelEditor_Selection_Tests
+
+# fast build rule for target.
+VoxelEditor_Selection_Tests/fast:
+	$(MAKE) $(MAKESILENT) -f core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build
+.PHONY : VoxelEditor_Selection_Tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -301,6 +327,8 @@ help:
 	@echo "... VoxelEditor_Memory_Tests"
 	@echo "... VoxelEditor_Rendering"
 	@echo "... VoxelEditor_Rendering_Tests"
+	@echo "... VoxelEditor_Selection"
+	@echo "... VoxelEditor_Selection_Tests"
 	@echo "... VoxelEditor_VoxelData"
 	@echo "... VoxelEditor_VoxelData_Tests"
 .PHONY : help

@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libVoxelEditor_Selection.a CMakeFiles/VoxelEditor_Selection.dir/SelectionTypes.cpp.o CMakeFiles/VoxelEditor_Selection.dir/SelectionSet.cpp.o CMakeFiles/VoxelEditor_Selection.dir/SelectionManager.cpp.o CMakeFiles/VoxelEditor_Selection.dir/SelectionRenderer.cpp.o CMakeFiles/VoxelEditor_Selection.dir/BoxSelector.cpp.o CMakeFiles/VoxelEditor_Selection.dir/SphereSelector.cpp.o CMakeFiles/VoxelEditor_Selection.dir/FloodFillSelector.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libVoxelEditor_Selection.a

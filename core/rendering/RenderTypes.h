@@ -18,8 +18,37 @@ class RenderState;
 using ShaderId = uint32_t;
 using TextureId = uint32_t;
 using BufferId = uint32_t;
+using VertexBufferId = uint32_t;
+using IndexBufferId = uint32_t;
+using VertexArrayId = uint32_t;
+
+// Invalid ID constant
+constexpr uint32_t InvalidId = 0;
 
 // Enumerations
+enum class VertexAttribute {
+    Position,
+    Normal,
+    TexCoord0,
+    TexCoord1,
+    Color,
+    Tangent,
+    Bitangent,
+    BoneIndices,
+    BoneWeights,
+    Custom0,
+    Custom1,
+    Custom2,
+    Custom3
+};
+
+enum class VertexAttributeType {
+    Float,
+    Int,
+    UInt,
+    Byte,
+    UByte
+};
 enum class RenderMode {
     Solid,              // Solid surfaces only
     Wireframe,          // Wireframe only
@@ -97,6 +126,37 @@ enum class ClearFlags {
     Depth = 1 << 1,
     Stencil = 1 << 2,
     All = Color | Depth | Stencil
+};
+
+// Vertex layout description
+struct VertexLayout {
+    struct Attribute {
+        VertexAttribute attribute;
+        int components; // 1-4
+        VertexAttributeType type;
+        bool normalized;
+        size_t offset;
+        
+        Attribute(VertexAttribute attr, int comp, VertexAttributeType t, bool norm = false, size_t off = 0)
+            : attribute(attr), components(comp), type(t), normalized(norm), offset(off) {}
+    };
+    
+    std::vector<Attribute> attributes;
+    size_t stride = 0;
+    
+    void addAttribute(VertexAttribute attr, int components, VertexAttributeType type, bool normalized = false) {
+        attributes.emplace_back(attr, components, type, normalized, stride);
+        size_t typeSize = 4; // Assume 4 bytes for now (float/int)
+        if (type == VertexAttributeType::Byte || type == VertexAttributeType::UByte) {
+            typeSize = 1;
+        }
+        stride += components * typeSize;
+    }
+    
+    void clear() {
+        attributes.clear();
+        stride = 0;
+    }
 };
 
 // Color structure

@@ -1,11 +1,13 @@
 #include <gtest/gtest.h>
 #include "../EventDispatcher.h"
 #include "../CommonEvents.h"
+#include "../../../core/voxel_data/VoxelTypes.h"
 #include <thread>
 #include <chrono>
 
 using namespace VoxelEditor::Events;
 using namespace VoxelEditor::Math;
+using VoxelResolution = VoxelEditor::VoxelData::VoxelResolution;
 
 class TestEvent : public Event<TestEvent> {
 public:
@@ -203,7 +205,7 @@ TEST_F(EventDispatcherTest, CommonVoxelChangedEvent) {
     class VoxelHandler : public EventHandler<VoxelChangedEvent> {
     public:
         void handleEvent(const VoxelChangedEvent& event) override {
-            position = event.position;
+            position = event.gridPos;
             resolution = event.resolution;
             oldValue = event.oldValue;
             newValue = event.newValue;

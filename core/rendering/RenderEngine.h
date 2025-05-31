@@ -79,11 +79,32 @@ public:
     // Resource management
     BufferId createVertexBuffer(const void* data, size_t size, BufferUsage usage = BufferUsage::Static);
     BufferId createIndexBuffer(const uint32_t* indices, size_t count, BufferUsage usage = BufferUsage::Static);
+    VertexArrayId createVertexArray(const VertexLayout& layout);
     TextureId createTexture(int width, int height, TextureFormat format, const void* data = nullptr);
     void updateBuffer(BufferId bufferId, const void* data, size_t size, size_t offset = 0);
+    void updateVertexBuffer(VertexBufferId bufferId, const void* data, size_t size, size_t offset = 0);
+    void updateIndexBuffer(IndexBufferId bufferId, const void* data, size_t size, size_t offset = 0);
     void updateTexture(TextureId textureId, int x, int y, int width, int height, const void* data);
     void deleteBuffer(BufferId bufferId);
+    void deleteVertexBuffer(VertexBufferId bufferId);
+    void deleteIndexBuffer(IndexBufferId bufferId);
+    void deleteVertexArray(VertexArrayId vaoId);
     void deleteTexture(TextureId textureId);
+    
+    // Binding operations
+    void bindVertexBuffer(VertexArrayId vaoId, VertexBufferId vboId, int bindingIndex);
+    void bindIndexBuffer(VertexArrayId vaoId, IndexBufferId iboId);
+    void setVertexArray(VertexArrayId vaoId);
+    
+    // Drawing operations
+    void drawIndexed(PrimitiveType primitive, size_t indexCount, IndexType indexType, size_t offset = 0);
+    void drawArrays(PrimitiveType primitive, size_t vertexCount, size_t offset = 0);
+    
+    // State management
+    void setBlendMode(BlendMode mode);
+    void setDepthWrite(bool enabled);
+    void setCullMode(CullMode mode);
+    void setDepthTest(bool enabled);
     
     // Shader management
     ShaderId getBuiltinShader(const std::string& name);

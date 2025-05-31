@@ -85,6 +85,7 @@ core/all: core/voxel_data/all
 core/all: core/camera/all
 core/all: core/rendering/all
 core/all: core/input/all
+core/all: core/selection/all
 .PHONY : core/all
 
 # Recursive "preinstall" directory target.
@@ -92,6 +93,7 @@ core/preinstall: core/voxel_data/preinstall
 core/preinstall: core/camera/preinstall
 core/preinstall: core/rendering/preinstall
 core/preinstall: core/input/preinstall
+core/preinstall: core/selection/preinstall
 .PHONY : core/preinstall
 
 # Recursive "clean" directory target.
@@ -99,6 +101,7 @@ core/clean: core/voxel_data/clean
 core/clean: core/camera/clean
 core/clean: core/rendering/clean
 core/clean: core/input/clean
+core/clean: core/selection/clean
 .PHONY : core/clean
 
 #=============================================================================
@@ -194,6 +197,38 @@ core/rendering/tests/preinstall:
 # Recursive "clean" directory target.
 core/rendering/tests/clean: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/clean
 .PHONY : core/rendering/tests/clean
+
+#=============================================================================
+# Directory level rules for directory core/selection
+
+# Recursive "all" directory target.
+core/selection/all: core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+core/selection/all: core/selection/tests/all
+.PHONY : core/selection/all
+
+# Recursive "preinstall" directory target.
+core/selection/preinstall: core/selection/tests/preinstall
+.PHONY : core/selection/preinstall
+
+# Recursive "clean" directory target.
+core/selection/clean: core/selection/CMakeFiles/VoxelEditor_Selection.dir/clean
+core/selection/clean: core/selection/tests/clean
+.PHONY : core/selection/clean
+
+#=============================================================================
+# Directory level rules for directory core/selection/tests
+
+# Recursive "all" directory target.
+core/selection/tests/all: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/all
+.PHONY : core/selection/tests/all
+
+# Recursive "preinstall" directory target.
+core/selection/tests/preinstall:
+.PHONY : core/selection/tests/preinstall
+
+# Recursive "clean" directory target.
+core/selection/tests/clean: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean
+.PHONY : core/selection/tests/clean
 
 #=============================================================================
 # Directory level rules for directory core/voxel_data
@@ -411,7 +446,7 @@ foundation/memory/tests/clean: foundation/memory/tests/CMakeFiles/VoxelEditor_Me
 foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build.make foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build.make foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=27,28,29 "Built target VoxelEditor_Math_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=30,31,32 "Built target VoxelEditor_Math_Tests"
 .PHONY : foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -463,7 +498,7 @@ foundation/events/tests/CMakeFiles/VoxelEditor_Events_Tests.dir/clean:
 foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build.make foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build.make foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=30,31,32 "Built target VoxelEditor_Memory_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=33,34,35 "Built target VoxelEditor_Memory_Tests"
 .PHONY : foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -489,7 +524,7 @@ foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/clean:
 foundation/logging/tests/CMakeFiles/VoxelEditor_Logging_Tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f foundation/logging/tests/CMakeFiles/VoxelEditor_Logging_Tests.dir/build.make foundation/logging/tests/CMakeFiles/VoxelEditor_Logging_Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f foundation/logging/tests/CMakeFiles/VoxelEditor_Logging_Tests.dir/build.make foundation/logging/tests/CMakeFiles/VoxelEditor_Logging_Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=24,25,26 "Built target VoxelEditor_Logging_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=27,28,29 "Built target VoxelEditor_Logging_Tests"
 .PHONY : foundation/logging/tests/CMakeFiles/VoxelEditor_Logging_Tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -541,7 +576,7 @@ foundation/config/tests/CMakeFiles/VoxelEditor_Config_Tests.dir/clean:
 core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all:
 	$(MAKE) $(MAKESILENT) -f core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/build.make core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/build.make core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=39,40 "Built target VoxelEditor_VoxelData"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=57,58 "Built target VoxelEditor_VoxelData"
 .PHONY : core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
 
 # Build rule for subdir invocation for target.
@@ -567,7 +602,7 @@ core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/clean:
 core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
 	$(MAKE) $(MAKESILENT) -f core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build.make core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build.make core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=41,42,43,44,45,46 "Built target VoxelEditor_VoxelData_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=59,60,61,62,63,64 "Built target VoxelEditor_VoxelData_Tests"
 .PHONY : core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -619,7 +654,7 @@ core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/clean:
 core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all:
 	$(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=33,34 "Built target VoxelEditor_Rendering"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=36,37 "Built target VoxelEditor_Rendering"
 .PHONY : core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
 
 # Build rule for subdir invocation for target.
@@ -645,7 +680,7 @@ core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/clean:
 core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
 	$(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=35,36,37,38 "Built target VoxelEditor_Rendering_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=38,39,40,41 "Built target VoxelEditor_Rendering_Tests"
 .PHONY : core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -671,12 +706,12 @@ core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/clean:
 core/input/CMakeFiles/VoxelEditor_Input.dir/all:
 	$(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/input/CMakeFiles/VoxelEditor_Input.dir/build.make core/input/CMakeFiles/VoxelEditor_Input.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=12,13,14,15,16,17 "Built target VoxelEditor_Input"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=12,13,14,15,16,17,18,19 "Built target VoxelEditor_Input"
 .PHONY : core/input/CMakeFiles/VoxelEditor_Input.dir/all
 
 # Build rule for subdir invocation for target.
 core/input/CMakeFiles/VoxelEditor_Input.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/input/CMakeFiles/VoxelEditor_Input.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
 .PHONY : core/input/CMakeFiles/VoxelEditor_Input.dir/rule
@@ -697,12 +732,12 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/clean:
 core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/all: core/input/CMakeFiles/VoxelEditor_Input.dir/all
 	$(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=18,19,20,21,22,23 "Built target VoxelEditor_Input_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=20,21,22,23,24,25,26 "Built target VoxelEditor_Input_Tests"
 .PHONY : core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/all
 
 # Build rule for subdir invocation for target.
 core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
 .PHONY : core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/rule
@@ -715,6 +750,61 @@ VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir
 core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/clean:
 	$(MAKE) $(MAKESILENT) -f core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/clean
 .PHONY : core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/clean
+
+#=============================================================================
+# Target rules for target core/selection/CMakeFiles/VoxelEditor_Selection.dir
+
+# All Build rule for target.
+core/selection/CMakeFiles/VoxelEditor_Selection.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/selection/CMakeFiles/VoxelEditor_Selection.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
+	$(MAKE) $(MAKESILENT) -f core/selection/CMakeFiles/VoxelEditor_Selection.dir/build.make core/selection/CMakeFiles/VoxelEditor_Selection.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/selection/CMakeFiles/VoxelEditor_Selection.dir/build.make core/selection/CMakeFiles/VoxelEditor_Selection.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=42,43,44,45,46,47,48,49 "Built target VoxelEditor_Selection"
+.PHONY : core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+
+# Build rule for subdir invocation for target.
+core/selection/CMakeFiles/VoxelEditor_Selection.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 12
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/selection/CMakeFiles/VoxelEditor_Selection.dir/rule
+
+# Convenience name for target.
+VoxelEditor_Selection: core/selection/CMakeFiles/VoxelEditor_Selection.dir/rule
+.PHONY : VoxelEditor_Selection
+
+# clean rule for target.
+core/selection/CMakeFiles/VoxelEditor_Selection.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/selection/CMakeFiles/VoxelEditor_Selection.dir/build.make core/selection/CMakeFiles/VoxelEditor_Selection.dir/clean
+.PHONY : core/selection/CMakeFiles/VoxelEditor_Selection.dir/clean
+
+#=============================================================================
+# Target rules for target core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir
+
+# All Build rule for target.
+core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/all: core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/all
+core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/all: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/all
+core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/all: core/selection/CMakeFiles/VoxelEditor_Selection.dir/all
+	$(MAKE) $(MAKESILENT) -f core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=50,51,52,53,54,55,56 "Built target VoxelEditor_Selection_Tests"
+.PHONY : core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/all
+
+# Build rule for subdir invocation for target.
+core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 19
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles 0
+.PHONY : core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/rule
+
+# Convenience name for target.
+VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/rule
+.PHONY : VoxelEditor_Selection_Tests
+
+# clean rule for target.
+core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean
+.PHONY : core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
