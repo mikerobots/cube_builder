@@ -353,6 +353,33 @@ public:
         result += "]";
         return result;
     }
+
+    // Point transformation (applies full matrix including translation)
+    Vector3f transformPoint(const Vector3f& point) const {
+        float w = m[12] * point.x + m[13] * point.y + m[14] * point.z + m[15];
+        if (std::abs(w) < 1e-8f) {
+            w = 1.0f; // Avoid division by zero
+        }
+        return Vector3f(
+            (m[0] * point.x + m[1] * point.y + m[2] * point.z + m[3]) / w,
+            (m[4] * point.x + m[5] * point.y + m[6] * point.z + m[7]) / w,
+            (m[8] * point.x + m[9] * point.y + m[10] * point.z + m[11]) / w
+        );
+    }
+
+    // Vector transformation (ignores translation)
+    Vector3f transformVector(const Vector3f& vector) const {
+        return Vector3f(
+            m[0] * vector.x + m[1] * vector.y + m[2] * vector.z,
+            m[4] * vector.x + m[5] * vector.y + m[6] * vector.z,
+            m[8] * vector.x + m[9] * vector.y + m[10] * vector.z
+        );
+    }
+
+    // Alias for inverted() to match common matrix APIs
+    Matrix4f inverse() const {
+        return inverted();
+    }
 };
 
 }

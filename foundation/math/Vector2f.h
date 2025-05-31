@@ -1,7 +1,8 @@
 #pragma once
 
+#include "MathUtils.h"
 #include <cmath>
-#include <string>
+#include <iostream>
 
 namespace VoxelEditor {
 namespace Math {
@@ -9,177 +10,190 @@ namespace Math {
 class Vector2f {
 public:
     float x, y;
-
+    
+    // Constructors
     Vector2f() : x(0.0f), y(0.0f) {}
     Vector2f(float x, float y) : x(x), y(y) {}
-    Vector2f(float value) : x(value), y(value) {}
-
+    Vector2f(float scalar) : x(scalar), y(scalar) {}
+    
+    // Copy constructor and assignment
+    Vector2f(const Vector2f& other) = default;
+    Vector2f& operator=(const Vector2f& other) = default;
+    
+    // Arithmetic operators
     Vector2f operator+(const Vector2f& other) const {
         return Vector2f(x + other.x, y + other.y);
     }
-
+    
     Vector2f operator-(const Vector2f& other) const {
         return Vector2f(x - other.x, y - other.y);
     }
-
+    
     Vector2f operator*(float scalar) const {
         return Vector2f(x * scalar, y * scalar);
     }
-
+    
     Vector2f operator/(float scalar) const {
-        float inv = 1.0f / scalar;
-        return Vector2f(x * inv, y * inv);
+        return Vector2f(x / scalar, y / scalar);
     }
-
+    
     Vector2f operator-() const {
         return Vector2f(-x, -y);
     }
-
+    
+    // Compound assignment operators
     Vector2f& operator+=(const Vector2f& other) {
         x += other.x;
         y += other.y;
         return *this;
     }
-
+    
     Vector2f& operator-=(const Vector2f& other) {
         x -= other.x;
         y -= other.y;
         return *this;
     }
-
+    
     Vector2f& operator*=(float scalar) {
         x *= scalar;
         y *= scalar;
         return *this;
     }
-
+    
     Vector2f& operator/=(float scalar) {
-        float inv = 1.0f / scalar;
-        x *= inv;
-        y *= inv;
+        x /= scalar;
+        y /= scalar;
         return *this;
     }
-
+    
+    // Comparison operators
     bool operator==(const Vector2f& other) const {
-        const float epsilon = 1e-6f;
-        return std::abs(x - other.x) < epsilon &&
-               std::abs(y - other.y) < epsilon;
+        return isEqual(x, other.x) && isEqual(y, other.y);
     }
-
+    
     bool operator!=(const Vector2f& other) const {
         return !(*this == other);
     }
-
-    float operator[](int index) const {
-        return (&x)[index];
-    }
-
+    
+    // Array access
     float& operator[](int index) {
         return (&x)[index];
     }
-
-    float dot(const Vector2f& other) const {
-        return x * other.x + y * other.y;
+    
+    const float& operator[](int index) const {
+        return (&x)[index];
     }
-
-    float cross(const Vector2f& other) const {
-        return x * other.y - y * other.x;
-    }
-
-    float length() const {
-        return std::sqrt(x * x + y * y);
-    }
-
+    
+    // Vector operations
     float lengthSquared() const {
         return x * x + y * y;
     }
-
+    
+    float length() const {
+        return std::sqrt(lengthSquared());
+    }
+    
+    float manhattanLength() const {
+        return std::abs(x) + std::abs(y);
+    }
+    
     Vector2f normalized() const {
         float len = length();
-        if (len > 1e-8f) {
-            return *this / len;
+        if (isZero(len)) {
+            return Vector2f(0.0f, 0.0f);
         }
-        return Vector2f(1.0f, 0.0f);
+        return *this / len;
     }
-
-    void normalize() {
-        float len = length();
-        if (len > 1e-8f) {
-            *this /= len;
-        } else {
-            x = 1.0f;
-            y = 0.0f;
-        }
+    
+    Vector2f& normalize() {
+        *this = normalized();
+        return *this;
     }
-
+    
+    float dot(const Vector2f& other) const {
+        return x * other.x + y * other.y;
+    }
+    
+    // Cross product (returns scalar for 2D)
+    float cross(const Vector2f& other) const {
+        return x * other.y - y * other.x;
+    }
+    
+    // Perpendicular vector (rotated 90 degrees counter-clockwise)
     Vector2f perpendicular() const {
         return Vector2f(-y, x);
     }
-
-    float angle() const {
-        return std::atan2(y, x);
+    
+    // Rotation
+    Vector2f rotated(float angle) const {
+        float cosAngle = std::cos(angle);
+        float sinAngle = std::sin(angle);
+        return Vector2f(
+            x * cosAngle - y * sinAngle,
+            x * sinAngle + y * cosAngle
+        );
     }
-
-    static Vector2f Zero() {
-        return Vector2f(0.0f, 0.0f);
+    
+    // Angle to another vector
+    float angleTo(const Vector2f& other) const {
+        return std::atan2(cross(other), dot(other));
     }
-
-    static Vector2f One() {
-        return Vector2f(1.0f, 1.0f);
+    
+    // Distance to another vector
+    float distanceTo(const Vector2f& other) const {
+        return (*this - other).length();
     }
-
-    static Vector2f UnitX() {
-        return Vector2f(1.0f, 0.0f);
+    
+    float distanceSquaredTo(const Vector2f& other) const {
+        return (*this - other).lengthSquared();
     }
-
-    static Vector2f UnitY() {
-        return Vector2f(0.0f, 1.0f);
-    }
-
-    static float distance(const Vector2f& a, const Vector2f& b) {
-        return (b - a).length();
-    }
-
-    static float distanceSquared(const Vector2f& a, const Vector2f& b) {
-        return (b - a).lengthSquared();
-    }
-
+    
+    // Static utility functions
+    static Vector2f zero() { return Vector2f(0.0f, 0.0f); }
+    static Vector2f one() { return Vector2f(1.0f, 1.0f); }
+    static Vector2f unitX() { return Vector2f(1.0f, 0.0f); }
+    static Vector2f unitY() { return Vector2f(0.0f, 1.0f); }
+    
     static Vector2f lerp(const Vector2f& a, const Vector2f& b, float t) {
         return a + (b - a) * t;
     }
-
+    
     static Vector2f min(const Vector2f& a, const Vector2f& b) {
-        return Vector2f(
-            std::min(a.x, b.x),
-            std::min(a.y, b.y)
-        );
+        return Vector2f(std::min(a.x, b.x), std::min(a.y, b.y));
     }
-
+    
     static Vector2f max(const Vector2f& a, const Vector2f& b) {
+        return Vector2f(std::max(a.x, b.x), std::max(a.y, b.y));
+    }
+    
+    static Vector2f abs(const Vector2f& v) {
+        return Vector2f(std::abs(v.x), std::abs(v.y));
+    }
+    
+    static Vector2f clamp(const Vector2f& v, const Vector2f& min, const Vector2f& max) {
         return Vector2f(
-            std::max(a.x, b.x),
-            std::max(a.y, b.y)
+            Math::clamp(v.x, min.x, max.x),
+            Math::clamp(v.y, min.y, max.y)
         );
     }
-
-    static Vector2f clamp(const Vector2f& value, const Vector2f& min, const Vector2f& max) {
-        return Vector2f(
-            std::clamp(value.x, min.x, max.x),
-            std::clamp(value.y, min.y, max.y)
-        );
-    }
-
-    static Vector2f fromAngle(float angle) {
-        return Vector2f(std::cos(angle), std::sin(angle));
-    }
-
-    std::string toString() const {
-        return "(" + std::to_string(x) + ", " + std::to_string(y) + ")";
+    
+    static Vector2f fromAngle(float angle, float magnitude = 1.0f) {
+        return Vector2f(std::cos(angle) * magnitude, std::sin(angle) * magnitude);
     }
 };
 
-inline Vector2f operator*(float scalar, const Vector2f& vec) {
-    return vec * scalar;
+// Global operators
+inline Vector2f operator*(float scalar, const Vector2f& vector) {
+    return vector * scalar;
+}
+
+// Stream operators
+inline std::ostream& operator<<(std::ostream& os, const Vector2f& v) {
+    return os << "Vector2f(" << v.x << ", " << v.y << ")";
+}
+
+inline std::istream& operator>>(std::istream& is, Vector2f& v) {
+    return is >> v.x >> v.y;
 }
 
 }

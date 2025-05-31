@@ -2,6 +2,9 @@
 
 #include "Vector3f.h"
 
+// Forward declaration to avoid circular dependencies
+namespace VoxelEditor { namespace Math { class Matrix4f; }}
+
 namespace VoxelEditor {
 namespace Math {
 
