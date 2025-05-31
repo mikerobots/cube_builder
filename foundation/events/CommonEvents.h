@@ -7,29 +7,30 @@
 namespace VoxelEditor {
 namespace Events {
 
-enum class VoxelResolution : uint8_t {
-    Size_1cm = 0,   Size_2cm = 1,   Size_4cm = 2,   Size_8cm = 3,   Size_16cm = 4,
-    Size_32cm = 5,  Size_64cm = 6,  Size_128cm = 7, Size_256cm = 8, Size_512cm = 9
-};
+// Forward declarations for voxel data types
+namespace VoxelData {
+    struct VoxelPosition;
+    enum class VoxelResolution : uint8_t;
+}
 
 class VoxelChangedEvent : public Event<VoxelChangedEvent> {
 public:
-    VoxelChangedEvent(const Math::Vector3i& position, VoxelResolution resolution, bool oldValue, bool newValue)
-        : position(position), resolution(resolution), oldValue(oldValue), newValue(newValue) {}
+    VoxelChangedEvent(const Math::Vector3i& gridPos, VoxelData::VoxelResolution resolution, bool oldValue, bool newValue)
+        : gridPos(gridPos), resolution(resolution), oldValue(oldValue), newValue(newValue) {}
     
-    Math::Vector3i position;
-    VoxelResolution resolution;
+    Math::Vector3i gridPos;
+    VoxelData::VoxelResolution resolution;
     bool oldValue;
     bool newValue;
 };
 
 class ResolutionChangedEvent : public Event<ResolutionChangedEvent> {
 public:
-    ResolutionChangedEvent(VoxelResolution oldResolution, VoxelResolution newResolution)
+    ResolutionChangedEvent(VoxelData::VoxelResolution oldResolution, VoxelData::VoxelResolution newResolution)
         : oldResolution(oldResolution), newResolution(newResolution) {}
     
-    VoxelResolution oldResolution;
-    VoxelResolution newResolution;
+    VoxelData::VoxelResolution oldResolution;
+    VoxelData::VoxelResolution newResolution;
 };
 
 class WorkspaceResizedEvent : public Event<WorkspaceResizedEvent> {

@@ -20,3 +20,4 @@ endif()
 
 # Add subdirectories
 add_subdirectory(foundation)
+add_subdirectory(core)
