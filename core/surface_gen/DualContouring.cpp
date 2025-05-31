@@ -216,8 +216,11 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     MeshBuilder builder;
     builder.beginMesh();
     
+    // Convert vertices from grid coordinates to world coordinates
+    float voxelSize = grid.getVoxelSize();
     for (const auto& vertex : m_vertices) {
-        builder.addVertex(vertex);
+        Math::Vector3f worldVertex = vertex * voxelSize;
+        builder.addVertex(worldVertex);
     }
     
     for (size_t i = 0; i < m_indices.size(); i += 4) {

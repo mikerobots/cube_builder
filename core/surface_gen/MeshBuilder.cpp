@@ -143,7 +143,8 @@ void MeshBuilder::removeDuplicateVertices(float epsilon) {
     std::vector<Math::Vector3f> uniqueNormals;
     std::vector<Math::Vector2f> uniqueUVs;
     
-    m_vertexMap.clear();
+    // Map from old vertex hash to new unique index
+    std::unordered_map<size_t, std::vector<uint32_t>> uniqueVertexMap;
     
     for (size_t i = 0; i < m_vertices.size(); ++i) {
         VertexKey key;
@@ -158,10 +159,36 @@ void MeshBuilder::removeDuplicateVertices(float epsilon) {
             key.uv = m_uvCoords[i];
         }
         
-        uint32_t uniqueIndex = findOrAddVertex(key, epsilon);
+        // Check if we already have this vertex
+        size_t h = key.hash();
+        auto& bucket = uniqueVertexMap[h];
         
-        if (uniqueIndex == uniqueVertices.size()) {
+        uint32_t uniqueIndex = static_cast<uint32_t>(uniqueVertices.size());
+        bool found = false;
+        
+        for (uint32_t existingIndex : bucket) {
+            VertexKey existing;
+            existing.position = uniqueVertices[existingIndex];
+            existing.hasNormal = existingIndex < uniqueNormals.size();
+            existing.hasUV = existingIndex < uniqueUVs.size();
+            
+            if (existing.hasNormal) {
+                existing.normal = uniqueNormals[existingIndex];
+            }
+            if (existing.hasUV) {
+                existing.uv = uniqueUVs[existingIndex];
+            }
+            
+            if (key.equals(existing, epsilon)) {
+                uniqueIndex = existingIndex;
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
             // New unique vertex
+            bucket.push_back(uniqueIndex);
             uniqueVertices.push_back(key.position);
             if (key.hasNormal) {
                 uniqueNormals.push_back(key.normal);

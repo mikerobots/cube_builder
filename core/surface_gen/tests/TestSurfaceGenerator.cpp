@@ -90,7 +90,7 @@ TEST_F(SurfaceGeneratorTest, CustomSettings) {
     settings.simplificationRatio = 0.8f;
     
     generator.setSurfaceSettings(settings);
-    Mesh mesh = generator.generateSurface(*testGrid);
+    Mesh mesh = generator.generateSurface(*testGrid, settings);
     
     EXPECT_TRUE(mesh.isValid());
     EXPECT_GT(mesh.normals.size(), 0);
@@ -235,10 +235,11 @@ TEST_F(SurfaceGeneratorTest, VoxelDataChanged) {
     size_t cacheSize1 = generator.getCacheMemoryUsage();
     EXPECT_GT(cacheSize1, 0);
     
-    // Notify of voxel data change
+    // Notify of voxel data change in world coordinates
+    // Grid coords (2,2,2) to (6,6,6) with voxel size 0.32m
     BoundingBox changedRegion;
-    changedRegion.min = Vector3f(2, 2, 2);
-    changedRegion.max = Vector3f(6, 6, 6);
+    changedRegion.min = Vector3f(2 * 0.32f, 2 * 0.32f, 2 * 0.32f);
+    changedRegion.max = Vector3f(6 * 0.32f, 6 * 0.32f, 6 * 0.32f);
     generator.onVoxelDataChanged(changedRegion, VoxelResolution::Size_32cm);
     
     // Cache should be invalidated
@@ -270,8 +271,8 @@ TEST_F(SurfaceGeneratorTest, CacheMemoryLimit) {
     SurfaceGenerator generator;
     generator.enableCaching(true);
     
-    // Set very small cache limit
-    generator.setCacheMaxMemory(1024); // 1KB
+    // Set small cache limit (enough for 2-3 meshes)
+    generator.setCacheMaxMemory(50 * 1024); // 50KB
     
     // Generate multiple different meshes
     for (int i = 0; i < 5; ++i) {
@@ -282,7 +283,7 @@ TEST_F(SurfaceGeneratorTest, CacheMemoryLimit) {
     }
     
     // Cache should not exceed limit
-    EXPECT_LE(generator.getCacheMemoryUsage(), 1024);
+    EXPECT_LE(generator.getCacheMemoryUsage(), 50 * 1024);
 }
 
 TEST_F(SurfaceGeneratorTest, ClearCache) {

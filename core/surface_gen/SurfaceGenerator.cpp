@@ -159,7 +159,7 @@ void SurfaceGenerator::applyPostProcessing(Mesh& mesh, const SurfaceSettings& se
     builder.removeDuplicateVertices();
     
     // Generate UVs if requested
-    if (settings.generateUVs && mesh.uvCoords.empty()) {
+    if (settings.generateUVs) {
         builder.generateBoxUVs();
     }
     
