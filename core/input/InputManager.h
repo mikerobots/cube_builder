@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <string>
 #include <mutex>
+#include <variant>
 
 namespace VoxelEditor {
 namespace Input {
@@ -179,17 +180,12 @@ private:
     // Event queue for thread-safe event injection
     struct QueuedEvent {
         enum Type { Mouse, Keyboard, Touch, VR } type;
-        union {
-            MouseEvent mouse;
-            KeyEvent keyboard;
-            TouchEvent touch;
-            VREvent vr;
-        } data;
+        std::variant<MouseEvent, KeyEvent, TouchEvent, VREvent> data;
         
-        QueuedEvent(const MouseEvent& event) : type(Mouse) { data.mouse = event; }
-        QueuedEvent(const KeyEvent& event) : type(Keyboard) { data.keyboard = event; }
-        QueuedEvent(const TouchEvent& event) : type(Touch) { data.touch = event; }
-        QueuedEvent(const VREvent& event) : type(VR) { data.vr = event; }
+        QueuedEvent(const MouseEvent& event) : type(Mouse), data(event) {}
+        QueuedEvent(const KeyEvent& event) : type(Keyboard), data(event) {}
+        QueuedEvent(const TouchEvent& event) : type(Touch), data(event) {}
+        QueuedEvent(const VREvent& event) : type(VR), data(event) {}
     };
     
     std::vector<QueuedEvent> m_eventQueue;

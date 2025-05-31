@@ -1,17 +1,21 @@
 #include <gtest/gtest.h>
 #include "../VRInputHandler.h"
+#include "../../../foundation/events/EventDispatcher.h"
 
 using namespace VoxelEditor::Input;
 using namespace VoxelEditor::Math;
+using namespace VoxelEditor::Events;
 
 class VRInputHandlerTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        handler = std::make_unique<VRInputHandler>();
+        dispatcher = std::make_unique<EventDispatcher>();
+        handler = std::make_unique<VRInputHandler>(dispatcher.get());
     }
     
     void TearDown() override {}
     
+    std::unique_ptr<EventDispatcher> dispatcher;
     std::unique_ptr<VRInputHandler> handler;
 };
 
@@ -69,7 +73,11 @@ TEST_F(VRInputHandlerTest, HandPoseUpdate) {
     leftPose.hand = HandType::Left;
     
     // Create VR event
-    VREvent handUpdate(VREventType::HandUpdate, HandType::Left, leftPose);
+    VREvent handUpdate;
+    handUpdate.type = VREventType::HandUpdate;
+    handUpdate.hand = HandType::Left;
+    handUpdate.pose = leftPose;
+    
     handler->processVREvent(handUpdate);
     
     // Check that pose was updated
@@ -95,8 +103,15 @@ TEST_F(VRInputHandlerTest, BothHandPoses) {
     rightPose.hand = HandType::Right;
     
     // Update both hands
-    VREvent leftUpdate(VREventType::HandUpdate, HandType::Left, leftPose);
-    VREvent rightUpdate(VREventType::HandUpdate, HandType::Right, rightPose);
+    VREvent leftUpdate;
+    leftUpdate.type = VREventType::HandUpdate;
+    leftUpdate.hand = HandType::Left;
+    leftUpdate.pose = leftPose;
+    
+    VREvent rightUpdate;
+    rightUpdate.type = VREventType::HandUpdate;
+    rightUpdate.hand = HandType::Right;
+    rightUpdate.pose = rightPose;
     
     handler->processVREvent(leftUpdate);
     handler->processVREvent(rightUpdate);
@@ -149,7 +164,10 @@ TEST_F(VRInputHandlerTest, GestureDetection) {
     pose.position = Vector3f(0.2f, 1.5f, -0.3f);
     pose.hand = HandType::Right;
     
-    VREvent gestureEvent(VREventType::GestureDetected, HandType::Right, pose);
+    VREvent gestureEvent;
+    gestureEvent.type = VREventType::GestureDetected;
+    gestureEvent.hand = HandType::Right;
+    gestureEvent.pose = pose;
     gestureEvent.gestures.push_back(VRGesture::Point);
     
     handler->processVREvent(gestureEvent);
@@ -213,7 +231,11 @@ TEST_F(VRInputHandlerTest, EnabledState) {
     pose.position = Vector3f(0.2f, 1.5f, -0.3f);
     pose.hand = HandType::Left;
     
-    VREvent handUpdate(VREventType::HandUpdate, HandType::Left, pose);
+    VREvent handUpdate;
+    handUpdate.type = VREventType::HandUpdate;
+    handUpdate.hand = HandType::Left;
+    handUpdate.pose = pose;
+    
     handler->processVREvent(handUpdate);
     
     // Position should not have changed
@@ -281,19 +303,33 @@ TEST_F(VRInputHandlerTest, GestureQueries) {
 }
 
 TEST_F(VRInputHandlerTest, RayCasting) {
-    // Create a hand pose
+    // Create a hand pose with pointing gesture (index finger extended)
     HandPose pose;
     pose.position = Vector3f(0.2f, 1.5f, -0.3f);
     pose.orientation = Quaternion::lookRotation(Vector3f(0.0f, 0.0f, -1.0f));
     pose.hand = HandType::Right;
+    pose.confidence = 0.9f;
+    
+    // Set up finger poses for pointing gesture
+    for (int i = 0; i < 5; ++i) {
+        pose.fingers[i].extended = (i == 1); // Only index finger extended
+        pose.fingers[i].bend = (i == 1) ? 0.1f : 0.8f;
+    }
     
     // Update hand pose
-    VREvent handUpdate(VREventType::HandUpdate, HandType::Right, pose);
+    VREvent handUpdate;
+    handUpdate.type = VREventType::HandUpdate;
+    handUpdate.hand = HandType::Right;
+    handUpdate.pose = pose;
+    
     handler->processVREvent(handUpdate);
     
     // Test ray casting (basic interface test)
     Ray handRay = handler->getHandRay(HandType::Right);
     EXPECT_EQ(handRay.origin, pose.position);
+    
+    // Check if pointing is detected
+    EXPECT_TRUE(handler->isPointing(HandType::Right));
     
     Vector3f pointingDir = handler->getPointingDirection(HandType::Right);
     // Pointing direction should be derived from hand orientation
@@ -312,10 +348,40 @@ TEST_F(VRInputHandlerTest, Update) {
     HandPose pose;
     pose.position = Vector3f(0.2f, 1.5f, -0.3f);
     pose.hand = HandType::Left;
+    pose.confidence = 0.8f;
     
-    VREvent handUpdate(VREventType::HandUpdate, HandType::Left, pose);
+    VREvent handUpdate;
+    handUpdate.type = VREventType::HandUpdate;
+    handUpdate.hand = HandType::Left;
+    handUpdate.pose = pose;
+    
     handler->processVREvent(handUpdate);
     handler->update(0.016f);
     
     EXPECT_EQ(handler->getHandPosition(HandType::Left), pose.position);
+}
+
+TEST_F(VRInputHandlerTest, HandLost) {
+    // First, establish hand tracking
+    HandPose pose;
+    pose.position = Vector3f(0.2f, 1.5f, -0.3f);
+    pose.confidence = 0.9f;
+    pose.hand = HandType::Left;
+    
+    VREvent handUpdate;
+    handUpdate.type = VREventType::HandUpdate;
+    handUpdate.hand = HandType::Left;
+    handUpdate.pose = pose;
+    
+    handler->processVREvent(handUpdate);
+    EXPECT_TRUE(handler->isHandTracking(HandType::Left));
+    
+    // Now send update with zero confidence to simulate hand lost
+    pose.confidence = 0.0f;
+    handUpdate.pose = pose;
+    
+    handler->processVREvent(handUpdate);
+    
+    // Check that hand is no longer tracking
+    EXPECT_FALSE(handler->isHandTracking(HandType::Left));
 }

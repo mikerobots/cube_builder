@@ -16,9 +16,9 @@ add_library(VoxelEditor_Input STATIC
     MouseHandler.cpp
     KeyboardHandler.cpp
     TouchHandler.cpp
-    # InputManager.cpp  # Temporarily disabled - depends on VRInputHandler
+    VRInputHandler.cpp
+    InputManager.cpp
     # TODO: Add full implementations when platform integration is complete
-    # VRInputHandler.cpp
 )
 
 # Set target properties

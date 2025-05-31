@@ -7,7 +7,7 @@
 namespace VoxelEditor {
 namespace Input {
 
-InputManager::InputManager(VoxelEditor::Events::EventDispatcher* eventDispatcher)
+InputManager::InputManager(::VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : m_eventDispatcher(eventDispatcher)
     , m_enabled(true)
     , m_initialized(false)
@@ -152,7 +152,7 @@ void InputManager::setInputMapping(const InputMapping& mapping) {
         m_touchHandler->setSensitivity(m_mapping.touchSensitivity);
     }
     if (m_vrHandler) {
-        m_vrHandler->setSpatialSensitivity(m_mapping.vrSensitivity);
+        m_vrHandler->setSensitivity(m_mapping.vrSensitivity);
     }
 }
 
@@ -254,7 +254,7 @@ HandPose InputManager::getHandPose(HandType hand) const {
 }
 
 bool InputManager::isVRGestureActive(VRGesture gesture, HandType hand) const {
-    return m_vrHandler ? m_vrHandler->isVRGestureActive(gesture, hand) : false;
+    return m_vrHandler ? m_vrHandler->isGestureActive(gesture, hand) : false;
 }
 
 void InputManager::bindAction(const std::string& actionName, const InputTrigger& trigger) {
@@ -348,7 +348,7 @@ void InputManager::setTouchSensitivity(float sensitivity) {
 void InputManager::setVRSensitivity(float sensitivity) {
     m_mapping.vrSensitivity = sensitivity;
     if (m_vrHandler) {
-        m_vrHandler->setSpatialSensitivity(sensitivity);
+        m_vrHandler->setSensitivity(sensitivity);
     }
 }
 
@@ -388,16 +388,16 @@ void InputManager::processQueuedEvents() {
     for (const auto& event : events) {
         switch (event.type) {
             case QueuedEvent::Mouse:
-                processMouseEventInternal(event.data.mouse);
+                processMouseEventInternal(std::get<MouseEvent>(event.data));
                 break;
             case QueuedEvent::Keyboard:
-                processKeyboardEventInternal(event.data.keyboard);
+                processKeyboardEventInternal(std::get<KeyEvent>(event.data));
                 break;
             case QueuedEvent::Touch:
-                processTouchEventInternal(event.data.touch);
+                processTouchEventInternal(std::get<TouchEvent>(event.data));
                 break;
             case QueuedEvent::VR:
-                processVREventInternal(event.data.vr);
+                processVREventInternal(std::get<VREvent>(event.data));
                 break;
         }
     }
@@ -452,12 +452,12 @@ void InputManager::updateInputState() {
     }
     
     if (m_touchHandler) {
-        m_currentState.touches = m_touchHandler->getActiveTouches();
+        m_currentState.activeTouches = m_touchHandler->getActiveTouches();
     }
     
     if (m_vrHandler) {
-        m_currentState.leftHandPose = m_vrHandler->getHandPose(HandType::Left);
-        m_currentState.rightHandPose = m_vrHandler->getHandPose(HandType::Right);
+        m_currentState.handPoses[0] = m_vrHandler->getHandPose(HandType::Left);
+        m_currentState.handPoses[1] = m_vrHandler->getHandPose(HandType::Right);
     }
 }
 
@@ -562,7 +562,7 @@ bool InputManager::checkInputTrigger(const InputTrigger& trigger, VRGesture gest
         return false;
     }
     
-    return m_vrHandler->isVRGestureActive(trigger.input.vrGesture);
+    return m_vrHandler->isGestureActive(trigger.input.vrGesture, HandType::Either);
 }
 
 ActionContext InputManager::createActionContext(const ActionBinding& binding, bool pressed, float value) const {
@@ -592,7 +592,7 @@ void InputManager::initializeDefaultHandlers() {
 
 void InputManager::setupDefaultBindings() {
     // Set default input mapping
-    if (m_mapping.keyBindings.empty()) {
+    if (m_mapping.keys.empty() && m_mapping.mouseButtons.empty()) {
         m_mapping = InputMapping::Default();
     }
 }

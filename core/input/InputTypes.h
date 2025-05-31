@@ -481,4 +481,12 @@ namespace std {
             return keyHash ^ (modHash << 1);
         }
     };
+    
+    // Hash specialization for gesture-hand pairs
+    template<>
+    struct hash<std::pair<VoxelEditor::Input::VRGesture, VoxelEditor::Input::HandType>> {
+        size_t operator()(const std::pair<VoxelEditor::Input::VRGesture, VoxelEditor::Input::HandType>& p) const {
+            return hash<int>()(static_cast<int>(p.first)) ^ (hash<int>()(static_cast<int>(p.second)) << 1);
+        }
+    };
 }

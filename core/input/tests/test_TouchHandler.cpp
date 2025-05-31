@@ -245,6 +245,7 @@ TEST_F(TouchHandlerTest, TouchGestureUtilities) {
     EXPECT_EQ(TouchHandler::touchGestureToString(TouchGesture::Pinch), "Pinch");
     EXPECT_EQ(TouchHandler::touchGestureToString(TouchGesture::Pan), "Pan");
     EXPECT_EQ(TouchHandler::touchGestureToString(TouchGesture::Swipe), "Swipe");
+    EXPECT_EQ(TouchHandler::touchGestureToString(TouchGesture::Rotation), "Rotation");
     
     // Test string to gesture conversion
     EXPECT_EQ(TouchHandler::touchGestureFromString("Tap"), TouchGesture::Tap);
@@ -257,6 +258,7 @@ TEST_F(TouchHandlerTest, TouchGestureUtilities) {
     EXPECT_TRUE(TouchHandler::isValidTouchGesture(TouchGesture::Pinch));
     EXPECT_TRUE(TouchHandler::isValidTouchGesture(TouchGesture::Pan));
     EXPECT_TRUE(TouchHandler::isValidTouchGesture(TouchGesture::Swipe));
+    EXPECT_TRUE(TouchHandler::isValidTouchGesture(TouchGesture::Rotation));
 }
 
 TEST_F(TouchHandlerTest, GestureData) {

@@ -2,6 +2,7 @@
 
 #include "InputHandler.h"
 #include "InputTypes.h"
+#include "../../foundation/events/EventBase.h"
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
@@ -248,90 +249,74 @@ private:
 // Touch event types for the event system
 namespace Events {
     
-    struct TouchBeginEvent {
+    struct TouchBeginEvent : public VoxelEditor::Events::Event<TouchBeginEvent> {
         std::vector<TouchPoint> touches;
-        TimePoint timestamp;
         
         TouchBeginEvent(const std::vector<TouchPoint>& t)
-            : touches(t), timestamp(std::chrono::high_resolution_clock::now()) {}
+            : touches(t) {}
     };
     
-    struct TouchEndEvent {
+    struct TouchEndEvent : public VoxelEditor::Events::Event<TouchEndEvent> {
         std::vector<TouchPoint> touches;
-        TimePoint timestamp;
         
         TouchEndEvent(const std::vector<TouchPoint>& t)
-            : touches(t), timestamp(std::chrono::high_resolution_clock::now()) {}
+            : touches(t) {}
     };
     
-    struct TouchGestureEvent {
+    struct TouchGestureEvent : public VoxelEditor::Events::Event<TouchGestureEvent> {
         TouchGesture gesture;
         Math::Vector2f position;
         Math::Vector2f data; // Scale/rotation/velocity depending on gesture
         bool started;
         bool ended;
-        TimePoint timestamp;
         
         TouchGestureEvent(TouchGesture g, const Math::Vector2f& pos, bool s, bool e)
-            : gesture(g), position(pos), data(Math::Vector2f::zero()), started(s), ended(e)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+            : gesture(g), position(pos), data(Math::Vector2f::zero()), started(s), ended(e) {}
     };
     
-    struct TouchTapEvent {
+    struct TouchTapEvent : public VoxelEditor::Events::Event<TouchTapEvent> {
         Math::Vector2f position;
         int tapCount;
-        TimePoint timestamp;
         
         TouchTapEvent(const Math::Vector2f& pos, int count)
-            : position(pos), tapCount(count)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+            : position(pos), tapCount(count) {}
     };
     
-    struct TouchSwipeEvent {
+    struct TouchSwipeEvent : public VoxelEditor::Events::Event<TouchSwipeEvent> {
         Math::Vector2f startPosition;
         Math::Vector2f endPosition;
         Math::Vector2f velocity;
-        TimePoint timestamp;
         
         TouchSwipeEvent(const Math::Vector2f& start, const Math::Vector2f& end, const Math::Vector2f& vel)
-            : startPosition(start), endPosition(end), velocity(vel)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+            : startPosition(start), endPosition(end), velocity(vel) {}
     };
     
-    struct TouchPinchEvent {
+    struct TouchPinchEvent : public VoxelEditor::Events::Event<TouchPinchEvent> {
         Math::Vector2f center;
         float scale;
         float velocity;
-        TimePoint timestamp;
         
         TouchPinchEvent(const Math::Vector2f& c, float s, float v)
-            : center(c), scale(s), velocity(v)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+            : center(c), scale(s), velocity(v) {}
     };
     
-    struct TouchPanEvent {
+    struct TouchPanEvent : public VoxelEditor::Events::Event<TouchPanEvent> {
         Math::Vector2f delta;
         Math::Vector2f velocity;
-        TimePoint timestamp;
         
         TouchPanEvent(const Math::Vector2f& d, const Math::Vector2f& v)
-            : delta(d), velocity(v)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+            : delta(d), velocity(v) {}
     };
     
-    struct TouchUpdateEvent {
+    struct TouchUpdateEvent : public VoxelEditor::Events::Event<TouchUpdateEvent> {
         std::vector<TouchPoint> touches;
-        TimePoint timestamp;
         
         TouchUpdateEvent(const std::vector<TouchPoint>& t)
-            : touches(t), timestamp(std::chrono::high_resolution_clock::now()) {}
+            : touches(t) {}
     };
     
-    struct TouchCancelEvent {
-        TimePoint timestamp;
-        
-        TouchCancelEvent()
-            : timestamp(std::chrono::high_resolution_clock::now()) {}
+    struct TouchCancelEvent : public VoxelEditor::Events::Event<TouchCancelEvent> {
+        TouchCancelEvent() {}
     };
     
     

@@ -3,9 +3,11 @@
 #include "InputHandler.h"
 #include "InputTypes.h"
 #include "../../foundation/math/Ray.h"
+#include "../../foundation/events/EventBase.h"
 #include <array>
 #include <deque>
 #include <memory>
+#include <vector>
 
 namespace VoxelEditor {
 
@@ -22,7 +24,7 @@ class VRGestureRecognizer;
 
 class VRInputHandler : public InputHandler {
 public:
-    explicit VRInputHandler(Events::EventDispatcher* eventDispatcher = nullptr);
+    explicit VRInputHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher = nullptr);
     ~VRInputHandler();
     
     // InputHandler interface
@@ -136,6 +138,7 @@ private:
     void handleHandUpdate(const VREvent& event);
     void handleGestureDetected(const VREvent& event);
     void handleGestureCompleted(const VREvent& event);
+    void handleHandLost(HandType hand);
     
     // Hand pose processing
     void updateHandPose(HandType hand, const HandPose& pose);
@@ -225,111 +228,94 @@ private:
     float calculateHandDistance() const;
 };
 
+}
+}
+
 // VR event types for the event system
+namespace VoxelEditor {
 namespace Events {
     
-    struct VRHandPoseEvent {
-        HandType hand;
-        HandPose pose;
+    struct VRHandPoseEvent : public Event<VRHandPoseEvent> {
+        Input::HandType hand;
+        Input::HandPose pose;
         bool tracking;
-        TimePoint timestamp;
         
-        VRHandPoseEvent(HandType h, const HandPose& p, bool t)
-            : hand(h), pose(p), tracking(t)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRHandPoseEvent(Input::HandType h, const Input::HandPose& p, bool t)
+            : hand(h), pose(p), tracking(t) {}
     };
     
-    struct VRGestureEvent {
-        VRGesture gesture;
-        HandType hand;
+    struct VRGestureEvent : public Event<VRGestureEvent> {
+        Input::VRGesture gesture;
+        Input::HandType hand;
         Math::Vector3f position;
         float confidence;
         bool started;
         bool ended;
-        TimePoint timestamp;
         
-        VRGestureEvent(VRGesture g, HandType h, const Math::Vector3f& pos, float conf, bool s, bool e)
-            : gesture(g), hand(h), position(pos), confidence(conf), started(s), ended(e)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRGestureEvent(Input::VRGesture g, Input::HandType h, const Math::Vector3f& pos, float conf, bool s, bool e)
+            : gesture(g), hand(h), position(pos), confidence(conf), started(s), ended(e) {}
     };
     
-    struct VRPointingEvent {
-        HandType hand;
+    struct VRPointingEvent : public Event<VRPointingEvent> {
+        Input::HandType hand;
         Math::Vector3f direction;
         Math::Vector3f position;
         bool started;
-        TimePoint timestamp;
         
-        VRPointingEvent(HandType h, const Math::Vector3f& dir, const Math::Vector3f& pos, bool s)
-            : hand(h), direction(dir), position(pos), started(s)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRPointingEvent(Input::HandType h, const Math::Vector3f& dir, const Math::Vector3f& pos, bool s)
+            : hand(h), direction(dir), position(pos), started(s) {}
     };
     
-    struct VRPinchEvent {
-        HandType hand;
+    struct VRPinchEvent : public Event<VRPinchEvent> {
+        Input::HandType hand;
         float distance;
         Math::Vector3f position;
         bool started;
-        TimePoint timestamp;
         
-        VRPinchEvent(HandType h, float d, const Math::Vector3f& pos, bool s)
-            : hand(h), distance(d), position(pos), started(s)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRPinchEvent(Input::HandType h, float d, const Math::Vector3f& pos, bool s)
+            : hand(h), distance(d), position(pos), started(s) {}
     };
     
-    struct VRGrabEvent {
-        HandType hand;
+    struct VRGrabEvent : public Event<VRGrabEvent> {
+        Input::HandType hand;
         Math::Vector3f position;
         bool started;
-        TimePoint timestamp;
         
-        VRGrabEvent(HandType h, const Math::Vector3f& pos, bool s)
-            : hand(h), position(pos), started(s)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRGrabEvent(Input::HandType h, const Math::Vector3f& pos, bool s)
+            : hand(h), position(pos), started(s) {}
     };
     
-    struct HandTrackingEvent {
-        HandType hand;
-        HandPose pose;
-        TimePoint timestamp;
+    struct HandTrackingEvent : public Event<HandTrackingEvent> {
+        Input::HandType hand;
+        Input::HandPose pose;
         
-        HandTrackingEvent(HandType h, const HandPose& p)
-            : hand(h), pose(p)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        HandTrackingEvent(Input::HandType h, const Input::HandPose& p)
+            : hand(h), pose(p) {}
     };
     
-    struct HandLostEvent {
-        HandType hand;
-        TimePoint timestamp;
+    struct HandLostEvent : public Event<HandLostEvent> {
+        Input::HandType hand;
         
-        HandLostEvent(HandType h)
-            : hand(h)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        HandLostEvent(Input::HandType h)
+            : hand(h) {}
     };
     
-    struct VRSystemGestureEvent {
-        std::vector<VRGesture> gestures;
-        HandType hand;
-        TimePoint timestamp;
+    struct VRSystemGestureEvent : public Event<VRSystemGestureEvent> {
+        std::vector<Input::VRGesture> gestures;
+        Input::HandType hand;
         
-        VRSystemGestureEvent(const std::vector<VRGesture>& g, HandType h)
-            : gestures(g), hand(h)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRSystemGestureEvent(const std::vector<Input::VRGesture>& g, Input::HandType h)
+            : gestures(g), hand(h) {}
     };
     
-    struct VRGestureActionEvent {
+    struct VRGestureActionEvent : public Event<VRGestureActionEvent> {
         std::string action;
-        VRGesture gesture;
-        HandType hand;
-        TimePoint timestamp;
+        Input::VRGesture gesture;
+        Input::HandType hand;
         
-        VRGestureActionEvent(const std::string& a, VRGesture g, HandType h)
-            : action(a), gesture(g), hand(h)
-            , timestamp(std::chrono::high_resolution_clock::now()) {}
+        VRGestureActionEvent(const std::string& a, Input::VRGesture g, Input::HandType h)
+            : action(a), gesture(g), hand(h) {}
     };
     
-    
-}
-
 }
 }

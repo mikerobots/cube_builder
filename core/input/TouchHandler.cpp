@@ -7,14 +7,14 @@ namespace Input {
 TouchHandler::TouchHandler(VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : InputHandler(eventDispatcher)
     , m_tapTimeout(0.3f)
-    , m_doubleTapTimeout(0.5f)
     , m_tapRadius(20.0f)
     , m_pinchThreshold(50.0f)
-    , m_panThreshold(10.0f)
-    , m_rotationThreshold(0.1f)
-    , m_sensitivity(1.0f)
     , m_swipeThreshold(100.0f)
+    , m_rotationThreshold(0.1f)
     , m_longPressTimeout(1.0f)
+    , m_sensitivity(1.0f)
+    , m_doubleTapTimeout(0.5f)
+    , m_panThreshold(10.0f)
     , m_pinchStartDistance(0.0f)
     , m_rotationStartAngle(0.0f)
     , m_rotationAngle(0.0f) {
@@ -125,8 +125,8 @@ Math::Vector2f TouchHandler::getGestureCenter() const {
     return center / static_cast<float>(m_activeTouches.size());
 }
 
-int TouchHandler::getTouchCount() const {
-    return static_cast<int>(m_activeTouches.size());
+size_t TouchHandler::getTouchCount() const {
+    return m_activeTouches.size();
 }
 
 void TouchHandler::handleTouchBegin(const TouchEvent& event) {
@@ -163,6 +163,7 @@ void TouchHandler::handleTouchUpdate(const TouchEvent& event) {
                 existingTouch.position = newPoint.position;
                 existingTouch.delta = newPoint.delta;
                 existingTouch.pressure = newPoint.pressure;
+                existingTouch.state = newPoint.state;
                 break;
             }
         }
@@ -198,7 +199,7 @@ void TouchHandler::handleTouchEnd(const TouchEvent& event) {
     // Reset multi-touch gestures when we have less than 2 touches
     if (m_activeTouches.size() < 2) {
         m_activeGestures.erase(TouchGesture::Pinch);
-        m_activeGestures.erase(TouchGesture::Rotate);
+        m_activeGestures.erase(TouchGesture::Rotation);
         m_pinchStartDistance = 0.0f;
         m_rotationStartAngle = 0.0f;
     }
@@ -250,7 +251,7 @@ void TouchHandler::detectPanGesture() {
             
             // Dispatch gesture event
             if (m_eventDispatcher) {
-                Events::TouchGestureEvent gestureEvent(TouchGesture::Pan, getGestureCenter());
+                Events::TouchGestureEvent gestureEvent(TouchGesture::Pan, getGestureCenter(), true, false);
                 m_eventDispatcher->dispatch(gestureEvent);
             }
         }
@@ -276,7 +277,7 @@ void TouchHandler::detectPinchGesture() {
                 
                 // Dispatch gesture event
                 if (m_eventDispatcher) {
-                    Events::TouchGestureEvent gestureEvent(TouchGesture::Pinch, getGestureCenter());
+                    Events::TouchGestureEvent gestureEvent(TouchGesture::Pinch, getGestureCenter(), true, false);
                     m_eventDispatcher->dispatch(gestureEvent);
                 }
             }
@@ -311,7 +312,7 @@ void TouchHandler::detectRotationGesture() {
                 
                 // Dispatch gesture event
                 if (m_eventDispatcher) {
-                    Events::TouchGestureEvent gestureEvent(TouchGesture::Rotation, getGestureCenter());
+                    Events::TouchGestureEvent gestureEvent(TouchGesture::Rotation, getGestureCenter(), true, false);
                     m_eventDispatcher->dispatch(gestureEvent);
                 }
             }
@@ -333,10 +334,10 @@ void TouchHandler::checkForTap(const TouchPoint& touch) {
     // Check if touch was quick enough for a tap
     if (duration <= m_tapTimeout * 1000) {
         Math::Vector2f startPos = m_touchStartPositions[touch.id];
-        float distance = Math::MathUtils::distance(touch.position, startPos);
+        float distance = touch.position.distanceTo(startPos);
         
         // Check if movement was small enough for a tap
-        if (distance <= m_tapThreshold) {
+        if (distance <= m_tapRadius) {
             m_detectedGestures.push_back(TouchGesture::Tap);
             
             // Check for double tap
@@ -344,7 +345,7 @@ void TouchHandler::checkForTap(const TouchPoint& touch) {
             
             // Dispatch gesture event
             if (m_eventDispatcher) {
-                Events::TouchGestureEvent gestureEvent(TouchGesture::Tap, touch.position);
+                Events::TouchGestureEvent gestureEvent(TouchGesture::Tap, touch.position, true, true);
                 m_eventDispatcher->dispatch(gestureEvent);
             }
         }
@@ -359,14 +360,14 @@ void TouchHandler::checkForDoubleTap(const TouchPoint& touch) {
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastTapTime).count();
         
         if (duration <= m_doubleTapTimeout * 1000) {
-            float distance = Math::MathUtils::distance(touch.position, m_lastTapPosition);
+            float distance = touch.position.distanceTo(m_lastTapPosition);
             
-            if (distance <= m_tapThreshold) {
+            if (distance <= m_tapRadius) {
                 m_detectedGestures.push_back(TouchGesture::DoubleTap);
                 
                 // Dispatch gesture event
                 if (m_eventDispatcher) {
-                    Events::TouchGestureEvent gestureEvent(TouchGesture::DoubleTap, touch.position);
+                    Events::TouchGestureEvent gestureEvent(TouchGesture::DoubleTap, touch.position, true, true);
                     m_eventDispatcher->dispatch(gestureEvent);
                 }
                 
@@ -386,7 +387,7 @@ void TouchHandler::initializePinchGesture() {
     if (m_activeTouches.size() >= 2) {
         Math::Vector2f pos1 = m_activeTouches[0].position;
         Math::Vector2f pos2 = m_activeTouches[1].position;
-        m_pinchStartDistance = Math::MathUtils::distance(pos1, pos2);
+        m_pinchStartDistance = pos1.distanceTo(pos2);
     }
 }
 
@@ -422,11 +423,10 @@ std::string TouchHandler::touchGestureToString(TouchGesture gesture) {
         case TouchGesture::LongPress: return "LongPress";
         case TouchGesture::Pan: return "Pan";
         case TouchGesture::Pinch: return "Pinch";
-        case TouchGesture::Rotate: return "Rotate";
+        case TouchGesture::Rotation: return "Rotation";
         case TouchGesture::Swipe: return "Swipe";
-        case TouchGesture::ThreeFingerTap: return "ThreeFingerTap";
-        case TouchGesture::FourFingerTap: return "FourFingerTap";
         case TouchGesture::TwoFingerPan: return "TwoFingerPan";
+        case TouchGesture::ThreeFingerPan: return "ThreeFingerPan";
         default: return "Unknown";
     }
 }
@@ -437,11 +437,10 @@ TouchGesture TouchHandler::touchGestureFromString(const std::string& str) {
     if (str == "LongPress") return TouchGesture::LongPress;
     if (str == "Pan") return TouchGesture::Pan;
     if (str == "Pinch") return TouchGesture::Pinch;
-    if (str == "Rotate") return TouchGesture::Rotate;
+    if (str == "Rotation") return TouchGesture::Rotation;
     if (str == "Swipe") return TouchGesture::Swipe;
-    if (str == "ThreeFingerTap") return TouchGesture::ThreeFingerTap;
-    if (str == "FourFingerTap") return TouchGesture::FourFingerTap;
     if (str == "TwoFingerPan") return TouchGesture::TwoFingerPan;
+    if (str == "ThreeFingerPan") return TouchGesture::ThreeFingerPan;
     return TouchGesture::Tap; // Default fallback
 }
 
@@ -452,11 +451,10 @@ bool TouchHandler::isValidTouchGesture(TouchGesture gesture) {
         case TouchGesture::LongPress:
         case TouchGesture::Pan:
         case TouchGesture::Pinch:
-        case TouchGesture::Rotate:
+        case TouchGesture::Rotation:
         case TouchGesture::Swipe:
-        case TouchGesture::ThreeFingerTap:
-        case TouchGesture::FourFingerTap:
         case TouchGesture::TwoFingerPan:
+        case TouchGesture::ThreeFingerPan:
             return true;
         default:
             return false;
@@ -494,7 +492,7 @@ float TouchHandler::getGestureScale(TouchGesture gesture) const {
 }
 
 float TouchHandler::getGestureRotation(TouchGesture gesture) const {
-    if (gesture == TouchGesture::Rotate) {
+    if (gesture == TouchGesture::Rotation) {
         return getRotationAngle();
     }
     return 0.0f;
