@@ -111,5 +111,12 @@ public:
     int exitCode;
 };
 
+class ConfigurationChangedEvent : public Event<ConfigurationChangedEvent> {
+public:
+    ConfigurationChangedEvent(const std::string& key) : key(key) {}
+    
+    std::string key;
+};
+
 }
 }
