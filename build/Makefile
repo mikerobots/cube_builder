@@ -386,6 +386,32 @@ test_surface_gen/fast:
 	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build
 .PHONY : test_surface_gen/fast
 
+#=============================================================================
+# Target rules for targets named visual_feedback
+
+# Build rule for target.
+visual_feedback: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 visual_feedback
+.PHONY : visual_feedback
+
+# fast build rule for target.
+visual_feedback/fast:
+	$(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/build
+.PHONY : visual_feedback/fast
+
+#=============================================================================
+# Target rules for targets named visual_feedback_tests
+
+# Build rule for target.
+visual_feedback_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 visual_feedback_tests
+.PHONY : visual_feedback_tests
+
+# fast build rule for target.
+visual_feedback_tests/fast:
+	$(MAKE) $(MAKESILENT) -f core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/build.make core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/build
+.PHONY : visual_feedback_tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -415,6 +441,8 @@ help:
 	@echo "... test_simple_command"
 	@echo "... test_surface_gen"
 	@echo "... test_undo_redo"
+	@echo "... visual_feedback"
+	@echo "... visual_feedback_tests"
 .PHONY : help
 
 

@@ -22,6 +22,15 @@ constexpr float toDegrees(float radians) {
     return radians * RAD_TO_DEG;
 }
 
+// Alternative names for angle conversions
+constexpr float degreesToRadians(float degrees) {
+    return degrees * DEG_TO_RAD;
+}
+
+constexpr float radiansToDegrees(float radians) {
+    return radians * RAD_TO_DEG;
+}
+
 // Clamping
 template<typename T>
 constexpr T clamp(T value, T min, T max) {

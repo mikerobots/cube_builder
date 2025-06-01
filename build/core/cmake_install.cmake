@@ -72,3 +72,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/Users/michaelhalloran/cube_edit/build/core/surface_gen/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/Users/michaelhalloran/cube_edit/build/core/visual_feedback/cmake_install.cmake")
+endif()
+

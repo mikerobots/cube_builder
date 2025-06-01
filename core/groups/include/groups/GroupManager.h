@@ -144,6 +144,9 @@ public:
     // Thread safety
     std::mutex& getMutex() const { return m_mutex; }
     
+    // Internal method for group operations
+    void updateVoxelGroupMembership(const VoxelId& voxel, GroupId oldGroup, GroupId newGroup);
+    
 private:
     std::unordered_map<GroupId, std::unique_ptr<VoxelGroup>> m_groups;
     std::unique_ptr<GroupHierarchy> m_hierarchy;

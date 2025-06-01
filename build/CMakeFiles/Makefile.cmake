@@ -24,6 +24,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Users/michaelhalloran/cube_edit/core/surface_gen/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/undo_redo/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/undo_redo/tests/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/visual_feedback/CMakeLists.txt"
+  "/Users/michaelhalloran/cube_edit/core/visual_feedback/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt"
   "/Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt"
@@ -110,6 +112,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "core/undo_redo/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   "core/surface_gen/CMakeFiles/CMakeDirectoryInformation.cmake"
   "core/surface_gen/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/visual_feedback/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "core/visual_feedback/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -134,4 +138,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "core/undo_redo/tests/CMakeFiles/test_history_manager.dir/DependInfo.cmake"
   "core/surface_gen/CMakeFiles/core_surface_gen.dir/DependInfo.cmake"
   "core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/DependInfo.cmake"
+  "core/visual_feedback/CMakeFiles/visual_feedback.dir/DependInfo.cmake"
+  "core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/DependInfo.cmake"
   )

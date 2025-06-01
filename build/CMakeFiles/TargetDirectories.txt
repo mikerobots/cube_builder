@@ -99,3 +99,11 @@
 /Users/michaelhalloran/cube_edit/build/core/surface_gen/tests/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build/core/surface_gen/tests/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build/core/surface_gen/tests/CMakeFiles/rebuild_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/CMakeFiles/visual_feedback.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/CMakeFiles/test.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/CMakeFiles/edit_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/CMakeFiles/rebuild_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/tests/CMakeFiles/test.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/tests/CMakeFiles/edit_cache.dir
+/Users/michaelhalloran/cube_edit/build/core/visual_feedback/tests/CMakeFiles/rebuild_cache.dir
