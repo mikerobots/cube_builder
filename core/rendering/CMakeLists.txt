@@ -28,6 +28,7 @@ set_target_properties(VoxelEditor_Rendering PROPERTIES
 target_include_directories(VoxelEditor_Rendering PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/external/glad/include
 )
 
 # Link dependencies
@@ -35,6 +36,7 @@ target_link_libraries(VoxelEditor_Rendering
     VoxelEditor_Math
     VoxelEditor_Events
     VoxelEditor_Camera
+    glad
 )
 
 # OpenGL dependencies (when implementation is added)

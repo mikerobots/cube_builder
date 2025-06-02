@@ -75,6 +75,27 @@ enum class BufferUsage {
     Stream
 };
 
+// Clear flags for framebuffer clearing
+enum class ClearFlags : uint32_t {
+    COLOR = 0x01,
+    DEPTH = 0x02,
+    STENCIL = 0x04,
+    All = COLOR | DEPTH | STENCIL
+};
+
+// Enable bitwise operations for ClearFlags
+inline ClearFlags operator|(ClearFlags a, ClearFlags b) {
+    return static_cast<ClearFlags>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
+}
+
+inline ClearFlags operator&(ClearFlags a, ClearFlags b) {
+    return static_cast<ClearFlags>(static_cast<uint32_t>(a) & static_cast<uint32_t>(b));
+}
+
+inline bool operator&(ClearFlags a, uint32_t b) {
+    return (static_cast<uint32_t>(a) & b) != 0;
+}
+
 enum class TextureFormat {
     RGB8,
     RGBA8,
@@ -121,12 +142,6 @@ enum class IndexType {
     UInt32
 };
 
-enum class ClearFlags {
-    Color = 1 << 0,
-    Depth = 1 << 1,
-    Stencil = 1 << 2,
-    All = Color | Depth | Stencil
-};
 
 // Vertex layout description
 struct VertexLayout {

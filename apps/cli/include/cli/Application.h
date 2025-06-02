@@ -30,6 +30,7 @@ namespace VoxelEditor {
 class CommandProcessor;
 class RenderWindow;
 class MouseInteraction;
+class VoxelMeshGenerator;
 
 class Application {
 public:
@@ -68,6 +69,9 @@ public:
     // Window management
     RenderWindow* getRenderWindow() const { return m_renderWindow.get(); }
     
+    // Rendering updates
+    void requestMeshUpdate() { updateVoxelMesh(); }
+    
 private:
     // Core systems
     std::unique_ptr<VoxelData::VoxelDataManager> m_voxelManager;
@@ -90,10 +94,18 @@ private:
     std::unique_ptr<CommandProcessor> m_commandProcessor;
     std::unique_ptr<RenderWindow> m_renderWindow;
     std::unique_ptr<MouseInteraction> m_mouseInteraction;
+    std::unique_ptr<VoxelMeshGenerator> m_meshGenerator;
     
     // Application state
     bool m_running = false;
     std::string m_currentProject;
+    
+    // Rendering data
+    uint32_t m_voxelVAO = 0;
+    uint32_t m_voxelVBO = 0;
+    uint32_t m_voxelEBO = 0;
+    uint32_t m_voxelShaderProgram = 0;
+    size_t m_voxelIndexCount = 0;
     
     // Private methods
     bool initializeFoundation();
@@ -103,6 +115,11 @@ private:
     void registerCommands();
     void processInput();
     void render();
+    
+    // Rendering helpers
+    bool createShaderProgram();
+    void updateVoxelMesh();
+    void cleanupGL();
 };
 
 } // namespace VoxelEditor

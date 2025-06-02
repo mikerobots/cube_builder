@@ -9,11 +9,21 @@
 #include <algorithm>
 #include <cstddef>  // for offsetof
 
+// Silence OpenGL deprecation warnings on macOS
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#endif
+
+// OpenGL headers
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 // Application headers
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
 #include "cli/RenderWindow.h"
 #include "cli/MouseInteraction.h"
+#include "cli/VoxelMeshGenerator.h"
 
 // Core includes
 #include "voxel_data/VoxelDataManager.h"
@@ -45,7 +55,10 @@
 namespace VoxelEditor {
 
 Application::Application() = default;
-Application::~Application() = default;
+
+Application::~Application() {
+    cleanupGL();
+}
 
 bool Application::initialize(int argc, char* argv[]) {
     std::cout << "Initializing Voxel Editor..." << std::endl;
@@ -263,6 +276,21 @@ bool Application::initializeCLI() {
         m_commandProcessor = std::make_unique<CommandProcessor>(this);
         m_mouseInteraction = std::make_unique<MouseInteraction>(this);
         m_mouseInteraction->initialize();
+        m_meshGenerator = std::make_unique<VoxelMeshGenerator>();
+        
+        // Create shader program for voxel rendering
+        if (!createShaderProgram()) {
+            std::cerr << "Failed to create shader program" << std::endl;
+            return false;
+        }
+        
+        // Create initial mesh (empty)
+        updateVoxelMesh();
+        
+        // Subscribe to voxel change events
+        // TODO: Implement proper event handlers when EventHandler supports lambdas
+        // For now, voxel mesh will be updated manually when needed
+        
         return true;
     } catch (const std::exception& e) {
         std::cerr << "Failed to initialize CLI: " << e.what() << std::endl;
@@ -304,15 +332,274 @@ void Application::processInput() {
 }
 
 void Application::render() {
-    // TODO: Implement rendering when OpenGL integration is complete
-    // For now, just clear the screen
-    if (m_renderWindow) {
-        // Clear is handled by OpenGL context in RenderWindow
+    if (!m_renderWindow || !m_openGLRenderer) {
+        return;
     }
     
+    // Make sure we're rendering to the window
+    m_renderWindow->makeContextCurrent();
     
-    // Visual feedback would be rendered here
+    // Clear the screen with a dark gray background
+    Rendering::Color clearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    m_openGLRenderer->clear(Rendering::ClearFlags::COLOR | Rendering::ClearFlags::DEPTH, clearColor);
+    
+    // Set viewport to window size
+    m_openGLRenderer->setViewport(0, 0, m_renderWindow->getWidth(), m_renderWindow->getHeight());
+    
+    // Render voxels if we have any
+    if (m_voxelShaderProgram && m_voxelIndexCount > 0) {
+        glUseProgram(m_voxelShaderProgram);
+        
+        // Set uniforms
+        auto camera = m_cameraController->getCamera();
+        auto viewMatrix = camera->getViewMatrix();
+        auto projMatrix = camera->getProjectionMatrix();
+        
+        // Set matrices
+        GLint modelLoc = glGetUniformLocation(m_voxelShaderProgram, "model");
+        GLint viewLoc = glGetUniformLocation(m_voxelShaderProgram, "view");
+        GLint projLoc = glGetUniformLocation(m_voxelShaderProgram, "projection");
+        
+        Math::Matrix4f identity;
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, identity.m);
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, viewMatrix.m);
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, projMatrix.m);
+        
+        // Set light properties
+        GLint lightPosLoc = glGetUniformLocation(m_voxelShaderProgram, "lightPos");
+        GLint lightColorLoc = glGetUniformLocation(m_voxelShaderProgram, "lightColor");
+        GLint viewPosLoc = glGetUniformLocation(m_voxelShaderProgram, "viewPos");
+        
+        Math::Vector3f lightPos(5.0f, 10.0f, 5.0f);
+        Math::Vector3f lightColor(1.0f, 1.0f, 1.0f);
+        auto viewPos = camera->getPosition();
+        
+        glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
+        glUniform3f(lightColorLoc, lightColor.x, lightColor.y, lightColor.z);
+        glUniform3f(viewPosLoc, viewPos.x, viewPos.y, viewPos.z);
+        
+        // Draw voxels
+        #ifdef __APPLE__
+        glBindVertexArrayAPPLE(m_voxelVAO);
+        #else
+        glBindVertexArray(m_voxelVAO);
+        #endif
+        
+        glDrawElements(GL_TRIANGLES, m_voxelIndexCount, GL_UNSIGNED_INT, 0);
+        
+        #ifdef __APPLE__
+        glBindVertexArrayAPPLE(0);
+        #else
+        glBindVertexArray(0);
+        #endif
+        
+        glUseProgram(0);
+    }
+    
+    // TODO: Render visual feedback (selection highlights, etc)
     // m_feedbackRenderer->render(*m_cameraController->getCamera(), context);
+}
+
+bool Application::createShaderProgram() {
+    // Vertex shader source
+    const char* vertexShaderSource = R"(
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aNormal;
+layout (location = 2) in vec3 aColor;
+
+out vec3 FragPos;
+out vec3 Normal;
+out vec3 Color;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main() {
+    FragPos = vec3(model * vec4(aPos, 1.0));
+    Normal = mat3(transpose(inverse(model))) * aNormal;
+    Color = aColor;
+    
+    gl_Position = projection * view * vec4(FragPos, 1.0);
+}
+)";
+
+    // Fragment shader source
+    const char* fragmentShaderSource = R"(
+#version 330 core
+in vec3 FragPos;
+in vec3 Normal;
+in vec3 Color;
+
+out vec4 FragColor;
+
+uniform vec3 lightPos;
+uniform vec3 lightColor;
+uniform vec3 viewPos;
+
+void main() {
+    // Ambient lighting
+    float ambientStrength = 0.3;
+    vec3 ambient = ambientStrength * lightColor;
+    
+    // Diffuse lighting
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
+    
+    // Specular lighting
+    float specularStrength = 0.5;
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = specularStrength * spec * lightColor;
+    
+    // Combine results
+    vec3 result = (ambient + diffuse + specular) * Color;
+    FragColor = vec4(result, 1.0);
+}
+)";
+
+    // Compile vertex shader
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glCompileShader(vertexShader);
+    
+    // Check vertex shader compilation
+    GLint success;
+    GLchar infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+        std::cerr << "Vertex shader compilation failed: " << infoLog << std::endl;
+        return false;
+    }
+    
+    // Compile fragment shader
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+    glCompileShader(fragmentShader);
+    
+    // Check fragment shader compilation
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+        std::cerr << "Fragment shader compilation failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        return false;
+    }
+    
+    // Create shader program
+    m_voxelShaderProgram = glCreateProgram();
+    glAttachShader(m_voxelShaderProgram, vertexShader);
+    glAttachShader(m_voxelShaderProgram, fragmentShader);
+    glLinkProgram(m_voxelShaderProgram);
+    
+    // Check linking
+    glGetProgramiv(m_voxelShaderProgram, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(m_voxelShaderProgram, 512, nullptr, infoLog);
+        std::cerr << "Shader program linking failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        return false;
+    }
+    
+    // Clean up shaders
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+    
+    return true;
+}
+
+void Application::updateVoxelMesh() {
+    if (!m_meshGenerator || !m_voxelManager) {
+        return;
+    }
+    
+    // Generate mesh from voxel data
+    auto mesh = m_meshGenerator->generateCubeMesh(*m_voxelManager);
+    
+    // Clean up old buffers
+    if (m_voxelVAO) {
+        #ifdef __APPLE__
+        glDeleteVertexArraysAPPLE(1, &m_voxelVAO);
+        #else
+        glDeleteVertexArrays(1, &m_voxelVAO);
+        #endif
+        glDeleteBuffers(1, &m_voxelVBO);
+        glDeleteBuffers(1, &m_voxelEBO);
+    }
+    
+    m_voxelIndexCount = mesh.indices.size();
+    
+    if (!mesh.vertices.empty()) {
+        // Create vertex array object
+        #ifdef __APPLE__
+        glGenVertexArraysAPPLE(1, &m_voxelVAO);
+        glBindVertexArrayAPPLE(m_voxelVAO);
+        #else
+        glGenVertexArrays(1, &m_voxelVAO);
+        glBindVertexArray(m_voxelVAO);
+        #endif
+        
+        glGenBuffers(1, &m_voxelVBO);
+        glGenBuffers(1, &m_voxelEBO);
+        
+        // Upload vertex data
+        glBindBuffer(GL_ARRAY_BUFFER, m_voxelVBO);
+        glBufferData(GL_ARRAY_BUFFER, 
+                     sizeof(Rendering::Vertex) * mesh.vertices.size(),
+                     mesh.vertices.data(), 
+                     GL_STATIC_DRAW);
+        
+        // Upload index data
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_voxelEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                     sizeof(uint32_t) * mesh.indices.size(),
+                     mesh.indices.data(),
+                     GL_STATIC_DRAW);
+        
+        // Set vertex attributes
+        // Position
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
+                             (void*)offsetof(Rendering::Vertex, position));
+        glEnableVertexAttribArray(0);
+        
+        // Normal
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
+                             (void*)offsetof(Rendering::Vertex, normal));
+        glEnableVertexAttribArray(1);
+        
+        // Color
+        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
+                             (void*)offsetof(Rendering::Vertex, color));
+        glEnableVertexAttribArray(2);
+        
+        #ifdef __APPLE__
+        glBindVertexArrayAPPLE(0);
+        #else
+        glBindVertexArray(0);
+        #endif
+    }
+}
+
+void Application::cleanupGL() {
+    if (m_voxelVAO) {
+        #ifdef __APPLE__
+        glDeleteVertexArraysAPPLE(1, &m_voxelVAO);
+        #else
+        glDeleteVertexArrays(1, &m_voxelVAO);
+        #endif
+        glDeleteBuffers(1, &m_voxelVBO);
+        glDeleteBuffers(1, &m_voxelEBO);
+    }
+    
+    if (m_voxelShaderProgram) {
+        glDeleteProgram(m_voxelShaderProgram);
+    }
 }
 
 } // namespace VoxelEditor

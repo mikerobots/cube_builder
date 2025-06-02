@@ -222,6 +222,9 @@ void MouseInteraction::placeVoxel() {
     
     // Update hover state since geometry changed
     updateHoverState();
+    
+    // Update mesh for rendering
+    m_app->requestMeshUpdate();
 }
 
 void MouseInteraction::removeVoxel() {
@@ -243,6 +246,9 @@ void MouseInteraction::removeVoxel() {
     
     // Update hover state since geometry changed
     updateHoverState();
+    
+    // Update mesh for rendering
+    m_app->requestMeshUpdate();
 }
 
 } // namespace VoxelEditor

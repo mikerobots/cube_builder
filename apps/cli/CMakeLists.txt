@@ -10,6 +10,7 @@ set(CLI_SOURCES
     src/Commands.cpp
     src/MouseInteraction.cpp
     src/AutoComplete.cpp
+    src/VoxelMeshGenerator.cpp
 )
 
 set(CLI_HEADERS
@@ -19,6 +20,7 @@ set(CLI_HEADERS
     include/cli/RenderWindow.h
     include/cli/MouseInteraction.h
     include/cli/AutoComplete.h
+    include/cli/VoxelMeshGenerator.h
 )
 
 # Create executable

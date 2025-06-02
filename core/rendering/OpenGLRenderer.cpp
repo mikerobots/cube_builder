@@ -1,6 +1,13 @@
 #include "OpenGLRenderer.h"
 #include <iostream>
 
+// Silence OpenGL deprecation warnings on macOS
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#endif
+
+#include <glad/glad.h>
+
 namespace VoxelEditor {
 namespace Rendering {
 
@@ -98,15 +105,29 @@ void OpenGLRenderer::drawElements(PrimitiveType type, int count, IndexType index
 }
 
 void OpenGLRenderer::clear(ClearFlags flags, const Color& color, float depth, int stencil) {
-    // TODO: Implement clearing
+    glClearColor(color.r, color.g, color.b, color.a);
+    
+    GLbitfield clearMask = 0;
+    if (static_cast<uint32_t>(flags) & static_cast<uint32_t>(ClearFlags::COLOR)) clearMask |= GL_COLOR_BUFFER_BIT;
+    if (static_cast<uint32_t>(flags) & static_cast<uint32_t>(ClearFlags::DEPTH)) clearMask |= GL_DEPTH_BUFFER_BIT;
+    if (static_cast<uint32_t>(flags) & static_cast<uint32_t>(ClearFlags::STENCIL)) clearMask |= GL_STENCIL_BUFFER_BIT;
+    
+    if (static_cast<uint32_t>(flags) & static_cast<uint32_t>(ClearFlags::DEPTH)) {
+        glClearDepth(depth);
+    }
+    if (static_cast<uint32_t>(flags) & static_cast<uint32_t>(ClearFlags::STENCIL)) {
+        glClearStencil(stencil);
+    }
+    
+    glClear(clearMask);
 }
 
 void OpenGLRenderer::setClearColor(const Color& color) {
-    // TODO: Implement clear color setting
+    glClearColor(color.r, color.g, color.b, color.a);
 }
 
 void OpenGLRenderer::setViewport(int x, int y, int width, int height) {
-    // TODO: Implement viewport setting
+    glViewport(x, y, width, height);
 }
 
 } // namespace Rendering
