@@ -58,7 +58,9 @@ bool MoveGroupOperation::execute() {
         newPositions.push_back(newPos);
     }
     
-    auto workspaceBounds = m_voxelManager->getWorkspaceBounds();
+    // Create workspace bounds from size
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    Math::BoundingBox workspaceBounds(Math::Vector3f(0, 0, 0), workspaceSize);
     if (!GroupOperationUtils::validateVoxelPositions(newPositions, workspaceBounds)) {
         m_voxelMoves.clear();
         return false;
@@ -84,14 +86,14 @@ bool MoveGroupOperation::execute() {
     
     // Remove old voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->removeVoxel(oldPos.position, oldPos.resolution);
+        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, false);
         group->removeVoxel(oldPos);
     }
     
     // Add new voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        auto color = m_voxelManager->getVoxel(oldPos.position, oldPos.resolution);
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, color);
+        // Note: VoxelDataManager doesn't store color, only existence
+        m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
         group->addVoxel(newPos);
     }
     
@@ -110,14 +112,14 @@ bool MoveGroupOperation::undo() {
     
     // Remove new voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->removeVoxel(newPos.position, newPos.resolution);
+        m_voxelManager->setVoxel(newPos.position, newPos.resolution, false);
         group->removeVoxel(newPos);
     }
     
     // Restore old voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        auto color = m_voxelManager->getVoxel(newPos.position, newPos.resolution);
-        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, color);
+        // Note: VoxelDataManager doesn't store color, only existence
+        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, true);
         group->addVoxel(oldPos);
     }
     
@@ -193,8 +195,11 @@ bool CopyGroupOperation::execute() {
         
         // Check if position is valid and empty
         if (!m_voxelManager->hasVoxel(newVoxel.position, newVoxel.resolution)) {
-            auto color = m_voxelManager->getVoxel(voxel.position, voxel.resolution);
-            m_voxelManager->setVoxel(newVoxel.position, newVoxel.resolution, color);
+            // Note: VoxelDataManager doesn't store color, only existence
+            bool hasVoxel = m_voxelManager->getVoxel(voxel.position, voxel.resolution);
+            if (hasVoxel) {
+                m_voxelManager->setVoxel(newVoxel.position, newVoxel.resolution, true);
+            }
             newGroup->addVoxel(newVoxel);
             m_createdVoxels.push_back(newVoxel);
         }
@@ -209,7 +214,7 @@ bool CopyGroupOperation::undo() {
     
     // Remove all created voxels
     for (const auto& voxel : m_createdVoxels) {
-        m_voxelManager->removeVoxel(voxel.position, voxel.resolution);
+        m_voxelManager->setVoxel(voxel.position, voxel.resolution, false);
     }
     
     // Delete the created group
@@ -320,14 +325,14 @@ bool RotateGroupOperation::execute() {
     
     // Remove old voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->removeVoxel(oldPos.position, oldPos.resolution);
+        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, false);
         group->removeVoxel(oldPos);
     }
     
     // Add new voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        auto color = m_voxelManager->getVoxel(oldPos.position, oldPos.resolution);
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, color);
+        // Note: VoxelDataManager doesn't store color, only existence
+        m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
         group->addVoxel(newPos);
     }
     
@@ -343,14 +348,14 @@ bool RotateGroupOperation::undo() {
     
     // Remove rotated voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->removeVoxel(newPos.position, newPos.resolution);
+        m_voxelManager->setVoxel(newPos.position, newPos.resolution, false);
         group->removeVoxel(newPos);
     }
     
     // Restore original voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        auto color = m_voxelManager->getVoxel(newPos.position, newPos.resolution);
-        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, color);
+        // Note: VoxelDataManager doesn't store color, only existence
+        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, true);
         group->addVoxel(oldPos);
     }
     
@@ -441,14 +446,14 @@ bool ScaleGroupOperation::execute() {
     // Execute the moves
     // First remove all old voxels
     for (const auto& voxel : voxelList) {
-        m_voxelManager->removeVoxel(voxel.position, voxel.resolution);
+        m_voxelManager->setVoxel(voxel.position, voxel.resolution, false);
         group->removeVoxel(voxel);
     }
     
     // Add new voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        auto color = m_voxelManager->getVoxel(oldPos.position, oldPos.resolution);
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, color);
+        // Note: VoxelDataManager doesn't store color, only existence
+        m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
         group->addVoxel(newPos);
     }
     
@@ -469,7 +474,7 @@ bool ScaleGroupOperation::undo() {
     }
     
     for (const auto& voxel : uniqueNewPositions) {
-        m_voxelManager->removeVoxel(voxel.position, voxel.resolution);
+        m_voxelManager->setVoxel(voxel.position, voxel.resolution, false);
         group->removeVoxel(voxel);
     }
     
@@ -480,8 +485,8 @@ bool ScaleGroupOperation::undo() {
     }
     
     for (const auto& voxel : uniqueOldPositions) {
-        auto color = m_voxelManager->getVoxel(voxel.position, voxel.resolution);
-        m_voxelManager->setVoxel(voxel.position, voxel.resolution, color);
+        // Note: VoxelDataManager doesn't store color, only existence
+        m_voxelManager->setVoxel(voxel.position, voxel.resolution, true);
         group->addVoxel(voxel);
     }
     

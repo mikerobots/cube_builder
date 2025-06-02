@@ -9,6 +9,9 @@
 namespace VoxelEditor {
 namespace FileIO {
 
+// Forward declarations
+struct FileHeader;
+
 // File version management and migration
 class FileVersioning {
 public:

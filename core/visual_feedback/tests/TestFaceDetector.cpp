@@ -28,7 +28,7 @@ protected:
 
 TEST_F(FaceDetectorTest, RayMiss) {
     // Ray that doesn't hit any voxels
-    Ray ray(Vector3f(0, 0, 0), Vector3f(0, 0, 1));
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 0, 0), Vector3f(0, 0, 1));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
@@ -39,7 +39,7 @@ TEST_F(FaceDetectorTest, RayHit) {
     // Ray that hits the test voxel
     float voxelSize = getVoxelSize(resolution);
     Vector3f rayOrigin = Vector3f(5 * voxelSize, 5 * voxelSize, 0);
-    Ray ray(rayOrigin, Vector3f(0, 0, 1));
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
@@ -93,7 +93,7 @@ TEST_F(FaceDetectorTest, MaxRayDistance) {
     // Ray that would hit but is too far
     float voxelSize = getVoxelSize(resolution);
     Vector3f rayOrigin = Vector3f(5 * voxelSize, 5 * voxelSize, -2.0f);
-    Ray ray(rayOrigin, Vector3f(0, 0, 1));
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
@@ -106,7 +106,7 @@ TEST_F(FaceDetectorTest, RayFromInside) {
     Vector3f rayOrigin = Vector3f(5 * voxelSize + voxelSize * 0.5f, 
                                  5 * voxelSize + voxelSize * 0.5f, 
                                  5 * voxelSize + voxelSize * 0.5f);
-    Ray ray(rayOrigin, Vector3f(1, 0, 0));
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(1, 0, 0));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
@@ -118,7 +118,7 @@ TEST_F(FaceDetectorTest, RayFromInside) {
 TEST_F(FaceDetectorTest, EmptyGrid) {
     VoxelGrid emptyGrid(resolution, workspaceSize);
     
-    Ray ray(Vector3f(0, 0, 0), Vector3f(1, 1, 1));
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 0, 0), Vector3f(1, 1, 1));
     Face face = detector->detectFace(ray, emptyGrid, resolution);
     
     EXPECT_FALSE(face.isValid());
@@ -132,7 +132,7 @@ TEST_F(FaceDetectorTest, EmptyGrid) {
 TEST_F(FaceDetectorTest, GridBoundaryRay) {
     // Ray that starts outside grid bounds
     Vector3f rayOrigin = Vector3f(-1, -1, -1);
-    Ray ray(rayOrigin, Vector3f(1, 1, 1).normalized());
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(1, 1, 1).normalized());
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
@@ -150,7 +150,7 @@ TEST_F(FaceDetectorTest, MultipleVoxelRay) {
     // Ray that passes through multiple voxels
     float voxelSize = getVoxelSize(resolution);
     Vector3f rayOrigin = Vector3f(4 * voxelSize, 5 * voxelSize + voxelSize * 0.5f, 5 * voxelSize + voxelSize * 0.5f);
-    Ray ray(rayOrigin, Vector3f(1, 0, 0));
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(1, 0, 0));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     

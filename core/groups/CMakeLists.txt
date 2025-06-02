@@ -22,44 +22,37 @@ set(HEADERS
 )
 
 # Create library
-add_library(groups ${SOURCES} ${HEADERS})
+add_library(VoxelEditor_Groups ${SOURCES} ${HEADERS})
 
 # Include directories
-target_include_directories(groups 
+target_include_directories(VoxelEditor_Groups 
     PUBLIC 
         include
-        ../rendering
-        ../voxel_data
-        ../selection
-        ../camera
-        ../../foundation/math
-        ../../foundation/events
-        ../../foundation/memory
-        ../../foundation/logging
-    PRIVATE
         ../
+        ../../foundation
+    PRIVATE
         ../../
 )
 
 # Link dependencies
-target_link_libraries(groups
+target_link_libraries(VoxelEditor_Groups
     PUBLIC
-        math
-        rendering
-        voxel_data
-        events
+        VoxelEditor_Math
+        VoxelEditor_Rendering
+        VoxelEditor_VoxelData
+        VoxelEditor_Events
     PRIVATE
-        memory
-        logging
+        VoxelEditor_Memory
+        VoxelEditor_Logging
 )
 
 # Platform-specific settings
 if(WIN32)
-    target_compile_definitions(groups PRIVATE VOXEL_EDITOR_WINDOWS)
+    target_compile_definitions(VoxelEditor_Groups PRIVATE VOXEL_EDITOR_WINDOWS)
 elseif(APPLE)
-    target_compile_definitions(groups PRIVATE VOXEL_EDITOR_MACOS)
+    target_compile_definitions(VoxelEditor_Groups PRIVATE VOXEL_EDITOR_MACOS)
 else()
-    target_compile_definitions(groups PRIVATE VOXEL_EDITOR_LINUX)
+    target_compile_definitions(VoxelEditor_Groups PRIVATE VOXEL_EDITOR_LINUX)
 endif()
 
 # Test executable

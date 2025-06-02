@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/michaelhalloran/cube_edit/core/undo_redo/../.. -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/logging -I/Users/michaelhalloran/cube_edit/core/voxel_data -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/foundation/memory -I/Users/michaelhalloran/cube_edit/core/selection/../.. -I/Users/michaelhalloran/cube_edit/core/rendering -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/core/camera -isystem /opt/homebrew/include
 
-CXX_FLAGSarm64 = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++20
+CXX_FLAGSarm64 = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++20
 
-CXX_FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++20
+CXX_FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++20
 

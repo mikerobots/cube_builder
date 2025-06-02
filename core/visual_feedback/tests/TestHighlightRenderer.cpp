@@ -46,7 +46,7 @@ TEST_F(HighlightRendererTest, VoxelHighlight) {
 }
 
 TEST_F(HighlightRendererTest, MultiSelection) {
-    Selection::SelectionSet selection;
+    VoxelEditor::Selection::SelectionSet selection;
     // TODO: Add voxels to selection once SelectionSet interface is complete
     
     HighlightStyle style = HighlightStyle::Selection();

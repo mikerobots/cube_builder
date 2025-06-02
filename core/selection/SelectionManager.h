@@ -1,12 +1,13 @@
 #pragma once
 
+#include <stack>
+#include <unordered_map>
+#include <memory>
+
 #include "SelectionTypes.h"
 #include "SelectionSet.h"
 #include "../voxel_data/VoxelDataManager.h"
 #include "../../foundation/events/EventDispatcher.h"
-#include <stack>
-#include <unordered_map>
-#include <memory>
 
 namespace VoxelEditor {
 namespace Selection {

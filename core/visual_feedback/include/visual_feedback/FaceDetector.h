@@ -1,8 +1,9 @@
 #pragma once
 
+#include <vector>
+
 #include "FeedbackTypes.h"
 #include "VoxelGrid.h"
-#include <vector>
 
 namespace VoxelEditor {
 namespace VisualFeedback {

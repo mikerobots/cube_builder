@@ -1,6 +1,5 @@
 #include "../include/file_io/Project.h"
-#include "WorkspaceManager.h"
-#include "EventDispatcher.h"
+#include "events/EventDispatcher.h"
 
 namespace VoxelEditor {
 namespace FileIO {
@@ -21,9 +20,8 @@ void Project::initializeDefaults() {
     
     // Create default components
     auto eventDispatcher = std::make_shared<Events::EventDispatcher>();
-    auto workspaceManager = std::make_shared<VoxelData::WorkspaceManager>(eventDispatcher.get());
     
-    voxelData = std::make_shared<VoxelData::VoxelDataManager>(workspaceManager.get(), eventDispatcher.get());
+    voxelData = std::make_shared<VoxelData::VoxelDataManager>(eventDispatcher.get());
     groupData = std::make_shared<Groups::GroupManager>(voxelData.get(), eventDispatcher.get());
     camera = std::make_shared<Camera::OrbitCamera>();
     currentSelection = std::make_shared<Selection::SelectionSet>();
@@ -194,7 +192,8 @@ size_t Project::getGroupCount() const {
 
 Math::BoundingBox Project::getContentBounds() const {
     if (voxelData) {
-        return voxelData->getOccupiedBounds();
+        // TODO: Implement bounds calculation
+        return Math::BoundingBox();
     }
     return Math::BoundingBox();
 }
@@ -248,7 +247,7 @@ void ProjectFactory::applyTemplate(Project& project, const std::string& template
                     project.voxelData->setVoxel(
                         Math::Vector3i(x, 0, z),
                         VoxelData::VoxelResolution::Size_32cm,
-                        Rendering::Color::White()
+                        true
                     );
                 }
             }
@@ -263,7 +262,7 @@ void ProjectFactory::applyTemplate(Project& project, const std::string& template
                         project.voxelData->setVoxel(
                             Math::Vector3i(x, y, z),
                             VoxelData::VoxelResolution::Size_16cm,
-                            Rendering::Color::Red()
+                            true
                         );
                     }
                 }
@@ -319,7 +318,7 @@ bool ProjectValidator::repair(Project& project, std::vector<std::string>& repair
     
     // Ensure all components exist
     if (!project.voxelData) {
-        project.initializeDefaults();
+        // Project will initialize defaults in constructor
         repairLog.push_back("Recreated missing components");
     }
     

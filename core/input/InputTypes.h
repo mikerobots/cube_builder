@@ -1,14 +1,15 @@
 #pragma once
 
-#include "../../foundation/math/Vector2f.h"
-#include "../../foundation/math/Vector2i.h"
-#include "../../foundation/math/Vector3f.h"
-#include "../../foundation/math/Quaternion.h"
 #include <chrono>
 #include <vector>
 #include <array>
 #include <functional>
 #include <deque>
+
+#include "../../foundation/math/Vector2f.h"
+#include "../../foundation/math/Vector2i.h"
+#include "../../foundation/math/Vector3f.h"
+#include "../../foundation/math/Quaternion.h"
 
 namespace VoxelEditor {
 namespace Input {

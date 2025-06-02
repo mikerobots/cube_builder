@@ -37,7 +37,7 @@ TEST_F(FeedbackRendererTest, EnableDisable) {
 
 TEST_F(FeedbackRendererTest, FaceHighlight) {
     Face face(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    Color color = Color::Yellow();
+    Color color = Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
     
     EXPECT_NO_THROW(renderer->renderFaceHighlight(face, color));
     EXPECT_NO_THROW(renderer->clearFaceHighlight());
@@ -67,8 +67,8 @@ TEST_F(FeedbackRendererTest, VoxelPreview) {
 }
 
 TEST_F(FeedbackRendererTest, SelectionVisualization) {
-    Selection::SelectionSet selection;
-    Color color = Color::Cyan();
+    VoxelEditor::Selection::SelectionSet selection;
+    Color color = Color(0.0f, 1.0f, 1.0f, 1.0f); // Cyan
     
     EXPECT_NO_THROW(renderer->renderSelection(selection, color));
     
@@ -87,7 +87,7 @@ TEST_F(FeedbackRendererTest, GroupVisualization) {
     std::vector<GroupId> groups = {1, 2, 3};
     
     EXPECT_NO_THROW(renderer->renderGroupOutlines(groups));
-    EXPECT_NO_THROW(renderer->renderGroupBounds(1, Color::Orange()));
+    EXPECT_NO_THROW(renderer->renderGroupBounds(1, Color(1.0f, 0.5f, 0.0f, 1.0f))); // Orange
     
     // Test enable/disable
     renderer->setGroupVisualizationEnabled(false);
@@ -99,7 +99,7 @@ TEST_F(FeedbackRendererTest, GroupVisualization) {
 
 TEST_F(FeedbackRendererTest, WorkspaceVisualization) {
     BoundingBox workspace(Vector3f(0, 0, 0), Vector3f(10, 10, 10));
-    Color color = Color::Gray();
+    Color color = Color(0.5f, 0.5f, 0.5f, 1.0f); // Gray
     
     EXPECT_NO_THROW(renderer->renderWorkspaceBounds(workspace, color));
     EXPECT_NO_THROW(renderer->renderGridLines(VoxelResolution::Size_32cm, 0.5f));
@@ -189,12 +189,12 @@ TEST_F(FeedbackRendererTest, DisabledRenderer) {
     renderer->setEnabled(false);
     
     Face face(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    renderer->renderFaceHighlight(face, Color::Yellow());
+    renderer->renderFaceHighlight(face, Color(1.0f, 1.0f, 0.0f, 1.0f)); // Yellow
     
     renderer->renderVoxelPreview(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, Color::Green());
     
-    Selection::SelectionSet selection;
-    renderer->renderSelection(selection, Color::Cyan());
+    VoxelEditor::Selection::SelectionSet selection;
+    renderer->renderSelection(selection, Color(0.0f, 1.0f, 1.0f, 1.0f)); // Cyan
     
     // Should not crash when updating disabled renderer
     EXPECT_NO_THROW(renderer->update(0.016f));
@@ -205,14 +205,14 @@ TEST_F(FeedbackRendererTest, ComplexScene) {
     
     // Face highlight
     Face face(Vector3i(5, 5, 5), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    renderer->renderFaceHighlight(face, Color::Yellow());
+    renderer->renderFaceHighlight(face, Color(1.0f, 1.0f, 0.0f, 1.0f)); // Yellow
     
     // Voxel preview
     renderer->renderVoxelPreview(Vector3i(6, 5, 5), VoxelResolution::Size_32cm, Color::Green());
     
     // Selection
-    Selection::SelectionSet selection;
-    renderer->renderSelection(selection, Color::Cyan());
+    VoxelEditor::Selection::SelectionSet selection;
+    renderer->renderSelection(selection, Color(0.0f, 1.0f, 1.0f, 1.0f)); // Cyan
     
     // Group outlines
     std::vector<GroupId> groups = {1, 2, 3};
@@ -220,7 +220,7 @@ TEST_F(FeedbackRendererTest, ComplexScene) {
     
     // Workspace bounds
     BoundingBox workspace(Vector3f(0, 0, 0), Vector3f(20, 20, 20));
-    renderer->renderWorkspaceBounds(workspace, Color::Gray());
+    renderer->renderWorkspaceBounds(workspace, Color(0.5f, 0.5f, 0.5f, 1.0f)); // Gray
     
     // Performance metrics
     RenderStats stats;

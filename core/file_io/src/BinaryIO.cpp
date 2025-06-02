@@ -73,7 +73,7 @@ void BinaryWriter::writeVector3f(const Math::Vector3f& vec) {
 
 void BinaryWriter::writeMatrix4f(const Math::Matrix4f& mat) {
     for (int i = 0; i < 16; ++i) {
-        writeFloat(mat.data[i]);
+        writeFloat(mat.m[i]);
     }
 }
 
@@ -192,7 +192,7 @@ Math::Vector3f BinaryReader::readVector3f() {
 Math::Matrix4f BinaryReader::readMatrix4f() {
     Math::Matrix4f mat;
     for (int i = 0; i < 16; ++i) {
-        mat.data[i] = readFloat();
+        mat.m[i] = readFloat();
     }
     return mat;
 }

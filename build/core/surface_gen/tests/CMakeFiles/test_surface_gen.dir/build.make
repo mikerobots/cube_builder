@@ -140,7 +140,7 @@ core/surface_gen/tests/test_surface_gen: core/surface_gen/tests/CMakeFiles/test_
 core/surface_gen/tests/test_surface_gen: core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/TestDualContouring.cpp.o
 core/surface_gen/tests/test_surface_gen: core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/TestSurfaceGenerator.cpp.o
 core/surface_gen/tests/test_surface_gen: core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make
-core/surface_gen/tests/test_surface_gen: core/surface_gen/libcore_surface_gen.a
+core/surface_gen/tests/test_surface_gen: core/surface_gen/libVoxelEditor_SurfaceGen.a
 core/surface_gen/tests/test_surface_gen: core/voxel_data/libVoxelEditor_VoxelData.a
 core/surface_gen/tests/test_surface_gen: /opt/homebrew/lib/libgtest_main.a
 core/surface_gen/tests/test_surface_gen: /opt/homebrew/lib/libgtest.a

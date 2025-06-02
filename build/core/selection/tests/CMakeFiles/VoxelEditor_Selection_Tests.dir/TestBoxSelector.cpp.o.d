@@ -1001,4 +1001,5 @@ core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestBoxSelector.
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/memory/MemoryTracker.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/../events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/../events/CommonEvents.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Matrix4f.h
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Matrix4f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h

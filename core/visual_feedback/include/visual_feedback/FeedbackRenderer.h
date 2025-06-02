@@ -1,5 +1,9 @@
 #pragma once
 
+#include <memory>
+#include <vector>
+#include <unordered_map>
+
 #include "FeedbackTypes.h"
 #include "HighlightRenderer.h"
 #include "OutlineRenderer.h"
@@ -8,9 +12,6 @@
 #include "SelectionSet.h"
 #include "Camera.h"
 #include "RenderContext.h"
-#include <memory>
-#include <vector>
-#include <unordered_map>
 
 namespace VoxelEditor {
 namespace VisualFeedback {

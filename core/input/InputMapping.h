@@ -1,8 +1,9 @@
 #pragma once
 
-#include "InputTypes.h"
 #include <unordered_map>
 #include <string>
+
+#include "InputTypes.h"
 
 namespace VoxelEditor {
 namespace Input {

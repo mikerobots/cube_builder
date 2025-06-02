@@ -92,7 +92,7 @@ test_history_manager_EXTERNAL_OBJECTS =
 
 core/undo_redo/tests/test_history_manager: core/undo_redo/tests/CMakeFiles/test_history_manager.dir/TestHistoryManager.cpp.o
 core/undo_redo/tests/test_history_manager: core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make
-core/undo_redo/tests/test_history_manager: core/undo_redo/libcore_undo_redo.a
+core/undo_redo/tests/test_history_manager: core/undo_redo/libVoxelEditor_UndoRedo.a
 core/undo_redo/tests/test_history_manager: /opt/homebrew/lib/libgtest_main.a
 core/undo_redo/tests/test_history_manager: core/selection/libVoxelEditor_Selection.a
 core/undo_redo/tests/test_history_manager: core/voxel_data/libVoxelEditor_VoxelData.a

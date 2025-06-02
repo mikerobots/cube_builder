@@ -26,11 +26,11 @@ set(SOURCES
     src/FileTypes.cpp
     src/BinaryIO.cpp
     src/Project.cpp
-    src/BinaryFormat.cpp
-    src/STLExporter.cpp
-    src/Compression.cpp
-    src/FileVersioning.cpp
     src/FileManager.cpp
+    src/Compression.cpp
+    src/BinaryFormat.cpp
+    src/FileVersioning.cpp
+    src/STLExporter.cpp
 )
 
 # Header files
@@ -46,10 +46,10 @@ set(HEADERS
 )
 
 # Create library
-add_library(file_io ${SOURCES} ${HEADERS})
+add_library(VoxelEditor_FileIO ${SOURCES} ${HEADERS})
 
 # Include directories
-target_include_directories(file_io 
+target_include_directories(VoxelEditor_FileIO 
     PUBLIC 
         include
         ../rendering
@@ -69,37 +69,37 @@ target_include_directories(file_io
 
 # Add LZ4 include directories if found
 if(LZ4_FOUND)
-    target_include_directories(file_io PRIVATE ${LZ4_INCLUDE_DIRS})
-    target_compile_definitions(file_io PRIVATE HAVE_LZ4)
+    target_include_directories(VoxelEditor_FileIO PRIVATE ${LZ4_INCLUDE_DIRS})
+    target_compile_definitions(VoxelEditor_FileIO PRIVATE HAVE_LZ4)
 endif()
 
 # Link dependencies
-target_link_libraries(file_io
+target_link_libraries(VoxelEditor_FileIO
     PUBLIC
-        math
-        rendering
-        voxel_data
-        groups
-        selection
-        camera
-        events
+        VoxelEditor_Math
+        VoxelEditor_Rendering
+        VoxelEditor_VoxelData
+        VoxelEditor_Groups
+        VoxelEditor_Selection
+        VoxelEditor_Camera
+        VoxelEditor_Events
     PRIVATE
-        memory
-        logging
+        VoxelEditor_Memory
+        VoxelEditor_Logging
 )
 
 # Link LZ4 if found
 if(LZ4_FOUND)
-    target_link_libraries(file_io PRIVATE ${LZ4_LIBRARIES})
+    target_link_libraries(VoxelEditor_FileIO PRIVATE ${LZ4_LIBRARIES})
 endif()
 
 # Platform-specific settings
 if(WIN32)
-    target_compile_definitions(file_io PRIVATE VOXEL_EDITOR_WINDOWS)
+    target_compile_definitions(VoxelEditor_FileIO PRIVATE VOXEL_EDITOR_WINDOWS)
 elseif(APPLE)
-    target_compile_definitions(file_io PRIVATE VOXEL_EDITOR_MACOS)
+    target_compile_definitions(VoxelEditor_FileIO PRIVATE VOXEL_EDITOR_MACOS)
 else()
-    target_compile_definitions(file_io PRIVATE VOXEL_EDITOR_LINUX)
+    target_compile_definitions(VoxelEditor_FileIO PRIVATE VOXEL_EDITOR_LINUX)
 endif()
 
 # Test executable

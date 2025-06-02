@@ -981,11 +981,14 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_MouseHandler.cpp.o:
   /Users/michaelhalloran/cube_edit/core/input/../camera/Camera.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Matrix4f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Ray.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector2f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventBase.h \
   /Users/michaelhalloran/cube_edit/core/input/tests/../../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/core/input/tests/../../../foundation/math/Vector2f.h \

@@ -924,17 +924,20 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/MouseHandler.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventDispatcher.h \
-  /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
-  /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
+  /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
+  /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
   /Users/michaelhalloran/cube_edit/core/input/../camera/Camera.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Matrix4f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Ray.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector2f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventBase.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/MathUtils.h

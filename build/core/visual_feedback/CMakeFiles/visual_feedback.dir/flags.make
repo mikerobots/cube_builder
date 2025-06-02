@@ -4,9 +4,9 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = -DVOXEL_EDITOR_MACOS
 
-CXX_INCLUDES = -I/Users/michaelhalloran/cube_edit/core/visual_feedback/include -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../rendering -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../voxel_data -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../selection -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../camera -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/math -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/events -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/memory -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/logging -I/Users/michaelhalloran/cube_edit/core/visual_feedback/.. -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../..
+CXX_INCLUDES = -I/Users/michaelhalloran/cube_edit/core/visual_feedback/include -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../rendering -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../voxel_data -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../selection -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../camera -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/math -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/events -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/memory -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/logging -I/Users/michaelhalloran/cube_edit/core/visual_feedback/.. -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../.. -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/foundation/math
 
-CXX_FLAGSarm64 = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++17
+CXX_FLAGSarm64 = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++20
 
-CXX_FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++17
+CXX_FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=gnu++20
 

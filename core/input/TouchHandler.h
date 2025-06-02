@@ -1,13 +1,14 @@
 #pragma once
 
-#include "InputHandler.h"
-#include "InputTypes.h"
-#include "../../foundation/events/EventBase.h"
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
 #include <memory>
 #include <chrono>
+
+#include "InputHandler.h"
+#include "InputTypes.h"
+#include "../../foundation/events/EventBase.h"
 
 namespace VoxelEditor {
 namespace Input {

@@ -51,13 +51,15 @@ public:
     FileError getLastError() const { return m_lastError; }
     std::string getLastErrorMessage() const { return m_lastErrorMessage; }
     
+    // Header operations (public for FileManager)
+    bool readHeader(BinaryReader& reader, FileHeader& header);
+    
 private:
     FileError m_lastError = FileError::None;
     std::string m_lastErrorMessage;
     
     // Header operations
     bool writeHeader(BinaryWriter& writer, const FileHeader& header);
-    bool readHeader(BinaryReader& reader, FileHeader& header);
     
     // Chunk operations
     bool writeChunk(BinaryWriter& writer, ChunkType type, const std::vector<uint8_t>& data);

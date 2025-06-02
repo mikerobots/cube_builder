@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <vector>
+
 #include "Command.h"
 #include "../selection/SelectionManager.h"
 #include "../selection/SelectionSet.h"
@@ -7,8 +10,6 @@
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/BoundingBox.h"
 #include "../../foundation/math/Matrix4f.h"
-#include <memory>
-#include <vector>
 
 namespace VoxelEditor {
 namespace UndoRedo {

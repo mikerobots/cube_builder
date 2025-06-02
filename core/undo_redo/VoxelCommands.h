@@ -1,12 +1,13 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+
 #include "Command.h"
 #include "../voxel_data/VoxelDataManager.h"
 #include "../voxel_data/VoxelTypes.h"
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/BoundingBox.h"
-#include <vector>
-#include <memory>
 
 namespace VoxelEditor {
 namespace UndoRedo {

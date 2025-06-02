@@ -16,7 +16,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/michaelhalloran/cube_edit/build/core/surface_gen/CMakeFiles/core_surface_gen.dir/DependInfo.cmake"
+  "/Users/michaelhalloran/cube_edit/build/core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/DependInfo.cmake"
   "/Users/michaelhalloran/cube_edit/build/core/voxel_data/CMakeFiles/VoxelEditor_VoxelData.dir/DependInfo.cmake"
   )
 

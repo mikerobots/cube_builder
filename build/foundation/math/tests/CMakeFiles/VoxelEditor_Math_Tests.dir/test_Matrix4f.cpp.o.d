@@ -927,4 +927,5 @@ foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Matrix4f.cpp.o:
   /opt/homebrew/include/gtest/gtest_pred_impl.h \
   /opt/homebrew/include/gtest/gtest_prod.h \
   /Users/michaelhalloran/cube_edit/foundation/math/tests/../Matrix4f.h \
-  /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h

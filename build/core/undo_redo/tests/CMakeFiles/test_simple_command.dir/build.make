@@ -92,7 +92,7 @@ test_simple_command_EXTERNAL_OBJECTS =
 
 core/undo_redo/tests/test_simple_command: core/undo_redo/tests/CMakeFiles/test_simple_command.dir/TestSimpleCommand.cpp.o
 core/undo_redo/tests/test_simple_command: core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make
-core/undo_redo/tests/test_simple_command: core/undo_redo/libcore_undo_redo.a
+core/undo_redo/tests/test_simple_command: core/undo_redo/libVoxelEditor_UndoRedo.a
 core/undo_redo/tests/test_simple_command: /opt/homebrew/lib/libgtest_main.a
 core/undo_redo/tests/test_simple_command: core/selection/libVoxelEditor_Selection.a
 core/undo_redo/tests/test_simple_command: core/voxel_data/libVoxelEditor_VoxelData.a

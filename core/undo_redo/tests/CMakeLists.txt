@@ -10,7 +10,7 @@ add_executable(test_simple_command
 
 target_link_libraries(test_undo_redo
     PRIVATE
-        core_undo_redo
+        VoxelEditor_UndoRedo
         VoxelEditor_Math
         VoxelEditor_Logging
         GTest::gtest_main
@@ -20,7 +20,7 @@ add_test(NAME test_undo_redo COMMAND test_undo_redo)
 
 target_link_libraries(test_simple_command
     PRIVATE
-        core_undo_redo
+        VoxelEditor_UndoRedo
         GTest::gtest_main
 )
 
@@ -33,7 +33,7 @@ add_executable(test_history_manager
 
 target_link_libraries(test_history_manager
     PRIVATE
-        core_undo_redo
+        VoxelEditor_UndoRedo
         GTest::gtest_main
 )
 

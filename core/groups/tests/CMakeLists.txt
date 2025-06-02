@@ -18,13 +18,13 @@ add_executable(groups_tests ${TEST_SOURCES})
 # Link libraries
 target_link_libraries(groups_tests
     PRIVATE
-        groups
-        voxel_data
-        rendering
-        math
-        events
-        memory
-        logging
+        VoxelEditor_Groups
+        VoxelEditor_VoxelData
+        VoxelEditor_Rendering
+        VoxelEditor_Math
+        VoxelEditor_Events
+        VoxelEditor_Memory
+        VoxelEditor_Logging
         GTest::GTest
         GTest::Main
 )

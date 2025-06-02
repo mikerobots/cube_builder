@@ -1,7 +1,6 @@
 #pragma once
 
 #include "FileTypes.h"
-#include "Mesh.h"
 #include <string>
 #include <vector>
 #include <fstream>

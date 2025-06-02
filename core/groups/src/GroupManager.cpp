@@ -1,4 +1,5 @@
 #include "../include/groups/GroupManager.h"
+#include "../include/groups/GroupEvents.h"
 #include <algorithm>
 #include <sstream>
 
@@ -530,7 +531,7 @@ Math::BoundingBox GroupManager::getGroupsBounds() const {
                 bounds = groupBounds;
                 first = false;
             } else {
-                bounds = bounds.merge(groupBounds);
+                bounds.expandToInclude(groupBounds);
             }
         }
     }

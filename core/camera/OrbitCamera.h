@@ -1,8 +1,9 @@
 #pragma once
 
+#include <algorithm>
+
 #include "Camera.h"
 #include "../../foundation/math/MathUtils.h"
-#include <algorithm>
 
 namespace VoxelEditor {
 namespace Camera {

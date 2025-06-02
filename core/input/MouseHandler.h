@@ -1,13 +1,14 @@
 #pragma once
 
+#include <array>
+#include <chrono>
+
 #include "InputHandler.h"
 #include "InputTypes.h"
 #include "../camera/Camera.h"
 #include "../../foundation/math/Ray.h"
 #include "../../foundation/math/Vector2i.h"
 #include "../../foundation/events/EventBase.h"
-#include <array>
-#include <chrono>
 
 namespace VoxelEditor {
 

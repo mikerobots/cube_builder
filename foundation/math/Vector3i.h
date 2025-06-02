@@ -146,37 +146,37 @@ public:
 
     static Vector3i min(const Vector3i& a, const Vector3i& b) {
         return Vector3i(
-            std::min(a.x, b.x),
-            std::min(a.y, b.y),
-            std::min(a.z, b.z)
+            ::std::min(a.x, b.x),
+            ::std::min(a.y, b.y),
+            ::std::min(a.z, b.z)
         );
     }
 
     static Vector3i max(const Vector3i& a, const Vector3i& b) {
         return Vector3i(
-            std::max(a.x, b.x),
-            std::max(a.y, b.y),
-            std::max(a.z, b.z)
+            ::std::max(a.x, b.x),
+            ::std::max(a.y, b.y),
+            ::std::max(a.z, b.z)
         );
     }
 
     static Vector3i clamp(const Vector3i& value, const Vector3i& min, const Vector3i& max) {
         return Vector3i(
-            std::clamp(value.x, min.x, max.x),
-            std::clamp(value.y, min.y, max.y),
-            std::clamp(value.z, min.z, max.z)
+            ::std::clamp(value.x, min.x, max.x),
+            ::std::clamp(value.y, min.y, max.y),
+            ::std::clamp(value.z, min.z, max.z)
         );
     }
 
     size_t hash() const {
-        size_t h1 = std::hash<int>{}(x);
-        size_t h2 = std::hash<int>{}(y);
-        size_t h3 = std::hash<int>{}(z);
+        size_t h1 = ::std::hash<int>{}(x);
+        size_t h2 = ::std::hash<int>{}(y);
+        size_t h3 = ::std::hash<int>{}(z);
         return h1 ^ (h2 << 1) ^ (h3 << 2);
     }
 
     std::string toString() const {
-        return "(" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")";
+        return "(" + ::std::to_string(x) + ", " + ::std::to_string(y) + ", " + ::std::to_string(z) + ")";
     }
 };
 

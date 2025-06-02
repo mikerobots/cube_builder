@@ -18,6 +18,41 @@ if(BUILD_TESTS)
     enable_testing()
 endif()
 
+# External dependencies
+include(FetchContent)
+
+# GLFW
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG 3.3.8
+)
+FetchContent_MakeAvailable(glfw)
+
+# GLAD
+add_subdirectory(external/glad)
+
+# GLM
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG 0.9.9.8
+)
+FetchContent_MakeAvailable(glm)
+
 # Add subdirectories
 add_subdirectory(foundation)
 add_subdirectory(core)
+
+# Add applications
+if(BUILD_CLI)
+    add_subdirectory(apps/cli)
+endif()
+
+if(BUILD_QT_DESKTOP)
+    add_subdirectory(apps/desktop)
+endif()
+
+if(BUILD_VR)
+    add_subdirectory(apps/vr)
+endif()

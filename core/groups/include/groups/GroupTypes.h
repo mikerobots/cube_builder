@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Vector3f.h"
-#include "Vector3i.h"
-#include "BoundingBox.h"
-#include "RenderTypes.h"
-#include "VoxelTypes.h"
+#include "math/Vector3f.h"
+#include "math/Vector3i.h"
+#include "math/BoundingBox.h"
+#include "rendering/RenderTypes.h"
+#include "voxel_data/VoxelTypes.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -60,7 +60,9 @@ enum class GroupModificationType {
     ColorChanged,
     Locked,
     Unlocked,
-    ParentChanged
+    ParentChanged,
+    PropertiesChanged,
+    LockChanged
 };
 
 // Group metadata

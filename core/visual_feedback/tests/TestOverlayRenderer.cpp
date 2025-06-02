@@ -113,7 +113,7 @@ TEST_F(OverlayRendererTest, BoundingBoxes) {
         BoundingBox(Vector3f(-1, -1, -1), Vector3f(0, 0, 0))
     };
     
-    Rendering::Color color = Rendering::Color::Red();
+    VoxelEditor::Rendering::Color color = VoxelEditor::Rendering::Color::Red();
     
     // Note: This requires a camera parameter which we don't have in this test
     // EXPECT_NO_THROW(renderer->renderBoundingBoxes(boxes, color, camera));
@@ -124,9 +124,9 @@ TEST_F(OverlayRendererTest, BoundingBoxes) {
 TEST_F(OverlayRendererTest, Raycast) {
     renderer->beginFrame(1920, 1080);
     
-    Ray ray(Vector3f(0, 0, 0), Vector3f(1, 0, 0));
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 0, 0), Vector3f(1, 0, 0));
     float length = 10.0f;
-    Rendering::Color color = Rendering::Color::Yellow();
+    VoxelEditor::Rendering::Color color = VoxelEditor::Rendering::Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
     
     // Note: This requires a camera parameter which we don't have in this test
     // EXPECT_NO_THROW(renderer->renderRaycast(ray, length, color, camera));

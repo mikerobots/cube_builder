@@ -1,23 +1,24 @@
 #pragma once
 
+#include <memory>
+
 #include "VoxelTypes.h"
 #include "SparseOctree.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
-#include <memory>
 
 namespace VoxelEditor {
 namespace VoxelData {
 
 class VoxelGrid {
 public:
-    VoxelGrid(VoxelResolution resolution, const Math::Vector3f& workspaceSize)
+    VoxelGrid(::VoxelEditor::VoxelData::VoxelResolution resolution, const Math::Vector3f& workspaceSize)
         : m_resolution(resolution)
         , m_workspaceSize(workspaceSize)
         , m_voxelCount(0) {
         
         // Calculate maximum grid dimensions for this resolution
-        m_maxDimensions = calculateMaxGridDimensions(resolution, workspaceSize);
+        m_maxDimensions = ::VoxelEditor::VoxelData::calculateMaxGridDimensions(resolution, workspaceSize);
         
         // Calculate octree depth needed to contain the maximum dimensions
         int maxDim = std::max({m_maxDimensions.x, m_maxDimensions.y, m_maxDimensions.z});
@@ -72,32 +73,32 @@ public:
     }
     
     // Convenience methods using VoxelPosition
-    bool setVoxel(const VoxelPosition& pos, bool value) {
+    bool setVoxel(const ::VoxelEditor::VoxelData::VoxelPosition& pos, bool value) {
         if (pos.resolution != m_resolution) {
             return false;
         }
         return setVoxel(pos.gridPos, value);
     }
     
-    bool getVoxel(const VoxelPosition& pos) const {
+    bool getVoxel(const ::VoxelEditor::VoxelData::VoxelPosition& pos) const {
         if (pos.resolution != m_resolution) {
             return false;
         }
         return getVoxel(pos.gridPos);
     }
     
-    bool hasVoxel(const VoxelPosition& pos) const {
+    bool hasVoxel(const ::VoxelEditor::VoxelData::VoxelPosition& pos) const {
         return getVoxel(pos);
     }
     
     // World space operations
     bool setVoxelAtWorldPos(const Math::Vector3f& worldPos, bool value) {
-        VoxelPosition pos = VoxelPosition::fromWorldSpace(worldPos, m_resolution, m_workspaceSize);
+        ::VoxelEditor::VoxelData::VoxelPosition pos = ::VoxelEditor::VoxelData::VoxelPosition::fromWorldSpace(worldPos, m_resolution, m_workspaceSize);
         return setVoxel(pos, value);
     }
     
     bool getVoxelAtWorldPos(const Math::Vector3f& worldPos) const {
-        VoxelPosition pos = VoxelPosition::fromWorldSpace(worldPos, m_resolution, m_workspaceSize);
+        ::VoxelEditor::VoxelData::VoxelPosition pos = ::VoxelEditor::VoxelData::VoxelPosition::fromWorldSpace(worldPos, m_resolution, m_workspaceSize);
         return getVoxel(pos);
     }
     
@@ -111,9 +112,9 @@ public:
         m_voxelCount = 0;
     }
     
-    std::vector<VoxelPosition> getAllVoxels() const {
+    std::vector<::VoxelEditor::VoxelData::VoxelPosition> getAllVoxels() const {
         std::vector<Math::Vector3i> gridPositions = m_octree->getAllVoxels();
-        std::vector<VoxelPosition> voxelPositions;
+        std::vector<::VoxelEditor::VoxelData::VoxelPosition> voxelPositions;
         voxelPositions.reserve(gridPositions.size());
         
         for (const auto& gridPos : gridPositions) {
@@ -124,7 +125,7 @@ public:
     }
     
     // Grid information
-    VoxelResolution getResolution() const { return m_resolution; }
+    ::VoxelEditor::VoxelData::VoxelResolution getResolution() const { return m_resolution; }
     float getVoxelSize() const { return ::VoxelEditor::VoxelData::getVoxelSize(m_resolution); }
     const Math::Vector3f& getWorkspaceSize() const { return m_workspaceSize; }
     const Math::Vector3i& getMaxDimensions() const { return m_maxDimensions; }
@@ -133,12 +134,12 @@ public:
     
     // Coordinate conversion methods
     Math::Vector3f gridToWorldPos(const Math::Vector3i& gridPos) const {
-        VoxelPosition voxelPos(gridPos, m_resolution);
+        ::VoxelEditor::VoxelData::VoxelPosition voxelPos(gridPos, m_resolution);
         return voxelPos.toWorldSpace(m_workspaceSize);
     }
     
     Math::Vector3i worldToGridPos(const Math::Vector3f& worldPos) const {
-        VoxelPosition voxelPos = VoxelPosition::fromWorldSpace(worldPos, m_resolution, m_workspaceSize);
+        ::VoxelEditor::VoxelData::VoxelPosition voxelPos = ::VoxelEditor::VoxelData::VoxelPosition::fromWorldSpace(worldPos, m_resolution, m_workspaceSize);
         return voxelPos.gridPos;
     }
     
@@ -153,12 +154,12 @@ public:
     
     // Workspace resize support
     bool resizeWorkspace(const Math::Vector3f& newWorkspaceSize) {
-        if (!WorkspaceConstraints::isValidSize(newWorkspaceSize)) {
+        if (!::VoxelEditor::VoxelData::WorkspaceConstraints::isValidSize(newWorkspaceSize)) {
             return false;
         }
         
         // Calculate new maximum dimensions
-        Math::Vector3i newMaxDimensions = calculateMaxGridDimensions(m_resolution, newWorkspaceSize);
+        Math::Vector3i newMaxDimensions = ::VoxelEditor::VoxelData::calculateMaxGridDimensions(m_resolution, newWorkspaceSize);
         
         // If shrinking, check if any voxels would be out of bounds
         if (newMaxDimensions.x < m_maxDimensions.x ||
@@ -217,7 +218,7 @@ public:
     }
     
 private:
-    VoxelResolution m_resolution;
+    ::VoxelEditor::VoxelData::VoxelResolution m_resolution;
     Math::Vector3f m_workspaceSize;
     Math::Vector3i m_maxDimensions;
     std::unique_ptr<SparseOctree> m_octree;

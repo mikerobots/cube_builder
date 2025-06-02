@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Vector3f.h"
-#include "Matrix4f.h"
+#include "math/Vector3f.h"
+#include "math/Matrix4f.h"
 
 namespace VoxelEditor {
 namespace FileIO {

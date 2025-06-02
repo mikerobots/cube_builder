@@ -1,10 +1,11 @@
 #pragma once
 
+#include <queue>
+#include <unordered_set>
+
 #include "SelectionTypes.h"
 #include "SelectionSet.h"
 #include "../voxel_data/VoxelDataManager.h"
-#include <queue>
-#include <unordered_set>
 
 namespace VoxelEditor {
 namespace Selection {

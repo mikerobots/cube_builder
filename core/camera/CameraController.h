@@ -1,10 +1,11 @@
 #pragma once
 
+#include <memory>
+
 #include "OrbitCamera.h"
 #include "Viewport.h"
 #include "../../foundation/math/Vector2i.h"
 #include "../../foundation/math/Ray.h"
-#include <memory>
 
 namespace VoxelEditor {
 namespace Camera {

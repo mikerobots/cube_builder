@@ -93,14 +93,14 @@ TEST_F(FeedbackTypesTest, RayConstruction) {
     Vector3f origin(1, 2, 3);
     Vector3f direction(0, 1, 0);
     
-    Ray ray(origin, direction);
+    VoxelEditor::VisualFeedback::Ray ray(origin, direction);
     
     EXPECT_EQ(ray.origin, origin);
     EXPECT_FLOAT_EQ(ray.direction.length(), 1.0f); // Should be normalized
 }
 
 TEST_F(FeedbackTypesTest, RayPointAt) {
-    Ray ray(Vector3f(0, 0, 0), Vector3f(1, 0, 0));
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 0, 0), Vector3f(1, 0, 0));
     
     Vector3f point = ray.pointAt(5.0f);
     

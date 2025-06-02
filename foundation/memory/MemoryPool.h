@@ -6,6 +6,8 @@
 #include <memory>
 #include <cstddef>
 #include <cassert>
+#include <algorithm>
+#include <new>
 
 namespace VoxelEditor {
 namespace Memory {
@@ -31,7 +33,7 @@ public:
     MemoryPool& operator=(const MemoryPool&) = delete;
     
     void* allocate() {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         
         if (m_freeList.empty()) {
             allocateNewBlock();
@@ -47,7 +49,7 @@ public:
     void deallocate(void* ptr) {
         if (!ptr) return;
         
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         
         if (!isValidPointer(ptr)) {
             return;
@@ -59,13 +61,13 @@ public:
     
     template<typename T, typename... Args>
     T* construct(Args&&... args) {
-        static_assert(sizeof(T) <= sizeof(typename std::aligned_storage<sizeof(T), alignof(T)>::type));
+        static_assert(sizeof(T) <= sizeof(typename ::std::aligned_storage<sizeof(T), alignof(T)>::type));
         
         void* ptr = allocate();
         if (!ptr) return nullptr;
         
         try {
-            return new(ptr) T(std::forward<Args>(args)...);
+            return new(ptr) T(::std::forward<Args>(args)...);
         } catch (...) {
             deallocate(ptr);
             throw;
@@ -81,40 +83,40 @@ public:
     }
     
     size_t getObjectSize() const {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         return m_objectSize;
     }
     
     size_t getCapacity() const {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         return m_totalCapacity;
     }
     
     size_t getUsedCount() const {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         return m_usedCount;
     }
     
     size_t getFreeCount() const {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         return m_totalCapacity - m_usedCount;
     }
     
     size_t getMemoryUsage() const {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         return m_blocks.size() * m_blockSize * m_objectSize;
     }
     
     float getUtilization() const {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         return m_totalCapacity > 0 ? static_cast<float>(m_usedCount) / m_totalCapacity : 0.0f;
     }
     
     void clear() {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         
         for (auto& block : m_blocks) {
-            std::free(block.memory);
+            ::std::free(block.memory);
         }
         m_blocks.clear();
         
@@ -127,7 +129,7 @@ public:
     }
     
     void shrink() {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         
         // Only shrink if no objects are currently used
         if (m_usedCount == 0) {
@@ -137,7 +139,7 @@ public:
     }
     
     void reserve(size_t capacity) {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        ::std::lock_guard<::std::mutex> lock(m_mutex);
         
         while (m_totalCapacity < capacity) {
             allocateNewBlock();
@@ -156,13 +158,13 @@ private:
         size_t blockMemorySize = m_blockSize * m_objectSize;
         
         // Ensure alignment is power of 2 and block size is multiple of alignment
-        size_t alignment = alignof(std::max_align_t);
+        size_t alignment = alignof(::std::max_align_t);
         blockMemorySize = (blockMemorySize + alignment - 1) & ~(alignment - 1);
         
-        void* memory = std::aligned_alloc(alignment, blockMemorySize);
+        void* memory = ::std::aligned_alloc(alignment, blockMemorySize);
         
         if (!memory) {
-            throw std::bad_alloc();
+            throw ::std::bad_alloc();
         }
         
         m_blocks.emplace_back(memory, m_blockSize);
@@ -175,7 +177,7 @@ private:
         m_totalCapacity += m_blockSize;
         
         if (m_blocks.size() > 1) {
-            m_blockSize = std::min(m_blockSize * 2, size_t(1024));
+            m_blockSize = ::std::min(m_blockSize * 2, size_t(1024));
         }
     }
     
@@ -201,9 +203,9 @@ private:
     size_t m_totalCapacity;
     size_t m_usedCount;
     
-    std::vector<Block> m_blocks;
-    std::stack<void*> m_freeList;
-    mutable std::mutex m_mutex;
+    ::std::vector<Block> m_blocks;
+    ::std::stack<void*> m_freeList;
+    mutable ::std::mutex m_mutex;
 };
 
 template<typename T>
@@ -214,7 +216,7 @@ public:
     
     template<typename... Args>
     T* construct(Args&&... args) {
-        return m_pool.template construct<T>(std::forward<Args>(args)...);
+        return m_pool.template construct<T>(::std::forward<Args>(args)...);
     }
     
     void destroy(T* ptr) {

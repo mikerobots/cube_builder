@@ -1,7 +1,5 @@
 #pragma once
 
-#include "EventBase.h"
-#include "EventHandler.h"
 #include <vector>
 #include <unordered_map>
 #include <typeindex>
@@ -9,6 +7,10 @@
 #include <queue>
 #include <mutex>
 #include <algorithm>
+#include <typeinfo>
+
+#include "EventBase.h"
+#include "EventHandler.h"
 
 namespace VoxelEditor {
 namespace Events {

@@ -25,10 +25,10 @@ set(HEADERS
 )
 
 # Create library
-add_library(visual_feedback ${SOURCES} ${HEADERS})
+add_library(VoxelEditor_VisualFeedback ${SOURCES} ${HEADERS})
 
 # Include directories
-target_include_directories(visual_feedback 
+target_include_directories(VoxelEditor_VisualFeedback 
     PUBLIC 
         include
         ../rendering
@@ -45,26 +45,26 @@ target_include_directories(visual_feedback
 )
 
 # Link dependencies
-target_link_libraries(visual_feedback
+target_link_libraries(VoxelEditor_VisualFeedback
     PUBLIC
-        math
-        rendering
-        voxel_data
-        selection
-        camera
+        VoxelEditor_Math
+        VoxelEditor_Rendering
+        VoxelEditor_VoxelData
+        VoxelEditor_Selection
+        VoxelEditor_Camera
     PRIVATE
-        memory
-        events
-        logging
+        VoxelEditor_Memory
+        VoxelEditor_Events
+        VoxelEditor_Logging
 )
 
 # Platform-specific settings
 if(WIN32)
-    target_compile_definitions(visual_feedback PRIVATE VOXEL_EDITOR_WINDOWS)
+    target_compile_definitions(VoxelEditor_VisualFeedback PRIVATE VOXEL_EDITOR_WINDOWS)
 elseif(APPLE)
-    target_compile_definitions(visual_feedback PRIVATE VOXEL_EDITOR_MACOS)
+    target_compile_definitions(VoxelEditor_VisualFeedback PRIVATE VOXEL_EDITOR_MACOS)
 else()
-    target_compile_definitions(visual_feedback PRIVATE VOXEL_EDITOR_LINUX)
+    target_compile_definitions(VoxelEditor_VisualFeedback PRIVATE VOXEL_EDITOR_LINUX)
 endif()
 
 # Test executable

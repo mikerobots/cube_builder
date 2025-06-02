@@ -19,15 +19,15 @@ add_executable(visual_feedback_tests ${TEST_SOURCES})
 # Link libraries
 target_link_libraries(visual_feedback_tests
     PRIVATE
-        visual_feedback
-        voxel_data
-        selection
-        camera
-        rendering
-        math
-        memory
-        events
-        logging
+        VoxelEditor_VisualFeedback
+        VoxelEditor_VoxelData
+        VoxelEditor_Selection
+        VoxelEditor_Camera
+        VoxelEditor_Rendering
+        VoxelEditor_Math
+        VoxelEditor_Memory
+        VoxelEditor_Events
+        VoxelEditor_Logging
         GTest::GTest
         GTest::Main
 )

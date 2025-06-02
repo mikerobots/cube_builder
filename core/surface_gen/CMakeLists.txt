@@ -1,5 +1,5 @@
 # Core Surface Generation System
-add_library(core_surface_gen STATIC
+add_library(VoxelEditor_SurfaceGen STATIC
     SurfaceTypes.h
     SurfaceTypes.cpp
     MeshBuilder.h
@@ -10,12 +10,12 @@ add_library(core_surface_gen STATIC
     SurfaceGenerator.cpp
 )
 
-target_include_directories(core_surface_gen
+target_include_directories(VoxelEditor_SurfaceGen
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-target_link_libraries(core_surface_gen
+target_link_libraries(VoxelEditor_SurfaceGen
     PUBLIC
         VoxelEditor_Math
         VoxelEditor_Events
@@ -23,7 +23,7 @@ target_link_libraries(core_surface_gen
 )
 
 # Set compile features
-target_compile_features(core_surface_gen PUBLIC cxx_std_17)
+target_compile_features(VoxelEditor_SurfaceGen PUBLIC cxx_std_17)
 
 # Add tests
 if(BUILD_TESTS)

@@ -95,6 +95,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /Users/michaelhalloran/cube_edit/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles /Users/michaelhalloran/cube_edit/build/core/visual_feedback//CMakeFiles/progress.marks
@@ -127,25 +172,25 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-core/visual_feedback/CMakeFiles/visual_feedback.dir/rule:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/visual_feedback/CMakeFiles/visual_feedback.dir/rule
-.PHONY : core/visual_feedback/CMakeFiles/visual_feedback.dir/rule
+core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/rule:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/rule
+.PHONY : core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/rule
 
 # Convenience name for target.
-visual_feedback: core/visual_feedback/CMakeFiles/visual_feedback.dir/rule
-.PHONY : visual_feedback
+VoxelEditor_VisualFeedback: core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/rule
+.PHONY : VoxelEditor_VisualFeedback
 
 # fast build rule for target.
-visual_feedback/fast:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/build
-.PHONY : visual_feedback/fast
+VoxelEditor_VisualFeedback/fast:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build
+.PHONY : VoxelEditor_VisualFeedback/fast
 
 src/FaceDetector.o: src/FaceDetector.cpp.o
 .PHONY : src/FaceDetector.o
 
 # target to build an object file
 src/FaceDetector.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FaceDetector.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FaceDetector.cpp.o
 .PHONY : src/FaceDetector.cpp.o
 
 src/FaceDetector.i: src/FaceDetector.cpp.i
@@ -153,7 +198,7 @@ src/FaceDetector.i: src/FaceDetector.cpp.i
 
 # target to preprocess a source file
 src/FaceDetector.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FaceDetector.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FaceDetector.cpp.i
 .PHONY : src/FaceDetector.cpp.i
 
 src/FaceDetector.s: src/FaceDetector.cpp.s
@@ -161,7 +206,7 @@ src/FaceDetector.s: src/FaceDetector.cpp.s
 
 # target to generate assembly for a file
 src/FaceDetector.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FaceDetector.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FaceDetector.cpp.s
 .PHONY : src/FaceDetector.cpp.s
 
 src/FeedbackRenderer.o: src/FeedbackRenderer.cpp.o
@@ -169,7 +214,7 @@ src/FeedbackRenderer.o: src/FeedbackRenderer.cpp.o
 
 # target to build an object file
 src/FeedbackRenderer.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FeedbackRenderer.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FeedbackRenderer.cpp.o
 .PHONY : src/FeedbackRenderer.cpp.o
 
 src/FeedbackRenderer.i: src/FeedbackRenderer.cpp.i
@@ -177,7 +222,7 @@ src/FeedbackRenderer.i: src/FeedbackRenderer.cpp.i
 
 # target to preprocess a source file
 src/FeedbackRenderer.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FeedbackRenderer.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FeedbackRenderer.cpp.i
 .PHONY : src/FeedbackRenderer.cpp.i
 
 src/FeedbackRenderer.s: src/FeedbackRenderer.cpp.s
@@ -185,7 +230,7 @@ src/FeedbackRenderer.s: src/FeedbackRenderer.cpp.s
 
 # target to generate assembly for a file
 src/FeedbackRenderer.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FeedbackRenderer.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FeedbackRenderer.cpp.s
 .PHONY : src/FeedbackRenderer.cpp.s
 
 src/FeedbackTypes.o: src/FeedbackTypes.cpp.o
@@ -193,7 +238,7 @@ src/FeedbackTypes.o: src/FeedbackTypes.cpp.o
 
 # target to build an object file
 src/FeedbackTypes.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FeedbackTypes.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FeedbackTypes.cpp.o
 .PHONY : src/FeedbackTypes.cpp.o
 
 src/FeedbackTypes.i: src/FeedbackTypes.cpp.i
@@ -201,7 +246,7 @@ src/FeedbackTypes.i: src/FeedbackTypes.cpp.i
 
 # target to preprocess a source file
 src/FeedbackTypes.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FeedbackTypes.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FeedbackTypes.cpp.i
 .PHONY : src/FeedbackTypes.cpp.i
 
 src/FeedbackTypes.s: src/FeedbackTypes.cpp.s
@@ -209,7 +254,7 @@ src/FeedbackTypes.s: src/FeedbackTypes.cpp.s
 
 # target to generate assembly for a file
 src/FeedbackTypes.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/FeedbackTypes.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/FeedbackTypes.cpp.s
 .PHONY : src/FeedbackTypes.cpp.s
 
 src/HighlightRenderer.o: src/HighlightRenderer.cpp.o
@@ -217,7 +262,7 @@ src/HighlightRenderer.o: src/HighlightRenderer.cpp.o
 
 # target to build an object file
 src/HighlightRenderer.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/HighlightRenderer.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/HighlightRenderer.cpp.o
 .PHONY : src/HighlightRenderer.cpp.o
 
 src/HighlightRenderer.i: src/HighlightRenderer.cpp.i
@@ -225,7 +270,7 @@ src/HighlightRenderer.i: src/HighlightRenderer.cpp.i
 
 # target to preprocess a source file
 src/HighlightRenderer.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/HighlightRenderer.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/HighlightRenderer.cpp.i
 .PHONY : src/HighlightRenderer.cpp.i
 
 src/HighlightRenderer.s: src/HighlightRenderer.cpp.s
@@ -233,7 +278,7 @@ src/HighlightRenderer.s: src/HighlightRenderer.cpp.s
 
 # target to generate assembly for a file
 src/HighlightRenderer.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/HighlightRenderer.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/HighlightRenderer.cpp.s
 .PHONY : src/HighlightRenderer.cpp.s
 
 src/OutlineRenderer.o: src/OutlineRenderer.cpp.o
@@ -241,7 +286,7 @@ src/OutlineRenderer.o: src/OutlineRenderer.cpp.o
 
 # target to build an object file
 src/OutlineRenderer.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/OutlineRenderer.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/OutlineRenderer.cpp.o
 .PHONY : src/OutlineRenderer.cpp.o
 
 src/OutlineRenderer.i: src/OutlineRenderer.cpp.i
@@ -249,7 +294,7 @@ src/OutlineRenderer.i: src/OutlineRenderer.cpp.i
 
 # target to preprocess a source file
 src/OutlineRenderer.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/OutlineRenderer.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/OutlineRenderer.cpp.i
 .PHONY : src/OutlineRenderer.cpp.i
 
 src/OutlineRenderer.s: src/OutlineRenderer.cpp.s
@@ -257,7 +302,7 @@ src/OutlineRenderer.s: src/OutlineRenderer.cpp.s
 
 # target to generate assembly for a file
 src/OutlineRenderer.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/OutlineRenderer.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/OutlineRenderer.cpp.s
 .PHONY : src/OutlineRenderer.cpp.s
 
 src/OverlayRenderer.o: src/OverlayRenderer.cpp.o
@@ -265,7 +310,7 @@ src/OverlayRenderer.o: src/OverlayRenderer.cpp.o
 
 # target to build an object file
 src/OverlayRenderer.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/OverlayRenderer.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/OverlayRenderer.cpp.o
 .PHONY : src/OverlayRenderer.cpp.o
 
 src/OverlayRenderer.i: src/OverlayRenderer.cpp.i
@@ -273,7 +318,7 @@ src/OverlayRenderer.i: src/OverlayRenderer.cpp.i
 
 # target to preprocess a source file
 src/OverlayRenderer.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/OverlayRenderer.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/OverlayRenderer.cpp.i
 .PHONY : src/OverlayRenderer.cpp.i
 
 src/OverlayRenderer.s: src/OverlayRenderer.cpp.s
@@ -281,7 +326,7 @@ src/OverlayRenderer.s: src/OverlayRenderer.cpp.s
 
 # target to generate assembly for a file
 src/OverlayRenderer.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/visual_feedback.dir/build.make core/visual_feedback/CMakeFiles/visual_feedback.dir/src/OverlayRenderer.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/build.make core/visual_feedback/CMakeFiles/VoxelEditor_VisualFeedback.dir/src/OverlayRenderer.cpp.s
 .PHONY : src/OverlayRenderer.cpp.s
 
 # Help Target
@@ -291,9 +336,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... visual_feedback"
+	@echo "... VoxelEditor_VisualFeedback"
 	@echo "... src/FaceDetector.o"
 	@echo "... src/FaceDetector.i"
 	@echo "... src/FaceDetector.s"

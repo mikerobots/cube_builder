@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Command.h"
-#include "CompositeCommand.h"
 #include <memory>
 #include <vector>
 #include <string>
+
+#include "Command.h"
+#include "CompositeCommand.h"
 
 namespace VoxelEditor {
 namespace UndoRedo {

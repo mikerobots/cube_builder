@@ -1,10 +1,10 @@
 #pragma once
 
 #include "FileTypes.h"
-#include "VoxelDataManager.h"
-#include "GroupManager.h"
-#include "SelectionSet.h"
-#include "OrbitCamera.h"
+#include "voxel_data/VoxelDataManager.h"
+#include "groups/GroupManager.h"
+#include "selection/SelectionSet.h"
+#include "camera/OrbitCamera.h"
 #include <memory>
 #include <vector>
 

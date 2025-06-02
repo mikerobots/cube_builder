@@ -1,5 +1,9 @@
 #pragma once
 
+#include <array>
+#include <cstdint>
+#include <string>
+
 #include "RenderTypes.h"
 #include "VoxelTypes.h"
 #include "Vector3f.h"
@@ -8,9 +12,6 @@
 #include "BoundingBox.h"
 #include "Quaternion.h"
 #include "Matrix4f.h"
-#include <array>
-#include <cstdint>
-#include <string>
 
 namespace VoxelEditor {
 namespace VisualFeedback {

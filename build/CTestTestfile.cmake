@@ -4,5 +4,9 @@
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
+subdirs("_deps/glfw-build")
+subdirs("external/glad")
+subdirs("_deps/glm-build")
 subdirs("foundation")
 subdirs("core")
+subdirs("apps/cli")

@@ -4,8 +4,9 @@
 #include "VoxelGroup.h"
 #include "GroupHierarchy.h"
 #include "GroupOperations.h"
-#include "VoxelDataManager.h"
-#include "EventDispatcher.h"
+#include "GroupEvents.h"
+#include "voxel_data/VoxelDataManager.h"
+#include "events/EventDispatcher.h"
 #include <unordered_map>
 #include <memory>
 #include <vector>
@@ -15,29 +16,6 @@
 
 namespace VoxelEditor {
 namespace Groups {
-
-// Event structures
-struct GroupCreatedEvent {
-    GroupId groupId;
-    std::string name;
-    std::vector<VoxelId> voxels;
-};
-
-struct GroupModifiedEvent {
-    GroupId groupId;
-    GroupModificationType type;
-    std::string oldName;        // for rename events
-    std::string newName;        // for rename events
-    bool oldVisible;            // for visibility events
-    bool newVisible;            // for visibility events
-    Math::Vector3f offset;      // for move events
-};
-
-struct GroupDeletedEvent {
-    GroupId groupId;
-    std::string name;
-    std::vector<VoxelId> releasedVoxels;
-};
 
 // Group selection and filtering
 using GroupPredicate = std::function<bool(const VoxelGroup&)>;

@@ -1,5 +1,5 @@
 # Core Undo/Redo System
-add_library(core_undo_redo STATIC
+add_library(VoxelEditor_UndoRedo STATIC
     Command.h
     HistoryManager.h
     HistoryManager.cpp
@@ -15,12 +15,12 @@ add_library(core_undo_redo STATIC
     StateSnapshot.cpp
 )
 
-target_include_directories(core_undo_redo
+target_include_directories(VoxelEditor_UndoRedo
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-target_link_libraries(core_undo_redo
+target_link_libraries(VoxelEditor_UndoRedo
     PUBLIC
         VoxelEditor_Math
         VoxelEditor_Logging
@@ -29,7 +29,7 @@ target_link_libraries(core_undo_redo
 )
 
 # Set compile features
-target_compile_features(core_undo_redo PUBLIC cxx_std_17)
+target_compile_features(VoxelEditor_UndoRedo PUBLIC cxx_std_17)
 
 # Add tests
 if(BUILD_TESTS)

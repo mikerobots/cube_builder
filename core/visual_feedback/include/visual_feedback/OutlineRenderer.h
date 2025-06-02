@@ -1,9 +1,10 @@
 #pragma once
 
-#include "FeedbackTypes.h"
-#include "Camera.h"
 #include <vector>
 #include <memory>
+
+#include "FeedbackTypes.h"
+#include "Camera.h"
 
 namespace VoxelEditor {
 namespace VisualFeedback {

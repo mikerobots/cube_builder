@@ -5,9 +5,9 @@
 #include <chrono>
 #include <unordered_map>
 #include <functional>
-#include "Vector3f.h"
-#include "VoxelTypes.h"
-#include "Color.h"
+#include "math/Vector3f.h"
+#include "voxel_data/VoxelTypes.h"
+#include "rendering/RenderTypes.h"
 
 namespace VoxelEditor {
 namespace FileIO {
@@ -248,3 +248,18 @@ struct FileResult {
 
 } // namespace FileIO
 } // namespace VoxelEditor
+
+// Hash specialization for FileVersion
+namespace std {
+template<>
+struct hash<VoxelEditor::FileIO::FileVersion> {
+    size_t operator()(const VoxelEditor::FileIO::FileVersion& v) const {
+        return hash<uint64_t>{}(
+            (uint64_t(v.major) << 48) |
+            (uint64_t(v.minor) << 32) |
+            (uint64_t(v.patch) << 16) |
+            uint64_t(v.build)
+        );
+    }
+};
+}

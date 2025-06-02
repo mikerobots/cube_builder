@@ -95,6 +95,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /Users/michaelhalloran/cube_edit/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles /Users/michaelhalloran/cube_edit/build/core/surface_gen//CMakeFiles/progress.marks
@@ -127,25 +172,25 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-core/surface_gen/CMakeFiles/core_surface_gen.dir/rule:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/surface_gen/CMakeFiles/core_surface_gen.dir/rule
-.PHONY : core/surface_gen/CMakeFiles/core_surface_gen.dir/rule
+core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/rule:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/rule
+.PHONY : core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/rule
 
 # Convenience name for target.
-core_surface_gen: core/surface_gen/CMakeFiles/core_surface_gen.dir/rule
-.PHONY : core_surface_gen
+VoxelEditor_SurfaceGen: core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/rule
+.PHONY : VoxelEditor_SurfaceGen
 
 # fast build rule for target.
-core_surface_gen/fast:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/build
-.PHONY : core_surface_gen/fast
+VoxelEditor_SurfaceGen/fast:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build
+.PHONY : VoxelEditor_SurfaceGen/fast
 
 DualContouring.o: DualContouring.cpp.o
 .PHONY : DualContouring.o
 
 # target to build an object file
 DualContouring.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/DualContouring.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/DualContouring.cpp.o
 .PHONY : DualContouring.cpp.o
 
 DualContouring.i: DualContouring.cpp.i
@@ -153,7 +198,7 @@ DualContouring.i: DualContouring.cpp.i
 
 # target to preprocess a source file
 DualContouring.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/DualContouring.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/DualContouring.cpp.i
 .PHONY : DualContouring.cpp.i
 
 DualContouring.s: DualContouring.cpp.s
@@ -161,7 +206,7 @@ DualContouring.s: DualContouring.cpp.s
 
 # target to generate assembly for a file
 DualContouring.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/DualContouring.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/DualContouring.cpp.s
 .PHONY : DualContouring.cpp.s
 
 MeshBuilder.o: MeshBuilder.cpp.o
@@ -169,7 +214,7 @@ MeshBuilder.o: MeshBuilder.cpp.o
 
 # target to build an object file
 MeshBuilder.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/MeshBuilder.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/MeshBuilder.cpp.o
 .PHONY : MeshBuilder.cpp.o
 
 MeshBuilder.i: MeshBuilder.cpp.i
@@ -177,7 +222,7 @@ MeshBuilder.i: MeshBuilder.cpp.i
 
 # target to preprocess a source file
 MeshBuilder.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/MeshBuilder.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/MeshBuilder.cpp.i
 .PHONY : MeshBuilder.cpp.i
 
 MeshBuilder.s: MeshBuilder.cpp.s
@@ -185,7 +230,7 @@ MeshBuilder.s: MeshBuilder.cpp.s
 
 # target to generate assembly for a file
 MeshBuilder.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/MeshBuilder.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/MeshBuilder.cpp.s
 .PHONY : MeshBuilder.cpp.s
 
 SurfaceGenerator.o: SurfaceGenerator.cpp.o
@@ -193,7 +238,7 @@ SurfaceGenerator.o: SurfaceGenerator.cpp.o
 
 # target to build an object file
 SurfaceGenerator.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/SurfaceGenerator.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/SurfaceGenerator.cpp.o
 .PHONY : SurfaceGenerator.cpp.o
 
 SurfaceGenerator.i: SurfaceGenerator.cpp.i
@@ -201,7 +246,7 @@ SurfaceGenerator.i: SurfaceGenerator.cpp.i
 
 # target to preprocess a source file
 SurfaceGenerator.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/SurfaceGenerator.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/SurfaceGenerator.cpp.i
 .PHONY : SurfaceGenerator.cpp.i
 
 SurfaceGenerator.s: SurfaceGenerator.cpp.s
@@ -209,7 +254,7 @@ SurfaceGenerator.s: SurfaceGenerator.cpp.s
 
 # target to generate assembly for a file
 SurfaceGenerator.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/SurfaceGenerator.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/SurfaceGenerator.cpp.s
 .PHONY : SurfaceGenerator.cpp.s
 
 SurfaceTypes.o: SurfaceTypes.cpp.o
@@ -217,7 +262,7 @@ SurfaceTypes.o: SurfaceTypes.cpp.o
 
 # target to build an object file
 SurfaceTypes.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/SurfaceTypes.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/SurfaceTypes.cpp.o
 .PHONY : SurfaceTypes.cpp.o
 
 SurfaceTypes.i: SurfaceTypes.cpp.i
@@ -225,7 +270,7 @@ SurfaceTypes.i: SurfaceTypes.cpp.i
 
 # target to preprocess a source file
 SurfaceTypes.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/SurfaceTypes.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/SurfaceTypes.cpp.i
 .PHONY : SurfaceTypes.cpp.i
 
 SurfaceTypes.s: SurfaceTypes.cpp.s
@@ -233,7 +278,7 @@ SurfaceTypes.s: SurfaceTypes.cpp.s
 
 # target to generate assembly for a file
 SurfaceTypes.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/core_surface_gen.dir/build.make core/surface_gen/CMakeFiles/core_surface_gen.dir/SurfaceTypes.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/SurfaceTypes.cpp.s
 .PHONY : SurfaceTypes.cpp.s
 
 # Help Target
@@ -243,9 +288,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... core_surface_gen"
+	@echo "... VoxelEditor_SurfaceGen"
 	@echo "... DualContouring.o"
 	@echo "... DualContouring.i"
 	@echo "... DualContouring.s"

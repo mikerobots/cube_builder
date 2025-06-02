@@ -172,7 +172,11 @@ core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/tests/CMa
 core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/TestOverlayRenderer.cpp.o
 core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/TestFeedbackRenderer.cpp.o
 core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/build.make
-core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/libvisual_feedback.a
+core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/libVoxelEditor_VisualFeedback.a
+core/visual_feedback/tests/visual_feedback_tests: core/voxel_data/libVoxelEditor_VoxelData.a
+core/visual_feedback/tests/visual_feedback_tests: core/selection/libVoxelEditor_Selection.a
+core/visual_feedback/tests/visual_feedback_tests: core/rendering/libVoxelEditor_Rendering.a
+core/visual_feedback/tests/visual_feedback_tests: core/voxel_data/libVoxelEditor_VoxelData.a
 core/visual_feedback/tests/visual_feedback_tests: /opt/homebrew/lib/libgtest_main.a
 core/visual_feedback/tests/visual_feedback_tests: /opt/homebrew/lib/libgtest.a
 core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/link.txt

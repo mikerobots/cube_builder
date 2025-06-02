@@ -979,5 +979,7 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Ray.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector2f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventBase.h \
   /Users/michaelhalloran/cube_edit/core/input/tests/../../../foundation/events/EventDispatcher.h

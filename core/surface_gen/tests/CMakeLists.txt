@@ -8,7 +8,7 @@ add_executable(test_surface_gen
 
 target_link_libraries(test_surface_gen
     PRIVATE
-        core_surface_gen
+        VoxelEditor_SurfaceGen
         VoxelEditor_VoxelData
         VoxelEditor_Math
         VoxelEditor_Events

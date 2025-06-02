@@ -95,6 +95,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /Users/michaelhalloran/cube_edit/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelhalloran/cube_edit/build/CMakeFiles /Users/michaelhalloran/cube_edit/build/core/undo_redo//CMakeFiles/progress.marks
@@ -127,25 +172,25 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-core/undo_redo/CMakeFiles/core_undo_redo.dir/rule:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/undo_redo/CMakeFiles/core_undo_redo.dir/rule
-.PHONY : core/undo_redo/CMakeFiles/core_undo_redo.dir/rule
+core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/rule:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/rule
+.PHONY : core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/rule
 
 # Convenience name for target.
-core_undo_redo: core/undo_redo/CMakeFiles/core_undo_redo.dir/rule
-.PHONY : core_undo_redo
+VoxelEditor_UndoRedo: core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/rule
+.PHONY : VoxelEditor_UndoRedo
 
 # fast build rule for target.
-core_undo_redo/fast:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/build
-.PHONY : core_undo_redo/fast
+VoxelEditor_UndoRedo/fast:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build
+.PHONY : VoxelEditor_UndoRedo/fast
 
 CompositeCommand.o: CompositeCommand.cpp.o
 .PHONY : CompositeCommand.o
 
 # target to build an object file
 CompositeCommand.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/CompositeCommand.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/CompositeCommand.cpp.o
 .PHONY : CompositeCommand.cpp.o
 
 CompositeCommand.i: CompositeCommand.cpp.i
@@ -153,7 +198,7 @@ CompositeCommand.i: CompositeCommand.cpp.i
 
 # target to preprocess a source file
 CompositeCommand.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/CompositeCommand.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/CompositeCommand.cpp.i
 .PHONY : CompositeCommand.cpp.i
 
 CompositeCommand.s: CompositeCommand.cpp.s
@@ -161,7 +206,7 @@ CompositeCommand.s: CompositeCommand.cpp.s
 
 # target to generate assembly for a file
 CompositeCommand.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/CompositeCommand.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/CompositeCommand.cpp.s
 .PHONY : CompositeCommand.cpp.s
 
 HistoryManager.o: HistoryManager.cpp.o
@@ -169,7 +214,7 @@ HistoryManager.o: HistoryManager.cpp.o
 
 # target to build an object file
 HistoryManager.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/HistoryManager.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/HistoryManager.cpp.o
 .PHONY : HistoryManager.cpp.o
 
 HistoryManager.i: HistoryManager.cpp.i
@@ -177,7 +222,7 @@ HistoryManager.i: HistoryManager.cpp.i
 
 # target to preprocess a source file
 HistoryManager.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/HistoryManager.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/HistoryManager.cpp.i
 .PHONY : HistoryManager.cpp.i
 
 HistoryManager.s: HistoryManager.cpp.s
@@ -185,7 +230,7 @@ HistoryManager.s: HistoryManager.cpp.s
 
 # target to generate assembly for a file
 HistoryManager.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/HistoryManager.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/HistoryManager.cpp.s
 .PHONY : HistoryManager.cpp.s
 
 SelectionCommands.o: SelectionCommands.cpp.o
@@ -193,7 +238,7 @@ SelectionCommands.o: SelectionCommands.cpp.o
 
 # target to build an object file
 SelectionCommands.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/SelectionCommands.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/SelectionCommands.cpp.o
 .PHONY : SelectionCommands.cpp.o
 
 SelectionCommands.i: SelectionCommands.cpp.i
@@ -201,7 +246,7 @@ SelectionCommands.i: SelectionCommands.cpp.i
 
 # target to preprocess a source file
 SelectionCommands.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/SelectionCommands.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/SelectionCommands.cpp.i
 .PHONY : SelectionCommands.cpp.i
 
 SelectionCommands.s: SelectionCommands.cpp.s
@@ -209,7 +254,7 @@ SelectionCommands.s: SelectionCommands.cpp.s
 
 # target to generate assembly for a file
 SelectionCommands.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/SelectionCommands.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/SelectionCommands.cpp.s
 .PHONY : SelectionCommands.cpp.s
 
 StateSnapshot.o: StateSnapshot.cpp.o
@@ -217,7 +262,7 @@ StateSnapshot.o: StateSnapshot.cpp.o
 
 # target to build an object file
 StateSnapshot.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/StateSnapshot.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/StateSnapshot.cpp.o
 .PHONY : StateSnapshot.cpp.o
 
 StateSnapshot.i: StateSnapshot.cpp.i
@@ -225,7 +270,7 @@ StateSnapshot.i: StateSnapshot.cpp.i
 
 # target to preprocess a source file
 StateSnapshot.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/StateSnapshot.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/StateSnapshot.cpp.i
 .PHONY : StateSnapshot.cpp.i
 
 StateSnapshot.s: StateSnapshot.cpp.s
@@ -233,7 +278,7 @@ StateSnapshot.s: StateSnapshot.cpp.s
 
 # target to generate assembly for a file
 StateSnapshot.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/StateSnapshot.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/StateSnapshot.cpp.s
 .PHONY : StateSnapshot.cpp.s
 
 Transaction.o: Transaction.cpp.o
@@ -241,7 +286,7 @@ Transaction.o: Transaction.cpp.o
 
 # target to build an object file
 Transaction.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/Transaction.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/Transaction.cpp.o
 .PHONY : Transaction.cpp.o
 
 Transaction.i: Transaction.cpp.i
@@ -249,7 +294,7 @@ Transaction.i: Transaction.cpp.i
 
 # target to preprocess a source file
 Transaction.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/Transaction.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/Transaction.cpp.i
 .PHONY : Transaction.cpp.i
 
 Transaction.s: Transaction.cpp.s
@@ -257,7 +302,7 @@ Transaction.s: Transaction.cpp.s
 
 # target to generate assembly for a file
 Transaction.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/Transaction.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/Transaction.cpp.s
 .PHONY : Transaction.cpp.s
 
 VoxelCommands.o: VoxelCommands.cpp.o
@@ -265,7 +310,7 @@ VoxelCommands.o: VoxelCommands.cpp.o
 
 # target to build an object file
 VoxelCommands.cpp.o:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/VoxelCommands.cpp.o
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/VoxelCommands.cpp.o
 .PHONY : VoxelCommands.cpp.o
 
 VoxelCommands.i: VoxelCommands.cpp.i
@@ -273,7 +318,7 @@ VoxelCommands.i: VoxelCommands.cpp.i
 
 # target to preprocess a source file
 VoxelCommands.cpp.i:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/VoxelCommands.cpp.i
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/VoxelCommands.cpp.i
 .PHONY : VoxelCommands.cpp.i
 
 VoxelCommands.s: VoxelCommands.cpp.s
@@ -281,7 +326,7 @@ VoxelCommands.s: VoxelCommands.cpp.s
 
 # target to generate assembly for a file
 VoxelCommands.cpp.s:
-	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/core_undo_redo.dir/build.make core/undo_redo/CMakeFiles/core_undo_redo.dir/VoxelCommands.cpp.s
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/build.make core/undo_redo/CMakeFiles/VoxelEditor_UndoRedo.dir/VoxelCommands.cpp.s
 .PHONY : VoxelCommands.cpp.s
 
 # Help Target
@@ -291,9 +336,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... core_undo_redo"
+	@echo "... VoxelEditor_UndoRedo"
 	@echo "... CompositeCommand.o"
 	@echo "... CompositeCommand.i"
 	@echo "... CompositeCommand.s"
