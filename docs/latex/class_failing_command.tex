@@ -1,0 +1,127 @@
+\doxysection{Failing\+Command Class Reference}
+\hypertarget{class_failing_command}{}\label{class_failing_command}\index{FailingCommand@{FailingCommand}}
+Inheritance diagram for Failing\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_failing_command}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_failing_command_a109ffcc35dd53888b28f9421b7efc4fd}{Failing\+Command}} (bool fail\+On\+Execute, bool fail\+On\+Undo)
+\item 
+bool \mbox{\hyperlink{class_failing_command_a407ec224d44a3ae74b5e98ec4475c146}{execute}} () override
+\item 
+bool \mbox{\hyperlink{class_failing_command_aaa5d125cb6730f5b18dc85371c2e2939}{undo}} () override
+\item 
+std\+::string \mbox{\hyperlink{class_failing_command_a1a3960ae7f6b39d84673a5128e9fbd8a}{get\+Name}} () const override
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{Command\+Type}} \mbox{\hyperlink{class_failing_command_ad8a636c2312ae676852f0e7f674eeb9b}{get\+Type}} () const override
+\item 
+size\+\_\+t \mbox{\hyperlink{class_failing_command_af8eeb15dc417c07e598c8559a4de26e3}{get\+Memory\+Usage}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a8fe1ab00c6ace635e16810b1865c0cd9}{\texorpdfstring{$\sim$}{\string~}\+Command}} ()=default
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3cc9f3bf60abf3252cab94a6cd63eb25}{can\+Undo}} () const
+\item 
+virtual std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_ae3ac3a01733af389a4d289ddbc182075}{get\+Description}} () const
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_af531550f86b128c224d3d47bea51a0ae}{compress}} ()
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6770e00f50a677871e9ff447568e836d}{decompress}} ()
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a1cd5003c687acdd268531e8be2c7b7b0}{can\+Merge\+With}} (const \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} \&other) const
+\item 
+virtual std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_afa5a02f73fbccc60b7723aed270adbce}{merge\+With}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} $>$ other)
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_acd22d97b2c12b46c02ad4f6cce2940d3}{is\+Valid}} () const
+\item 
+virtual \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result}{Validation\+Result}} \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a9ee9b6fac042f95e79198b9e0632e94e}{validate}} () const
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a690769c483756d9a657943a8b984d581}{get\+Timestamp}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a04febc95d1a5331c865dbd64866b3502}{has\+Executed}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6cf7d7d58bb50802e7cb335cd9b6c461}{m\+\_\+timestamp}} = std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::now()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3ca44d16ecff16b618eb4ab12f5f33f0}{m\+\_\+executed}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_failing_command_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_failing_command_a109ffcc35dd53888b28f9421b7efc4fd}\index{FailingCommand@{FailingCommand}!FailingCommand@{FailingCommand}}
+\index{FailingCommand@{FailingCommand}!FailingCommand@{FailingCommand}}
+\doxysubsubsection{\texorpdfstring{FailingCommand()}{FailingCommand()}}
+{\footnotesize\ttfamily \label{class_failing_command_a109ffcc35dd53888b28f9421b7efc4fd} 
+Failing\+Command\+::\+Failing\+Command (\begin{DoxyParamCaption}\item[{bool}]{fail\+On\+Execute}{, }\item[{bool}]{fail\+On\+Undo}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_failing_command_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_failing_command_a407ec224d44a3ae74b5e98ec4475c146}\index{FailingCommand@{FailingCommand}!execute@{execute}}
+\index{execute@{execute}!FailingCommand@{FailingCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily \label{class_failing_command_a407ec224d44a3ae74b5e98ec4475c146} 
+bool Failing\+Command\+::execute (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a30722ec4f6777b2d80088f6990343848}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_failing_command_af8eeb15dc417c07e598c8559a4de26e3}\index{FailingCommand@{FailingCommand}!getMemoryUsage@{getMemoryUsage}}
+\index{getMemoryUsage@{getMemoryUsage}!FailingCommand@{FailingCommand}}
+\doxysubsubsection{\texorpdfstring{getMemoryUsage()}{getMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_failing_command_af8eeb15dc417c07e598c8559a4de26e3} 
+size\+\_\+t Failing\+Command\+::get\+Memory\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a621d5a5e80b04980ad7c287216ff9e4d}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_failing_command_a1a3960ae7f6b39d84673a5128e9fbd8a}\index{FailingCommand@{FailingCommand}!getName@{getName}}
+\index{getName@{getName}!FailingCommand@{FailingCommand}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_failing_command_a1a3960ae7f6b39d84673a5128e9fbd8a} 
+std\+::string Failing\+Command\+::get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a4f281b72b5069097d93bbb3316028fad}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_failing_command_ad8a636c2312ae676852f0e7f674eeb9b}\index{FailingCommand@{FailingCommand}!getType@{getType}}
+\index{getType@{getType}!FailingCommand@{FailingCommand}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{class_failing_command_ad8a636c2312ae676852f0e7f674eeb9b} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{Command\+Type}} Failing\+Command\+::get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_aa07b99ca98eca64ad8fef3165bf66ab7}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_failing_command_aaa5d125cb6730f5b18dc85371c2e2939}\index{FailingCommand@{FailingCommand}!undo@{undo}}
+\index{undo@{undo}!FailingCommand@{FailingCommand}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily \label{class_failing_command_aaa5d125cb6730f5b18dc85371c2e2939} 
+bool Failing\+Command\+::undo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_afd4c2e7460816931d09ddd414e213ad7}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/undo\+\_\+redo/tests/\mbox{\hyperlink{_test_command_8cpp}{Test\+Command.\+cpp}}\end{DoxyCompactItemize}

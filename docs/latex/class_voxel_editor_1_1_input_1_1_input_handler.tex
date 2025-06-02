@@ -1,0 +1,174 @@
+\doxysection{Voxel\+Editor\+::Input\+::Input\+Handler Class Reference}
+\hypertarget{class_voxel_editor_1_1_input_1_1_input_handler}{}\label{class_voxel_editor_1_1_input_1_1_input_handler}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+
+
+{\ttfamily \#include $<$Input\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Input\+::Input\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.250000cm]{class_voxel_editor_1_1_input_1_1_input_handler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be}{Input\+Handler}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher=nullptr)
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a55f2872d38f20cdff65af0ebe572e893}{\texorpdfstring{$\sim$}{\string~}\+Input\+Handler}} ()=default
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a070d65de9e5d7106520b52390852f23f}{process\+Mouse\+Event}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Mouse\+Event}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_af5c9a62a8cf45e254f887615de2c27eb}{process\+Keyboard\+Event}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_ab12a8d27d9881dbd07d5cda94240d71b}{process\+Touch\+Event}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_event}{Touch\+Event}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_adcf856bad8faa30736c881647568ded9}{process\+VREvent}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_event}{VREvent}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_aac4b30762126d7da6a4a55928ff3c974}{update}} (float delta\+Time)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_af4b647df74a702e6b31e6444347c41c2}{set\+Enabled}} (bool enabled)
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a265207e95fae146f62d2f93e0593f35d}{is\+Enabled}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a43315bece4f4e4d81bd69c3228b4bfdb}{set\+Event\+Dispatcher}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}dispatcher)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_abbbcc318fd575214079597ff3dec8fd9}{get\+Event\+Dispatcher}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a446998642af9f0671aba57e572b2dd14}{dispatch\+Event}} (const Event\+Type \&event)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a9acb53e5fbeed790f8f983f69187206a}{m\+\_\+event\+Dispatcher}}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a17afb243c430749b2cf6eaf9993b2a5e}{m\+\_\+enabled}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!InputHandler@{InputHandler}}
+\index{InputHandler@{InputHandler}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{InputHandler()}{InputHandler()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be} 
+Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::\+Input\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{event\+Dispatcher}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a55f2872d38f20cdff65af0ebe572e893}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!````~InputHandler@{\texorpdfstring{$\sim$}{\string~}InputHandler}}
+\index{````~InputHandler@{\texorpdfstring{$\sim$}{\string~}InputHandler}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}InputHandler()}{\string~InputHandler()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a55f2872d38f20cdff65af0ebe572e893} 
+virtual Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::\texorpdfstring{$\sim$}{\string~}\+Input\+Handler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a446998642af9f0671aba57e572b2dd14}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!dispatchEvent@{dispatchEvent}}
+\index{dispatchEvent@{dispatchEvent}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{dispatchEvent()}{dispatchEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a446998642af9f0671aba57e572b2dd14} 
+template$<$typename Event\+Type$>$ \\
+void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::dispatch\+Event (\begin{DoxyParamCaption}\item[{const Event\+Type \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_abbbcc318fd575214079597ff3dec8fd9}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!getEventDispatcher@{getEventDispatcher}}
+\index{getEventDispatcher@{getEventDispatcher}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{getEventDispatcher()}{getEventDispatcher()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_abbbcc318fd575214079597ff3dec8fd9} 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::get\+Event\+Dispatcher (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a265207e95fae146f62d2f93e0593f35d}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!isEnabled@{isEnabled}}
+\index{isEnabled@{isEnabled}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{isEnabled()}{isEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a265207e95fae146f62d2f93e0593f35d} 
+virtual bool Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::is\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_af5c9a62a8cf45e254f887615de2c27eb}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!processKeyboardEvent@{processKeyboardEvent}}
+\index{processKeyboardEvent@{processKeyboardEvent}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{processKeyboardEvent()}{processKeyboardEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_af5c9a62a8cf45e254f887615de2c27eb} 
+virtual void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::process\+Keyboard\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_adc4012e89049b8e45c395d2638a1a0bc}{Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler}}.
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a070d65de9e5d7106520b52390852f23f}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!processMouseEvent@{processMouseEvent}}
+\index{processMouseEvent@{processMouseEvent}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{processMouseEvent()}{processMouseEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a070d65de9e5d7106520b52390852f23f} 
+virtual void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::process\+Mouse\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Mouse\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_mouse_handler_a9e37c5037e85fa11fe53624cc819f38c}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Handler}}.
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_ab12a8d27d9881dbd07d5cda94240d71b}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!processTouchEvent@{processTouchEvent}}
+\index{processTouchEvent@{processTouchEvent}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{processTouchEvent()}{processTouchEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_ab12a8d27d9881dbd07d5cda94240d71b} 
+virtual void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::process\+Touch\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_event}{Touch\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_af29e08e3c9f5d5bc46e62f92c8ac2d5d}{Voxel\+Editor\+::\+Input\+::\+Touch\+Handler}}.
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_adcf856bad8faa30736c881647568ded9}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!processVREvent@{processVREvent}}
+\index{processVREvent@{processVREvent}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{processVREvent()}{processVREvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_adcf856bad8faa30736c881647568ded9} 
+virtual void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::process\+VREvent (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_event}{VREvent}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a97cafa68e635c0cd8122a7974417f31f}{Voxel\+Editor\+::\+Input\+::\+VRInput\+Handler}}.
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_af4b647df74a702e6b31e6444347c41c2}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!setEnabled@{setEnabled}}
+\index{setEnabled@{setEnabled}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{setEnabled()}{setEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_af4b647df74a702e6b31e6444347c41c2} 
+virtual void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::set\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a43315bece4f4e4d81bd69c3228b4bfdb}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!setEventDispatcher@{setEventDispatcher}}
+\index{setEventDispatcher@{setEventDispatcher}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{setEventDispatcher()}{setEventDispatcher()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a43315bece4f4e4d81bd69c3228b4bfdb} 
+void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::set\+Event\+Dispatcher (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{dispatcher}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_aac4b30762126d7da6a4a55928ff3c974}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!update@{update}}
+\index{update@{update}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_aac4b30762126d7da6a4a55928ff3c974} 
+virtual void Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_adb9e41e67514744edb9867ababbef3f4}{Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler}}, \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_mouse_handler_a8663fe59323bbbcedb8c73653f52220f}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Handler}}, \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a88174308f867bd4c8c814dae6844ddca}{Voxel\+Editor\+::\+Input\+::\+Touch\+Handler}}, and \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_aefd3d0b9eb7d3cf87033b6cba05562ad}{Voxel\+Editor\+::\+Input\+::\+VRInput\+Handler}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a17afb243c430749b2cf6eaf9993b2a5e}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!m\_enabled@{m\_enabled}}
+\index{m\_enabled@{m\_enabled}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{m\_enabled}{m\_enabled}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a17afb243c430749b2cf6eaf9993b2a5e} 
+bool Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::m\+\_\+enabled\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_input_handler_a9acb53e5fbeed790f8f983f69187206a}\index{VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}!m\_eventDispatcher@{m\_eventDispatcher}}
+\index{m\_eventDispatcher@{m\_eventDispatcher}!VoxelEditor::Input::InputHandler@{VoxelEditor::Input::InputHandler}}
+\doxysubsubsection{\texorpdfstring{m\_eventDispatcher}{m\_eventDispatcher}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_input_handler_a9acb53e5fbeed790f8f983f69187206a} 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}}\texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Input\+::\+Input\+Handler\+::m\+\_\+event\+Dispatcher\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_input_handler_8h}{Input\+Handler.\+h}}\end{DoxyCompactItemize}

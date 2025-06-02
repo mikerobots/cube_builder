@@ -1,10 +1,18 @@
 #pragma once
 
+#include <functional>
+#include <vector>
+#include <memory>
+#include <unordered_map>
+#include <typeindex>
+#include <queue>
+#include <mutex>
+#include <algorithm>
+
 #include "VoxelTypes.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
-#include <functional>
 
 // Forward declaration for memory estimation
 namespace VoxelEditor { namespace VoxelData { class OctreeNode; }}
@@ -17,14 +25,14 @@ public:
     using SizeChangeCallback = std::function<bool(const Math::Vector3f&, const Math::Vector3f&)>;
     
     explicit WorkspaceManager(Events::EventDispatcher* eventDispatcher = nullptr)
-        : m_size(WorkspaceConstraints::DEFAULT_SIZE, 
-                WorkspaceConstraints::DEFAULT_SIZE, 
-                WorkspaceConstraints::DEFAULT_SIZE)
+        : m_size(::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE, 
+                ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE, 
+                ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE)
         , m_eventDispatcher(eventDispatcher) {}
     
     // Workspace size management
     bool setSize(const Math::Vector3f& newSize) {
-        if (!WorkspaceConstraints::isValidSize(newSize)) {
+        if (!::VoxelEditor::VoxelData::WorkspaceConstraints::isValidSize(newSize)) {
             return false;
         }
         
@@ -54,87 +62,82 @@ public:
         return m_size;
     }
     
-    // Convenience getters
-    float getWidth() const { return m_size.x; }
-    float getHeight() const { return m_size.y; }
-    float getDepth() const { return m_size.z; }
-    
-    // Volume calculation
     float getVolume() const {
         return m_size.x * m_size.y * m_size.z;
     }
     
-    // Bounds calculation
+    float getMinDimension() const {
+        return std::min({m_size.x, m_size.y, m_size.z});
+    }
+    
+    float getMaxDimension() const {
+        return std::max({m_size.x, m_size.y, m_size.z});
+    }
+    
+    // Check if workspace is cubic
+    bool isCubic() const {
+        return (m_size.x == m_size.y) && (m_size.y == m_size.z);
+    }
+    
+    // Get workspace bounds
     Math::Vector3f getMinBounds() const {
-        return -m_size * 0.5f;
+        return Math::Vector3f(0, 0, 0);
     }
     
     Math::Vector3f getMaxBounds() const {
+        return m_size;
+    }
+    
+    Math::Vector3f getCenter() const {
         return m_size * 0.5f;
     }
     
-    void getBounds(Math::Vector3f& minBounds, Math::Vector3f& maxBounds) const {
-        minBounds = getMinBounds();
-        maxBounds = getMaxBounds();
-    }
-    
     // Position validation
-    bool isPositionInBounds(const Math::Vector3f& worldPos) const {
-        Math::Vector3f halfSize = m_size * 0.5f;
-        return worldPos.x >= -halfSize.x && worldPos.x <= halfSize.x &&
-               worldPos.y >= -halfSize.y && worldPos.y <= halfSize.y &&
-               worldPos.z >= -halfSize.z && worldPos.z <= halfSize.z;
+    bool isPositionValid(const Math::Vector3f& position) const {
+        return position.x >= 0 && position.x <= m_size.x &&
+               position.y >= 0 && position.y <= m_size.y &&
+               position.z >= 0 && position.z <= m_size.z;
     }
     
-    bool isVoxelPositionValid(const VoxelPosition& voxelPos) const {
-        return ::VoxelEditor::VoxelData::isPositionInBounds(voxelPos.gridPos, voxelPos.resolution, m_size);
+    bool isVoxelPositionValid(const ::VoxelEditor::VoxelData::VoxelPosition& voxelPos) const {
+        Math::Vector3f worldPos = voxelPos.toWorldSpace(m_size);
+        return isPositionValid(worldPos);
     }
     
-    // Clamping utilities
-    Math::Vector3f clampPosition(const Math::Vector3f& worldPos) const {
-        Math::Vector3f halfSize = m_size * 0.5f;
+    // Grid position validation (for specific resolution)
+    bool isGridPositionValid(const Math::Vector3i& gridPos, ::VoxelEditor::VoxelData::VoxelResolution resolution) const {
+        Math::Vector3i maxDims = getMaxGridDimensions(resolution);
+        return gridPos.x >= 0 && gridPos.x < maxDims.x &&
+               gridPos.y >= 0 && gridPos.y < maxDims.y &&
+               gridPos.z >= 0 && gridPos.z < maxDims.z;
+    }
+    
+    // Clamp position to workspace bounds
+    Math::Vector3f clampPosition(const Math::Vector3f& position) const {
         return Math::Vector3f(
-            std::clamp(worldPos.x, -halfSize.x, halfSize.x),
-            std::clamp(worldPos.y, -halfSize.y, halfSize.y),
-            std::clamp(worldPos.z, -halfSize.z, halfSize.z)
+            std::clamp(position.x, 0.0f, m_size.x),
+            std::clamp(position.y, 0.0f, m_size.y),
+            std::clamp(position.z, 0.0f, m_size.z)
         );
     }
     
-    // Distance calculations
-    float getDistanceToEdge(const Math::Vector3f& worldPos) const {
-        Math::Vector3f halfSize = m_size * 0.5f;
-        Math::Vector3f distances = halfSize - Math::Vector3f(
-            std::abs(worldPos.x),
-            std::abs(worldPos.y),
-            std::abs(worldPos.z)
-        );
+    // Get maximum voxel counts for each resolution
+    int getMaxVoxelCount(::VoxelEditor::VoxelData::VoxelResolution resolution) const {
+        Math::Vector3i maxDims = getMaxGridDimensions(resolution);
+        return maxDims.x * maxDims.y * maxDims.z;
+    }
+    
+    Math::Vector3i getMaxGridDimensions(::VoxelEditor::VoxelData::VoxelResolution resolution) const {
+        return ::VoxelEditor::VoxelData::calculateMaxGridDimensions(resolution, m_size);
+    }
+    
+    // Memory estimation
+    size_t estimateMemoryUsage(::VoxelEditor::VoxelData::VoxelResolution resolution, float fillRatio = 0.1f) const {
+        // Base memory for workspace management
+        size_t baseMemory = sizeof(WorkspaceManager) + sizeof(Math::Vector3f);
         
-        return std::min({distances.x, distances.y, distances.z});
-    }
-    
-    bool isNearEdge(const Math::Vector3f& worldPos, float threshold = 0.1f) const {
-        return getDistanceToEdge(worldPos) < threshold;
-    }
-    
-    // Grid information for different resolutions
-    Math::Vector3i getMaxGridDimensions(VoxelResolution resolution) const {
-        return calculateMaxGridDimensions(resolution, m_size);
-    }
-    
-    size_t getMaxVoxelCount(VoxelResolution resolution) const {
-        Math::Vector3i dims = getMaxGridDimensions(resolution);
-        return static_cast<size_t>(dims.x) * static_cast<size_t>(dims.y) * static_cast<size_t>(dims.z);
-    }
-    
-    float getVoxelDensity(VoxelResolution resolution, size_t actualVoxelCount) const {
-        size_t maxVoxels = getMaxVoxelCount(resolution);
-        if (maxVoxels == 0) return 0.0f;
-        return static_cast<float>(actualVoxelCount) / static_cast<float>(maxVoxels);
-    }
-    
-    // Memory estimation (rough estimate)
-    size_t estimateMemoryUsage(VoxelResolution resolution, float fillRatio = 0.1f) const {
-        size_t maxVoxels = getMaxVoxelCount(resolution);
+        // Estimate voxel storage
+        int maxVoxels = getMaxVoxelCount(resolution);
         size_t estimatedVoxels = static_cast<size_t>(maxVoxels * fillRatio);
         
         // Rough estimate: each voxel might need 2-3 octree nodes on average
@@ -144,20 +147,20 @@ public:
     
     // Constraint validation
     static bool isValidSize(const Math::Vector3f& size) {
-        return WorkspaceConstraints::isValidSize(size);
+        return ::VoxelEditor::VoxelData::WorkspaceConstraints::isValidSize(size);
     }
     
     static bool isValidSize(float size) {
-        return WorkspaceConstraints::isValidSize(size);
+        return ::VoxelEditor::VoxelData::WorkspaceConstraints::isValidSize(size);
     }
     
     static Math::Vector3f clampSize(const Math::Vector3f& size) {
-        return WorkspaceConstraints::clampSize(size);
+        return ::VoxelEditor::VoxelData::WorkspaceConstraints::clampSize(size);
     }
     
-    static float getMinSize() { return WorkspaceConstraints::MIN_SIZE; }
-    static float getMaxSize() { return WorkspaceConstraints::MAX_SIZE; }
-    static float getDefaultSize() { return WorkspaceConstraints::DEFAULT_SIZE; }
+    static float getMinSize() { return ::VoxelEditor::VoxelData::WorkspaceConstraints::MIN_SIZE; }
+    static float getMaxSize() { return ::VoxelEditor::VoxelData::WorkspaceConstraints::MAX_SIZE; }
+    static float getDefaultSize() { return ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE; }
     
     // Callback management
     void setSizeChangeCallback(SizeChangeCallback callback) {
@@ -176,9 +179,9 @@ public:
     // Reset to defaults
     void reset() {
         Math::Vector3f oldSize = m_size;
-        m_size = Math::Vector3f(WorkspaceConstraints::DEFAULT_SIZE, 
-                              WorkspaceConstraints::DEFAULT_SIZE, 
-                              WorkspaceConstraints::DEFAULT_SIZE);
+        m_size = Math::Vector3f(::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE, 
+                              ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE, 
+                              ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE);
         
         if (m_eventDispatcher) {
             Events::WorkspaceResizedEvent event(oldSize, m_size);
@@ -188,34 +191,34 @@ public:
     
     // Utility methods for common sizes
     bool setToMinimumSize() {
-        return setSize(WorkspaceConstraints::MIN_SIZE);
+        return setSize(::VoxelEditor::VoxelData::WorkspaceConstraints::MIN_SIZE);
     }
     
     bool setToMaximumSize() {
-        return setSize(WorkspaceConstraints::MAX_SIZE);
+        return setSize(::VoxelEditor::VoxelData::WorkspaceConstraints::MAX_SIZE);
     }
     
     bool setToDefaultSize() {
-        return setSize(WorkspaceConstraints::DEFAULT_SIZE);
+        return setSize(::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE);
     }
     
     // Check if workspace is at limits
     bool isAtMinimumSize() const {
-        return m_size.x <= WorkspaceConstraints::MIN_SIZE &&
-               m_size.y <= WorkspaceConstraints::MIN_SIZE &&
-               m_size.z <= WorkspaceConstraints::MIN_SIZE;
+        return m_size.x <= ::VoxelEditor::VoxelData::WorkspaceConstraints::MIN_SIZE &&
+               m_size.y <= ::VoxelEditor::VoxelData::WorkspaceConstraints::MIN_SIZE &&
+               m_size.z <= ::VoxelEditor::VoxelData::WorkspaceConstraints::MIN_SIZE;
     }
     
     bool isAtMaximumSize() const {
-        return m_size.x >= WorkspaceConstraints::MAX_SIZE &&
-               m_size.y >= WorkspaceConstraints::MAX_SIZE &&
-               m_size.z >= WorkspaceConstraints::MAX_SIZE;
+        return m_size.x >= ::VoxelEditor::VoxelData::WorkspaceConstraints::MAX_SIZE &&
+               m_size.y >= ::VoxelEditor::VoxelData::WorkspaceConstraints::MAX_SIZE &&
+               m_size.z >= ::VoxelEditor::VoxelData::WorkspaceConstraints::MAX_SIZE;
     }
     
     bool isDefaultSize() const {
-        return m_size.x == WorkspaceConstraints::DEFAULT_SIZE &&
-               m_size.y == WorkspaceConstraints::DEFAULT_SIZE &&
-               m_size.z == WorkspaceConstraints::DEFAULT_SIZE;
+        return m_size.x == ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE &&
+               m_size.y == ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE &&
+               m_size.z == ::VoxelEditor::VoxelData::WorkspaceConstraints::DEFAULT_SIZE;
     }
     
 private:

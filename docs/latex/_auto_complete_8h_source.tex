@@ -1,0 +1,110 @@
+\doxysection{Auto\+Complete.\+h}
+\hypertarget{_auto_complete_8h_source}{}\label{_auto_complete_8h_source}\index{apps/cli/include/cli/AutoComplete.h@{apps/cli/include/cli/AutoComplete.h}}
+\mbox{\hyperlink{_auto_complete_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <deque>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_command_processor}{CommandProcessor}};}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_aa40df766d201bdaff0224f3f143bb542}{AutoComplete}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_aa40df766d201bdaff0224f3f143bb542}{AutoComplete}}(\mbox{\hyperlink{class_voxel_editor_1_1_command_processor}{CommandProcessor}}*\ processor,\ \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ app);}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a69457806e99f822417d6c8d1b4abfb3c}{\string~AutoComplete}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00016\ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Input\ handling}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a75efc423e5804bab2704c286dd1b55f1}{reset}}();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a0a99c37103f6f8dd56f90bb289d59e7f}{setInput}}(\textcolor{keyword}{const}\ std::string\&\ input);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_aa274a698d9b5c8700c01267947f3676e}{setCursorPosition}}(\textcolor{keywordtype}{size\_t}\ pos);}
+\DoxyCodeLine{00021\ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Completion}}
+\DoxyCodeLine{00023\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_ae062a95b9f0c9d765890e4ec451e4682}{getCompletions}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00024\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a6312a925ae7bf9964c438fd56df703e1}{getCompletion}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a0c437a398342803ca4f56227aafcdc80}{applyCompletion}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Tab\ cycling}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a33c70e0602bcf190f86ef029b2a2f895}{nextCompletion}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_abc3b507f1ade701e69239b2fba21d9b7}{previousCompletion}}();}
+\DoxyCodeLine{00030\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a01060e6724fd38b6ef0d8088eea9769b}{getCurrentCompletion}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_ad4ed9a9bfee8f68ae80233728522ee89}{hasCompletions}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Context-\/aware\ completions}}
+\DoxyCodeLine{00034\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a1808305e175c0f64fbd888ec978be54a}{getFileCompletions}}(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a12e2690918d6993dc77f95d75aa8bf5b}{getGroupCompletions}}(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00036\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_ad2a59f2d7b44456c05e489090e12e504}{getViewCompletions}}(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a27f65c0e8a032ab8f28b6ef870964e1c}{getResolutionCompletions}}(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor}{CommandProcessor}}*\ m\_processor;}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ m\_app;}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ std::string\ m\_input;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_cursorPos\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{mutable}\ std::vector<std::string>\ m\_completions;}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{mutable}\ \textcolor{keywordtype}{int}\ m\_currentIndex\ =\ -\/1;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{mutable}\ \textcolor{keywordtype}{bool}\ m\_completionsValid\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ updateCompletions()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ \ \ \ \ std::string\ getPartialAtCursor()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ std::pair<std::string,\ std::string>\ splitAtCursor()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Line\ editor\ for\ interactive\ command\ input}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a92d927d27568888e74ed2f660203e5a7}{LineEditor}}\ \{}
+\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a92d927d27568888e74ed2f660203e5a7}{LineEditor}}();}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a11bfac9b7e5a62d2150cfd9449cc7152}{\string~LineEditor}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Input\ handling}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a0fd923494cc0d8ea394c5fc43d7ee735}{clear}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a751a2aaa143caa8a0049949aed9ebfa6}{insert}}(\textcolor{keywordtype}{char}\ c);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a751a2aaa143caa8a0049949aed9ebfa6}{insert}}(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_ac1b21a405870e00601ede6c731205433}{backspace}}();}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a0b5e3cfd30e487c901357b914d915555}{deleteChar}}();}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a038a08cf1c5ae69b21626759504be084}{moveLeft}}();}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a63c983e52a41e8132677205061721aab}{moveRight}}();}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_aedcf4cc76be679fec60d8269428ee5bf}{moveHome}}();}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a142d6ef69c2c2aff1850dfac933f975c}{moveEnd}}();}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a25624f67ca9cbfdf316cf353cffe3d92}{moveWordLeft}}();}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_acf38114dd5a377affe6d900100692285}{moveWordRight}}();}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ History}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_ace96983c1e1e31231fe267aac238238e}{addToHistory}}(\textcolor{keyword}{const}\ std::string\&\ line);}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_ad3e696aba241e3eac7f4747c08e4ca2c}{historyUp}}();}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a60dd22ba5be6f3131adf0b471ed4779f}{historyDown}}();}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Content\ access}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a8b3cf05d0171dd63ad23c6f2c9c81c06}{getLine}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_line;\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_ae2878445e5bf36ad4504762c9000f610}{getCursor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cursor;\ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a28eff7bf78ef894975ebc295486a2509}{setLine}}(\textcolor{keyword}{const}\ std::string\&\ line);}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Display}}
+\DoxyCodeLine{00086\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a0a479db57a25ab47a08cea24a29f06fd}{getDisplay}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_line_editor_a059757586616e56f42a07ee4270cde1a}{getDisplayCursor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00090\ \ \ \ \ std::string\ m\_line;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_cursor\ =\ 0;}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ std::deque<std::string>\ m\_history;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxHistory\ =\ 100;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_historyIndex\ =\ -\/1;}
+\DoxyCodeLine{00096\ \ \ \ \ std::string\ m\_savedLine;}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWordChar(\textcolor{keywordtype}{char}\ c)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ findWordBoundaryLeft(\textcolor{keywordtype}{size\_t}\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ findWordBoundaryRight(\textcolor{keywordtype}{size\_t}\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ \};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

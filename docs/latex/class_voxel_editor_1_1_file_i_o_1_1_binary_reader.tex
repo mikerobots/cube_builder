@@ -1,0 +1,326 @@
+\doxysection{Voxel\+Editor\+::File\+IO\+::Binary\+Reader Class Reference}
+\hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{}\label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+
+
+{\ttfamily \#include $<$Binary\+IO.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a79a4dfdc4e9e66ba1a58368caf10438f}{Binary\+Reader}} (std\+::istream \&stream)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a21a45d07af72f6dc4848f6ca28c742fb}{\texorpdfstring{$\sim$}{\string~}\+Binary\+Reader}} ()
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_acbf64a89d1c6749653725aaf6f28983f}{read\+UInt8}} ()
+\item 
+uint16\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aed007fee5ffe3f574403c8643a110b38}{read\+UInt16}} ()
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a1f74ef03485a31ea4c53646fe4959327}{read\+UInt32}} ()
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a39e12926882d68951d68a019d84412d8}{read\+UInt64}} ()
+\item 
+int8\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9f5ab7e3c07530013a52bb29d6f87dc7}{read\+Int8}} ()
+\item 
+int16\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a796cd76b99b236897671ec78fe769727}{read\+Int16}} ()
+\item 
+int32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_af35ce04150c88b247942160706cd6d1a}{read\+Int32}} ()
+\item 
+int64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae96dd7d65ff08b90e78dad0fdc00d5e7}{read\+Int64}} ()
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_abf51ede6e093ed0937aadefb99741d5a}{read\+Float}} ()
+\item 
+double \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a86bdb78e34c456f4262ac7e77c5b3055}{read\+Double}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2d99ea34771535a9e42ac2ee3fc37411}{read\+Bool}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a25219e1da62b22bbbdad15ae2cb4fbe8}{read\+String}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac5349dd47ccd2d5abe062a4f6a5719f3}{read\+Vector3f}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac255798a53f22012b7a47bcab33bb561}{read\+Matrix4f}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac678d3dd368e26769feaa326a271dc64}{read\+Bytes}} (void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size)
+\item 
+std\+::vector$<$ uint8\+\_\+t $>$ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_adb29e3b9c9fc2d17bb5bbac4956d30c2}{read\+Bytes}} (size\+\_\+t size)
+\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::vector$<$ T $>$ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a096cd5fa62e05c3d815d64b6440f2180}{read\+Array}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\T \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{read}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ad8b8c8e7490991ce5a041c03d7f04818}{get\+Bytes\+Read}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac49a13e2e4c222149623930c762cf93d}{is\+Valid}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2bd8c071fd0cb9852f4f2902b1c7948c}{is\+At\+End}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a96a7db5f439e31adec3bc13c7f28df10}{skip}} (size\+\_\+t bytes)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a97b08aeaa975cdc33f165e7c8999b18b}{remaining}} () const
+\item 
+template$<$$>$ uint8\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9358423d16171f3e7d39d28abf951563}{read}} ()
+\item 
+template$<$$>$ uint16\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2efa14f7e042c38df94d1a4000a5adfa}{read}} ()
+\item 
+template$<$$>$ uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a5392e1d2bf49647dfef14f3c4102ff4b}{read}} ()
+\item 
+template$<$$>$ uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a52e94f8cb64b21de025eb1ba7edd4d98}{read}} ()
+\item 
+template$<$$>$ int8\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a4d2f37d6665c6c753965fe0ea99cb48c}{read}} ()
+\item 
+template$<$$>$ int16\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae640afb2e25ca7f975850731c32fda4f}{read}} ()
+\item 
+template$<$$>$ int32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a295fce98df3e1fb00acca14cd862dc5a}{read}} ()
+\item 
+template$<$$>$ int64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ab9874878e5f46d467b2213266122d7cc}{read}} ()
+\item 
+template$<$$>$ float \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aef06c1fbb7e78da9a13c35f8ef815460}{read}} ()
+\item 
+template$<$$>$ double \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a749a8061cf0f30df43bc5ba3e01db891}{read}} ()
+\item 
+template$<$$>$ bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a51563886532503a677000b96bcbd0f0b}{read}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a79a4dfdc4e9e66ba1a58368caf10438f}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!BinaryReader@{BinaryReader}}
+\index{BinaryReader@{BinaryReader}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{BinaryReader()}{BinaryReader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a79a4dfdc4e9e66ba1a58368caf10438f} 
+Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::\+Binary\+Reader (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a21a45d07af72f6dc4848f6ca28c742fb}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!````~BinaryReader@{\texorpdfstring{$\sim$}{\string~}BinaryReader}}
+\index{````~BinaryReader@{\texorpdfstring{$\sim$}{\string~}BinaryReader}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BinaryReader()}{\string~BinaryReader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a21a45d07af72f6dc4848f6ca28c742fb} 
+Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::\texorpdfstring{$\sim$}{\string~}\+Binary\+Reader (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ad8b8c8e7490991ce5a041c03d7f04818}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!getBytesRead@{getBytesRead}}
+\index{getBytesRead@{getBytesRead}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{getBytesRead()}{getBytesRead()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ad8b8c8e7490991ce5a041c03d7f04818} 
+size\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::get\+Bytes\+Read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2bd8c071fd0cb9852f4f2902b1c7948c}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!isAtEnd@{isAtEnd}}
+\index{isAtEnd@{isAtEnd}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{isAtEnd()}{isAtEnd()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2bd8c071fd0cb9852f4f2902b1c7948c} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::is\+At\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac49a13e2e4c222149623930c762cf93d}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!isValid@{isValid}}
+\index{isValid@{isValid}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac49a13e2e4c222149623930c762cf93d} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [1/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8} 
+template$<$typename T$>$ \\
+T Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9358423d16171f3e7d39d28abf951563}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [2/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9358423d16171f3e7d39d28abf951563} 
+template$<$$>$ \\
+uint8\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2efa14f7e042c38df94d1a4000a5adfa}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [3/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2efa14f7e042c38df94d1a4000a5adfa} 
+template$<$$>$ \\
+uint16\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a5392e1d2bf49647dfef14f3c4102ff4b}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [4/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a5392e1d2bf49647dfef14f3c4102ff4b} 
+template$<$$>$ \\
+uint32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a52e94f8cb64b21de025eb1ba7edd4d98}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [5/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a52e94f8cb64b21de025eb1ba7edd4d98} 
+template$<$$>$ \\
+uint64\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a4d2f37d6665c6c753965fe0ea99cb48c}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [6/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a4d2f37d6665c6c753965fe0ea99cb48c} 
+template$<$$>$ \\
+int8\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae640afb2e25ca7f975850731c32fda4f}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [7/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae640afb2e25ca7f975850731c32fda4f} 
+template$<$$>$ \\
+int16\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a295fce98df3e1fb00acca14cd862dc5a}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [8/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a295fce98df3e1fb00acca14cd862dc5a} 
+template$<$$>$ \\
+int32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ab9874878e5f46d467b2213266122d7cc}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [9/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ab9874878e5f46d467b2213266122d7cc} 
+template$<$$>$ \\
+int64\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aef06c1fbb7e78da9a13c35f8ef815460}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [10/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aef06c1fbb7e78da9a13c35f8ef815460} 
+template$<$$>$ \\
+float Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a749a8061cf0f30df43bc5ba3e01db891}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [11/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a749a8061cf0f30df43bc5ba3e01db891} 
+template$<$$>$ \\
+double Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a51563886532503a677000b96bcbd0f0b}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [12/12]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a51563886532503a677000b96bcbd0f0b} 
+template$<$$>$ \\
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a096cd5fa62e05c3d815d64b6440f2180}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readArray@{readArray}}
+\index{readArray@{readArray}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readArray()}{readArray()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a096cd5fa62e05c3d815d64b6440f2180} 
+template$<$typename T$>$ \\
+std\+::vector$<$ T $>$ Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Array (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2d99ea34771535a9e42ac2ee3fc37411}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readBool@{readBool}}
+\index{readBool@{readBool}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readBool()}{readBool()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2d99ea34771535a9e42ac2ee3fc37411} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Bool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_adb29e3b9c9fc2d17bb5bbac4956d30c2}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readBytes@{readBytes}}
+\index{readBytes@{readBytes}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readBytes()}{readBytes()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_adb29e3b9c9fc2d17bb5bbac4956d30c2} 
+std\+::vector$<$ uint8\+\_\+t $>$ Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Bytes (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac678d3dd368e26769feaa326a271dc64}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readBytes@{readBytes}}
+\index{readBytes@{readBytes}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readBytes()}{readBytes()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac678d3dd368e26769feaa326a271dc64} 
+void Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Bytes (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a86bdb78e34c456f4262ac7e77c5b3055}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readDouble@{readDouble}}
+\index{readDouble@{readDouble}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readDouble()}{readDouble()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a86bdb78e34c456f4262ac7e77c5b3055} 
+double Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Double (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_abf51ede6e093ed0937aadefb99741d5a}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readFloat@{readFloat}}
+\index{readFloat@{readFloat}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readFloat()}{readFloat()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_abf51ede6e093ed0937aadefb99741d5a} 
+float Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Float (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a796cd76b99b236897671ec78fe769727}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readInt16@{readInt16}}
+\index{readInt16@{readInt16}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readInt16()}{readInt16()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a796cd76b99b236897671ec78fe769727} 
+int16\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Int16 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_af35ce04150c88b247942160706cd6d1a}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readInt32@{readInt32}}
+\index{readInt32@{readInt32}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readInt32()}{readInt32()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_af35ce04150c88b247942160706cd6d1a} 
+int32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Int32 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae96dd7d65ff08b90e78dad0fdc00d5e7}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readInt64@{readInt64}}
+\index{readInt64@{readInt64}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readInt64()}{readInt64()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae96dd7d65ff08b90e78dad0fdc00d5e7} 
+int64\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Int64 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9f5ab7e3c07530013a52bb29d6f87dc7}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readInt8@{readInt8}}
+\index{readInt8@{readInt8}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readInt8()}{readInt8()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9f5ab7e3c07530013a52bb29d6f87dc7} 
+int8\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Int8 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac255798a53f22012b7a47bcab33bb561}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readMatrix4f@{readMatrix4f}}
+\index{readMatrix4f@{readMatrix4f}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readMatrix4f()}{readMatrix4f()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac255798a53f22012b7a47bcab33bb561} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Matrix4f (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a25219e1da62b22bbbdad15ae2cb4fbe8}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readString@{readString}}
+\index{readString@{readString}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readString()}{readString()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a25219e1da62b22bbbdad15ae2cb4fbe8} 
+std\+::string Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aed007fee5ffe3f574403c8643a110b38}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readUInt16@{readUInt16}}
+\index{readUInt16@{readUInt16}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readUInt16()}{readUInt16()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aed007fee5ffe3f574403c8643a110b38} 
+uint16\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+UInt16 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a1f74ef03485a31ea4c53646fe4959327}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readUInt32@{readUInt32}}
+\index{readUInt32@{readUInt32}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readUInt32()}{readUInt32()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a1f74ef03485a31ea4c53646fe4959327} 
+uint32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+UInt32 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a39e12926882d68951d68a019d84412d8}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readUInt64@{readUInt64}}
+\index{readUInt64@{readUInt64}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readUInt64()}{readUInt64()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a39e12926882d68951d68a019d84412d8} 
+uint64\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+UInt64 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_acbf64a89d1c6749653725aaf6f28983f}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readUInt8@{readUInt8}}
+\index{readUInt8@{readUInt8}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readUInt8()}{readUInt8()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_acbf64a89d1c6749653725aaf6f28983f} 
+uint8\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+UInt8 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac5349dd47ccd2d5abe062a4f6a5719f3}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!readVector3f@{readVector3f}}
+\index{readVector3f@{readVector3f}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{readVector3f()}{readVector3f()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac5349dd47ccd2d5abe062a4f6a5719f3} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::read\+Vector3f (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a97b08aeaa975cdc33f165e7c8999b18b}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!remaining@{remaining}}
+\index{remaining@{remaining}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{remaining()}{remaining()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a97b08aeaa975cdc33f165e7c8999b18b} 
+size\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::remaining (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a96a7db5f439e31adec3bc13c7f28df10}\index{VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}!skip@{skip}}
+\index{skip@{skip}!VoxelEditor::FileIO::BinaryReader@{VoxelEditor::FileIO::BinaryReader}}
+\doxysubsubsection{\texorpdfstring{skip()}{skip()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a96a7db5f439e31adec3bc13c7f28df10} 
+void Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Reader\+::skip (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{bytes}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/file\+\_\+io/include/file\+\_\+io/\mbox{\hyperlink{_binary_i_o_8h}{Binary\+IO.\+h}}\item 
+core/file\+\_\+io/src/\mbox{\hyperlink{_binary_i_o_8cpp}{Binary\+IO.\+cpp}}\end{DoxyCompactItemize}

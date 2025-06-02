@@ -1,0 +1,105 @@
+\doxysection{Voxel\+Editor\+::File\+IO\+::STLExporter Class Reference}
+\hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter}{}\label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+
+
+{\ttfamily \#include $<$STLExporter.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a7610be2c62df1349a05ca0fc93f2d2de}{STLExporter}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a8f518306c6644873fee29d31739101fe}{\texorpdfstring{$\sim$}{\string~}\+STLExporter}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af68682000a52ddfb9cd7d05fa97c52fd}{export\+Mesh}} (const std\+::string \&filename, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&mesh, const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExport\+Options}} \&options=\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExport\+Options\+::\+Default}}())
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a392a1dc16249a79388693bec5ab2dcda}{export\+Meshes}} (const std\+::string \&filename, const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} $>$ \&meshes, const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExport\+Options}} \&options=\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExport\+Options\+::\+Default}}())
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af19042624fd731cce28717a2df4ee3fb}{validate\+Mesh}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&mesh, std\+::vector$<$ std\+::string $>$ \&issues) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a92d828c8a682a8b625bd48893832ff3c}{is\+Watertight}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&mesh) const
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a3bb679e51b38f16d597bffabe05cb84c}{repair\+Mesh}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&mesh) const
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats}{STLExport\+Stats}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a0574d67c6ae4c18acae0cad2b71b7ad2}{get\+Last\+Export\+Stats}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{File\+Error}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_afbea51654ba43ff3bca6da05e78593d6}{get\+Last\+Error}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a98f34f5d9ae6310360a27877e3e2eab3}{get\+Last\+Error\+Message}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a7610be2c62df1349a05ca0fc93f2d2de}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!STLExporter@{STLExporter}}
+\index{STLExporter@{STLExporter}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{STLExporter()}{STLExporter()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a7610be2c62df1349a05ca0fc93f2d2de} 
+Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::\+STLExporter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a8f518306c6644873fee29d31739101fe}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!````~STLExporter@{\texorpdfstring{$\sim$}{\string~}STLExporter}}
+\index{````~STLExporter@{\texorpdfstring{$\sim$}{\string~}STLExporter}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}STLExporter()}{\string~STLExporter()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a8f518306c6644873fee29d31739101fe} 
+Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::\texorpdfstring{$\sim$}{\string~}\+STLExporter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af68682000a52ddfb9cd7d05fa97c52fd}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!exportMesh@{exportMesh}}
+\index{exportMesh@{exportMesh}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{exportMesh()}{exportMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af68682000a52ddfb9cd7d05fa97c52fd} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::export\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&}]{mesh}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExport\+Options}} \&}]{options}{ = {\ttfamily \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExport\+Options\+::\+Default}}()}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a392a1dc16249a79388693bec5ab2dcda}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!exportMeshes@{exportMeshes}}
+\index{exportMeshes@{exportMeshes}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{exportMeshes()}{exportMeshes()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a392a1dc16249a79388693bec5ab2dcda} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::export\+Meshes (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} $>$ \&}]{meshes}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExport\+Options}} \&}]{options}{ = {\ttfamily \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExport\+Options\+::\+Default}}()}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_afbea51654ba43ff3bca6da05e78593d6}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!getLastError@{getLastError}}
+\index{getLastError@{getLastError}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{getLastError()}{getLastError()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_afbea51654ba43ff3bca6da05e78593d6} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{File\+Error}} Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::get\+Last\+Error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a98f34f5d9ae6310360a27877e3e2eab3}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!getLastErrorMessage@{getLastErrorMessage}}
+\index{getLastErrorMessage@{getLastErrorMessage}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{getLastErrorMessage()}{getLastErrorMessage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a98f34f5d9ae6310360a27877e3e2eab3} 
+std\+::string Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::get\+Last\+Error\+Message (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a0574d67c6ae4c18acae0cad2b71b7ad2}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!getLastExportStats@{getLastExportStats}}
+\index{getLastExportStats@{getLastExportStats}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{getLastExportStats()}{getLastExportStats()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a0574d67c6ae4c18acae0cad2b71b7ad2} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats}{STLExport\+Stats}} Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::get\+Last\+Export\+Stats (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a92d828c8a682a8b625bd48893832ff3c}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!isWatertight@{isWatertight}}
+\index{isWatertight@{isWatertight}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{isWatertight()}{isWatertight()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a92d828c8a682a8b625bd48893832ff3c} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::is\+Watertight (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&}]{mesh}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a3bb679e51b38f16d597bffabe05cb84c}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!repairMesh@{repairMesh}}
+\index{repairMesh@{repairMesh}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{repairMesh()}{repairMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a3bb679e51b38f16d597bffabe05cb84c} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::repair\+Mesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&}]{mesh}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af19042624fd731cce28717a2df4ee3fb}\index{VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}!validateMesh@{validateMesh}}
+\index{validateMesh@{validateMesh}!VoxelEditor::FileIO::STLExporter@{VoxelEditor::FileIO::STLExporter}}
+\doxysubsubsection{\texorpdfstring{validateMesh()}{validateMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af19042624fd731cce28717a2df4ee3fb} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+STLExporter\+::validate\+Mesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering\+::\+Mesh}} \&}]{mesh}{, }\item[{std\+::vector$<$ std\+::string $>$ \&}]{issues}{}\end{DoxyParamCaption}) const}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/file\+\_\+io/include/file\+\_\+io/\mbox{\hyperlink{_s_t_l_exporter_8h}{STLExporter.\+h}}\item 
+core/file\+\_\+io/src/\mbox{\hyperlink{_s_t_l_exporter_8cpp}{STLExporter.\+cpp}}\end{DoxyCompactItemize}

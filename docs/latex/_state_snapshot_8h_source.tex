@@ -1,0 +1,144 @@
+\doxysection{State\+Snapshot.\+h}
+\hypertarget{_state_snapshot_8h_source}{}\label{_state_snapshot_8h_source}\index{core/undo\_redo/StateSnapshot.h@{core/undo\_redo/StateSnapshot.h}}
+\mbox{\hyperlink{_state_snapshot_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelDataManager}};}
+\DoxyCodeLine{00013\ \}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_selection}{Selection}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{SelectionManager}};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}};}
+\DoxyCodeLine{00017\ \}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_camera}{Camera}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}};}
+\DoxyCodeLine{00020\ \}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Rendering}}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}};}
+\DoxyCodeLine{00023\ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Snapshot\ of\ the\ entire\ application\ state}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_afb62ff7f796240c598fb827f9b6b1d25}{StateSnapshot}}\ \{}
+\DoxyCodeLine{00029\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_voxel_data_snapshot}{VoxelDataSnapshot}}\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO:\ Implement\ efficient\ voxel\ data\ storage}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_voxel_data_snapshot_ae2d05690fec5041998ab28f36d8d165f}{compressedData}};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_voxel_data_snapshot_a1e57c46436a916f6f927bc2c8cd640b1}{uncompressedSize}};}
+\DoxyCodeLine{00034\ \ \ \ \ \};}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_selection_snapshot}{SelectionSnapshot}}\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_selection_snapshot_a2ff4cf40a6b87e853437ec096574b52f}{id}};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::unique\_ptr<Selection::SelectionSet>\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_selection_snapshot_a1f7c2dbda218a84eb3a913e1058fe124}{selection}};}
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot}{CameraSnapshot}}\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ position,\ rotation,\ etc.}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot_a0fab89902188134c455e0949c5910077}{position}}[3];}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot_a897bc2f7c948753fee2b017d813e2c86}{rotation}}[4];\ \textcolor{comment}{//\ Quaternion}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot_a74840ebb368fd30195c41adfca393ff1}{fov}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot_a865dee8ef180556b6951c0fd970b0c00}{nearPlane}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot_ad545723f8c5751f02212817e5d62f402}{farPlane}};}
+\DoxyCodeLine{00048\ \ \ \ \ \};}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot}{RenderSnapshot}}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot_a9d31f04b42b5ea7f94d270e26aea22b4}{showGrid}};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot_ab435d556eecf9e27372bd056a286d716}{showAxes}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot_a1a81545a1779f4faa51472b89c4e6c63}{showBoundingBoxes}};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot_ac9410fb8a66d61c24caf83c54b124338}{enableShadows}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot_ac568d21149296881c75d1a238776e30b}{enableAmbientOcclusion}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot_a3686e377964dc29fb366c6ddd82c4055}{ambientIntensity}};}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_afb62ff7f796240c598fb827f9b6b1d25}{StateSnapshot}}();}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_aee3a68203835b376ea334096cf728443}{\string~StateSnapshot}}();}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Capture\ current\ state}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a8dc0f0d8a55f3f76e967eebaf371149a}{captureVoxelData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_ae02098ee7ea9f4c84ca75cf117e29b36}{captureSelections}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a60afffcf176a933b5a0474f7c6e15d56}{captureCamera}}(\textcolor{keyword}{const}\ Camera::CameraState*\ cameraState);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a1a7f38de56629383f10194e9f3907311}{captureRenderSettings}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{Rendering::RenderSettings}}*\ renderSettings);}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Restore\ state}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a0e8806747814c9eb159600fbfeb075c4}{restoreVoxelData}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_aaa6a62bcabd3a0fd3a10ef2053da5b27}{restoreSelections}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a49c3e32b264ad99ea907199693682c9b}{restoreCamera}}(Camera::CameraState*\ cameraState)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a45583051821a031e5eb64a5c065f6888}{restoreRenderSettings}}(\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{Rendering::RenderSettings}}*\ renderSettings)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Full\ state\ operations}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a02526f1775729042878f5bb42fc9a9ba}{captureFullState}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Camera::CameraState*\ cameraState,}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{Rendering::RenderSettings}}*\ renderSettings);}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a63afbae12c966a9bd583308287ab0299}{restoreFullState}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Camera::CameraState*\ cameraState,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{Rendering::RenderSettings}}*\ renderSettings)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Metadata}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a66e978e304820f546153426faeccb0b6}{setDescription}}(\textcolor{keyword}{const}\ std::string\&\ description)\ \{\ m\_description\ =\ description;\ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a99d67c49f602682e3209534347e46347}{getDescription}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_description;\ \}}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ std::chrono::system\_clock::time\_point\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_ad74280f183f16880f6c7cfe2414090de}{getTimestamp}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_timestamp;\ \}}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Memory\ management}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_ac3d4766cd90db393fc737789fa5ee1af}{getMemoryUsage}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_adc1e56a462a02d6877d26331fecb1641}{compress}}();}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a032be84884f60befa9508fba5ad5b0a8}{decompress}}();}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a0b57c527619423f50639f9c541e1be60}{isCompressed}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_compressed;\ \}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Serialization}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_ae54a8499ea53f2feefa667452f3bb3bb}{saveToFile}}(\textcolor{keyword}{const}\ std::string\&\ filepath)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_a55aa7372db713f797b691564876bf58e}{loadFromFile}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ State\ data}}
+\DoxyCodeLine{00103\ \ \ \ \ std::unique\_ptr<VoxelDataSnapshot>\ m\_voxelData;}
+\DoxyCodeLine{00104\ \ \ \ \ std::vector<SelectionSnapshot>\ m\_selections;}
+\DoxyCodeLine{00105\ \ \ \ \ std::unique\_ptr<CameraSnapshot>\ m\_camera;}
+\DoxyCodeLine{00106\ \ \ \ \ std::unique\_ptr<RenderSnapshot>\ m\_renderSettings;}
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ Metadata}}
+\DoxyCodeLine{00109\ \ \ \ \ std::string\ m\_description;}
+\DoxyCodeLine{00110\ \ \ \ \ std::chrono::system\_clock::time\_point\ m\_timestamp;}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressed;}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ compressVoxelData();}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ decompressVoxelData();}
+\DoxyCodeLine{00116\ \};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ Factory\ for\ creating\ state\ snapshots}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_factory}{StateSnapshotFactory}}\ \{}
+\DoxyCodeLine{00120\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<StateSnapshot>\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_factory_ac5275256d055e18027aec9aea4ba00ac}{createFullSnapshot}}(}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Camera::CameraState*\ cameraState,}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{Rendering::RenderSettings}}*\ renderSettings,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ description\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<StateSnapshot>\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_factory_a63c61d90374aa4321d0e16a6ebce136c}{createVoxelSnapshot}}(}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ description\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<StateSnapshot>\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_state_snapshot_factory_ac9aa039630845cacebb7f74b5015479c}{createSelectionSnapshot}}(}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ description\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00135\ \};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \}}
+\DoxyCodeLine{00138\ \}}
+
+\end{DoxyCode}

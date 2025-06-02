@@ -1,0 +1,50 @@
+\doxysection{Composite\+Command.\+h}
+\hypertarget{_composite_command_8h_source}{}\label{_composite_command_8h_source}\index{core/undo\_redo/CompositeCommand.h@{core/undo\_redo/CompositeCommand.h}}
+\mbox{\hyperlink{_composite_command_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_command_8h}{Command.h}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a4266963b98f58f40a320963eb921cc47}{CompositeCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a4266963b98f58f40a320963eb921cc47}{CompositeCommand}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a86d75f41e8b5c1bd29d5f67c3362d532}{\string~CompositeCommand}}()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00016\ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Add\ commands}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a0ad9673a8d48917f03adf8837e18e85e}{addCommand}}(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a1f862ea0a525b9227a370268ffc5d901}{addCommands}}(std::vector<std::unique\_ptr<Command>>\ commands);}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Command\ interface}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_aa1e7d79aa6261ec86d3e8c3809e795e0}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a48546ea56890cc96ebdfffd08aadfd8f}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00024\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a02cbae18ced37bad87387053e331c5e1}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a66d04ec2173f9bdbcd33b47e4da97db6}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a141a5b46e2087dc7a80a43710c2dacfb}{CommandType::Composite}};\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_af41567f87bd4b96a2731b75feaf963e1}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Composite-\/specific\ methods}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_aea1018058e96398b8671de47bc2121ad}{getCommandCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_commands.size();\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a418abc6d54f2e58c463815af65805bff}{getCommand}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Memory\ optimization}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a054d3105acc4653fbd4f8ca5476d12fe}{compress}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_composite_command_a55ad12ef18b01d02d921a4150273d5ed}{decompress}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00037\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00038\ \ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_commands;}
+\DoxyCodeLine{00039\ \ \ \ \ std::vector<bool>\ m\_executionResults;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_lastExecutedIndex\ =\ 0;}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ \}}
+
+\end{DoxyCode}

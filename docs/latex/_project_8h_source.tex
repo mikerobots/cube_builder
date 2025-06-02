@@ -1,0 +1,123 @@
+\doxysection{Project.\+h}
+\hypertarget{_project_8h_source}{}\label{_project_8h_source}\index{core/file\_io/include/file\_io/Project.h@{core/file\_io/include/file\_io/Project.h}}
+\mbox{\hyperlink{_project_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_types_8h}{FileTypes.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{voxel\_data/VoxelDataManager.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_group_manager_8h}{groups/GroupManager.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_set_8h}{selection/SelectionSet.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_orbit_camera_8h}{camera/OrbitCamera.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }FileValidator;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ Project\ data\ structure\ containing\ all\ saveable\ state}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a44dcab3f2d96bb7083f072211ea5128c}{Project}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Metadata}}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_metadata}{ProjectMetadata}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a26d028f24ad9c5bee4c16ec57003a8da}{metadata}};}
+\DoxyCodeLine{00021\ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Core\ data}}
+\DoxyCodeLine{00023\ \ \ \ \ std::shared\_ptr<VoxelData::VoxelDataManager>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_aaab740c7fb012621d348fcc750a531c3}{voxelData}};}
+\DoxyCodeLine{00024\ \ \ \ \ std::shared\_ptr<Groups::GroupManager>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a64950168a2e7a0b9a7aa035db74bcdff}{groupData}};}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ View\ state}}
+\DoxyCodeLine{00027\ \ \ \ \ std::shared\_ptr<Camera::OrbitCamera>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_aefb765c3dca0a82dbf836b3791919922}{camera}};}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Selection\ state}}
+\DoxyCodeLine{00030\ \ \ \ \ std::shared\_ptr<Selection::SelectionSet>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_aea88193b10cfda6068ed109043a47fb0}{currentSelection}};}
+\DoxyCodeLine{00031\ \ \ \ \ std::vector<std::pair<std::string,\ Selection::SelectionSet>>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a11eac11cb7e740d417c1afd86b7da9f4}{namedSelections}};}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Settings}}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings}{WorkspaceSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_ab3f3c8e7366b067dbd8da36e6f92972c}{workspace}};}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Additional\ data}}
+\DoxyCodeLine{00037\ \ \ \ \ std::unordered\_map<std::string,\ std::vector<uint8\_t>>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a08bb22d36b51d18a461d8a90d07db9d4}{customData}};}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a44dcab3f2d96bb7083f072211ea5128c}{Project}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a6bf9a967cd218fbff0b3148407323839}{\string~Project}}();}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a44fd539ad8227ebb0c05c5953a590591}{isValid}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a4c40c1a990bab79dd0de841353892591}{calculateSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_ac517ae2cf6219b39b0bcadc899e53fa0}{clear}}();}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Metadata\ management}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_ab1fd447695ab944270a047e0162c0559}{updateMetadata}}();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a6e211ce6015c3508b71e91cc6bdff91e}{setName}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a5477e310d433f6f5c1a846d15e6c60c6}{setDescription}}(\textcolor{keyword}{const}\ std::string\&\ description);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a18ebb85f497d74aa78cbb46009032ea9}{setAuthor}}(\textcolor{keyword}{const}\ std::string\&\ author);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a0946add3cb81363ccd1706916951368d}{setCustomProperty}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ std::string\&\ value);}
+\DoxyCodeLine{00054\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_ab387b41f4b2e6e49f59a93fbf9332c00}{getCustomProperty}}(\textcolor{keyword}{const}\ std::string\&\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Selection\ management}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a2b374b5d7bf50950c8d0a9bc682322e8}{saveCurrentSelection}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_af4d4f2cfb40275a3060cf371cb5303ea}{loadNamedSelection}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_aeee78aaa6f05e192627872e16766991d}{deleteNamedSelection}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00060\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a0366a9b074056f0ee386654d59064133}{getNamedSelectionList}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Custom\ data\ management}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_aae75903b6eb1bd98056638011fd09f51}{setCustomData}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a8d4c5736ed99a55e3f853084b637caba}{getCustomData}}(\textcolor{keyword}{const}\ std::string\&\ key,\ std::vector<uint8\_t>\&\ data)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_ad3fcff2844add31887c0b95d2be53b85}{removeCustomData}}(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{00066\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_ae4e56642d0bc6ee22fb411d20f632c27}{getCustomDataKeys}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ State\ queries}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a358468e9682b12acac190f3906b3f08e}{hasUnsavedChanges}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ std::chrono::system\_clock::time\_point\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a273dec06ec37a8b522313f81234c36a4}{getLastModified}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_adf171be63ee7d1777cc1c7f7706ff7f9}{getVoxelCount}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a1bec31cf8f6c5c69388102a5a898d99f}{getGroupCount}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_a8f5bfec19047796faeaae74686bdbcd1}{getContentBounds}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{mutable}\ \textcolor{keywordtype}{bool}\ m\_hasUnsavedChanges\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00077\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Initialize\ default\ components}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ initializeDefaults();}
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{comment}{//\ Project\ factory\ for\ creating\ new\ projects}}
+\DoxyCodeLine{00083\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_factory}{ProjectFactory}}\ \{}
+\DoxyCodeLine{00084\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Project>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_factory_aed15553cb50abe979f8fae5e60bca232}{createNewProject}}(}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ name\ =\ \textcolor{stringliteral}{"{}Untitled"{}},}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ workspaceSize\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(5.0f,\ 5.0f,\ 5.0f));}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Project>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_factory_a22769cc7006cc31e1d2f3c3b7de9c895}{createFromTemplate}}(}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ templateName);}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_factory_a912303c23808467d473d49dbd70335b0}{getAvailableTemplates}}();}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ applyTemplate(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ \textcolor{keyword}{const}\ std::string\&\ templateName);}
+\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{comment}{//\ Project\ validation}}
+\DoxyCodeLine{00099\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_validator}{ProjectValidator}}\ \{}
+\DoxyCodeLine{00100\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_validator_a420e21f7c45110477a11b83c38c1b4b2}{validate}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_project_validator_a10592cfa89e53a94e5281f12685a8ba8}{repair}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ std::vector<std::string>\&\ repairLog);}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateMetadata(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_metadata}{ProjectMetadata}}\&\ metadata,\ std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateVoxelData(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}\&\ voxelData,\ std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateGroupData(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Groups::GroupManager}}\&\ groupData,\ std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateSelections(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateWorkspace(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings}{WorkspaceSettings}}\&\ workspace,\ std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ repairVoxelData(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}\&\ voxelData,\ std::vector<std::string>\&\ repairLog);}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ repairGroupData(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Groups::GroupManager}}\&\ groupData,\ std::vector<std::string>\&\ repairLog);}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{bool}\ repairSelections(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ std::vector<std::string>\&\ repairLog);}
+\DoxyCodeLine{00114\ \};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \}\ \textcolor{comment}{//\ namespace\ FileIO}}
+\DoxyCodeLine{00117\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

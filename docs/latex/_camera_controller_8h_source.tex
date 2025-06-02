@@ -1,0 +1,258 @@
+\doxysection{Camera\+Controller.\+h}
+\hypertarget{_camera_controller_8h_source}{}\label{_camera_controller_8h_source}\index{core/camera/CameraController.h@{core/camera/CameraController.h}}
+\mbox{\hyperlink{_camera_controller_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_orbit_camera_8h}{OrbitCamera.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_viewport_8h}{Viewport.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector2i_8h}{../../foundation/math/Vector2i.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ray_8h}{../../foundation/math/Ray.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_camera}{Camera}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}{InteractionMode}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{NONE}},}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a48d80811ec81276fb3ee0df3944e7aee}{ORBIT}},}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ad74461db15255d85a44ffd72419646b3}{PAN}},}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a66f276916d5a97cbb3b0008213bda1c3}{ZOOM}}}
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ :\ m\_camera(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera}{OrbitCamera}}>(eventDispatcher))}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ ,\ m\_viewport(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport}{Viewport}}>())}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ ,\ m\_interactionMode(\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}{InteractionMode}}::\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{NONE}})}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ ,\ m\_lastMousePos(0,\ 0)}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ ,\ m\_mouseDragThreshold(3.0f)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ ,\ m\_isDragging(false)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ up\ camera\ to\ use\ viewport\ aspect\ ratio}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ updateCameraAspectRatio();}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aafd464c9e9c5f81033e9af5712129349}{\string~CameraController}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Non-\/copyable\ but\ movable}}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a6e61ea78ae729ce908392b883e976402}{CameraController}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a8fcf9e9b0c9f51ce16385e3bc2f01cd4}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a82ee735ff41d3d3e4a9bc1b98565c930}{CameraController}}(\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a4c45711523f889f0268ffbb30bb3eae7}{operator=}}(\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a25b5142f5586a0c7a8455885ffedbb4b}{CameraController}}\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Camera\ access}}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera}{OrbitCamera}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a0b3dbe20dcf5d4e7fd4905ddf1b94a13}{getCamera}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_camera.get();\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport}{Viewport}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a00cbd95aeedf5155009070e196bd270c}{getViewport}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_viewport.get();\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Viewport\ management}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aa5c5d93f4fa68454e084c0d84de20721}{setViewportSize}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ m\_viewport-\/>setSize(width,\ height);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ updateCameraAspectRatio();}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_ae658387f84cb384b4a0e781678f08273}{setViewportBounds}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ m\_viewport-\/>setBounds(x,\ y,\ width,\ height);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ updateCameraAspectRatio();}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Mouse\ interaction}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a6f8ebeb4b651515233c98efd48a0970c}{onMouseButtonDown}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ mousePos,\ \textcolor{keywordtype}{int}\ button)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_viewport-\/>contains(mousePos))\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ m\_lastMousePos\ =\ mousePos;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ m\_isDragging\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Button\ mapping:\ 0=left,\ 1=middle,\ 2=right}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (button)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ \textcolor{comment}{//\ Left\ button\ -\/\ orbit}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_interactionMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a48d80811ec81276fb3ee0df3944e7aee}{InteractionMode::ORBIT}};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ \textcolor{comment}{//\ Middle\ button\ -\/\ pan}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_interactionMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ad74461db15255d85a44ffd72419646b3}{InteractionMode::PAN}};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ \textcolor{comment}{//\ Right\ button\ -\/\ zoom}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_interactionMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a66f276916d5a97cbb3b0008213bda1c3}{InteractionMode::ZOOM}};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_interactionMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{InteractionMode::NONE}};}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a71517b5a1700d9c7fd351cc61c82ff61}{onMouseButtonUp}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ mousePos,\ \textcolor{keywordtype}{int}\ button)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ m\_interactionMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{InteractionMode::NONE}};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ m\_isDragging\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_af0ed23611c994b13d6be5e759a22c375}{onMouseMove}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ mousePos)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_viewport-\/>contains(mousePos)\ ||\ m\_interactionMode\ ==\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{InteractionMode::NONE}})\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ delta\ =\ mousePos\ -\/\ m\_lastMousePos;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ we've\ exceeded\ drag\ threshold}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_isDragging)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ std::sqrt(delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_a05e9627c9de00e62f2edf34ed0c2b3fe}{x}}\ *\ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_a05e9627c9de00e62f2edf34ed0c2b3fe}{x}}\ +\ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_ad3433e4becd4ba6ab916a10869f652d2}{y}}\ *\ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_ad3433e4becd4ba6ab916a10869f652d2}{y}});}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ >\ m\_mouseDragThreshold)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_isDragging\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ Not\ dragging\ yet}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Convert\ to\ viewport-\/normalized\ coordinates}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ normalizedDelta\ =\ m\_viewport-\/>getMouseDelta(mousePos,\ m\_lastMousePos);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (m\_interactionMode)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a48d80811ec81276fb3ee0df3944e7aee}{InteractionMode::ORBIT}}:}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ handleOrbit(normalizedDelta);}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ad74461db15255d85a44ffd72419646b3}{InteractionMode::PAN}}:}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ handlePan(normalizedDelta);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a66f276916d5a97cbb3b0008213bda1c3}{InteractionMode::ZOOM}}:}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ handleZoom(normalizedDelta);}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{InteractionMode::NONE}}:}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ m\_lastMousePos\ =\ mousePos;}
+\DoxyCodeLine{00123\ \ \ \ \ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aee377fdc78bfd1af17e6d91c96f58c2e}{onMouseWheel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ mousePos,\ \textcolor{keywordtype}{float}\ delta)\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_viewport-\/>contains(mousePos))\ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Zoom\ towards\ cursor\ position}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zoomAmount\ =\ delta\ *\ m\_camera-\/>getZoomSensitivity()\ *\ 0.1f;}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ m\_camera-\/>zoom(zoomAmount);}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Keyboard\ shortcuts\ for\ view\ presets}}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_abc55b4ddcc51d5289aea0a7beab011d1}{setViewPreset}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}{ViewPreset}}\ preset)\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ m\_camera-\/>setViewPreset(preset);}
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Frame\ objects}}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a9240517fd169570cada282fa7c5244db}{frameAll}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ minBounds,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ maxBounds)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ m\_camera-\/>frameBox(minBounds,\ maxBounds);}
+\DoxyCodeLine{00143\ \ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a52ab8a536d37bc9fbb68871874bf4950}{focusOn}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ point,\ \textcolor{keywordtype}{float}\ distance\ =\ -\/1.0f)\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ m\_camera-\/>focusOn(point,\ distance);}
+\DoxyCodeLine{00147\ \ \ \ \ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{comment}{//\ 3D\ interaction}}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_adefcaf7a39a12b257a95ebc989983ca7}{getMouseRay}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ mousePos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_viewport-\/>screenToWorldRay(}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ mousePos,}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ m\_camera-\/>getViewMatrix(),}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ m\_camera-\/>getProjectionMatrix()}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00156\ \ \ \ \ \}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_adb20a996653b373a0b13fc4ba5149ebb}{worldToScreen}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_viewport-\/>worldToScreen(}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ worldPos,}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ m\_camera-\/>getViewMatrix(),}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ m\_camera-\/>getProjectionMatrix()}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00164\ \ \ \ \ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//\ Update\ for\ animation/smoothing}}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_af33f3438962605490fe16767c37a631f}{update}}(\textcolor{keywordtype}{float}\ deltaTime)\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ m\_camera-\/>update(deltaTime);}
+\DoxyCodeLine{00169\ \ \ \ \ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Settings}}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aced0031fbb484a7274786fdb958750b8}{setMouseDragThreshold}}(\textcolor{keywordtype}{float}\ threshold)\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ m\_mouseDragThreshold\ =\ threshold;}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a7e4be873918aaf28d838cfa987819631}{setCameraSensitivity}}(\textcolor{keywordtype}{float}\ panSensitivity,\ \textcolor{keywordtype}{float}\ rotateSensitivity,\ \textcolor{keywordtype}{float}\ zoomSensitivity)\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ m\_camera-\/>setPanSensitivity(panSensitivity);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ m\_camera-\/>setRotateSensitivity(rotateSensitivity);}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ m\_camera-\/>setZoomSensitivity(zoomSensitivity);}
+\DoxyCodeLine{00180\ \ \ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aa0c4f752f36bba505e61f009de31fb44}{setCameraSmoothing}}(\textcolor{keywordtype}{bool}\ enabled,\ \textcolor{keywordtype}{float}\ smoothFactor\ =\ 0.1f)\ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ m\_camera-\/>setSmoothing(enabled);}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (enabled)\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ m\_camera-\/>setSmoothFactor(smoothFactor);}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \ \ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aa6007c5600567211d8bda7ba84ae6982}{setCameraConstraints}}(\textcolor{keywordtype}{float}\ minDistance,\ \textcolor{keywordtype}{float}\ maxDistance,\ \textcolor{keywordtype}{float}\ minPitch,\ \textcolor{keywordtype}{float}\ maxPitch)\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ m\_camera-\/>setDistanceConstraints(minDistance,\ maxDistance);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ m\_camera-\/>setPitchConstraints(minPitch,\ maxPitch);}
+\DoxyCodeLine{00192\ \ \ \ \ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//\ State\ queries}}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a45e71a6a3a399a79bccdf616d7961dc7}{isInteracting}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_interactionMode\ !=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{InteractionMode::NONE}}\ \&\&\ m\_isDragging;}
+\DoxyCodeLine{00197\ \ \ \ \ \}}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}{InteractionMode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_a3c2b43e0972c87c0c4c10785a68c706a}{getInteractionMode}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_interactionMode;}
+\DoxyCodeLine{00201\ \ \ \ \ \}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller_aacb4486f60b01950e386bdefb25bbfb6}{getMouseDragThreshold}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_mouseDragThreshold;}
+\DoxyCodeLine{00205\ \ \ \ \ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{void}\ updateCameraAspectRatio()\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ m\_camera-\/>setAspectRatio(m\_viewport-\/>getAspectRatio());}
+\DoxyCodeLine{00210\ \ \ \ \ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{void}\ handleOrbit(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ delta)\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scale\ rotation\ based\ on\ distance\ for\ more\ intuitive\ control}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distanceScale\ =\ m\_camera-\/>getDistance()\ /\ 10.0f;}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ distanceScale\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(distanceScale,\ 0.1f,\ 2.0f);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ m\_camera-\/>orbit(}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ -\/delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_a3c079bfe9ed1b5144eca337b1455acfe}{x}}\ *\ 180.0f\ *\ distanceScale,\ \textcolor{comment}{//\ Negative\ for\ intuitive\ left/right}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ -\/delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ac812b3ed86dadbae646000ca799e7d5a}{y}}\ *\ 180.0f\ *\ distanceScale\ \ \textcolor{comment}{//\ Negative\ for\ intuitive\ up/down}}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00221\ \ \ \ \ \}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{void}\ handlePan(\textcolor{keyword}{const}\ Math::Vector2f\&\ delta)\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scale\ panning\ based\ on\ distance\ for\ consistent\ feel}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distanceScale\ =\ m\_camera-\/>getDistance()\ /\ 10.0f;}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ Math::Vector3f\ panDelta(}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ -\/delta.x\ *\ distanceScale,\ \textcolor{comment}{//\ Negative\ for\ intuitive\ left/right}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ delta.y\ *\ distanceScale,\ \ \textcolor{comment}{//\ Positive\ for\ intuitive\ up/down}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ m\_camera-\/>pan(panDelta);}
+\DoxyCodeLine{00234\ \ \ \ \ \}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keywordtype}{void}\ handleZoom(\textcolor{keyword}{const}\ Math::Vector2f\&\ delta)\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Use\ vertical\ mouse\ movement\ for\ zoom}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zoomDelta\ =\ delta.y\ *\ m\_camera-\/>getDistance()\ *\ 0.5f;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ m\_camera-\/>zoom(zoomDelta);}
+\DoxyCodeLine{00240\ \ \ \ \ \}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ std::unique\_ptr<OrbitCamera>\ m\_camera;}
+\DoxyCodeLine{00243\ \ \ \ \ std::unique\_ptr<Viewport>\ m\_viewport;}
+\DoxyCodeLine{00244\ \ \ \ \ }
+\DoxyCodeLine{00245\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}{InteractionMode}}\ m\_interactionMode;}
+\DoxyCodeLine{00246\ \ \ \ \ Math::Vector2i\ m\_lastMousePos;}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_mouseDragThreshold;}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_isDragging;}
+\DoxyCodeLine{00249\ \};}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \}}
+\DoxyCodeLine{00252\ \}}
+
+\end{DoxyCode}

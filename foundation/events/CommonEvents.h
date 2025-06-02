@@ -1,5 +1,15 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+#include <typeindex>
+#include <queue>
+#include <mutex>
+#include <algorithm>
+#include <stack>
+#include <unordered_map>
+#include <typeinfo>
+
 #include "EventBase.h"
 #include "../math/Vector3f.h"
 #include "../math/Vector3i.h"

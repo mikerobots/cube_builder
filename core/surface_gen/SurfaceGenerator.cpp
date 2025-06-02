@@ -49,6 +49,13 @@ Mesh SurfaceGenerator::generatePreviewMesh(const VoxelData::VoxelGrid& grid, int
     return generateInternal(grid, previewSettings, lod);
 }
 
+Mesh SurfaceGenerator::generateMultiResMesh(const VoxelData::VoxelDataManager& voxelManager,
+                                           VoxelData::VoxelResolution targetRes) {
+    // TODO: Implement multi-resolution mesh generation
+    // For now, return an empty mesh
+    return Mesh();
+}
+
 Mesh SurfaceGenerator::generateExportMesh(const VoxelData::VoxelGrid& grid, 
                                          ExportQuality quality) {
     SurfaceSettings exportSettings = SurfaceSettings::Export();

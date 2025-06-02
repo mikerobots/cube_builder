@@ -1,0 +1,564 @@
+\chapter{File I/O System Subsystem }
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n}{}\label{md_core_2file__io_2_d_e_s_i_g_n}\index{File I/O System Subsystem@{File I/O System Subsystem}}
+\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md152}%
+\Hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md152}%
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md153}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md153}
+Handles project save/load operations using custom binary format, STL export functionality, file versioning, and compression for efficient storage.\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md154}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md154}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md155}{}\doxysubsection{\texorpdfstring{File\+Manager}{File\+Manager}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md155}
+{\bfseries{Responsibility}}\+: Main interface for file operations
+\begin{DoxyItemize}
+\item Coordinate save/load operations
+\item Manage file format versioning
+\item Handle compression and decompression
+\item Provide progress callbacks for large files
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md156}{}\doxysubsection{\texorpdfstring{Binary\+Format}{Binary\+Format}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md156}
+{\bfseries{Responsibility}}\+: Custom binary format implementation
+\begin{DoxyItemize}
+\item Efficient serialization of voxel data
+\item Multi-\/resolution data storage
+\item Metadata and settings persistence
+\item Forward/backward compatibility
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md157}{}\doxysubsection{\texorpdfstring{STLExporter}{STLExporter}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md157}
+{\bfseries{Responsibility}}\+: STL file export functionality
+\begin{DoxyItemize}
+\item Convert mesh data to STL format
+\item ASCII and binary STL support
+\item Watertight mesh validation
+\item Scale and unit conversion
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md158}{}\doxysubsection{\texorpdfstring{File\+Versioning}{File\+Versioning}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md158}
+{\bfseries{Responsibility}}\+: File format version management
+\begin{DoxyItemize}
+\item Version detection and upgrade
+\item Migration between format versions
+\item Deprecation warnings
+\item Compatibility validation
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md159}{}\doxysubsection{\texorpdfstring{Compression}{Compression}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md159}
+{\bfseries{Responsibility}}\+: LZ4 compression wrapper
+\begin{DoxyItemize}
+\item Fast compression for real-\/time saves
+\item Sparse data optimization
+\item Incremental compression
+\item Memory-\/efficient streaming
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md160}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md160}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }FileManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Project\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ saveProject(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Project\&\ project,\ \textcolor{keyword}{const}\ SaveOptions\&\ options\ =\ SaveOptions::Default());}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadProject(\textcolor{keyword}{const}\ std::string\&\ filename,\ Project\&\ project,\ LoadOptions\&\ options\ =\ LoadOptions::Default());}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasProject(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Export\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportSTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options\ =\ STLExportOptions::Default());}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportMultiSTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ std::vector<Mesh>\&\ meshes,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ File\ information}}
+\DoxyCodeLine{\ \ \ \ FileInfo\ getFileInfo(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getRecentFiles()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addToRecentFiles(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Format\ validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValidProjectFile(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ FileVersion\ getFileVersion(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canUpgradeFile(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Progress\ callbacks}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setProgressCallback(ProgressCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSaveCompleteCallback(SaveCompleteCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setLoadCompleteCallback(LoadCompleteCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCompressionEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCompressionLevel(\textcolor{keywordtype}{int}\ level);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setBackupEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setAutoSaveEnabled(\textcolor{keywordtype}{bool}\ enabled,\ \textcolor{keywordtype}{float}\ intervalSeconds\ =\ 300.0f);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<BinaryFormat>\ m\_binaryFormat;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<STLExporter>\ m\_stlExporter;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<FileVersioning>\ m\_versioning;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<Compression>\ m\_compression;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_afc10f59d0bd4c862af3b94ae247dd603}{ProgressCallback}}\ m\_progressCallback;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a479d10236ee78cb58a0f0429f1c3e91c}{SaveCompleteCallback}}\ m\_saveCompleteCallback;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_aa256a07fb67dc8cdd82f0820fdac019c}{LoadCompleteCallback}}\ m\_loadCompleteCallback;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ m\_recentFiles;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressionEnabled;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ m\_compressionLevel;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_backupEnabled;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_autoSaveEnabled;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_autoSaveInterval;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ createBackup(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ cleanupOldBackups(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ triggerAutoSave();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md161}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md161}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md162}{}\doxysubsection{\texorpdfstring{Project Structure}{Project Structure}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md162}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }Project\ \{}
+\DoxyCodeLine{\ \ \ \ ProjectMetadata\ metadata;}
+\DoxyCodeLine{\ \ \ \ MultiResolutionGrid\ voxelData;}
+\DoxyCodeLine{\ \ \ \ GroupManager\ groupData;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ cameraState;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ currentSelection;}
+\DoxyCodeLine{\ \ \ \ std::vector<SelectionSet>\ namedSelections;}
+\DoxyCodeLine{\ \ \ \ WorkspaceSettings\ workspace;}
+\DoxyCodeLine{\ \ \ \ RenderSettings\ renderSettings;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ calculateSize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }ProjectMetadata\ \{}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ std::string\ description;}
+\DoxyCodeLine{\ \ \ \ std::string\ author;}
+\DoxyCodeLine{\ \ \ \ std::chrono::system\_clock::time\_point\ created;}
+\DoxyCodeLine{\ \ \ \ std::chrono::system\_clock::time\_point\ modified;}
+\DoxyCodeLine{\ \ \ \ FileVersion\ version;}
+\DoxyCodeLine{\ \ \ \ std::string\ application;}
+\DoxyCodeLine{\ \ \ \ std::string\ applicationVersion;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ std::string>\ customProperties;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }WorkspaceSettings\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3f\ size\ =\ Vector3f(5.0f,\ 5.0f,\ 5.0f);}
+\DoxyCodeLine{\ \ \ \ Vector3f\ origin\ =\ Vector3f::Zero();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ defaultResolution\ =\ VoxelResolution::Size\_1cm;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ gridVisible\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ axesVisible\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ backgroundColor\ =\ Color::Gray();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md163}{}\doxysubsection{\texorpdfstring{File Options}{File Options}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md163}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }SaveOptions\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compress\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ compressionLevel\ =\ 6;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ includeHistory\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ includeCache\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ createBackup\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateBeforeSave\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SaveOptions\ Default();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SaveOptions\ Fast();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SaveOptions\ Compact();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SaveOptions\ Development();}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }LoadOptions\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadHistory\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadCache\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateAfterLoad\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ upgradeVersion\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ ignoreVersionMismatch\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ LoadOptions\ Default();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ LoadOptions\ Fast();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ LoadOptions\ Safe();}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }STLExportOptions\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bb}{STLFormat}}\ format\ =\ STLFormat::Binary;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ units\ =\ STLUnits::Millimeters;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ scale\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ mergeMeshes\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateWatertight\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ translation\ =\ Vector3f::Zero();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ STLExportOptions\ Default();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ STLExportOptions\ Printing3D();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ STLExportOptions\ CAD();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md164}{}\doxysection{\texorpdfstring{Binary Format Implementation}{Binary Format Implementation}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md164}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md165}{}\doxysubsection{\texorpdfstring{File Structure}{File Structure}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md165}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Custom\ Voxel\ Editor\ File\ Format\ (.cvef)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Header\ (256\ bytes):}
+\DoxyCodeLine{-\/\ Magic\ number\ (4\ bytes):\ "{}CVEF"{}}
+\DoxyCodeLine{-\/\ Version\ (4\ bytes):\ Major.Minor.Patch.Build}
+\DoxyCodeLine{-\/\ File\ size\ (8\ bytes)}
+\DoxyCodeLine{-\/\ Compression\ flags\ (4\ bytes)}
+\DoxyCodeLine{-\/\ Checksum\ (8\ bytes)}
+\DoxyCodeLine{-\/\ Reserved\ (228\ bytes)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Chunks:}
+\DoxyCodeLine{-\/\ Metadata\ chunk}
+\DoxyCodeLine{-\/\ Voxel\ data\ chunk\ (per\ resolution)}
+\DoxyCodeLine{-\/\ Group\ data\ chunk}
+\DoxyCodeLine{-\/\ Camera\ state\ chunk}
+\DoxyCodeLine{-\/\ Selection\ data\ chunk}
+\DoxyCodeLine{-\/\ Settings\ chunk}
+\DoxyCodeLine{-\/\ Custom\ data\ chunks}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md166}{}\doxysubsection{\texorpdfstring{Binary\+Format}{Binary\+Format}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md166}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }BinaryFormat\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ writeProject(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ Project\&\ project,\ \textcolor{keyword}{const}\ SaveOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ readProject(BinaryReader\&\ reader,\ Project\&\ project,\ \textcolor{keyword}{const}\ LoadOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Chunk\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ writeChunk(BinaryWriter\&\ writer,\ ChunkType\ type,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ readChunk(BinaryReader\&\ reader,\ ChunkType\&\ type,\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateFile(BinaryReader\&\ reader);}
+\DoxyCodeLine{\ \ \ \ uint64\_t\ calculateChecksum(BinaryReader\&\ reader);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }FileHeader\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ magic[4]\ =\ \{\textcolor{charliteral}{'C'},\ \textcolor{charliteral}{'V'},\ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'F'}\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ FileVersion\ version;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint64\_t\ fileSize;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ compressionFlags;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint64\_t\ checksum;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint8\_t\ reserved[228]\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ updateChecksum(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ChunkHeader\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970}{ChunkType}}\ type;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ size;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ uncompressedSize;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ checksum;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970}{ChunkType}}\ :\ uint32\_t\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970ace21470ab49d1d1976bc3dc72438c183}{Metadata}}\ =\ 0x4D455441,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 'META'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a8297838d919ddfa3d4d58774e887c36d}{VoxelData}}\ =\ 0x564F5845,\ \ \ \ \ \ \ \textcolor{comment}{//\ 'VOXE'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a7f1fc2225258096cb6b47b4dc12855a2}{GroupData}}\ =\ 0x47525550,\ \ \ \ \ \ \ \textcolor{comment}{//\ 'GRUP'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ =\ 0x43414D45,\ \ \ \ \ \textcolor{comment}{//\ 'CAME'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970aa8e6e777406e3ccbd538095a3cfd1d1b}{SelectionData}}\ =\ 0x53454C45,\ \ \ \textcolor{comment}{//\ 'SELE'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970af4f70727dc34561dfde1a3c529b6205c}{Settings}}\ =\ 0x53455454,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 'SETT'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a4e0bb514b87fd684035a3b34a80ddb53}{CustomData}}\ =\ 0x43555354\ \ \ \ \ \ \ \textcolor{comment}{//\ 'CUST'}}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ writeHeader(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ FileHeader\&\ header);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ readHeader(BinaryReader\&\ reader,\ FileHeader\&\ header);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ writeVoxelDataChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ MultiResolutionGrid\&\ grid,\ \textcolor{keyword}{const}\ SaveOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ readVoxelDataChunk(BinaryReader\&\ reader,\ MultiResolutionGrid\&\ grid,\ \textcolor{keyword}{const}\ LoadOptions\&\ options);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md167}{}\doxysubsection{\texorpdfstring{Binary I/O Utilities}{Binary I/O Utilities}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md167}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }BinaryWriter\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ BinaryWriter(std::ostream\&\ stream);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeUInt8(uint8\_t\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeUInt16(uint16\_t\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeUInt32(uint32\_t\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeUInt64(uint64\_t\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeFloat(\textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeDouble(\textcolor{keywordtype}{double}\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeString(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeVector3f(\textcolor{keyword}{const}\ Vector3f\&\ vec);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeMatrix4f(\textcolor{keyword}{const}\ Matrix4f\&\ mat);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeBytes(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getBytesWritten()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::ostream\&\ m\_stream;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_bytesWritten;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_valid;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }BinaryReader\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ BinaryReader(std::istream\&\ stream);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ uint8\_t\ readUInt8();}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ readUInt16();}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ readUInt32();}
+\DoxyCodeLine{\ \ \ \ uint64\_t\ readUInt64();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ readFloat();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{double}\ readDouble();}
+\DoxyCodeLine{\ \ \ \ std::string\ readString();}
+\DoxyCodeLine{\ \ \ \ Vector3f\ readVector3f();}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ readMatrix4f();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ readBytes(\textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getBytesRead()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isAtEnd()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::istream\&\ m\_stream;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_bytesRead;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_valid;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md168}{}\doxysection{\texorpdfstring{STL Export Implementation}{STL Export Implementation}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md168}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md169}{}\doxysubsection{\texorpdfstring{STLExporter}{STLExporter}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md169}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }STLExporter\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportMesh(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportMeshes(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ std::vector<Mesh>\&\ meshes,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Format-\/specific\ exports}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportBinarySTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportASCIISTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ std::vector<std::string>\&\ issues);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isWatertight(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{\ \ \ \ Mesh\ repairMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Statistics}}
+\DoxyCodeLine{\ \ \ \ STLExportStats\ getLastExportStats()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ STLExportStats\ m\_lastStats;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ Mesh\ preprocessMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ STLExportOptions\&\ options);}
+\DoxyCodeLine{\ \ \ \ Mesh\ scaleMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ scale);}
+\DoxyCodeLine{\ \ \ \ Mesh\ translateMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Vector3f\&\ translation);}
+\DoxyCodeLine{\ \ \ \ Mesh\ mergeMeshes(\textcolor{keyword}{const}\ std::vector<Mesh>\&\ meshes);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeBinaryTriangle(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ Vector3f\&\ v0,\ \textcolor{keyword}{const}\ Vector3f\&\ v1,\ \textcolor{keyword}{const}\ Vector3f\&\ v2);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ writeASCIITriangle(std::ostream\&\ stream,\ \textcolor{keyword}{const}\ Vector3f\&\ v0,\ \textcolor{keyword}{const}\ Vector3f\&\ v1,\ \textcolor{keyword}{const}\ Vector3f\&\ v2);}
+\DoxyCodeLine{\ \ \ \ Vector3f\ calculateTriangleNormal(\textcolor{keyword}{const}\ Vector3f\&\ v0,\ \textcolor{keyword}{const}\ Vector3f\&\ v1,\ \textcolor{keyword}{const}\ Vector3f\&\ v2);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }STLExportStats\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ triangleCount\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ vertexCount\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ exportTime\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ fileSize\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ watertight\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ warnings;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bb}{STLFormat}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bba6ce976e8f061b2b5cfe4d0c50c3405dd}{Binary}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bbad2cd8253361a9c732d21ca1d336599cc}{ASCII}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892a3be6521a73bcafce5b38459ec548bd11}{Millimeters}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892a3040cc6624f5c309963dee141936b299}{Centimeters}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892a80b4a3eed88aed8a1c7d8a4418b7f469}{Meters}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892ad73325cdb1cb4f9a1ed11bdab879321d}{Inches}}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md170}{}\doxysection{\texorpdfstring{File Versioning}{File Versioning}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md170}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md171}{}\doxysubsection{\texorpdfstring{File\+Versioning}{File\+Versioning}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md171}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }FileVersioning\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ FileVersion\ getCurrentVersion()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ FileVersion\ detectVersion(BinaryReader\&\ reader);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isCompatible(FileVersion\ version)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canUpgrade(FileVersion\ from,\ FileVersion\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ upgradeFile(\textcolor{keyword}{const}\ std::string\&\ filename,\ FileVersion\ targetVersion);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Migration\ functions}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ migrateV1ToV2(BinaryReader\&\ reader,\ BinaryWriter\&\ writer);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ migrateV2ToV3(BinaryReader\&\ reader,\ BinaryWriter\&\ writer);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getUpgradeWarnings(FileVersion\ from,\ FileVersion\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }MigrationFunction\ =\ std::function<bool(BinaryReader\&,\ BinaryWriter\&)>;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::pair<FileVersion,\ FileVersion>,\ MigrationFunction>\ m\_migrations;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerMigrations();}
+\DoxyCodeLine{\ \ \ \ std::vector<FileVersion>\ findUpgradePath(FileVersion\ from,\ FileVersion\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }FileVersion\ \{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ major\ =\ 1;}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ minor\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ patch\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ build\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ FileVersion\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ FileVersion\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isCompatible(\textcolor{keyword}{const}\ FileVersion\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::string\ toString()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ FileVersion\ fromString(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ FileVersion\ Current();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md172}{}\doxysection{\texorpdfstring{Compression Implementation}{Compression Implementation}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md172}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md173}{}\doxysubsection{\texorpdfstring{Compression}{Compression}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md173}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }Compression\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compress(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{int}\ level\ =\ 6);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ decompress(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{size\_t}\ expectedSize);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMaxCompressedSize(\textcolor{keywordtype}{size\_t}\ inputSize)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getCompressionRatio()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Streaming\ compression}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compressStream(std::istream\&\ input,\ std::ostream\&\ output,\ \textcolor{keywordtype}{int}\ level\ =\ 6);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ decompressStream(std::istream\&\ input,\ std::ostream\&\ output,\ \textcolor{keywordtype}{size\_t}\ expectedSize);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Specialized\ compression\ for\ voxel\ data}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compressVoxelData(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{int}\ level\ =\ 6);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ decompressVoxelData(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ VoxelGrid\&\ grid);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_lastCompressionRatio\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ LZ4-\/specific\ compression}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compressLZ4(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{int}\ level);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ decompressLZ4(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{size\_t}\ expectedSize);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Voxel-\/specific\ optimization}}
+\DoxyCodeLine{\ \ \ \ std::vector<uint8\_t>\ optimizeVoxelData(\textcolor{keyword}{const}\ VoxelGrid\&\ grid);}
+\DoxyCodeLine{\ \ \ \ VoxelGrid\ restoreVoxelData(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md174}{}\doxysection{\texorpdfstring{Auto-\/\+Save and Backup}{Auto-\/\+Save and Backup}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md174}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md175}{}\doxysubsection{\texorpdfstring{Auto\+Save}{Auto\+Save}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md175}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }AutoSave\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ enable(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setInterval(\textcolor{keywordtype}{float}\ seconds);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMaxBackups(\textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setBackupDirectory(\textcolor{keyword}{const}\ std::string\&\ directory);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerProject(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Project*\ project);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ unregisterProject(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ forceSave();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getBackupFiles(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ restoreFromBackup(\textcolor{keyword}{const}\ std::string\&\ backupFilename,\ \textcolor{keyword}{const}\ std::string\&\ targetFilename);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }AutoSaveEntry\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ filename;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Project*\ project;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ timeSinceLastSave\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ needsSave\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<AutoSaveEntry>\ m\_entries;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_enabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_interval\ =\ 300.0f;\ \textcolor{comment}{//\ 5\ minutes}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ m\_maxBackups\ =\ 10;}
+\DoxyCodeLine{\ \ \ \ std::string\ m\_backupDirectory;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ performAutoSave(AutoSaveEntry\&\ entry);}
+\DoxyCodeLine{\ \ \ \ std::string\ generateBackupFilename(\textcolor{keyword}{const}\ std::string\&\ originalFilename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ cleanupOldBackups(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md176}{}\doxysection{\texorpdfstring{Error Handling and Validation}{Error Handling and Validation}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md176}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md177}{}\doxysubsection{\texorpdfstring{File Validation}{File Validation}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md177}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }FileValidator\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateProjectFile(\textcolor{keyword}{const}\ std::string\&\ filename,\ std::vector<std::string>\&\ errors);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateProject(\textcolor{keyword}{const}\ Project\&\ project,\ std::vector<std::string>\&\ errors);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateVoxelData(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grid,\ std::vector<std::string>\&\ errors);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateGroupData(\textcolor{keyword}{const}\ GroupManager\&\ groups,\ std::vector<std::string>\&\ errors);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Repair\ functions}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ repairProject(Project\&\ project,\ std::vector<std::string>\&\ repairActions);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ repairVoxelData(MultiResolutionGrid\&\ grid,\ std::vector<std::string>\&\ repairActions);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ checkFileIntegrity(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ checkVoxelBounds(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grid);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ checkGroupConsistency(\textcolor{keyword}{const}\ GroupManager\&\ groups);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ checkSelectionValidity(\textcolor{keyword}{const}\ SelectionSet\&\ selection,\ \textcolor{keyword}{const}\ MultiResolutionGrid\&\ grid);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md178}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md178}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md179}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md179}
+
+\begin{DoxyItemize}
+\item Binary format read/write correctness
+\item Compression/decompression validation
+\item STL export accuracy
+\item File version migration
+\item Error handling and recovery
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md180}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md180}
+
+\begin{DoxyItemize}
+\item Full save/load roundtrip testing
+\item Cross-\/platform file compatibility
+\item Large file handling
+\item Memory usage optimization
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md181}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md181}
+
+\begin{DoxyItemize}
+\item Save/load speed benchmarks
+\item Compression efficiency measurement
+\item Memory usage during I/O operations
+\item Auto-\/save performance impact
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md182}{}\doxysubsection{\texorpdfstring{Stress Tests}{Stress Tests}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md182}
+
+\begin{DoxyItemize}
+\item Very large projects
+\item Corrupted file handling
+\item Disk space limitations
+\item Concurrent file access
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md183}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md183}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Voxel\+Data}}\+: Voxel grid serialization
+\item {\bfseries{Core/\+Groups}}\+: Group data serialization
+\item {\bfseries{Core/\+Selection}}\+: Selection set serialization
+\item {\bfseries{Core/\+Camera}}\+: Camera state serialization
+\item {\bfseries{Foundation/\+Math}}\+: Vector/matrix serialization
+\item {\bfseries{External/\+LZ4}}\+: Compression library
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md184}{}\doxysection{\texorpdfstring{Platform Considerations}{Platform Considerations}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md184}
+\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md185}{}\doxysubsection{\texorpdfstring{File System Integration}{File System Integration}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md185}
+
+\begin{DoxyItemize}
+\item Native file dialogs
+\item File association registration
+\item Thumbnail generation
+\item Recent files integration
+\end{DoxyItemize}\hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md186}{}\doxysubsection{\texorpdfstring{Performance Optimization}{Performance Optimization}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md186}
+
+\begin{DoxyItemize}
+\item Memory-\/mapped files for large projects
+\item Background I/O for auto-\/save
+\item Incremental saves for large changes
+\item Async loading with progress indication 
+\end{DoxyItemize}

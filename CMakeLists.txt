@@ -18,6 +18,13 @@ if(BUILD_TESTS)
     enable_testing()
 endif()
 
+# Set up Homebrew paths for macOS
+if(APPLE)
+    set(CMAKE_PREFIX_PATH "/opt/homebrew;${CMAKE_PREFIX_PATH}")
+    list(APPEND CMAKE_LIBRARY_PATH "/opt/homebrew/lib")
+    list(APPEND CMAKE_INCLUDE_PATH "/opt/homebrew/include")
+endif()
+
 # External dependencies
 include(FetchContent)
 

@@ -1,0 +1,332 @@
+\chapter{Surface Generation Subsystem }
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n}{}\label{md_core_2surface__gen_2_d_e_s_i_g_n}\index{Surface Generation Subsystem@{Surface Generation Subsystem}}
+\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md327}%
+\Hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md327}%
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md328}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md328}
+Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with multi-\/resolution support and real-\/time preview capabilities.\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md329}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md329}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md330}{}\doxysubsection{\texorpdfstring{Surface\+Generator}{Surface\+Generator}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md330}
+{\bfseries{Responsibility}}\+: Main interface for mesh generation
+\begin{DoxyItemize}
+\item Coordinate mesh generation across resolutions
+\item Manage quality settings and LOD
+\item Handle real-\/time vs. export quality
+\item Cache management for performance
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md331}{}\doxysubsection{\texorpdfstring{Dual\+Contouring}{Dual\+Contouring}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md331}
+{\bfseries{Responsibility}}\+: Core Dual Contouring algorithm implementation
+\begin{DoxyItemize}
+\item Feature-\/preserving surface extraction
+\item Sharp edge detection and preservation
+\item Adaptive mesh generation
+\item Hermite data interpolation
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md332}{}\doxysubsection{\texorpdfstring{Mesh\+Builder}{Mesh\+Builder}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md332}
+{\bfseries{Responsibility}}\+: Mesh construction and optimization
+\begin{DoxyItemize}
+\item Vertex and index buffer generation
+\item Mesh simplification and optimization
+\item Normal calculation and smoothing
+\item UV coordinate generation
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md333}{}\doxysubsection{\texorpdfstring{LODManager}{LODManager}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md333}
+{\bfseries{Responsibility}}\+: Level-\/of-\/detail management
+\begin{DoxyItemize}
+\item Distance-\/based LOD selection
+\item Progressive mesh generation
+\item Memory-\/efficient LOD storage
+\item Smooth LOD transitions
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md334}{}\doxysubsection{\texorpdfstring{Mesh\+Cache}{Mesh\+Cache}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md334}
+{\bfseries{Responsibility}}\+: Performance optimization through caching
+\begin{DoxyItemize}
+\item Cache frequently accessed meshes
+\item Invalidation on voxel changes
+\item Memory pressure management
+\item Background mesh generation
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md335}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md335}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SurfaceGenerator\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Main\ generation\ functions}}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateSurface(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings\ =\ SurfaceSettings::Default());}
+\DoxyCodeLine{\ \ \ \ Mesh\ generatePreviewMesh(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keywordtype}{int}\ lodLevel\ =\ 1);}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateExportMesh(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ ExportQuality\ quality\ =\ ExportQuality::High);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Multi-\/resolution\ support}}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateMultiResMesh(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grids,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ targetRes);}
+\DoxyCodeLine{\ \ \ \ std::vector<Mesh>\ generateAllResolutions(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grids);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Quality\ settings}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSurfaceSettings(\textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ SurfaceSettings\ getSurfaceSettings()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ LOD\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setLODEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ calculateLOD(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Cache\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ enableCaching(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearCache();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getCacheMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Async\ generation}}
+\DoxyCodeLine{\ \ \ \ std::future<Mesh>\ generateSurfaceAsync(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<DualContouring>\ m\_algorithm;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<MeshBuilder>\ m\_meshBuilder;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<LODManager>\ m\_lodManager;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<MeshCache>\ m\_cache;}
+\DoxyCodeLine{\ \ \ \ SurfaceSettings\ m\_settings;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md336}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md336}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md337}{}\doxysubsection{\texorpdfstring{Mesh}{Mesh}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md337}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }Mesh\ \{}
+\DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ vertices;}
+\DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ normals;}
+\DoxyCodeLine{\ \ \ \ std::vector<Vector2f>\ uvCoords;}
+\DoxyCodeLine{\ \ \ \ std::vector<uint32\_t>\ indices;}
+\DoxyCodeLine{\ \ \ \ BoundingBox\ bounds;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ materialId;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Utility\ functions}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ calculateNormals();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba}{calculateBounds}}();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md338}{}\doxysubsection{\texorpdfstring{Surface\+Settings}{Surface\+Settings}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md338}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }SurfaceSettings\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ isoValue\ =\ 0.5f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ preserveSharpEdges\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ edgeThreshold\ =\ 0.1f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ smoothingIterations\ =\ 2;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ generateUVs\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ simplificationRatio\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SurfaceSettings\ Default();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SurfaceSettings\ Preview();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ SurfaceSettings\ Export();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md339}{}\doxysubsection{\texorpdfstring{Export\+Quality}{Export\+Quality}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md339}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{ExportQuality}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9}{Draft}},\ \ \ \ \ \ \textcolor{comment}{//\ Fast\ generation,\ lower\ quality}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b}{Standard}},\ \ \ \textcolor{comment}{//\ Balanced\ quality/performance}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35}{High}},\ \ \ \ \ \ \ \textcolor{comment}{//\ High\ quality,\ slower\ generation}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892}{Maximum}}\ \ \ \ \ \textcolor{comment}{//\ Best\ possible\ quality}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md340}{}\doxysubsection{\texorpdfstring{Hermite\+Data}{Hermite\+Data}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md340}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }HermiteData\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3f\ position;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ normal;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ value;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasIntersection;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md341}{}\doxysection{\texorpdfstring{Dual Contouring Algorithm}{Dual Contouring Algorithm}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md341}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md342}{}\doxysubsection{\texorpdfstring{Core Implementation}{Core Implementation}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md342}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }DualContouring\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateMesh(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Core\ algorithm\ steps}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ extractHermiteData(\textcolor{keyword}{const}\ VoxelGrid\&\ grid);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ generateVertices();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ generateQuads();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ resolveIntersections();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Edge\ processing}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ findEdgeIntersection(\textcolor{keyword}{const}\ Vector3i\&\ v0,\ \textcolor{keyword}{const}\ Vector3i\&\ v1,\ HermiteData\&\ hermite);}
+\DoxyCodeLine{\ \ \ \ Vector3f\ calculateEdgePosition(\textcolor{keyword}{const}\ HermiteData\&\ h0,\ \textcolor{keyword}{const}\ HermiteData\&\ h1);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Vertex\ generation}}
+\DoxyCodeLine{\ \ \ \ Vector3f\ solveQEF(\textcolor{keyword}{const}\ std::vector<HermiteData>\&\ edges);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isFeatureVertex(\textcolor{keyword}{const}\ std::vector<HermiteData>\&\ edges,\ \textcolor{keywordtype}{float}\ threshold);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<HermiteData>\ m\_hermiteData;}
+\DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ m\_vertices;}
+\DoxyCodeLine{\ \ \ \ std::vector<uint32\_t>\ m\_indices;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md343}{}\doxysubsection{\texorpdfstring{Sharp Feature Preservation}{Sharp Feature Preservation}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md343}
+
+\begin{DoxyItemize}
+\item Detect sharp edges using normal variation
+\item Use Quadratic Error Function (QEF) for vertex placement
+\item Preserve geometric features during simplification
+\item Handle material boundaries as sharp features
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md344}{}\doxysection{\texorpdfstring{Level of Detail (LOD)}{Level of Detail (LOD)}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md344}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md345}{}\doxysubsection{\texorpdfstring{LOD Levels}{LOD Levels}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md345}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{LOD0}}\ =\ 0,\ \ \textcolor{comment}{//\ Full\ resolution\ (100\%)}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c}{LOD1}}\ =\ 1,\ \ \textcolor{comment}{//\ Half\ resolution\ (50\%)}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca}{LOD2}}\ =\ 2,\ \ \textcolor{comment}{//\ Quarter\ resolution\ (25\%)}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83}{LOD3}}\ =\ 3,\ \ \textcolor{comment}{//\ Eighth\ resolution\ (12.5\%)}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86}{LOD4}}\ =\ 4\ \ \ \textcolor{comment}{//\ Sixteenth\ resolution\ (6.25\%)}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md346}{}\doxysubsection{\texorpdfstring{LOD Manager Implementation}{LOD Manager Implementation}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md346}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }LODManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateLOD(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ LODLevel\ level,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ calculateLOD(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setLODDistances(\textcolor{keyword}{const}\ std::vector<float>\&\ distances);}
+\DoxyCodeLine{\ \ \ \ std::vector<float>\ getLODDistances()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ VoxelGrid\ downsampleGrid(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keywordtype}{int}\ factor);}
+\DoxyCodeLine{\ \ \ \ Mesh\ simplifyMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ ratio);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<float>\ m\_lodDistances;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<LODLevel,\ float>\ m\_simplificationRatios;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md347}{}\doxysection{\texorpdfstring{Performance Optimization}{Performance Optimization}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md347}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md348}{}\doxysubsection{\texorpdfstring{Mesh Caching}{Mesh Caching}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md348}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MeshCache\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasCachedMesh(\textcolor{keyword}{const}\ VoxelGridHash\&\ hash,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ Mesh\ getCachedMesh(\textcolor{keyword}{const}\ VoxelGridHash\&\ hash,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ cacheMesh(\textcolor{keyword}{const}\ VoxelGridHash\&\ hash,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings,\ \textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ invalidateRegion(\textcolor{keyword}{const}\ BoundingBox\&\ region);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMaxMemoryUsage(\textcolor{keywordtype}{size\_t}\ maxBytes);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }CacheEntry\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Mesh\ mesh;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::chrono::time\_point<std::chrono::steady\_clock>\ lastAccess;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ memoryUsage;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<size\_t,\ CacheEntry>\ m\_cache;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxMemoryUsage;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_currentMemoryUsage;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md349}{}\doxysubsection{\texorpdfstring{Background Generation}{Background Generation}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md349}
+
+\begin{DoxyItemize}
+\item Asynchronous mesh generation for non-\/blocking UI
+\item Priority queue for mesh generation requests
+\item Background LOD pre-\/generation
+\item Streaming mesh updates
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md350}{}\doxysubsection{\texorpdfstring{Memory Management}{Memory Management}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md350}
+
+\begin{DoxyItemize}
+\item Streaming geometry for large meshes
+\item Compressed mesh storage
+\item Memory pooling for temporary data
+\item Automatic garbage collection
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md351}{}\doxysection{\texorpdfstring{Real-\/time vs Export Quality}{Real-\/time vs Export Quality}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md351}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md352}{}\doxysubsection{\texorpdfstring{Real-\/time Generation}{Real-\/time Generation}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md352}
+
+\begin{DoxyItemize}
+\item Lower polygon counts for smooth interaction
+\item Simplified algorithms for speed
+\item Cached results for repeated access
+\item Progressive refinement
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md353}{}\doxysubsection{\texorpdfstring{Export Quality}{Export Quality}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md353}
+
+\begin{DoxyItemize}
+\item High-\/resolution mesh generation
+\item Advanced smoothing algorithms
+\item Optimal topology for 3D printing
+\item Watertight mesh guarantees
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md354}{}\doxysection{\texorpdfstring{Integration Points}{Integration Points}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md354}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md355}{}\doxysubsection{\texorpdfstring{Voxel Data Integration}{Voxel Data Integration}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md355}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Events\ from\ voxel\ data\ changes}}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ onVoxelChanged(\textcolor{keyword}{const}\ VoxelChangedEvent\&\ event)\ \{}
+\DoxyCodeLine{\ \ \ \ invalidateMeshCache(event.position,\ event.resolution);}
+\DoxyCodeLine{\ \ \ \ requestMeshUpdate(event.position,\ event.resolution);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ onResolutionChanged(\textcolor{keyword}{const}\ ResolutionChangedEvent\&\ event)\ \{}
+\DoxyCodeLine{\ \ \ \ clearPreviewCache();}
+\DoxyCodeLine{\ \ \ \ generatePreviewMesh(event.newResolution);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md356}{}\doxysubsection{\texorpdfstring{Rendering Integration}{Rendering Integration}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md356}
+
+\begin{DoxyItemize}
+\item Direct vertex buffer updates
+\item Instanced rendering for repeated geometry
+\item Frustum culling optimization
+\item Occlusion culling support
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md357}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md357}
+\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md358}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md358}
+
+\begin{DoxyItemize}
+\item Algorithm correctness verification
+\item Edge case handling (empty grids, single voxels)
+\item Quality settings validation
+\item LOD generation accuracy
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md359}{}\doxysubsection{\texorpdfstring{Visual Tests}{Visual Tests}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md359}
+
+\begin{DoxyItemize}
+\item Mesh visual correctness
+\item Sharp edge preservation
+\item Smooth surface generation
+\item LOD transition smoothness
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md360}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md360}
+
+\begin{DoxyItemize}
+\item Generation speed benchmarks
+\item Memory usage validation
+\item Cache effectiveness measurement
+\item Async generation performance
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md361}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md361}
+
+\begin{DoxyItemize}
+\item Voxel data integration
+\item Rendering pipeline integration
+\item File export accuracy
+\item Multi-\/resolution handling
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md362}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md362}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Voxel\+Data}}\+: Source voxel data access
+\item {\bfseries{Foundation/\+Math}}\+: Vector/matrix operations, geometric calculations
+\item {\bfseries{Foundation/\+Memory}}\+: Memory pooling for mesh data
+\item {\bfseries{Foundation/\+Events}}\+: Change notifications and updates
+\item {\bfseries{Core/\+Rendering}}\+: Mesh format compatibility
+\end{DoxyItemize}\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md363}{}\doxysection{\texorpdfstring{Export Integration}{Export Integration}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md363}
+
+\begin{DoxyItemize}
+\item STL format generation
+\item Watertight mesh validation
+\item Scale and unit conversion
+\item Material information preservation 
+\end{DoxyItemize}

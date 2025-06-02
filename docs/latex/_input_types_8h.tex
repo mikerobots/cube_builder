@@ -1,0 +1,291 @@
+\doxysection{core/input/\+Input\+Types.h File Reference}
+\hypertarget{_input_types_8h}{}\label{_input_types_8h}\index{core/input/InputTypes.h@{core/input/InputTypes.h}}
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector2f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector2i.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector3f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Quaternion.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Event}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Voxel\+Editor\+::\+Input\+::\+Key\+Event}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_point}{Voxel\+Editor\+::\+Input\+::\+Touch\+Point}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_event}{Voxel\+Editor\+::\+Input\+::\+Touch\+Event}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_finger_pose}{Voxel\+Editor\+::\+Input\+::\+Finger\+Pose}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{Voxel\+Editor\+::\+Input\+::\+Hand\+Pose}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_event}{Voxel\+Editor\+::\+Input\+::\+VREvent}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_context}{Voxel\+Editor\+::\+Input\+::\+Action\+Context}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger}{Voxel\+Editor\+::\+Input\+::\+Input\+Trigger}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Voxel\+Editor\+::\+Input\+::\+Key\+Combination}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_binding}{Voxel\+Editor\+::\+Input\+::\+Action\+Binding}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_comfort_settings}{Voxel\+Editor\+::\+Input\+::\+VRComfort\+Settings}}
+\item 
+struct \mbox{\hyperlink{structstd_1_1hash_3_01_voxel_editor_1_1_input_1_1_key_combination_01_4}{std\+::hash$<$ Voxel\+Editor\+::\+Input\+::\+Key\+Combination $>$}}
+\item 
+struct \mbox{\hyperlink{structstd_1_1hash_3_01std_1_1pair_3_01_voxel_editor_1_1_input_1_1_v_r_gesture_00_01_voxel_editorf6e2ca58d21f055abe8facc9f6505ae6}{std\+::hash$<$ std\+::pair$<$ Voxel\+Editor\+::\+Input\+::\+VRGesture, Voxel\+Editor\+::\+Input\+::\+Hand\+Type $>$ $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_input}{Voxel\+Editor\+::\+Input}}
+\item 
+namespace \mbox{\hyperlink{namespacestd}{std}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a7c9606a8732184925ebed4f98288667a}{Voxel\+Editor\+::\+Input\+::\+Action\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Voxel\+Editor\+::\+Input\+::\+Time\+Point}} = std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a658f77a535b8a869ae89c9a69646c434}{Voxel\+Editor\+::\+Input\+::\+Action\+Callback}} = std\+::function$<$void(const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_context}{Action\+Context}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}{Voxel\+Editor\+::\+Input\+::\+Input\+Device}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa88183b946cc5f0e8c96b2e66e1c74a7e}{Voxel\+Editor\+::\+Input\+::\+Unknown}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf2a47c6809d88e175dade0ef7b16aa13}{Voxel\+Editor\+::\+Input\+::\+Mouse}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa6ce4d85a628a88bbdb3ac24a8e5a9c2e}{Voxel\+Editor\+::\+Input\+::\+Keyboard}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf0f31c9700c6b10d8a20dc487b2ae6a8}{Voxel\+Editor\+::\+Input\+::\+Touch}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa872f259ff5adda3c4ec659710b5c1b0e}{Voxel\+Editor\+::\+Input\+::\+VRController}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aacb1e9bb5e7d251426cc714667a9cf771}{Voxel\+Editor\+::\+Input\+::\+VRHands}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Event\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbae331802be240d79912c365112ad41ddb}{Voxel\+Editor\+::\+Input\+::\+Button\+Press}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbac58a283b80d411649376455b98710c95}{Voxel\+Editor\+::\+Input\+::\+Button\+Release}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bba6bc362dbf494c61ea117fe3c71ca48a5}{Voxel\+Editor\+::\+Input\+::\+Move}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa5df60ef4fc4447353769d66661d2229}{Voxel\+Editor\+::\+Input\+::\+Wheel}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaf1851d5600eae616ee802a31ac74701b}{Voxel\+Editor\+::\+Input\+::\+Enter}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa52945dbe283de2f7e9d63ca3417f36a}{Voxel\+Editor\+::\+Input\+::\+Leave}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Button}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da945d5e233cf7d6240f6b783b36a374ff}{Voxel\+Editor\+::\+Input\+::\+Left}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da92b09c7c48c520c3c55e497875da437c}{Voxel\+Editor\+::\+Input\+::\+Right}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681dab1ca34f82e83c52b010f86955f264e05}{Voxel\+Editor\+::\+Input\+::\+Middle}} = 2
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da91ff24acfc01cc2c3a4238a272a37d07}{Voxel\+Editor\+::\+Input\+::\+Button4}} = 3
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daf8849babaeaee3344306b87310664d65}{Voxel\+Editor\+::\+Input\+::\+Button5}} = 4
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da375ccc6b3a6125cc5c67f2c700a55b72}{Voxel\+Editor\+::\+Input\+::\+Button6}} = 5
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daa00c628d1b186fa4fe9c7f633426979e}{Voxel\+Editor\+::\+Input\+::\+Button7}} = 6
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da4f651f24c0b38f6e7ea0d52b0c514e36}{Voxel\+Editor\+::\+Input\+::\+Button8}} = 7
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da6adf97f83acf6453d4a6a4b1070f3754}{Voxel\+Editor\+::\+Input\+::\+None}} = 255
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af}{Voxel\+Editor\+::\+Input\+::\+Key\+Event\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa0610123bdd4ffc191a3ea05a847e1307}{Voxel\+Editor\+::\+Input\+::\+Press}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afab8e7b465df7c5979dc731d06e84ce2cf}{Voxel\+Editor\+::\+Input\+::\+Release}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa76a40e4f974fd895a0a2598c1cee28b4}{Voxel\+Editor\+::\+Input\+::\+Character}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Voxel\+Editor\+::\+Input\+::\+Key\+Code}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7fc56270e7a70fa81a5935b72eacbe29}{Voxel\+Editor\+::\+Input\+::A}} = 65
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9d5ed678fe57bcca610140957afab571}{Voxel\+Editor\+::\+Input\+::B}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0d61f8370cad1d412f80b84d143e1257}{Voxel\+Editor\+::\+Input\+::C}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af623e75af30e62bbd73d6df5b50bb7b5}{Voxel\+Editor\+::\+Input\+::D}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a3a3ea00cfc35332cedf6e5e9a32e94da}{Voxel\+Editor\+::\+Input\+::E}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a800618943025315f869e4e1f09471012}{Voxel\+Editor\+::\+Input\+::F}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530adfcf28d0734569a6a693bc8194de62bf}{Voxel\+Editor\+::\+Input\+::G}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac1d9f50f86825a1a2302ec2449c17196}{Voxel\+Editor\+::\+Input\+::H}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530add7536794b63bf90eccfd37f9b147d7f}{Voxel\+Editor\+::\+Input\+::I}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aff44570aca8241914870afbc310cdb85}{Voxel\+Editor\+::\+Input\+::J}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa5f3c6a11b03839d46af9fb43c97c188}{Voxel\+Editor\+::\+Input\+::K}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad20caec3b48a1eef164cb4ca81ba2587}{Voxel\+Editor\+::\+Input\+::L}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a69691c7bdcc3ce6d5d8a1361f22d04ac}{Voxel\+Editor\+::\+Input\+::M}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8d9c307cb7f3c4a32822a51922d1ceaa}{Voxel\+Editor\+::\+Input\+::N}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af186217753c37b9b9f958d906208506e}{Voxel\+Editor\+::\+Input\+::O}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a44c29edb103a2872f519ad0c9a0fdaaa}{Voxel\+Editor\+::\+Input\+::P}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af09564c9ca56850d4cd6b3319e541aee}{Voxel\+Editor\+::\+Input\+::Q}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1e1d3d40573127e9ee0480caf1283d6}{Voxel\+Editor\+::\+Input\+::R}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5dbc98dcc983a70728bd082d1a47546e}{Voxel\+Editor\+::\+Input\+::S}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{Voxel\+Editor\+::\+Input\+::T}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4c614360da93c0a041b22e537de151eb}{Voxel\+Editor\+::\+Input\+::U}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5206560a306a2e085a437fd258eb57ce}{Voxel\+Editor\+::\+Input\+::V}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a61e9c06ea9a85a5088a499df6458d276}{Voxel\+Editor\+::\+Input\+::W}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a02129bb861061d1a052c592e2dc6b383}{Voxel\+Editor\+::\+Input\+::X}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a57cec4137b614c87cb4e24a3d003a3e0}{Voxel\+Editor\+::\+Input\+::Y}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a21c2e59531c8710156d34a3c30ac81d5}{Voxel\+Editor\+::\+Input\+::Z}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a845787798a45b48e825e9b99a338537a}{Voxel\+Editor\+::\+Input\+::\+Num0}} = 48
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530abacb69a042a9fdc268a672919052d1f2}{Voxel\+Editor\+::\+Input\+::\+Num1}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a72bd76d6e2b68a539c8d1a77b564ed72}{Voxel\+Editor\+::\+Input\+::\+Num2}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa3a965b443a13522aa59fbdea31d00ce}{Voxel\+Editor\+::\+Input\+::\+Num3}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae0af89b5f83c670e4cc584c73c4732ca}{Voxel\+Editor\+::\+Input\+::\+Num4}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7e89a79bbb017bfcaff80ff820a15d8a}{Voxel\+Editor\+::\+Input\+::\+Num5}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0581cd1de881a0f697f3b46741fb326b}{Voxel\+Editor\+::\+Input\+::\+Num6}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4911ceac5c68b5a3f1499d68b27b0938}{Voxel\+Editor\+::\+Input\+::\+Num7}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a894e7d9b7dcced78e8007ba2d38b8dd2}{Voxel\+Editor\+::\+Input\+::\+Num8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad7b1dbe22119bc7acf6e4a1afcc06e46}{Voxel\+Editor\+::\+Input\+::\+Num9}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1dffc8709f31a4987c8a88334107e89}{Voxel\+Editor\+::\+Input\+::\+F1}} = 112
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530afe5c3684dce76cdd9f7f42430868aa74}{Voxel\+Editor\+::\+Input\+::\+F2}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4b6bf4b531770872d4328ce69bef5627}{Voxel\+Editor\+::\+Input\+::\+F3}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae7e0e72401a9f2718ed0f39f2861d702}{Voxel\+Editor\+::\+Input\+::\+F4}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a37f438df6a6d5ba4c17ef8ca58562f00}{Voxel\+Editor\+::\+Input\+::\+F5}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1faf42f2823f184eb2c9f0dffe5d73f2}{Voxel\+Editor\+::\+Input\+::\+F6}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a47489eb597b7db34caa24b1fc78fc839}{Voxel\+Editor\+::\+Input\+::\+F7}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4787509ad9f9d747a81a30e9dde3d4a7}{Voxel\+Editor\+::\+Input\+::\+F8}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a892a245e287c163080b23db737d3c4c9}{Voxel\+Editor\+::\+Input\+::\+F9}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab213ce22ca6ad4eda8db82966b9b6e5a}{Voxel\+Editor\+::\+Input\+::\+F10}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a643b0662422d1d0dffa3fca2e2bf28a8}{Voxel\+Editor\+::\+Input\+::\+F11}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae902674982fc99aa343cdd94da7476c3}{Voxel\+Editor\+::\+Input\+::\+F12}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad511f8439ecde36647437fbba67a4394}{Voxel\+Editor\+::\+Input\+::\+Space}} = 32
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af1851d5600eae616ee802a31ac74701b}{Voxel\+Editor\+::\+Input\+::\+Enter}} = 13
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a013ec032d3460d4be4431c6ab1f8f224}{Voxel\+Editor\+::\+Input\+::\+Escape}} = 27
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5c6ba25104401c9ee0650230fc6ba413}{Voxel\+Editor\+::\+Input\+::\+Tab}} = 9
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530acd7d13ceea728b08555f7c818cfb13ef}{Voxel\+Editor\+::\+Input\+::\+Backspace}} = 8
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af2a6c498fb90ee345d997f888fce3b18}{Voxel\+Editor\+::\+Input\+::\+Delete}} = 127
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa458be0f08b7e4ff3c0f633c100176c0}{Voxel\+Editor\+::\+Input\+::\+Insert}} = 155
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8cf04a9734132302f96da8e113e80ce5}{Voxel\+Editor\+::\+Input\+::\+Home}} = 156
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a87557f11575c0ad78e4e28abedc13b6e}{Voxel\+Editor\+::\+Input\+::\+End}} = 157
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9b869c510c75c5827ac82e49d4340927}{Voxel\+Editor\+::\+Input\+::\+Page\+Up}} = 158
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aee3677bcca83ece9384b01e43952bf33}{Voxel\+Editor\+::\+Input\+::\+Page\+Down}} = 159
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a258f49887ef8d14ac268c92b02503aaa}{Voxel\+Editor\+::\+Input\+::\+Up}} = 200
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a08a38277b0309070706f6652eeae9a53}{Voxel\+Editor\+::\+Input\+::\+Down}} = 201
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a945d5e233cf7d6240f6b783b36a374ff}{Voxel\+Editor\+::\+Input\+::\+Left}} = 202
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a92b09c7c48c520c3c55e497875da437c}{Voxel\+Editor\+::\+Input\+::\+Right}} = 203
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a825a3d98017bab11815ad2817201324c}{Voxel\+Editor\+::\+Input\+::\+Shift}} = 160
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a2b61e0d5977f2e38f06e16281c802b47}{Voxel\+Editor\+::\+Input\+::\+Ctrl}} = 162
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa2e92861b757ab878312dd57993d60cf}{Voxel\+Editor\+::\+Input\+::\+Alt}} = 164
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ce3266d4eb71ad50f7a90aee6d21dcd}{Voxel\+Editor\+::\+Input\+::\+Super}} = 166
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a453fb623e752c5993f65bc410fd74fe5}{Voxel\+Editor\+::\+Input\+::\+Minus}} = 45
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a32ba78fe43257d3e7f88e3935a8ea0d4}{Voxel\+Editor\+::\+Input\+::\+Plus}} = 43
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ccb67e7eaae09d9e4078d161eeca100}{Voxel\+Editor\+::\+Input\+::\+Equals}} = 61
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a481c09f513474b2d31ba5c2992947b17}{Voxel\+Editor\+::\+Input\+::\+Left\+Bracket}} = 91
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a455364d8991395f71ef9ccc5cc449e5c}{Voxel\+Editor\+::\+Input\+::\+Right\+Bracket}} = 93
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af6c6379402dce27659f7cffee6bc1f00}{Voxel\+Editor\+::\+Input\+::\+Backslash}} = 92
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9806fa37a3ecd39bf637c203aa011ed0}{Voxel\+Editor\+::\+Input\+::\+Semicolon}} = 59
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac48e929b2b1eabba2ba036884433345e}{Voxel\+Editor\+::\+Input\+::\+Quote}} = 39
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a58be47db9455679e6a44df2eff9c9fa6}{Voxel\+Editor\+::\+Input\+::\+Comma}} = 44
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1901606ea069a83dc7beea17881ef95a}{Voxel\+Editor\+::\+Input\+::\+Period}} = 46
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a358cfe58715d680d9ab09f82e4010cbc}{Voxel\+Editor\+::\+Input\+::\+Slash}} = 47
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a77a804418d76dc407383a618b60853ab}{Voxel\+Editor\+::\+Input\+::\+Tilde}} = 96
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a88183b946cc5f0e8c96b2e66e1c74a7e}{Voxel\+Editor\+::\+Input\+::\+Unknown}} = 0
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Voxel\+Editor\+::\+Input\+::\+Modifier\+Flags}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Voxel\+Editor\+::\+Input\+::\+None}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a825a3d98017bab11815ad2817201324c}{Voxel\+Editor\+::\+Input\+::\+Shift}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a2b61e0d5977f2e38f06e16281c802b47}{Voxel\+Editor\+::\+Input\+::\+Ctrl}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7aa2e92861b757ab878312dd57993d60cf}{Voxel\+Editor\+::\+Input\+::\+Alt}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a0ce3266d4eb71ad50f7a90aee6d21dcd}{Voxel\+Editor\+::\+Input\+::\+Super}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{Voxel\+Editor\+::\+Input\+::\+Touch\+State}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5ad78a68f6a85421ae121c2cb5b73a1040}{Voxel\+Editor\+::\+Input\+::\+Pressed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5a95bfdefaaf01553cbf21ccd942855c69}{Voxel\+Editor\+::\+Input\+::\+Moved}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aea1e34304a5d8ffa7c9b0ed8ede4ef1a}{Voxel\+Editor\+::\+Input\+::\+Released}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aa149e85a44aeec9140e92733d9ed694e}{Voxel\+Editor\+::\+Input\+::\+Cancelled}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35}{Voxel\+Editor\+::\+Input\+::\+Touch\+Event\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a00c33f82857e7edddaa3f8ec002c515b}{Voxel\+Editor\+::\+Input\+::\+Touch\+Begin}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a889fb266ddac0a84f0dc787775e85d17}{Voxel\+Editor\+::\+Input\+::\+Touch\+Update}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a73beb4ea238cde276649f819b7e1682b}{Voxel\+Editor\+::\+Input\+::\+Touch\+End}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a528ee64d2b9cbbdbfd7d3538b5be0b69}{Voxel\+Editor\+::\+Input\+::\+Touch\+Cancel}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Voxel\+Editor\+::\+Input\+::\+Touch\+Gesture}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a73cf2f244bc0cb0d205b99c04fa13978}{Voxel\+Editor\+::\+Input\+::\+Tap}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a8f3f96ab0875983edbc267d3cec4aed9}{Voxel\+Editor\+::\+Input\+::\+Double\+Tap}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a00d900000cd9029ba6de8dc9349da768}{Voxel\+Editor\+::\+Input\+::\+Long\+Press}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af6d4a17b27da35c2d90ce13801f36782}{Voxel\+Editor\+::\+Input\+::\+Pan}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a1e4ddf6f135e4c639929b4633c29d4f2}{Voxel\+Editor\+::\+Input\+::\+Pinch}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af1a42bd417390fc63b030a519624607a}{Voxel\+Editor\+::\+Input\+::\+Rotation}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a78076ce792c4640bf99c598c92bd69e7}{Voxel\+Editor\+::\+Input\+::\+Swipe}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a25e1bddc8aaf7f018dfa2631d2d5f2ed}{Voxel\+Editor\+::\+Input\+::\+Two\+Finger\+Pan}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a3e970866ef378e94ede4efee35d4db49}{Voxel\+Editor\+::\+Input\+::\+Three\+Finger\+Pan}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Voxel\+Editor\+::\+Input\+::\+Hand\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a945d5e233cf7d6240f6b783b36a374ff}{Voxel\+Editor\+::\+Input\+::\+Left}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a92b09c7c48c520c3c55e497875da437c}{Voxel\+Editor\+::\+Input\+::\+Right}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{Voxel\+Editor\+::\+Input\+::\+Either}} = 2
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3}{Voxel\+Editor\+::\+Input\+::\+VREvent\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3aa6b6cb3fb82a7035b13231db241d5a81}{Voxel\+Editor\+::\+Input\+::\+Hand\+Update}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a2aaf17e02c3abe2a426db1467b049412}{Voxel\+Editor\+::\+Input\+::\+Gesture\+Detected}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a95d034aeadfbf1e658c5cab5043d80e9}{Voxel\+Editor\+::\+Input\+::\+Gesture\+Completed}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{Voxel\+Editor\+::\+Input\+::\+VRGesture}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a2a3cd5946cfd317eb99c3d32e35e2d4c}{Voxel\+Editor\+::\+Input\+::\+Point}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a1e4ddf6f135e4c639929b4633c29d4f2}{Voxel\+Editor\+::\+Input\+::\+Pinch}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ab635ceb01a10e96cdbefa95d72b25750}{Voxel\+Editor\+::\+Input\+::\+Grab}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a65adf7b9eb629336c1726ec078dc0a11}{Voxel\+Editor\+::\+Input\+::\+Thumbs\+Up}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10afb97b89e2f05ccab67af971669dfcf06}{Voxel\+Editor\+::\+Input\+::\+Thumbs\+Down}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10aae8faf2882fb1dfc7183a0a7a6784f9a}{Voxel\+Editor\+::\+Input\+::\+Fist}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ac24a1d6c75101e1f4b9e2a8f6f65520a}{Voxel\+Editor\+::\+Input\+::\+Open\+Palm}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10acc2073b04d2e90482ab2c7b7f03dfcc1}{Voxel\+Editor\+::\+Input\+::\+Peace}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a8243d605a8dc617fd65ebc94e909f7e1}{Voxel\+Editor\+::\+Input\+::\+Two\+Hand\+Grab}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a514ae3c77cf05768d4b3f4d9d820b9e8}{Voxel\+Editor\+::\+Input\+::\+Two\+Hand\+Scale}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a71bc5c310a9ec29c40510435741800e7}{Voxel\+Editor\+::\+Input\+::\+Two\+Hand\+Rotate}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}{Voxel\+Editor\+::\+Input\+::\+Action\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a87b7760f14fbff78d8819291f36ab9a0}{Voxel\+Editor\+::\+Input\+::\+Button}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a39e6b4ab3e4adecf031d3aa8410bb3ce}{Voxel\+Editor\+::\+Input\+::\+Axis}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a1bebc5ae2822f8e361fb0ce57b5e09e2}{Voxel\+Editor\+::\+Input\+::\+Vector2}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a02b4dab58bbc49e0851fb3fd8df520cc}{Voxel\+Editor\+::\+Input\+::\+Vector3}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820}{Voxel\+Editor\+::\+Input\+::\+Cursor\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a960b44c579bc2f6818d2daaf9e4c16f0}{Voxel\+Editor\+::\+Input\+::\+Normal}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a7acdf85c69cc3c5305456a293524386e}{Voxel\+Editor\+::\+Input\+::\+Hidden}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820ab8786828a1c422c20e2ce788075a732a}{Voxel\+Editor\+::\+Input\+::\+Captured}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{Voxel\+Editor\+::\+Input\+::\+Hand\+Tracking\+Quality}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea6adf97f83acf6453d4a6a4b1070f3754}{Voxel\+Editor\+::\+Input\+::\+None}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea28d0edd045e05cf5af64e35ae0c4c6ef}{Voxel\+Editor\+::\+Input\+::\+Low}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea87f8a6ab85c9ced3702b4ea641ad4bb5}{Voxel\+Editor\+::\+Input\+::\+Medium}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35}{Voxel\+Editor\+::\+Input\+::\+High}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a01c5e816fc1fc6e24b638b7b2a056d48}{Voxel\+Editor\+::\+Input\+::operator\texorpdfstring{$\vert$}{|}}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} a, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} b)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a4038af4e4fb29e1a7ba83527c7f6f27d}{Voxel\+Editor\+::\+Input\+::operator\&}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} a, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} b)
+\item 
+bool \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a93ae6570964bcb5edf9ce3841b044020}{Voxel\+Editor\+::\+Input\+::has\+Modifier}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} flags, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} modifier)
+\end{DoxyCompactItemize}

@@ -1,0 +1,225 @@
+\doxysection{Voxel\+Editor\+::Selection Namespace Reference}
+\hypertarget{namespace_voxel_editor_1_1_selection}{}\label{namespace_voxel_editor_1_1_selection}\index{VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_1_1_events}{Events}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector}{Box\+Selector}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_flood_fill_selector}{Flood\+Fill\+Selector}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_context}{Selection\+Context}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection\+Manager}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_region}{Selection\+Region}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_renderer}{Selection\+Renderer}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats}{Selection\+Stats}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_style}{Selection\+Style}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector}{Sphere\+Selector}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{Voxel\+Id}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_af589e01f5f77676ab3972297de9b0251}{Selection\+Predicate}} = std\+::function$<$bool(const \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{Voxel\+Id}}\&)$>$
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_aae127c363a8b8f713f6af09347ff150c}{Selection\+Visitor}} = std\+::function$<$void(const \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{Voxel\+Id}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{Selection\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a0ebe6df8a3ac338e0512acc741823fdb}{Replace}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6aec211f7c20af43e742bf2570c3cb84f9}{Add}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a1d9baf077ee87921f57a8fe42d510b65}{Subtract}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a6faa907d79c8bb46a12bea5c8de76654}{Intersect}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{Selection\+Change\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59af29ddbfb905eb2593fdcdfb243f9af85}{Added}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59a93f07b720ebf7d1246512569761a5804}{Removed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59ab3f23170be598de0771ac94684114f94}{Replaced}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59aa3b087a75730395ff9ff9d3dd307295e}{Cleared}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59a35e0c8c0b180c95d4e122e55ed62cc64}{Modified}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{Selection\+Operation\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa6bc362dbf494c61ea117fe3c71ca48a5}{Move}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa5fb63579fc981698f97d55bfecb213ea}{Copy}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfaf2a6c498fb90ee345d997f888fce3b18}{Delete}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa2ff4148554480a37f85efd299df04850}{Transform}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfaed75712b0eb1913c28a3872731ffd48d}{Duplicate}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93}{Flood\+Fill\+Criteria}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a2ec0d16e4ca169baedb9b2d50ec5c6d7}{Connected}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93afbdd183d8a47f52c4f272bb5e7094da2}{Same\+Resolution}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a216bf0b2e5bfa7c42536550aa838afa8}{Connected\+Same\+Res}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ae12b540108c491a55034622e43fcee1e}{make\+Box\+Selection}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&box, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a89cfe2baaba2883c1cd2a74022c59f3a}{make\+Sphere\+Selection}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&center, float radius, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a25884347ac1dc4293a7fbfee081260ce}{make\+Cylinder\+Selection}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&base, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&direction, float radius, float height, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution)
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_voxel_editor_1_1_selection_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_selection_af589e01f5f77676ab3972297de9b0251}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!SelectionPredicate@{SelectionPredicate}}
+\index{SelectionPredicate@{SelectionPredicate}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{SelectionPredicate}{SelectionPredicate}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_af589e01f5f77676ab3972297de9b0251} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_af589e01f5f77676ab3972297de9b0251}{Voxel\+Editor\+::\+Selection\+::\+Selection\+Predicate}} = std\+::function$<$bool(const \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{Voxel\+Id}}\&)$>$}
+
+\Hypertarget{namespace_voxel_editor_1_1_selection_aae127c363a8b8f713f6af09347ff150c}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!SelectionVisitor@{SelectionVisitor}}
+\index{SelectionVisitor@{SelectionVisitor}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{SelectionVisitor}{SelectionVisitor}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_aae127c363a8b8f713f6af09347ff150c} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_aae127c363a8b8f713f6af09347ff150c}{Voxel\+Editor\+::\+Selection\+::\+Selection\+Visitor}} = std\+::function$<$void(const \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{Voxel\+Id}}\&)$>$}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_voxel_editor_1_1_selection_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!FloodFillCriteria@{FloodFillCriteria}}
+\index{FloodFillCriteria@{FloodFillCriteria}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{FloodFillCriteria}{FloodFillCriteria}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93}{Voxel\+Editor\+::\+Selection\+::\+Flood\+Fill\+Criteria}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Connected@{Connected}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Connected@{Connected}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a2ec0d16e4ca169baedb9b2d50ec5c6d7}\label{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a2ec0d16e4ca169baedb9b2d50ec5c6d7} 
+Connected&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SameResolution@{SameResolution}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!SameResolution@{SameResolution}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93afbdd183d8a47f52c4f272bb5e7094da2}\label{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93afbdd183d8a47f52c4f272bb5e7094da2} 
+Same\+Resolution&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ConnectedSameRes@{ConnectedSameRes}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!ConnectedSameRes@{ConnectedSameRes}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a216bf0b2e5bfa7c42536550aa838afa8}\label{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a216bf0b2e5bfa7c42536550aa838afa8} 
+Connected\+Same\+Res&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!SelectionChangeType@{SelectionChangeType}}
+\index{SelectionChangeType@{SelectionChangeType}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{SelectionChangeType}{SelectionChangeType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{Voxel\+Editor\+::\+Selection\+::\+Selection\+Change\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Added@{Added}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Added@{Added}}}\Hypertarget{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59af29ddbfb905eb2593fdcdfb243f9af85}\label{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59af29ddbfb905eb2593fdcdfb243f9af85} 
+Added&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Removed@{Removed}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Removed@{Removed}}}\Hypertarget{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59a93f07b720ebf7d1246512569761a5804}\label{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59a93f07b720ebf7d1246512569761a5804} 
+Removed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Replaced@{Replaced}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Replaced@{Replaced}}}\Hypertarget{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59ab3f23170be598de0771ac94684114f94}\label{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59ab3f23170be598de0771ac94684114f94} 
+Replaced&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Cleared@{Cleared}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Cleared@{Cleared}}}\Hypertarget{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59aa3b087a75730395ff9ff9d3dd307295e}\label{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59aa3b087a75730395ff9ff9d3dd307295e} 
+Cleared&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Modified@{Modified}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Modified@{Modified}}}\Hypertarget{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59a35e0c8c0b180c95d4e122e55ed62cc64}\label{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59a35e0c8c0b180c95d4e122e55ed62cc64} 
+Modified&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!SelectionMode@{SelectionMode}}
+\index{SelectionMode@{SelectionMode}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{SelectionMode}{SelectionMode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{Voxel\+Editor\+::\+Selection\+::\+Selection\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Replace@{Replace}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Replace@{Replace}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a0ebe6df8a3ac338e0512acc741823fdb}\label{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a0ebe6df8a3ac338e0512acc741823fdb} 
+Replace&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Add@{Add}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Add@{Add}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6aec211f7c20af43e742bf2570c3cb84f9}\label{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6aec211f7c20af43e742bf2570c3cb84f9} 
+Add&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Subtract@{Subtract}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Subtract@{Subtract}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a1d9baf077ee87921f57a8fe42d510b65}\label{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a1d9baf077ee87921f57a8fe42d510b65} 
+Subtract&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Intersect@{Intersect}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Intersect@{Intersect}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a6faa907d79c8bb46a12bea5c8de76654}\label{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a6faa907d79c8bb46a12bea5c8de76654} 
+Intersect&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!SelectionOperationType@{SelectionOperationType}}
+\index{SelectionOperationType@{SelectionOperationType}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{SelectionOperationType}{SelectionOperationType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{Voxel\+Editor\+::\+Selection\+::\+Selection\+Operation\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Move@{Move}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Move@{Move}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa6bc362dbf494c61ea117fe3c71ca48a5}\label{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa6bc362dbf494c61ea117fe3c71ca48a5} 
+Move&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Copy@{Copy}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Copy@{Copy}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa5fb63579fc981698f97d55bfecb213ea}\label{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa5fb63579fc981698f97d55bfecb213ea} 
+Copy&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Delete@{Delete}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Delete@{Delete}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfaf2a6c498fb90ee345d997f888fce3b18}\label{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfaf2a6c498fb90ee345d997f888fce3b18} 
+Delete&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Transform@{Transform}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Transform@{Transform}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa2ff4148554480a37f85efd299df04850}\label{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa2ff4148554480a37f85efd299df04850} 
+Transform&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Duplicate@{Duplicate}!VoxelEditor::Selection@{VoxelEditor::Selection}}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!Duplicate@{Duplicate}}}\Hypertarget{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfaed75712b0eb1913c28a3872731ffd48d}\label{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfaed75712b0eb1913c28a3872731ffd48d} 
+Duplicate&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_voxel_editor_1_1_selection_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_selection_ae12b540108c491a55034622e43fcee1e}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!makeBoxSelection@{makeBoxSelection}}
+\index{makeBoxSelection@{makeBoxSelection}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{makeBoxSelection()}{makeBoxSelection()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_ae12b540108c491a55034622e43fcee1e} 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} Voxel\+Editor\+::\+Selection\+::make\+Box\+Selection (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&}]{box}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_voxel_editor_1_1_selection_a25884347ac1dc4293a7fbfee081260ce}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!makeCylinderSelection@{makeCylinderSelection}}
+\index{makeCylinderSelection@{makeCylinderSelection}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{makeCylinderSelection()}{makeCylinderSelection()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_a25884347ac1dc4293a7fbfee081260ce} 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} Voxel\+Editor\+::\+Selection\+::make\+Cylinder\+Selection (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{base}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{direction}{, }\item[{float}]{radius}{, }\item[{float}]{height}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_voxel_editor_1_1_selection_a89cfe2baaba2883c1cd2a74022c59f3a}\index{VoxelEditor::Selection@{VoxelEditor::Selection}!makeSphereSelection@{makeSphereSelection}}
+\index{makeSphereSelection@{makeSphereSelection}!VoxelEditor::Selection@{VoxelEditor::Selection}}
+\doxysubsubsection{\texorpdfstring{makeSphereSelection()}{makeSphereSelection()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_selection_a89cfe2baaba2883c1cd2a74022c59f3a} 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} Voxel\+Editor\+::\+Selection\+::make\+Sphere\+Selection (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{center}{, }\item[{float}]{radius}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption})}
+

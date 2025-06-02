@@ -1,0 +1,64 @@
+\doxysection{foundation/math/\+Math\+Utils.h File Reference}
+\hypertarget{_math_utils_8h}{}\label{_math_utils_8h}\index{foundation/math/MathUtils.h@{foundation/math/MathUtils.h}}
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_random}{Voxel\+Editor\+::\+Math\+::\+Random}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Voxel\+Editor\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a8f0518eaf8cacc711204defa1dbfdf94}{Voxel\+Editor\+::\+Math\+::to\+Radians}} (float degrees)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a3ff24a4febe4fa71e2744f6cbe54080d}{Voxel\+Editor\+::\+Math\+::to\+Degrees}} (float radians)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af73474ec5cabee42a66161784076cc75}{Voxel\+Editor\+::\+Math\+::degrees\+To\+Radians}} (float degrees)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab3acc4d687e1cc9f9bac2acf89090889}{Voxel\+Editor\+::\+Math\+::radians\+To\+Degrees}} (float radians)
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr T \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Voxel\+Editor\+::\+Math\+::clamp}} (T value, T min, T max)
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr T \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{Voxel\+Editor\+::\+Math\+::lerp}} (T a, T b, float t)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af5d524bc8481602673d24ba833edf293}{Voxel\+Editor\+::\+Math\+::smoothstep}} (float edge0, float edge1, float x)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a68448c333a2b6b3881895fd7d8303688}{Voxel\+Editor\+::\+Math\+::is\+Zero}} (float value, float epsilon=1e-\/6f)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ad4735381a452ee12919ae8309346c2fe}{Voxel\+Editor\+::\+Math\+::is\+Equal}} (float a, float b, float epsilon=1e-\/6f)
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr T \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a233940b815f74c2c13a0c5639d614079}{Voxel\+Editor\+::\+Math\+::sign}} (T value)
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr T \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a73b74bfaefcbbdc0057fec09aa341e74}{Voxel\+Editor\+::\+Math\+::square}} (T value)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a6697eeeba655badca4968fa9b475d583}{Voxel\+Editor\+::\+Math\+::wrap\+Angle}} (float angle)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a6de54b9fc16129a5b14ede7ac13c59e7}{Voxel\+Editor\+::\+Math\+::wrap\+Angle\+Signed}} (float angle)
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a828ff20164ad8bc9fa416f28027b9b08}{Voxel\+Editor\+::\+Math\+::angle\+Distance}} (float a, float b)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a914665732b0d8555ab4bcf2c4d296205}{Voxel\+Editor\+::\+Math\+::is\+Power\+Of\+Two}} (int value)
+\item 
+constexpr int \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b3ed7ed03d27c4a9cb345933ca911d2}{Voxel\+Editor\+::\+Math\+::next\+Power\+Of\+Two}} (int value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{Voxel\+Editor\+::\+Math\+::\+PI}} = 3.\+14159265358979323846f
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{Voxel\+Editor\+::\+Math\+::\+TWO\+\_\+\+PI}} = 2.\+0f \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}}
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab4a24fb7973931c1e4308312291e0ecf}{Voxel\+Editor\+::\+Math\+::\+HALF\+\_\+\+PI}} = \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}} \texorpdfstring{$\ast$}{*} 0.\+5f
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a32b584f76d2c508bc075c6f5101b9b35}{Voxel\+Editor\+::\+Math\+::\+DEG\+\_\+\+TO\+\_\+\+RAD}} = \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}} / 180.\+0f
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af2f9885f2b542065e16e69e083dff209}{Voxel\+Editor\+::\+Math\+::\+RAD\+\_\+\+TO\+\_\+\+DEG}} = 180.\+0f / \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}}
+\end{DoxyCompactItemize}

@@ -12,8 +12,12 @@ endif()
 
 # If pkg-config didn't find LZ4, try to find it manually
 if(NOT LZ4_FOUND)
-    find_path(LZ4_INCLUDE_DIR lz4.h)
-    find_library(LZ4_LIBRARY NAMES lz4)
+    find_path(LZ4_INCLUDE_DIR lz4.h
+        PATHS /opt/homebrew/include /usr/local/include /usr/include
+    )
+    find_library(LZ4_LIBRARY NAMES lz4
+        PATHS /opt/homebrew/lib /usr/local/lib /usr/lib
+    )
     if(LZ4_INCLUDE_DIR AND LZ4_LIBRARY)
         set(LZ4_FOUND TRUE)
         set(LZ4_INCLUDE_DIRS ${LZ4_INCLUDE_DIR})
@@ -90,7 +94,10 @@ target_link_libraries(VoxelEditor_FileIO
 
 # Link LZ4 if found
 if(LZ4_FOUND)
-    target_link_libraries(VoxelEditor_FileIO PRIVATE ${LZ4_LIBRARIES})
+    if(LZ4_LIBDIR)
+        target_link_directories(VoxelEditor_FileIO PUBLIC ${LZ4_LIBDIR})
+    endif()
+    target_link_libraries(VoxelEditor_FileIO PUBLIC ${LZ4_LIBRARIES})
 endif()
 
 # Platform-specific settings

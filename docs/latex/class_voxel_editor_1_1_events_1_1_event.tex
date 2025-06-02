@@ -1,0 +1,69 @@
+\doxysection{Voxel\+Editor\+::Events\+::Event\texorpdfstring{$<$}{<} Derived \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_voxel_editor_1_1_events_1_1_event}{}\label{class_voxel_editor_1_1_events_1_1_event}\index{VoxelEditor::Events::Event$<$ Derived $>$@{VoxelEditor::Events::Event$<$ Derived $>$}}
+
+
+{\ttfamily \#include $<$Event\+Base.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::Event\texorpdfstring{$<$}{<} Derived \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_events_1_1_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}\index{VoxelEditor::Events::Event$<$ Derived $>$@{VoxelEditor::Events::Event$<$ Derived $>$}!getEventType@{getEventType}}
+\index{getEventType@{getEventType}!VoxelEditor::Events::Event$<$ Derived $>$@{VoxelEditor::Events::Event$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{getEventType()}{getEventType()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc} 
+template$<$typename Derived$>$ \\
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event}}$<$ Derived $>$\+::get\+Event\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a98aeb77c413842b0f20996775c670fee}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a9d9d8aa3d8017ead9a7c2731e0ea8f74}{Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Changed\+Event}}, and \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_af7a9814f5d5fc9e3e1d55d8d74a36c48}{Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Operation\+Event}}.
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}\index{VoxelEditor::Events::Event$<$ Derived $>$@{VoxelEditor::Events::Event$<$ Derived $>$}!getStaticEventType@{getStaticEventType}}
+\index{getStaticEventType@{getStaticEventType}!VoxelEditor::Events::Event$<$ Derived $>$@{VoxelEditor::Events::Event$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{getStaticEventType()}{getStaticEventType()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22} 
+template$<$typename Derived$>$ \\
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event}}$<$ Derived $>$\+::get\+Static\+Event\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/\mbox{\hyperlink{_event_base_8h}{Event\+Base.\+h}}\end{DoxyCompactItemize}

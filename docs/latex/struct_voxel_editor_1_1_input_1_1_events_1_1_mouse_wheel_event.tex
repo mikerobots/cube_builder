@@ -1,0 +1,105 @@
+\doxysection{Voxel\+Editor\+::Input\+::Events\+::Mouse\+Wheel\+Event Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event}{}\label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+
+
+{\ttfamily \#include $<$Mouse\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Input\+::Events\+::Mouse\+Wheel\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ade5b0a3dea3221eb8e2e5edcaf9a53ff}{Mouse\+Wheel\+Event}} (float d, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&pos, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} mods=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}})
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a5c07ae248a41ee1745a20e32b26eed9c}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ac663ae1555e973c50df74361f162af6b}{delta}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a7ae792d16913bd82facb141388005c51}{position}}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a8f9c3f83ee105f02b8015764fe1d6d0d}{modifiers}}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Time\+Point}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ac019bba8b9ba048976274c9615b3b628}{timestamp}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ade5b0a3dea3221eb8e2e5edcaf9a53ff}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}!MouseWheelEvent@{MouseWheelEvent}}
+\index{MouseWheelEvent@{MouseWheelEvent}!VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+\doxysubsubsection{\texorpdfstring{MouseWheelEvent()}{MouseWheelEvent()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ade5b0a3dea3221eb8e2e5edcaf9a53ff} 
+Voxel\+Editor\+::\+Input\+::\+Events\+::\+Mouse\+Wheel\+Event\+::\+Mouse\+Wheel\+Event (\begin{DoxyParamCaption}\item[{float}]{d}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{pos}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{mods}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a5c07ae248a41ee1745a20e32b26eed9c}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}!getEventType@{getEventType}}
+\index{getEventType@{getEventType}!VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+\doxysubsubsection{\texorpdfstring{getEventType()}{getEventType()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a5c07ae248a41ee1745a20e32b26eed9c} 
+const char \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Mouse\+Wheel\+Event\+::get\+Event\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a98aeb77c413842b0f20996775c670fee}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ac663ae1555e973c50df74361f162af6b}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}!delta@{delta}}
+\index{delta@{delta}!VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+\doxysubsubsection{\texorpdfstring{delta}{delta}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ac663ae1555e973c50df74361f162af6b} 
+float Voxel\+Editor\+::\+Input\+::\+Events\+::\+Mouse\+Wheel\+Event\+::delta}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a8f9c3f83ee105f02b8015764fe1d6d0d}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}!modifiers@{modifiers}}
+\index{modifiers@{modifiers}!VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+\doxysubsubsection{\texorpdfstring{modifiers}{modifiers}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a8f9c3f83ee105f02b8015764fe1d6d0d} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Mouse\+Wheel\+Event\+::modifiers}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a7ae792d16913bd82facb141388005c51}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}!position@{position}}
+\index{position@{position}!VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_a7ae792d16913bd82facb141388005c51} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Mouse\+Wheel\+Event\+::position}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ac019bba8b9ba048976274c9615b3b628}\index{VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!VoxelEditor::Input::Events::MouseWheelEvent@{VoxelEditor::Input::Events::MouseWheelEvent}}
+\doxysubsubsection{\texorpdfstring{timestamp}{timestamp}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_mouse_wheel_event_ac019bba8b9ba048976274c9615b3b628} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Time\+Point}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Mouse\+Wheel\+Event\+::timestamp}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_mouse_handler_8h}{Mouse\+Handler.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,143 @@
+\doxysection{Selection\+Commands.\+h}
+\hypertarget{_selection_commands_8h_source}{}\label{_selection_commands_8h_source}\index{core/undo\_redo/SelectionCommands.h@{core/undo\_redo/SelectionCommands.h}}
+\mbox{\hyperlink{_selection_commands_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_command_8h}{Command.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_manager_8h}{../selection/SelectionManager.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_set_8h}{../selection/SelectionSet.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_types_8h}{../selection/SelectionTypes.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{../../foundation/math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_bounding_box_8h}{../../foundation/math/BoundingBox.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix4f_8h}{../../foundation/math/Matrix4f.h}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ Command\ for\ modifying\ the\ current\ selection}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_ad36dbea948a0ab0f39b1b5a390814272}{ModifySelectionCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_ad36dbea948a0ab0f39b1b5a390814272}{ModifySelectionCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\&\ selection,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{Selection::SelectionMode}}\ mode);}
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_a7b83e58941ccab4e44df27fb5e458ac2}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_a8f9829023924076d4e6b462f85eac46f}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00026\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_a19d66f8718383d9fc4cf30d65fb4c2c0}{getName}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_a43539824b3e1b4a28302d452940ff2dc}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{CommandType::Selection}};\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_modify_selection_command_a923ddca69fd263fa4887ddf46b7ea990}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ m\_selectionManager;}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_selection;}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{Selection::SelectionMode}}\ m\_mode;}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_previousSelection;}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ Command\ for\ clearing\ selection}}
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_aea1e1d7f8133d0d9a19b0b008f037eb5}{ClearSelectionCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_aea1e1d7f8133d0d9a19b0b008f037eb5}{ClearSelectionCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager);}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_a58e37f3d58029444aca0bc66eb71e1eb}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_a4041b05931a302d7cf5ff29ca87a79f5}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00044\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_a69ae55e75f2b1d50220b3a61b0fb2bb2}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Clear\ Selection"{}};\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_a78c5f31a7afef6959e6ca638491e165d}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{CommandType::Selection}};\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_clear_selection_command_a456b721a9f775b9f006c9d7295894433}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ m\_selectionManager;}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_previousSelection;}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ Command\ for\ set\ operations\ on\ selection}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a04ea5dce6a58795a795e57e1e3427940}{SelectionSetOperationCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00055\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a0880111f74c01ebb226dbf9a72f9aeb8}{Operation}}\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a0880111f74c01ebb226dbf9a72f9aeb8aaef12e903e606a4895a16b393bfdec8c}{Union}},}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a0880111f74c01ebb226dbf9a72f9aeb8aa06d31c2ee920b4d53e8c9c06d90ba24}{Intersection}},}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a0880111f74c01ebb226dbf9a72f9aeb8a1d9baf077ee87921f57a8fe42d510b65}{Subtract}}}
+\DoxyCodeLine{00060\ \ \ \ \ \};}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a04ea5dce6a58795a795e57e1e3427940}{SelectionSetOperationCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\&\ operand,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a0880111f74c01ebb226dbf9a72f9aeb8}{Operation}}\ operation);}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_af585f5754ca7178796fb43c7c837cf7a}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a1d9aa8c9f90764673a05209ebe12036f}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00068\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_ad1170d8b0f5998acba6942100e1ca072}{getName}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_aa88877de9a6481f0fd2b5cb1ef593f82}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{CommandType::Selection}};\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a14c33e7df5b10cb28b96671e974b528b}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ m\_selectionManager;}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_operand;}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_selection_set_operation_command_a0880111f74c01ebb226dbf9a72f9aeb8}{Operation}}\ m\_operation;}
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_previousSelection;}
+\DoxyCodeLine{00077\ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ Command\ for\ selecting\ a\ region}}
+\DoxyCodeLine{00080\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_a7a05da55a9e2d02f0dd7d517da69c2e3}{SelectRegionCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00081\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_a7a05da55a9e2d02f0dd7d517da69c2e3}{SelectRegionCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_region}{Selection::SelectionRegion}}\&\ region,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{Selection::SelectionMode}}\ mode);}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_a948792045d92cf025521b660baa4c17d}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_a453f9b3d667e2b645adc811d1431f642}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00089\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_abdc1656fb21f676f953e68aa0aa67cf1}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Select\ Region"{}};\ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_a1ff95dde2d174ccda90e3d85d5a4efd4}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{CommandType::Selection}};\ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_select_region_command_acfcd1f7cb08df0c1b50801879c383c20}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ m\_selectionManager;}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_region}{Selection::SelectionRegion}}\ m\_region;}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{Selection::SelectionMode}}\ m\_mode;}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_previousSelection;}
+\DoxyCodeLine{00099\ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{comment}{//\ Command\ for\ inverting\ selection}}
+\DoxyCodeLine{00102\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_a65a07ca071ce5bd6285ed1b73a77c50a}{InvertSelectionCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00103\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_a65a07ca071ce5bd6285ed1b73a77c50a}{InvertSelectionCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager);}
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_a3246ed1bde14b757a481a22359b1e533}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_a3dd4318719189feb2d05720b518c6c00}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00108\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_a7f0313848dd4fd43e2bc0fe8ca3d59bd}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Invert\ Selection"{}};\ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_aca4637a68c99b136dd83ff80905febb0}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{CommandType::Selection}};\ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_invert_selection_command_af1ac030c14a33bd18676dbb8dd97ed32}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00111\ \ \ \ \ }
+\DoxyCodeLine{00112\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ m\_selectionManager;}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_previousSelection;}
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{comment}{//\ Command\ for\ saving/loading\ selection\ sets}}
+\DoxyCodeLine{00118\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_a436a3cbd085a93de3f0069cbf32dea80}{SaveSelectionSetCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00119\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_a436a3cbd085a93de3f0069cbf32dea80}{SaveSelectionSetCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ selectionManager,}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00122\ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_ad5a569182da4e6a6cab1d5b6d2191240}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_a9de44571998b2fd24e0d637c45e5f938}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00125\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_a5cd1a2c0715e23b4d54c0777cf932d23}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Save\ Selection\ Set"{}};\ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_a4119a54d26905bbb5adec08bf159be22}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{CommandType::Selection}};\ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_save_selection_set_command_a00278759d8aa8e6c0bde8516213e4088}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00128\ \ \ \ \ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ m\_selectionManager;}
+\DoxyCodeLine{00131\ \ \ \ \ std::string\ m\_setName;}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_existedBefore\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00133\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection::SelectionSet}}\ m\_previousSetContent;}
+\DoxyCodeLine{00134\ \};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \}}
+\DoxyCodeLine{00137\ \}}
+
+\end{DoxyCode}

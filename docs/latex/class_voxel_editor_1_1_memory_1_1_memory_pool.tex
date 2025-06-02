@@ -1,0 +1,162 @@
+\doxysection{Voxel\+Editor\+::Memory\+::Memory\+Pool Class Reference}
+\hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool}{}\label{class_voxel_editor_1_1_memory_1_1_memory_pool}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+
+
+{\ttfamily \#include $<$Memory\+Pool.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}{Memory\+Pool}} (size\+\_\+t object\+Size, size\+\_\+t initial\+Capacity=64)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_ad45507b003bb9f50e495c20a71e9f478}{\texorpdfstring{$\sim$}{\string~}\+Memory\+Pool}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a6671a94f5e52d4456a038e03c387dd23}{Memory\+Pool}} (const \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{Memory\+Pool}} \&)=delete
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{Memory\+Pool}} \& \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_aed7d7e4c52aed430f45e177c1047ebdb}{operator=}} (const \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{Memory\+Pool}} \&)=delete
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a4be58a12388757fa31eac677d06f39a8}{allocate}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a6adfb8f9ea9751945757ba77948c501e}{deallocate}} (void \texorpdfstring{$\ast$}{*}ptr)
+\item 
+{\footnotesize template$<$typename T, typename... Args$>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a84d59651ba2df959999a81c2cadd864b}{construct}} (Args \&\&... args)
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_ad0451e30806c5bbc0bb82e5d609db016}{destroy}} (T \texorpdfstring{$\ast$}{*}ptr)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a262bb0a74cafafb9399c9e08a96d32ba}{get\+Object\+Size}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a51071fc8466074242b69225675ad28e7}{get\+Capacity}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_acdab2dac6dba3708e13fc197cef3130c}{get\+Used\+Count}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a9febc5099703e7ccb9c29eabefca2b50}{get\+Free\+Count}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a32247afba7656be6a8708f808a4083f9}{get\+Memory\+Usage}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a3cf2b702140642f56aaf027d7a0e20a5}{get\+Utilization}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a5cb8b477aebafb8084fdcefbff05c033}{clear}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a3c2f0c523743b5d5e07fd784fb586f29}{shrink}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a16e0de60833997a0c520e676f727c039}{reserve}} (size\+\_\+t capacity)
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!MemoryPool@{MemoryPool}}
+\index{MemoryPool@{MemoryPool}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{MemoryPool()}{MemoryPool()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb} 
+Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::\+Memory\+Pool (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{object\+Size}{, }\item[{size\+\_\+t}]{initial\+Capacity}{ = {\ttfamily 64}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_ad45507b003bb9f50e495c20a71e9f478}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!````~MemoryPool@{\texorpdfstring{$\sim$}{\string~}MemoryPool}}
+\index{````~MemoryPool@{\texorpdfstring{$\sim$}{\string~}MemoryPool}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MemoryPool()}{\string~MemoryPool()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_ad45507b003bb9f50e495c20a71e9f478} 
+Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::\texorpdfstring{$\sim$}{\string~}\+Memory\+Pool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a6671a94f5e52d4456a038e03c387dd23}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!MemoryPool@{MemoryPool}}
+\index{MemoryPool@{MemoryPool}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{MemoryPool()}{MemoryPool()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a6671a94f5e52d4456a038e03c387dd23} 
+Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::\+Memory\+Pool (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{Memory\+Pool}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a4be58a12388757fa31eac677d06f39a8}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!allocate@{allocate}}
+\index{allocate@{allocate}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a4be58a12388757fa31eac677d06f39a8} 
+void \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::allocate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a5cb8b477aebafb8084fdcefbff05c033}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!clear@{clear}}
+\index{clear@{clear}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a5cb8b477aebafb8084fdcefbff05c033} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a84d59651ba2df959999a81c2cadd864b}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!construct@{construct}}
+\index{construct@{construct}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{construct()}{construct()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a84d59651ba2df959999a81c2cadd864b} 
+template$<$typename T, typename... Args$>$ \\
+T \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::construct (\begin{DoxyParamCaption}\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a6adfb8f9ea9751945757ba77948c501e}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!deallocate@{deallocate}}
+\index{deallocate@{deallocate}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{deallocate()}{deallocate()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a6adfb8f9ea9751945757ba77948c501e} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::deallocate (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_ad0451e30806c5bbc0bb82e5d609db016}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!destroy@{destroy}}
+\index{destroy@{destroy}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_ad0451e30806c5bbc0bb82e5d609db016} 
+template$<$typename T$>$ \\
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::destroy (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a51071fc8466074242b69225675ad28e7}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!getCapacity@{getCapacity}}
+\index{getCapacity@{getCapacity}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{getCapacity()}{getCapacity()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a51071fc8466074242b69225675ad28e7} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::get\+Capacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a9febc5099703e7ccb9c29eabefca2b50}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!getFreeCount@{getFreeCount}}
+\index{getFreeCount@{getFreeCount}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{getFreeCount()}{getFreeCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a9febc5099703e7ccb9c29eabefca2b50} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::get\+Free\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a32247afba7656be6a8708f808a4083f9}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!getMemoryUsage@{getMemoryUsage}}
+\index{getMemoryUsage@{getMemoryUsage}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{getMemoryUsage()}{getMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a32247afba7656be6a8708f808a4083f9} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::get\+Memory\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a262bb0a74cafafb9399c9e08a96d32ba}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!getObjectSize@{getObjectSize}}
+\index{getObjectSize@{getObjectSize}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{getObjectSize()}{getObjectSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a262bb0a74cafafb9399c9e08a96d32ba} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::get\+Object\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_acdab2dac6dba3708e13fc197cef3130c}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!getUsedCount@{getUsedCount}}
+\index{getUsedCount@{getUsedCount}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{getUsedCount()}{getUsedCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_acdab2dac6dba3708e13fc197cef3130c} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::get\+Used\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a3cf2b702140642f56aaf027d7a0e20a5}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!getUtilization@{getUtilization}}
+\index{getUtilization@{getUtilization}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{getUtilization()}{getUtilization()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a3cf2b702140642f56aaf027d7a0e20a5} 
+float Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::get\+Utilization (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_aed7d7e4c52aed430f45e177c1047ebdb}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!operator=@{operator=}}
+\index{operator=@{operator=}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_aed7d7e4c52aed430f45e177c1047ebdb} 
+\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{Memory\+Pool}} \& Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{Memory\+Pool}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a16e0de60833997a0c520e676f727c039}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!reserve@{reserve}}
+\index{reserve@{reserve}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{reserve()}{reserve()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a16e0de60833997a0c520e676f727c039} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::reserve (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{capacity}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_pool_a3c2f0c523743b5d5e07fd784fb586f29}\index{VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}!shrink@{shrink}}
+\index{shrink@{shrink}!VoxelEditor::Memory::MemoryPool@{VoxelEditor::Memory::MemoryPool}}
+\doxysubsubsection{\texorpdfstring{shrink()}{shrink()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_pool_a3c2f0c523743b5d5e07fd784fb586f29} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Pool\+::shrink (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/memory/\mbox{\hyperlink{_memory_pool_8h}{Memory\+Pool.\+h}}\end{DoxyCompactItemize}

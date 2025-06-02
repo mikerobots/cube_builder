@@ -1,0 +1,112 @@
+\doxysection{core/input/\+Input\+Mapping.h File Reference}
+\hypertarget{_input_mapping_8h}{}\label{_input_mapping_8h}\index{core/input/InputMapping.h@{core/input/InputMapping.h}}
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include "{}Input\+Types.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_mapping}{Voxel\+Editor\+::\+Input\+::\+Input\+Mapping}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_input}{Voxel\+Editor\+::\+Input}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions}{Voxel\+Editor\+::\+Input\+::\+Actions}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a7032a2752a984182f7cb9ef5e1d59d4e}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+PLACE\+\_\+\+VOXEL}} = "{}place\+\_\+voxel"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a74befa5bfbc0fa8836ed5c5fd647b532}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+REMOVE\+\_\+\+VOXEL}} = "{}remove\+\_\+voxel"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a82faebe5332efbff539850c69f537ac7}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+PAINT\+\_\+\+VOXEL}} = "{}paint\+\_\+voxel"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_adc333b74bfe2617f5cac44ca2848e6ab}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SAMPLE\+\_\+\+VOXEL}} = "{}sample\+\_\+voxel"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a8b397ae501b68a46571684361133fd5a}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+ORBIT\+\_\+\+CAMERA}} = "{}orbit\+\_\+camera"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_add73aaccae091ca1957035fad6dbae0c}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+PAN\+\_\+\+CAMERA}} = "{}pan\+\_\+camera"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a077303b091701a217986b5e6f3b2d340}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+ZOOM\+\_\+\+CAMERA}} = "{}zoom\+\_\+camera"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a4c6ca9f5d64339efef3145944c1c4181}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+RESET\+\_\+\+CAMERA}} = "{}reset\+\_\+camera"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a185d9384277b89229e3846f6b375c057}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+FRAME\+\_\+\+SELECTION}} = "{}frame\+\_\+selection"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ad3c19102058e030e3152acdd57754f99}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+VOXEL}} = "{}select\+\_\+voxel"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_aa96e31fb63b6cc5ab2464a5b5a44b864}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+MULTIPLE}} = "{}select\+\_\+multiple"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a2300f8442fc97c3998817458ad98bf96}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+BOX}} = "{}select\+\_\+box"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a8fd958c3465a2b12cca3db8a65ec3220}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+DESELECT\+\_\+\+ALL}} = "{}deselect\+\_\+all"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a9afa8ec60f8ec1ba7268225eaa1dd1ac}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+INVERT\+\_\+\+SELECTION}} = "{}invert\+\_\+selection"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ad5517fbc185c67ae79c65ff9aaaadcbd}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+CREATE\+\_\+\+GROUP}} = "{}create\+\_\+group"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a68a9467f6215a645e1da8a682d0bb6c3}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+GROUP}} = "{}select\+\_\+group"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a7711b04b6b80b4c7f686751b0951555c}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+MOVE\+\_\+\+GROUP}} = "{}move\+\_\+group"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_aedad50feb31c2d0d8b4e1aea6432e904}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+DELETE\+\_\+\+GROUP}} = "{}delete\+\_\+group"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ac919729db690eff5c00639ae3d07802c}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+UNDO}} = "{}undo"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ae267e79320e12a0b3e5702e4e2ef52e3}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+REDO}} = "{}redo"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a572c12bdb95608219b4ea747c0bb405e}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+COPY}} = "{}copy"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ae175e18f66e0125b0697d9913de430b5}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+PASTE}} = "{}paste"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a7ec7d70390cf80ec9c7074b710fc3816}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+CUT}} = "{}cut"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a318ed2c9195d500b135bdc440246ebb2}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+DELETE}} = "{}delete"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ab79cb1045719f216a3ccbd2b25a85f49}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+TOGGLE\+\_\+\+WIREFRAME}} = "{}toggle\+\_\+wireframe"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a1d94893bcde2a8829d4fc7cf415d7c98}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+TOGGLE\+\_\+\+GRID}} = "{}toggle\+\_\+grid"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a526843648d2e62d8361a6f60fc719cec}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+CYCLE\+\_\+\+VIEW\+\_\+\+MODE}} = "{}cycle\+\_\+view\+\_\+mode"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a68fd7875f324785c13aab4a1c6e3adec}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+ZOOM\+\_\+\+IN}} = "{}zoom\+\_\+in"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ad6161c8018f940847fe38e9a878c62a4}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+ZOOM\+\_\+\+OUT}} = "{}zoom\+\_\+out"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ac39a4bca063690837d6b691cd4bc4393}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+NEW\+\_\+\+FILE}} = "{}new\+\_\+file"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a2a28f88cbdf1a26a232b332032812497}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+OPEN\+\_\+\+FILE}} = "{}open\+\_\+file"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_abd58ceabf87da70f955c27d3eacd5a63}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SAVE\+\_\+\+FILE}} = "{}save\+\_\+file"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_afbffc1fbe1dbab9c4c66222946447ea9}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SAVE\+\_\+\+AS}} = "{}save\+\_\+as"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ab05fb6ea29c8b72308cdb0492c096e9c}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+EXPORT}} = "{}export"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a81e99603f80eae3667ae94d266c0970c}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+TOOL\+\_\+\+PLACE}} = "{}select\+\_\+tool\+\_\+place"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a3265c7d5e2e2e8aa8d10f97311c9f322}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+TOOL\+\_\+\+REMOVE}} = "{}select\+\_\+tool\+\_\+remove"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a0ce3300bff4bd5264e0f99b89039525d}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+TOOL\+\_\+\+PAINT}} = "{}select\+\_\+tool\+\_\+paint"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a2f8c0a828a17ad82cafd9093420240e7}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+TOOL\+\_\+\+SELECT}} = "{}select\+\_\+tool\+\_\+select"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a99435c1543dd34447499bef0b687ca52}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+SELECT\+\_\+\+TOOL\+\_\+\+MOVE}} = "{}select\+\_\+tool\+\_\+move"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_adbb6b48757132d9641a12f98bca524ea}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+VR\+\_\+\+GRAB}} = "{}vr\+\_\+grab"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_aba69c21c0560baf179eeea51996fcd84}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+VR\+\_\+\+POINT}} = "{}vr\+\_\+point"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_ad5f4c6a223a60618ba3ac649113dcf6a}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+VR\+\_\+\+MENU}} = "{}vr\+\_\+menu"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_abee15129b152755985be8fef3ec444b2}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+VR\+\_\+\+TELEPORT}} = "{}vr\+\_\+teleport"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a538090769479e610503a81a24b035b40}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+VR\+\_\+\+SCALE}} = "{}vr\+\_\+scale"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions_a04f068c77a0327db8f79be28ff840786}{Voxel\+Editor\+::\+Input\+::\+Actions\+::\+VR\+\_\+\+ROTATE}} = "{}vr\+\_\+rotate"{}
+\end{DoxyCompactItemize}

@@ -1,0 +1,35 @@
+var struct_voxel_editor_1_1_rendering_1_1_uniform_value =
+[
+    [ "Type", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07", [
+      [ "Float", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07ab03bb8ab46fc4fbac42fcfd2cb4a80e8", null ],
+      [ "Vec2", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a684e6dd477846541f9142f6482105ee5", null ],
+      [ "Vec3", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07afcf5709adbab0c6ff4867cd1eeb68d89", null ],
+      [ "Vec4", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07af4bc8c87eb078a0cbbe49bd1d620dd7d", null ],
+      [ "Int", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a0311fa0a1412a0a90d6599c2fc468381", null ],
+      [ "IVec2", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a589beff6f9c28a200998571dfe478704", null ],
+      [ "IVec3", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07ae51f7273acd6229fd39c64719de419b6", null ],
+      [ "IVec4", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a77ca0d29501c041e6f73444139eb507e", null ],
+      [ "Mat3", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a08b936ceea57e77f82d7ff2187d5e44e", null ],
+      [ "Mat4", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a6cd4b193d5889eab6e1f9c8973eda964", null ],
+      [ "Sampler2D", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a5dcd8c38e07e54bf43d5d6be26e44a07a285f8ffca9871ff09f917a2ddce97309", null ]
+    ] ],
+    [ "UniformValue", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#ad4da1a5123472d5ff01e5c66251e3433", null ],
+    [ "UniformValue", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#aac4933d35bdf0f746983bb486f589cae", null ],
+    [ "UniformValue", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a0ec97a6cfa1e4df0225abe0d2cd4f787", null ],
+    [ "UniformValue", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#aef28bb37ee5bf1660a4d89e97644d92d", null ],
+    [ "UniformValue", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#ae78a31f3aca485f676eb9f94c4821778", null ],
+    [ "UniformValue", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#ae90e63f734d9c0f5690d60928065bb8d", null ],
+    [ "data", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a4d03cbeefd836d26224ad6a3aedb8a3e", null ],
+    [ "f", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#aca7b67e7009940e56a30f061b88487c8", null ],
+    [ "i", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a62893525dfe0225a50233145ca107168", null ],
+    [ "ivec2", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#affb1636d808b6355718ea36e3d169f8b", null ],
+    [ "ivec3", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a0eeb61b76407e26b1e002e2c1e244203", null ],
+    [ "ivec4", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a566850aa179972b64b3ef63dea968720", null ],
+    [ "mat3", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#acd8a9e1cd49562e676910d28a8b0bebf", null ],
+    [ "mat4", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a2b86b3a8528da4af5a8fe55406da5a0a", null ],
+    [ "sampler", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a6765c27f54ea7f84a76e33052c7d22ed", null ],
+    [ "type", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a4ea27ad442e0fa9ac8598738b5d9ee22", null ],
+    [ "vec2", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#a75dee4109f790a3c1aee9e7a043f47db", null ],
+    [ "vec3", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#aa0d05719ea8d4f9b5aa99b6550f5ed93", null ],
+    [ "vec4", "struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#af55e533897a1a2159be40a4c9382960a", null ]
+];

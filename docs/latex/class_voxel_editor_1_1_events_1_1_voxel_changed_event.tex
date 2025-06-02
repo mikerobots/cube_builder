@@ -1,0 +1,98 @@
+\doxysection{Voxel\+Editor\+::Events\+::Voxel\+Changed\+Event Class Reference}
+\hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event}{}\label{class_voxel_editor_1_1_events_1_1_voxel_changed_event}\index{VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}}
+
+
+{\ttfamily \#include $<$Common\+Events.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::Voxel\+Changed\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_voxel_editor_1_1_events_1_1_voxel_changed_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_af5ec41193e00cabcfe94512087c9edd8}{Voxel\+Changed\+Event}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}{grid\+Pos}}, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}{resolution}}, bool \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}{old\+Value}}, bool \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}{new\+Value}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Voxel\+Changed\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}{grid\+Pos}}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}{resolution}}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}{old\+Value}}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}{new\+Value}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Voxel\+Changed\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_af5ec41193e00cabcfe94512087c9edd8}\index{VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}!VoxelChangedEvent@{VoxelChangedEvent}}
+\index{VoxelChangedEvent@{VoxelChangedEvent}!VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}}
+\doxysubsubsection{\texorpdfstring{VoxelChangedEvent()}{VoxelChangedEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_voxel_changed_event_af5ec41193e00cabcfe94512087c9edd8} 
+Voxel\+Editor\+::\+Events\+::\+Voxel\+Changed\+Event\+::\+Voxel\+Changed\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{grid\+Pos}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{, }\item[{bool}]{old\+Value}{, }\item[{bool}]{new\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}\index{VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}!gridPos@{gridPos}}
+\index{gridPos@{gridPos}!VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}}
+\doxysubsubsection{\texorpdfstring{gridPos}{gridPos}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} Voxel\+Editor\+::\+Events\+::\+Voxel\+Changed\+Event\+::grid\+Pos}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}\index{VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}!newValue@{newValue}}
+\index{newValue@{newValue}!VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}}
+\doxysubsubsection{\texorpdfstring{newValue}{newValue}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b} 
+bool Voxel\+Editor\+::\+Events\+::\+Voxel\+Changed\+Event\+::new\+Value}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}\index{VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}!oldValue@{oldValue}}
+\index{oldValue@{oldValue}!VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}}
+\doxysubsubsection{\texorpdfstring{oldValue}{oldValue}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8} 
+bool Voxel\+Editor\+::\+Events\+::\+Voxel\+Changed\+Event\+::old\+Value}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}\index{VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}!resolution@{resolution}}
+\index{resolution@{resolution}!VoxelEditor::Events::VoxelChangedEvent@{VoxelEditor::Events::VoxelChangedEvent}}
+\doxysubsubsection{\texorpdfstring{resolution}{resolution}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} Voxel\+Editor\+::\+Events\+::\+Voxel\+Changed\+Event\+::resolution}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/\mbox{\hyperlink{_common_events_8h}{Common\+Events.\+h}}\end{DoxyCompactItemize}

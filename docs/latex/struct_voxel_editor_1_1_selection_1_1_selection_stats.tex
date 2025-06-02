@@ -1,0 +1,75 @@
+\doxysection{Voxel\+Editor\+::Selection\+::Selection\+Stats Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats}{}\label{struct_voxel_editor_1_1_selection_1_1_selection_stats}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+
+
+{\ttfamily \#include $<$Selection\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats_ac35bf2eeaf28452d4e581146a4764f6f}{clear}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats_a073e0478c133958a4bb11539d7ea048f}{voxel\+Count}} = 0
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}, size\+\_\+t $>$ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats_ae714bf17817ca4ddd8c143c6d83b0e11}{count\+By\+Resolution}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats_a360e77e0f89982fa095cb7fb7e7c45e1}{bounds}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats_a3c3a8e9fe41eb609376d7b35c850f196}{center}}
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats_ad1cce812c57295b27c8dd9129115dc11}{total\+Volume}} = 0.\+0f
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_ac35bf2eeaf28452d4e581146a4764f6f}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}!clear@{clear}}
+\index{clear@{clear}!VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_selection_stats_ac35bf2eeaf28452d4e581146a4764f6f} 
+void Voxel\+Editor\+::\+Selection\+::\+Selection\+Stats\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_a360e77e0f89982fa095cb7fb7e7c45e1}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}!bounds@{bounds}}
+\index{bounds@{bounds}!VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+\doxysubsubsection{\texorpdfstring{bounds}{bounds}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_selection_stats_a360e77e0f89982fa095cb7fb7e7c45e1} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} Voxel\+Editor\+::\+Selection\+::\+Selection\+Stats\+::bounds}
+
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_a3c3a8e9fe41eb609376d7b35c850f196}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}!center@{center}}
+\index{center@{center}!VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+\doxysubsubsection{\texorpdfstring{center}{center}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_selection_stats_a3c3a8e9fe41eb609376d7b35c850f196} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Selection\+::\+Selection\+Stats\+::center}
+
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_ae714bf17817ca4ddd8c143c6d83b0e11}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}!countByResolution@{countByResolution}}
+\index{countByResolution@{countByResolution}!VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+\doxysubsubsection{\texorpdfstring{countByResolution}{countByResolution}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_selection_stats_ae714bf17817ca4ddd8c143c6d83b0e11} 
+std\+::unordered\+\_\+map$<$\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}, size\+\_\+t$>$ Voxel\+Editor\+::\+Selection\+::\+Selection\+Stats\+::count\+By\+Resolution}
+
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_ad1cce812c57295b27c8dd9129115dc11}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}!totalVolume@{totalVolume}}
+\index{totalVolume@{totalVolume}!VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+\doxysubsubsection{\texorpdfstring{totalVolume}{totalVolume}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_selection_stats_ad1cce812c57295b27c8dd9129115dc11} 
+float Voxel\+Editor\+::\+Selection\+::\+Selection\+Stats\+::total\+Volume = 0.\+0f}
+
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_selection_stats_a073e0478c133958a4bb11539d7ea048f}\index{VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}!voxelCount@{voxelCount}}
+\index{voxelCount@{voxelCount}!VoxelEditor::Selection::SelectionStats@{VoxelEditor::Selection::SelectionStats}}
+\doxysubsubsection{\texorpdfstring{voxelCount}{voxelCount}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_selection_stats_a073e0478c133958a4bb11539d7ea048f} 
+size\+\_\+t Voxel\+Editor\+::\+Selection\+::\+Selection\+Stats\+::voxel\+Count = 0}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/selection/\mbox{\hyperlink{_selection_types_8h}{Selection\+Types.\+h}}\end{DoxyCompactItemize}

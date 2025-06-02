@@ -1,0 +1,137 @@
+\doxysection{File\+Versioning.\+h}
+\hypertarget{_file_versioning_8h_source}{}\label{_file_versioning_8h_source}\index{core/file\_io/include/file\_io/FileVersioning.h@{core/file\_io/include/file\_io/FileVersioning.h}}
+\mbox{\hyperlink{_file_versioning_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_types_8h}{FileTypes.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_binary_i_o_8h}{BinaryIO.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header}{FileHeader}};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ File\ version\ management\ and\ migration}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7b21358edacbc6c1f1070233ccf4e48e}{FileVersioning}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7b21358edacbc6c1f1070233ccf4e48e}{FileVersioning}}();}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a56156258d8be808bb99be8af8aeb962b}{\string~FileVersioning}}();}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Version\ information}}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a426363a1b19a4840958dfc572e27be38}{getCurrentVersion}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7340afbb1d0e81c358b1a217ad781571}{detectVersion}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader);}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Compatibility\ checks}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ab1794674854d50718ef90b5b8e636dbf}{isCompatible}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ version)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a6493e76a28bbe01d54819cc099ac74d1}{canUpgrade}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ from,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_acf7a1e02e8d28b140d829efd52d98b9b}{needsUpgrade}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ version)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Version\ migration}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7a3594873b47b785027b5779ccb5a1c9}{upgradeFile}}(\textcolor{keyword}{const}\ std::string\&\ inputFile,\ \textcolor{keyword}{const}\ std::string\&\ outputFile,\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ targetVersion\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version_af9e153735481f38f923cdc3966375403}{FileVersion::Current}}());}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a43df1e08c5ce39045672ef7fcc1e50c8}{migrateData}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ fromVersion,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ toVersion);}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Migration\ information}}
+\DoxyCodeLine{00037\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ad2be96e9d84b85261297ec18044763fc}{getUpgradeWarnings}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ from,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a0b5776a82e59af3fc736a6f63539f227}{getBreakingChanges}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ from,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_adfb51d1c6a1162dfda6f9c0a48f75e4f}{getMigrationNotes}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ from,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Version\ history}}
+\DoxyCodeLine{00042\ \ \ \ \ std::vector<FileVersion>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ae5bc39bdfa071c6234d8edfee41d1c20}{getVersionHistory}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ac7e0ad2b617f05de825b6007da7964f8}{getVersionChangelog}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ version)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Migration\ function\ type}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{using\ }MigrationFunction\ =\ std::function<bool(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&,\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&)>;}
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Version\ pair\ for\ migration\ mapping}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{struct\ }VersionPair\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ from;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ to;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ VersionPair\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ from\ ==\ other.from\ \&\&\ to\ ==\ other.to;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Hash\ function\ for\ VersionPair}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{struct\ }VersionPairHash\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ VersionPair\&\ pair)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h1\ =\ std::hash<uint64\_t>\{\}(}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint64\_t(pair.from.major)\ <<\ 48)\ |}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint64\_t(pair.from.minor)\ <<\ 32)\ |}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint64\_t(pair.from.patch)\ <<\ 16)\ |}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t(pair.from.build)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h2\ =\ std::hash<uint64\_t>\{\}(}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint64\_t(pair.to.major)\ <<\ 48)\ |}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint64\_t(pair.to.minor)\ <<\ 32)\ |}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint64\_t(pair.to.patch)\ <<\ 16)\ |}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t(pair.to.build)}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h1\ \string^\ (h2\ <<\ 1);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \};}
+\DoxyCodeLine{00077\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Migration\ registry}}
+\DoxyCodeLine{00079\ \ \ \ \ std::unordered\_map<VersionPair,\ MigrationFunction,\ VersionPairHash>\ m\_migrations;}
+\DoxyCodeLine{00080\ \ \ \ \ std::unordered\_map<VersionPair,\ std::vector<std::string>,\ VersionPairHash>\ m\_migrationWarnings;}
+\DoxyCodeLine{00081\ \ \ \ \ std::unordered\_map<FileVersion,\ std::string>\ m\_versionChangelogs;}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Register\ all\ migrations}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ registerMigrations();}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ Specific\ version\ migrations}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{bool}\ migrateV1\_0ToV1\_1(BinaryReader\&\ reader,\ BinaryWriter\&\ writer);}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ migrateV1\_1ToV1\_2(BinaryReader\&\ reader,\ BinaryWriter\&\ writer);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ migrateV1\_2ToV2\_0(BinaryReader\&\ reader,\ BinaryWriter\&\ writer);}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Helper\ functions}}
+\DoxyCodeLine{00092\ \ \ \ \ std::vector<FileVersion>\ findUpgradePath(FileVersion\ from,\ FileVersion\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{bool}\ executeMigrationPath(BinaryReader\&\ reader,\ BinaryWriter\&\ writer,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<FileVersion>\&\ path);}
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ Data\ migration\ helpers}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ migrateMetadata(BinaryReader\&\ reader,\ BinaryWriter\&\ writer,}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FileVersion\ from,\ FileVersion\ to);}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ migrateVoxelData(BinaryReader\&\ reader,\ BinaryWriter\&\ writer,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FileVersion\ from,\ FileVersion\ to);}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ migrateGroupData(BinaryReader\&\ reader,\ BinaryWriter\&\ writer,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FileVersion\ from,\ FileVersion\ to);}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Version-\/specific\ readers\ for\ old\ formats}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ readV1\_0Header(BinaryReader\&\ reader,\ FileHeader\&\ header);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ readV1\_0VoxelData(BinaryReader\&\ reader,\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ Version\ compatibility\ rules}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_version_compatibility}{VersionCompatibility}}\ \{}
+\DoxyCodeLine{00111\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ versions\ are\ compatible\ for\ reading}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_version_compatibility_a1728dd25e618a9d78f01ec08f213bd37}{canRead}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ fileVersion,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ appVersion);}
+\DoxyCodeLine{00114\ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ versions\ are\ compatible\ for\ writing}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_version_compatibility_a40ac52e917ce0b9414f76539e42a7108}{canWrite}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ fileVersion,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ appVersion);}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Get\ minimum\ compatible\ version}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_version_compatibility_ab0fec453c37eaa2a26487bb016c86f59}{getMinimumCompatibleVersion}}(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ version);}
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Get\ recommended\ version\ for\ saving}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_version_compatibility_a8ea1a9312b41c51aa24006ba96fc27d3}{getRecommendedSaveVersion}}();}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00124\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//\ Compatibility\ rules}}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isMajorCompatible(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ v1,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ v2);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isMinorCompatible(\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ v1,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ v2);}
+\DoxyCodeLine{00128\ \};}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \}\ \textcolor{comment}{//\ namespace\ FileIO}}
+\DoxyCodeLine{00131\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

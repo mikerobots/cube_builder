@@ -1,0 +1,181 @@
+\doxysection{Voxel\+Editor\+::Undo\+Redo\+::Bulk\+Voxel\+Edit\+Command Class Reference}
+\hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command}{}\label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+
+
+{\ttfamily \#include $<$Voxel\+Commands.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Undo\+Redo\+::Bulk\+Voxel\+Edit\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_af637acbe3a8ae0ee2e72d5737205d5e3}{Bulk\+Voxel\+Edit\+Command}} (\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{Voxel\+Data\+::\+Voxel\+Data\+Manager}} \texorpdfstring{$\ast$}{*}voxel\+Manager, const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}} $>$ \&changes)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_ac6187347cee2b0f7c445fb4730827710}{execute}} () override
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a7ae7f62751f67b1cbbf50f2c0a82a4f0}{undo}} () override
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a55d7ebcf702ff869b9773d4baad983bc}{get\+Name}} () const override
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{Command\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a84f85e38b3362d790d5a903d71bc3d27}{get\+Type}} () const override
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a40c943360187dfa5a0cbae19d3e55da4}{get\+Memory\+Usage}} () const override
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aa4ffa0786e80fc556d8284b5f5a74fa5}{compress}} () override
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a2b380c5b997aae4a4ac18ada8b4ef5e6}{decompress}} () override
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aede24b4bf0e7b6e42f6d89327973b4fd}{add\+Change}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}} \&change)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_adf2274e74ed533773ef718d0a4da8315}{add\+Changes}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}} $>$ \&changes)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_acf23fd6ca2ee7fe0cf6bf0c96ed8d105}{get\+Change\+Count}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a8fe1ab00c6ace635e16810b1865c0cd9}{\texorpdfstring{$\sim$}{\string~}\+Command}} ()=default
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3cc9f3bf60abf3252cab94a6cd63eb25}{can\+Undo}} () const
+\item 
+virtual std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_ae3ac3a01733af389a4d289ddbc182075}{get\+Description}} () const
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a1cd5003c687acdd268531e8be2c7b7b0}{can\+Merge\+With}} (const \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} \&other) const
+\item 
+virtual std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_afa5a02f73fbccc60b7723aed270adbce}{merge\+With}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} $>$ other)
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_acd22d97b2c12b46c02ad4f6cce2940d3}{is\+Valid}} () const
+\item 
+virtual \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result}{Validation\+Result}} \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a9ee9b6fac042f95e79198b9e0632e94e}{validate}} () const
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a690769c483756d9a657943a8b984d581}{get\+Timestamp}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a04febc95d1a5331c865dbd64866b3502}{has\+Executed}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6cf7d7d58bb50802e7cb335cd9b6c461}{m\+\_\+timestamp}} = std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::now()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3ca44d16ecff16b618eb4ab12f5f33f0}{m\+\_\+executed}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_af637acbe3a8ae0ee2e72d5737205d5e3}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!BulkVoxelEditCommand@{BulkVoxelEditCommand}}
+\index{BulkVoxelEditCommand@{BulkVoxelEditCommand}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{BulkVoxelEditCommand()}{BulkVoxelEditCommand()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_af637acbe3a8ae0ee2e72d5737205d5e3} 
+Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::\+Bulk\+Voxel\+Edit\+Command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{Voxel\+Data\+::\+Voxel\+Data\+Manager}} \texorpdfstring{$\ast$}{*}}]{voxel\+Manager}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}} $>$ \&}]{changes}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aede24b4bf0e7b6e42f6d89327973b4fd}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!addChange@{addChange}}
+\index{addChange@{addChange}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{addChange()}{addChange()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aede24b4bf0e7b6e42f6d89327973b4fd} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::add\+Change (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}} \&}]{change}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_adf2274e74ed533773ef718d0a4da8315}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!addChanges@{addChanges}}
+\index{addChanges@{addChanges}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{addChanges()}{addChanges()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_adf2274e74ed533773ef718d0a4da8315} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::add\+Changes (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change}{Voxel\+Change}} $>$ \&}]{changes}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aa4ffa0786e80fc556d8284b5f5a74fa5}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!compress@{compress}}
+\index{compress@{compress}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{compress()}{compress()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aa4ffa0786e80fc556d8284b5f5a74fa5} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::compress (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_af531550f86b128c224d3d47bea51a0ae}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a2b380c5b997aae4a4ac18ada8b4ef5e6}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!decompress@{decompress}}
+\index{decompress@{decompress}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{decompress()}{decompress()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a2b380c5b997aae4a4ac18ada8b4ef5e6} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::decompress (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6770e00f50a677871e9ff447568e836d}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_ac6187347cee2b0f7c445fb4730827710}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!execute@{execute}}
+\index{execute@{execute}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_ac6187347cee2b0f7c445fb4730827710} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::execute (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a30722ec4f6777b2d80088f6990343848}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_acf23fd6ca2ee7fe0cf6bf0c96ed8d105}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!getChangeCount@{getChangeCount}}
+\index{getChangeCount@{getChangeCount}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{getChangeCount()}{getChangeCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_acf23fd6ca2ee7fe0cf6bf0c96ed8d105} 
+size\+\_\+t Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::get\+Change\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a40c943360187dfa5a0cbae19d3e55da4}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!getMemoryUsage@{getMemoryUsage}}
+\index{getMemoryUsage@{getMemoryUsage}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{getMemoryUsage()}{getMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a40c943360187dfa5a0cbae19d3e55da4} 
+size\+\_\+t Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::get\+Memory\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a621d5a5e80b04980ad7c287216ff9e4d}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a55d7ebcf702ff869b9773d4baad983bc}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!getName@{getName}}
+\index{getName@{getName}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a55d7ebcf702ff869b9773d4baad983bc} 
+std\+::string Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a4f281b72b5069097d93bbb3316028fad}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a84f85e38b3362d790d5a903d71bc3d27}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!getType@{getType}}
+\index{getType@{getType}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a84f85e38b3362d790d5a903d71bc3d27} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{Command\+Type}} Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_aa07b99ca98eca64ad8fef3165bf66ab7}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a7ae7f62751f67b1cbbf50f2c0a82a4f0}\index{VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}!undo@{undo}}
+\index{undo@{undo}!VoxelEditor::UndoRedo::BulkVoxelEditCommand@{VoxelEditor::UndoRedo::BulkVoxelEditCommand}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a7ae7f62751f67b1cbbf50f2c0a82a4f0} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+Bulk\+Voxel\+Edit\+Command\+::undo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_afd4c2e7460816931d09ddd414e213ad7}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/undo\+\_\+redo/\mbox{\hyperlink{_voxel_commands_8h}{Voxel\+Commands.\+h}}\item 
+core/undo\+\_\+redo/\mbox{\hyperlink{_voxel_commands_8cpp}{Voxel\+Commands.\+cpp}}\end{DoxyCompactItemize}

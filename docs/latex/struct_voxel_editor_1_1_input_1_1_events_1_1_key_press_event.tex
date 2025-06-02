@@ -1,0 +1,98 @@
+\doxysection{Voxel\+Editor\+::Input\+::Events\+::Key\+Press\+Event Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event}{}\label{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event}\index{VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}}
+
+
+{\ttfamily \#include $<$Keyboard\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Input\+::Events\+::Key\+Press\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a967ee558f3a33543e190dd49bec200d9}{Key\+Press\+Event}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} k, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} mods=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}, bool rep=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Key\+Press\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a581c6acc0c9038285e341f0fc6373485}{key}}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_ad4cbb51f2d14b4086141891ce8ca00c8}{modifiers}}
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a09878c32485cba5dfb284cc744a95976}{repeat}}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Time\+Point}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a0a613605a9b4eda2631f23792ea85134}{timestamp}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Key\+Press\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a967ee558f3a33543e190dd49bec200d9}\index{VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}!KeyPressEvent@{KeyPressEvent}}
+\index{KeyPressEvent@{KeyPressEvent}!VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}}
+\doxysubsubsection{\texorpdfstring{KeyPressEvent()}{KeyPressEvent()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a967ee558f3a33543e190dd49bec200d9} 
+Voxel\+Editor\+::\+Input\+::\+Events\+::\+Key\+Press\+Event\+::\+Key\+Press\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{k}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{mods}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}, }\item[{bool}]{rep}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a581c6acc0c9038285e341f0fc6373485}\index{VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}!key@{key}}
+\index{key@{key}!VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}}
+\doxysubsubsection{\texorpdfstring{key}{key}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a581c6acc0c9038285e341f0fc6373485} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Key\+Press\+Event\+::key}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_ad4cbb51f2d14b4086141891ce8ca00c8}\index{VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}!modifiers@{modifiers}}
+\index{modifiers@{modifiers}!VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}}
+\doxysubsubsection{\texorpdfstring{modifiers}{modifiers}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_ad4cbb51f2d14b4086141891ce8ca00c8} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Key\+Press\+Event\+::modifiers}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a09878c32485cba5dfb284cc744a95976}\index{VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}!repeat@{repeat}}
+\index{repeat@{repeat}!VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}}
+\doxysubsubsection{\texorpdfstring{repeat}{repeat}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a09878c32485cba5dfb284cc744a95976} 
+bool Voxel\+Editor\+::\+Input\+::\+Events\+::\+Key\+Press\+Event\+::repeat}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a0a613605a9b4eda2631f23792ea85134}\index{VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!VoxelEditor::Input::Events::KeyPressEvent@{VoxelEditor::Input::Events::KeyPressEvent}}
+\doxysubsubsection{\texorpdfstring{timestamp}{timestamp}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a0a613605a9b4eda2631f23792ea85134} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Time\+Point}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Key\+Press\+Event\+::timestamp}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_keyboard_handler_8h}{Keyboard\+Handler.\+h}}\end{DoxyCompactItemize}

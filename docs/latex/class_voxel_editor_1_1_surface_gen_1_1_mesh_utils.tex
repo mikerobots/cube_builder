@@ -1,0 +1,148 @@
+\doxysection{Voxel\+Editor\+::Surface\+Gen\+::Mesh\+Utils Class Reference}
+\hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils}{}\label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+
+
+{\ttfamily \#include $<$Mesh\+Builder.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a59088c2359424a71c5b32537ab0e7373}{is\+Manifold}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a0991c0dca668b574f5dd1a98bd10a8a1}{is\+Watertight}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static float \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a4dd47ce92b3315ac27526b5c29bd21b5}{calculate\+Volume}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static float \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a8b105041ed1337e0e4ee1a5c8e385ac5}{calculate\+Surface\+Area}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_af4af786805ec978f7f836460585d193f}{flip\+Normals}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a3294b77d2ec276b4983e4c9de4c1503e}{remove\+Degenerate\+Triangles}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh, float epsilon=0.\+0001f)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a85fdb0d0f01c3b89276fb6bd934b91d5}{fill\+Holes}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a54e58568130ca0b931ed819a8fecc6e3}{make\+Watertight}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_adb0011542bf68bbe8d6d5a2c5bf6ee24}{quad\+To\+Triangle\+Mesh}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face}{Quad\+Face}} $>$ \&quads, const std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} $>$ \&vertices)
+\item 
+static std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face}{Quad\+Face}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a6f22226c66cc7e97c1126db8d6a9507b}{triangle\+To\+Quad\+Mesh}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a97f413019fc1320f553d55de1e207a20}{subdivide}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh, int levels=1)
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ab687a2af603d162007c0182bd58e21fc}{decimate}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh, float ratio)
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a75499cfdb4bccbfb78ffc9fc88e6af5c}{remesh}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh, float target\+Edge\+Length)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a51887826f28f92fc6d9b5ae5faf9dba5}{center\+Mesh}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae45c800f17ed28c148a23dd98c76b876}{scale\+Mesh}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh, float scale)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae82b4091c1c768dde7b39a049bce73d9}{translate\+Mesh}} (\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&translation)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a8b105041ed1337e0e4ee1a5c8e385ac5}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!calculateSurfaceArea@{calculateSurfaceArea}}
+\index{calculateSurfaceArea@{calculateSurfaceArea}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{calculateSurfaceArea()}{calculateSurfaceArea()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a8b105041ed1337e0e4ee1a5c8e385ac5} 
+float Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::calculate\+Surface\+Area (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a4dd47ce92b3315ac27526b5c29bd21b5}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!calculateVolume@{calculateVolume}}
+\index{calculateVolume@{calculateVolume}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{calculateVolume()}{calculateVolume()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a4dd47ce92b3315ac27526b5c29bd21b5} 
+float Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::calculate\+Volume (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a51887826f28f92fc6d9b5ae5faf9dba5}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!centerMesh@{centerMesh}}
+\index{centerMesh@{centerMesh}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{centerMesh()}{centerMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a51887826f28f92fc6d9b5ae5faf9dba5} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::center\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ab687a2af603d162007c0182bd58e21fc}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!decimate@{decimate}}
+\index{decimate@{decimate}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{decimate()}{decimate()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ab687a2af603d162007c0182bd58e21fc} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::decimate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{, }\item[{float}]{ratio}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a85fdb0d0f01c3b89276fb6bd934b91d5}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!fillHoles@{fillHoles}}
+\index{fillHoles@{fillHoles}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{fillHoles()}{fillHoles()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a85fdb0d0f01c3b89276fb6bd934b91d5} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::fill\+Holes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_af4af786805ec978f7f836460585d193f}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!flipNormals@{flipNormals}}
+\index{flipNormals@{flipNormals}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{flipNormals()}{flipNormals()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_af4af786805ec978f7f836460585d193f} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::flip\+Normals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a59088c2359424a71c5b32537ab0e7373}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!isManifold@{isManifold}}
+\index{isManifold@{isManifold}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{isManifold()}{isManifold()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a59088c2359424a71c5b32537ab0e7373} 
+bool Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::is\+Manifold (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a0991c0dca668b574f5dd1a98bd10a8a1}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!isWatertight@{isWatertight}}
+\index{isWatertight@{isWatertight}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{isWatertight()}{isWatertight()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a0991c0dca668b574f5dd1a98bd10a8a1} 
+bool Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::is\+Watertight (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a54e58568130ca0b931ed819a8fecc6e3}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!makeWatertight@{makeWatertight}}
+\index{makeWatertight@{makeWatertight}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{makeWatertight()}{makeWatertight()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a54e58568130ca0b931ed819a8fecc6e3} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::make\+Watertight (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_adb0011542bf68bbe8d6d5a2c5bf6ee24}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!quadToTriangleMesh@{quadToTriangleMesh}}
+\index{quadToTriangleMesh@{quadToTriangleMesh}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{quadToTriangleMesh()}{quadToTriangleMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_adb0011542bf68bbe8d6d5a2c5bf6ee24} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::quad\+To\+Triangle\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face}{Quad\+Face}} $>$ \&}]{quads}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} $>$ \&}]{vertices}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a75499cfdb4bccbfb78ffc9fc88e6af5c}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!remesh@{remesh}}
+\index{remesh@{remesh}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{remesh()}{remesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a75499cfdb4bccbfb78ffc9fc88e6af5c} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::remesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{, }\item[{float}]{target\+Edge\+Length}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a3294b77d2ec276b4983e4c9de4c1503e}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!removeDegenerateTriangles@{removeDegenerateTriangles}}
+\index{removeDegenerateTriangles@{removeDegenerateTriangles}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{removeDegenerateTriangles()}{removeDegenerateTriangles()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a3294b77d2ec276b4983e4c9de4c1503e} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::remove\+Degenerate\+Triangles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{, }\item[{float}]{epsilon}{ = {\ttfamily 0.0001f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae45c800f17ed28c148a23dd98c76b876}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!scaleMesh@{scaleMesh}}
+\index{scaleMesh@{scaleMesh}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{scaleMesh()}{scaleMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae45c800f17ed28c148a23dd98c76b876} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::scale\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{, }\item[{float}]{scale}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a97f413019fc1320f553d55de1e207a20}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!subdivide@{subdivide}}
+\index{subdivide@{subdivide}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{subdivide()}{subdivide()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a97f413019fc1320f553d55de1e207a20} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::subdivide (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{, }\item[{int}]{levels}{ = {\ttfamily 1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae82b4091c1c768dde7b39a049bce73d9}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!translateMesh@{translateMesh}}
+\index{translateMesh@{translateMesh}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{translateMesh()}{translateMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae82b4091c1c768dde7b39a049bce73d9} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::translate\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{translation}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a6f22226c66cc7e97c1126db8d6a9507b}\index{VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}!triangleToQuadMesh@{triangleToQuadMesh}}
+\index{triangleToQuadMesh@{triangleToQuadMesh}!VoxelEditor::SurfaceGen::MeshUtils@{VoxelEditor::SurfaceGen::MeshUtils}}
+\doxysubsubsection{\texorpdfstring{triangleToQuadMesh()}{triangleToQuadMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a6f22226c66cc7e97c1126db8d6a9507b} 
+std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face}{Quad\+Face}} $>$ Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Utils\+::triangle\+To\+Quad\+Mesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/surface\+\_\+gen/\mbox{\hyperlink{_mesh_builder_8h}{Mesh\+Builder.\+h}}\item 
+core/surface\+\_\+gen/\mbox{\hyperlink{_mesh_builder_8cpp}{Mesh\+Builder.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,129 @@
+\doxysection{Voxel\+Editor\+::File\+IO\+::Compression Class Reference}
+\hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression}{}\label{class_voxel_editor_1_1_file_i_o_1_1_compression}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+
+
+{\ttfamily \#include $<$Compression.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ad4f32c61e6af89ec5252ceae09bd6125}{Compression}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a1c81373272c3d85eda239af5c7ce8dbd}{\texorpdfstring{$\sim$}{\string~}\+Compression}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ae33741cb24de7237b06bbee54b97125c}{compress}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, size\+\_\+t input\+Size, std\+::vector$<$ uint8\+\_\+t $>$ \&output, int level=6)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ac0cf7fdf056ffd9c7635dfd1ca3b873a}{decompress}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, size\+\_\+t input\+Size, std\+::vector$<$ uint8\+\_\+t $>$ \&output, size\+\_\+t expected\+Size)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ae1034d2610a0b8038077d2e20e8b7390}{get\+Max\+Compressed\+Size}} (size\+\_\+t input\+Size) const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_acd2ac296d1554a77afc7aa0958b8484c}{get\+Compression\+Ratio}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a7cce17edcae93cffcdeba0ae608b675f}{compress\+Stream}} (std\+::istream \&input, std\+::ostream \&output, int level=6)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a3437639f3f8d7312a064081f458fcdb2}{decompress\+Stream}} (std\+::istream \&input, std\+::ostream \&output, size\+\_\+t expected\+Size)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a1a1596f4e7062d48169a72b6c3f24ce2}{compress\+Voxel\+Data}} (const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&grid, std\+::vector$<$ uint8\+\_\+t $>$ \&output, int level=6)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a0df7efacf8a60ab14404907540d8fa0e}{decompress\+Voxel\+Data}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}input, size\+\_\+t input\+Size, \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&grid)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a5debef51a857eeabe38edcb342942a52}{set\+Compression\+Level}} (int level)
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_adc638bebb55166a4da9a3813630ddf0d}{get\+Compression\+Level}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a47ca43682231d4aad778d02d1897ac6d}{get\+Last\+Error}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_ad4f32c61e6af89ec5252ceae09bd6125}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!Compression@{Compression}}
+\index{Compression@{Compression}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{Compression()}{Compression()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_ad4f32c61e6af89ec5252ceae09bd6125} 
+Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::\+Compression (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a1c81373272c3d85eda239af5c7ce8dbd}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!````~Compression@{\texorpdfstring{$\sim$}{\string~}Compression}}
+\index{````~Compression@{\texorpdfstring{$\sim$}{\string~}Compression}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Compression()}{\string~Compression()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a1c81373272c3d85eda239af5c7ce8dbd} 
+Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::\texorpdfstring{$\sim$}{\string~}\+Compression (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_ae33741cb24de7237b06bbee54b97125c}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!compress@{compress}}
+\index{compress@{compress}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{compress()}{compress()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_ae33741cb24de7237b06bbee54b97125c} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::compress (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{input\+Size}{, }\item[{std\+::vector$<$ uint8\+\_\+t $>$ \&}]{output}{, }\item[{int}]{level}{ = {\ttfamily 6}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a7cce17edcae93cffcdeba0ae608b675f}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!compressStream@{compressStream}}
+\index{compressStream@{compressStream}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{compressStream()}{compressStream()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a7cce17edcae93cffcdeba0ae608b675f} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::compress\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{input}{, }\item[{std\+::ostream \&}]{output}{, }\item[{int}]{level}{ = {\ttfamily 6}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a1a1596f4e7062d48169a72b6c3f24ce2}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!compressVoxelData@{compressVoxelData}}
+\index{compressVoxelData@{compressVoxelData}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{compressVoxelData()}{compressVoxelData()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a1a1596f4e7062d48169a72b6c3f24ce2} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::compress\+Voxel\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&}]{grid}{, }\item[{std\+::vector$<$ uint8\+\_\+t $>$ \&}]{output}{, }\item[{int}]{level}{ = {\ttfamily 6}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_ac0cf7fdf056ffd9c7635dfd1ca3b873a}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!decompress@{decompress}}
+\index{decompress@{decompress}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{decompress()}{decompress()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_ac0cf7fdf056ffd9c7635dfd1ca3b873a} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::decompress (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{input\+Size}{, }\item[{std\+::vector$<$ uint8\+\_\+t $>$ \&}]{output}{, }\item[{size\+\_\+t}]{expected\+Size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a3437639f3f8d7312a064081f458fcdb2}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!decompressStream@{decompressStream}}
+\index{decompressStream@{decompressStream}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{decompressStream()}{decompressStream()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a3437639f3f8d7312a064081f458fcdb2} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::decompress\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{input}{, }\item[{std\+::ostream \&}]{output}{, }\item[{size\+\_\+t}]{expected\+Size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a0df7efacf8a60ab14404907540d8fa0e}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!decompressVoxelData@{decompressVoxelData}}
+\index{decompressVoxelData@{decompressVoxelData}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{decompressVoxelData()}{decompressVoxelData()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a0df7efacf8a60ab14404907540d8fa0e} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::decompress\+Voxel\+Data (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{input}{, }\item[{size\+\_\+t}]{input\+Size}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&}]{grid}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_adc638bebb55166a4da9a3813630ddf0d}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!getCompressionLevel@{getCompressionLevel}}
+\index{getCompressionLevel@{getCompressionLevel}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{getCompressionLevel()}{getCompressionLevel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_adc638bebb55166a4da9a3813630ddf0d} 
+int Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::get\+Compression\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_acd2ac296d1554a77afc7aa0958b8484c}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!getCompressionRatio@{getCompressionRatio}}
+\index{getCompressionRatio@{getCompressionRatio}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{getCompressionRatio()}{getCompressionRatio()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_acd2ac296d1554a77afc7aa0958b8484c} 
+float Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::get\+Compression\+Ratio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a47ca43682231d4aad778d02d1897ac6d}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!getLastError@{getLastError}}
+\index{getLastError@{getLastError}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{getLastError()}{getLastError()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a47ca43682231d4aad778d02d1897ac6d} 
+const std\+::string \& Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::get\+Last\+Error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_ae1034d2610a0b8038077d2e20e8b7390}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!getMaxCompressedSize@{getMaxCompressedSize}}
+\index{getMaxCompressedSize@{getMaxCompressedSize}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{getMaxCompressedSize()}{getMaxCompressedSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_ae1034d2610a0b8038077d2e20e8b7390} 
+size\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::get\+Max\+Compressed\+Size (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{input\+Size}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_compression_a5debef51a857eeabe38edcb342942a52}\index{VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}!setCompressionLevel@{setCompressionLevel}}
+\index{setCompressionLevel@{setCompressionLevel}!VoxelEditor::FileIO::Compression@{VoxelEditor::FileIO::Compression}}
+\doxysubsubsection{\texorpdfstring{setCompressionLevel()}{setCompressionLevel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_compression_a5debef51a857eeabe38edcb342942a52} 
+void Voxel\+Editor\+::\+File\+IO\+::\+Compression\+::set\+Compression\+Level (\begin{DoxyParamCaption}\item[{int}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/file\+\_\+io/include/file\+\_\+io/\mbox{\hyperlink{_compression_8h}{Compression.\+h}}\item 
+core/file\+\_\+io/src/\mbox{\hyperlink{_compression_8cpp}{Compression.\+cpp}}\end{DoxyCompactItemize}

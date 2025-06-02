@@ -1,0 +1,63 @@
+\doxysection{core/voxel\+\_\+data/\+Voxel\+Types.h File Reference}
+\hypertarget{_voxel_types_8h}{}\label{_voxel_types_8h}\index{core/voxel\_data/VoxelTypes.h@{core/voxel\_data/VoxelTypes.h}}
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$typeindex$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$typeinfo$>$}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector3f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector3i.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Position}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_1_1_hash}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Position\+::\+Hash}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_workspace_constraints}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Constraints}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{Voxel\+Editor\+::\+Voxel\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8aeb3107023563be5a16dd90314394c80e}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+1cm}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a1b98375d02731e698132094793ada6c7}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+2cm}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a4760c53267fc13b78962fe379583ed73}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+4cm}} = 2
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a89edd42eddb2e52c1ac16c5b4bbc56b7}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+8cm}} = 3
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8ae3ac033f5ce503ed4d798c81afd6a0bc}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+16cm}} = 4
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a9c8b2cde7074df3df198a124ecb7c95d}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+32cm}} = 5
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a5c3938a2f7b9af6f0c52f45e29e6bf93}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+64cm}} = 6
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a3ed34b80d31717f43fedc0a4ffa29c46}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+128cm}} = 7
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8abb36185c3447faea14b1bd945b8af16f}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+256cm}} = 8
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a68044428fd9ade682008ff6672d66777}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Size\+\_\+512cm}} = 9
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a4905ac9d6a22bdfc1ae096094ce6248d}{Voxel\+Editor\+::\+Voxel\+Data\+::\+COUNT}} = 10
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr float \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a22a0fd4712c51df4ec07731b4e29239a}{Voxel\+Editor\+::\+Voxel\+Data\+::get\+Voxel\+Size}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Resolution}} resolution)
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a2e034702527bc3ff34077c5dd8dcc90a}{Voxel\+Editor\+::\+Voxel\+Data\+::get\+Voxel\+Size\+Name}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Resolution}} resolution)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a82ab4711dcc9bd20bbc818d63b1ced8c}{Voxel\+Editor\+::\+Voxel\+Data\+::is\+Valid\+Resolution}} (int resolution)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aab5809e885e7973ce4911f46a695385f}{Voxel\+Editor\+::\+Voxel\+Data\+::calculate\+Max\+Grid\+Dimensions}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Resolution}} resolution, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&workspace\+Size)
+\item 
+bool \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a722ca8fc559f688ff5f749529a001e42}{Voxel\+Editor\+::\+Voxel\+Data\+::is\+Position\+In\+Bounds}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&grid\+Pos, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Resolution}} resolution, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&workspace\+Size)
+\end{DoxyCompactItemize}

@@ -1,0 +1,137 @@
+\doxysection{Voxel\+Editor\+::Visual\+Feedback\+::Face Class Reference}
+\hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face}{}\label{class_voxel_editor_1_1_visual_feedback_1_1_face}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+
+
+{\ttfamily \#include $<$Feedback\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_aa94738a89f67e97e4b4a0b56f82f3961}{Face}} ()=default
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a67e5c9cc0a791442d042d8625297c422}{Face}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&voxel\+Pos, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} res, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}} dir)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a313e18f70837de4dbc4b51d19577d1fd}{Face\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_aa98487b615cdbbf098b383f6ef1c843e}{get\+Id}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_aa5e25d65f28d0eb7cd5dc15f59e8c84d}{is\+Valid}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a2395ed0d0c6a6b2820886f4b02c59fed}{get\+Voxel\+Position}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_ac22dd8dab56e6c023e9fd6586b7e2cd4}{get\+Resolution}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a970f00ccce81ec1111009636e5f52c7c}{get\+Direction}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a33a7eba0ad3fec14177b19bf9889b4cd}{get\+World\+Position}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a49b9136ed870f88afb33f4f9269077fa}{get\+Normal}} () const
+\item 
+std\+::array$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}, 4 $>$ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_ab0423e701813ab529e12e6e878d888d3}{get\+Corners}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a121c134c0a50fbb2f460f83b206c8265}{get\+Center}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_ae73569ab36908349c03f92230f7fb25e}{get\+Area}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a98da3fd5ca09963cbeb7976e54c22f84}{operator==}} (const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&other) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_a80011f0377bf1f61fa5a0d12b7eb7700}{operator!=}} (const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&other) const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_aa94738a89f67e97e4b4a0b56f82f3961}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!Face@{Face}}
+\index{Face@{Face}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{Face()}{Face()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_aa94738a89f67e97e4b4a0b56f82f3961} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::\+Face (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a67e5c9cc0a791442d042d8625297c422}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!Face@{Face}}
+\index{Face@{Face}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{Face()}{Face()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a67e5c9cc0a791442d042d8625297c422} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::\+Face (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{voxel\+Pos}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{res}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}}}]{dir}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_ae73569ab36908349c03f92230f7fb25e}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getArea@{getArea}}
+\index{getArea@{getArea}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getArea()}{getArea()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_ae73569ab36908349c03f92230f7fb25e} 
+float Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Area (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a121c134c0a50fbb2f460f83b206c8265}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getCenter@{getCenter}}
+\index{getCenter@{getCenter}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getCenter()}{getCenter()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a121c134c0a50fbb2f460f83b206c8265} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Center (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_ab0423e701813ab529e12e6e878d888d3}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getCorners@{getCorners}}
+\index{getCorners@{getCorners}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getCorners()}{getCorners()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_ab0423e701813ab529e12e6e878d888d3} 
+std\+::array$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}, 4 $>$ Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Corners (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a970f00ccce81ec1111009636e5f52c7c}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getDirection@{getDirection}}
+\index{getDirection@{getDirection}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getDirection()}{getDirection()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a970f00ccce81ec1111009636e5f52c7c} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Direction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_aa98487b615cdbbf098b383f6ef1c843e}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getId@{getId}}
+\index{getId@{getId}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_aa98487b615cdbbf098b383f6ef1c843e} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a313e18f70837de4dbc4b51d19577d1fd}{Face\+Id}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a49b9136ed870f88afb33f4f9269077fa}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getNormal@{getNormal}}
+\index{getNormal@{getNormal}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getNormal()}{getNormal()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a49b9136ed870f88afb33f4f9269077fa} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Normal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_ac22dd8dab56e6c023e9fd6586b7e2cd4}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getResolution@{getResolution}}
+\index{getResolution@{getResolution}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getResolution()}{getResolution()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_ac22dd8dab56e6c023e9fd6586b7e2cd4} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Resolution (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a2395ed0d0c6a6b2820886f4b02c59fed}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getVoxelPosition@{getVoxelPosition}}
+\index{getVoxelPosition@{getVoxelPosition}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getVoxelPosition()}{getVoxelPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a2395ed0d0c6a6b2820886f4b02c59fed} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+Voxel\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a33a7eba0ad3fec14177b19bf9889b4cd}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!getWorldPosition@{getWorldPosition}}
+\index{getWorldPosition@{getWorldPosition}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{getWorldPosition()}{getWorldPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a33a7eba0ad3fec14177b19bf9889b4cd} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::get\+World\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_aa5e25d65f28d0eb7cd5dc15f59e8c84d}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!isValid@{isValid}}
+\index{isValid@{isValid}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_aa5e25d65f28d0eb7cd5dc15f59e8c84d} 
+bool Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a80011f0377bf1f61fa5a0d12b7eb7700}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a80011f0377bf1f61fa5a0d12b7eb7700} 
+bool Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_a98da3fd5ca09963cbeb7976e54c22f84}\index{VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}!operator==@{operator==}}
+\index{operator==@{operator==}!VoxelEditor::VisualFeedback::Face@{VoxelEditor::VisualFeedback::Face}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_a98da3fd5ca09963cbeb7976e54c22f84} 
+bool Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/visual\+\_\+feedback/include/visual\+\_\+feedback/\mbox{\hyperlink{_feedback_types_8h}{Feedback\+Types.\+h}}\item 
+core/visual\+\_\+feedback/src/\mbox{\hyperlink{_feedback_types_8cpp}{Feedback\+Types.\+cpp}}\end{DoxyCompactItemize}

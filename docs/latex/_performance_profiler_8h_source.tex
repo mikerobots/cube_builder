@@ -1,0 +1,231 @@
+\doxysection{Performance\+Profiler.\+h}
+\hypertarget{_performance_profiler_8h_source}{}\label{_performance_profiler_8h_source}\index{foundation/logging/PerformanceProfiler.h@{foundation/logging/PerformanceProfiler.h}}
+\mbox{\hyperlink{_performance_profiler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Logging}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler}{PerformanceProfiler}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_acfa74c02166a275ff1c6ded69d9d79d2}{ProfileData}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a6453c3173ee7988c6853eda8e4383ced}{name}};}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a9e4234b78913ae73b488c9a4b413bbac}{totalTime}};}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a336ad411d818eac341d095e1ab280636}{averageTime}};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a28223bd47e80f2a0b7b5474135076bad}{callCount}};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a0b54f482c733ce5ab5beac7a567e2811}{minTime}};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_ac12e944a5980d129a54659451d3e82f1}{maxTime}};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_acfa74c02166a275ff1c6ded69d9d79d2}{ProfileData}}()\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a9e4234b78913ae73b488c9a4b413bbac}{totalTime}}(0.0),\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a336ad411d818eac341d095e1ab280636}{averageTime}}(0.0),\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a28223bd47e80f2a0b7b5474135076bad}{callCount}}(0),\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_a0b54f482c733ce5ab5beac7a567e2811}{minTime}}(\mbox{\hyperlink{namespacestd}{std}}::numeric\_limits<double>::max()),\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data_ac12e944a5980d129a54659451d3e82f1}{maxTime}}(0.0)\ \{\}}
+\DoxyCodeLine{00029\ \ \ \ \ \};}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler}{PerformanceProfiler}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a55611bc15156c5ac78764bc4a524b680}{getInstance}}()\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler}{PerformanceProfiler}}\ instance;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
+\DoxyCodeLine{00034\ \ \ \ \ \}}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a9c366fbcdb364a9eaf3748d2c61d50b7}{beginSection}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ m\_sectionStack.push(\{name,\ now\});}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_ab445b9ff44682d11010df0334eaa547a}{endSection}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_sectionStack.empty())\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ No\ matching\ begin}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ top\ =\ m\_sectionStack.top();}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (top.name\ !=\ name)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ Mismatched\ section\ names}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ m\_sectionStack.pop();}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ duration\ =\ std::chrono::duration<double,\ std::milli>(now\ -\/\ top.startTime).count();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ data\ =\ m\_sections[name];}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ data.name\ =\ name;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ data.totalTime\ +=\ duration;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ data.callCount++;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ data.averageTime\ =\ data.totalTime\ /\ data.callCount;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ data.minTime\ =\ std::min(data.minTime,\ duration);}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ data.maxTime\ =\ std::max(data.maxTime,\ duration);}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_aedd96982ac64a44dfd1699dc696c8da4}{recordMemoryAllocation}}(\textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ std::string\&\ category)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ m\_memoryStats[category].allocatedBytes\ +=\ size;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ m\_memoryStats[category].allocationCount++;}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a2ca7e48542ea487e2d60d701656d47fb}{recordMemoryDeallocation}}(\textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ std::string\&\ category)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ m\_memoryStats[category].deallocatedBytes\ +=\ size;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ m\_memoryStats[category].deallocationCount++;}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ std::vector<ProfileData>\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a8aad00d51225ba465254743b80c0e642}{getResults}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ std::vector<ProfileData>\ results;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ results.reserve(m\_sections.size());}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pair\ :\ m\_sections)\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ results.push\_back(pair.second);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sort\ by\ total\ time\ descending}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ std::sort(results.begin(),\ results.end(),}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data}{ProfileData}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data}{ProfileData}}\&\ b)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ a.totalTime\ >\ b.totalTime;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ results;}
+\DoxyCodeLine{00098\ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats}{MemoryStats}}\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_a3371500602dc8cbe86eec33431c63f48}{allocatedBytes}}\ =\ 0;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_af89bcd6fc5df6a7f6092760fd2d8494b}{deallocatedBytes}}\ =\ 0;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_a07532b47bf2ee7e88ef25a07e7eb3f37}{allocationCount}}\ =\ 0;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_a521482d26773f1387929ecea9f163a5d}{deallocationCount}}\ =\ 0;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_a361645d2cc11791a939b1cfcc9073a9f}{getCurrentUsage}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_a3371500602dc8cbe86eec33431c63f48}{allocatedBytes}}\ -\/\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats_af89bcd6fc5df6a7f6092760fd2d8494b}{deallocatedBytes}};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \};}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ std::unordered\_map<std::string,\ MemoryStats>\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a39d3842cc914a92de6441d6af2d5b0dc}{getMemoryStats}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_memoryStats;}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a6f18c996136710e1cb59b15c18169dac}{reset}}()\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ m\_sections.clear();}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ m\_memoryStats.clear();}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ the\ stack}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!m\_sectionStack.empty())\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ m\_sectionStack.pop();}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_ac0c36a735b4273bcebae1a76787a7ad2}{saveReport}}(\textcolor{keyword}{const}\ std::string\&\ filename)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ std::ofstream\ file(filename);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}Performance\ Profile\ Report\(\backslash\)n"{}};}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}==========================\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Timing\ data}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}Timing\ Profile:\(\backslash\)n"{}};}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ file\ <<\ std::setw(30)\ <<\ \textcolor{stringliteral}{"{}Section\ Name"{}}\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Total\ (ms)"{}}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Average\ (ms)"{}}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(10)\ <<\ \textcolor{stringliteral}{"{}Calls"{}}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Min\ (ms)"{}}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Max\ (ms)"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ file\ <<\ std::string(100,\ \textcolor{charliteral}{'-\/'})\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ results\ directly\ without\ calling\ getResults()\ to\ avoid\ double-\/locking}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ std::vector<ProfileData>\ results;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ results.reserve(m\_sections.size());}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pair\ :\ m\_sections)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ results.push\_back(pair.second);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sort\ by\ total\ time\ descending}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ std::sort(results.begin(),\ results.end(),}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data}{ProfileData}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data}{ProfileData}}\&\ b)\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ a.totalTime\ >\ b.totalTime;}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ data\ :\ results)\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ file\ <<\ std::setw(30)\ <<\ data.name}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ std::fixed\ <<\ std::setprecision(3)\ <<\ data.totalTime}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ std::fixed\ <<\ std::setprecision(3)\ <<\ data.averageTime}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(10)\ <<\ data.callCount}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ std::fixed\ <<\ std::setprecision(3)\ <<\ data.minTime}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ std::fixed\ <<\ std::setprecision(3)\ <<\ data.maxTime\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Memory\ data}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nMemory\ Profile:\(\backslash\)n"{}};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ file\ <<\ std::setw(20)\ <<\ \textcolor{stringliteral}{"{}Category"{}}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Allocated"{}}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Deallocated"{}}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ \textcolor{stringliteral}{"{}Current"{}}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(10)\ <<\ \textcolor{stringliteral}{"{}Allocs"{}}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(10)\ <<\ \textcolor{stringliteral}{"{}Deallocs"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ file\ <<\ std::string(85,\ \textcolor{charliteral}{'-\/'})\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pair\ :\ m\_memoryStats)\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ stats\ =\ pair.second;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ file\ <<\ std::setw(20)\ <<\ pair.first}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ stats.allocatedBytes}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ stats.deallocatedBytes}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(15)\ <<\ stats.getCurrentUsage()}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(10)\ <<\ stats.allocationCount}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::setw(10)\ <<\ stats.deallocationCount\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ file.close();}
+\DoxyCodeLine{00191\ \ \ \ \ \}}
+\DoxyCodeLine{00192\ \ \ \ \ }
+\DoxyCodeLine{00193\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{struct\ }SectionInfo\ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ startTime;}
+\DoxyCodeLine{00197\ \ \ \ \ \};}
+\DoxyCodeLine{00198\ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ std::unordered\_map<std::string,\ ProfileData>\ m\_sections;}
+\DoxyCodeLine{00200\ \ \ \ \ std::unordered\_map<std::string,\ MemoryStats>\ m\_memoryStats;}
+\DoxyCodeLine{00201\ \ \ \ \ std::stack<SectionInfo>\ m\_sectionStack;}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
+\DoxyCodeLine{00203\ \};}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \textcolor{comment}{//\ RAII\ profiling\ helper}}
+\DoxyCodeLine{00206\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_scoped_profiler_aa0b8470c00347f3567606a1a5a2b3655}{ScopedProfiler}}\ \{}
+\DoxyCodeLine{00207\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_scoped_profiler_aa0b8470c00347f3567606a1a5a2b3655}{ScopedProfiler}}(\textcolor{keyword}{const}\ std::string\&\ name)\ :\ m\_name(name)\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a55611bc15156c5ac78764bc4a524b680}{PerformanceProfiler::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a9c366fbcdb364a9eaf3748d2c61d50b7}{beginSection}}(m\_name);}
+\DoxyCodeLine{00210\ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ }
+\DoxyCodeLine{00212\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_scoped_profiler_aff458100a415c54f7a05650afd66b6fd}{\string~ScopedProfiler}}()\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_a55611bc15156c5ac78764bc4a524b680}{PerformanceProfiler::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler_ab445b9ff44682d11010df0334eaa547a}{endSection}}(m\_name);}
+\DoxyCodeLine{00214\ \ \ \ \ \}}
+\DoxyCodeLine{00215\ \ \ \ \ }
+\DoxyCodeLine{00216\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00217\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00218\ \};}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \textcolor{comment}{//\ Convenience\ macros}}
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\#define\ PROFILE\_SCOPE(name)\ VoxelEditor::Logging::ScopedProfiler\ \_prof(name)}}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\#define\ PROFILE\_FUNCTION()\ VoxelEditor::Logging::ScopedProfiler\ \_prof(\_\_FUNCTION\_\_)}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \}}
+\DoxyCodeLine{00225\ \}}
+
+\end{DoxyCode}

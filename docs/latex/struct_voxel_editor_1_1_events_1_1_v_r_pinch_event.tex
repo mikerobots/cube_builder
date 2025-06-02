@@ -1,0 +1,98 @@
+\doxysection{Voxel\+Editor\+::Events\+::VRPinch\+Event Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event}{}\label{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event}\index{VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}}
+
+
+{\ttfamily \#include $<$VRInput\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::VRPinch\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a7308d03f1b5ad2e1d8b579ca32451f5a}{VRPinch\+Event}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}} h, float d, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&pos, bool s)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ VRPinch\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}} \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a94de0e13eef8c054131cf83becec4963}{hand}}
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a34ab75675b6c9b96deccd99f27113348}{distance}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_ae44d0f1cb7a9c05536705bba4bd42137}{position}}
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a6347c9a7183c459b2bda57609fdb326d}{started}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ VRPinch\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a7308d03f1b5ad2e1d8b579ca32451f5a}\index{VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}!VRPinchEvent@{VRPinchEvent}}
+\index{VRPinchEvent@{VRPinchEvent}!VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}}
+\doxysubsubsection{\texorpdfstring{VRPinchEvent()}{VRPinchEvent()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a7308d03f1b5ad2e1d8b579ca32451f5a} 
+Voxel\+Editor\+::\+Events\+::\+VRPinch\+Event\+::\+VRPinch\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}}}]{h}{, }\item[{float}]{d}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{pos}{, }\item[{bool}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a34ab75675b6c9b96deccd99f27113348}\index{VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}!distance@{distance}}
+\index{distance@{distance}!VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}}
+\doxysubsubsection{\texorpdfstring{distance}{distance}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a34ab75675b6c9b96deccd99f27113348} 
+float Voxel\+Editor\+::\+Events\+::\+VRPinch\+Event\+::distance}
+
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a94de0e13eef8c054131cf83becec4963}\index{VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}!hand@{hand}}
+\index{hand@{hand}!VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}}
+\doxysubsubsection{\texorpdfstring{hand}{hand}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a94de0e13eef8c054131cf83becec4963} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}} Voxel\+Editor\+::\+Events\+::\+VRPinch\+Event\+::hand}
+
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_ae44d0f1cb7a9c05536705bba4bd42137}\index{VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}!position@{position}}
+\index{position@{position}!VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_ae44d0f1cb7a9c05536705bba4bd42137} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Events\+::\+VRPinch\+Event\+::position}
+
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a6347c9a7183c459b2bda57609fdb326d}\index{VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}!started@{started}}
+\index{started@{started}!VoxelEditor::Events::VRPinchEvent@{VoxelEditor::Events::VRPinchEvent}}
+\doxysubsubsection{\texorpdfstring{started}{started}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a6347c9a7183c459b2bda57609fdb326d} 
+bool Voxel\+Editor\+::\+Events\+::\+VRPinch\+Event\+::started}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_v_r_input_handler_8h}{VRInput\+Handler.\+h}}\end{DoxyCompactItemize}

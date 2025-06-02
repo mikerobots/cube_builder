@@ -1,0 +1,97 @@
+\doxysection{Voxel\+Editor\+::Mouse\+Interaction Class Reference}
+\hypertarget{class_voxel_editor_1_1_mouse_interaction}{}\label{class_voxel_editor_1_1_mouse_interaction}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+
+
+{\ttfamily \#include $<$Mouse\+Interaction.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_ad34aa5ad52c8f90c412d6abec7c2c47a}{Mouse\+Interaction}} (\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}} \texorpdfstring{$\ast$}{*}app)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_a29becd5676a2c09c53c62cf83208ccb9}{\texorpdfstring{$\sim$}{\string~}\+Mouse\+Interaction}} ()=default
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_a28c72ebafd34fc39d5bd74a23e3388a9}{initialize}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_ac1dfee4588255b8e6bf129d94cbecb74}{update}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_a1a8e86c8460a9a5187321d421d92b5fe}{on\+Mouse\+Move}} (float x, float y)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_ab1b2b23acbc99c5d3225d5593b735896}{on\+Mouse\+Click}} (int button, bool pressed, float x, float y)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_aed8987b3c23a74017e0886288049f866}{on\+Mouse\+Scroll}} (float deltaY)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_a4ba95a2e65b74b62adaeeb62a86f3ed3}{has\+Hover\+Face}} () const
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Visual\+Feedback\+::\+Face}} \& \mbox{\hyperlink{class_voxel_editor_1_1_mouse_interaction_a7deaa4c148186360cad44aebfb1d7e30}{get\+Hover\+Face}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_ad34aa5ad52c8f90c412d6abec7c2c47a}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!MouseInteraction@{MouseInteraction}}
+\index{MouseInteraction@{MouseInteraction}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{MouseInteraction()}{MouseInteraction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_ad34aa5ad52c8f90c412d6abec7c2c47a} 
+Voxel\+Editor\+::\+Mouse\+Interaction\+::\+Mouse\+Interaction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}} \texorpdfstring{$\ast$}{*}}]{app}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_a29becd5676a2c09c53c62cf83208ccb9}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!````~MouseInteraction@{\texorpdfstring{$\sim$}{\string~}MouseInteraction}}
+\index{````~MouseInteraction@{\texorpdfstring{$\sim$}{\string~}MouseInteraction}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MouseInteraction()}{\string~MouseInteraction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_a29becd5676a2c09c53c62cf83208ccb9} 
+Voxel\+Editor\+::\+Mouse\+Interaction\+::\texorpdfstring{$\sim$}{\string~}\+Mouse\+Interaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_a7deaa4c148186360cad44aebfb1d7e30}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!getHoverFace@{getHoverFace}}
+\index{getHoverFace@{getHoverFace}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{getHoverFace()}{getHoverFace()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_a7deaa4c148186360cad44aebfb1d7e30} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Visual\+Feedback\+::\+Face}} \& Voxel\+Editor\+::\+Mouse\+Interaction\+::get\+Hover\+Face (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_a4ba95a2e65b74b62adaeeb62a86f3ed3}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!hasHoverFace@{hasHoverFace}}
+\index{hasHoverFace@{hasHoverFace}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{hasHoverFace()}{hasHoverFace()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_a4ba95a2e65b74b62adaeeb62a86f3ed3} 
+bool Voxel\+Editor\+::\+Mouse\+Interaction\+::has\+Hover\+Face (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_a28c72ebafd34fc39d5bd74a23e3388a9}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!initialize@{initialize}}
+\index{initialize@{initialize}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_a28c72ebafd34fc39d5bd74a23e3388a9} 
+void Voxel\+Editor\+::\+Mouse\+Interaction\+::initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_ab1b2b23acbc99c5d3225d5593b735896}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!onMouseClick@{onMouseClick}}
+\index{onMouseClick@{onMouseClick}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{onMouseClick()}{onMouseClick()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_ab1b2b23acbc99c5d3225d5593b735896} 
+void Voxel\+Editor\+::\+Mouse\+Interaction\+::on\+Mouse\+Click (\begin{DoxyParamCaption}\item[{int}]{button}{, }\item[{bool}]{pressed}{, }\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_a1a8e86c8460a9a5187321d421d92b5fe}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!onMouseMove@{onMouseMove}}
+\index{onMouseMove@{onMouseMove}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{onMouseMove()}{onMouseMove()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_a1a8e86c8460a9a5187321d421d92b5fe} 
+void Voxel\+Editor\+::\+Mouse\+Interaction\+::on\+Mouse\+Move (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{y}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_aed8987b3c23a74017e0886288049f866}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!onMouseScroll@{onMouseScroll}}
+\index{onMouseScroll@{onMouseScroll}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{onMouseScroll()}{onMouseScroll()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_aed8987b3c23a74017e0886288049f866} 
+void Voxel\+Editor\+::\+Mouse\+Interaction\+::on\+Mouse\+Scroll (\begin{DoxyParamCaption}\item[{float}]{deltaY}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_mouse_interaction_ac1dfee4588255b8e6bf129d94cbecb74}\index{VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}!update@{update}}
+\index{update@{update}!VoxelEditor::MouseInteraction@{VoxelEditor::MouseInteraction}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_mouse_interaction_ac1dfee4588255b8e6bf129d94cbecb74} 
+void Voxel\+Editor\+::\+Mouse\+Interaction\+::update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+apps/cli/include/cli/\mbox{\hyperlink{_mouse_interaction_8h}{Mouse\+Interaction.\+h}}\item 
+apps/cli/src/\mbox{\hyperlink{_mouse_interaction_8cpp}{Mouse\+Interaction.\+cpp}}\end{DoxyCompactItemize}

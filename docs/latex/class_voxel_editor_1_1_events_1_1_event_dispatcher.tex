@@ -1,0 +1,131 @@
+\doxysection{Voxel\+Editor\+::Events\+::Event\+Dispatcher Class Reference}
+\hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher}{}\label{class_voxel_editor_1_1_events_1_1_event_dispatcher}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+
+
+{\ttfamily \#include $<$Event\+Dispatcher.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::Event\+Dispatcher\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.637427cm]{class_voxel_editor_1_1_events_1_1_event_dispatcher}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a673ef0fb93ec40a11c506d3131f908a8}{Event\+Dispatcher}} ()
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_acad55493bbb9e1d888c689a668d14704}{subscribe}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Event\+Handler}}$<$ Event\+Type $>$ \texorpdfstring{$\ast$}{*}handler, int priority=0)
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0e079de8f523b71434de3ff51c925ed7}{unsubscribe}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Event\+Handler}}$<$ Event\+Type $>$ \texorpdfstring{$\ast$}{*}handler)
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a000cb34aa8b03a892fcaed967a53a1fd}{dispatch}} (const Event\+Type \&event)
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_afd22afd096842a033897139f2cf68b84}{dispatch\+Async}} (const Event\+Type \&event)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a4a39aaa79dbbf0f0f37a0f61ad6118dc}{process\+Queued\+Events}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6e8ee80826d0185b56b622a0b192cc8f}{clear\+Queue}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6f20492526b607c336d2611f3674ac3e}{get\+Queue\+Size}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0d64cea967ce7e1c1223b274441313cf}{set\+Max\+Queue\+Size}} (size\+\_\+t max\+Size)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab6d0a9ce4ea1313a35807e51c3c0ce87}{get\+Max\+Queue\+Size}} () const
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab799ffa2a94ae7d14c672205d9242858}{get\+Handler\+Count}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_aeec248b12e79ed361fd1690bc99e7fb1}{get\+Total\+Handler\+Count}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a673ef0fb93ec40a11c506d3131f908a8}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!EventDispatcher@{EventDispatcher}}
+\index{EventDispatcher@{EventDispatcher}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{EventDispatcher()}{EventDispatcher()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a673ef0fb93ec40a11c506d3131f908a8} 
+Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::\+Event\+Dispatcher (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6e8ee80826d0185b56b622a0b192cc8f}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!clearQueue@{clearQueue}}
+\index{clearQueue@{clearQueue}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{clearQueue()}{clearQueue()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6e8ee80826d0185b56b622a0b192cc8f} 
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::clear\+Queue (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a000cb34aa8b03a892fcaed967a53a1fd}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!dispatch@{dispatch}}
+\index{dispatch@{dispatch}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{dispatch()}{dispatch()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a000cb34aa8b03a892fcaed967a53a1fd} 
+template$<$typename Event\+Type$>$ \\
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::dispatch (\begin{DoxyParamCaption}\item[{const Event\+Type \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_afd22afd096842a033897139f2cf68b84}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!dispatchAsync@{dispatchAsync}}
+\index{dispatchAsync@{dispatchAsync}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{dispatchAsync()}{dispatchAsync()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_afd22afd096842a033897139f2cf68b84} 
+template$<$typename Event\+Type$>$ \\
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::dispatch\+Async (\begin{DoxyParamCaption}\item[{const Event\+Type \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab799ffa2a94ae7d14c672205d9242858}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!getHandlerCount@{getHandlerCount}}
+\index{getHandlerCount@{getHandlerCount}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{getHandlerCount()}{getHandlerCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab799ffa2a94ae7d14c672205d9242858} 
+template$<$typename Event\+Type$>$ \\
+size\+\_\+t Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::get\+Handler\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab6d0a9ce4ea1313a35807e51c3c0ce87}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!getMaxQueueSize@{getMaxQueueSize}}
+\index{getMaxQueueSize@{getMaxQueueSize}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{getMaxQueueSize()}{getMaxQueueSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab6d0a9ce4ea1313a35807e51c3c0ce87} 
+size\+\_\+t Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::get\+Max\+Queue\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6f20492526b607c336d2611f3674ac3e}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!getQueueSize@{getQueueSize}}
+\index{getQueueSize@{getQueueSize}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{getQueueSize()}{getQueueSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6f20492526b607c336d2611f3674ac3e} 
+size\+\_\+t Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::get\+Queue\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_aeec248b12e79ed361fd1690bc99e7fb1}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!getTotalHandlerCount@{getTotalHandlerCount}}
+\index{getTotalHandlerCount@{getTotalHandlerCount}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{getTotalHandlerCount()}{getTotalHandlerCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_aeec248b12e79ed361fd1690bc99e7fb1} 
+size\+\_\+t Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::get\+Total\+Handler\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a4a39aaa79dbbf0f0f37a0f61ad6118dc}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!processQueuedEvents@{processQueuedEvents}}
+\index{processQueuedEvents@{processQueuedEvents}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{processQueuedEvents()}{processQueuedEvents()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a4a39aaa79dbbf0f0f37a0f61ad6118dc} 
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::process\+Queued\+Events (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0d64cea967ce7e1c1223b274441313cf}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!setMaxQueueSize@{setMaxQueueSize}}
+\index{setMaxQueueSize@{setMaxQueueSize}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{setMaxQueueSize()}{setMaxQueueSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0d64cea967ce7e1c1223b274441313cf} 
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::set\+Max\+Queue\+Size (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{max\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_acad55493bbb9e1d888c689a668d14704}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!subscribe@{subscribe}}
+\index{subscribe@{subscribe}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{subscribe()}{subscribe()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_acad55493bbb9e1d888c689a668d14704} 
+template$<$typename Event\+Type$>$ \\
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Event\+Handler}}$<$ Event\+Type $>$ \texorpdfstring{$\ast$}{*}}]{handler}{, }\item[{int}]{priority}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0e079de8f523b71434de3ff51c925ed7}\index{VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}!unsubscribe@{unsubscribe}}
+\index{unsubscribe@{unsubscribe}!VoxelEditor::Events::EventDispatcher@{VoxelEditor::Events::EventDispatcher}}
+\doxysubsubsection{\texorpdfstring{unsubscribe()}{unsubscribe()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0e079de8f523b71434de3ff51c925ed7} 
+template$<$typename Event\+Type$>$ \\
+void Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher\+::unsubscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Event\+Handler}}$<$ Event\+Type $>$ \texorpdfstring{$\ast$}{*}}]{handler}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/\mbox{\hyperlink{_event_dispatcher_8h}{Event\+Dispatcher.\+h}}\end{DoxyCompactItemize}

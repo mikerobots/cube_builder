@@ -1,0 +1,90 @@
+\doxysection{Voxel\+Editor\+::Input\+::Events\+::Touch\+Pinch\+Event Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event}{}\label{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event}\index{VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}}
+
+
+{\ttfamily \#include $<$Touch\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Input\+::Events\+::Touch\+Pinch\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a2048c8a905384a951bb2fe18749f45a0}{Touch\+Pinch\+Event}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&c, float s, float v)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Touch\+Pinch\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a8d5fd965684223326fba65f9ed725fb1}{center}}
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_aeb849b9748aa18161da1bc25a0f21afc}{scale}}
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a38f861022bbe6ceb5a864048d76d7c87}{velocity}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Touch\+Pinch\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a2048c8a905384a951bb2fe18749f45a0}\index{VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}!TouchPinchEvent@{TouchPinchEvent}}
+\index{TouchPinchEvent@{TouchPinchEvent}!VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}}
+\doxysubsubsection{\texorpdfstring{TouchPinchEvent()}{TouchPinchEvent()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a2048c8a905384a951bb2fe18749f45a0} 
+Voxel\+Editor\+::\+Input\+::\+Events\+::\+Touch\+Pinch\+Event\+::\+Touch\+Pinch\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{c}{, }\item[{float}]{s}{, }\item[{float}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a8d5fd965684223326fba65f9ed725fb1}\index{VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}!center@{center}}
+\index{center@{center}!VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}}
+\doxysubsubsection{\texorpdfstring{center}{center}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a8d5fd965684223326fba65f9ed725fb1} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} Voxel\+Editor\+::\+Input\+::\+Events\+::\+Touch\+Pinch\+Event\+::center}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_aeb849b9748aa18161da1bc25a0f21afc}\index{VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}!scale@{scale}}
+\index{scale@{scale}!VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}}
+\doxysubsubsection{\texorpdfstring{scale}{scale}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_aeb849b9748aa18161da1bc25a0f21afc} 
+float Voxel\+Editor\+::\+Input\+::\+Events\+::\+Touch\+Pinch\+Event\+::scale}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a38f861022bbe6ceb5a864048d76d7c87}\index{VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}!velocity@{velocity}}
+\index{velocity@{velocity}!VoxelEditor::Input::Events::TouchPinchEvent@{VoxelEditor::Input::Events::TouchPinchEvent}}
+\doxysubsubsection{\texorpdfstring{velocity}{velocity}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a38f861022bbe6ceb5a864048d76d7c87} 
+float Voxel\+Editor\+::\+Input\+::\+Events\+::\+Touch\+Pinch\+Event\+::velocity}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_touch_handler_8h}{Touch\+Handler.\+h}}\end{DoxyCompactItemize}

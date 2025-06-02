@@ -1,0 +1,221 @@
+\doxysection{Config\+Section.\+h}
+\hypertarget{_config_section_8h_source}{}\label{_config_section_8h_source}\index{foundation/config/ConfigSection.h@{foundation/config/ConfigSection.h}}
+\mbox{\hyperlink{_config_section_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_config_value_8h}{ConfigValue.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_config}{Config}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a9f5f1a5eef38b971d74792d450032ad6}{ConfigSection}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a0de2b5c68aedabd054d1a78497deb106}{ChangeCallback}}\ =\ std::function<void(\textcolor{keyword}{const}\ std::string\&,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\&,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\&)>;}
+\DoxyCodeLine{00015\ \ \ \ \ }
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a9f5f1a5eef38b971d74792d450032ad6}{ConfigSection}}(\textcolor{keyword}{const}\ std::string\&\ name\ =\ \textcolor{stringliteral}{"{}"{}})\ :\ m\_name(name)\ \{\}}
+\DoxyCodeLine{00017\ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ Value\ management}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00020\ \ \ \ \ T\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_addcf6a4e443412e60d900ea6d8ae300a}{getValue}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_values.find(key);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ m\_values.end())\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ defaultValue;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_config_a7707608a32d732027f14ffd29f11966f}{getValueOr}}(it-\/>second,\ defaultValue);}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a7269f5d07356990d4f31bfd68cad7b23}{setValue}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\ oldValue;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_values.find(key);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ m\_values.end())\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ oldValue\ =\ it-\/>second;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\ newValue(value);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ m\_values[key]\ =\ newValue;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Notify\ callbacks}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ notifyChange(key,\ oldValue,\ newValue);}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_acc05507db9ce5b8fed32eacf4f24a97b}{hasValue}}(\textcolor{keyword}{const}\ std::string\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_values.find(key);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it\ !=\ m\_values.end()\ \&\&\ it-\/>second.isValid();}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a0f0fbdd935ec61d5db05258352955204}{removeValue}}(\textcolor{keyword}{const}\ std::string\&\ key)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_values.find(key);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ m\_values.end())\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\ oldValue\ =\ it-\/>second;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ m\_values.erase(it);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ notifyChange(key,\ oldValue,\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\{\});}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_aa9639fda3a8ec427fb60c9a579d8b843}{getKeys}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ std::vector<std::string>\ keys;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ keys.reserve(m\_values.size());}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pair\ :\ m\_values)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ keys.push\_back(pair.first);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ keys;}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Section\ management}}
+\DoxyCodeLine{00070\ \ \ \ \ std::shared\_ptr<ConfigSection>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a89281736b4f38a588f4057652de06e26}{getSection}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_sections.find(name);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ m\_sections.end())\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ new\ section}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ section\ =\ std::make\_shared<ConfigSection>(name);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ m\_sections[name]\ =\ section;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ section;}
+\DoxyCodeLine{00080\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ std::shared\_ptr<const\ ConfigSection>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a799e63be27e676da9f1b6069770ca6ca}{getSection}}(\textcolor{keyword}{const}\ std::string\&\ name)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_sections.find(name);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ m\_sections.end())\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_aeac5610ffbb63f81ce7104392ff99327}{hasSection}}(\textcolor{keyword}{const}\ std::string\&\ name)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_sections.find(name)\ !=\ m\_sections.end();}
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a93798461e3714e16479c9f28d718d77a}{removeSection}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ m\_sections.erase(name);}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a1fa1b7f30f1c1af736b79418b57a9b5d}{getSectionNames}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ std::vector<std::string>\ names;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ names.reserve(m\_sections.size());}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pair\ :\ m\_sections)\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ names.push\_back(pair.first);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ names;}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Path-\/based\ access\ (dot\ notation:\ "{}section.subsection.key"{})}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00111\ \ \ \ \ T\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a9801b738e259ae91990d9ac8f2d09f1e}{getValueByPath}}(\textcolor{keyword}{const}\ std::string\&\ path,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const}\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dotPos\ =\ path.find(\textcolor{charliteral}{'.'});}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dotPos\ ==\ std::string::npos)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ No\ dot,\ it's\ a\ direct\ value}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_addcf6a4e443412e60d900ea6d8ae300a}{getValue}}(path,\ defaultValue);}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Split\ path}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ std::string\ sectionName\ =\ path.substr(0,\ dotPos);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ std::string\ remainingPath\ =\ path.substr(dotPos\ +\ 1);}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ section\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a89281736b4f38a588f4057652de06e26}{getSection}}(sectionName);}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!section)\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ defaultValue;}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ section-\/>getValueByPath(remainingPath,\ defaultValue);}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_aac3331224e052e0a846790586204e24d}{setValueByPath}}(\textcolor{keyword}{const}\ std::string\&\ path,\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dotPos\ =\ path.find(\textcolor{charliteral}{'.'});}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dotPos\ ==\ std::string::npos)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ No\ dot,\ it's\ a\ direct\ value}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a7269f5d07356990d4f31bfd68cad7b23}{setValue}}(path,\ value);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Split\ path}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ std::string\ sectionName\ =\ path.substr(0,\ dotPos);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ std::string\ remainingPath\ =\ path.substr(dotPos\ +\ 1);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ section\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a89281736b4f38a588f4057652de06e26}{getSection}}(sectionName);\ \textcolor{comment}{//\ Creates\ section\ if\ it\ doesn't\ exist}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ section-\/>setValueByPath(remainingPath,\ value);}
+\DoxyCodeLine{00145\ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a477062ee2f2adc90abb4bec313d540ac}{hasValueByPath}}(\textcolor{keyword}{const}\ std::string\&\ path)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ dotPos\ =\ path.find(\textcolor{charliteral}{'.'});}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dotPos\ ==\ std::string::npos)\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_acc05507db9ce5b8fed32eacf4f24a97b}{hasValue}}(path);}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ std::string\ sectionName\ =\ path.substr(0,\ dotPos);}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ std::string\ remainingPath\ =\ path.substr(dotPos\ +\ 1);}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ section\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a89281736b4f38a588f4057652de06e26}{getSection}}(sectionName);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!section)\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ section-\/>hasValueByPath(remainingPath);}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \ \ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ Change\ notifications}}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a824b0d85a60cc41590b9f3c4f61b7f32}{subscribe}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a0de2b5c68aedabd054d1a78497deb106}{ChangeCallback}}\ callback)\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ m\_callbacks[key].push\_back(callback);}
+\DoxyCodeLine{00167\ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a303d36dac8e3c057c6f17da09e41b25d}{unsubscribe}}(\textcolor{keyword}{const}\ std::string\&\ key)\ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ m\_callbacks.erase(key);}
+\DoxyCodeLine{00171\ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{comment}{//\ Utility}}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a7cc30656dbb44222597537f2f3e97ad9}{clear}}()\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ m\_values.clear();}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ m\_sections.clear();}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ m\_callbacks.clear();}
+\DoxyCodeLine{00178\ \ \ \ \ \}}
+\DoxyCodeLine{00179\ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a457885c69e866f1642c01dbf3d49a4dd}{isEmpty}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_values.empty()\ \&\&\ m\_sections.empty();}
+\DoxyCodeLine{00182\ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a9982244f59d3251f88b2edf27288f574}{size}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_values.size();}
+\DoxyCodeLine{00186\ \ \ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a17462659cb5a09eddb5688858170eb11}{sectionCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_sections.size();}
+\DoxyCodeLine{00190\ \ \ \ \ \}}
+\DoxyCodeLine{00191\ \ \ \ \ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_ab373484bab765cb5eb08581258597dd7}{getName}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_name;}
+\DoxyCodeLine{00194\ \ \ \ \ \}}
+\DoxyCodeLine{00195\ \ \ \ \ }
+\DoxyCodeLine{00196\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00197\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00198\ \ \ \ \ std::unordered\_map<std::string,\ ConfigValue>\ m\_values;}
+\DoxyCodeLine{00199\ \ \ \ \ std::unordered\_map<std::string,\ std::shared\_ptr<ConfigSection>>\ m\_sections;}
+\DoxyCodeLine{00200\ \ \ \ \ std::unordered\_map<std::string,\ std::vector<ChangeCallback>>\ m\_callbacks;}
+\DoxyCodeLine{00201\ \ \ \ \ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{void}\ notifyChange(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\&\ oldValue,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_value}{ConfigValue}}\&\ newValue)\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_callbacks.find(key);}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ m\_callbacks.end())\ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ callback\ :\ it-\/>second)\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (callback)\ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ callback(key,\ oldValue,\ newValue);}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \};}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \}}
+\DoxyCodeLine{00215\ \}}
+
+\end{DoxyCode}

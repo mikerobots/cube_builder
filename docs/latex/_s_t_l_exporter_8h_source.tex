@@ -1,0 +1,140 @@
+\doxysection{STLExporter.\+h}
+\hypertarget{_s_t_l_exporter_8h_source}{}\label{_s_t_l_exporter_8h_source}\index{core/file\_io/include/file\_io/STLExporter.h@{core/file\_io/include/file\_io/STLExporter.h}}
+\mbox{\hyperlink{_s_t_l_exporter_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_types_8h}{FileTypes.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ STL\ exporter\ for\ 3D\ printing\ and\ CAD\ applications}}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a7610be2c62df1349a05ca0fc93f2d2de}{STLExporter}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a7610be2c62df1349a05ca0fc93f2d2de}{STLExporter}}();}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a8f518306c6644873fee29d31739101fe}{\string~STLExporter}}();}
+\DoxyCodeLine{00016\ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Export\ single\ mesh}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af68682000a52ddfb9cd7d05fa97c52fd}{exportMesh}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExportOptions::Default}}());}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Export\ multiple\ meshes}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a392a1dc16249a79388693bec5ab2dcda}{exportMeshes}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ std::vector<Rendering::Mesh>\&\ meshes,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExportOptions::Default}}());}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_af19042624fd731cce28717a2df4ee3fb}{validateMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,\ std::vector<std::string>\&\ issues)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a92d828c8a682a8b625bd48893832ff3c}{isWatertight}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Mesh\ repair}}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a3bb679e51b38f16d597bffabe05cb84c}{repairMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats}{STLExportStats}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a0574d67c6ae4c18acae0cad2b71b7ad2}{getLastExportStats}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastStats;\ \}}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_afbea51654ba43ff3bca6da05e78593d6}{getLastError}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter_a98f34f5d9ae6310360a27877e3e2eab3}{getLastErrorMessage}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastErrorMessage;\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats}{STLExportStats}}\ m\_lastStats;}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ m\_lastError\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{FileError::None}};}
+\DoxyCodeLine{00042\ \ \ \ \ std::string\ m\_lastErrorMessage;}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Format-\/specific\ export}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ exportBinarySTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ exportASCIISTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options);}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Mesh\ preprocessing}}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\ preprocessMesh(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\ scaleMesh(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ scale)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\ translateMesh(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ translation)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\ mergeMeshes(\textcolor{keyword}{const}\ std::vector<Rendering::Mesh>\&\ meshes)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Unit\ conversion}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{float}\ getUnitScale(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ from,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{float}\ getUnitToMillimeters(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ unit)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Binary\ STL\ writing}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ writeBinaryHeader(std::ofstream\&\ file,\ uint32\_t\ triangleCount);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ writeBinaryTriangle(std::ofstream\&\ file,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v0,}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v2);}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ ASCII\ STL\ writing}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ writeASCIIHeader(std::ofstream\&\ file,\ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ writeASCIIFooter(std::ofstream\&\ file);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ writeASCIITriangle(std::ofstream\&\ file,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v0,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v2);}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Triangle\ operations}}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ calculateTriangleNormal(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v0,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v1,}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateTriangleArea(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v0,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v1,}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Validation\ helpers}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasManifoldEdges(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasConsistentNormals(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasDegenerateTriangles(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ setError(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ error,\ \textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ clearError();}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Statistics\ tracking}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ resetStats();}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ updateStats(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh);}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{comment}{//\ STL\ file\ reader\ (for\ validation\ and\ testing)}}
+\DoxyCodeLine{00094\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_a885e07c2d4a597bdad7b7a0ea328574d}{STLImporter}}\ \{}
+\DoxyCodeLine{00095\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_a885e07c2d4a597bdad7b7a0ea328574d}{STLImporter}}();}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_a20371f023fe33c9a52e1903b6ce74a84}{\string~STLImporter}}();}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Import\ STL\ file}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_a67592572b7c60376b0e486272d1fc31b}{importMesh}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh);}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Format\ detection}}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_aeac6993a9446b55d9c81b35f72e047de}{isBinarySTL}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_a58b08a55aea6cd44dffe63fcf915b4cd}{getLastError}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
+\DoxyCodeLine{00107\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer_a181a7627486e92a4cd7b847dc52921ae}{getLastErrorMessage}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastErrorMessage;\ \}}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ m\_lastError\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{FileError::None}};}
+\DoxyCodeLine{00111\ \ \ \ \ std::string\ m\_lastErrorMessage;}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Format-\/specific\ import}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{bool}\ importBinarySTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh);}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{bool}\ importASCIISTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh);}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//\ Binary\ STL\ reading}}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{bool}\ readBinaryHeader(std::ifstream\&\ file,\ uint32\_t\&\ triangleCount);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{bool}\ readBinaryTriangle(std::ifstream\&\ file,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v0,}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v1,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v2,}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal);}
+\DoxyCodeLine{00122\ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ ASCII\ STL\ parsing}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseASCIISTL(std::ifstream\&\ file,\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh);}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseVertex(\textcolor{keyword}{const}\ std::string\&\ line,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ vertex);}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{bool}\ parseNormal(\textcolor{keyword}{const}\ std::string\&\ line,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal);}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ setError(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ error,\ \textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ clearError();}
+\DoxyCodeLine{00131\ \};}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \}\ \textcolor{comment}{//\ namespace\ FileIO}}
+\DoxyCodeLine{00134\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

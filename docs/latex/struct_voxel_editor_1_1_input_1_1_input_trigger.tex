@@ -1,0 +1,168 @@
+\doxysection{Voxel\+Editor\+::Input\+::Input\+Trigger Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger}{}\label{struct_voxel_editor_1_1_input_1_1_input_trigger}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+
+
+{\ttfamily \#include $<$Input\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_afdb6a0ff74def41c1e70bbc61223b3f9}{Input\+Trigger}} ()
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a6f77d6a915755d39f3f24c7a700017a1}{Input\+Trigger}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{Mouse\+Button}} button, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} mods=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}})
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a6be94a6f07045e2d550d3426ea9cbe45}{Input\+Trigger}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} mods=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}})
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_abcdadb65ffa16f552f1e1174c5400100}{Input\+Trigger}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Touch\+Gesture}} gesture)
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a5f0d9e85b40f4976fe1e4954a3702227}{Input\+Trigger}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}} gesture)
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_aa340edc7182a924af80a24aa9ad33ea3}{matches}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Mouse\+Event}} \&event) const
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a6790fe9e993219864243909a58043ee9}{matches}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}} \&event) const
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a5f260aed808daea9faad5bccaadeffb2}{matches}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Touch\+Gesture}} gesture) const
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a35878d67e0ca632bb6702b91844241fc}{matches}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}} gesture) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}{Input\+Device}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_aff5e3ef0df6c7ce63f05cfdf71d6407a}{device}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{MouseButton}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a7279ed6f0043c904233e14a366f25f94}{mouseButton}}\\
+\>\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_adfab781cc7caee6d275ab2e8ee3839d3}{keyCode}}\\
+\>\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a6efabbdf2c524e651739e287d40a5325}{touchGesture}}\\
+\>\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_af7dfc297d5db6fa354004c53979e9351}{vrGesture}}\\
+\>uint32\_t \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a9bfe0468fd7a48deeca01a4ccdbcc362}{raw}}\\
+\} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_a6ae0ce95f10c8855d7501941c426fc9e}{input}}\\
+
+\end{tabbing}\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger_ad847129dfbe81447aefeace8507179f4}{required\+Modifiers}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_afdb6a0ff74def41c1e70bbc61223b3f9}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!InputTrigger@{InputTrigger}}
+\index{InputTrigger@{InputTrigger}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{InputTrigger()}{InputTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_afdb6a0ff74def41c1e70bbc61223b3f9} 
+Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::\+Input\+Trigger (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a6f77d6a915755d39f3f24c7a700017a1}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!InputTrigger@{InputTrigger}}
+\index{InputTrigger@{InputTrigger}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{InputTrigger()}{InputTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a6f77d6a915755d39f3f24c7a700017a1} 
+Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::\+Input\+Trigger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{Mouse\+Button}}}]{button}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{mods}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a6be94a6f07045e2d550d3426ea9cbe45}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!InputTrigger@{InputTrigger}}
+\index{InputTrigger@{InputTrigger}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{InputTrigger()}{InputTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a6be94a6f07045e2d550d3426ea9cbe45} 
+Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::\+Input\+Trigger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{mods}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_abcdadb65ffa16f552f1e1174c5400100}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!InputTrigger@{InputTrigger}}
+\index{InputTrigger@{InputTrigger}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{InputTrigger()}{InputTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_abcdadb65ffa16f552f1e1174c5400100} 
+Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::\+Input\+Trigger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Touch\+Gesture}}}]{gesture}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a5f0d9e85b40f4976fe1e4954a3702227}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!InputTrigger@{InputTrigger}}
+\index{InputTrigger@{InputTrigger}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{InputTrigger()}{InputTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a5f0d9e85b40f4976fe1e4954a3702227} 
+Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::\+Input\+Trigger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}}]{gesture}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a6790fe9e993219864243909a58043ee9}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!matches@{matches}}
+\index{matches@{matches}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{matches()}{matches()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a6790fe9e993219864243909a58043ee9} 
+bool Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::matches (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}} \&}]{event}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_aa340edc7182a924af80a24aa9ad33ea3}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!matches@{matches}}
+\index{matches@{matches}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{matches()}{matches()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_aa340edc7182a924af80a24aa9ad33ea3} 
+bool Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::matches (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Mouse\+Event}} \&}]{event}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a5f260aed808daea9faad5bccaadeffb2}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!matches@{matches}}
+\index{matches@{matches}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{matches()}{matches()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a5f260aed808daea9faad5bccaadeffb2} 
+bool Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::matches (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Touch\+Gesture}}}]{gesture}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a35878d67e0ca632bb6702b91844241fc}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!matches@{matches}}
+\index{matches@{matches}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{matches()}{matches()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a35878d67e0ca632bb6702b91844241fc} 
+bool Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::matches (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}}]{gesture}{}\end{DoxyParamCaption}) const}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_aff5e3ef0df6c7ce63f05cfdf71d6407a}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!device@{device}}
+\index{device@{device}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{device}{device}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_aff5e3ef0df6c7ce63f05cfdf71d6407a} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}{Input\+Device}} Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::device}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a6ae0ce95f10c8855d7501941c426fc9e}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!input@{input}}
+\index{input@{input}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a6ae0ce95f10c8855d7501941c426fc9e} 
+union  \{ ... \}  Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::input}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_adfab781cc7caee6d275ab2e8ee3839d3}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!keyCode@{keyCode}}
+\index{keyCode@{keyCode}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{keyCode}{keyCode}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_adfab781cc7caee6d275ab2e8ee3839d3} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::key\+Code}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a7279ed6f0043c904233e14a366f25f94}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!mouseButton@{mouseButton}}
+\index{mouseButton@{mouseButton}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{mouseButton}{mouseButton}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a7279ed6f0043c904233e14a366f25f94} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{Mouse\+Button}} Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::mouse\+Button}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a9bfe0468fd7a48deeca01a4ccdbcc362}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!raw@{raw}}
+\index{raw@{raw}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{raw}{raw}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a9bfe0468fd7a48deeca01a4ccdbcc362} 
+uint32\+\_\+t Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::raw}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_ad847129dfbe81447aefeace8507179f4}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!requiredModifiers@{requiredModifiers}}
+\index{requiredModifiers@{requiredModifiers}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{requiredModifiers}{requiredModifiers}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_ad847129dfbe81447aefeace8507179f4} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::required\+Modifiers}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_a6efabbdf2c524e651739e287d40a5325}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!touchGesture@{touchGesture}}
+\index{touchGesture@{touchGesture}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{touchGesture}{touchGesture}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_a6efabbdf2c524e651739e287d40a5325} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Touch\+Gesture}} Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::touch\+Gesture}
+
+\Hypertarget{struct_voxel_editor_1_1_input_1_1_input_trigger_af7dfc297d5db6fa354004c53979e9351}\index{VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}!vrGesture@{vrGesture}}
+\index{vrGesture@{vrGesture}!VoxelEditor::Input::InputTrigger@{VoxelEditor::Input::InputTrigger}}
+\doxysubsubsection{\texorpdfstring{vrGesture}{vrGesture}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_input_1_1_input_trigger_af7dfc297d5db6fa354004c53979e9351} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}} Voxel\+Editor\+::\+Input\+::\+Input\+Trigger\+::vr\+Gesture}
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_input_types_8h}{Input\+Types.\+h}}\item 
+core/input/\mbox{\hyperlink{_input_types_8cpp}{Input\+Types.\+cpp}}\end{DoxyCompactItemize}

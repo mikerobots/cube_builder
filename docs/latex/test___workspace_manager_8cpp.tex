@@ -1,0 +1,148 @@
+\doxysection{core/voxel\+\_\+data/tests/test\+\_\+\+Workspace\+Manager.cpp File Reference}
+\hypertarget{test___workspace_manager_8cpp}{}\label{test___workspace_manager_8cpp}\index{core/voxel\_data/tests/test\_WorkspaceManager.cpp@{core/voxel\_data/tests/test\_WorkspaceManager.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Workspace\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/events/\+Event\+Dispatcher.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_test_workspace_resized_handler}{Test\+Workspace\+Resized\+Handler}}
+\item 
+class \mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a77e8f2560253be8bbd7d35b8f79d9f8b}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Default\+Construction)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a6b9870e7f733d05f646ec9270e06e4b3}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Construction\+With\+Event\+Dispatcher)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a4588fca67a79740715974c44b9553582}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Valid\+Size\+Changes)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a119305bb6b4ffb278a66d6ceb3328629}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Invalid\+Size\+Changes)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a7cf703c6df25bc7cc83d099d14e12513}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Cubic\+Size\+Shorthand)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_ac49a36eccc2c44c1d169bf8eab96d983}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Position\+Bounds\+Checking)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_ac9bc7d74fa75504d6a5ce2217a70c778}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Position\+Clamping)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_ab743abadea4bd4f79b227246a2860ed6}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Bounds\+Retrieval\+Methods)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a4eb10ec5fed74fae09bd5f98219bdc51}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Size\+Change\+Callbacks)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a8b4ba7975c4c7a4b8b6dca993f071da3}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Size\+Change\+Callback\+Veto)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a46ccb34bec5950e551c11cd543fa4e8b}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Size\+Change\+Callback\+Conditional)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a7b2fd14b5977c3c1cb1aede49a991430}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Event\+Dispatcher\+Changes)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_af8745eb6ae3d7f5154f6066ddf9250a1}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Multiple\+Size\+Changes)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_ae2dc94bf05547a7e969e54af59e0e235}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Edge\+Case\+Bounds)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_acff6d82b74fd6e853e773a1f81a31840}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Non\+Cubic\+Workspaces)
+\item 
+\mbox{\hyperlink{test___workspace_manager_8cpp_a5adad1fb3cb6091ce7e90d96fb767dee}{TEST\+\_\+F}} (\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}, Const\+Methods\+With\+Const\+Manager)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___workspace_manager_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___workspace_manager_8cpp_ab743abadea4bd4f79b227246a2860ed6}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_ab743abadea4bd4f79b227246a2860ed6} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Bounds\+Retrieval\+Methods}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a5adad1fb3cb6091ce7e90d96fb767dee}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a5adad1fb3cb6091ce7e90d96fb767dee} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Const\+Methods\+With\+Const\+Manager}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a6b9870e7f733d05f646ec9270e06e4b3}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a6b9870e7f733d05f646ec9270e06e4b3} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Construction\+With\+Event\+Dispatcher}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a7cf703c6df25bc7cc83d099d14e12513}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a7cf703c6df25bc7cc83d099d14e12513} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Cubic\+Size\+Shorthand}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a77e8f2560253be8bbd7d35b8f79d9f8b}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a77e8f2560253be8bbd7d35b8f79d9f8b} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Default\+Construction}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_ae2dc94bf05547a7e969e54af59e0e235}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_ae2dc94bf05547a7e969e54af59e0e235} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Edge\+Case\+Bounds}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a7b2fd14b5977c3c1cb1aede49a991430}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a7b2fd14b5977c3c1cb1aede49a991430} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Event\+Dispatcher\+Changes}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a119305bb6b4ffb278a66d6ceb3328629}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a119305bb6b4ffb278a66d6ceb3328629} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Invalid\+Size\+Changes}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_af8745eb6ae3d7f5154f6066ddf9250a1}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_af8745eb6ae3d7f5154f6066ddf9250a1} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Multiple\+Size\+Changes}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_acff6d82b74fd6e853e773a1f81a31840}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_acff6d82b74fd6e853e773a1f81a31840} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Non\+Cubic\+Workspaces}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_ac49a36eccc2c44c1d169bf8eab96d983}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_ac49a36eccc2c44c1d169bf8eab96d983} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Position\+Bounds\+Checking}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_ac9bc7d74fa75504d6a5ce2217a70c778}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_ac9bc7d74fa75504d6a5ce2217a70c778} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Position\+Clamping}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a46ccb34bec5950e551c11cd543fa4e8b}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a46ccb34bec5950e551c11cd543fa4e8b} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Size\+Change\+Callback\+Conditional}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a4eb10ec5fed74fae09bd5f98219bdc51}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [14/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a4eb10ec5fed74fae09bd5f98219bdc51} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Size\+Change\+Callbacks}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a8b4ba7975c4c7a4b8b6dca993f071da3}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [15/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a8b4ba7975c4c7a4b8b6dca993f071da3} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Size\+Change\+Callback\+Veto}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___workspace_manager_8cpp_a4588fca67a79740715974c44b9553582}\index{test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_WorkspaceManager.cpp@{test\_WorkspaceManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [16/16]}}
+{\footnotesize\ttfamily \label{test___workspace_manager_8cpp_a4588fca67a79740715974c44b9553582} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_workspace_manager_test}{Workspace\+Manager\+Test}}}]{}{, }\item[{Valid\+Size\+Changes}]{}{}\end{DoxyParamCaption})}
+

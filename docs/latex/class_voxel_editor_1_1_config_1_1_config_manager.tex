@@ -1,0 +1,152 @@
+\doxysection{Voxel\+Editor\+::Config\+::Config\+Manager Class Reference}
+\hypertarget{class_voxel_editor_1_1_config_1_1_config_manager}{}\label{class_voxel_editor_1_1_config_1_1_config_manager}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+
+
+{\ttfamily \#include $<$Config\+Manager.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a60bc56ba03c8c9fed60628b7ad18a3cc}{load\+From\+File}} (const std\+::string \&filename)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_abfbf61b4f263b8aa9993ee497a6dfb90}{save\+To\+File}} (const std\+::string \&filename) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ada70697c3d589dd484fd428f7f0d6ccf}{load\+Defaults}} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\T \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a741b7291be849d95c97791e333af5fda}{get\+Value}} (const std\+::string \&key, const T \&default\+Value=T\{\}) const
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a13644a079641b9b8b8c40ab55d2d9b42}{set\+Value}} (const std\+::string \&key, const T \&value)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_aa05e8fd8f821597b445b04fd268a1536}{has\+Value}} (const std\+::string \&key) const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a99d680021a7f78c8d01535387e1b8420}{remove\+Value}} (const std\+::string \&key)
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section}{Config\+Section}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ab63eadecc0668dc0c8076e4c6cf1329a}{get\+Section}} (const std\+::string \&path)
+\item 
+std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section}{Config\+Section}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a521ddb298b4cbfc3671c1a4bd85c8165}{get\+Section}} (const std\+::string \&path) const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a01295081442fa8102bdfb322608174dc}{create\+Section}} (const std\+::string \&path)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_aab736eb0186f3348f179318c31ec63df}{set\+Event\+Dispatcher}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}dispatcher)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ae5472736f70c8943ddefbf75cb862639}{clear}} ()
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a3aba910ed6c2680e744a84d1c50cb030}{get\+All\+Keys}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a9225235b0e6d477da494514c8e8637d5}{load\+From\+Stream}} (std\+::istream \&stream)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_af1f3c4ec2230a71dcef2a182127032df}{save\+To\+Stream}} (std\+::ostream \&stream) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager}{Config\+Manager}} \& \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a235ae8efbb74f182ab1b084ffd25ab8e}{get\+Instance}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_ae5472736f70c8943ddefbf75cb862639}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!clear@{clear}}
+\index{clear@{clear}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_ae5472736f70c8943ddefbf75cb862639} 
+void Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a01295081442fa8102bdfb322608174dc}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!createSection@{createSection}}
+\index{createSection@{createSection}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{createSection()}{createSection()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a01295081442fa8102bdfb322608174dc} 
+void Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::create\+Section (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a3aba910ed6c2680e744a84d1c50cb030}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!getAllKeys@{getAllKeys}}
+\index{getAllKeys@{getAllKeys}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{getAllKeys()}{getAllKeys()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a3aba910ed6c2680e744a84d1c50cb030} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::get\+All\+Keys (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a235ae8efbb74f182ab1b084ffd25ab8e}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a235ae8efbb74f182ab1b084ffd25ab8e} 
+\mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager}{Config\+Manager}} \& Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::get\+Instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_ab63eadecc0668dc0c8076e4c6cf1329a}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!getSection@{getSection}}
+\index{getSection@{getSection}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{getSection()}{getSection()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_ab63eadecc0668dc0c8076e4c6cf1329a} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section}{Config\+Section}} $>$ Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::get\+Section (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a521ddb298b4cbfc3671c1a4bd85c8165}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!getSection@{getSection}}
+\index{getSection@{getSection}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{getSection()}{getSection()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a521ddb298b4cbfc3671c1a4bd85c8165} 
+std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section}{Config\+Section}} $>$ Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::get\+Section (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a741b7291be849d95c97791e333af5fda}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!getValue@{getValue}}
+\index{getValue@{getValue}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{getValue()}{getValue()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a741b7291be849d95c97791e333af5fda} 
+template$<$typename T$>$ \\
+T Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::get\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{, }\item[{const T \&}]{default\+Value}{ = {\ttfamily T\{\}}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_aa05e8fd8f821597b445b04fd268a1536}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!hasValue@{hasValue}}
+\index{hasValue@{hasValue}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{hasValue()}{hasValue()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_aa05e8fd8f821597b445b04fd268a1536} 
+bool Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::has\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_ada70697c3d589dd484fd428f7f0d6ccf}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!loadDefaults@{loadDefaults}}
+\index{loadDefaults@{loadDefaults}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{loadDefaults()}{loadDefaults()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_ada70697c3d589dd484fd428f7f0d6ccf} 
+bool Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::load\+Defaults (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a60bc56ba03c8c9fed60628b7ad18a3cc}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!loadFromFile@{loadFromFile}}
+\index{loadFromFile@{loadFromFile}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{loadFromFile()}{loadFromFile()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a60bc56ba03c8c9fed60628b7ad18a3cc} 
+bool Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::load\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a9225235b0e6d477da494514c8e8637d5}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!loadFromStream@{loadFromStream}}
+\index{loadFromStream@{loadFromStream}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{loadFromStream()}{loadFromStream()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a9225235b0e6d477da494514c8e8637d5} 
+bool Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::load\+From\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a99d680021a7f78c8d01535387e1b8420}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!removeValue@{removeValue}}
+\index{removeValue@{removeValue}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{removeValue()}{removeValue()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a99d680021a7f78c8d01535387e1b8420} 
+void Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::remove\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_abfbf61b4f263b8aa9993ee497a6dfb90}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!saveToFile@{saveToFile}}
+\index{saveToFile@{saveToFile}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{saveToFile()}{saveToFile()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_abfbf61b4f263b8aa9993ee497a6dfb90} 
+bool Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::save\+To\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_af1f3c4ec2230a71dcef2a182127032df}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!saveToStream@{saveToStream}}
+\index{saveToStream@{saveToStream}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{saveToStream()}{saveToStream()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_af1f3c4ec2230a71dcef2a182127032df} 
+bool Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::save\+To\+Stream (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{stream}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_aab736eb0186f3348f179318c31ec63df}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!setEventDispatcher@{setEventDispatcher}}
+\index{setEventDispatcher@{setEventDispatcher}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{setEventDispatcher()}{setEventDispatcher()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_aab736eb0186f3348f179318c31ec63df} 
+void Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::set\+Event\+Dispatcher (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{dispatcher}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_config_1_1_config_manager_a13644a079641b9b8b8c40ab55d2d9b42}\index{VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}!setValue@{setValue}}
+\index{setValue@{setValue}!VoxelEditor::Config::ConfigManager@{VoxelEditor::Config::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{setValue()}{setValue()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_config_1_1_config_manager_a13644a079641b9b8b8c40ab55d2d9b42} 
+template$<$typename T$>$ \\
+void Voxel\+Editor\+::\+Config\+::\+Config\+Manager\+::set\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{, }\item[{const T \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/config/\mbox{\hyperlink{_config_manager_8h}{Config\+Manager.\+h}}\end{DoxyCompactItemize}

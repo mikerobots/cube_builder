@@ -1,0 +1,427 @@
+\chapter{Camera System Subsystem }
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n}{}\label{md_core_2camera_2_d_e_s_i_g_n}\index{Camera System Subsystem@{Camera System Subsystem}}
+\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md111}%
+\Hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md111}%
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md112}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md112}
+Manages 3D camera controls, view presets, smooth transitions, and camera state persistence for the voxel editor across all platforms.\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md113}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md113}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md114}{}\doxysubsection{\texorpdfstring{Camera\+Manager}{Camera\+Manager}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md114}
+{\bfseries{Responsibility}}\+: Main interface for camera operations
+\begin{DoxyItemize}
+\item Coordinate camera movement and rotation
+\item Manage view presets and transitions
+\item Handle camera state persistence
+\item Provide camera matrices for rendering
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md115}{}\doxysubsection{\texorpdfstring{Orbit\+Camera}{Orbit\+Camera}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md115}
+{\bfseries{Responsibility}}\+: Core camera implementation
+\begin{DoxyItemize}
+\item Orbit-\/style camera controls
+\item Target-\/based rotation and zoom
+\item Constraint handling (zoom limits, bounds)
+\item Smooth interpolation for movements
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md116}{}\doxysubsection{\texorpdfstring{View\+Presets}{View\+Presets}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md116}
+{\bfseries{Responsibility}}\+: Predefined camera positions
+\begin{DoxyItemize}
+\item Standard orthographic views (front, back, top, etc.)
+\item Isometric and perspective views
+\item Custom user-\/defined presets
+\item View transition calculations
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md117}{}\doxysubsection{\texorpdfstring{Camera\+Animator}{Camera\+Animator}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md117}
+{\bfseries{Responsibility}}\+: Smooth camera transitions
+\begin{DoxyItemize}
+\item Interpolated camera movements
+\item Easing functions for natural motion
+\item Concurrent animation management
+\item Animation cancellation and blending
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md118}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md118}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CameraManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ View\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setView(ViewType\ view);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCustomView(\textcolor{keyword}{const}\ Vector3f\&\ position,\ \textcolor{keyword}{const}\ Vector3f\&\ target,\ \textcolor{keyword}{const}\ Vector3f\&\ up);}
+\DoxyCodeLine{\ \ \ \ ViewType\ getCurrentView()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Camera\ movement}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ orbit(\textcolor{keywordtype}{float}\ deltaAzimuth,\ \textcolor{keywordtype}{float}\ deltaElevation);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ pan(\textcolor{keyword}{const}\ Vector2f\&\ delta);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ zoom(\textcolor{keywordtype}{float}\ factor);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ dolly(\textcolor{keywordtype}{float}\ distance);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Target\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setTarget(\textcolor{keyword}{const}\ Vector3f\&\ target);}
+\DoxyCodeLine{\ \ \ \ Vector3f\ getTarget()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ frameSelection(\textcolor{keyword}{const}\ BoundingBox\&\ bounds);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ frameAll(\textcolor{keyword}{const}\ BoundingBox\&\ worldBounds);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Animation\ control}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setAnimationEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setAnimationDuration(\textcolor{keywordtype}{float}\ seconds);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isAnimating()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ stopAnimation();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Camera\ properties}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setProjection(ProjectionType\ type);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setFieldOfView(\textcolor{keywordtype}{float}\ fovDegrees);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setNearFar(\textcolor{keywordtype}{float}\ nearPlane,\ \textcolor{keywordtype}{float}\ farPlane);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setViewportSize(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Matrix\ access}}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ getViewMatrix()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ getProjectionMatrix()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ getViewProjectionMatrix()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ State\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getState()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setState(\textcolor{keyword}{const}\ CameraState\&\ state);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Constraints}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setZoomLimits(\textcolor{keywordtype}{float}\ minZoom,\ \textcolor{keywordtype}{float}\ maxZoom);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setOrbitLimits(\textcolor{keywordtype}{float}\ minElevation,\ \textcolor{keywordtype}{float}\ maxElevation);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setBounds(\textcolor{keyword}{const}\ BoundingBox\&\ bounds);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<OrbitCamera>\ m\_camera;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<ViewPresets>\ m\_presets;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<CameraAnimator>\ m\_animator;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md119}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md119}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md120}{}\doxysubsection{\texorpdfstring{View\+Type}{View\+Type}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md120}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ ViewType\ \{}
+\DoxyCodeLine{\ \ \ \ Custom,}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda5835bab1ade0060909e31a06af2e2cde}{Front}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Back}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa945d5e233cf7d6240f6b783b36a374ff}{Left}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa92b09c7c48c520c3c55e497875da437c}{Right}},}
+\DoxyCodeLine{\ \ \ \ Top,}
+\DoxyCodeLine{\ \ \ \ Bottom,}
+\DoxyCodeLine{\ \ \ \ Isometric,}
+\DoxyCodeLine{\ \ \ \ Perspective}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md121}{}\doxysubsection{\texorpdfstring{Projection\+Type}{Projection\+Type}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md121}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ ProjectionType\ \{}
+\DoxyCodeLine{\ \ \ \ Perspective,}
+\DoxyCodeLine{\ \ \ \ Orthographic}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md122}{}\doxysubsection{\texorpdfstring{Camera\+State}{Camera\+State}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md122}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3f\ position;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ target;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ up;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ distance;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ azimuth;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Rotation\ around\ Y\ axis}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ elevation;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Rotation\ around\ X\ axis}}
+\DoxyCodeLine{\ \ \ \ ProjectionType\ projectionType;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ fieldOfView;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ nearPlane;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ farPlane;}
+\DoxyCodeLine{\ \ \ \ ViewType\ currentView;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ CameraState\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ serialize(BinaryWriter\&\ writer)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deserialize(BinaryReader\&\ reader);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md123}{}\doxysubsection{\texorpdfstring{Camera\+Constraints}{Camera\+Constraints}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md123}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }CameraConstraints\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ minZoom\ =\ 0.1f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ maxZoom\ =\ 100.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ minElevation\ =\ -\/89.0f;\ \ \textcolor{comment}{//\ degrees}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ maxElevation\ =\ 89.0f;\ \ \ \textcolor{comment}{//\ degrees}}
+\DoxyCodeLine{\ \ \ \ std::optional<BoundingBox>\ bounds;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ constrainTarget\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ applyToState(CameraState\&\ state)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md124}{}\doxysection{\texorpdfstring{Camera Implementation}{Camera Implementation}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md124}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md125}{}\doxysubsection{\texorpdfstring{Orbit\+Camera}{Orbit\+Camera}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md125}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }OrbitCamera\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ OrbitCamera();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Core\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ orbit(\textcolor{keywordtype}{float}\ deltaAzimuth,\ \textcolor{keywordtype}{float}\ deltaElevation);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ pan(\textcolor{keyword}{const}\ Vector2f\&\ screenDelta,\ \textcolor{keyword}{const}\ Matrix4f\&\ projectionMatrix,\ \textcolor{keyword}{const}\ Vector2i\&\ viewportSize);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ zoom(\textcolor{keywordtype}{float}\ factor);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ dolly(\textcolor{keywordtype}{float}\ distance);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Position\ calculation}}
+\DoxyCodeLine{\ \ \ \ Vector3f\ calculatePosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ calculateViewMatrix()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ State\ access}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setState(\textcolor{keyword}{const}\ CameraState\&\ state);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getState()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Constraints}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setConstraints(\textcolor{keyword}{const}\ CameraConstraints\&\ constraints);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ applyConstraints();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Utility\ functions}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ lookAt(\textcolor{keyword}{const}\ Vector3f\&\ position,\ \textcolor{keyword}{const}\ Vector3f\&\ target,\ \textcolor{keyword}{const}\ Vector3f\&\ up);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ frameBox(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \textcolor{keywordtype}{float}\ margin\ =\ 0.1f);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_target;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_up;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_distance;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_azimuth;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_elevation;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_fieldOfView;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_nearPlane;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_farPlane;}
+\DoxyCodeLine{\ \ \ \ ProjectionType\ m\_projectionType;}
+\DoxyCodeLine{\ \ \ \ CameraConstraints\ m\_constraints;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateUpVector();}
+\DoxyCodeLine{\ \ \ \ Vector3f\ sphericalToCartesian(\textcolor{keywordtype}{float}\ azimuth,\ \textcolor{keywordtype}{float}\ elevation,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md126}{}\doxysubsection{\texorpdfstring{View\+Presets}{View\+Presets}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md126}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ViewPresets\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getPreset(ViewType\ view)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCustomPreset(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ CameraState\&\ state);}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getCustomPresetNames()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Calculate\ view\ transformations}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateFrontView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateBackView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateTopView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateBottomView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateLeftView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateRightView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateIsometricView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ CameraState>\ m\_customPresets;}
+\DoxyCodeLine{\ \ \ \ BoundingBox\ m\_sceneBounds;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ createOrthographicView(\textcolor{keyword}{const}\ Vector3f\&\ direction,\ \textcolor{keyword}{const}\ Vector3f\&\ up,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ calculateOptimalDistance(\textcolor{keyword}{const}\ BoundingBox\&\ bounds,\ \textcolor{keywordtype}{float}\ fieldOfView)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md127}{}\doxysubsection{\texorpdfstring{Camera\+Animator}{Camera\+Animator}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md127}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CameraAnimator\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ animateTo(\textcolor{keyword}{const}\ CameraState\&\ targetState,\ \textcolor{keywordtype}{float}\ duration,\ EasingFunction\ easing\ =\ EasingFunction::EaseInOut);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ animateOrbit(\textcolor{keywordtype}{float}\ deltaAzimuth,\ \textcolor{keywordtype}{float}\ deltaElevation,\ \textcolor{keywordtype}{float}\ duration);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ animateZoom(\textcolor{keywordtype}{float}\ targetDistance,\ \textcolor{keywordtype}{float}\ duration);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ animatePan(\textcolor{keyword}{const}\ Vector3f\&\ targetPosition,\ \textcolor{keywordtype}{float}\ duration);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isAnimating()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ stop();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getCurrentState()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }Animation\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ startState;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ targetState;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ duration;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ elapsedTime;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ EasingFunction\ easing;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ active;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ Animation\ m\_currentAnimation;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ interpolateStates(\textcolor{keyword}{const}\ CameraState\&\ start,\ \textcolor{keyword}{const}\ CameraState\&\ end,\ \textcolor{keywordtype}{float}\ t,\ EasingFunction\ easing)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ applyEasing(\textcolor{keywordtype}{float}\ t,\ EasingFunction\ easing)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md128}{}\doxysection{\texorpdfstring{Easing Functions}{Easing Functions}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md128}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ EasingFunction\ \{}
+\DoxyCodeLine{\ \ \ \ Linear,}
+\DoxyCodeLine{\ \ \ \ EaseIn,}
+\DoxyCodeLine{\ \ \ \ EaseOut,}
+\DoxyCodeLine{\ \ \ \ EaseInOut,}
+\DoxyCodeLine{\ \ \ \ EaseInBack,}
+\DoxyCodeLine{\ \ \ \ EaseOutBack,}
+\DoxyCodeLine{\ \ \ \ EaseInOutBack}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }EasingFunctions\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ apply(\textcolor{keywordtype}{float}\ t,\ EasingFunction\ function);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ easeInQuad(\textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ easeOutQuad(\textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ easeInOutQuad(\textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ easeInBack(\textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ easeOutBack(\textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ easeInOutBack(\textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md129}{}\doxysection{\texorpdfstring{Input Integration}{Input Integration}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md129}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md130}{}\doxysubsection{\texorpdfstring{Mouse Controls}{Mouse Controls}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md130}
+
+\begin{DoxyItemize}
+\item {\bfseries{Left Drag}}\+: Orbit around target
+\item {\bfseries{Right Drag}}\+: Pan camera
+\item {\bfseries{Middle Drag}}\+: Alternative pan
+\item {\bfseries{Scroll Wheel}}\+: Zoom in/out
+\item {\bfseries{Double Click}}\+: Frame selection or auto-\/focus
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md131}{}\doxysubsection{\texorpdfstring{Keyboard Shortcuts}{Keyboard Shortcuts}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md131}
+
+\begin{DoxyItemize}
+\item {\bfseries{Number Keys 1-\/7}}\+: Switch to preset views
+\item {\bfseries{F}}\+: Frame selection
+\item {\bfseries{Home}}\+: Reset camera
+\item {\bfseries{Ctrl + Mouse}}\+: Constrained movement
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md132}{}\doxysubsection{\texorpdfstring{Touch Controls (Qt)}{Touch Controls (Qt)}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md132}
+
+\begin{DoxyItemize}
+\item {\bfseries{Single Touch Drag}}\+: Orbit
+\item {\bfseries{Two Finger Drag}}\+: Pan
+\item {\bfseries{Pinch}}\+: Zoom
+\item {\bfseries{Double Tap}}\+: Frame selection
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md133}{}\doxysubsection{\texorpdfstring{VR Controls}{VR Controls}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md133}
+
+\begin{DoxyItemize}
+\item {\bfseries{Head Movement}}\+: Natural camera movement
+\item {\bfseries{Hand Gestures}}\+: Point to focus target
+\item {\bfseries{Voice Commands}}\+: "{}\+Front view"{}, "{}\+Reset camera"{}
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md134}{}\doxysection{\texorpdfstring{Performance Considerations}{Performance Considerations}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md134}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md135}{}\doxysubsection{\texorpdfstring{Matrix Caching}{Matrix Caching}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md135}
+
+\begin{DoxyItemize}
+\item Cache view and projection matrices
+\item Invalidate only when camera changes
+\item Avoid unnecessary matrix calculations
+\item Use dirty flags for optimization
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md136}{}\doxysubsection{\texorpdfstring{Animation Optimization}{Animation Optimization}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md136}
+
+\begin{DoxyItemize}
+\item Skip interpolation for very small changes
+\item Use fixed timestep for consistent animation
+\item Batch multiple small movements
+\item Early termination for completed animations
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md137}{}\doxysubsection{\texorpdfstring{Constraint Validation}{Constraint Validation}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md137}
+
+\begin{DoxyItemize}
+\item Lazy constraint application
+\item Incremental constraint checking
+\item Optimized bounds testing
+\item Minimal state copying
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md138}{}\doxysection{\texorpdfstring{Events}{Events}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md138}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md139}{}\doxysubsection{\texorpdfstring{Camera\+Changed Event}{Camera\+Changed Event}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md139}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }CameraChangedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ oldState;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ newState;}
+\DoxyCodeLine{\ \ \ \ ChangeType\ changeType;\ \textcolor{comment}{//\ POSITION,\ ROTATION,\ ZOOM,\ VIEW\_PRESET}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md140}{}\doxysubsection{\texorpdfstring{View\+Changed Event}{View\+Changed Event}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md140}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }ViewChangedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ ViewType\ oldView;}
+\DoxyCodeLine{\ \ \ \ ViewType\ newView;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ animated;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md141}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md141}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md142}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md142}
+
+\begin{DoxyItemize}
+\item Matrix calculation accuracy
+\item Constraint enforcement
+\item Animation interpolation
+\item State serialization
+\item View preset calculations
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md143}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md143}
+
+\begin{DoxyItemize}
+\item Input handling integration
+\item Rendering system integration
+\item State persistence
+\item Cross-\/platform behavior
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md144}{}\doxysubsection{\texorpdfstring{Visual Tests}{Visual Tests}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md144}
+
+\begin{DoxyItemize}
+\item Smooth animation playback
+\item Correct view transitions
+\item Constraint visualization
+\item Matrix accuracy validation
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md145}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md145}
+
+\begin{DoxyItemize}
+\item Animation frame rate consistency
+\item Matrix calculation performance
+\item Memory usage validation
+\item Large scene handling
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md146}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md146}
+
+\begin{DoxyItemize}
+\item {\bfseries{Foundation/\+Math}}\+: Matrix and vector operations
+\item {\bfseries{Foundation/\+Events}}\+: Camera change notifications
+\item {\bfseries{Core/\+Input}}\+: Input event processing
+\item {\bfseries{Foundation/\+Config}}\+: Camera settings and preferences
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md147}{}\doxysection{\texorpdfstring{Platform Considerations}{Platform Considerations}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md147}
+\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md148}{}\doxysubsection{\texorpdfstring{Desktop}{Desktop}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md148}
+
+\begin{DoxyItemize}
+\item Mouse and keyboard input
+\item Multiple monitor support
+\item High precision input handling
+\item Customizable shortcuts
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md149}{}\doxysubsection{\texorpdfstring{Mobile/\+Touch}{Mobile/\+Touch}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md149}
+
+\begin{DoxyItemize}
+\item Touch gesture recognition
+\item Accelerometer integration
+\item Battery-\/conscious animations
+\item Adaptive sensitivity
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md150}{}\doxysubsection{\texorpdfstring{VR}{VR}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md150}
+
+\begin{DoxyItemize}
+\item Head tracking integration
+\item Hand gesture recognition
+\item Comfort settings (motion sickness)
+\item Spatial audio synchronization
+\end{DoxyItemize}\hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md151}{}\doxysection{\texorpdfstring{File I/O Integration}{File I/O Integration}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md151}
+
+\begin{DoxyItemize}
+\item Save camera state with projects
+\item Export camera paths for animation
+\item Import camera presets
+\item Version compatibility for camera data 
+\end{DoxyItemize}

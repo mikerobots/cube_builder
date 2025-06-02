@@ -1,0 +1,76 @@
+var namespace_voxel_editor_1_1_file_i_o =
+[
+    [ "FileConstants", "namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html", [
+      [ "BACKUP_SUFFIX", "namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html#a4072892f2aa407b89468ee0808403767", null ],
+      [ "FILE_EXTENSION", "namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html#a1ae39ad361d59907ae59f80a3809e5d3", null ],
+      [ "HEADER_SIZE", "namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html#a503be965b70ea7fa295debaa5c15c223", null ],
+      [ "MAGIC", "namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html#a310af1eb86437b36cc81f60772ad3e73", null ],
+      [ "MAX_CHUNK_SIZE", "namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html#a44b6e52b7a7fa5e611b8d64ea13ca842", null ]
+    ] ],
+    [ "VoxelData", "namespace_voxel_editor_1_1_file_i_o_1_1_voxel_data.html", null ],
+    [ "BinaryFormat", "class_voxel_editor_1_1_file_i_o_1_1_binary_format.html", "class_voxel_editor_1_1_file_i_o_1_1_binary_format" ],
+    [ "BinaryReader", "class_voxel_editor_1_1_file_i_o_1_1_binary_reader.html", "class_voxel_editor_1_1_file_i_o_1_1_binary_reader" ],
+    [ "BinaryWriter", "class_voxel_editor_1_1_file_i_o_1_1_binary_writer.html", "class_voxel_editor_1_1_file_i_o_1_1_binary_writer" ],
+    [ "ChecksumCalculator", "class_voxel_editor_1_1_file_i_o_1_1_checksum_calculator.html", null ],
+    [ "ChunkHeader", "struct_voxel_editor_1_1_file_i_o_1_1_chunk_header.html", "struct_voxel_editor_1_1_file_i_o_1_1_chunk_header" ],
+    [ "Compression", "class_voxel_editor_1_1_file_i_o_1_1_compression.html", "class_voxel_editor_1_1_file_i_o_1_1_compression" ],
+    [ "CompressionHeader", "struct_voxel_editor_1_1_file_i_o_1_1_compression_header.html", "struct_voxel_editor_1_1_file_i_o_1_1_compression_header" ],
+    [ "CompressionUtils", "class_voxel_editor_1_1_file_i_o_1_1_compression_utils.html", null ],
+    [ "FileHeader", "struct_voxel_editor_1_1_file_i_o_1_1_file_header.html", "struct_voxel_editor_1_1_file_i_o_1_1_file_header" ],
+    [ "FileInfo", "struct_voxel_editor_1_1_file_i_o_1_1_file_info.html", "struct_voxel_editor_1_1_file_i_o_1_1_file_info" ],
+    [ "FileManager", "class_voxel_editor_1_1_file_i_o_1_1_file_manager.html", "class_voxel_editor_1_1_file_i_o_1_1_file_manager" ],
+    [ "FileManagerInstance", "class_voxel_editor_1_1_file_i_o_1_1_file_manager_instance.html", null ],
+    [ "FileResult", "struct_voxel_editor_1_1_file_i_o_1_1_file_result.html", "struct_voxel_editor_1_1_file_i_o_1_1_file_result" ],
+    [ "FileVersion", "struct_voxel_editor_1_1_file_i_o_1_1_file_version.html", "struct_voxel_editor_1_1_file_i_o_1_1_file_version" ],
+    [ "FileVersioning", "class_voxel_editor_1_1_file_i_o_1_1_file_versioning.html", "class_voxel_editor_1_1_file_i_o_1_1_file_versioning" ],
+    [ "LoadOptions", "struct_voxel_editor_1_1_file_i_o_1_1_load_options.html", "struct_voxel_editor_1_1_file_i_o_1_1_load_options" ],
+    [ "Project", "struct_voxel_editor_1_1_file_i_o_1_1_project.html", "struct_voxel_editor_1_1_file_i_o_1_1_project" ],
+    [ "ProjectFactory", "class_voxel_editor_1_1_file_i_o_1_1_project_factory.html", null ],
+    [ "ProjectMetadata", "struct_voxel_editor_1_1_file_i_o_1_1_project_metadata.html", "struct_voxel_editor_1_1_file_i_o_1_1_project_metadata" ],
+    [ "ProjectValidator", "class_voxel_editor_1_1_file_i_o_1_1_project_validator.html", "class_voxel_editor_1_1_file_i_o_1_1_project_validator" ],
+    [ "SaveOptions", "struct_voxel_editor_1_1_file_i_o_1_1_save_options.html", "struct_voxel_editor_1_1_file_i_o_1_1_save_options" ],
+    [ "STLExporter", "class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter.html", "class_voxel_editor_1_1_file_i_o_1_1_s_t_l_exporter" ],
+    [ "STLExportOptions", "struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options.html", "struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options" ],
+    [ "STLExportStats", "struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats.html", "struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats" ],
+    [ "STLImporter", "class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer.html", "class_voxel_editor_1_1_file_i_o_1_1_s_t_l_importer" ],
+    [ "VersionCompatibility", "class_voxel_editor_1_1_file_i_o_1_1_version_compatibility.html", null ],
+    [ "WorkspaceSettings", "struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings.html", "struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings" ],
+    [ "LoadCompleteCallback", "namespace_voxel_editor_1_1_file_i_o.html#aa256a07fb67dc8cdd82f0820fdac019c", null ],
+    [ "ProgressCallback", "namespace_voxel_editor_1_1_file_i_o.html#afc10f59d0bd4c862af3b94ae247dd603", null ],
+    [ "SaveCompleteCallback", "namespace_voxel_editor_1_1_file_i_o.html#a479d10236ee78cb58a0f0429f1c3e91c", null ],
+    [ "ChunkType", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970", [
+      [ "Metadata", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970ace21470ab49d1d1976bc3dc72438c183", null ],
+      [ "VoxelData", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970a8297838d919ddfa3d4d58774e887c36d", null ],
+      [ "GroupData", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970a7f1fc2225258096cb6b47b4dc12855a2", null ],
+      [ "CameraState", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492", null ],
+      [ "SelectionData", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970aa8e6e777406e3ccbd538095a3cfd1d1b", null ],
+      [ "Settings", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970af4f70727dc34561dfde1a3c529b6205c", null ],
+      [ "CustomData", "namespace_voxel_editor_1_1_file_i_o.html#ac4a753aec4547a1d45a29bd68a9f0970a4e0bb514b87fd684035a3b34a80ddb53", null ]
+    ] ],
+    [ "FileError", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87", [
+      [ "None", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754", null ],
+      [ "FileNotFound", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a2767828026039e8ba7b38973cbb701f2", null ],
+      [ "AccessDenied", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87acbcc0759909213e7cdba1f0cbf253126", null ],
+      [ "InvalidFormat", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87ade236a235b4e8ffc9141676624753b2d", null ],
+      [ "VersionMismatch", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a2d50084f04994afa70d78b604a22dd31", null ],
+      [ "CorruptedData", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a14ce06721aa54faf8e86a779a37ada3f", null ],
+      [ "CompressionError", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a05a8d5f9c17595b9338cf7d7db3ee97b", null ],
+      [ "WriteError", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a4a02ea49d454392fd1e3426e53f14b58", null ],
+      [ "ReadError", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87adf9be6f7af7c3f7196c5c3e731de0a87", null ],
+      [ "OutOfMemory", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87ab498327feeb51430af73e07deac268fd", null ],
+      [ "DiskFull", "namespace_voxel_editor_1_1_file_i_o.html#a750d1fc3c491dd22fefb7336039f9f87a4f080d03a8ddd688d27f7d7cd8e6d41e", null ]
+    ] ],
+    [ "STLFormat", "namespace_voxel_editor_1_1_file_i_o.html#a87a48c9fb164987820ff2912a7cc65bb", [
+      [ "Binary", "namespace_voxel_editor_1_1_file_i_o.html#a87a48c9fb164987820ff2912a7cc65bba6ce976e8f061b2b5cfe4d0c50c3405dd", null ],
+      [ "ASCII", "namespace_voxel_editor_1_1_file_i_o.html#a87a48c9fb164987820ff2912a7cc65bbad2cd8253361a9c732d21ca1d336599cc", null ]
+    ] ],
+    [ "STLUnits", "namespace_voxel_editor_1_1_file_i_o.html#acaa439e5d5a429c73117f1ba266a9892", [
+      [ "Millimeters", "namespace_voxel_editor_1_1_file_i_o.html#acaa439e5d5a429c73117f1ba266a9892a3be6521a73bcafce5b38459ec548bd11", null ],
+      [ "Centimeters", "namespace_voxel_editor_1_1_file_i_o.html#acaa439e5d5a429c73117f1ba266a9892a3040cc6624f5c309963dee141936b299", null ],
+      [ "Meters", "namespace_voxel_editor_1_1_file_i_o.html#acaa439e5d5a429c73117f1ba266a9892a80b4a3eed88aed8a1c7d8a4418b7f469", null ],
+      [ "Inches", "namespace_voxel_editor_1_1_file_i_o.html#acaa439e5d5a429c73117f1ba266a9892ad73325cdb1cb4f9a1ed11bdab879321d", null ]
+    ] ],
+    [ "BinaryReader::read< Math::Matrix4f >", "namespace_voxel_editor_1_1_file_i_o.html#a20ce036c6fbe06ec6135484d0c5c2452", null ],
+    [ "BinaryReader::read< Math::Vector3f >", "namespace_voxel_editor_1_1_file_i_o.html#ad9d6109ea44de9e26a7ebb398f48b62f", null ],
+    [ "BinaryReader::read< std::string >", "namespace_voxel_editor_1_1_file_i_o.html#a89cad0bdba49442e6c5a0bb03504557d", null ]
+];

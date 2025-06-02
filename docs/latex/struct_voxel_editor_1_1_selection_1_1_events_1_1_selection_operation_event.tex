@@ -1,0 +1,102 @@
+\doxysection{Voxel\+Editor\+::Selection\+::Events\+::Selection\+Operation\+Event Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event}{}\label{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event}\index{VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}}
+
+
+{\ttfamily \#include $<$Selection\+Manager.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Selection\+::Events\+::Selection\+Operation\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6681b477edb76a967696b06be7dff2db}{Selection\+Operation\+Event}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{Selection\+Operation\+Type}} type, const \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} \&voxels, bool result)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_af7a9814f5d5fc9e3e1d55d8d74a36c48}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{Selection\+Operation\+Type}} \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a8a2e9ad8d4a65c0567507693deb0a083}{operation\+Type}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6194620194f87ea6c87b7d3f0b6fb968}{affected\+Voxels}}
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a71a5170a426c0322ba34a8afea3da35f}{success}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Selection\+Operation\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6681b477edb76a967696b06be7dff2db}\index{VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}!SelectionOperationEvent@{SelectionOperationEvent}}
+\index{SelectionOperationEvent@{SelectionOperationEvent}!VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}}
+\doxysubsubsection{\texorpdfstring{SelectionOperationEvent()}{SelectionOperationEvent()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6681b477edb76a967696b06be7dff2db} 
+Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Operation\+Event\+::\+Selection\+Operation\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{Selection\+Operation\+Type}}}]{type}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} \&}]{voxels}{, }\item[{bool}]{result}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_af7a9814f5d5fc9e3e1d55d8d74a36c48}\index{VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}!getEventType@{getEventType}}
+\index{getEventType@{getEventType}!VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}}
+\doxysubsubsection{\texorpdfstring{getEventType()}{getEventType()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_af7a9814f5d5fc9e3e1d55d8d74a36c48} 
+const char \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Operation\+Event\+::get\+Event\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Selection\+Operation\+Event $>$}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6194620194f87ea6c87b7d3f0b6fb968}\index{VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}!affectedVoxels@{affectedVoxels}}
+\index{affectedVoxels@{affectedVoxels}!VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}}
+\doxysubsubsection{\texorpdfstring{affectedVoxels}{affectedVoxels}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6194620194f87ea6c87b7d3f0b6fb968} 
+\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+Set}} Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Operation\+Event\+::affected\+Voxels}
+
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a8a2e9ad8d4a65c0567507693deb0a083}\index{VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}!operationType@{operationType}}
+\index{operationType@{operationType}!VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}}
+\doxysubsubsection{\texorpdfstring{operationType}{operationType}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a8a2e9ad8d4a65c0567507693deb0a083} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{Selection\+Operation\+Type}} Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Operation\+Event\+::operation\+Type}
+
+\Hypertarget{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a71a5170a426c0322ba34a8afea3da35f}\index{VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}!success@{success}}
+\index{success@{success}!VoxelEditor::Selection::Events::SelectionOperationEvent@{VoxelEditor::Selection::Events::SelectionOperationEvent}}
+\doxysubsubsection{\texorpdfstring{success}{success}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a71a5170a426c0322ba34a8afea3da35f} 
+bool Voxel\+Editor\+::\+Selection\+::\+Events\+::\+Selection\+Operation\+Event\+::success}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/selection/\mbox{\hyperlink{_selection_manager_8h}{Selection\+Manager.\+h}}\end{DoxyCompactItemize}

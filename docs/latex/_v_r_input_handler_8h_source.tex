@@ -1,0 +1,328 @@
+\doxysection{VRInput\+Handler.\+h}
+\hypertarget{_v_r_input_handler_8h_source}{}\label{_v_r_input_handler_8h_source}\index{core/input/VRInputHandler.h@{core/input/VRInputHandler.h}}
+\mbox{\hyperlink{_v_r_input_handler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <deque>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_input_handler_8h}{InputHandler.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_input_types_8h}{InputTypes.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ray_8h}{../../foundation/math/Ray.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{../../foundation/events/EventBase.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{struct\ }Face;}
+\DoxyCodeLine{00019\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input}{Input}}\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Forward\ declaration\ for\ VR\ gesture\ recognizer}}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer}{VRGestureRecognizer}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_aa63715f96e2d775988c85230767155aa}{VRInputHandler}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be}{InputHandler}}\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_aa63715f96e2d775988c85230767155aa}{VRInputHandler}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{VoxelEditor::Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a84c2160fce5fd9e44a5456684a54f8c7}{\string~VRInputHandler}}();}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ InputHandler\ interface}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a97cafa68e635c0cd8122a7974417f31f}{processVREvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_event}{VREvent}}\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_aefd3d0b9eb7d3cf87033b6cba05562ad}{update}}(\textcolor{keywordtype}{float}\ deltaTime)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Hand\ tracking}}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{HandPose}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a4446d6630c02a8fbc6a2e3c264f8fa9c}{getHandPose}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_acc44545522ce199e5b3f4ab1f0345570}{isHandTracking}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a09dda68624c44f3cc94605b14f946122}{getHandPosition}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_quaternion}{Math::Quaternion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a4a31b87d546fb0664a1f225be8159ca7}{getHandOrientation}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a74ea36eecb7c0034dfbf3f52518d7f91}{getHandConfidence}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Gesture\ recognition}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_af002ae2cb385172d5af5fc6a901dbe00}{isGestureActive}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{HandType::Either}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_adaff40bd4d05ae8ae166b8b4d7152096}{getGestureConfidence}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{HandType::Either}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a00fdc623264210e3148e0d1be84bbb91}{getGesturePosition}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{HandType::Either}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ std::vector<VRGesture>\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a94d1317cbcfe6c8ebc29bf67682c3a7c}{getActiveGestures}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{HandType::Either}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Ray\ casting}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a006dfd195c5c337f20889411215a1fa1}{getHandRay}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a61d957131df35bda1790bb28b670b760}{getPointingDirection}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_ae7db25fe703baa55811aee7ee2a8a0af}{isPointing}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Gesture\ configuration}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_aa6ae649222b2eda0b26c35a4c410e4ec}{enableGesture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_ad640e1acc4887428d1a11584166efe05}{isGestureEnabled}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a9449953862f55768381ff53a11dfa6dd}{setGestureThreshold}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \textcolor{keywordtype}{float}\ threshold);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a445637fc0005249bcd7dc305b99eb380}{getGestureThreshold}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Hand\ tracking\ configuration}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a54f46bbc9f422b88352fc0252f16b192}{setHandTrackingEnabled}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_handTrackingEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a78187c893fd186fe8cd2892da794cc34}{isHandTrackingEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_handTrackingEnabled;\ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a4ebb2e71b82c6f751acf887b53b04710}{setTrackingQuality}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{HandTrackingQuality}}\ quality)\ \{\ m\_trackingQuality\ =\ quality;\ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{HandTrackingQuality}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a7a8745e4970ba8f4e67ff9c50d704185}{getTrackingQuality}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_trackingQuality;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Comfort\ settings}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a65a731d027cab1cd9d1fb4ba0df98f50}{setComfortSettings}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_comfort_settings}{VRComfortSettings}}\&\ settings)\ \{\ m\_comfortSettings\ =\ settings;\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_comfort_settings}{VRComfortSettings}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a1a1ae68f2e36a8e563000ffa744ad822}{getComfortSettings}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_comfortSettings;\ \}}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Filtering\ and\ smoothing}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_ae40a5fb1a21d21edcdb2335c1a82e161}{setPoseFiltering}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_poseFiltering\ =\ enabled;\ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_ac4e1dfd7ed7c131c805defa401a1e885}{setFilterStrength}}(\textcolor{keywordtype}{float}\ strength)\ \{\ m\_filterStrength\ =\ strength;\ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_aecb8c0523a9f391f85e7a5458222e6ff}{setPoseHistorySize}}(\textcolor{keywordtype}{size\_t}\ size)\ \{\ m\_poseHistorySize\ =\ size;\ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_af7d754439af4f5ade89b7608daa50e49}{isPoseFilteringEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_poseFiltering;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_ab0ce60e893b755f84f97562fe94f8759}{getFilterStrength}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_filterStrength;\ \}}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Sensitivity}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a0b1da6d2cc095e912a345ea8cf21d237}{setSensitivity}}(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_sensitivity\ =\ sensitivity;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a3670aac2810eb4ab08fe7808a48c07b4}{getSensitivity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_sensitivity;\ \}}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ VR\ utilities}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a745b194bf0a3bcd017ca676cfa06e648}{vrGestureToString}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture);}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a845e74a8faa5cb4553b2c14c1c15736d}{vrGestureFromString}}(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a2131a159ed713803dd03285246906af2}{handTypeToString}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a702fdaabd3c3ebd9c5ef7dcf7f13c7cd}{handTypeFromString}}(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a0145ae1026e19d20b34337cb85925dc2}{isValidVRGesture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler_a6f3710729b31dfe3fec69b596e6389ec}{isValidHandType}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{struct\ }VRState\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hand\ poses}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ std::array<HandPose,\ 2>\ currentPoses;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ std::array<bool,\ 2>\ handTracking\ =\ \{\};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ std::array<float,\ 2>\ handConfidence\ =\ \{\};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gesture\ state}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::vector<std::pair<VRGesture,\ HandType>>\ activeGestures;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ std::unordered\_map<VRGesture,\ bool>\ enabledGestures;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ std::unordered\_map<VRGesture,\ float>\ gestureThresholds;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ std::unordered\_map<std::pair<VRGesture,\ HandType>,\ \textcolor{keywordtype}{float}>\ gestureConfidence;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pose\ history\ for\ filtering}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ std::array<std::deque<HandPose>,\ 2>\ poseHistory;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gesture\ detection\ state}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ std::array<bool,\ 2>\ pointing\ =\ \{\};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ std::array<bool,\ 2>\ pinching\ =\ \{\};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ std::array<bool,\ 2>\ grabbing\ =\ \{\};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ std::array<Math::Vector3f,\ 2>\ pointingDirection;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ handTracking.fill(\textcolor{keyword}{false});}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ handConfidence.fill(0.0f);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ activeGestures.clear();}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ history\ :\ poseHistory)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ history.clear();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ pointing.fill(\textcolor{keyword}{false});}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ pinching.fill(\textcolor{keyword}{false});}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ grabbing.fill(\textcolor{keyword}{false});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ dir\ :\ pointingDirection)\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dir\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a3520709f0a606a5c43d6aa3fdbe43e5d}{Math::Vector3f::Zero}}();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \};}
+\DoxyCodeLine{00125\ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ VRState\ m\_state;}
+\DoxyCodeLine{00127\ \ \ \ \ std::unique\_ptr<VRGestureRecognizer>\ m\_gestureRecognizer;}
+\DoxyCodeLine{00128\ \ \ \ \ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_handTrackingEnabled;}
+\DoxyCodeLine{00131\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{HandTrackingQuality}}\ m\_trackingQuality;}
+\DoxyCodeLine{00132\ \ \ \ \ VRComfortSettings\ m\_comfortSettings;}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_poseFiltering;}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_filterStrength;}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_poseHistorySize;}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_sensitivity;}
+\DoxyCodeLine{00137\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Event\ processing\ methods}}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ handleHandUpdate(\textcolor{keyword}{const}\ VREvent\&\ event);}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ handleGestureDetected(\textcolor{keyword}{const}\ VREvent\&\ event);}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ handleGestureCompleted(\textcolor{keyword}{const}\ VREvent\&\ event);}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ handleHandLost(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00143\ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ Hand\ pose\ processing}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}\ updateHandPose(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keyword}{const}\ HandPose\&\ pose);}
+\DoxyCodeLine{00146\ \ \ \ \ HandPose\ filterHandPose(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keyword}{const}\ HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{void}\ addPoseToHistory(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keyword}{const}\ HandPose\&\ pose);}
+\DoxyCodeLine{00148\ \ \ \ \ HandPose\ getFilteredPose(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00149\ \ \ \ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ Gesture\ recognition}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ recognizeGestures();}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ updateGestureStates();}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ checkPointingGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ checkPinchGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ checkGrabGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{void}\ checkThumbsGestures(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ checkFistGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ checkOpenPalmGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ checkTwoHandGestures();}
+\DoxyCodeLine{00160\ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ Gesture\ state\ management}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ startGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{void}\ updateGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{void}\ endGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{bool}\ isGestureInProgress(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00166\ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Hand\ analysis}}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFingerExtended(\textcolor{keyword}{const}\ HandPose\&\ pose,\ \textcolor{keywordtype}{int}\ fingerIndex)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFingerBent(\textcolor{keyword}{const}\ HandPose\&\ pose,\ \textcolor{keywordtype}{int}\ fingerIndex)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateFingerBend(\textcolor{keyword}{const}\ FingerPose\&\ finger)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00171\ \ \ \ \ Math::Vector3f\ calculatePointingDirection(\textcolor{keyword}{const}\ HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{float}\ calculatePinchDistance(\textcolor{keyword}{const}\ HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHandClosed(\textcolor{keyword}{const}\ HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHandOpen(\textcolor{keyword}{const}\ HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00175\ \ \ \ \ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getHandIndex(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidHandIndex(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateGestureConfidence(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ meetsGestureThreshold(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \textcolor{keywordtype}{float}\ confidence)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00181\ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ Ray\ casting\ helpers}}
+\DoxyCodeLine{00183\ \ \ \ \ Math::Ray\ createHandRay(\textcolor{keyword}{const}\ HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00184\ \ \ \ \ Math::Vector3f\ getFingerTipPosition(\textcolor{keyword}{const}\ HandPose\&\ pose,\ \textcolor{keywordtype}{int}\ fingerIndex)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00185\ \ \ \ \ }
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ Event\ dispatching}}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchVREvent(\textcolor{keyword}{const}\ VREvent\&\ event);}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchHandPoseEvent(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keyword}{const}\ HandPose\&\ pose);}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchGestureEvent(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keywordtype}{bool}\ started,\ \textcolor{keywordtype}{bool}\ ended\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchPointingEvent(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ direction,\ \textcolor{keywordtype}{bool}\ started);}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchPinchEvent(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keywordtype}{float}\ distance,\ \textcolor{keywordtype}{bool}\ started);}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchGrabEvent(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand,\ \textcolor{keywordtype}{bool}\ started);}
+\DoxyCodeLine{00193\ \};}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \textcolor{comment}{//\ VR\ gesture\ recognizer}}
+\DoxyCodeLine{00196\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_af1e3a91cc65175749c1c2c4d62cd6483}{VRGestureRecognizer}}\ \{}
+\DoxyCodeLine{00197\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00198\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_af1e3a91cc65175749c1c2c4d62cd6483}{VRGestureRecognizer}}();}
+\DoxyCodeLine{00199\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_a9a536c34a0294031667fcdbb6172be36}{\string~VRGestureRecognizer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00200\ \ \ \ \ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_a0d2b9a66d53709c39ab6c91e02c45068}{updateHandPoses}}(\textcolor{keyword}{const}\ std::array<HandPose,\ 2>\&\ poses);}
+\DoxyCodeLine{00202\ \ \ \ \ std::vector<std::pair<VRGesture,\ HandType>>\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_a660bb6df32eec1240c05b10c52ff0d70}{recognizeGestures}}();}
+\DoxyCodeLine{00203\ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_a02a1ab817902c9a0c5cc8d93270024cf}{setGestureThreshold}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture,\ \textcolor{keywordtype}{float}\ threshold);}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer_ac10f7c2105967b7c85a981994c76f13f}{getGestureThreshold}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00207\ \ \ \ \ }
+\DoxyCodeLine{00208\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00209\ \ \ \ \ std::array<HandPose,\ 2>\ m\_currentPoses;}
+\DoxyCodeLine{00210\ \ \ \ \ std::array<HandPose,\ 2>\ m\_previousPoses;}
+\DoxyCodeLine{00211\ \ \ \ \ std::unordered\_map<VRGesture,\ float>\ m\_gestureThresholds;}
+\DoxyCodeLine{00212\ \ \ \ \ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizePointing(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizePinch(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeGrab(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeThumbsUp(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeThumbsDown(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeFist(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeOpenPalm(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizePeace(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand);}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeTwoHandGrab();}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeTwoHandScale();}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{float}\ recognizeTwoHandRotate();}
+\DoxyCodeLine{00224\ \ \ \ \ }
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFingerExtended(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{HandPose}}\&\ pose,\ \textcolor{keywordtype}{int}\ fingerIndex)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateFingerBend(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_finger_pose}{FingerPose}}\&\ finger)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00227\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ getFingerTip(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{HandPose}}\&\ pose,\ \textcolor{keywordtype}{int}\ fingerIndex)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateDistance(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ p1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ p2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateHandDistance()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00230\ \};}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \}}
+\DoxyCodeLine{00233\ \}}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \textcolor{comment}{//\ VR\ event\ types\ for\ the\ event\ system}}
+\DoxyCodeLine{00236\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00237\ \textcolor{keyword}{namespace\ }Events\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_ad6091964ef291c1c03f01513cfa1db4d}{VRHandPoseEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRHandPoseEvent>\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_a5df47f22c04dfe5bb92e82f7eb5e7f38}{hand}};}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{Input::HandPose}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_a51ab046e8b81da205713c1b742ffe554}{pose}};}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_ae770b785b0fd1a3e02f5a23ad259d406}{tracking}};}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_ad6091964ef291c1c03f01513cfa1db4d}{VRHandPoseEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{Input::HandPose}}\&\ p,\ \textcolor{keywordtype}{bool}\ t)}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_a5df47f22c04dfe5bb92e82f7eb5e7f38}{hand}}(h),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_a51ab046e8b81da205713c1b742ffe554}{pose}}(p),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_hand_pose_event_ae770b785b0fd1a3e02f5a23ad259d406}{tracking}}(t)\ \{\}}
+\DoxyCodeLine{00246\ \ \ \ \ \};}
+\DoxyCodeLine{00247\ \ \ \ \ }
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a0ac25c90b188a9ce78194592b058ad93}{VRGestureEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRGestureEvent>\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{Input::VRGesture}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a6c560857acc9906d2163ad5406b0a714}{gesture}};}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a1c60710d5e3c43752ec92a85a49b3912}{hand}};}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_ade668c3750e350fd07bed5224615733b}{position}};}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a819b9967a525a032c143c5e96e6670c4}{confidence}};}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a747c19ac47d1eaa2fa146ec4d581b270}{started}};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_af7ede916ff2eab87e1725ff75f522a2a}{ended}};}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a0ac25c90b188a9ce78194592b058ad93}{VRGestureEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{Input::VRGesture}}\ g,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ pos,\ \textcolor{keywordtype}{float}\ conf,\ \textcolor{keywordtype}{bool}\ s,\ \textcolor{keywordtype}{bool}\ e)}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a6c560857acc9906d2163ad5406b0a714}{gesture}}(g),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a1c60710d5e3c43752ec92a85a49b3912}{hand}}(h),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_ade668c3750e350fd07bed5224615733b}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a819b9967a525a032c143c5e96e6670c4}{confidence}}(conf),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_a747c19ac47d1eaa2fa146ec4d581b270}{started}}(s),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_event_af7ede916ff2eab87e1725ff75f522a2a}{ended}}(e)\ \{\}}
+\DoxyCodeLine{00258\ \ \ \ \ \};}
+\DoxyCodeLine{00259\ \ \ \ \ }
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a055339e9b6285cf600fab0b4295a61bc}{VRPointingEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRPointingEvent>\ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_aba1a84195c39e26d1a2e19277fb0b205}{hand}};}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a32f6a00db72a99faa35a635772bf98a9}{direction}};}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a26f3524826e30d6513fb2e1475933df5}{position}};}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a60d4f9a6bbd17edbc468b4abc6ff5ebc}{started}};}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a055339e9b6285cf600fab0b4295a61bc}{VRPointingEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ dir,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ pos,\ \textcolor{keywordtype}{bool}\ s)}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_aba1a84195c39e26d1a2e19277fb0b205}{hand}}(h),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a32f6a00db72a99faa35a635772bf98a9}{direction}}(dir),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a26f3524826e30d6513fb2e1475933df5}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pointing_event_a60d4f9a6bbd17edbc468b4abc6ff5ebc}{started}}(s)\ \{\}}
+\DoxyCodeLine{00268\ \ \ \ \ \};}
+\DoxyCodeLine{00269\ \ \ \ \ }
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a7308d03f1b5ad2e1d8b579ca32451f5a}{VRPinchEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRPinchEvent>\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a94de0e13eef8c054131cf83becec4963}{hand}};}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a34ab75675b6c9b96deccd99f27113348}{distance}};}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_ae44d0f1cb7a9c05536705bba4bd42137}{position}};}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a6347c9a7183c459b2bda57609fdb326d}{started}};}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a7308d03f1b5ad2e1d8b579ca32451f5a}{VRPinchEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h,\ \textcolor{keywordtype}{float}\ d,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ pos,\ \textcolor{keywordtype}{bool}\ s)}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a94de0e13eef8c054131cf83becec4963}{hand}}(h),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a34ab75675b6c9b96deccd99f27113348}{distance}}(d),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_ae44d0f1cb7a9c05536705bba4bd42137}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_pinch_event_a6347c9a7183c459b2bda57609fdb326d}{started}}(s)\ \{\}}
+\DoxyCodeLine{00278\ \ \ \ \ \};}
+\DoxyCodeLine{00279\ \ \ \ \ }
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a00c76d6a2e18c911da9c3037daf270f6}{VRGrabEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRGrabEvent>\ \{}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_aed5faa114bcb5d490aa78b47c9817dc7}{hand}};}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a5dfbc83f3e420c273ea34b27d2424098}{position}};}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a72c45dd246c154e2318622cdccb17b18}{started}};}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a00c76d6a2e18c911da9c3037daf270f6}{VRGrabEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ pos,\ \textcolor{keywordtype}{bool}\ s)}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_aed5faa114bcb5d490aa78b47c9817dc7}{hand}}(h),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a5dfbc83f3e420c273ea34b27d2424098}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a72c45dd246c154e2318622cdccb17b18}{started}}(s)\ \{\}}
+\DoxyCodeLine{00287\ \ \ \ \ \};}
+\DoxyCodeLine{00288\ \ \ \ \ }
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_tracking_event_a4dbb4c9663cdc783fa66820cfec36b9c}{HandTrackingEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<HandTrackingEvent>\ \{}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_tracking_event_a89c7fd73bdcbed7520b44fcc4b525bec}{hand}};}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{Input::HandPose}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_tracking_event_aba2c5de3d80bbd8db6df9f55df4c558c}{pose}};}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_tracking_event_a4dbb4c9663cdc783fa66820cfec36b9c}{HandTrackingEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{Input::HandPose}}\&\ p)}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_tracking_event_a89c7fd73bdcbed7520b44fcc4b525bec}{hand}}(h),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_tracking_event_aba2c5de3d80bbd8db6df9f55df4c558c}{pose}}(p)\ \{\}}
+\DoxyCodeLine{00295\ \ \ \ \ \};}
+\DoxyCodeLine{00296\ \ \ \ \ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_lost_event_ad2940589876946fa91e2c7094d640f1a}{HandLostEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<HandLostEvent>\ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_lost_event_ad7a05a407aa72b98fe29e7c10fb8eafa}{hand}};}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_lost_event_ad2940589876946fa91e2c7094d640f1a}{HandLostEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h)}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_hand_lost_event_ad7a05a407aa72b98fe29e7c10fb8eafa}{hand}}(h)\ \{\}}
+\DoxyCodeLine{00302\ \ \ \ \ \};}
+\DoxyCodeLine{00303\ \ \ \ \ }
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_system_gesture_event_ad7d8bf27be4267b9675cc07dbcc09ba8}{VRSystemGestureEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRSystemGestureEvent>\ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ std::vector<Input::VRGesture>\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_system_gesture_event_aaa1904878e30da860d1dad8d595a6ac0}{gestures}};}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_system_gesture_event_a9d59da9520a50ee5d69c52a81044a2eb}{hand}};}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_system_gesture_event_ad7d8bf27be4267b9675cc07dbcc09ba8}{VRSystemGestureEvent}}(\textcolor{keyword}{const}\ std::vector<Input::VRGesture>\&\ g,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h)}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_system_gesture_event_aaa1904878e30da860d1dad8d595a6ac0}{gestures}}(g),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_system_gesture_event_a9d59da9520a50ee5d69c52a81044a2eb}{hand}}(h)\ \{\}}
+\DoxyCodeLine{00310\ \ \ \ \ \};}
+\DoxyCodeLine{00311\ \ \ \ \ }
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_a9773780b504555083cd5d19a8e9b7b6d}{VRGestureActionEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VRGestureActionEvent>\ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_ab4ac88107c4cf12e88d18b92e3ffdf84}{action}};}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{Input::VRGesture}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_a29a2c8b2a4b108ad8f67da756ca75970}{gesture}};}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_abc1b2831c828d749bd267ffe101415d8}{hand}};}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_a9773780b504555083cd5d19a8e9b7b6d}{VRGestureActionEvent}}(\textcolor{keyword}{const}\ std::string\&\ a,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{Input::VRGesture}}\ g,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input::HandType}}\ h)}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_ab4ac88107c4cf12e88d18b92e3ffdf84}{action}}(a),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_a29a2c8b2a4b108ad8f67da756ca75970}{gesture}}(g),\ \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_gesture_action_event_abc1b2831c828d749bd267ffe101415d8}{hand}}(h)\ \{\}}
+\DoxyCodeLine{00319\ \ \ \ \ \};}
+\DoxyCodeLine{00320\ \ \ \ \ }
+\DoxyCodeLine{00321\ \}}
+\DoxyCodeLine{00322\ \}}
+
+\end{DoxyCode}

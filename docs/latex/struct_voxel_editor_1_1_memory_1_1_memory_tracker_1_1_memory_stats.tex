@@ -1,0 +1,75 @@
+\doxysection{Voxel\+Editor\+::Memory\+::Memory\+Tracker\+::Memory\+Stats Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}{}\label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+
+
+{\ttfamily \#include $<$Memory\+Tracker.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a38b83c266e615b4d5c485ee846595b69}{total\+Allocated}}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_affc1fb61b7d76604bfb38e53c20ce22b}{total\+Deallocated}}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a9fee4f4df173615f6f7efd166e96f0c7}{current\+Usage}}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a0c9740b9913d2fab851842a4105afba4}{peak\+Usage}}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_ae8d6d9449266987825ad12351a264ac2}{active\+Allocations}}
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a492e2f22ce9614b71866d729f8d7d4fe}{pressure\+Ratio}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, size\+\_\+t $>$ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a8483f9fa41a6b87d18cef8ff81efa691}{category\+Usage}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_ae8d6d9449266987825ad12351a264ac2}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!activeAllocations@{activeAllocations}}
+\index{activeAllocations@{activeAllocations}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{activeAllocations}{activeAllocations}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_ae8d6d9449266987825ad12351a264ac2} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::active\+Allocations}
+
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a8483f9fa41a6b87d18cef8ff81efa691}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!categoryUsage@{categoryUsage}}
+\index{categoryUsage@{categoryUsage}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{categoryUsage}{categoryUsage}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a8483f9fa41a6b87d18cef8ff81efa691} 
+std\+::unordered\+\_\+map$<$std\+::string, size\+\_\+t$>$ Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::category\+Usage}
+
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a9fee4f4df173615f6f7efd166e96f0c7}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!currentUsage@{currentUsage}}
+\index{currentUsage@{currentUsage}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{currentUsage}{currentUsage}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a9fee4f4df173615f6f7efd166e96f0c7} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::current\+Usage}
+
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a0c9740b9913d2fab851842a4105afba4}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!peakUsage@{peakUsage}}
+\index{peakUsage@{peakUsage}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{peakUsage}{peakUsage}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a0c9740b9913d2fab851842a4105afba4} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::peak\+Usage}
+
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a492e2f22ce9614b71866d729f8d7d4fe}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!pressureRatio@{pressureRatio}}
+\index{pressureRatio@{pressureRatio}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{pressureRatio}{pressureRatio}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a492e2f22ce9614b71866d729f8d7d4fe} 
+float Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::pressure\+Ratio}
+
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a38b83c266e615b4d5c485ee846595b69}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!totalAllocated@{totalAllocated}}
+\index{totalAllocated@{totalAllocated}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{totalAllocated}{totalAllocated}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a38b83c266e615b4d5c485ee846595b69} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::total\+Allocated}
+
+\Hypertarget{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_affc1fb61b7d76604bfb38e53c20ce22b}\index{VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}!totalDeallocated@{totalDeallocated}}
+\index{totalDeallocated@{totalDeallocated}!VoxelEditor::Memory::MemoryTracker::MemoryStats@{VoxelEditor::Memory::MemoryTracker::MemoryStats}}
+\doxysubsubsection{\texorpdfstring{totalDeallocated}{totalDeallocated}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_affc1fb61b7d76604bfb38e53c20ce22b} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats\+::total\+Deallocated}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/memory/\mbox{\hyperlink{_memory_tracker_8h}{Memory\+Tracker.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,158 @@
+\doxysection{Binary\+IO.\+h}
+\hypertarget{_binary_i_o_8h_source}{}\label{_binary_i_o_8h_source}\index{core/file\_io/include/file\_io/BinaryIO.h@{core/file\_io/include/file\_io/BinaryIO.h}}
+\mbox{\hyperlink{_binary_i_o_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{math/Vector3f.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix4f_8h}{math/Matrix4f.h}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ Binary\ writer\ for\ serialization}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a782ab4690f4dfd65b5790fff1fb0baa5}{BinaryWriter}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a782ab4690f4dfd65b5790fff1fb0baa5}{BinaryWriter}}(std::ostream\&\ stream);}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a88a2458788df58d0a2dcd015323c2bee}{\string~BinaryWriter}}();}
+\DoxyCodeLine{00017\ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ Basic\ types}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a4022f9cc029777c0699cb85fce249c2b}{writeUInt8}}(uint8\_t\ value);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a9ec9d773b091d3db24efdbee67ed63a7}{writeUInt16}}(uint16\_t\ value);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae2a553c12904febe533e3b5a8cd03fba}{writeUInt32}}(uint32\_t\ value);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a3861a6fc16b3048ebec2e4e4226f806a}{writeUInt64}}(uint64\_t\ value);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae172b0fd3bc64206b3e348b122fe46b7}{writeInt8}}(int8\_t\ value);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_aaa19435d922db495b084abe8fc185a23}{writeInt16}}(int16\_t\ value);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ac069695df9ceb598826b4ab6eb946c4a}{writeInt32}}(int32\_t\ value);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a6e4f1afcde05e3b16d7027bfb39c6152}{writeInt64}}(int64\_t\ value);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a334eb4ee8a115b5cae137cdbe84c9aaf}{writeFloat}}(\textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_af1e14a4ba4b6e33ceffd8b4c21fbb851}{writeDouble}}(\textcolor{keywordtype}{double}\ value);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ab5a3c414782b87cf7d94048af3dc4fbc}{writeBool}}(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Complex\ types}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a2f3191a4ef1f650d0caaf9eee0609db9}{writeString}}(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a47a510cec68de2bab111aa671abbafa1}{writeVector3f}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ vec);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae75523044222295f0644b61223a79b52}{writeMatrix4f}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ mat);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a5a472bf3790ad126455fc5352ecc03a8}{writeBytes}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Array\ writing}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a2a9b468f9a9ff151f527b16c0363713d}{writeArray}}(\textcolor{keyword}{const}\ std::vector<T>\&\ array)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae2a553c12904febe533e3b5a8cd03fba}{writeUInt32}}(\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(array.size()));}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ item\ :\ array)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{write}}(item);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Generic\ write\ (requires\ specialization)}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{write}}(\textcolor{keyword}{const}\ T\&\ value);}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Stream\ management}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a5e939d00fac2b597ed771dc53f478b10}{getBytesWritten}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_bytesWritten;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ab9243c97998691de4d6f9e352c871916}{isValid}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_valid\ \&\&\ m\_stream.good();\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a36192fdcc7f73c9531461f0dd9c0f11d}{flush}}();}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00056\ \ \ \ \ std::ostream\&\ m\_stream;}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_bytesWritten;}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_valid;}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ writeRaw(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ Binary\ reader\ for\ deserialization}}
+\DoxyCodeLine{00064\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a79a4dfdc4e9e66ba1a58368caf10438f}{BinaryReader}}\ \{}
+\DoxyCodeLine{00065\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a79a4dfdc4e9e66ba1a58368caf10438f}{BinaryReader}}(std::istream\&\ stream);}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a21a45d07af72f6dc4848f6ca28c742fb}{\string~BinaryReader}}();}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Basic\ types}}
+\DoxyCodeLine{00070\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_acbf64a89d1c6749653725aaf6f28983f}{readUInt8}}();}
+\DoxyCodeLine{00071\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aed007fee5ffe3f574403c8643a110b38}{readUInt16}}();}
+\DoxyCodeLine{00072\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a1f74ef03485a31ea4c53646fe4959327}{readUInt32}}();}
+\DoxyCodeLine{00073\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a39e12926882d68951d68a019d84412d8}{readUInt64}}();}
+\DoxyCodeLine{00074\ \ \ \ \ int8\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9f5ab7e3c07530013a52bb29d6f87dc7}{readInt8}}();}
+\DoxyCodeLine{00075\ \ \ \ \ int16\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a796cd76b99b236897671ec78fe769727}{readInt16}}();}
+\DoxyCodeLine{00076\ \ \ \ \ int32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_af35ce04150c88b247942160706cd6d1a}{readInt32}}();}
+\DoxyCodeLine{00077\ \ \ \ \ int64\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae96dd7d65ff08b90e78dad0fdc00d5e7}{readInt64}}();}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_abf51ede6e093ed0937aadefb99741d5a}{readFloat}}();}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a86bdb78e34c456f4262ac7e77c5b3055}{readDouble}}();}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2d99ea34771535a9e42ac2ee3fc37411}{readBool}}();}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ Complex\ types}}
+\DoxyCodeLine{00083\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a25219e1da62b22bbbdad15ae2cb4fbe8}{readString}}();}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac5349dd47ccd2d5abe062a4f6a5719f3}{readVector3f}}();}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac255798a53f22012b7a47bcab33bb561}{readMatrix4f}}();}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac678d3dd368e26769feaa326a271dc64}{readBytes}}(\textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00087\ \ \ \ \ std::vector<uint8\_t>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac678d3dd368e26769feaa326a271dc64}{readBytes}}(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Array\ reading}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00091\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a096cd5fa62e05c3d815d64b6440f2180}{readArray}}()\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ uint32\_t\ size\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a1f74ef03485a31ea4c53646fe4959327}{readUInt32}}();}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ std::vector<T>\ array;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ array.reserve(size);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ size;\ ++i)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ array.push\_back(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{read<T>}}());}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ array;}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Generic\ read\ (requires\ specialization)}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00103\ \ \ \ \ T\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{read}}();}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Stream\ management}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ad8b8c8e7490991ce5a041c03d7f04818}{getBytesRead}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_bytesRead;\ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ac49a13e2e4c222149623930c762cf93d}{isValid}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_valid\ \&\&\ m\_stream.good();\ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2bd8c071fd0cb9852f4f2902b1c7948c}{isAtEnd}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a96a7db5f439e31adec3bc13c7f28df10}{skip}}(\textcolor{keywordtype}{size\_t}\ bytes);}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a97b08aeaa975cdc33f165e7c8999b18b}{remaining}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00111\ \ \ \ \ }
+\DoxyCodeLine{00112\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00113\ \ \ \ \ std::istream\&\ m\_stream;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_bytesRead;}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_valid;}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ readRaw(\textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{comment}{//\ Template\ specializations\ for\ common\ types}}
+\DoxyCodeLine{00121\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ uint8\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a4022f9cc029777c0699cb85fce249c2b}{writeUInt8}}(value);\ \}}
+\DoxyCodeLine{00122\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ uint16\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a9ec9d773b091d3db24efdbee67ed63a7}{writeUInt16}}(value);\ \}}
+\DoxyCodeLine{00123\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ uint32\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae2a553c12904febe533e3b5a8cd03fba}{writeUInt32}}(value);\ \}}
+\DoxyCodeLine{00124\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ uint64\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a3861a6fc16b3048ebec2e4e4226f806a}{writeUInt64}}(value);\ \}}
+\DoxyCodeLine{00125\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ int8\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae172b0fd3bc64206b3e348b122fe46b7}{writeInt8}}(value);\ \}}
+\DoxyCodeLine{00126\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ int16\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_aaa19435d922db495b084abe8fc185a23}{writeInt16}}(value);\ \}}
+\DoxyCodeLine{00127\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ int32\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ac069695df9ceb598826b4ab6eb946c4a}{writeInt32}}(value);\ \}}
+\DoxyCodeLine{00128\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ int64\_t\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a6e4f1afcde05e3b16d7027bfb39c6152}{writeInt64}}(value);\ \}}
+\DoxyCodeLine{00129\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a334eb4ee8a115b5cae137cdbe84c9aaf}{writeFloat}}(value);\ \}}
+\DoxyCodeLine{00130\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_af1e14a4ba4b6e33ceffd8b4c21fbb851}{writeDouble}}(value);\ \}}
+\DoxyCodeLine{00131\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ab5a3c414782b87cf7d94048af3dc4fbc}{writeBool}}(value);\ \}}
+\DoxyCodeLine{00132\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ std::string\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a2f3191a4ef1f650d0caaf9eee0609db9}{writeString}}(value);\ \}}
+\DoxyCodeLine{00133\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_a47a510cec68de2bab111aa671abbafa1}{writeVector3f}}(value);\ \}}
+\DoxyCodeLine{00134\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ad477ffed69188ef02011d4d5440450b3}{BinaryWriter::write}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ value)\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer_ae75523044222295f0644b61223a79b52}{writeMatrix4f}}(value);\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ uint8\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<uint8\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_acbf64a89d1c6749653725aaf6f28983f}{readUInt8}}();\ \}}
+\DoxyCodeLine{00137\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ uint16\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<uint16\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_aed007fee5ffe3f574403c8643a110b38}{readUInt16}}();\ \}}
+\DoxyCodeLine{00138\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<uint32\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a1f74ef03485a31ea4c53646fe4959327}{readUInt32}}();\ \}}
+\DoxyCodeLine{00139\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ uint64\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<uint64\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a39e12926882d68951d68a019d84412d8}{readUInt64}}();\ \}}
+\DoxyCodeLine{00140\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ int8\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<int8\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a9f5ab7e3c07530013a52bb29d6f87dc7}{readInt8}}();\ \}}
+\DoxyCodeLine{00141\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ int16\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<int16\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a796cd76b99b236897671ec78fe769727}{readInt16}}();\ \}}
+\DoxyCodeLine{00142\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ int32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<int32\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_af35ce04150c88b247942160706cd6d1a}{readInt32}}();\ \}}
+\DoxyCodeLine{00143\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ int64\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<int64\_t>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae96dd7d65ff08b90e78dad0fdc00d5e7}{readInt64}}();\ \}}
+\DoxyCodeLine{00144\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<float>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_abf51ede6e093ed0937aadefb99741d5a}{readFloat}}();\ \}}
+\DoxyCodeLine{00145\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<double>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a86bdb78e34c456f4262ac7e77c5b3055}{readDouble}}();\ \}}
+\DoxyCodeLine{00146\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<bool>}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_a2d99ea34771535a9e42ac2ee3fc37411}{readBool}}();\ \}}
+\DoxyCodeLine{00147\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<std::string>}}()\ \{\ \textcolor{keywordflow}{return}\ readString();\ \}}
+\DoxyCodeLine{00148\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<Math::Vector3f>}}()\ \{\ \textcolor{keywordflow}{return}\ readVector3f();\ \}}
+\DoxyCodeLine{00149\ \textcolor{keyword}{template}<>\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader_ae74fb0b18599a51241f599a97d4e12d8}{BinaryReader::read<Math::Matrix4f>}}()\ \{\ \textcolor{keywordflow}{return}\ readMatrix4f();\ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \}\ \textcolor{comment}{//\ namespace\ FileIO}}
+\DoxyCodeLine{00152\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

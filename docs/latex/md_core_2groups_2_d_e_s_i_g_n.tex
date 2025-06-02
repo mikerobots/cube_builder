@@ -1,0 +1,305 @@
+\chapter{Group Management Subsystem }
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n}{}\label{md_core_2groups_2_d_e_s_i_g_n}\index{Group Management Subsystem@{Group Management Subsystem}}
+\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md187}%
+\Hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md187}%
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md188}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md188}
+Manages voxel grouping, group operations (move, hide, copy), hierarchical organization, and group metadata persistence.\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md189}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md189}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md190}{}\doxysubsection{\texorpdfstring{Group\+Manager}{Group\+Manager}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md190}
+{\bfseries{Responsibility}}\+: Main interface for group operations
+\begin{DoxyItemize}
+\item Create and manage groups
+\item Handle group visibility
+\item Coordinate group operations
+\item Maintain group hierarchy
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md191}{}\doxysubsection{\texorpdfstring{Voxel\+Group}{Voxel\+Group}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md191}
+{\bfseries{Responsibility}}\+: Individual group representation
+\begin{DoxyItemize}
+\item Store group metadata (name, color, etc.)
+\item Track member voxels
+\item Handle group-\/specific operations
+\item Maintain group state
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md192}{}\doxysubsection{\texorpdfstring{Group\+Hierarchy}{Group\+Hierarchy}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md192}
+{\bfseries{Responsibility}}\+: Nested group management
+\begin{DoxyItemize}
+\item Parent-\/child relationships
+\item Inheritance of properties
+\item Hierarchical operations
+\item Cycle detection
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md193}{}\doxysubsection{\texorpdfstring{Group\+Operations}{Group\+Operations}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md193}
+{\bfseries{Responsibility}}\+: Bulk group operations
+\begin{DoxyItemize}
+\item Move entire groups
+\item Copy/duplicate groups
+\item Merge/split operations
+\item Batch transformations
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md194}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md194}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }GroupManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ lifecycle}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ createGroup(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ deleteGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ renameGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ std::string\&\ newName);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ membership}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ addVoxelToGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ removeVoxelFromGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getGroupVoxels(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ visibility}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ hideGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ showGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isGroupVisible(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setGroupOpacity(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{float}\ opacity);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ moveGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ copyGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ std::string\&\ newName\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ rotateGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Quaternion\&\ rotation);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ scaleGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{float}\ scale);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Hierarchy\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setParentGroup(GroupId\ child,\ GroupId\ parent);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ getParentGroup(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ getChildGroups(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ queries}}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupInfo>\ listGroups()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ findGroupsByName(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ findGroupContaining(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ locking}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ lockGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ unlockGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isGroupLocked(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<GroupId,\ std::unique\_ptr<VoxelGroup>>\ m\_groups;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<GroupHierarchy>\ m\_hierarchy;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_nextGroupId;}
+\DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md195}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md195}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md196}{}\doxysubsection{\texorpdfstring{Group\+Id}{Group\+Id}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md196}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ =\ uint32\_t;}
+\DoxyCodeLine{\textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}}\ =\ 0;}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md197}{}\doxysubsection{\texorpdfstring{Voxel\+Id}{Voxel\+Id}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md197}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3i\ position;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ VoxelId\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ hash()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md198}{}\doxysubsection{\texorpdfstring{Group\+Info}{Group\+Info}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md198}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }GroupInfo\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ id;}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ visible;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ locked;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ opacity;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ voxelCount;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parentId;}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ childIds;}
+\DoxyCodeLine{\ \ \ \ BoundingBox\ bounds;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md199}{}\doxysubsection{\texorpdfstring{Group\+Metadata}{Group\+Metadata}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md199}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }GroupMetadata\ \{}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ visible;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ locked;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ opacity;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ pivot;}
+\DoxyCodeLine{\ \ \ \ std::string\ description;}
+\DoxyCodeLine{\ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ created;}
+\DoxyCodeLine{\ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ modified;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md200}{}\doxysection{\texorpdfstring{Group Operations}{Group Operations}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md200}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md201}{}\doxysubsection{\texorpdfstring{Move Operation}{Move Operation}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md201}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MoveGroupOperation\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ MoveGroupOperation(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ execute(VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ undo(VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_moves;\ \textcolor{comment}{//\ old\ -\/>\ new\ positions}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md202}{}\doxysubsection{\texorpdfstring{Copy Operation}{Copy Operation}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md202}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CopyGroupOperation\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ CopyGroupOperation(GroupId\ sourceId,\ \textcolor{keyword}{const}\ std::string\&\ newName,\ \textcolor{keyword}{const}\ Vector3f\&\ offset\ =\ Vector3f::Zero());}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ execute(GroupManager\&\ groupManager,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ undo(GroupManager\&\ groupManager,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_sourceId;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_createdId;}
+\DoxyCodeLine{\ \ \ \ std::string\ m\_newName;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ m\_createdVoxels;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md203}{}\doxysection{\texorpdfstring{Visual Properties}{Visual Properties}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md203}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md204}{}\doxysubsection{\texorpdfstring{Group Colors}{Group Colors}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md204}
+
+\begin{DoxyItemize}
+\item Auto-\/assign colors from predefined palette
+\item User-\/customizable colors
+\item Color inheritance in hierarchies
+\item High-\/contrast color selection
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md205}{}\doxysubsection{\texorpdfstring{Group Indicators}{Group Indicators}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md205}
+
+\begin{DoxyItemize}
+\item Outline rendering for group boundaries
+\item Color-\/coded group visualization
+\item Opacity blending for hidden groups
+\item Visual hierarchy indicators
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md206}{}\doxysection{\texorpdfstring{Hierarchy Management}{Hierarchy Management}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md206}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md207}{}\doxysubsection{\texorpdfstring{Rules}{Rules}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md207}
+
+\begin{DoxyItemize}
+\item Groups can have at most one parent
+\item Circular references are prevented
+\item Operations propagate to children
+\item Visibility inheritance from parents
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md208}{}\doxysubsection{\texorpdfstring{Hierarchy Operations}{Hierarchy Operations}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md208}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }GroupHierarchy\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ addChild(GroupId\ parent,\ GroupId\ child);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ removeChild(GroupId\ parent,\ GroupId\ child);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasAncestor(GroupId\ descendant,\ GroupId\ ancestor)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ getAllDescendants(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ getRootGroups()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<GroupId,\ GroupId>\ m\_parentMap;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<GroupId,\ std::vector<GroupId>>\ m\_childrenMap;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md209}{}\doxysection{\texorpdfstring{Events}{Events}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md209}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md210}{}\doxysubsection{\texorpdfstring{Group\+Created Event}{Group\+Created Event}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md210}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }GroupCreatedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId;}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ voxels;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md211}{}\doxysubsection{\texorpdfstring{Group\+Modified Event}{Group\+Modified Event}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md211}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }GroupModifiedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ type;\ \textcolor{comment}{//\ MOVED,\ RENAMED,\ VISIBILITY\_CHANGED,\ etc.}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Type-\/specific\ data}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md212}{}\doxysubsection{\texorpdfstring{Group\+Deleted Event}{Group\+Deleted Event}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md212}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }GroupDeletedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId;}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ releasedVoxels;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md213}{}\doxysection{\texorpdfstring{Performance Considerations}{Performance Considerations}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md213}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md214}{}\doxysubsection{\texorpdfstring{Memory Optimization}{Memory Optimization}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md214}
+
+\begin{DoxyItemize}
+\item Store voxel references, not copies
+\item Use bit vectors for large group membership
+\item Lazy evaluation of group bounds
+\item Memory pooling for group objects
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md215}{}\doxysubsection{\texorpdfstring{Operation Efficiency}{Operation Efficiency}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md215}
+
+\begin{DoxyItemize}
+\item Spatial indexing for group intersection queries
+\item Cached bounding boxes
+\item Incremental updates for group modifications
+\item Parallel processing for bulk operations
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md216}{}\doxysubsection{\texorpdfstring{Rendering Integration}{Rendering Integration}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md216}
+
+\begin{DoxyItemize}
+\item Frustum culling per group
+\item Level-\/of-\/detail based on group size
+\item Instanced rendering for similar groups
+\item Occlusion culling optimization
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md217}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md217}
+\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md218}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md218}
+
+\begin{DoxyItemize}
+\item Group creation and deletion
+\item Membership management
+\item Hierarchy validation
+\item Operation correctness
+\item Event propagation
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md219}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md219}
+
+\begin{DoxyItemize}
+\item Interaction with voxel data manager
+\item Rendering system integration
+\item File I/O roundtrip testing
+\item Undo/redo system integration
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md220}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md220}
+
+\begin{DoxyItemize}
+\item Large group handling
+\item Deep hierarchy performance
+\item Bulk operation efficiency
+\item Memory usage validation
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md221}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md221}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Voxel\+Data}}\+: Voxel operations and validation
+\item {\bfseries{Foundation/\+Events}}\+: Event system for notifications
+\item {\bfseries{Foundation/\+Math}}\+: Vector operations and transformations
+\item {\bfseries{Core/\+Rendering}}\+: Visual representation of groups
+\item {\bfseries{Core/\+Undo\+Redo}}\+: Command pattern integration
+\end{DoxyItemize}\hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md222}{}\doxysection{\texorpdfstring{File I/O Integration}{File I/O Integration}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md222}
+
+\begin{DoxyItemize}
+\item Serialize group metadata and hierarchy
+\item Store group-\/voxel relationships efficiently
+\item Version compatibility for group data
+\item Incremental saves for group changes 
+\end{DoxyItemize}

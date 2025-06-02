@@ -1,0 +1,90 @@
+\doxysection{core/rendering/\+Shader\+Manager.h File Reference}
+\hypertarget{_shader_manager_8h}{}\label{_shader_manager_8h}\index{core/rendering/ShaderManager.h@{core/rendering/ShaderManager.h}}
+{\ttfamily \#include "{}Render\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Open\+GLRenderer.\+h"{}}\newline
+{\ttfamily \#include "{}../camera/\+Camera.\+h"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{Voxel\+Editor\+::\+Rendering\+::\+Shader\+Source}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program}{Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager}{Voxel\+Editor\+::\+Rendering\+::\+Shader\+Manager}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Voxel\+Editor\+::\+Rendering}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_shader_manager_8h_a568bb9e2637af25c68570b9ef6ed826e}{SHADER\+\_\+\+VERTEX}}(source)
+\item 
+\#define \mbox{\hyperlink{_shader_manager_8h_a93f1e0be75f19e7df654ecc295f07db8}{SHADER\+\_\+\+FRAGMENT}}(source)
+\item 
+\#define \mbox{\hyperlink{_shader_manager_8h_a91264abcf88e9e58045eb5a8b7da1f88}{SHADER\+\_\+\+GEOMETRY}}(source)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a9c8da62b6486226bcc7f9910742b0a5b}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders\+::\+VOXEL}} = "{}voxel"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_aaf03785d843820baad0fc95c8d01efc5}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders\+::\+WIREFRAME}} = "{}wireframe"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a11d41f13cea1bc1fc16c37910a807e4c}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders\+::\+SELECTION}} = "{}selection"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a9bbdc5d624bb444e54df985679ab508e}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders\+::\+GROUP\+\_\+\+OUTLINE}} = "{}group\+\_\+outline"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_ad110d9f9dcf2d6cd67ad263991dfd125}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders\+::\+DEBUG}} = "{}debug"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a28d5a51ea521983cbc48c78b2fde93cd}{Voxel\+Editor\+::\+Rendering\+::\+Builtin\+Shaders\+::\+POST\+\_\+\+PROCESS}} = "{}post\+\_\+process"{}
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{_shader_manager_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_shader_manager_8h_a93f1e0be75f19e7df654ecc295f07db8}\index{ShaderManager.h@{ShaderManager.h}!SHADER\_FRAGMENT@{SHADER\_FRAGMENT}}
+\index{SHADER\_FRAGMENT@{SHADER\_FRAGMENT}!ShaderManager.h@{ShaderManager.h}}
+\doxysubsubsection{\texorpdfstring{SHADER\_FRAGMENT}{SHADER\_FRAGMENT}}
+{\footnotesize\ttfamily \label{_shader_manager_8h_a93f1e0be75f19e7df654ecc295f07db8} 
+\#define SHADER\+\_\+\+FRAGMENT(\begin{DoxyParamCaption}\item[{}]{source}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#source}}
+
+\end{DoxyCode}
+\Hypertarget{_shader_manager_8h_a91264abcf88e9e58045eb5a8b7da1f88}\index{ShaderManager.h@{ShaderManager.h}!SHADER\_GEOMETRY@{SHADER\_GEOMETRY}}
+\index{SHADER\_GEOMETRY@{SHADER\_GEOMETRY}!ShaderManager.h@{ShaderManager.h}}
+\doxysubsubsection{\texorpdfstring{SHADER\_GEOMETRY}{SHADER\_GEOMETRY}}
+{\footnotesize\ttfamily \label{_shader_manager_8h_a91264abcf88e9e58045eb5a8b7da1f88} 
+\#define SHADER\+\_\+\+GEOMETRY(\begin{DoxyParamCaption}\item[{}]{source}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#source}}
+
+\end{DoxyCode}
+\Hypertarget{_shader_manager_8h_a568bb9e2637af25c68570b9ef6ed826e}\index{ShaderManager.h@{ShaderManager.h}!SHADER\_VERTEX@{SHADER\_VERTEX}}
+\index{SHADER\_VERTEX@{SHADER\_VERTEX}!ShaderManager.h@{ShaderManager.h}}
+\doxysubsubsection{\texorpdfstring{SHADER\_VERTEX}{SHADER\_VERTEX}}
+{\footnotesize\ttfamily \label{_shader_manager_8h_a568bb9e2637af25c68570b9ef6ed826e} 
+\#define SHADER\+\_\+\+VERTEX(\begin{DoxyParamCaption}\item[{}]{source}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#source}}
+
+\end{DoxyCode}

@@ -1,0 +1,615 @@
+\chapter{Undo/\+Redo System Subsystem }
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n}{}\label{md_core_2undo__redo_2_d_e_s_i_g_n}\index{Undo/Redo System Subsystem@{Undo/Redo System Subsystem}}
+\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md364}%
+\Hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md364}%
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md365}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md365}
+Manages operation history, command pattern implementation, and state restoration for all user actions with memory-\/efficient state management.\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md366}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md366}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md367}{}\doxysubsection{\texorpdfstring{History\+Manager}{History\+Manager}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md367}
+{\bfseries{Responsibility}}\+: Main undo/redo coordination and command execution
+\begin{DoxyItemize}
+\item Execute commands and track history
+\item Manage undo/redo stack operations
+\item Memory limit enforcement
+\item Integration with all subsystems
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md368}{}\doxysubsection{\texorpdfstring{Command}{Command}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md368}
+{\bfseries{Responsibility}}\+: Base command interface and common functionality
+\begin{DoxyItemize}
+\item Encapsulate reversible operations
+\item Provide execute/undo semantics
+\item Support command composition
+\item Memory-\/efficient state capture
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md369}{}\doxysubsection{\texorpdfstring{State\+Snapshot}{State\+Snapshot}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md369}
+{\bfseries{Responsibility}}\+: Efficient state capture and restoration
+\begin{DoxyItemize}
+\item Incremental state differences
+\item Compressed state storage
+\item Fast state comparison
+\item Memory pressure handling
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md370}{}\doxysubsection{\texorpdfstring{Command\+Composer}{Command\+Composer}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md370}
+{\bfseries{Responsibility}}\+: Combine multiple commands into composite operations
+\begin{DoxyItemize}
+\item Macro command creation
+\item Atomic multi-\/step operations
+\item Nested command handling
+\item Transaction semantics
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md371}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md371}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }HistoryManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Command\ execution}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ executeCommand(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ executeCommand(Args\&\&...\ args);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Undo/Redo\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canUndo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canRedo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ redo();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearHistory();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ History\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMaxHistorySize(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMaxMemoryUsage(\textcolor{keywordtype}{size\_t}\ bytes);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getHistorySize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ History\ queries}}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getUndoHistory()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getRedoHistory()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::string\ getLastExecutedCommand()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Grouping\ and\ transactions}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ beginTransaction(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ endTransaction();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isInTransaction()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ cancelTransaction();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ optimizeMemory();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCompressionEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSnapshotInterval(\textcolor{keywordtype}{int}\ commandCount);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Events}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setUndoRedoCallback(UndoRedoCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMemoryPressureCallback(MemoryPressureCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_undoStack;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_redoStack;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<Transaction>\ m\_currentTransaction;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxHistorySize;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxMemoryUsage;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_currentMemoryUsage;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ m\_snapshotInterval;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressionEnabled;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{UndoRedoCallback}}\ m\_undoRedoCallback;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{MemoryPressureCallback}}\ m\_memoryPressureCallback;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<StateSnapshot>\ m\_baseSnapshot;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<StateSnapshot>>\ m\_snapshots;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ pushToUndoStack(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearRedoStack();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ enforceMemoryLimits();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ createSnapshot();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ restoreFromSnapshot(\textcolor{keyword}{const}\ StateSnapshot\&\ snapshot);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md372}{}\doxysection{\texorpdfstring{Command Pattern Implementation}{Command Pattern Implementation}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md372}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md373}{}\doxysubsection{\texorpdfstring{Base Command Interface}{Base Command Interface}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md373}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \string~Command()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Core\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ execute()\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ undo()\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ canUndo()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Command\ information}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getName()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getDescription()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getName();\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ compress()\ \{\}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ decompress()\ \{\}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Merging\ capability}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ canMergeWith(\textcolor{keyword}{const}\ Command\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ std::unique\_ptr<Command>\ mergeWith(std::unique\_ptr<Command>\ other)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isValid()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ ValidationResult\ validate()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{protected}:}
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ m\_timestamp;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{VoxelEdit}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{Selection}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03937134cedab9078be39a77ee3a48a0}{Group}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a967d35e40f3f95b1f538bd248640bf3b}{Camera}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03a21915504df93cf5dba0636080f62e}{Workspace}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a72d6d7a1885885bb55a565fd1070581a}{Import}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a141a5b46e2087dc7a80a43710c2dacfb}{Composite}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }ValidationResult\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ valid\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ errors;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ warnings;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md374}{}\doxysubsection{\texorpdfstring{Voxel Commands}{Voxel Commands}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md374}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }VoxelEditCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ VoxelEditCommand(VoxelDataManager*\ voxelManager,\ \textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{bool}\ newValue);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Edit\ Voxel"{}};\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canMergeWith(\textcolor{keyword}{const}\ Command\&\ other)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<Command>\ mergeWith(std::unique\_ptr<Command>\ other)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{\ \ \ \ Vector3i\ m\_position;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_oldValue;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_newValue;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }BulkVoxelEditCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ BulkVoxelEditCommand(VoxelDataManager*\ voxelManager,\ \textcolor{keyword}{const}\ std::vector<VoxelChange>\&\ changes);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ compress()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ decompress()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VoxelChange\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3i\ position;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelChange>\ m\_changes;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ std::vector<uint8\_t>\ m\_compressedData;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md375}{}\doxysubsection{\texorpdfstring{Selection Commands}{Selection Commands}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md375}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SelectionCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ SelectionCommand(SelectionManager*\ selectionManager,\ \textcolor{keyword}{const}\ SelectionSet\&\ newSelection);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Change\ Selection"{}};\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Selection;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ SelectionManager*\ m\_selectionManager;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_oldSelection;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_newSelection;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MoveSelectionCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ MoveSelectionCommand(VoxelDataManager*\ voxelManager,\ SelectionManager*\ selectionManager,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SelectionSet\&\ selection,\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Move\ Selection"{}};\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{\ \ \ \ SelectionManager*\ m\_selectionManager;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_moves;\ \textcolor{comment}{//\ old\ -\/>\ new\ positions}}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_originalSelection;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_newSelection;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md376}{}\doxysubsection{\texorpdfstring{Group Commands}{Group Commands}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md376}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CreateGroupCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ CreateGroupCommand(GroupManager*\ groupManager,\ \textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ SelectionSet\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Create\ Group"{}};\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Group;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{\ \ \ \ std::string\ m\_groupName;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_voxels;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_createdGroupId;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MoveGroupCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ MoveGroupCommand(GroupManager*\ groupManager,\ VoxelDataManager*\ voxelManager,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GroupId\ groupId,\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Move\ Group"{}};\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Group;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_moves;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md377}{}\doxysubsection{\texorpdfstring{Camera Commands}{Camera Commands}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md377}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CameraCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ CameraCommand(CameraManager*\ cameraManager,\ \textcolor{keyword}{const}\ CameraState\&\ newState);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Camera\ Change"{}};\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Camera;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canMergeWith(\textcolor{keyword}{const}\ Command\&\ other)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<Command>\ mergeWith(std::unique\_ptr<Command>\ other)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ CameraManager*\ m\_cameraManager;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ m\_oldState;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ m\_newState;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isSmallChange(\textcolor{keyword}{const}\ CameraState\&\ from,\ \textcolor{keyword}{const}\ CameraState\&\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md378}{}\doxysection{\texorpdfstring{Composite Commands}{Composite Commands}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md378}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md379}{}\doxysubsection{\texorpdfstring{Composite\+Command}{Composite\+Command}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md379}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CompositeCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ CompositeCommand(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addCommand(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addCommands(std::vector<std::unique\_ptr<Command>>\ commands);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Composite;\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Composite-\/specific}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getCommandCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_commands.size();\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ Command\&\ getCommand(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ compress()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ decompress()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_commands;}
+\DoxyCodeLine{\ \ \ \ std::vector<bool>\ m\_executionResults;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_lastExecutedIndex\ =\ 0;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md380}{}\doxysubsection{\texorpdfstring{Transaction Support}{Transaction Support}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md380}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }Transaction\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ Transaction(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addCommand(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<CompositeCommand>\ commit();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ rollback();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isEmpty()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_commands.empty();\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getCommandCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_commands.size();\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ std::string\&\ getName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_commands;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_executedCommands;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md381}{}\doxysection{\texorpdfstring{State Snapshots}{State Snapshots}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md381}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md382}{}\doxysubsection{\texorpdfstring{State\+Snapshot}{State\+Snapshot}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md382}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }StateSnapshot\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ StateSnapshot();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Capture\ current\ state}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ captureVoxelData(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grid);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ captureGroupData(\textcolor{keyword}{const}\ GroupManager\&\ groups);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ captureSelectionData(\textcolor{keyword}{const}\ SelectionManager\&\ selection);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ captureCameraData(\textcolor{keyword}{const}\ CameraManager\&\ camera);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ captureWorkspaceData(\textcolor{keyword}{const}\ WorkspaceSettings\&\ workspace);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Restore\ state}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ restoreVoxelData(MultiResolutionGrid\&\ grid)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ restoreGroupData(GroupManager\&\ groups)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ restoreSelectionData(SelectionManager\&\ selection)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ restoreCameraData(CameraManager\&\ camera)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ restoreWorkspaceData(WorkspaceSettings\&\ workspace)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ compress();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ decompress();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isCompressed()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_compressed;\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isComplete()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Serialization}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ serialize(BinaryWriter\&\ writer)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deserialize(BinaryReader\&\ reader);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VoxelSnapshot\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<std::vector<uint8\_t>,\ 10>\ grids;\ \textcolor{comment}{//\ One\ per\ resolution}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3f\ workspaceSize;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ activeResolution;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }GroupSnapshot\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<GroupInfo>\ groups;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<std::pair<GroupId,\ std::vector<VoxelId>>>\ groupMembers;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ GroupHierarchy\ hierarchy;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }SelectionSnapshot\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ SelectionSet\ currentSelection;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ SelectionSet>\ namedSelections;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<VoxelSnapshot>\ m\_voxelData;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<GroupSnapshot>\ m\_groupData;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<SelectionSnapshot>\ m\_selectionData;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<CameraState>\ m\_cameraData;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<WorkspaceSettings>\ m\_workspaceData;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ m\_timestamp;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_uncompressedSize\ =\ 0;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md383}{}\doxysubsection{\texorpdfstring{Incremental Snapshots}{Incremental Snapshots}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md383}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }IncrementalSnapshot\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ IncrementalSnapshot(\textcolor{keyword}{const}\ StateSnapshot\&\ baseSnapshot);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addVoxelChange(\textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{bool}\ oldValue,\ \textcolor{keywordtype}{bool}\ newValue);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addGroupChange(\textcolor{keyword}{const}\ GroupChangeRecord\&\ change);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addSelectionChange(\textcolor{keyword}{const}\ SelectionSet\&\ oldSelection,\ \textcolor{keyword}{const}\ SelectionSet\&\ newSelection);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ applyChanges(StateSnapshot\&\ snapshot)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reverseChanges(StateSnapshot\&\ snapshot)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isEmpty()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VoxelChange\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3i\ position;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelChange>\ m\_voxelChanges;}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupChangeRecord>\ m\_groupChanges;}
+\DoxyCodeLine{\ \ \ \ std::optional<std::pair<SelectionSet,\ SelectionSet>>\ m\_selectionChange;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ StateSnapshot\&\ m\_baseSnapshot;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md384}{}\doxysection{\texorpdfstring{Memory Management}{Memory Management}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md384}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md385}{}\doxysubsection{\texorpdfstring{Memory Optimization}{Memory Optimization}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md385}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MemoryOptimizer\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ optimizeCommandHistory(std::vector<std::unique\_ptr<Command>>\&\ commands,\ \textcolor{keywordtype}{size\_t}\ maxMemory);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ compressOldCommands(std::vector<std::unique\_ptr<Command>>\&\ commands,\ \textcolor{keywordtype}{int}\ threshold);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ mergeCompatibleCommands(std::vector<std::unique\_ptr<Command>>\&\ commands);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ createSnapshots(std::vector<std::unique\_ptr<Command>>\&\ commands,\ \textcolor{keywordtype}{int}\ interval);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ calculateMemoryUsage(\textcolor{keyword}{const}\ std::vector<std::unique\_ptr<Command>>\&\ commands)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<size\_t>\ getMemoryUsageByType(\textcolor{keyword}{const}\ std::vector<std::unique\_ptr<Command>>\&\ commands)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canMergeCommands(\textcolor{keyword}{const}\ Command\&\ first,\ \textcolor{keyword}{const}\ Command\&\ second)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<Command>\ mergeCommands(std::unique\_ptr<Command>\ first,\ std::unique\_ptr<Command>\ second);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ removeRedundantCommands(std::vector<std::unique\_ptr<Command>>\&\ commands);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md386}{}\doxysubsection{\texorpdfstring{Command Compression}{Command Compression}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md386}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CommandCompressor\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compressCommand(Command\&\ command);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ decompressCommand(Command\&\ command);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compressBulkVoxelEdit(BulkVoxelEditCommand\&\ command);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compressComposite(CompositeCommand\&\ command);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getCompressionRatio()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastCompressionRatio;\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_lastCompressionRatio\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<uint8\_t>\ compressVoxelChanges(\textcolor{keyword}{const}\ std::vector<VoxelChange>\&\ changes);}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelChange>\ decompressVoxelChanges(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Delta\ compression\ for\ similar\ commands}}
+\DoxyCodeLine{\ \ \ \ std::vector<uint8\_t>\ deltaCompress(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ reference,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{\ \ \ \ std::vector<uint8\_t>\ deltaDecompress(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ reference,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ delta);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md387}{}\doxysection{\texorpdfstring{Performance Considerations}{Performance Considerations}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md387}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md388}{}\doxysubsection{\texorpdfstring{Fast Execution}{Fast Execution}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md388}
+
+\begin{DoxyItemize}
+\item Lazy state capture until needed
+\item Incremental state differences
+\item Command merging for small operations
+\item Background compression
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md389}{}\doxysubsection{\texorpdfstring{Memory Efficiency}{Memory Efficiency}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md389}
+
+\begin{DoxyItemize}
+\item Sparse representation for voxel changes
+\item Reference counting for shared data
+\item Automatic cleanup of old history
+\item Progressive compression
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md390}{}\doxysubsection{\texorpdfstring{Responsiveness}{Responsiveness}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md390}
+
+\begin{DoxyItemize}
+\item Non-\/blocking undo/redo operations
+\item Progressive state restoration
+\item Priority-\/based memory cleanup
+\item Background optimization
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md391}{}\doxysection{\texorpdfstring{Events and Callbacks}{Events and Callbacks}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md391}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md392}{}\doxysubsection{\texorpdfstring{Event Types}{Event Types}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md392}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1}{UndoRedoEventType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a9ee4e041d9d1f5d3483c6b6ae9b38576}{CommandExecuted}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1aef41557e92a599b2432d54f6cb25f6ca}{CommandUndone}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a9baaf3ba77f4e6e092bfdf1ef57d8812}{CommandRedone}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a83ce0d0e4ebd7d8e4ab4820481a7577a}{HistoryCleared}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a79049c3d0a0b0602b576407a8fd40e3f}{TransactionStarted}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1af302f58cc298c396752c1a5f87ccbe9c}{TransactionCommitted}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a107c6cb0a79fcc2eb3249c69c95bdf6e}{TransactionRolledBack}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a1b3a89c10c25b2a230e1f1fe112a2825}{MemoryPressure}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }UndoRedoEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1}{UndoRedoEventType}}\ type;}
+\DoxyCodeLine{\ \ \ \ std::string\ commandName;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ historySize;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ memoryUsage;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canUndo;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canRedo;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{UndoRedoCallback}}\ =\ std::function<void(\textcolor{keyword}{const}\ UndoRedoEvent\&)>;}
+\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{MemoryPressureCallback}}\ =\ std::function<void(\textcolor{keywordtype}{size\_t}\ currentUsage,\ \textcolor{keywordtype}{size\_t}\ maxUsage)>;}
+
+\end{DoxyCode}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md393}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md393}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md394}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md394}
+
+\begin{DoxyItemize}
+\item Command execution and undo correctness
+\item Memory usage validation
+\item State snapshot accuracy
+\item Command merging logic
+\item Compression effectiveness
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md395}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md395}
+
+\begin{DoxyItemize}
+\item Cross-\/subsystem command integration
+\item Transaction semantics
+\item Memory pressure handling
+\item Performance under load
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md396}{}\doxysubsection{\texorpdfstring{Stress Tests}{Stress Tests}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md396}
+
+\begin{DoxyItemize}
+\item Large history management
+\item Memory limit enforcement
+\item Rapid undo/redo operations
+\item Complex composite commands
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md397}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md397}
+
+\begin{DoxyItemize}
+\item Undo/redo speed benchmarks
+\item Memory usage optimization
+\item Compression performance
+\item State restoration speed
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md398}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md398}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Voxel\+Data}}\+: Voxel state management
+\item {\bfseries{Core/\+Groups}}\+: Group state management
+\item {\bfseries{Core/\+Selection}}\+: Selection state management
+\item {\bfseries{Core/\+Camera}}\+: Camera state management
+\item {\bfseries{Foundation/\+Memory}}\+: Memory pool management
+\item {\bfseries{Foundation/\+Events}}\+: Event system integration
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md399}{}\doxysection{\texorpdfstring{Platform Considerations}{Platform Considerations}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md399}
+\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md400}{}\doxysubsection{\texorpdfstring{Memory Constraints}{Memory Constraints}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md400}
+
+\begin{DoxyItemize}
+\item VR memory limits (Quest 3)
+\item Mobile memory optimization
+\item Desktop large history support
+\item Automatic adaptation
+\end{DoxyItemize}\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md401}{}\doxysubsection{\texorpdfstring{Performance Optimization}{Performance Optimization}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md401}
+
+\begin{DoxyItemize}
+\item Platform-\/specific compression
+\item Memory-\/mapped snapshots
+\item Background processing
+\item Priority-\/based cleanup 
+\end{DoxyItemize}

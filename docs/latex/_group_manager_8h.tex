@@ -1,0 +1,36 @@
+\doxysection{core/groups/include/groups/\+Group\+Manager.h File Reference}
+\hypertarget{_group_manager_8h}{}\label{_group_manager_8h}\index{core/groups/include/groups/GroupManager.h@{core/groups/include/groups/GroupManager.h}}
+{\ttfamily \#include "{}Group\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Voxel\+Group.\+h"{}}\newline
+{\ttfamily \#include "{}Group\+Hierarchy.\+h"{}}\newline
+{\ttfamily \#include "{}Group\+Operations.\+h"{}}\newline
+{\ttfamily \#include "{}Group\+Events.\+h"{}}\newline
+{\ttfamily \#include "{}voxel\+\_\+data/\+Voxel\+Data\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Voxel\+Editor\+::\+Groups\+::\+Group\+Manager}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_manager_1_1_group_manager_data}{Voxel\+Editor\+::\+Groups\+::\+Group\+Manager\+::\+Group\+Manager\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Voxel\+Editor\+::\+Groups}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_ad5d6de04bdedbe60c9bd0306676b8495}{Voxel\+Editor\+::\+Groups\+::\+Group\+Predicate}} = std\+::function$<$bool(const \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_voxel_group}{Voxel\+Group}}\&)$>$
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a5e38d7f25a761d51721fda46f61c882d}{Voxel\+Editor\+::\+Groups\+::\+Group\+Visitor}} = std\+::function$<$void(const \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_voxel_group}{Voxel\+Group}}\&)$>$
+\end{DoxyCompactItemize}

@@ -1,0 +1,43 @@
+\doxysection{apps/cli/src/\+Application.cpp File Reference}
+\hypertarget{_application_8cpp}{}\label{_application_8cpp}\index{apps/cli/src/Application.cpp@{apps/cli/src/Application.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include "{}cli/\+Application.\+h"{}}\newline
+{\ttfamily \#include "{}cli/\+Command\+Processor.\+h"{}}\newline
+{\ttfamily \#include "{}cli/\+Render\+Window.\+h"{}}\newline
+{\ttfamily \#include "{}cli/\+Mouse\+Interaction.\+h"{}}\newline
+{\ttfamily \#include "{}voxel\+\_\+data/\+Voxel\+Data\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}camera/\+Camera\+Controller.\+h"{}}\newline
+{\ttfamily \#include "{}camera/\+Camera.\+h"{}}\newline
+{\ttfamily \#include "{}rendering/\+Render\+Engine.\+h"{}}\newline
+{\ttfamily \#include "{}rendering/\+Open\+GLRenderer.\+h"{}}\newline
+{\ttfamily \#include "{}rendering/\+Render\+Config.\+h"{}}\newline
+{\ttfamily \#include "{}rendering/\+Render\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}rendering/\+Render\+Context.\+h"{}}\newline
+{\ttfamily \#include "{}input/\+Input\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}selection/\+Selection\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}selection/\+Selection\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}undo\+\_\+redo/\+History\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}surface\+\_\+gen/\+Surface\+Generator.\+h"{}}\newline
+{\ttfamily \#include "{}visual\+\_\+feedback/\+Feedback\+Renderer.\+h"{}}\newline
+{\ttfamily \#include "{}groups/\+Group\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}groups/\+Group\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}file\+\_\+io/\+File\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include "{}logging/\+Logger.\+h"{}}\newline
+{\ttfamily \#include "{}config/\+Config\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}math/\+Matrix4f.\+h"{}}\newline
+{\ttfamily \#include "{}math/\+Vector2f.\+h"{}}\newline
+{\ttfamily \#include "{}math/\+Vector3f.\+h"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\end{DoxyCompactItemize}

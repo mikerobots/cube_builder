@@ -1,0 +1,121 @@
+\doxysection{Voxel\+Editor\+::Surface\+Gen\+::Mesh\+Cache Class Reference}
+\hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache}{}\label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+
+
+{\ttfamily \#include $<$Surface\+Generator.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a40b0354c5d1b6ff2894fa0bd83a93595}{Mesh\+Cache}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_abeeb37f72c3cb7cb3ef6e56497568ce6}{\texorpdfstring{$\sim$}{\string~}\+Mesh\+Cache}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_ae2603954daea13456da2fa48d6ecb864}{has\+Cached\+Mesh}} (const std\+::string \&key) const
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a23b7b82312667e1132cc46402b74361f}{get\+Cached\+Mesh}} (const std\+::string \&key)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6475d2fd9b95f7a9e667524d041c739b}{cache\+Mesh}} (const std\+::string \&key, const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&mesh)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a4a937b7b9393a211fcee8e309b03e27d}{invalidate\+Region}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&region)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a418a84623518e9ad73214ab847dbe376}{clear}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_aff3cc6b7842c4be80c7b73acebd1beec}{get\+Memory\+Usage}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_af49cb74c54035bbbd8002b82400e2f63}{set\+Max\+Memory\+Usage}} (size\+\_\+t max\+Bytes)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6f55383fbb9e754b1e4ca6785e9afaf8}{get\+Hit\+Count}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a159a07ae6465b096c56a4cc1cbc361fa}{get\+Miss\+Count}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_afb7b6f25e266a6e940248b8e4b76250d}{get\+Hit\+Rate}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a40b0354c5d1b6ff2894fa0bd83a93595}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!MeshCache@{MeshCache}}
+\index{MeshCache@{MeshCache}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{MeshCache()}{MeshCache()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a40b0354c5d1b6ff2894fa0bd83a93595} 
+Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::\+Mesh\+Cache (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_abeeb37f72c3cb7cb3ef6e56497568ce6}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!````~MeshCache@{\texorpdfstring{$\sim$}{\string~}MeshCache}}
+\index{````~MeshCache@{\texorpdfstring{$\sim$}{\string~}MeshCache}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MeshCache()}{\string~MeshCache()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_abeeb37f72c3cb7cb3ef6e56497568ce6} 
+Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::\texorpdfstring{$\sim$}{\string~}\+Mesh\+Cache (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6475d2fd9b95f7a9e667524d041c739b}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!cacheMesh@{cacheMesh}}
+\index{cacheMesh@{cacheMesh}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{cacheMesh()}{cacheMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6475d2fd9b95f7a9e667524d041c739b} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::cache\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \&}]{mesh}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a418a84623518e9ad73214ab847dbe376}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!clear@{clear}}
+\index{clear@{clear}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a418a84623518e9ad73214ab847dbe376} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a23b7b82312667e1132cc46402b74361f}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!getCachedMesh@{getCachedMesh}}
+\index{getCachedMesh@{getCachedMesh}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{getCachedMesh()}{getCachedMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a23b7b82312667e1132cc46402b74361f} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::get\+Cached\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6f55383fbb9e754b1e4ca6785e9afaf8}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!getHitCount@{getHitCount}}
+\index{getHitCount@{getHitCount}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{getHitCount()}{getHitCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6f55383fbb9e754b1e4ca6785e9afaf8} 
+size\+\_\+t Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::get\+Hit\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_afb7b6f25e266a6e940248b8e4b76250d}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!getHitRate@{getHitRate}}
+\index{getHitRate@{getHitRate}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{getHitRate()}{getHitRate()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_afb7b6f25e266a6e940248b8e4b76250d} 
+float Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::get\+Hit\+Rate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_aff3cc6b7842c4be80c7b73acebd1beec}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!getMemoryUsage@{getMemoryUsage}}
+\index{getMemoryUsage@{getMemoryUsage}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{getMemoryUsage()}{getMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_aff3cc6b7842c4be80c7b73acebd1beec} 
+size\+\_\+t Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::get\+Memory\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a159a07ae6465b096c56a4cc1cbc361fa}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!getMissCount@{getMissCount}}
+\index{getMissCount@{getMissCount}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{getMissCount()}{getMissCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a159a07ae6465b096c56a4cc1cbc361fa} 
+size\+\_\+t Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::get\+Miss\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_ae2603954daea13456da2fa48d6ecb864}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!hasCachedMesh@{hasCachedMesh}}
+\index{hasCachedMesh@{hasCachedMesh}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{hasCachedMesh()}{hasCachedMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_ae2603954daea13456da2fa48d6ecb864} 
+bool Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::has\+Cached\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a4a937b7b9393a211fcee8e309b03e27d}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!invalidateRegion@{invalidateRegion}}
+\index{invalidateRegion@{invalidateRegion}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{invalidateRegion()}{invalidateRegion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a4a937b7b9393a211fcee8e309b03e27d} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::invalidate\+Region (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&}]{region}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_af49cb74c54035bbbd8002b82400e2f63}\index{VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}!setMaxMemoryUsage@{setMaxMemoryUsage}}
+\index{setMaxMemoryUsage@{setMaxMemoryUsage}!VoxelEditor::SurfaceGen::MeshCache@{VoxelEditor::SurfaceGen::MeshCache}}
+\doxysubsubsection{\texorpdfstring{setMaxMemoryUsage()}{setMaxMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_af49cb74c54035bbbd8002b82400e2f63} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+::set\+Max\+Memory\+Usage (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{max\+Bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/surface\+\_\+gen/\mbox{\hyperlink{_surface_generator_8h}{Surface\+Generator.\+h}}\item 
+core/surface\+\_\+gen/\mbox{\hyperlink{_surface_generator_8cpp}{Surface\+Generator.\+cpp}}\end{DoxyCompactItemize}

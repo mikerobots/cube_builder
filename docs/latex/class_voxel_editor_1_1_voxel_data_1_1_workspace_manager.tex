@@ -1,0 +1,315 @@
+\doxysection{Voxel\+Editor\+::Voxel\+Data\+::Workspace\+Manager Class Reference}
+\hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager}{}\label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+
+
+{\ttfamily \#include $<$Workspace\+Manager.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a7ae5171e7e9ca7fdca2be56e3da79b5c}{Size\+Change\+Callback}} = std\+::function$<$bool(const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}\&, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a09364522c894c1eb348bdaab79db9c54}{Workspace\+Manager}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher=nullptr)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a3c0615b76f8a2b8f0146e3ab9dc5a629}{set\+Size}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&new\+Size)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aecab0f9ac2a49326da2e0f421f5b5ead}{set\+Size}} (float size)
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ac75a9860f4087df441efa259a37397fb}{get\+Size}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_acfb6266f849520dfacd432982b4376a2}{get\+Volume}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a9b6fc13da4c857c3bfcc48d9ffb1dcfc}{get\+Min\+Dimension}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa291c14cb660a57228d3b11e45595a14}{get\+Max\+Dimension}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a24de31e8d3ede98bb7c99c418888e6ce}{is\+Cubic}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a96f8dd147df0267eaee52554cba54a47}{get\+Min\+Bounds}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_afa2463eb762260dcc120a4399090af33}{get\+Max\+Bounds}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ab0941fd467d3bb3c334a8dbfd3313b8c}{get\+Center}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aff15423b8feb861487e589972c9360ef}{is\+Position\+Valid}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&position) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ada3278c8a919e66c661cd46f8866036a}{is\+Voxel\+Position\+Valid}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Position}} \&voxel\+Pos) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a4b44840d247a95ef836e7ac93de6b7a8}{is\+Grid\+Position\+Valid}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&grid\+Pos, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}} resolution) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_afe59bdd9feabc8390d35f55e3a595f69}{clamp\+Position}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&position) const
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_af76942c6d6f0c6827affdaa847ca6f66}{get\+Max\+Voxel\+Count}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}} resolution) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a4fca5856057ae1ad7a6d99fafad12432}{get\+Max\+Grid\+Dimensions}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}} resolution) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a033c36633e3d1a7cc2d73eb9f71d018d}{estimate\+Memory\+Usage}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}} resolution, float fill\+Ratio=0.\+1f) const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_acefc5f88742dc711adddb16fcfdd04ed}{set\+Size\+Change\+Callback}} (\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a7ae5171e7e9ca7fdca2be56e3da79b5c}{Size\+Change\+Callback}} callback)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa1e1032ba11e65d01f30ad326ee7061b}{clear\+Size\+Change\+Callback}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2c518aef2fb8a0d19919605080d19d77}{set\+Event\+Dispatcher}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad6f18994225d1a83f7a5c49bfa1a3661}{reset}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a9d7a9c851961f1d660fcbd4df8ff993c}{set\+To\+Minimum\+Size}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad4ac2fefb7613f6c59aa0aeb364d297b}{set\+To\+Maximum\+Size}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a5790183243013187920c3e85610a08f9}{set\+To\+Default\+Size}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a29111eea9693f474ae55a713bb155642}{is\+At\+Minimum\+Size}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2e2faf5f3354952d6caa8efc39a141a8}{is\+At\+Maximum\+Size}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aca566c2b962ed7b645d9e2f2a1d4821e}{is\+Default\+Size}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_abfd2ca28e310e21be4cae08fce316fd8}{is\+Valid\+Size}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&size)
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2d3fadc2acd25c4af837eee7d88569c9}{is\+Valid\+Size}} (float size)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa0a6de4492716d4c1fe9992ae1e97910}{clamp\+Size}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&size)
+\item 
+static float \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa273f89e9224e30dc8841b2e50d620e4}{get\+Min\+Size}} ()
+\item 
+static float \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad30b255ab0e5d5390b25a0a79ebb3178}{get\+Max\+Size}} ()
+\item 
+static float \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a971bf5093db9fdeef62dc9ac03ee003f}{get\+Default\+Size}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a7ae5171e7e9ca7fdca2be56e3da79b5c}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!SizeChangeCallback@{SizeChangeCallback}}
+\index{SizeChangeCallback@{SizeChangeCallback}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{SizeChangeCallback}{SizeChangeCallback}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a7ae5171e7e9ca7fdca2be56e3da79b5c} 
+using \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a7ae5171e7e9ca7fdca2be56e3da79b5c}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::\+Size\+Change\+Callback}} = std\+::function$<$bool(const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}\&, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}\&)$>$}
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a09364522c894c1eb348bdaab79db9c54}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!WorkspaceManager@{WorkspaceManager}}
+\index{WorkspaceManager@{WorkspaceManager}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{WorkspaceManager()}{WorkspaceManager()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a09364522c894c1eb348bdaab79db9c54} 
+Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::\+Workspace\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{event\+Dispatcher}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_afe59bdd9feabc8390d35f55e3a595f69}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!clampPosition@{clampPosition}}
+\index{clampPosition@{clampPosition}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{clampPosition()}{clampPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_afe59bdd9feabc8390d35f55e3a595f69} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::clamp\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{position}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa0a6de4492716d4c1fe9992ae1e97910}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!clampSize@{clampSize}}
+\index{clampSize@{clampSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{clampSize()}{clampSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa0a6de4492716d4c1fe9992ae1e97910} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::clamp\+Size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa1e1032ba11e65d01f30ad326ee7061b}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!clearSizeChangeCallback@{clearSizeChangeCallback}}
+\index{clearSizeChangeCallback@{clearSizeChangeCallback}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{clearSizeChangeCallback()}{clearSizeChangeCallback()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa1e1032ba11e65d01f30ad326ee7061b} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::clear\+Size\+Change\+Callback (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a033c36633e3d1a7cc2d73eb9f71d018d}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!estimateMemoryUsage@{estimateMemoryUsage}}
+\index{estimateMemoryUsage@{estimateMemoryUsage}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{estimateMemoryUsage()}{estimateMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a033c36633e3d1a7cc2d73eb9f71d018d} 
+size\+\_\+t Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::estimate\+Memory\+Usage (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{, }\item[{float}]{fill\+Ratio}{ = {\ttfamily 0.1f}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ab0941fd467d3bb3c334a8dbfd3313b8c}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getCenter@{getCenter}}
+\index{getCenter@{getCenter}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getCenter()}{getCenter()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ab0941fd467d3bb3c334a8dbfd3313b8c} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Center (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a971bf5093db9fdeef62dc9ac03ee003f}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getDefaultSize@{getDefaultSize}}
+\index{getDefaultSize@{getDefaultSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getDefaultSize()}{getDefaultSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a971bf5093db9fdeef62dc9ac03ee003f} 
+float Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Default\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_afa2463eb762260dcc120a4399090af33}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMaxBounds@{getMaxBounds}}
+\index{getMaxBounds@{getMaxBounds}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMaxBounds()}{getMaxBounds()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_afa2463eb762260dcc120a4399090af33} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Max\+Bounds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa291c14cb660a57228d3b11e45595a14}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMaxDimension@{getMaxDimension}}
+\index{getMaxDimension@{getMaxDimension}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMaxDimension()}{getMaxDimension()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa291c14cb660a57228d3b11e45595a14} 
+float Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Max\+Dimension (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a4fca5856057ae1ad7a6d99fafad12432}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMaxGridDimensions@{getMaxGridDimensions}}
+\index{getMaxGridDimensions@{getMaxGridDimensions}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMaxGridDimensions()}{getMaxGridDimensions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a4fca5856057ae1ad7a6d99fafad12432} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Max\+Grid\+Dimensions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad30b255ab0e5d5390b25a0a79ebb3178}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMaxSize@{getMaxSize}}
+\index{getMaxSize@{getMaxSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMaxSize()}{getMaxSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad30b255ab0e5d5390b25a0a79ebb3178} 
+float Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Max\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_af76942c6d6f0c6827affdaa847ca6f66}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMaxVoxelCount@{getMaxVoxelCount}}
+\index{getMaxVoxelCount@{getMaxVoxelCount}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMaxVoxelCount()}{getMaxVoxelCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_af76942c6d6f0c6827affdaa847ca6f66} 
+int Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Max\+Voxel\+Count (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a96f8dd147df0267eaee52554cba54a47}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMinBounds@{getMinBounds}}
+\index{getMinBounds@{getMinBounds}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMinBounds()}{getMinBounds()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a96f8dd147df0267eaee52554cba54a47} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Min\+Bounds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a9b6fc13da4c857c3bfcc48d9ffb1dcfc}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMinDimension@{getMinDimension}}
+\index{getMinDimension@{getMinDimension}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMinDimension()}{getMinDimension()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a9b6fc13da4c857c3bfcc48d9ffb1dcfc} 
+float Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Min\+Dimension (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa273f89e9224e30dc8841b2e50d620e4}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getMinSize@{getMinSize}}
+\index{getMinSize@{getMinSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getMinSize()}{getMinSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aa273f89e9224e30dc8841b2e50d620e4} 
+float Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Min\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ac75a9860f4087df441efa259a37397fb}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getSize@{getSize}}
+\index{getSize@{getSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ac75a9860f4087df441efa259a37397fb} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_acfb6266f849520dfacd432982b4376a2}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!getVolume@{getVolume}}
+\index{getVolume@{getVolume}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{getVolume()}{getVolume()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_acfb6266f849520dfacd432982b4376a2} 
+float Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::get\+Volume (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2e2faf5f3354952d6caa8efc39a141a8}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isAtMaximumSize@{isAtMaximumSize}}
+\index{isAtMaximumSize@{isAtMaximumSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isAtMaximumSize()}{isAtMaximumSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2e2faf5f3354952d6caa8efc39a141a8} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+At\+Maximum\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a29111eea9693f474ae55a713bb155642}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isAtMinimumSize@{isAtMinimumSize}}
+\index{isAtMinimumSize@{isAtMinimumSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isAtMinimumSize()}{isAtMinimumSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a29111eea9693f474ae55a713bb155642} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+At\+Minimum\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a24de31e8d3ede98bb7c99c418888e6ce}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isCubic@{isCubic}}
+\index{isCubic@{isCubic}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isCubic()}{isCubic()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a24de31e8d3ede98bb7c99c418888e6ce} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Cubic (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aca566c2b962ed7b645d9e2f2a1d4821e}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isDefaultSize@{isDefaultSize}}
+\index{isDefaultSize@{isDefaultSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isDefaultSize()}{isDefaultSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aca566c2b962ed7b645d9e2f2a1d4821e} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Default\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a4b44840d247a95ef836e7ac93de6b7a8}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isGridPositionValid@{isGridPositionValid}}
+\index{isGridPositionValid@{isGridPositionValid}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isGridPositionValid()}{isGridPositionValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a4b44840d247a95ef836e7ac93de6b7a8} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Grid\+Position\+Valid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{grid\+Pos}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aff15423b8feb861487e589972c9360ef}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isPositionValid@{isPositionValid}}
+\index{isPositionValid@{isPositionValid}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isPositionValid()}{isPositionValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aff15423b8feb861487e589972c9360ef} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Position\+Valid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{position}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_abfd2ca28e310e21be4cae08fce316fd8}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isValidSize@{isValidSize}}
+\index{isValidSize@{isValidSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isValidSize()}{isValidSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_abfd2ca28e310e21be4cae08fce316fd8} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Valid\+Size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2d3fadc2acd25c4af837eee7d88569c9}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isValidSize@{isValidSize}}
+\index{isValidSize@{isValidSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isValidSize()}{isValidSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2d3fadc2acd25c4af837eee7d88569c9} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Valid\+Size (\begin{DoxyParamCaption}\item[{float}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ada3278c8a919e66c661cd46f8866036a}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!isVoxelPositionValid@{isVoxelPositionValid}}
+\index{isVoxelPositionValid@{isVoxelPositionValid}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{isVoxelPositionValid()}{isVoxelPositionValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ada3278c8a919e66c661cd46f8866036a} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::is\+Voxel\+Position\+Valid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position}{\+::\+Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Position}} \&}]{voxel\+Pos}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad6f18994225d1a83f7a5c49bfa1a3661}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!reset@{reset}}
+\index{reset@{reset}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad6f18994225d1a83f7a5c49bfa1a3661} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2c518aef2fb8a0d19919605080d19d77}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setEventDispatcher@{setEventDispatcher}}
+\index{setEventDispatcher@{setEventDispatcher}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setEventDispatcher()}{setEventDispatcher()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a2c518aef2fb8a0d19919605080d19d77} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+Event\+Dispatcher (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{event\+Dispatcher}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a3c0615b76f8a2b8f0146e3ab9dc5a629}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setSize@{setSize}}
+\index{setSize@{setSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setSize()}{setSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a3c0615b76f8a2b8f0146e3ab9dc5a629} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+Size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{new\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aecab0f9ac2a49326da2e0f421f5b5ead}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setSize@{setSize}}
+\index{setSize@{setSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setSize()}{setSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_aecab0f9ac2a49326da2e0f421f5b5ead} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+Size (\begin{DoxyParamCaption}\item[{float}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_acefc5f88742dc711adddb16fcfdd04ed}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setSizeChangeCallback@{setSizeChangeCallback}}
+\index{setSizeChangeCallback@{setSizeChangeCallback}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setSizeChangeCallback()}{setSizeChangeCallback()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_acefc5f88742dc711adddb16fcfdd04ed} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+Size\+Change\+Callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a7ae5171e7e9ca7fdca2be56e3da79b5c}{Size\+Change\+Callback}}}]{callback}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a5790183243013187920c3e85610a08f9}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setToDefaultSize@{setToDefaultSize}}
+\index{setToDefaultSize@{setToDefaultSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setToDefaultSize()}{setToDefaultSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a5790183243013187920c3e85610a08f9} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+To\+Default\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad4ac2fefb7613f6c59aa0aeb364d297b}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setToMaximumSize@{setToMaximumSize}}
+\index{setToMaximumSize@{setToMaximumSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setToMaximumSize()}{setToMaximumSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_ad4ac2fefb7613f6c59aa0aeb364d297b} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+To\+Maximum\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a9d7a9c851961f1d660fcbd4df8ff993c}\index{VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}!setToMinimumSize@{setToMinimumSize}}
+\index{setToMinimumSize@{setToMinimumSize}!VoxelEditor::VoxelData::WorkspaceManager@{VoxelEditor::VoxelData::WorkspaceManager}}
+\doxysubsubsection{\texorpdfstring{setToMinimumSize()}{setToMinimumSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager_a9d7a9c851961f1d660fcbd4df8ff993c} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Workspace\+Manager\+::set\+To\+Minimum\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/voxel\+\_\+data/\mbox{\hyperlink{_workspace_manager_8h}{Workspace\+Manager.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,353 @@
+\doxysection{Voxel\+Editor\+::Camera\+::Camera Class Reference}
+\hypertarget{class_voxel_editor_1_1_camera_1_1_camera}{}\label{class_voxel_editor_1_1_camera_1_1_camera}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+
+
+{\ttfamily \#include $<$Camera.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Camera\+::Camera\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_camera_1_1_camera}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aed60a29dd31168f301a615943783c322}{Camera}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher=nullptr)
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a4ef93f7a4801c5a170ce8fa74e2258aa}{\texorpdfstring{$\sim$}{\string~}\+Camera}} ()=default
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_af6ad2b3114e21b2ab5baf938ba357735}{set\+Position}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&position)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aef8dd556770d18cb78d43ad5c25a3e94}{set\+Target}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&target)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aa2f10eeaa64b8181a6bca391500e9b08}{set\+Up}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&up)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a5d6f1eb1a7629701c53df945e0b150d2}{set\+Field\+Of\+View}} (float fov)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a38d71dbddef423376d2b018de545fe51}{set\+Aspect\+Ratio}} (float aspect\+Ratio)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aa023d3a48e9451a90da7357db378357e}{set\+Near\+Far\+Planes}} (float near\+Plane, float far\+Plane)
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a2ead516435c53faff39f6d70cd019b50}{get\+View\+Matrix}} () const
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_af51cda0736fabde1d50ff2792966267c}{get\+Projection\+Matrix}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a216b3b9c51ca6d2a508e5641c4fa9918}{get\+View\+Projection\+Matrix}} () const
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a8d65d319f20d223758e98fc8f1064260}{get\+Position}} () const
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_afd20a426763da6d3e2c374143929ae62}{get\+Target}} () const
+\item 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aff68eb2433c873e726b1e54d777b2331}{get\+Up}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_ad4e7450453b2a215f0a15bf632bb6c12}{get\+Field\+Of\+View}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_ade68d88a3e00e5a661d22c35c36bbbfa}{get\+Aspect\+Ratio}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_ad76ea5ae9fbc4dfde5aac8f75e28bccf}{get\+Near\+Plane}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a5151fc556d717ba3035334525e17783c}{get\+Far\+Plane}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a5e625d0601dad82e2a6f02d6834b97a8}{get\+Forward}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a4de920cbef2cb6a11991cdeb98959a39}{get\+Right}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a6375ad87966eb927d48e1c8f1ef6559f}{get\+Actual\+Up}} () const
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_ae247374b3928605a768db1e5f845b884}{set\+View\+Preset}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}{View\+Preset}} preset)=0
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a20ba00e221636606f9ffca7da6c3997d}{set\+Event\+Dispatcher}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a6d2bffcb1d83b1636a9dfdb8e7f2d599}{update\+View\+Matrix}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aabc8eba5d0e525ad519ed8b7d56af9c4}{update\+Projection\+Matrix}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a8fce8e4f1b9578ecdc932465623cd0a6}{dispatch\+Camera\+Changed\+Event}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Events\+::\+Camera\+Changed\+Event\+::\+Change\+Type}} change\+Type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a504b8520a311e6353876166d7913fe98}{m\+\_\+event\+Dispatcher}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a3ed44ed015a3d2bd8ffb1fb6cdab3f40}{m\+\_\+position}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}{m\+\_\+target}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aedf02f6810a1f9cc96c1fe14a3fe31ee}{m\+\_\+up}}
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_abebb656118ae099fbcb47a2c4e000673}{m\+\_\+fov}}
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a49d42fa531e62433cee641dfabd90ff2}{m\+\_\+near\+Plane}}
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a9f31537cc3f4d6e10fce62e928de2c68}{m\+\_\+far\+Plane}}
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aea573bdf82a2b01108670476072f53c9}{m\+\_\+aspect\+Ratio}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a4df88885aa0d3619d7bae1e89637ec4c}{m\+\_\+view\+Matrix}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a247fbaee29a8f7cca8cedd3cb6707753}{m\+\_\+projection\+Matrix}}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a652fabfb79d7f6d195eab563da5e9773}{m\+\_\+view\+Matrix\+Dirty}}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_ad7bbeb1403389cebccf68689f8a65883}{m\+\_\+projection\+Matrix\+Dirty}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aed60a29dd31168f301a615943783c322}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{Camera()}{Camera()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aed60a29dd31168f301a615943783c322} 
+Voxel\+Editor\+::\+Camera\+::\+Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{event\+Dispatcher}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a4ef93f7a4801c5a170ce8fa74e2258aa}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!````~Camera@{\texorpdfstring{$\sim$}{\string~}Camera}}
+\index{````~Camera@{\texorpdfstring{$\sim$}{\string~}Camera}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Camera()}{\string~Camera()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a4ef93f7a4801c5a170ce8fa74e2258aa} 
+virtual Voxel\+Editor\+::\+Camera\+::\+Camera\+::\texorpdfstring{$\sim$}{\string~}\+Camera (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a8fce8e4f1b9578ecdc932465623cd0a6}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!dispatchCameraChangedEvent@{dispatchCameraChangedEvent}}
+\index{dispatchCameraChangedEvent@{dispatchCameraChangedEvent}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{dispatchCameraChangedEvent()}{dispatchCameraChangedEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a8fce8e4f1b9578ecdc932465623cd0a6} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::dispatch\+Camera\+Changed\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Events\+::\+Camera\+Changed\+Event\+::\+Change\+Type}}}]{change\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a6375ad87966eb927d48e1c8f1ef6559f}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getActualUp@{getActualUp}}
+\index{getActualUp@{getActualUp}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getActualUp()}{getActualUp()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a6375ad87966eb927d48e1c8f1ef6559f} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Actual\+Up (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_ade68d88a3e00e5a661d22c35c36bbbfa}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getAspectRatio@{getAspectRatio}}
+\index{getAspectRatio@{getAspectRatio}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getAspectRatio()}{getAspectRatio()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_ade68d88a3e00e5a661d22c35c36bbbfa} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Aspect\+Ratio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a5151fc556d717ba3035334525e17783c}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getFarPlane@{getFarPlane}}
+\index{getFarPlane@{getFarPlane}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getFarPlane()}{getFarPlane()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a5151fc556d717ba3035334525e17783c} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Far\+Plane (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_ad4e7450453b2a215f0a15bf632bb6c12}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getFieldOfView@{getFieldOfView}}
+\index{getFieldOfView@{getFieldOfView}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getFieldOfView()}{getFieldOfView()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_ad4e7450453b2a215f0a15bf632bb6c12} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Field\+Of\+View (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a5e625d0601dad82e2a6f02d6834b97a8}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getForward@{getForward}}
+\index{getForward@{getForward}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getForward()}{getForward()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a5e625d0601dad82e2a6f02d6834b97a8} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Forward (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_ad76ea5ae9fbc4dfde5aac8f75e28bccf}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getNearPlane@{getNearPlane}}
+\index{getNearPlane@{getNearPlane}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getNearPlane()}{getNearPlane()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_ad76ea5ae9fbc4dfde5aac8f75e28bccf} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Near\+Plane (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a8d65d319f20d223758e98fc8f1064260}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getPosition@{getPosition}}
+\index{getPosition@{getPosition}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getPosition()}{getPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a8d65d319f20d223758e98fc8f1064260} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_af51cda0736fabde1d50ff2792966267c}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getProjectionMatrix@{getProjectionMatrix}}
+\index{getProjectionMatrix@{getProjectionMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getProjectionMatrix()}{getProjectionMatrix()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_af51cda0736fabde1d50ff2792966267c} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \& Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Projection\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a4de920cbef2cb6a11991cdeb98959a39}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getRight@{getRight}}
+\index{getRight@{getRight}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getRight()}{getRight()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a4de920cbef2cb6a11991cdeb98959a39} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Right (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_afd20a426763da6d3e2c374143929ae62}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getTarget@{getTarget}}
+\index{getTarget@{getTarget}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getTarget()}{getTarget()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_afd20a426763da6d3e2c374143929ae62} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aff68eb2433c873e726b1e54d777b2331}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getUp@{getUp}}
+\index{getUp@{getUp}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getUp()}{getUp()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aff68eb2433c873e726b1e54d777b2331} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \& Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+Up (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a2ead516435c53faff39f6d70cd019b50}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getViewMatrix@{getViewMatrix}}
+\index{getViewMatrix@{getViewMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getViewMatrix()}{getViewMatrix()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a2ead516435c53faff39f6d70cd019b50} 
+const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \& Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+View\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a216b3b9c51ca6d2a508e5641c4fa9918}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!getViewProjectionMatrix@{getViewProjectionMatrix}}
+\index{getViewProjectionMatrix@{getViewProjectionMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{getViewProjectionMatrix()}{getViewProjectionMatrix()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a216b3b9c51ca6d2a508e5641c4fa9918} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::get\+View\+Projection\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a38d71dbddef423376d2b018de545fe51}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setAspectRatio@{setAspectRatio}}
+\index{setAspectRatio@{setAspectRatio}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setAspectRatio()}{setAspectRatio()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a38d71dbddef423376d2b018de545fe51} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Aspect\+Ratio (\begin{DoxyParamCaption}\item[{float}]{aspect\+Ratio}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a20ba00e221636606f9ffca7da6c3997d}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setEventDispatcher@{setEventDispatcher}}
+\index{setEventDispatcher@{setEventDispatcher}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setEventDispatcher()}{setEventDispatcher()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a20ba00e221636606f9ffca7da6c3997d} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Event\+Dispatcher (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{event\+Dispatcher}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a5d6f1eb1a7629701c53df945e0b150d2}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setFieldOfView@{setFieldOfView}}
+\index{setFieldOfView@{setFieldOfView}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setFieldOfView()}{setFieldOfView()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a5d6f1eb1a7629701c53df945e0b150d2} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Field\+Of\+View (\begin{DoxyParamCaption}\item[{float}]{fov}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aa023d3a48e9451a90da7357db378357e}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setNearFarPlanes@{setNearFarPlanes}}
+\index{setNearFarPlanes@{setNearFarPlanes}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setNearFarPlanes()}{setNearFarPlanes()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aa023d3a48e9451a90da7357db378357e} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Near\+Far\+Planes (\begin{DoxyParamCaption}\item[{float}]{near\+Plane}{, }\item[{float}]{far\+Plane}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_af6ad2b3114e21b2ab5baf938ba357735}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setPosition@{setPosition}}
+\index{setPosition@{setPosition}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setPosition()}{setPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_af6ad2b3114e21b2ab5baf938ba357735} 
+virtual void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{position}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aef8dd556770d18cb78d43ad5c25a3e94}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setTarget@{setTarget}}
+\index{setTarget@{setTarget}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setTarget()}{setTarget()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aef8dd556770d18cb78d43ad5c25a3e94} 
+virtual void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Target (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{target}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ae6ea87e3574d48d6a5cc4fce8739a565}{Voxel\+Editor\+::\+Camera\+::\+Orbit\+Camera}}.
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aa2f10eeaa64b8181a6bca391500e9b08}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setUp@{setUp}}
+\index{setUp@{setUp}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setUp()}{setUp()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aa2f10eeaa64b8181a6bca391500e9b08} 
+virtual void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{up}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_ae247374b3928605a768db1e5f845b884}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!setViewPreset@{setViewPreset}}
+\index{setViewPreset@{setViewPreset}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{setViewPreset()}{setViewPreset()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_ae247374b3928605a768db1e5f845b884} 
+virtual void Voxel\+Editor\+::\+Camera\+::\+Camera\+::set\+View\+Preset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}{View\+Preset}}}]{preset}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_test_camera_a2dad9feb66162e23f12759190e060cb2}{Test\+Camera}}, and \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a74b96139841ce7a35497d09af0a8e5b4}{Voxel\+Editor\+::\+Camera\+::\+Orbit\+Camera}}.
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aabc8eba5d0e525ad519ed8b7d56af9c4}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!updateProjectionMatrix@{updateProjectionMatrix}}
+\index{updateProjectionMatrix@{updateProjectionMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{updateProjectionMatrix()}{updateProjectionMatrix()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aabc8eba5d0e525ad519ed8b7d56af9c4} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::update\+Projection\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a6d2bffcb1d83b1636a9dfdb8e7f2d599}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!updateViewMatrix@{updateViewMatrix}}
+\index{updateViewMatrix@{updateViewMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{updateViewMatrix()}{updateViewMatrix()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a6d2bffcb1d83b1636a9dfdb8e7f2d599} 
+void Voxel\+Editor\+::\+Camera\+::\+Camera\+::update\+View\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aea573bdf82a2b01108670476072f53c9}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_aspectRatio@{m\_aspectRatio}}
+\index{m\_aspectRatio@{m\_aspectRatio}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_aspectRatio}{m\_aspectRatio}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aea573bdf82a2b01108670476072f53c9} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+aspect\+Ratio\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a504b8520a311e6353876166d7913fe98}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_eventDispatcher@{m\_eventDispatcher}}
+\index{m\_eventDispatcher@{m\_eventDispatcher}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_eventDispatcher}{m\_eventDispatcher}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a504b8520a311e6353876166d7913fe98} 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events\+::\+Event\+Dispatcher}}\texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+event\+Dispatcher\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a9f31537cc3f4d6e10fce62e928de2c68}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_farPlane@{m\_farPlane}}
+\index{m\_farPlane@{m\_farPlane}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_farPlane}{m\_farPlane}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a9f31537cc3f4d6e10fce62e928de2c68} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+far\+Plane\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_abebb656118ae099fbcb47a2c4e000673}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_fov@{m\_fov}}
+\index{m\_fov@{m\_fov}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_fov}{m\_fov}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_abebb656118ae099fbcb47a2c4e000673} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+fov\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a49d42fa531e62433cee641dfabd90ff2}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_nearPlane@{m\_nearPlane}}
+\index{m\_nearPlane@{m\_nearPlane}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_nearPlane}{m\_nearPlane}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a49d42fa531e62433cee641dfabd90ff2} 
+float Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+near\+Plane\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a3ed44ed015a3d2bd8ffb1fb6cdab3f40}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_position@{m\_position}}
+\index{m\_position@{m\_position}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_position}{m\_position}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a3ed44ed015a3d2bd8ffb1fb6cdab3f40} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+position\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a247fbaee29a8f7cca8cedd3cb6707753}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_projectionMatrix@{m\_projectionMatrix}}
+\index{m\_projectionMatrix@{m\_projectionMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_projectionMatrix}{m\_projectionMatrix}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a247fbaee29a8f7cca8cedd3cb6707753} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+projection\+Matrix\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_ad7bbeb1403389cebccf68689f8a65883}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_projectionMatrixDirty@{m\_projectionMatrixDirty}}
+\index{m\_projectionMatrixDirty@{m\_projectionMatrixDirty}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_projectionMatrixDirty}{m\_projectionMatrixDirty}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_ad7bbeb1403389cebccf68689f8a65883} 
+bool Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+projection\+Matrix\+Dirty\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_target@{m\_target}}
+\index{m\_target@{m\_target}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_target}{m\_target}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+target\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_aedf02f6810a1f9cc96c1fe14a3fe31ee}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_up@{m\_up}}
+\index{m\_up@{m\_up}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_up}{m\_up}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_aedf02f6810a1f9cc96c1fe14a3fe31ee} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+up\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a4df88885aa0d3619d7bae1e89637ec4c}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_viewMatrix@{m\_viewMatrix}}
+\index{m\_viewMatrix@{m\_viewMatrix}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_viewMatrix}{m\_viewMatrix}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a4df88885aa0d3619d7bae1e89637ec4c} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+view\+Matrix\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_voxel_editor_1_1_camera_1_1_camera_a652fabfb79d7f6d195eab563da5e9773}\index{VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}!m\_viewMatrixDirty@{m\_viewMatrixDirty}}
+\index{m\_viewMatrixDirty@{m\_viewMatrixDirty}!VoxelEditor::Camera::Camera@{VoxelEditor::Camera::Camera}}
+\doxysubsubsection{\texorpdfstring{m\_viewMatrixDirty}{m\_viewMatrixDirty}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_camera_1_1_camera_a652fabfb79d7f6d195eab563da5e9773} 
+bool Voxel\+Editor\+::\+Camera\+::\+Camera\+::m\+\_\+view\+Matrix\+Dirty\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/camera/\mbox{\hyperlink{_camera_8h}{Camera.\+h}}\end{DoxyCompactItemize}

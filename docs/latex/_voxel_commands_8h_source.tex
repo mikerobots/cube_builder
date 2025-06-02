@@ -1,0 +1,155 @@
+\doxysection{Voxel\+Commands.\+h}
+\hypertarget{_voxel_commands_8h_source}{}\label{_voxel_commands_8h_source}\index{core/undo\_redo/VoxelCommands.h@{core/undo\_redo/VoxelCommands.h}}
+\mbox{\hyperlink{_voxel_commands_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_command_8h}{Command.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{../voxel\_data/VoxelDataManager.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_types_8h}{../voxel\_data/VoxelTypes.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{../../foundation/math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_bounding_box_8h}{../../foundation/math/BoundingBox.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Single\ voxel\ edit\ command}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a4fc82d8cfd9b509cd376b305fab3f036}{VoxelEditCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a4fc82d8cfd9b509cd376b305fab3f036}{VoxelEditCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ position,\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ newValue);}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a631f65694ed0edd7409cb2489aad0304}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_ac2c0635b699574d58283f8855384d6d6}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00025\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_abe90f6e869984cec03d893f96af2060f}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Edit\ Voxel"{}};\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a5a01d9d977858b2ca0a44c8a7cb0f8a3}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{CommandType::VoxelEdit}};\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a4f2a5c0234e23b42dd157f417d3078ae}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a8036f4b07be0a8a6aed6d83f10b03df0}{canMergeWith}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\&\ other)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00030\ \ \ \ \ std::unique\_ptr<Command>\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_edit_command_a5746c559747a3f38cd1be3eee4937244}{mergeWith}}(std::unique\_ptr<Command>\ other)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ m\_position;}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_oldValue;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_newValue;}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ Bulk\ voxel\ edit\ command\ for\ multiple\ voxels}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_af637acbe3a8ae0ee2e72d5737205d5e3}{BulkVoxelEditCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00042\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_af41d3ab189f84980866df26b9c77f7e4}{VoxelChange}}\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_ac36be6b19721dee49ead5415367b371f}{position}};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_a9aa73afb00ea3557e717d0c3a9fd3558}{resolution}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_aca1b339bcb6e16ae9362ac7fda3a877c}{oldValue}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_a5e6c3aa8f4bf35a26f65168fed4f8582}{newValue}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_af41d3ab189f84980866df26b9c77f7e4}{VoxelChange}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ pos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ res,\ \textcolor{keywordtype}{bool}\ oldVal,\ \textcolor{keywordtype}{bool}\ newVal)}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_ac36be6b19721dee49ead5415367b371f}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_a9aa73afb00ea3557e717d0c3a9fd3558}{resolution}}(res),\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_aca1b339bcb6e16ae9362ac7fda3a877c}{oldValue}}(oldVal),\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change_a5e6c3aa8f4bf35a26f65168fed4f8582}{newValue}}(newVal)\ \{\}}
+\DoxyCodeLine{00051\ \ \ \ \ \};}
+\DoxyCodeLine{00052\ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_af637acbe3a8ae0ee2e72d5737205d5e3}{BulkVoxelEditCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<VoxelChange>\&\ changes);}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_ac6187347cee2b0f7c445fb4730827710}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a7ae7f62751f67b1cbbf50f2c0a82a4f0}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00058\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a55d7ebcf702ff869b9773d4baad983bc}{getName}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a84f85e38b3362d790d5a903d71bc3d27}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{CommandType::VoxelEdit}};\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a40c943360187dfa5a0cbae19d3e55da4}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aa4ffa0786e80fc556d8284b5f5a74fa5}{compress}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_a2b380c5b997aae4a4ac18ada8b4ef5e6}{decompress}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Add\ more\ changes\ to\ this\ command}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_aede24b4bf0e7b6e42f6d89327973b4fd}{addChange}}(\textcolor{keyword}{const}\ VoxelChange\&\ change);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_adf2274e74ed533773ef718d0a4da8315}{addChanges}}(\textcolor{keyword}{const}\ std::vector<VoxelChange>\&\ changes);}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_acf23fd6ca2ee7fe0cf6bf0c96ed8d105}{getChangeCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_changes.size();\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
+\DoxyCodeLine{00073\ \ \ \ \ std::vector<VoxelChange>\ m\_changes;}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00075\ \ \ \ \ std::vector<uint8\_t>\ m\_compressedData;}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ compressChanges();}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ decompressChanges();}
+\DoxyCodeLine{00079\ \};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{comment}{//\ Fill\ operation\ command}}
+\DoxyCodeLine{00082\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_a0a309b15b222369724721f4c20a1f109}{VoxelFillCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00083\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_a0a309b15b222369724721f4c20a1f109}{VoxelFillCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ region,}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ fillValue);}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_aa3135dfd0c332b32bbf46260dc286b30}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_a2fcee4a998e58af59daae16452eda7cf}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00091\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_a27f6a4bcc6324e0044d1db8525c05050}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Fill\ Voxels"{}};\ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_af1cb772617e5b52d41c2f40c9e140dd6}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{CommandType::VoxelEdit}};\ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_fill_command_a86b9780c7bf0f9fafb826e799a7be0c6}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00094\ \ \ \ \ }
+\DoxyCodeLine{00095\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ m\_region;}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_fillValue;}
+\DoxyCodeLine{00100\ \ \ \ \ std::vector<BulkVoxelEditCommand::VoxelChange>\ m\_previousState;}
+\DoxyCodeLine{00101\ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{comment}{//\ Copy\ voxels\ command}}
+\DoxyCodeLine{00104\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_a2ef01de38f184a29585f0d68dcf81b3e}{VoxelCopyCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00105\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_a2ef01de38f184a29585f0d68dcf81b3e}{VoxelCopyCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Math::Vector3i>\&\ sourcePositions,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ offset,}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_ab91a9be5f89e83b6d8800b96ff214de8}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_ac6bccd412d1247152be95f145c0ab85f}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00113\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_a5195ad6ab348c5b55ed1ee3c40e75f1a}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Copy\ Voxels"{}};\ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_a5da9ec4ce359e02bb3cca13b649798d1}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{CommandType::VoxelEdit}};\ \}}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_copy_command_a396d6457752b5b3d16e17ef6700f6d71}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
+\DoxyCodeLine{00119\ \ \ \ \ std::vector<Math::Vector3i>\ m\_sourcePositions;}
+\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ m\_offset;}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{00122\ \ \ \ \ std::vector<BulkVoxelEditCommand::VoxelChange>\ m\_changes;}
+\DoxyCodeLine{00123\ \};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{comment}{//\ Move\ voxels\ command}}
+\DoxyCodeLine{00126\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_a61546d18d346bf743f712bc1288602d4}{VoxelMoveCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00127\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_a61546d18d346bf743f712bc1288602d4}{VoxelMoveCommand}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Math::Vector3i>\&\ positions,}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ offset,}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00132\ \ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_abd69f663152ef98a044b58bc0d9981fd}{execute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_ae1da1f44987d84bafb25428ea3fe94fd}{undo}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00135\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_a8fe603c00113d3e779bb5f63c78c31b6}{getName}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Move\ Voxels"{}};\ \}}
+\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_ac477768e06412ddd17d339e4b5fb5007}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{CommandType::VoxelEdit}};\ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_voxel_move_command_ad36e4a86cf4b9ac3452d58f339662bf2}{getMemoryUsage}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
+\DoxyCodeLine{00141\ \ \ \ \ std::vector<Math::Vector3i>\ m\_positions;}
+\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ m\_offset;}
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{00144\ \ \ \ \ std::vector<BulkVoxelEditCommand::VoxelChange>\ m\_sourceChanges;}
+\DoxyCodeLine{00145\ \ \ \ \ std::vector<BulkVoxelEditCommand::VoxelChange>\ m\_destChanges;}
+\DoxyCodeLine{00146\ \};}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \}}
+\DoxyCodeLine{00149\ \}}
+
+\end{DoxyCode}

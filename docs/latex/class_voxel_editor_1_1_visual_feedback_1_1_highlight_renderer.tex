@@ -1,0 +1,145 @@
+\doxysection{Voxel\+Editor\+::Visual\+Feedback\+::Highlight\+Renderer Class Reference}
+\hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer}{}\label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+
+
+{\ttfamily \#include $<$Highlight\+Renderer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a072b30a5efd93e2b753daef93d64549d}{Highlight\+Renderer}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a9ff3d1f2e5a3dbe262083bec12ab7d1a}{\texorpdfstring{$\sim$}{\string~}\+Highlight\+Renderer}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a9a04ac79441a219c3ec2e737dc57c221}{render\+Face\+Highlight}} (const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&face, const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Highlight\+Style}} \&style)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a91aa18d64a0d390226fd3832d4478886}{clear\+Face\+Highlights}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a3780b97fc44c3e5ca3c387d23d99bcdf}{render\+Voxel\+Highlight}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&position, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution, const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Highlight\+Style}} \&style)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ab766e7f596b8160d2ef53de07ce405db}{clear\+Voxel\+Highlights}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a4b4ab3781b366dcdb89f1c15d6334092}{render\+Multi\+Selection}} (const \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+::\+Selection\+Set}} \&selection, const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Highlight\+Style}} \&style)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ab5f68dac82d1cc61c353539328647d0b}{clear\+Selection\+Highlights}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a7fbecc82485e68bccf91bd62d6a0064f}{clear\+All}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a63b24604bb063d81d74429ba4476fb67}{update}} (float delta\+Time)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ad9065416a486466f66437719a121a494}{set\+Global\+Animation\+Enabled}} (bool enabled)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ad086c9b0cd5f6eea9af8453a3b08f4f3}{is\+Animation\+Enabled}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_af3632b1cf2ccb616cb8af5f9fdf17489}{set\+Max\+Highlights}} (int max\+Count)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a70ce31ac36a0235df5f19a46ed2b4bc3}{enable\+Instancing}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a638e1ea1c7fb3e97670361ca0422e010}{render}} (const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera)
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a072b30a5efd93e2b753daef93d64549d}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!HighlightRenderer@{HighlightRenderer}}
+\index{HighlightRenderer@{HighlightRenderer}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{HighlightRenderer()}{HighlightRenderer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a072b30a5efd93e2b753daef93d64549d} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::\+Highlight\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a9ff3d1f2e5a3dbe262083bec12ab7d1a}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!````~HighlightRenderer@{\texorpdfstring{$\sim$}{\string~}HighlightRenderer}}
+\index{````~HighlightRenderer@{\texorpdfstring{$\sim$}{\string~}HighlightRenderer}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}HighlightRenderer()}{\string~HighlightRenderer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a9ff3d1f2e5a3dbe262083bec12ab7d1a} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::\texorpdfstring{$\sim$}{\string~}\+Highlight\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a7fbecc82485e68bccf91bd62d6a0064f}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!clearAll@{clearAll}}
+\index{clearAll@{clearAll}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{clearAll()}{clearAll()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a7fbecc82485e68bccf91bd62d6a0064f} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::clear\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a91aa18d64a0d390226fd3832d4478886}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!clearFaceHighlights@{clearFaceHighlights}}
+\index{clearFaceHighlights@{clearFaceHighlights}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{clearFaceHighlights()}{clearFaceHighlights()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a91aa18d64a0d390226fd3832d4478886} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::clear\+Face\+Highlights (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ab5f68dac82d1cc61c353539328647d0b}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!clearSelectionHighlights@{clearSelectionHighlights}}
+\index{clearSelectionHighlights@{clearSelectionHighlights}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{clearSelectionHighlights()}{clearSelectionHighlights()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ab5f68dac82d1cc61c353539328647d0b} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::clear\+Selection\+Highlights (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ab766e7f596b8160d2ef53de07ce405db}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!clearVoxelHighlights@{clearVoxelHighlights}}
+\index{clearVoxelHighlights@{clearVoxelHighlights}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{clearVoxelHighlights()}{clearVoxelHighlights()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ab766e7f596b8160d2ef53de07ce405db} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::clear\+Voxel\+Highlights (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a70ce31ac36a0235df5f19a46ed2b4bc3}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!enableInstancing@{enableInstancing}}
+\index{enableInstancing@{enableInstancing}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{enableInstancing()}{enableInstancing()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a70ce31ac36a0235df5f19a46ed2b4bc3} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::enable\+Instancing (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ad086c9b0cd5f6eea9af8453a3b08f4f3}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!isAnimationEnabled@{isAnimationEnabled}}
+\index{isAnimationEnabled@{isAnimationEnabled}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{isAnimationEnabled()}{isAnimationEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ad086c9b0cd5f6eea9af8453a3b08f4f3} 
+bool Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::is\+Animation\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a638e1ea1c7fb3e97670361ca0422e010}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!render@{render}}
+\index{render@{render}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a638e1ea1c7fb3e97670361ca0422e010} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::render (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a9a04ac79441a219c3ec2e737dc57c221}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!renderFaceHighlight@{renderFaceHighlight}}
+\index{renderFaceHighlight@{renderFaceHighlight}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{renderFaceHighlight()}{renderFaceHighlight()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a9a04ac79441a219c3ec2e737dc57c221} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::render\+Face\+Highlight (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&}]{face}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Highlight\+Style}} \&}]{style}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a4b4ab3781b366dcdb89f1c15d6334092}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!renderMultiSelection@{renderMultiSelection}}
+\index{renderMultiSelection@{renderMultiSelection}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{renderMultiSelection()}{renderMultiSelection()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a4b4ab3781b366dcdb89f1c15d6334092} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::render\+Multi\+Selection (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{Selection\+::\+Selection\+Set}} \&}]{selection}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Highlight\+Style}} \&}]{style}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a3780b97fc44c3e5ca3c387d23d99bcdf}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!renderVoxelHighlight@{renderVoxelHighlight}}
+\index{renderVoxelHighlight@{renderVoxelHighlight}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{renderVoxelHighlight()}{renderVoxelHighlight()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a3780b97fc44c3e5ca3c387d23d99bcdf} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::render\+Voxel\+Highlight (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{position}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Highlight\+Style}} \&}]{style}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ad9065416a486466f66437719a121a494}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!setGlobalAnimationEnabled@{setGlobalAnimationEnabled}}
+\index{setGlobalAnimationEnabled@{setGlobalAnimationEnabled}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{setGlobalAnimationEnabled()}{setGlobalAnimationEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_ad9065416a486466f66437719a121a494} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::set\+Global\+Animation\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_af3632b1cf2ccb616cb8af5f9fdf17489}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!setMaxHighlights@{setMaxHighlights}}
+\index{setMaxHighlights@{setMaxHighlights}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{setMaxHighlights()}{setMaxHighlights()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_af3632b1cf2ccb616cb8af5f9fdf17489} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::set\+Max\+Highlights (\begin{DoxyParamCaption}\item[{int}]{max\+Count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a63b24604bb063d81d74429ba4476fb67}\index{VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}!update@{update}}
+\index{update@{update}!VoxelEditor::VisualFeedback::HighlightRenderer@{VoxelEditor::VisualFeedback::HighlightRenderer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_highlight_renderer_a63b24604bb063d81d74429ba4476fb67} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Renderer\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/visual\+\_\+feedback/include/visual\+\_\+feedback/\mbox{\hyperlink{_highlight_renderer_8h}{Highlight\+Renderer.\+h}}\item 
+core/visual\+\_\+feedback/src/\mbox{\hyperlink{_highlight_renderer_8cpp}{Highlight\+Renderer.\+cpp}}\end{DoxyCompactItemize}

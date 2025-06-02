@@ -1,0 +1,63 @@
+\doxysection{foundation/logging/\+Performance\+Profiler.h File Reference}
+\hypertarget{_performance_profiler_8h}{}\label{_performance_profiler_8h}\index{foundation/logging/PerformanceProfiler.h@{foundation/logging/PerformanceProfiler.h}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_performance_profiler}{Voxel\+Editor\+::\+Logging\+::\+Performance\+Profiler}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data}{Voxel\+Editor\+::\+Logging\+::\+Performance\+Profiler\+::\+Profile\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats}{Voxel\+Editor\+::\+Logging\+::\+Performance\+Profiler\+::\+Memory\+Stats}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_scoped_profiler}{Voxel\+Editor\+::\+Logging\+::\+Scoped\+Profiler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::\+Logging}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_performance_profiler_8h_aac1c1303c628961f4a2eefc0a1083766}{PROFILE\+\_\+\+SCOPE}}(name)
+\item 
+\#define \mbox{\hyperlink{_performance_profiler_8h_aea5bb1ebe0e3e32e5927e899daa2011d}{PROFILE\+\_\+\+FUNCTION}}()
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{_performance_profiler_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_performance_profiler_8h_aea5bb1ebe0e3e32e5927e899daa2011d}\index{PerformanceProfiler.h@{PerformanceProfiler.h}!PROFILE\_FUNCTION@{PROFILE\_FUNCTION}}
+\index{PROFILE\_FUNCTION@{PROFILE\_FUNCTION}!PerformanceProfiler.h@{PerformanceProfiler.h}}
+\doxysubsubsection{\texorpdfstring{PROFILE\_FUNCTION}{PROFILE\_FUNCTION}}
+{\footnotesize\ttfamily \label{_performance_profiler_8h_aea5bb1ebe0e3e32e5927e899daa2011d} 
+\#define PROFILE\+\_\+\+FUNCTION(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_scoped_profiler}{VoxelEditor::Logging::ScopedProfiler}}\ \_prof(\_\_FUNCTION\_\_)}
+
+\end{DoxyCode}
+\Hypertarget{_performance_profiler_8h_aac1c1303c628961f4a2eefc0a1083766}\index{PerformanceProfiler.h@{PerformanceProfiler.h}!PROFILE\_SCOPE@{PROFILE\_SCOPE}}
+\index{PROFILE\_SCOPE@{PROFILE\_SCOPE}!PerformanceProfiler.h@{PerformanceProfiler.h}}
+\doxysubsubsection{\texorpdfstring{PROFILE\_SCOPE}{PROFILE\_SCOPE}}
+{\footnotesize\ttfamily \label{_performance_profiler_8h_aac1c1303c628961f4a2eefc0a1083766} 
+\#define PROFILE\+\_\+\+SCOPE(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_scoped_profiler}{VoxelEditor::Logging::ScopedProfiler}}\ \_prof(name)}
+
+\end{DoxyCode}

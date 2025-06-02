@@ -1,0 +1,115 @@
+\doxysection{Test\+Handler Class Reference}
+\hypertarget{class_test_handler}{}\label{class_test_handler}\index{TestHandler@{TestHandler}}
+Inheritance diagram for Test\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_test_handler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_test_handler_a5c59a817d243bc3de47e40f9637bd0d0}{Test\+Handler}} (int priority=0)
+\item 
+void \mbox{\hyperlink{class_test_handler_a3886629d3f77e332d4a796eb14d70885}{handle\+Event}} (const \mbox{\hyperlink{class_test_event}{Test\+Event}} \&event) override
+\item 
+bool \mbox{\hyperlink{class_test_handler_a1a9d51dbcac1971ce2a4cc5406844db9}{should\+Handle}} (const \mbox{\hyperlink{class_test_event}{Test\+Event}} \&event) const override
+\item 
+int \mbox{\hyperlink{class_test_handler_a66b9995e47c20ebdeef3022df34cdbb3}{get\+Priority}} () const override
+\item 
+int \mbox{\hyperlink{class_test_handler_ad0f71c572dee0905e15458853ad3e267}{get\+Call\+Count}} () const
+\item 
+int \mbox{\hyperlink{class_test_handler_a0b302210ebe0213fcc2c42ce6af35db8}{get\+Last\+Value}} () const
+\item 
+const std\+::vector$<$ int $>$ \& \mbox{\hyperlink{class_test_handler_a99fbdf69602553b9721fc89d7c1edb4d}{get\+Received\+Values}} () const
+\item 
+void \mbox{\hyperlink{class_test_handler_a0bca56e75db0eeae647eb14bdd017721}{set\+Should\+Handle}} (bool should)
+\item 
+void \mbox{\hyperlink{class_test_handler_a2506dbc1dbff6909c6c570d047210169}{reset}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Voxel\+Editor\+::\+Events\+::\+Event\+Handler$<$ Test\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a101124b1461dcfd2a7926b694d99631c}{\texorpdfstring{$\sim$}{\string~}\+Event\+Handler}} ()=default
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_test_handler_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_test_handler_a5c59a817d243bc3de47e40f9637bd0d0}\index{TestHandler@{TestHandler}!TestHandler@{TestHandler}}
+\index{TestHandler@{TestHandler}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{TestHandler()}{TestHandler()}}
+{\footnotesize\ttfamily \label{class_test_handler_a5c59a817d243bc3de47e40f9637bd0d0} 
+Test\+Handler\+::\+Test\+Handler (\begin{DoxyParamCaption}\item[{int}]{priority}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_test_handler_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_test_handler_ad0f71c572dee0905e15458853ad3e267}\index{TestHandler@{TestHandler}!getCallCount@{getCallCount}}
+\index{getCallCount@{getCallCount}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{getCallCount()}{getCallCount()}}
+{\footnotesize\ttfamily \label{class_test_handler_ad0f71c572dee0905e15458853ad3e267} 
+int Test\+Handler\+::get\+Call\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_test_handler_a0b302210ebe0213fcc2c42ce6af35db8}\index{TestHandler@{TestHandler}!getLastValue@{getLastValue}}
+\index{getLastValue@{getLastValue}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{getLastValue()}{getLastValue()}}
+{\footnotesize\ttfamily \label{class_test_handler_a0b302210ebe0213fcc2c42ce6af35db8} 
+int Test\+Handler\+::get\+Last\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_test_handler_a66b9995e47c20ebdeef3022df34cdbb3}\index{TestHandler@{TestHandler}!getPriority@{getPriority}}
+\index{getPriority@{getPriority}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{getPriority()}{getPriority()}}
+{\footnotesize\ttfamily \label{class_test_handler_a66b9995e47c20ebdeef3022df34cdbb3} 
+int Test\+Handler\+::get\+Priority (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_ae91aaf86381ac62e6af710432291d092}{Voxel\+Editor\+::\+Events\+::\+Event\+Handler$<$ Test\+Event $>$}}.
+
+\Hypertarget{class_test_handler_a99fbdf69602553b9721fc89d7c1edb4d}\index{TestHandler@{TestHandler}!getReceivedValues@{getReceivedValues}}
+\index{getReceivedValues@{getReceivedValues}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{getReceivedValues()}{getReceivedValues()}}
+{\footnotesize\ttfamily \label{class_test_handler_a99fbdf69602553b9721fc89d7c1edb4d} 
+const std\+::vector$<$ int $>$ \& Test\+Handler\+::get\+Received\+Values (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_test_handler_a3886629d3f77e332d4a796eb14d70885}\index{TestHandler@{TestHandler}!handleEvent@{handleEvent}}
+\index{handleEvent@{handleEvent}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{handleEvent()}{handleEvent()}}
+{\footnotesize\ttfamily \label{class_test_handler_a3886629d3f77e332d4a796eb14d70885} 
+void Test\+Handler\+::handle\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_test_event}{Test\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a57c2e7e77e162d607c8a12970e579a96}{Voxel\+Editor\+::\+Events\+::\+Event\+Handler$<$ Test\+Event $>$}}.
+
+\Hypertarget{class_test_handler_a2506dbc1dbff6909c6c570d047210169}\index{TestHandler@{TestHandler}!reset@{reset}}
+\index{reset@{reset}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_test_handler_a2506dbc1dbff6909c6c570d047210169} 
+void Test\+Handler\+::reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_test_handler_a0bca56e75db0eeae647eb14bdd017721}\index{TestHandler@{TestHandler}!setShouldHandle@{setShouldHandle}}
+\index{setShouldHandle@{setShouldHandle}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{setShouldHandle()}{setShouldHandle()}}
+{\footnotesize\ttfamily \label{class_test_handler_a0bca56e75db0eeae647eb14bdd017721} 
+void Test\+Handler\+::set\+Should\+Handle (\begin{DoxyParamCaption}\item[{bool}]{should}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_test_handler_a1a9d51dbcac1971ce2a4cc5406844db9}\index{TestHandler@{TestHandler}!shouldHandle@{shouldHandle}}
+\index{shouldHandle@{shouldHandle}!TestHandler@{TestHandler}}
+\doxysubsubsection{\texorpdfstring{shouldHandle()}{shouldHandle()}}
+{\footnotesize\ttfamily \label{class_test_handler_a1a9d51dbcac1971ce2a4cc5406844db9} 
+bool Test\+Handler\+::should\+Handle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_test_event}{Test\+Event}} \&}]{event}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a104c3ddac92f34b78aac3c14a17d0de8}{Voxel\+Editor\+::\+Events\+::\+Event\+Handler$<$ Test\+Event $>$}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/tests/\mbox{\hyperlink{test___event_dispatcher_8cpp}{test\+\_\+\+Event\+Dispatcher.\+cpp}}\end{DoxyCompactItemize}

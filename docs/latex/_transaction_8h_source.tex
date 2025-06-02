@@ -1,0 +1,47 @@
+\doxysection{Transaction.\+h}
+\hypertarget{_transaction_8h_source}{}\label{_transaction_8h_source}\index{core/undo\_redo/Transaction.h@{core/undo\_redo/Transaction.h}}
+\mbox{\hyperlink{_transaction_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_command_8h}{Command.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_composite_command_8h}{CompositeCommand.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_ac2aff8c820a0fb9a5cd4d3d0ba34eca6}{Transaction}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_ac2aff8c820a0fb9a5cd4d3d0ba34eca6}{Transaction}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_af2de1315b96bfc311b87f462b05e7551}{\string~Transaction}}();}
+\DoxyCodeLine{00017\ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ Add\ a\ command\ to\ the\ transaction}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_a9d2e099d02418458e6b8a1d9f2d6fdfe}{addCommand}}(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Commit\ the\ transaction\ and\ return\ a\ composite\ command}}
+\DoxyCodeLine{00022\ \ \ \ \ std::unique\_ptr<CompositeCommand>\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_a74add34b3fd6ac2f874f3b618cf0fa52}{commit}}();}
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Cancel\ the\ transaction\ and\ undo\ any\ executed\ commands}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_a8e2f77bca8d65392893e848f39b35d27}{rollback}}();}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Query\ methods}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_a022327347d795f29ebcdb8d1bf8bff19}{isEmpty}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_commands.empty();\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_a31c4ff71813fcb8e26e909f1b813f6ad}{getCommandCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_commands.size();\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_transaction_a752143689faddf76d11ca5f0796167a8}{getName}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00034\ \ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_commands;}
+\DoxyCodeLine{00035\ \ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_executedCommands;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_committed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_rolledBack\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \}}
+\DoxyCodeLine{00041\ \}}
+
+\end{DoxyCode}

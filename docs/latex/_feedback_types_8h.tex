@@ -1,0 +1,85 @@
+\doxysection{core/visual\+\_\+feedback/include/visual\+\_\+feedback/\+Feedback\+Types.h File Reference}
+\hypertarget{_feedback_types_8h}{}\label{_feedback_types_8h}\index{core/visual\_feedback/include/visual\_feedback/FeedbackTypes.h@{core/visual\_feedback/include/visual\_feedback/FeedbackTypes.h}}
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include "{}Render\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Voxel\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Vector3f.\+h"{}}\newline
+{\ttfamily \#include "{}Vector2f.\+h"{}}\newline
+{\ttfamily \#include "{}Vector3i.\+h"{}}\newline
+{\ttfamily \#include "{}Bounding\+Box.\+h"{}}\newline
+{\ttfamily \#include "{}Quaternion.\+h"{}}\newline
+{\ttfamily \#include "{}Matrix4f.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_highlight_style}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Highlight\+Style}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_style}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Outline\+Style}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_text_style}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Text\+Style}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Ray}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_raycast_hit}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Raycast\+Hit}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_transform}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Transform}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_render_stats}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Render\+Stats}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback}{Voxel\+Editor\+::\+Visual\+Feedback}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a313e18f70837de4dbc4b51d19577d1fd}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Id}} = uint64\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ac0da12d1b08889961d0149fd1d070b0d}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Group\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Voxel\+Id}} = uint64\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Direction}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042a9f082d04c481aab268b9f614d2ffd129}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+PositiveX}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042a963a8a64a09d54efc81b136ca6be21b2}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+NegativeX}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042ac53c385ced96bd629c0f45a902aceba3}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+PositiveY}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042ae4d5f02ceecd15caf66e9f0b2393c86b}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+NegativeY}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042a1921c16ffdafaf04e378ca1b6774c0ce}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+PositiveZ}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042ada76df034cd139bd515761c8bb8e3090}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+NegativeZ}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a65a346913415f2193b4978994068596f}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Blend\+Mode}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a65a346913415f2193b4978994068596fa6132295fcf5570fb8b0a944ef322a598}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Alpha}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a65a346913415f2193b4978994068596fa3f7b3d8ee7bf0d542bd50821c083888f}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Additive}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a65a346913415f2193b4978994068596fae257376d913f3b53cbb4a9b19d770648}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Multiply}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a65a346913415f2193b4978994068596fa2fc3359e12b2a9104121dcf04246f6a0}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Screen}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75f}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Line\+Pattern}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75fae41480b6bbfbf7407974a88d3d34f4fa}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Solid}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75faeb656e41b6da91494775ecf47a51da91}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Dashed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75fa90c09393a4c0970bc9a6703ad527781c}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Dotted}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75faef1c598821948808c4dbd57821281a31}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Dash\+Dot}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18ab}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Text\+Alignment}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18aba945d5e233cf7d6240f6b783b36a374ff}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Left}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18aba4f1f6016fc9f3f2353c0cc7c67b292bd}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Center}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18aba92b09c7c48c520c3c55e497875da437c}{Voxel\+Editor\+::\+Visual\+Feedback\+::\+Right}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a336a8a1ab1925c44e63fe402b359e5e3}{Voxel\+Editor\+::\+Visual\+Feedback\+::face\+Direction\+To\+Normal}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}} dir)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}} \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_aacef5614048e2e595eed5dfe6da86262}{Voxel\+Editor\+::\+Visual\+Feedback\+::opposite\+Direction}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{Face\+Direction}} dir)
+\end{DoxyCompactItemize}

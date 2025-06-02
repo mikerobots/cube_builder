@@ -1,0 +1,30 @@
+\doxysection{core/groups/src/\+Group\+Operations.cpp File Reference}
+\hypertarget{_group_operations_8cpp}{}\label{_group_operations_8cpp}\index{core/groups/src/GroupOperations.cpp@{core/groups/src/GroupOperations.cpp}}
+{\ttfamily \#include "{}../include/groups/\+Group\+Operations.\+h"{}}\newline
+{\ttfamily \#include "{}../include/groups/\+Group\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}../include/groups/\+Voxel\+Group.\+h"{}}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Voxel\+Editor\+::\+Groups}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_ae12da07a4dd578fd3321c22b7994a867}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::transform\+Voxel}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} \&voxel, const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform}{Group\+Transform}} \&transform)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::calculate\+Bounds}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&voxels)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a82e0ef532e160476f08ef0dd3b18b00d}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::calculate\+Optimal\+Pivot}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&voxels)
+\item 
+bool \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a48e7c7adf7b9020b05a17ac875b4e766}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::validate\+Voxel\+Positions}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&voxels, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&workspace\+Bounds)
+\item 
+std\+::string \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_aaba64228af763adcdf1a8aa71e8d00ca}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::generate\+Unique\+Name}} (const std\+::string \&base\+Name, const std\+::vector$<$ std\+::string $>$ \&existing\+Names)
+\end{DoxyCompactItemize}

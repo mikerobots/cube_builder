@@ -1,0 +1,44 @@
+\doxysection{core/undo\+\_\+redo/\+History\+Manager.h File Reference}
+\hypertarget{_history_manager_8h}{}\label{_history_manager_8h}\index{core/undo\_redo/HistoryManager.h@{core/undo\_redo/HistoryManager.h}}
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include "{}Command.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_undo_redo_event}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Undo\+Redo\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager}{Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{Voxel\+Editor\+::\+Undo\+Redo}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Undo\+Redo\+Callback}} = std\+::function$<$void(const \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_undo_redo_event}{Undo\+Redo\+Event}}\&)$>$
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Memory\+Pressure\+Callback}} = std\+::function$<$void(size\+\_\+t current\+Usage, size\+\_\+t max\+Usage)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Undo\+Redo\+Event\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a9ee4e041d9d1f5d3483c6b6ae9b38576}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command\+Executed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1aef41557e92a599b2432d54f6cb25f6ca}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command\+Undone}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a9baaf3ba77f4e6e092bfdf1ef57d8812}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Command\+Redone}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a83ce0d0e4ebd7d8e4ab4820481a7577a}{Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Cleared}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a79049c3d0a0b0602b576407a8fd40e3f}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Transaction\+Started}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1af302f58cc298c396752c1a5f87ccbe9c}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Transaction\+Committed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a107c6cb0a79fcc2eb3249c69c95bdf6e}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Transaction\+Rolled\+Back}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a1b3a89c10c25b2a230e1f1fe112a2825}{Voxel\+Editor\+::\+Undo\+Redo\+::\+Memory\+Pressure}}
+ \}
+\end{DoxyCompactItemize}

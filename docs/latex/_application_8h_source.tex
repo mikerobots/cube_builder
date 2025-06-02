@@ -1,0 +1,114 @@
+\doxysection{Application.\+h}
+\hypertarget{_application_8h_source}{}\label{_application_8h_source}\index{apps/cli/include/cli/Application.h@{apps/cli/include/cli/Application.h}}
+\mbox{\hyperlink{_application_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ Include\ singleton\ headers\ for\ complete\ types}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}../../foundation/logging/Logger.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}../../foundation/config/ConfigManager.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Forward\ declarations\ of\ core\ systems}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelDataManager}};\ \}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller}{CameraController}};\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera}{OrbitCamera}};\ \}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Rendering}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{OpenGLRenderer}};\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine}{RenderEngine}};\ \}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input}{Input}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_manager}{InputManager}};\ \}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_selection}{Selection}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{SelectionManager}};\ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager}{HistoryManager}};\ \}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen}{SurfaceGen}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator}{SurfaceGenerator}};\ \}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback}{VisualFeedback}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_feedback_renderer}{FeedbackRenderer}};\ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Groups}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}};\ \}}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager}{FileManager}};\ \}}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_events}{Events}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{EventDispatcher}};\ \}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Logging}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger}{Logger}};\ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_config}{Config}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager}{ConfigManager}};\ \}}
+\DoxyCodeLine{00026\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }CommandProcessor;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }RenderWindow;}
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }MouseInteraction;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_application_a54149a0cbdde5f46fd9efe947f02e786}{Application}}\ \{}
+\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application_a54149a0cbdde5f46fd9efe947f02e786}{Application}}();}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application_abb967d6056d4f2ce2c1348705d941e1e}{\string~Application}}();}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Application\ lifecycle}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a540452ec2a9d1bf430d097228b666597}{initialize}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}*\ argv[]);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a2ae1b038fbf0bf219069037765fc3625}{run}}();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_application_ab430fd34d81298cb020e5852538a6510}{shutdown}}();}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ System\ access}}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_af61f2f3bb0e01f4b560112ca59cf916a}{getVoxelManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_voxelManager.get();\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller}{Camera::CameraController}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_ab3608dbe14ddad57f1a1855695fcb127}{getCameraController}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cameraController.get();\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Rendering::RenderEngine*\ getRenderEngine()\ const\ \{\ return\ m\_renderEngine.get();\ \}}}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{Rendering::OpenGLRenderer}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a07618990acefab8e2bb89f9397d3f6ba}{getOpenGLRenderer}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_openGLRenderer.get();\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_manager}{Input::InputManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a69cbe913c4653bd3aa92842b9dfcabdf}{getInputManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_inputManager.get();\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager}{Selection::SelectionManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a2c63a7b6728e8a09289b736ebf6ac74a}{getSelectionManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionManager.get();\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager}{UndoRedo::HistoryManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_af047ac1cb9d2b060c72cb332066574db}{getHistoryManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_historyManager.get();\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator}{SurfaceGen::SurfaceGenerator}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a08b27da1d5fc0b049473f6b5e921a652}{getSurfaceGenerator}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_surfaceGenerator.get();\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_feedback_renderer}{VisualFeedback::FeedbackRenderer}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a0d145947fe763ac3ab8a4e04d575e893}{getFeedbackRenderer}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_feedbackRenderer.get();\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Groups::GroupManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a2710767c20b17831e1b1fbdc6d8f208f}{getGroupManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_groupManager.get();\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager}{FileIO::FileManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a0064f66d07a637be2924410af4c35b52}{getFileManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_fileManager.get();\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a14c14fd9918637a151faebeadcb76011}{getEventDispatcher}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_eventDispatcher.get();\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger}{Logging::Logger}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_ac89c69ab0e59ccd4f0eeb18645cc01bb}{getLogger}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{Logging::Logger::getInstance}}();\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager}{Config::ConfigManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a6716c8e63629f8860d8de2ead30c7b77}{getConfigManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a235ae8efbb74f182ab1b084ffd25ab8e}{Config::ConfigManager::getInstance}}();\ \}}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Application\ state}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a784b1ed85025e13e7c2676c2c2ae80e9}{isRunning}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_running;\ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_application_ae67a0065b3d3137ded86bde26b2eb38b}{quit}}()\ \{\ m\_running\ =\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Project\ management}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_application_aee2cbe5362af80a21dc8e026b7bd8794}{getCurrentProject}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentProject;\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_application_ac3eeba026739f13a5e546d6890a10df9}{setCurrentProject}}(\textcolor{keyword}{const}\ std::string\&\ path)\ \{\ m\_currentProject\ =\ path;\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Window\ management}}
+\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_render_window}{RenderWindow}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_application_a7d37d1ffc3941432853eb506399c390e}{getRenderWindow}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_renderWindow.get();\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Core\ systems}}
+\DoxyCodeLine{00073\ \ \ \ \ std::unique\_ptr<VoxelData::VoxelDataManager>\ m\_voxelManager;}
+\DoxyCodeLine{00074\ \ \ \ \ std::unique\_ptr<Camera::CameraController>\ m\_cameraController;}
+\DoxyCodeLine{00075\ \ \ \ \ std::unique\_ptr<Rendering::OpenGLRenderer>\ m\_openGLRenderer;}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<Rendering::RenderEngine>\ m\_renderEngine;\ //\ TODO:\ Fix\ RenderEngine\ abstract\ class}}
+\DoxyCodeLine{00077\ \ \ \ \ std::unique\_ptr<Input::InputManager>\ m\_inputManager;}
+\DoxyCodeLine{00078\ \ \ \ \ std::unique\_ptr<Selection::SelectionManager>\ m\_selectionManager;}
+\DoxyCodeLine{00079\ \ \ \ \ std::unique\_ptr<UndoRedo::HistoryManager>\ m\_historyManager;}
+\DoxyCodeLine{00080\ \ \ \ \ std::unique\_ptr<SurfaceGen::SurfaceGenerator>\ m\_surfaceGenerator;}
+\DoxyCodeLine{00081\ \ \ \ \ std::unique\_ptr<VisualFeedback::FeedbackRenderer>\ m\_feedbackRenderer;}
+\DoxyCodeLine{00082\ \ \ \ \ std::unique\_ptr<Groups::GroupManager>\ m\_groupManager;}
+\DoxyCodeLine{00083\ \ \ \ \ std::unique\_ptr<FileIO::FileManager>\ m\_fileManager;}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Foundation\ systems}}
+\DoxyCodeLine{00086\ \ \ \ \ std::unique\_ptr<Events::EventDispatcher>\ m\_eventDispatcher;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ Logger\ and\ ConfigManager\ are\ singletons,\ not\ stored\ as\ members}}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ CLI\ components}}
+\DoxyCodeLine{00090\ \ \ \ \ std::unique\_ptr<CommandProcessor>\ m\_commandProcessor;}
+\DoxyCodeLine{00091\ \ \ \ \ std::unique\_ptr<RenderWindow>\ m\_renderWindow;}
+\DoxyCodeLine{00092\ \ \ \ \ std::unique\_ptr<MouseInteraction>\ m\_mouseInteraction;}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Application\ state}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_running\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00096\ \ \ \ \ std::string\ m\_currentProject;}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Private\ methods}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ initializeFoundation();}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{bool}\ initializeCoreSystem();}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ initializeRendering();}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ initializeCLI();}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ registerCommands();}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ processInput();}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ render();}
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

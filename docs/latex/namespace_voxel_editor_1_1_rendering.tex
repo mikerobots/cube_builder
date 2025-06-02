@@ -1,0 +1,602 @@
+\doxysection{Voxel\+Editor\+::Rendering Namespace Reference}
+\hypertarget{namespace_voxel_editor_1_1_rendering}{}\label{namespace_voxel_editor_1_1_rendering}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders}{Builtin\+Shaders}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_buffer_info}{Buffer\+Info}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{Open\+GLRenderer}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_program_info}{Program\+Info}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{Render\+Config}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_context}{Render\+Context}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine}{Render\+Engine}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{Render\+Settings}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state}{Render\+State}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_stats}{Render\+Stats}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_timer}{Render\+Timer}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_scoped_render_state}{Scoped\+Render\+State}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_info}{Shader\+Info}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager}{Shader\+Manager}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program}{Shader\+Program}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{Shader\+Source}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_texture_info}{Texture\+Info}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_transform}{Transform}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_vertex}{Vertex}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_vertex_attribute_info}{Vertex\+Attribute\+Info}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_vertex_layout}{Vertex\+Layout}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633}{Vertex\+Buffer\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0}{Index\+Buffer\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{Vertex\+Array\+Id}} = uint32\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032fa}{Vertex\+Attribute}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa52f5e0bc3859bc5f5e25130b6c7e8881}{Position}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa960b44c579bc2f6818d2daaf9e4c16f0}{Normal}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa4ac00b6292b9c8d63d0a11df581bd399}{Tex\+Coord0}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faae1328451c081a530e07a9b63aada0995}{Tex\+Coord1}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa541671cb1be09d76a84ba1a873ec3fc8}{Tangent}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faae3e73a4b6e7cfd12008a35f6a051b319}{Bitangent}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa23a2e34ae6632f6a14ff7885a65a52ac}{Bone\+Indices}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faac72bc491721725cf7d79b65e1675609c}{Bone\+Weights}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faaf4cacf9461698a222c0f7fa3b7a12e02}{Custom0}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faabfacbbe4e8be8fbc78a60cd9f8e67dd5}{Custom1}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa1d8ba0be5e8d76a3e6fb571c80929db2}{Custom2}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa01cd47f19cbca3337e2f0864d20544c8}{Custom3}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162}{Vertex\+Attribute\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a22ae0e2b89e5e3d477f988cc36d3272b}{Float}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a1686a6c336b71b36d77354cea19a8b52}{Int}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a0b1291eded63143ac04709711274785a}{UInt}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162aa245c3230debe5c956484ecc6fa93877}{Byte}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a4b4ba765b750d5836bfeb2213cc3caea}{UByte}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{Render\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}{Solid}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2}{Wireframe}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca55f4b4a94111759e08b3acb1acd12b8c}{Combined}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca75dd5f1160a3f02b6fae89c54361a1b3}{Points}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeafaa90538de35640e4b1e31ccf35b6eb5}{Opaque}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}{Alpha}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea3f7b3d8ee7bf0d542bd50821c083888f}{Additive}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeae257376d913f3b53cbb4a9b19d770648}{Multiply}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda6adf97f83acf6453d4a6a4b1070f3754}{None}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda5835bab1ade0060909e31a06af2e2cde}{Front}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Back}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{Buffer\+Usage}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{Static}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea971fd8cc345d8bd9f92e9f7d88fdf20c}{Dynamic}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eeaeae835e83c0494a376229f254f7d3392}{Stream}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{Texture\+Format}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a165c6379d01617e12de274a3952efa63}{RGB8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2ab4b279046a02077466fa26cabb00c642}{RGBA8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a78181d4f5d4b30baefed6c0da0de894f}{Depth24\+Stencil8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2aca70b53fb0610461a2327973614a76ce}{R32F}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2ad8936cc7055546f79128b9dbfb8c8bbb}{RGB32F}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a703a7a81e586669c930e3dcaf3e8c428}{RGBA32F}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683}{Color\+Format}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a165c6379d01617e12de274a3952efa63}{RGB8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ab4b279046a02077466fa26cabb00c642}{RGBA8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a25cd126670bd567a899c64c4e6e8ca7d}{RGB16F}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683aa29d843695056f9c171a9eb702d6910a}{RGBA16F}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ad8936cc7055546f79128b9dbfb8c8bbb}{RGB32F}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a703a7a81e586669c930e3dcaf3e8c428}{RGBA32F}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b}{Depth\+Format}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba733d24756144709f569c5cdaae3af79e}{Depth16}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607bad4f9c4cde6b620e386aa26db6dbd95ec}{Depth24}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba763a2259b25af120128f10da690e054d}{Depth32F}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba78181d4f5d4b30baefed6c0da0de894f}{Depth24\+Stencil8}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607babe0ddae1e70dc4233b16fc053a60e2fe}{Depth32\+FStencil8}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2c}{Shader\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2cab22b929ba52471a02d18bb3a4e4472e6}{Vertex}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2ca37d01b98065725fe3a1d30acf3a0064a}{Fragment}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2cad9c6333623e6357515fcbf17be806273}{Geometry}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2caa623a8d0366bf079411aa30be45b2d10}{Compute}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a7ca66fdfaad3eb33fc65d7490178f856}{Triangles}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299aa0b0293a2db49f5f93c15a62e095c819}{Lines}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a75dd5f1160a3f02b6fae89c54361a1b3}{Points}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a1da0b9ead8b051940a89214bae22831c}{Triangle\+Strip}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299ae7f9e73b8edd21f420a63b3ace5768a2}{Line\+Strip}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{Index\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317a8bd950a9d7779b83f5c30046c9aaf1cf}{UInt16}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd}{UInt32}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23}{Clear\+Flags}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23acb5feb1b7314637725a2e73bdc9f7295}{Color}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23a675056ad1441b6375b2c5abd48c27ef1}{Depth}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ad821e7ccd4d4c25a491ba1a9ea248895}{Stencil}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ab1c94ca2fbc3e78fc30069c8d0f01680}{All}} = Color \texorpdfstring{$\vert$}{|} Depth \texorpdfstring{$\vert$}{|} Stencil
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr uint32\+\_\+t \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aaeac99f764b31a8cd12dfe70cd075b0f}{Invalid\+Id}} = 0
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!BufferId@{BufferId}}
+\index{BufferId@{BufferId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{BufferId}{BufferId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Voxel\+Editor\+::\+Rendering\+::\+Buffer\+Id}} = uint32\+\_\+t}
+
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!IndexBufferId@{IndexBufferId}}
+\index{IndexBufferId@{IndexBufferId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{IndexBufferId}{IndexBufferId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0}{Voxel\+Editor\+::\+Rendering\+::\+Index\+Buffer\+Id}} = uint32\+\_\+t}
+
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!ShaderId@{ShaderId}}
+\index{ShaderId@{ShaderId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{ShaderId}{ShaderId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Voxel\+Editor\+::\+Rendering\+::\+Shader\+Id}} = uint32\+\_\+t}
+
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!TextureId@{TextureId}}
+\index{TextureId@{TextureId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{TextureId}{TextureId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Voxel\+Editor\+::\+Rendering\+::\+Texture\+Id}} = uint32\+\_\+t}
+
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!VertexArrayId@{VertexArrayId}}
+\index{VertexArrayId@{VertexArrayId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{VertexArrayId}{VertexArrayId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{Voxel\+Editor\+::\+Rendering\+::\+Vertex\+Array\+Id}} = uint32\+\_\+t}
+
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!VertexBufferId@{VertexBufferId}}
+\index{VertexBufferId@{VertexBufferId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{VertexBufferId}{VertexBufferId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633}{Voxel\+Editor\+::\+Rendering\+::\+Vertex\+Buffer\+Id}} = uint32\+\_\+t}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!BlendMode@{BlendMode}}
+\index{BlendMode@{BlendMode}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{BlendMode}{BlendMode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Voxel\+Editor\+::\+Rendering\+::\+Blend\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Opaque@{Opaque}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Opaque@{Opaque}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeafaa90538de35640e4b1e31ccf35b6eb5}\label{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeafaa90538de35640e4b1e31ccf35b6eb5} 
+Opaque&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha@{Alpha}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Alpha@{Alpha}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}\label{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598} 
+Alpha&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Additive@{Additive}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Additive@{Additive}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea3f7b3d8ee7bf0d542bd50821c083888f}\label{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea3f7b3d8ee7bf0d542bd50821c083888f} 
+Additive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Multiply@{Multiply}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Multiply@{Multiply}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeae257376d913f3b53cbb4a9b19d770648}\label{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeae257376d913f3b53cbb4a9b19d770648} 
+Multiply&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!BufferUsage@{BufferUsage}}
+\index{BufferUsage@{BufferUsage}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{BufferUsage}{BufferUsage}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{Voxel\+Editor\+::\+Rendering\+::\+Buffer\+Usage}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Static@{Static}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Static@{Static}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}\label{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16} 
+Static&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Dynamic@{Dynamic}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Dynamic@{Dynamic}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea971fd8cc345d8bd9f92e9f7d88fdf20c}\label{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea971fd8cc345d8bd9f92e9f7d88fdf20c} 
+Dynamic&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Stream@{Stream}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Stream@{Stream}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eeaeae835e83c0494a376229f254f7d3392}\label{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eeaeae835e83c0494a376229f254f7d3392} 
+Stream&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!ClearFlags@{ClearFlags}}
+\index{ClearFlags@{ClearFlags}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{ClearFlags}{ClearFlags}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23}{Voxel\+Editor\+::\+Rendering\+::\+Clear\+Flags}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Color@{Color}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Color@{Color}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23acb5feb1b7314637725a2e73bdc9f7295}\label{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23acb5feb1b7314637725a2e73bdc9f7295} 
+Color&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth@{Depth}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth@{Depth}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23a675056ad1441b6375b2c5abd48c27ef1}\label{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23a675056ad1441b6375b2c5abd48c27ef1} 
+Depth&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Stencil@{Stencil}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Stencil@{Stencil}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ad821e7ccd4d4c25a491ba1a9ea248895}\label{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ad821e7ccd4d4c25a491ba1a9ea248895} 
+Stencil&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{All@{All}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!All@{All}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ab1c94ca2fbc3e78fc30069c8d0f01680}\label{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ab1c94ca2fbc3e78fc30069c8d0f01680} 
+All&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!ColorFormat@{ColorFormat}}
+\index{ColorFormat@{ColorFormat}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{ColorFormat}{ColorFormat}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683}{Voxel\+Editor\+::\+Rendering\+::\+Color\+Format}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGB8@{RGB8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGB8@{RGB8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a165c6379d01617e12de274a3952efa63}\label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a165c6379d01617e12de274a3952efa63} 
+RGB8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGBA8@{RGBA8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGBA8@{RGBA8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ab4b279046a02077466fa26cabb00c642}\label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ab4b279046a02077466fa26cabb00c642} 
+RGBA8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGB16F@{RGB16F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGB16F@{RGB16F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a25cd126670bd567a899c64c4e6e8ca7d}\label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a25cd126670bd567a899c64c4e6e8ca7d} 
+RGB16F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGBA16F@{RGBA16F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGBA16F@{RGBA16F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683aa29d843695056f9c171a9eb702d6910a}\label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683aa29d843695056f9c171a9eb702d6910a} 
+RGBA16F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGB32F@{RGB32F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGB32F@{RGB32F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ad8936cc7055546f79128b9dbfb8c8bbb}\label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ad8936cc7055546f79128b9dbfb8c8bbb} 
+RGB32F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGBA32F@{RGBA32F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGBA32F@{RGBA32F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a703a7a81e586669c930e3dcaf3e8c428}\label{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683a703a7a81e586669c930e3dcaf3e8c428} 
+RGBA32F&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!CullMode@{CullMode}}
+\index{CullMode@{CullMode}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{CullMode}{CullMode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Voxel\+Editor\+::\+Rendering\+::\+Cull\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!None@{None}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda6adf97f83acf6453d4a6a4b1070f3754}\label{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda6adf97f83acf6453d4a6a4b1070f3754} 
+None&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Front@{Front}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Front@{Front}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda5835bab1ade0060909e31a06af2e2cde}\label{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda5835bab1ade0060909e31a06af2e2cde} 
+Front&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Back@{Back}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Back@{Back}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}\label{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f} 
+Back&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!DepthFormat@{DepthFormat}}
+\index{DepthFormat@{DepthFormat}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{DepthFormat}{DepthFormat}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b}{Voxel\+Editor\+::\+Rendering\+::\+Depth\+Format}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth16@{Depth16}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth16@{Depth16}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba733d24756144709f569c5cdaae3af79e}\label{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba733d24756144709f569c5cdaae3af79e} 
+Depth16&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth24@{Depth24}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth24@{Depth24}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607bad4f9c4cde6b620e386aa26db6dbd95ec}\label{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607bad4f9c4cde6b620e386aa26db6dbd95ec} 
+Depth24&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth32F@{Depth32F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth32F@{Depth32F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba763a2259b25af120128f10da690e054d}\label{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba763a2259b25af120128f10da690e054d} 
+Depth32F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth24Stencil8@{Depth24Stencil8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth24Stencil8@{Depth24Stencil8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba78181d4f5d4b30baefed6c0da0de894f}\label{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba78181d4f5d4b30baefed6c0da0de894f} 
+Depth24\+Stencil8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth32FStencil8@{Depth32FStencil8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth32FStencil8@{Depth32FStencil8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607babe0ddae1e70dc4233b16fc053a60e2fe}\label{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607babe0ddae1e70dc4233b16fc053a60e2fe} 
+Depth32\+FStencil8&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!IndexType@{IndexType}}
+\index{IndexType@{IndexType}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{IndexType}{IndexType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{Voxel\+Editor\+::\+Rendering\+::\+Index\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UInt16@{UInt16}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!UInt16@{UInt16}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317a8bd950a9d7779b83f5c30046c9aaf1cf}\label{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317a8bd950a9d7779b83f5c30046c9aaf1cf} 
+UInt16&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UInt32@{UInt32}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!UInt32@{UInt32}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd}\label{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd} 
+UInt32&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!PrimitiveType@{PrimitiveType}}
+\index{PrimitiveType@{PrimitiveType}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{PrimitiveType}{PrimitiveType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Voxel\+Editor\+::\+Rendering\+::\+Primitive\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Triangles@{Triangles}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Triangles@{Triangles}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a7ca66fdfaad3eb33fc65d7490178f856}\label{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a7ca66fdfaad3eb33fc65d7490178f856} 
+Triangles&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Lines@{Lines}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Lines@{Lines}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299aa0b0293a2db49f5f93c15a62e095c819}\label{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299aa0b0293a2db49f5f93c15a62e095c819} 
+Lines&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Points@{Points}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Points@{Points}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a75dd5f1160a3f02b6fae89c54361a1b3}\label{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a75dd5f1160a3f02b6fae89c54361a1b3} 
+Points&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TriangleStrip@{TriangleStrip}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!TriangleStrip@{TriangleStrip}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a1da0b9ead8b051940a89214bae22831c}\label{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299a1da0b9ead8b051940a89214bae22831c} 
+Triangle\+Strip&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LineStrip@{LineStrip}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!LineStrip@{LineStrip}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299ae7f9e73b8edd21f420a63b3ace5768a2}\label{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299ae7f9e73b8edd21f420a63b3ace5768a2} 
+Line\+Strip&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RenderMode@{RenderMode}}
+\index{RenderMode@{RenderMode}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{RenderMode}{RenderMode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{Voxel\+Editor\+::\+Rendering\+::\+Render\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Solid@{Solid}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Solid@{Solid}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}\label{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa} 
+Solid&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wireframe@{Wireframe}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Wireframe@{Wireframe}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2}\label{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2} 
+Wireframe&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Combined@{Combined}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Combined@{Combined}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca55f4b4a94111759e08b3acb1acd12b8c}\label{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca55f4b4a94111759e08b3acb1acd12b8c} 
+Combined&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Points@{Points}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Points@{Points}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca75dd5f1160a3f02b6fae89c54361a1b3}\label{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca75dd5f1160a3f02b6fae89c54361a1b3} 
+Points&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2c}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!ShaderType@{ShaderType}}
+\index{ShaderType@{ShaderType}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{ShaderType}{ShaderType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2c} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2c}{Voxel\+Editor\+::\+Rendering\+::\+Shader\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Vertex@{Vertex}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Vertex@{Vertex}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2cab22b929ba52471a02d18bb3a4e4472e6}\label{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2cab22b929ba52471a02d18bb3a4e4472e6} 
+Vertex&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Fragment@{Fragment}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Fragment@{Fragment}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2ca37d01b98065725fe3a1d30acf3a0064a}\label{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2ca37d01b98065725fe3a1d30acf3a0064a} 
+Fragment&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Geometry@{Geometry}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Geometry@{Geometry}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2cad9c6333623e6357515fcbf17be806273}\label{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2cad9c6333623e6357515fcbf17be806273} 
+Geometry&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Compute@{Compute}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Compute@{Compute}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2caa623a8d0366bf079411aa30be45b2d10}\label{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2caa623a8d0366bf079411aa30be45b2d10} 
+Compute&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!TextureFormat@{TextureFormat}}
+\index{TextureFormat@{TextureFormat}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{TextureFormat}{TextureFormat}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{Voxel\+Editor\+::\+Rendering\+::\+Texture\+Format}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGB8@{RGB8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGB8@{RGB8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a165c6379d01617e12de274a3952efa63}\label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a165c6379d01617e12de274a3952efa63} 
+RGB8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGBA8@{RGBA8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGBA8@{RGBA8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2ab4b279046a02077466fa26cabb00c642}\label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2ab4b279046a02077466fa26cabb00c642} 
+RGBA8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Depth24Stencil8@{Depth24Stencil8}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Depth24Stencil8@{Depth24Stencil8}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a78181d4f5d4b30baefed6c0da0de894f}\label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a78181d4f5d4b30baefed6c0da0de894f} 
+Depth24\+Stencil8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32F@{R32F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!R32F@{R32F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2aca70b53fb0610461a2327973614a76ce}\label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2aca70b53fb0610461a2327973614a76ce} 
+R32F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGB32F@{RGB32F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGB32F@{RGB32F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2ad8936cc7055546f79128b9dbfb8c8bbb}\label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2ad8936cc7055546f79128b9dbfb8c8bbb} 
+RGB32F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RGBA32F@{RGBA32F}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!RGBA32F@{RGBA32F}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a703a7a81e586669c930e3dcaf3e8c428}\label{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2a703a7a81e586669c930e3dcaf3e8c428} 
+RGBA32F&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032fa}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!VertexAttribute@{VertexAttribute}}
+\index{VertexAttribute@{VertexAttribute}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{VertexAttribute}{VertexAttribute}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032fa} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032fa}{Voxel\+Editor\+::\+Rendering\+::\+Vertex\+Attribute}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Position@{Position}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Position@{Position}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa52f5e0bc3859bc5f5e25130b6c7e8881}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa52f5e0bc3859bc5f5e25130b6c7e8881} 
+Position&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Normal@{Normal}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Normal@{Normal}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa960b44c579bc2f6818d2daaf9e4c16f0}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa960b44c579bc2f6818d2daaf9e4c16f0} 
+Normal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TexCoord0@{TexCoord0}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!TexCoord0@{TexCoord0}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa4ac00b6292b9c8d63d0a11df581bd399}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa4ac00b6292b9c8d63d0a11df581bd399} 
+Tex\+Coord0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TexCoord1@{TexCoord1}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!TexCoord1@{TexCoord1}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faae1328451c081a530e07a9b63aada0995}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faae1328451c081a530e07a9b63aada0995} 
+Tex\+Coord1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Color@{Color}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Color@{Color}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295} 
+Color&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Tangent@{Tangent}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Tangent@{Tangent}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa541671cb1be09d76a84ba1a873ec3fc8}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa541671cb1be09d76a84ba1a873ec3fc8} 
+Tangent&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Bitangent@{Bitangent}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Bitangent@{Bitangent}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faae3e73a4b6e7cfd12008a35f6a051b319}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faae3e73a4b6e7cfd12008a35f6a051b319} 
+Bitangent&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BoneIndices@{BoneIndices}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!BoneIndices@{BoneIndices}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa23a2e34ae6632f6a14ff7885a65a52ac}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa23a2e34ae6632f6a14ff7885a65a52ac} 
+Bone\+Indices&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BoneWeights@{BoneWeights}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!BoneWeights@{BoneWeights}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faac72bc491721725cf7d79b65e1675609c}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faac72bc491721725cf7d79b65e1675609c} 
+Bone\+Weights&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Custom0@{Custom0}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Custom0@{Custom0}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faaf4cacf9461698a222c0f7fa3b7a12e02}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faaf4cacf9461698a222c0f7fa3b7a12e02} 
+Custom0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Custom1@{Custom1}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Custom1@{Custom1}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faabfacbbe4e8be8fbc78a60cd9f8e67dd5}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faabfacbbe4e8be8fbc78a60cd9f8e67dd5} 
+Custom1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Custom2@{Custom2}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Custom2@{Custom2}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa1d8ba0be5e8d76a3e6fb571c80929db2}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa1d8ba0be5e8d76a3e6fb571c80929db2} 
+Custom2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Custom3@{Custom3}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Custom3@{Custom3}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa01cd47f19cbca3337e2f0864d20544c8}\label{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faa01cd47f19cbca3337e2f0864d20544c8} 
+Custom3&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!VertexAttributeType@{VertexAttributeType}}
+\index{VertexAttributeType@{VertexAttributeType}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{VertexAttributeType}{VertexAttributeType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162}{Voxel\+Editor\+::\+Rendering\+::\+Vertex\+Attribute\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Float@{Float}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Float@{Float}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a22ae0e2b89e5e3d477f988cc36d3272b}\label{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a22ae0e2b89e5e3d477f988cc36d3272b} 
+Float&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Int@{Int}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Int@{Int}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a1686a6c336b71b36d77354cea19a8b52}\label{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a1686a6c336b71b36d77354cea19a8b52} 
+Int&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UInt@{UInt}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!UInt@{UInt}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a0b1291eded63143ac04709711274785a}\label{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a0b1291eded63143ac04709711274785a} 
+UInt&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Byte@{Byte}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!Byte@{Byte}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162aa245c3230debe5c956484ecc6fa93877}\label{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162aa245c3230debe5c956484ecc6fa93877} 
+Byte&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UByte@{UByte}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!UByte@{UByte}}}\Hypertarget{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a4b4ba765b750d5836bfeb2213cc3caea}\label{namespace_voxel_editor_1_1_rendering_a645996e17091a24b605156d8d57fb162a4b4ba765b750d5836bfeb2213cc3caea} 
+UByte&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-var-members}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_rendering_aaeac99f764b31a8cd12dfe70cd075b0f}\index{VoxelEditor::Rendering@{VoxelEditor::Rendering}!InvalidId@{InvalidId}}
+\index{InvalidId@{InvalidId}!VoxelEditor::Rendering@{VoxelEditor::Rendering}}
+\doxysubsubsection{\texorpdfstring{InvalidId}{InvalidId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_rendering_aaeac99f764b31a8cd12dfe70cd075b0f} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Invalid\+Id = 0\hspace{0.3cm}{\ttfamily [constexpr]}}
+

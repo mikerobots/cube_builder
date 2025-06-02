@@ -1,0 +1,384 @@
+\chapter{Selection System Subsystem }
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n}{}\label{md_core_2selection_2_d_e_s_i_g_n}\index{Selection System Subsystem@{Selection System Subsystem}}
+\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md290}%
+\Hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md290}%
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md291}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md291}
+Manages voxel selection operations, multi-\/selection handling, selection persistence, and provides visual feedback for selected elements.\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md292}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md292}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md293}{}\doxysubsection{\texorpdfstring{Selection\+Manager}{Selection\+Manager}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md293}
+{\bfseries{Responsibility}}\+: Main interface for selection operations
+\begin{DoxyItemize}
+\item Single and multi-\/voxel selection
+\item Selection state management
+\item Selection history tracking
+\item Integration with group operations
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md294}{}\doxysubsection{\texorpdfstring{Selection\+Set}{Selection\+Set}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md294}
+{\bfseries{Responsibility}}\+: Efficient storage of selected voxels
+\begin{DoxyItemize}
+\item Set operations (union, intersection, difference)
+\item Spatial queries on selections
+\item Memory-\/efficient storage
+\item Serialization support
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md295}{}\doxysubsection{\texorpdfstring{Selection\+Operations}{Selection\+Operations}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md295}
+{\bfseries{Responsibility}}\+: Bulk operations on selected voxels
+\begin{DoxyItemize}
+\item Move selected voxels
+\item Copy/duplicate selections
+\item Delete selected voxels
+\item Transform operations
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md296}{}\doxysubsection{\texorpdfstring{Selection\+Renderer}{Selection\+Renderer}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md296}
+{\bfseries{Responsibility}}\+: Visual representation of selections
+\begin{DoxyItemize}
+\item Highlight rendering
+\item Selection bounds visualization
+\item Multi-\/selection color coding
+\item Performance-\/optimized rendering
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md297}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md297}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SelectionManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Basic\ selection\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deselectVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ toggleVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Multi-\/selection\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectAll();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectNone();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectInverse();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectByResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Region\ selection}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectBox(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectSphere(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectFloodFill(\textcolor{keyword}{const}\ VoxelId\&\ seed);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Selection\ queries}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isSelected(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getSelection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getSelectionSize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasSelection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ BoundingBox\ getSelectionBounds()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Selection\ history}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ pushSelectionToHistory();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canUndo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canRedo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ undoSelection();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ redoSelection();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Selection\ sets}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ saveSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getSelectionSetNames()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deleteSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Set\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ unionWith(\textcolor{keyword}{const}\ SelectionSet\&\ other);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ intersectWith(\textcolor{keyword}{const}\ SelectionSet\&\ other);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ subtractFrom(\textcolor{keyword}{const}\ SelectionSet\&\ other);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_currentSelection;}
+\DoxyCodeLine{\ \ \ \ std::stack<SelectionSet>\ m\_undoStack;}
+\DoxyCodeLine{\ \ \ \ std::stack<SelectionSet>\ m\_redoStack;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ SelectionSet>\ m\_namedSets;}
+\DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxHistorySize;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md298}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md298}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md299}{}\doxysubsection{\texorpdfstring{Voxel\+Id}{Voxel\+Id}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md299}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3i\ position;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ VoxelId\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ VoxelId\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ hash()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Hash\ specialization\ for\ unordered\ containers}}
+\DoxyCodeLine{\textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacestd}{std}}\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }hash<\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}>\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ VoxelId\&\ \textcolor{keywordtype}{id})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}.hash();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md300}{}\doxysubsection{\texorpdfstring{Selection\+Set}{Selection\+Set}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md300}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SelectionSet\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Basic\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ remove(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Bulk\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addRange(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ removeRange(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Set\ operations}}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ unionWith(\textcolor{keyword}{const}\ SelectionSet\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ intersectWith(\textcolor{keyword}{const}\ SelectionSet\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ subtract(\textcolor{keyword}{const}\ SelectionSet\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Queries}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ size()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ empty()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ toVector()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ BoundingBox\ getBounds()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Iteration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ begin()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_voxels.begin();\ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ end()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_voxels.end();\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Serialization}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ serialize(BinaryWriter\&\ writer)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deserialize(BinaryReader\&\ reader);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_set<VoxelId>\ m\_voxels;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{mutable}\ std::optional<BoundingBox>\ m\_cachedBounds;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md301}{}\doxysubsection{\texorpdfstring{Selection\+Mode}{Selection\+Mode}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md301}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a0ebe6df8a3ac338e0512acc741823fdb}{Replace}},\ \ \ \ \textcolor{comment}{//\ Replace\ current\ selection}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6aec211f7c20af43e742bf2570c3cb84f9}{Add}},\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ to\ current\ selection}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a1d9baf077ee87921f57a8fe42d510b65}{Subtract}},\ \ \ \textcolor{comment}{//\ Remove\ from\ current\ selection}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a6faa907d79c8bb46a12bea5c8de76654}{Intersect}}\ \ \ \textcolor{comment}{//\ Intersect\ with\ current\ selection}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md302}{}\doxysection{\texorpdfstring{Selection Algorithms}{Selection Algorithms}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md302}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md303}{}\doxysubsection{\texorpdfstring{Flood Fill Selection}{Flood Fill Selection}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md303}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }FloodFillSelector\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ VoxelId\&\ seed,\ VoxelDataManager\&\ voxelManager,\ FloodFillCriteria\ criteria);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93}{FloodFillCriteria}}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a2ec0d16e4ca169baedb9b2d50ec5c6d7}{Connected}},\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Connected\ voxels\ only}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93afbdd183d8a47f52c4f272bb5e7094da2}{SameResolution}},\ \ \ \ \ \textcolor{comment}{//\ Same\ resolution\ level}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a216bf0b2e5bfa7c42536550aa838afa8}{ConnectedSameRes}}\ \ \ \ \textcolor{comment}{//\ Connected\ +\ same\ resolution}}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ shouldInclude(\textcolor{keyword}{const}\ VoxelId\&\ current,\ \textcolor{keyword}{const}\ VoxelId\&\ neighbor,\ FloodFillCriteria\ criteria);}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getNeighbors(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md304}{}\doxysubsection{\texorpdfstring{Box Selection}{Box Selection}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md304}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }BoxSelector\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInBox(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ BoundingBox\&\ box);}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getVoxelsInRegion(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md305}{}\doxysubsection{\texorpdfstring{Sphere Selection}{Sphere Selection}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md305}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SphereSelector\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInSphere(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ distanceToVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Vector3f\&\ point);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md306}{}\doxysection{\texorpdfstring{Visual Feedback}{Visual Feedback}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md306}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md307}{}\doxysubsection{\texorpdfstring{Selection Rendering}{Selection Rendering}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md307}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SelectionRenderer\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderSelection(\textcolor{keyword}{const}\ SelectionSet\&\ selection,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderSelectionBounds(\textcolor{keyword}{const}\ BoundingBox\&\ bounds,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderSelectionPreview(\textcolor{keyword}{const}\ SelectionSet\&\ preview,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Visual\ settings}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSelectionColor(\textcolor{keyword}{const}\ Color\&\ color);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSelectionOpacity(\textcolor{keywordtype}{float}\ opacity);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setAnimationEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelHighlight(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Color\&\ color,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderWireframeBounds(\textcolor{keyword}{const}\ BoundingBox\&\ bounds,\ \textcolor{keyword}{const}\ Color\&\ color,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ m\_selectionColor;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ m\_previewColor;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_opacity;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_animationEnabled;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<Mesh>\ m\_highlightMesh;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md308}{}\doxysubsection{\texorpdfstring{Visual Indicators}{Visual Indicators}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md308}
+
+\begin{DoxyItemize}
+\item {\bfseries{Selected Voxels}}\+: Bright outline or overlay
+\item {\bfseries{Selection Bounds}}\+: Wireframe bounding box
+\item {\bfseries{Multi-\/\+Selection}}\+: Color-\/coded by selection order
+\item {\bfseries{Preview Selection}}\+: Semi-\/transparent overlay
+\item {\bfseries{Animation}}\+: Pulsing or breathing effect
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md309}{}\doxysection{\texorpdfstring{Selection Operations}{Selection Operations}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md309}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md310}{}\doxysubsection{\texorpdfstring{Move Operation}{Move Operation}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md310}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MoveSelectionOperation\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ MoveSelectionOperation(\textcolor{keyword}{const}\ SelectionSet\&\ selection,\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute(VoxelDataManager\&\ voxelManager,\ SelectionManager\&\ selectionManager);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo(VoxelDataManager\&\ voxelManager,\ SelectionManager\&\ selectionManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_originalSelection;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_newSelection;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_moves;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md311}{}\doxysubsection{\texorpdfstring{Copy Operation}{Copy Operation}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md311}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CopySelectionOperation\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ CopySelectionOperation(\textcolor{keyword}{const}\ SelectionSet\&\ selection,\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ execute(VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo(VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_sourceSelection;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_createdSelection;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md312}{}\doxysubsection{\texorpdfstring{Delete Operation}{Delete Operation}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md312}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }DeleteSelectionOperation\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ DeleteSelectionOperation(\textcolor{keyword}{const}\ SelectionSet\&\ selection);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute(VoxelDataManager\&\ voxelManager,\ SelectionManager\&\ selectionManager);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo(VoxelDataManager\&\ voxelManager,\ SelectionManager\&\ selectionManager);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_deletedVoxels;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md313}{}\doxysection{\texorpdfstring{Performance Optimization}{Performance Optimization}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md313}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md314}{}\doxysubsection{\texorpdfstring{Spatial Indexing}{Spatial Indexing}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md314}
+
+\begin{DoxyItemize}
+\item Octree-\/based spatial indexing for fast region queries
+\item Cached bounding boxes for selections
+\item Incremental updates for selection changes
+\item Level-\/of-\/detail for large selections
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md315}{}\doxysubsection{\texorpdfstring{Memory Management}{Memory Management}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md315}
+
+\begin{DoxyItemize}
+\item Bit vectors for dense selections
+\item Sparse storage for scattered selections
+\item Memory pooling for temporary selections
+\item Automatic optimization based on selection density
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md316}{}\doxysubsection{\texorpdfstring{Rendering Optimization}{Rendering Optimization}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md316}
+
+\begin{DoxyItemize}
+\item Instanced rendering for multiple selections
+\item Frustum culling for off-\/screen selections
+\item Level-\/of-\/detail for distant selections
+\item Batched rendering updates
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md317}{}\doxysection{\texorpdfstring{Events}{Events}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md317}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md318}{}\doxysubsection{\texorpdfstring{Selection\+Changed Event}{Selection\+Changed Event}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md318}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }SelectionChangedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ oldSelection;}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ newSelection;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{SelectionChangeType}}\ changeType;\ \textcolor{comment}{//\ ADDED,\ REMOVED,\ REPLACED,\ CLEARED}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md319}{}\doxysubsection{\texorpdfstring{Selection\+Operation\+Event}{Selection\+Operation\+Event}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md319}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }SelectionOperationEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{SelectionOperationType}}\ operationType;\ \textcolor{comment}{//\ MOVE,\ COPY,\ DELETE}}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ affectedVoxels;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ success;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md320}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md320}
+\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md321}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md321}
+
+\begin{DoxyItemize}
+\item Selection set operations
+\item Selection algorithms accuracy
+\item History management
+\item Serialization/deserialization
+\item Performance with large selections
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md322}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md322}
+
+\begin{DoxyItemize}
+\item Voxel data manager integration
+\item Visual feedback rendering
+\item Group system integration
+\item Undo/redo system integration
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md323}{}\doxysubsection{\texorpdfstring{Visual Tests}{Visual Tests}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md323}
+
+\begin{DoxyItemize}
+\item Selection highlighting accuracy
+\item Multi-\/selection visual clarity
+\item Animation smoothness
+\item Rendering performance
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md324}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md324}
+
+\begin{DoxyItemize}
+\item Large selection handling
+\item Memory usage optimization
+\item Rendering performance
+\item Spatial query efficiency
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md325}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md325}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Voxel\+Data}}\+: Access to voxel data for validation
+\item {\bfseries{Core/\+Rendering}}\+: Visual feedback rendering
+\item {\bfseries{Foundation/\+Math}}\+: Geometric calculations and transformations
+\item {\bfseries{Foundation/\+Events}}\+: Selection change notifications
+\item {\bfseries{Core/\+Undo\+Redo}}\+: Command pattern integration
+\end{DoxyItemize}\hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md326}{}\doxysection{\texorpdfstring{Input Integration}{Input Integration}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md326}
+
+\begin{DoxyItemize}
+\item Mouse selection (click, drag, box select)
+\item Keyboard modifiers (Ctrl for add, Shift for range)
+\item Touch selection for mobile interfaces
+\item VR hand tracking selection 
+\end{DoxyItemize}

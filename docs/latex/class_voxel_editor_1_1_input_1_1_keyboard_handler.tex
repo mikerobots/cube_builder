@@ -1,0 +1,380 @@
+\doxysection{Voxel\+Editor\+::Input\+::Keyboard\+Handler Class Reference}
+\hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler}{}\label{class_voxel_editor_1_1_input_1_1_keyboard_handler}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+
+
+{\ttfamily \#include $<$Keyboard\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Input\+::Keyboard\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_input_1_1_keyboard_handler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4fb620e609186bf9ba79045df0bb2df8}{Keyboard\+Handler}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher=nullptr)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9294e05de7c264ee3f30e98b51f73be5}{\texorpdfstring{$\sim$}{\string~}\+Keyboard\+Handler}} ()=default
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_adc4012e89049b8e45c395d2638a1a0bc}{process\+Keyboard\+Event}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}} \&event) override
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_adb9e41e67514744edb9867ababbef3f4}{update}} (float delta\+Time) override
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_af376b48b05e5db8e5c25234569c079d5}{is\+Key\+Pressed}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a0e00a4f27ae2e1ab569ec31acc6c7a9e}{is\+Key\+Just\+Pressed}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ada5da9034e8d9cfde614938a9cc168cc}{is\+Key\+Just\+Released}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_acec4278d20bfdcff0e1de579004465b2}{is\+Shift\+Pressed}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a545a5b57270bf2575a7d0de98e02f8ab}{is\+Ctrl\+Pressed}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ae51e4a2d16088b23acde4b0db73a518c}{is\+Alt\+Pressed}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_aca3fe54668018bccfc3542da2ee3ad50}{is\+Super\+Pressed}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8eefe9094adc4f703c8176e2f9e7a267}{get\+Current\+Modifiers}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9982677088d111763982c470842caa89}{get\+Text\+Input}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a6cacf8d4446157b68ba8c182d563cce0}{clear\+Text\+Input}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4effa40a1fe71f57a9ade1a285a16331}{set\+Text\+Input\+Enabled}} (bool enabled)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7ae3da6e9c382e7259dfe05ae636d054}{is\+Text\+Input\+Enabled}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_aff8e75b99a0afcc95c80a787d0bbd57d}{bind\+Key}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key, const std\+::string \&action, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} modifiers=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_aa4e20c6cff50aafc15019bba437e9a32}{bind\+Key\+Combination}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} \&combo, const std\+::string \&action)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7cfd64130faebb578b19383ae0063bdc}{unbind\+Key}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} modifiers=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_af9278f6f4ec4845db9b4e374f8be1f84}{unbind\+Key\+Combination}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} \&combo)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8f00d18ac5ade3a6052f2dab72d5bca2}{clear\+All\+Bindings}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a5e703103d4036a6ecf3cfa204f05e772}{get\+Key\+Action}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} modifiers=\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}) const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a79f9bf27f150eec27a8935bca23f8da3}{get\+Key\+Combination\+Action}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} \&combo) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a95de6fd8a2dbdca3ace4c8f38e9fa2e3}{get\+Actions\+For\+Key}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a89ee61a0a87e92e2fa3006bdcc357086}{get\+All\+Bound\+Actions}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3c98ceca71d344282505ff0066fab3be}{set\+Repeat\+Enabled}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_abbdb4d80125f5e887e70d3d325d64f84}{set\+Repeat\+Delay}} (float seconds)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_abf2675a980f9421df3199abb8d1d9123}{set\+Repeat\+Rate}} (float rate)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8d071fede77359a06206ad9f6fd80219}{is\+Repeat\+Enabled}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a773e5f3240e813a7d85ac4980af0f230}{get\+Repeat\+Delay}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a1fff1e8a3770192e14db2abf0866cd48}{get\+Repeat\+Rate}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler}{Voxel\+Editor\+::\+Input\+::\+Input\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be}{Input\+Handler}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}event\+Dispatcher=nullptr)
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a55f2872d38f20cdff65af0ebe572e893}{\texorpdfstring{$\sim$}{\string~}\+Input\+Handler}} ()=default
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a070d65de9e5d7106520b52390852f23f}{process\+Mouse\+Event}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Mouse\+Event}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_ab12a8d27d9881dbd07d5cda94240d71b}{process\+Touch\+Event}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_event}{Touch\+Event}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_adcf856bad8faa30736c881647568ded9}{process\+VREvent}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_event}{VREvent}} \&event)
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_af4b647df74a702e6b31e6444347c41c2}{set\+Enabled}} (bool enabled)
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a265207e95fae146f62d2f93e0593f35d}{is\+Enabled}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a43315bece4f4e4d81bd69c3228b4bfdb}{set\+Event\+Dispatcher}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}dispatcher)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_abbbcc318fd575214079597ff3dec8fd9}{get\+Event\+Dispatcher}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ad3bfde6b0bef129aca3d29c42e774415}{key\+Code\+To\+String}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key)
+\item 
+static \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_abc22c4f9ad5a22f3fe127c7da4576c4a}{key\+Code\+From\+String}} (const std\+::string \&str)
+\item 
+static std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ab4490ba79037220fd04800470634563f}{modifier\+Flags\+To\+String}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} modifiers)
+\item 
+static \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3bbf533cebd87e8179ab5b1c5db89945}{modifier\+Flags\+From\+String}} (const std\+::string \&str)
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8359a71d420adff7e72199a57881e369}{is\+Valid\+Key\+Code}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key)
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7a7f12ee7e3c1654c8c79d91eb9725d7}{is\+Printable\+Key}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key)
+\item 
+static bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_af1711b3dc99b49da39298e94caac4f02}{is\+Modifier\+Key}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} key)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler}{Voxel\+Editor\+::\+Input\+::\+Input\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Event\+Type$>$ }\\void \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a446998642af9f0671aba57e572b2dd14}{dispatch\+Event}} (const Event\+Type \&event)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler}{Voxel\+Editor\+::\+Input\+::\+Input\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a9acb53e5fbeed790f8f983f69187206a}{m\+\_\+event\+Dispatcher}}
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a17afb243c430749b2cf6eaf9993b2a5e}{m\+\_\+enabled}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4fb620e609186bf9ba79045df0bb2df8}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!KeyboardHandler@{KeyboardHandler}}
+\index{KeyboardHandler@{KeyboardHandler}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{KeyboardHandler()}{KeyboardHandler()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4fb620e609186bf9ba79045df0bb2df8} 
+Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::\+Keyboard\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Voxel\+Editor\+::\+Events\+::\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*}}]{event\+Dispatcher}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9294e05de7c264ee3f30e98b51f73be5}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!````~KeyboardHandler@{\texorpdfstring{$\sim$}{\string~}KeyboardHandler}}
+\index{````~KeyboardHandler@{\texorpdfstring{$\sim$}{\string~}KeyboardHandler}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}KeyboardHandler()}{\string~KeyboardHandler()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9294e05de7c264ee3f30e98b51f73be5} 
+Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::\texorpdfstring{$\sim$}{\string~}\+Keyboard\+Handler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_aff8e75b99a0afcc95c80a787d0bbd57d}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!bindKey@{bindKey}}
+\index{bindKey@{bindKey}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{bindKey()}{bindKey()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_aff8e75b99a0afcc95c80a787d0bbd57d} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::bind\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{, }\item[{const std\+::string \&}]{action}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{modifiers}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_aa4e20c6cff50aafc15019bba437e9a32}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!bindKeyCombination@{bindKeyCombination}}
+\index{bindKeyCombination@{bindKeyCombination}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{bindKeyCombination()}{bindKeyCombination()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_aa4e20c6cff50aafc15019bba437e9a32} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::bind\+Key\+Combination (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} \&}]{combo}{, }\item[{const std\+::string \&}]{action}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8f00d18ac5ade3a6052f2dab72d5bca2}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!clearAllBindings@{clearAllBindings}}
+\index{clearAllBindings@{clearAllBindings}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{clearAllBindings()}{clearAllBindings()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8f00d18ac5ade3a6052f2dab72d5bca2} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::clear\+All\+Bindings (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a6cacf8d4446157b68ba8c182d563cce0}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!clearTextInput@{clearTextInput}}
+\index{clearTextInput@{clearTextInput}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{clearTextInput()}{clearTextInput()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a6cacf8d4446157b68ba8c182d563cce0} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::clear\+Text\+Input (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a95de6fd8a2dbdca3ace4c8f38e9fa2e3}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getActionsForKey@{getActionsForKey}}
+\index{getActionsForKey@{getActionsForKey}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getActionsForKey()}{getActionsForKey()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a95de6fd8a2dbdca3ace4c8f38e9fa2e3} 
+std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} $>$ Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Actions\+For\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a89ee61a0a87e92e2fa3006bdcc357086}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getAllBoundActions@{getAllBoundActions}}
+\index{getAllBoundActions@{getAllBoundActions}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getAllBoundActions()}{getAllBoundActions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a89ee61a0a87e92e2fa3006bdcc357086} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+All\+Bound\+Actions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8eefe9094adc4f703c8176e2f9e7a267}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getCurrentModifiers@{getCurrentModifiers}}
+\index{getCurrentModifiers@{getCurrentModifiers}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getCurrentModifiers()}{getCurrentModifiers()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8eefe9094adc4f703c8176e2f9e7a267} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Current\+Modifiers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a5e703103d4036a6ecf3cfa204f05e772}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getKeyAction@{getKeyAction}}
+\index{getKeyAction@{getKeyAction}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getKeyAction()}{getKeyAction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a5e703103d4036a6ecf3cfa204f05e772} 
+std\+::string Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Key\+Action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{modifiers}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a79f9bf27f150eec27a8935bca23f8da3}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getKeyCombinationAction@{getKeyCombinationAction}}
+\index{getKeyCombinationAction@{getKeyCombinationAction}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getKeyCombinationAction()}{getKeyCombinationAction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a79f9bf27f150eec27a8935bca23f8da3} 
+std\+::string Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Key\+Combination\+Action (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} \&}]{combo}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a773e5f3240e813a7d85ac4980af0f230}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getRepeatDelay@{getRepeatDelay}}
+\index{getRepeatDelay@{getRepeatDelay}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getRepeatDelay()}{getRepeatDelay()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a773e5f3240e813a7d85ac4980af0f230} 
+float Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Repeat\+Delay (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a1fff1e8a3770192e14db2abf0866cd48}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getRepeatRate@{getRepeatRate}}
+\index{getRepeatRate@{getRepeatRate}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getRepeatRate()}{getRepeatRate()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a1fff1e8a3770192e14db2abf0866cd48} 
+float Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Repeat\+Rate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9982677088d111763982c470842caa89}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!getTextInput@{getTextInput}}
+\index{getTextInput@{getTextInput}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{getTextInput()}{getTextInput()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9982677088d111763982c470842caa89} 
+const std\+::string \& Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::get\+Text\+Input (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_ae51e4a2d16088b23acde4b0db73a518c}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isAltPressed@{isAltPressed}}
+\index{isAltPressed@{isAltPressed}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isAltPressed()}{isAltPressed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_ae51e4a2d16088b23acde4b0db73a518c} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Alt\+Pressed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a545a5b57270bf2575a7d0de98e02f8ab}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isCtrlPressed@{isCtrlPressed}}
+\index{isCtrlPressed@{isCtrlPressed}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isCtrlPressed()}{isCtrlPressed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a545a5b57270bf2575a7d0de98e02f8ab} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Ctrl\+Pressed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a0e00a4f27ae2e1ab569ec31acc6c7a9e}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isKeyJustPressed@{isKeyJustPressed}}
+\index{isKeyJustPressed@{isKeyJustPressed}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isKeyJustPressed()}{isKeyJustPressed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a0e00a4f27ae2e1ab569ec31acc6c7a9e} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Key\+Just\+Pressed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_ada5da9034e8d9cfde614938a9cc168cc}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isKeyJustReleased@{isKeyJustReleased}}
+\index{isKeyJustReleased@{isKeyJustReleased}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isKeyJustReleased()}{isKeyJustReleased()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_ada5da9034e8d9cfde614938a9cc168cc} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Key\+Just\+Released (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_af376b48b05e5db8e5c25234569c079d5}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isKeyPressed@{isKeyPressed}}
+\index{isKeyPressed@{isKeyPressed}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isKeyPressed()}{isKeyPressed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_af376b48b05e5db8e5c25234569c079d5} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Key\+Pressed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_af1711b3dc99b49da39298e94caac4f02}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isModifierKey@{isModifierKey}}
+\index{isModifierKey@{isModifierKey}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isModifierKey()}{isModifierKey()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_af1711b3dc99b49da39298e94caac4f02} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Modifier\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7a7f12ee7e3c1654c8c79d91eb9725d7}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isPrintableKey@{isPrintableKey}}
+\index{isPrintableKey@{isPrintableKey}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isPrintableKey()}{isPrintableKey()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7a7f12ee7e3c1654c8c79d91eb9725d7} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Printable\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8d071fede77359a06206ad9f6fd80219}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isRepeatEnabled@{isRepeatEnabled}}
+\index{isRepeatEnabled@{isRepeatEnabled}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isRepeatEnabled()}{isRepeatEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8d071fede77359a06206ad9f6fd80219} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Repeat\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_acec4278d20bfdcff0e1de579004465b2}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isShiftPressed@{isShiftPressed}}
+\index{isShiftPressed@{isShiftPressed}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isShiftPressed()}{isShiftPressed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_acec4278d20bfdcff0e1de579004465b2} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Shift\+Pressed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_aca3fe54668018bccfc3542da2ee3ad50}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isSuperPressed@{isSuperPressed}}
+\index{isSuperPressed@{isSuperPressed}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isSuperPressed()}{isSuperPressed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_aca3fe54668018bccfc3542da2ee3ad50} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Super\+Pressed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7ae3da6e9c382e7259dfe05ae636d054}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isTextInputEnabled@{isTextInputEnabled}}
+\index{isTextInputEnabled@{isTextInputEnabled}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isTextInputEnabled()}{isTextInputEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7ae3da6e9c382e7259dfe05ae636d054} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Text\+Input\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8359a71d420adff7e72199a57881e369}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!isValidKeyCode@{isValidKeyCode}}
+\index{isValidKeyCode@{isValidKeyCode}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{isValidKeyCode()}{isValidKeyCode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8359a71d420adff7e72199a57881e369} 
+bool Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::is\+Valid\+Key\+Code (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_abc22c4f9ad5a22f3fe127c7da4576c4a}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!keyCodeFromString@{keyCodeFromString}}
+\index{keyCodeFromString@{keyCodeFromString}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{keyCodeFromString()}{keyCodeFromString()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_abc22c4f9ad5a22f3fe127c7da4576c4a} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::key\+Code\+From\+String (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_ad3bfde6b0bef129aca3d29c42e774415}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!keyCodeToString@{keyCodeToString}}
+\index{keyCodeToString@{keyCodeToString}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{keyCodeToString()}{keyCodeToString()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_ad3bfde6b0bef129aca3d29c42e774415} 
+std\+::string Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::key\+Code\+To\+String (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3bbf533cebd87e8179ab5b1c5db89945}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!modifierFlagsFromString@{modifierFlagsFromString}}
+\index{modifierFlagsFromString@{modifierFlagsFromString}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{modifierFlagsFromString()}{modifierFlagsFromString()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3bbf533cebd87e8179ab5b1c5db89945} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::modifier\+Flags\+From\+String (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_ab4490ba79037220fd04800470634563f}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!modifierFlagsToString@{modifierFlagsToString}}
+\index{modifierFlagsToString@{modifierFlagsToString}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{modifierFlagsToString()}{modifierFlagsToString()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_ab4490ba79037220fd04800470634563f} 
+std\+::string Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::modifier\+Flags\+To\+String (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{modifiers}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_adc4012e89049b8e45c395d2638a1a0bc}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!processKeyboardEvent@{processKeyboardEvent}}
+\index{processKeyboardEvent@{processKeyboardEvent}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{processKeyboardEvent()}{processKeyboardEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_adc4012e89049b8e45c395d2638a1a0bc} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::process\+Keyboard\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_af5c9a62a8cf45e254f887615de2c27eb}{Voxel\+Editor\+::\+Input\+::\+Input\+Handler}}.
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_abbdb4d80125f5e887e70d3d325d64f84}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!setRepeatDelay@{setRepeatDelay}}
+\index{setRepeatDelay@{setRepeatDelay}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{setRepeatDelay()}{setRepeatDelay()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_abbdb4d80125f5e887e70d3d325d64f84} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::set\+Repeat\+Delay (\begin{DoxyParamCaption}\item[{float}]{seconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3c98ceca71d344282505ff0066fab3be}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!setRepeatEnabled@{setRepeatEnabled}}
+\index{setRepeatEnabled@{setRepeatEnabled}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{setRepeatEnabled()}{setRepeatEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3c98ceca71d344282505ff0066fab3be} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::set\+Repeat\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_abf2675a980f9421df3199abb8d1d9123}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!setRepeatRate@{setRepeatRate}}
+\index{setRepeatRate@{setRepeatRate}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{setRepeatRate()}{setRepeatRate()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_abf2675a980f9421df3199abb8d1d9123} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::set\+Repeat\+Rate (\begin{DoxyParamCaption}\item[{float}]{rate}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4effa40a1fe71f57a9ade1a285a16331}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!setTextInputEnabled@{setTextInputEnabled}}
+\index{setTextInputEnabled@{setTextInputEnabled}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{setTextInputEnabled()}{setTextInputEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4effa40a1fe71f57a9ade1a285a16331} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::set\+Text\+Input\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7cfd64130faebb578b19383ae0063bdc}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!unbindKey@{unbindKey}}
+\index{unbindKey@{unbindKey}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{unbindKey()}{unbindKey()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7cfd64130faebb578b19383ae0063bdc} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::unbind\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}}}]{key}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{modifiers}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{Modifier\+Flags\+::\+None}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_af9278f6f4ec4845db9b4e374f8be1f84}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!unbindKeyCombination@{unbindKeyCombination}}
+\index{unbindKeyCombination@{unbindKeyCombination}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{unbindKeyCombination()}{unbindKeyCombination()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_af9278f6f4ec4845db9b4e374f8be1f84} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::unbind\+Key\+Combination (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}} \&}]{combo}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_input_1_1_keyboard_handler_adb9e41e67514744edb9867ababbef3f4}\index{VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}!update@{update}}
+\index{update@{update}!VoxelEditor::Input::KeyboardHandler@{VoxelEditor::Input::KeyboardHandler}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_input_1_1_keyboard_handler_adb9e41e67514744edb9867ababbef3f4} 
+void Voxel\+Editor\+::\+Input\+::\+Keyboard\+Handler\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_aac4b30762126d7da6a4a55928ff3c974}{Voxel\+Editor\+::\+Input\+::\+Input\+Handler}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_keyboard_handler_8h}{Keyboard\+Handler.\+h}}\item 
+core/input/\mbox{\hyperlink{_keyboard_handler_8cpp}{Keyboard\+Handler.\+cpp}}\end{DoxyCompactItemize}

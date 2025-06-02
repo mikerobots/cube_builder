@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['f_0',['f',['../struct_voxel_editor_1_1_rendering_1_1_uniform_value.html#aca7b67e7009940e56a30f061b88487c8',1,'VoxelEditor::Rendering::UniformValue']]],
+  ['face_1',['face',['../struct_voxel_editor_1_1_visual_feedback_1_1_raycast_hit.html#a46e8757f8137bd017d65d5a11352fdd8',1,'VoxelEditor::VisualFeedback::RaycastHit']]],
+  ['faceedges_2',['faceEdges',['../class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables.html#ab57f75a4b90f1a7f863fb31160f7ac2f',1,'VoxelEditor::SurfaceGen::DualContouringTables']]],
+  ['farplane_3',['farPlane',['../struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot.html#ad545723f8c5751f02212817e5d62f402',1,'VoxelEditor::UndoRedo::StateSnapshot::CameraSnapshot']]],
+  ['file_4',['FILE',['../namespace_voxel_editor_1_1_command_category.html#a0b4ddb35532fa451a0bd08c8537c6bae',1,'VoxelEditor::CommandCategory']]],
+  ['file_5fextension_5',['FILE_EXTENSION',['../namespace_voxel_editor_1_1_file_i_o_1_1_file_constants.html#a1ae39ad361d59907ae59f80a3809e5d3',1,'VoxelEditor::FileIO::FileConstants']]],
+  ['filename_6',['filename',['../struct_voxel_editor_1_1_file_i_o_1_1_file_info.html#ad8e9d0043cad037da5ec308c5ef0793e',1,'VoxelEditor::FileIO::FileInfo']]],
+  ['filesize_7',['fileSize',['../struct_voxel_editor_1_1_file_i_o_1_1_file_header.html#a6164f978285687ae3cc0afe0843bdc48',1,'VoxelEditor::FileIO::FileHeader::fileSize'],['../struct_voxel_editor_1_1_file_i_o_1_1_file_info.html#aa37e39fb27b7bcc991c4a0638c11dcd8',1,'VoxelEditor::FileIO::FileInfo::fileSize'],['../struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_stats.html#a3c80f5a76bc97c5874814cbf0eb78372',1,'VoxelEditor::FileIO::STLExportStats::fileSize']]],
+  ['filesloaded_8',['filesLoaded',['../struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats.html#a37ffb6792d817fc74ad61a8031f495aa',1,'VoxelEditor::FileIO::FileManager::IOStats']]],
+  ['filessaved_9',['filesSaved',['../struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats.html#ae5961b34388506fc8d9a1d2edc2679fe',1,'VoxelEditor::FileIO::FileManager::IOStats']]],
+  ['fill_10',['FILL',['../namespace_voxel_editor_1_1_commands.html#a7c0776274e33a7df1f4eda7db13cac35',1,'VoxelEditor::Commands']]],
+  ['fillcolor_11',['fillColor',['../struct_voxel_editor_1_1_selection_1_1_selection_style.html#af25543a4b37437dffa1bfec593a576a5',1,'VoxelEditor::Selection::SelectionStyle']]],
+  ['filter_12',['filter',['../struct_voxel_editor_1_1_selection_1_1_selection_context.html#ad71a57eeb7ec87c5476abbf1c143e6f8',1,'VoxelEditor::Selection::SelectionContext']]],
+  ['fingers_13',['fingers',['../struct_voxel_editor_1_1_input_1_1_hand_pose.html#a9b29bd031b6d01683c05f3890b25b77f',1,'VoxelEditor::Input::HandPose']]],
+  ['format_14',['format',['../struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options.html#a4ffad9862eca2996de53a8366fe27900',1,'VoxelEditor::FileIO::STLExportOptions::format'],['../struct_voxel_editor_1_1_rendering_1_1_texture_info.html#a74c2e46bbce5a24389cff37e54884a8a',1,'VoxelEditor::Rendering::TextureInfo::format']]],
+  ['fov_15',['fov',['../struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot.html#a74840ebb368fd30195c41adfca393ff1',1,'VoxelEditor::UndoRedo::StateSnapshot::CameraSnapshot']]],
+  ['fps_16',['fps',['../struct_voxel_editor_1_1_rendering_1_1_render_stats.html#aa94dd0a60ec794d000b187e07b16870a',1,'VoxelEditor::Rendering::RenderStats']]],
+  ['fragmentsource_17',['fragmentSource',['../struct_voxel_editor_1_1_rendering_1_1_shader_source.html#a54473598b870ffbffbfb45b9ac4187b9',1,'VoxelEditor::Rendering::ShaderSource']]],
+  ['frame_5fselection_18',['FRAME_SELECTION',['../namespace_voxel_editor_1_1_input_1_1_actions.html#a185d9384277b89229e3846f6b375c057',1,'VoxelEditor::Input::Actions']]],
+  ['framecount_19',['frameCount',['../struct_voxel_editor_1_1_rendering_1_1_render_stats.html#ac2efc0f7ee88556b3be1ba22e794248f',1,'VoxelEditor::Rendering::RenderStats']]],
+  ['framenumber_20',['frameNumber',['../struct_voxel_editor_1_1_rendering_1_1_render_context.html#a78c2f7537eb162da3058aac244bb5e54',1,'VoxelEditor::Rendering::RenderContext']]],
+  ['frametime_21',['frameTime',['../struct_voxel_editor_1_1_rendering_1_1_render_stats.html#afa529b09c1535864e79ee154dcad2611',1,'VoxelEditor::Rendering::RenderStats::frameTime'],['../struct_voxel_editor_1_1_visual_feedback_1_1_render_stats.html#ab6e39a8afa0e5d6d804de658fcc1c598',1,'VoxelEditor::VisualFeedback::RenderStats::frameTime']]],
+  ['frustumculling_22',['frustumCulling',['../struct_voxel_editor_1_1_rendering_1_1_render_config.html#a6a4f5d30969095bc489c472d23d8960d',1,'VoxelEditor::Rendering::RenderConfig']]],
+  ['fullscreen_23',['fullscreen',['../struct_voxel_editor_1_1_rendering_1_1_render_config.html#a15e527db607076010fe1bed1d9bb40fc',1,'VoxelEditor::Rendering::RenderConfig']]]
+];

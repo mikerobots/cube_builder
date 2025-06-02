@@ -1,0 +1,131 @@
+\doxysection{Voxel\+Editor\+::Memory\+::Memory\+Optimizer Class Reference}
+\hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer}{}\label{class_voxel_editor_1_1_memory_1_1_memory_optimizer}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+
+
+{\ttfamily \#include $<$Memory\+Optimizer.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Memory\+::Memory\+Optimizer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_memory_1_1_memory_optimizer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_abb1422253d4ad03775d08a4556011e32}{Memory\+Optimizer}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_af9085aacfd697b387f79562f494dee13}{handle\+Event}} (const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Events\+::\+Memory\+Pressure\+Event}} \&event) override
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a220a8212014107c07e6c78862c1ed6de}{register\+Cleanup\+Callback}} (std\+::function$<$ size\+\_\+t()$>$ callback, \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{Cleanup\+Priority}} priority, const std\+::string \&name)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}{perform\+Cleanup}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{Cleanup\+Priority}} min\+Priority=\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{Cleanup\+Priority\+::\+Low}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae0d12fa0ce450d64c5d6fde8e6140a74}{set\+Enabled}} (bool enabled)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8513980197e94c9d3c1a6c85c16e25e8}{is\+Enabled}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae5afd3c9b7fe2bfaab172d3970a1b0aa}{set\+Aggressive\+Mode}} (bool aggressive)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a70a3c4b99cf95e194544e1e85de1b085}{is\+Aggressive\+Mode}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a9b296c65a56f71d983b41071a1d1a770}{force\+Cleanup}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8f127806d3865094f1efa68b24a257e7}{get\+Callback\+Count}} () const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a873c822f838beac3bfcd9265a15f4771}{get\+Callback\+Names}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Voxel\+Editor\+::\+Events\+::\+Event\+Handler$<$ Events\+::\+Memory\+Pressure\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a101124b1461dcfd2a7926b694d99631c}{\texorpdfstring{$\sim$}{\string~}\+Event\+Handler}} ()=default
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a104c3ddac92f34b78aac3c14a17d0de8}{should\+Handle}} (const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Events\+::\+Memory\+Pressure\+Event}} \&event) const
+\item 
+virtual int \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_ae91aaf86381ac62e6af710432291d092}{get\+Priority}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_abb1422253d4ad03775d08a4556011e32}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!MemoryOptimizer@{MemoryOptimizer}}
+\index{MemoryOptimizer@{MemoryOptimizer}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{MemoryOptimizer()}{MemoryOptimizer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_abb1422253d4ad03775d08a4556011e32} 
+Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::\+Memory\+Optimizer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a9b296c65a56f71d983b41071a1d1a770}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!forceCleanup@{forceCleanup}}
+\index{forceCleanup@{forceCleanup}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{forceCleanup()}{forceCleanup()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a9b296c65a56f71d983b41071a1d1a770} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::force\+Cleanup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8f127806d3865094f1efa68b24a257e7}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!getCallbackCount@{getCallbackCount}}
+\index{getCallbackCount@{getCallbackCount}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{getCallbackCount()}{getCallbackCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8f127806d3865094f1efa68b24a257e7} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::get\+Callback\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a873c822f838beac3bfcd9265a15f4771}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!getCallbackNames@{getCallbackNames}}
+\index{getCallbackNames@{getCallbackNames}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{getCallbackNames()}{getCallbackNames()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a873c822f838beac3bfcd9265a15f4771} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::get\+Callback\+Names (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_af9085aacfd697b387f79562f494dee13}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!handleEvent@{handleEvent}}
+\index{handleEvent@{handleEvent}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{handleEvent()}{handleEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_af9085aacfd697b387f79562f494dee13} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::handle\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Events\+::\+Memory\+Pressure\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a57c2e7e77e162d607c8a12970e579a96}{Voxel\+Editor\+::\+Events\+::\+Event\+Handler$<$ Events\+::\+Memory\+Pressure\+Event $>$}}.
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a70a3c4b99cf95e194544e1e85de1b085}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!isAggressiveMode@{isAggressiveMode}}
+\index{isAggressiveMode@{isAggressiveMode}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{isAggressiveMode()}{isAggressiveMode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a70a3c4b99cf95e194544e1e85de1b085} 
+bool Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::is\+Aggressive\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8513980197e94c9d3c1a6c85c16e25e8}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!isEnabled@{isEnabled}}
+\index{isEnabled@{isEnabled}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{isEnabled()}{isEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8513980197e94c9d3c1a6c85c16e25e8} 
+bool Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::is\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!performCleanup@{performCleanup}}
+\index{performCleanup@{performCleanup}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{performCleanup()}{performCleanup()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89} 
+size\+\_\+t Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::perform\+Cleanup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{Cleanup\+Priority}}}]{min\+Priority}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{Cleanup\+Priority\+::\+Low}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a220a8212014107c07e6c78862c1ed6de}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!registerCleanupCallback@{registerCleanupCallback}}
+\index{registerCleanupCallback@{registerCleanupCallback}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{registerCleanupCallback()}{registerCleanupCallback()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a220a8212014107c07e6c78862c1ed6de} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::register\+Cleanup\+Callback (\begin{DoxyParamCaption}\item[{std\+::function$<$ size\+\_\+t()$>$}]{callback}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{Cleanup\+Priority}}}]{priority}{, }\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae5afd3c9b7fe2bfaab172d3970a1b0aa}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!setAggressiveMode@{setAggressiveMode}}
+\index{setAggressiveMode@{setAggressiveMode}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{setAggressiveMode()}{setAggressiveMode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae5afd3c9b7fe2bfaab172d3970a1b0aa} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::set\+Aggressive\+Mode (\begin{DoxyParamCaption}\item[{bool}]{aggressive}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae0d12fa0ce450d64c5d6fde8e6140a74}\index{VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}!setEnabled@{setEnabled}}
+\index{setEnabled@{setEnabled}!VoxelEditor::Memory::MemoryOptimizer@{VoxelEditor::Memory::MemoryOptimizer}}
+\doxysubsubsection{\texorpdfstring{setEnabled()}{setEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae0d12fa0ce450d64c5d6fde8e6140a74} 
+void Voxel\+Editor\+::\+Memory\+::\+Memory\+Optimizer\+::set\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/memory/\mbox{\hyperlink{_memory_optimizer_8h}{Memory\+Optimizer.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,28 @@
+var class_voxel_editor_1_1_undo_redo_1_1_history_manager =
+[
+    [ "HistoryManager", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a19a222cc6b304b621d9614b0b7d8b78e", null ],
+    [ "~HistoryManager", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a885d97fb5dabccb06f8b842d30e5e9e1", null ],
+    [ "beginTransaction", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a74c9573ac5262c83fe88d557da348b9b", null ],
+    [ "cancelTransaction", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a41e8066efc5b4f06beb35acf496ab4a4", null ],
+    [ "canRedo", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a500683fa64e600587d349f8da9c89bd4", null ],
+    [ "canUndo", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#ac493442671070d447ad1b47f86af2ac3", null ],
+    [ "clearHistory", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#acfb70b69d5caf1a66208c377d34fcbf6", null ],
+    [ "endTransaction", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a7ba6a50537e2318e035755b394203779", null ],
+    [ "executeCommand", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a3ec4f06788f8da230ab572ed3a022591", null ],
+    [ "executeCommand", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#aa1014ce38d269fbe4b9aa5874384dc5a", null ],
+    [ "getHistorySize", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a748dfe52016fd7b8f5094ef28e74596b", null ],
+    [ "getLastExecutedCommand", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#ab8519db98d58571e71322bc62e48eb04", null ],
+    [ "getMemoryUsage", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#af9d87b2046ca6eca0e683207c1494ba8", null ],
+    [ "getRedoHistory", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a5cf628bb6c1e673d2e3be6cbff2c8e68", null ],
+    [ "getUndoHistory", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a0b6b2e105004d438b87a33505dfd1265", null ],
+    [ "isInTransaction", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a47eba0f63a052bb8bf10bb95ef7ee234", null ],
+    [ "optimizeMemory", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a03e0d16316165945df358e7fc935bf95", null ],
+    [ "redo", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a86687e6aab0872cafb19e3e56fa19bcc", null ],
+    [ "setCompressionEnabled", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#aee91540e107c5215f5a7309d109a8c0b", null ],
+    [ "setMaxHistorySize", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#ad556e58ed1f4c3ee85942b400d9f9cba", null ],
+    [ "setMaxMemoryUsage", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a537d24dc5c61c1632de6e5dafdf95f87", null ],
+    [ "setMemoryPressureCallback", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a740da63e5b5664cf5dfde4a656c454ba", null ],
+    [ "setSnapshotInterval", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a80e3b1534fd030729cdcfab9289d9f70", null ],
+    [ "setUndoRedoCallback", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#ae9fa5a7aa55132ae3dfd6e80d3f3afa9", null ],
+    [ "undo", "class_voxel_editor_1_1_undo_redo_1_1_history_manager.html#a312c1b425e2fcd0e9581bda0ca1e1040", null ]
+];

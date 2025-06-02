@@ -1,0 +1,553 @@
+\doxysection{Voxel\+Editor\+::Rendering\+::Open\+GLRenderer Class Reference}
+\hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{}\label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+
+
+{\ttfamily \#include $<$Open\+GLRenderer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3681e373f0e4f8cfdcd6589457095ccc}{Open\+GLRenderer}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6ae875cdffc22faf267cbda7c5d0bf2f}{\texorpdfstring{$\sim$}{\string~}\+Open\+GLRenderer}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abff5065b9e7ead583f697b31d4119873}{initialize\+Context}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{Render\+Config}} \&config)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_af38bdec798b09a9a715d0fa2ec6748cd}{destroy\+Context}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a4cc14992c734159272fdb0f80dfb157f}{is\+Context\+Valid}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa15c01f88d904ca3e042391ef1cb982b}{get\+Renderer\+Info}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a282d949288dc95ef7d01c3dd0a739d28}{create\+Vertex\+Buffer}} (const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{Buffer\+Usage}} usage=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{Buffer\+Usage\+::\+Static}})
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a5ad1b971350a24d6a374a74b74da7c45}{create\+Index\+Buffer}} (const uint32\+\_\+t \texorpdfstring{$\ast$}{*}indices, size\+\_\+t count, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{Buffer\+Usage}} usage=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{Buffer\+Usage\+::\+Static}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a2e129ec8d605d330b4d236db5f87266d}{update\+Buffer}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id, const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size, size\+\_\+t offset=0)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a57c3c2fc15553e357c392d1870b8b5aa}{bind\+Vertex\+Buffer}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a99e2906d7e46d37a9c7d910bc1a10257}{bind\+Index\+Buffer}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a4107eb260e099f5b98dd244f3ed5f658}{delete\+Buffer}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id)
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a30da12fd4c8dbc46f6ee764278c85dc8}{create\+Vertex\+Array}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abaf74bd0d2bb07e5903f2eb627ba888b}{bind\+Vertex\+Array}} (uint32\+\_\+t vao\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a64823c0fe3877e693ce4f8011fca5c89}{delete\+Vertex\+Array}} (uint32\+\_\+t vao\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a9b929259069bdccd3f3e71a79cc732bd}{setup\+Vertex\+Attributes}} (const std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032fa}{Vertex\+Attribute}} $>$ \&attributes)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_afb63e3313fa2a6c9e90422b13c94d858}{create\+Texture2D}} (int width, int height, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{Texture\+Format}} format, const void \texorpdfstring{$\ast$}{*}data=nullptr)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a62d53333b70f11cf2f4fe97a220c1241}{create\+Texture\+Cube}} (int size, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{Texture\+Format}} format, const void \texorpdfstring{$\ast$}{*}data\mbox{[}6\mbox{]}=nullptr)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ad2452377bb776f09676722d362eacb91}{update\+Texture}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id, int x, int y, int width, int height, const void \texorpdfstring{$\ast$}{*}data)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a44fd37e9d92623e54b7ed60bf46f1dc3}{bind\+Texture}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id, int slot=0)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ab767649d4724d21dc371b43a8f41e9d7}{delete\+Texture}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_adc263fae4016718988570d5734b316bf}{generate\+Mipmaps}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a90e44ad8770d4ee41ff2ad597d019c2a}{set\+Texture\+Parameters}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id, bool mipmapping, float anisotropy)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a445212a94ca1bbae6e3d3cc27b4cd151}{create\+Shader}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2c}{Shader\+Type}} type, const std\+::string \&source)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a0ae00e5956e91dded8fa3295c9661e5b}{create\+Program}} (const std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} $>$ \&shaders)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aba7e59ce2348b641cad4f6b1d692bb0d}{use\+Program}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} program\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a8365eed291cd9339597230bdbc3d98f1}{delete\+Shader}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} shader\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aaa33ea2bfd460a62bee576487328fd19}{delete\+Program}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} program\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a86c1ac1f2c7a11dbe06eae73847e6af0}{set\+Uniform}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} program\+Id, const std\+::string \&name, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}} \&value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a2a670b2de7fb463d988b7acd4207ef68}{set\+Uniform}} (const std\+::string \&name, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}} \&value)
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a16dc409bc9a26e00ed2a1d389f5946ca}{get\+Uniform\+Location}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} program\+Id, const std\+::string \&name)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aab924b6912cae322037cb7d660a8bf92}{draw\+Arrays}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}} type, int first, int count)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a406c10bcc996de514b83ccc5d4f1340d}{draw\+Elements}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}} type, int count, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{Index\+Type}} index\+Type=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd}{Index\+Type\+::\+UInt32}}, int offset=0)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a98b29dcaca17db251bf375713b5dc0a8}{draw\+Elements\+Instanced}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}} type, int count, int instance\+Count, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{Index\+Type}} index\+Type=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd}{Index\+Type\+::\+UInt32}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae4a5ab7c774a1010d92ca1193564594e}{set\+Depth\+Test}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa9eb28367f33c03ef0e35e5cfc94768f}{set\+Depth\+Write}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a8d423252627332d02a0167bc989c7b2c}{set\+Blending}} (bool enabled, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} mode=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}{Blend\+Mode\+::\+Alpha}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3a2b6a659e17fcc44cbbb17428f350f3}{set\+Culling}} (bool enabled, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} mode=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Cull\+Mode\+::\+Back}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa9d0bdcd3d003e5fcc5d98e9e5f328e7}{set\+Viewport}} (int x, int y, int width, int height)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ad0ed242c6a8b623ef2f7336f2e7548b8}{set\+Polygon\+Mode}} (bool wireframe)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7e15d07afa8f8f9246a8fa1675d76973}{set\+Line\+Width}} (float width)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a714d665d427c314420d9ca5b71151a8f}{set\+Point\+Size}} (float size)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a065301a070d6fe8e52ee15fcb2a8284c}{clear}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23}{Clear\+Flags}} flags, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&color=\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_a38ef9e5913032f706487901808153507}{Color\+::\+Black}}(), float depth=1.\+0f, int stencil=0)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae89d11cf47f1bb4dc5ead2fb4203724e}{set\+Clear\+Color}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&color)
+\item 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_buffer_info}{Buffer\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a0cb449cd494751c6ccdcf7b950d18858}{get\+Buffer\+Info}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id) const
+\item 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_texture_info}{Texture\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a86be6f74d643a00579a0d45a10e51e0d}{get\+Texture\+Info}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id) const
+\item 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_info}{Shader\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abe711fc3361a16ad466772a2e97a181f}{get\+Shader\+Info}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} shader\+Id) const
+\item 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_program_info}{Program\+Info}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a66eb3883a2c279df3dd25212369b0d22}{get\+Program\+Info}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} program\+Id) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a004efe1de19bcaa0c3c9cc38b3860e56}{get\+Total\+Buffer\+Memory}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6b5370a90b9e3a4f8300b686e5afb2d1}{get\+Total\+Texture\+Memory}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a164bcc0e953abf2c149d03bab1841957}{get\+Active\+Buffer\+Count}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a92e5f1ad4855e14deebb0e678971b391}{get\+Active\+Texture\+Count}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a5754853f0c46f9e4fe26a7ec01d3663c}{get\+Active\+Shader\+Count}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a220f0b68e4f08933ba62cc538812dc8c}{push\+Debug\+Group}} (const std\+::string \&name)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a22255cbd4d2226f71b3802caefa21b71}{pop\+Debug\+Group}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae6f38a785a51e7d58aeccd317299a5b4}{set\+Object\+Label}} (uint32\+\_\+t gl\+Handle, const std\+::string \&label)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a211b8579c9edc60708239d30a2e86362}{check\+GLError}} (const std\+::string \&operation="{}"{})
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_add0145674aea46191c8d33f8bf00fe40}{supports\+Anisotropic\+Filtering}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a90b1152079e78a420815205a078f9308}{supports\+Debug\+Output}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6f70000cf84c6ea3c1287b5d63170539}{supports\+Timestamp\+Queries}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a9c452ed99b8e2a882a725041f91d0296}{get\+Max\+Anisotropy}} () const
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3421140576806ea58010906941e0cda9}{get\+Max\+Texture\+Size}} () const
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7852c903a597e5221ff4142af7806e7a}{get\+Max\+Texture\+Units}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ab7d076b6df6fbc57e3b4928f0c4b7db1}{begin\+Timestamp\+Query}} (const std\+::string \&name)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ade2229b269fb02092ba3989d9a8b7895}{end\+Timestamp\+Query}} (const std\+::string \&name)
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7c263791dd4a9535514fb414a7304cd1}{get\+Query\+Time}} (const std\+::string \&name) const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3681e373f0e4f8cfdcd6589457095ccc}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!OpenGLRenderer@{OpenGLRenderer}}
+\index{OpenGLRenderer@{OpenGLRenderer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{OpenGLRenderer()}{OpenGLRenderer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3681e373f0e4f8cfdcd6589457095ccc} 
+Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::\+Open\+GLRenderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6ae875cdffc22faf267cbda7c5d0bf2f}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!````~OpenGLRenderer@{\texorpdfstring{$\sim$}{\string~}OpenGLRenderer}}
+\index{````~OpenGLRenderer@{\texorpdfstring{$\sim$}{\string~}OpenGLRenderer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}OpenGLRenderer()}{\string~OpenGLRenderer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6ae875cdffc22faf267cbda7c5d0bf2f} 
+Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::\texorpdfstring{$\sim$}{\string~}\+Open\+GLRenderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ab7d076b6df6fbc57e3b4928f0c4b7db1}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!beginTimestampQuery@{beginTimestampQuery}}
+\index{beginTimestampQuery@{beginTimestampQuery}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{beginTimestampQuery()}{beginTimestampQuery()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ab7d076b6df6fbc57e3b4928f0c4b7db1} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::begin\+Timestamp\+Query (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a99e2906d7e46d37a9c7d910bc1a10257}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!bindIndexBuffer@{bindIndexBuffer}}
+\index{bindIndexBuffer@{bindIndexBuffer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{bindIndexBuffer()}{bindIndexBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a99e2906d7e46d37a9c7d910bc1a10257} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::bind\+Index\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a44fd37e9d92623e54b7ed60bf46f1dc3}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!bindTexture@{bindTexture}}
+\index{bindTexture@{bindTexture}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{bindTexture()}{bindTexture()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a44fd37e9d92623e54b7ed60bf46f1dc3} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::bind\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{, }\item[{int}]{slot}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abaf74bd0d2bb07e5903f2eb627ba888b}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!bindVertexArray@{bindVertexArray}}
+\index{bindVertexArray@{bindVertexArray}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{bindVertexArray()}{bindVertexArray()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abaf74bd0d2bb07e5903f2eb627ba888b} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::bind\+Vertex\+Array (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{vao\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a57c3c2fc15553e357c392d1870b8b5aa}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!bindVertexBuffer@{bindVertexBuffer}}
+\index{bindVertexBuffer@{bindVertexBuffer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{bindVertexBuffer()}{bindVertexBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a57c3c2fc15553e357c392d1870b8b5aa} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::bind\+Vertex\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a211b8579c9edc60708239d30a2e86362}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!checkGLError@{checkGLError}}
+\index{checkGLError@{checkGLError}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{checkGLError()}{checkGLError()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a211b8579c9edc60708239d30a2e86362} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::check\+GLError (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{operation}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a065301a070d6fe8e52ee15fcb2a8284c}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!clear@{clear}}
+\index{clear@{clear}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a065301a070d6fe8e52ee15fcb2a8284c} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::clear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23}{Clear\+Flags}}}]{flags}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&}]{color}{ = {\ttfamily \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_a38ef9e5913032f706487901808153507}{Color\+::\+Black}}()}, }\item[{float}]{depth}{ = {\ttfamily 1.0f}, }\item[{int}]{stencil}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a5ad1b971350a24d6a374a74b74da7c45}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createIndexBuffer@{createIndexBuffer}}
+\index{createIndexBuffer@{createIndexBuffer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createIndexBuffer()}{createIndexBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a5ad1b971350a24d6a374a74b74da7c45} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Index\+Buffer (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \texorpdfstring{$\ast$}{*}}]{indices}{, }\item[{size\+\_\+t}]{count}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{Buffer\+Usage}}}]{usage}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{Buffer\+Usage\+::\+Static}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a0ae00e5956e91dded8fa3295c9661e5b}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createProgram@{createProgram}}
+\index{createProgram@{createProgram}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createProgram()}{createProgram()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a0ae00e5956e91dded8fa3295c9661e5b} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Program (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} $>$ \&}]{shaders}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a445212a94ca1bbae6e3d3cc27b4cd151}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createShader@{createShader}}
+\index{createShader@{createShader}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createShader()}{createShader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a445212a94ca1bbae6e3d3cc27b4cd151} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae88f8e644c7cd1600b9dca73086d1a2c}{Shader\+Type}}}]{type}{, }\item[{const std\+::string \&}]{source}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_afb63e3313fa2a6c9e90422b13c94d858}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createTexture2D@{createTexture2D}}
+\index{createTexture2D@{createTexture2D}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createTexture2D()}{createTexture2D()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_afb63e3313fa2a6c9e90422b13c94d858} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Texture2D (\begin{DoxyParamCaption}\item[{int}]{width}{, }\item[{int}]{height}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{Texture\+Format}}}]{format}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a62d53333b70f11cf2f4fe97a220c1241}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createTextureCube@{createTextureCube}}
+\index{createTextureCube@{createTextureCube}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createTextureCube()}{createTextureCube()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a62d53333b70f11cf2f4fe97a220c1241} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Texture\+Cube (\begin{DoxyParamCaption}\item[{int}]{size}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{Texture\+Format}}}]{format}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{\mbox{[}6\mbox{]} = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a30da12fd4c8dbc46f6ee764278c85dc8}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createVertexArray@{createVertexArray}}
+\index{createVertexArray@{createVertexArray}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createVertexArray()}{createVertexArray()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a30da12fd4c8dbc46f6ee764278c85dc8} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Vertex\+Array (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a282d949288dc95ef7d01c3dd0a739d28}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!createVertexBuffer@{createVertexBuffer}}
+\index{createVertexBuffer@{createVertexBuffer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{createVertexBuffer()}{createVertexBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a282d949288dc95ef7d01c3dd0a739d28} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::create\+Vertex\+Buffer (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{Buffer\+Usage}}}]{usage}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{Buffer\+Usage\+::\+Static}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a4107eb260e099f5b98dd244f3ed5f658}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!deleteBuffer@{deleteBuffer}}
+\index{deleteBuffer@{deleteBuffer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{deleteBuffer()}{deleteBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a4107eb260e099f5b98dd244f3ed5f658} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::delete\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aaa33ea2bfd460a62bee576487328fd19}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!deleteProgram@{deleteProgram}}
+\index{deleteProgram@{deleteProgram}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{deleteProgram()}{deleteProgram()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aaa33ea2bfd460a62bee576487328fd19} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::delete\+Program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{program\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a8365eed291cd9339597230bdbc3d98f1}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!deleteShader@{deleteShader}}
+\index{deleteShader@{deleteShader}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{deleteShader()}{deleteShader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a8365eed291cd9339597230bdbc3d98f1} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::delete\+Shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{shader\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ab767649d4724d21dc371b43a8f41e9d7}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!deleteTexture@{deleteTexture}}
+\index{deleteTexture@{deleteTexture}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{deleteTexture()}{deleteTexture()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ab767649d4724d21dc371b43a8f41e9d7} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::delete\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a64823c0fe3877e693ce4f8011fca5c89}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!deleteVertexArray@{deleteVertexArray}}
+\index{deleteVertexArray@{deleteVertexArray}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{deleteVertexArray()}{deleteVertexArray()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a64823c0fe3877e693ce4f8011fca5c89} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::delete\+Vertex\+Array (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{vao\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_af38bdec798b09a9a715d0fa2ec6748cd}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!destroyContext@{destroyContext}}
+\index{destroyContext@{destroyContext}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{destroyContext()}{destroyContext()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_af38bdec798b09a9a715d0fa2ec6748cd} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::destroy\+Context (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aab924b6912cae322037cb7d660a8bf92}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!drawArrays@{drawArrays}}
+\index{drawArrays@{drawArrays}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{drawArrays()}{drawArrays()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aab924b6912cae322037cb7d660a8bf92} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::draw\+Arrays (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}}}]{type}{, }\item[{int}]{first}{, }\item[{int}]{count}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a406c10bcc996de514b83ccc5d4f1340d}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!drawElements@{drawElements}}
+\index{drawElements@{drawElements}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{drawElements()}{drawElements()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a406c10bcc996de514b83ccc5d4f1340d} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::draw\+Elements (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}}}]{type}{, }\item[{int}]{count}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{Index\+Type}}}]{index\+Type}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd}{Index\+Type\+::\+UInt32}}}, }\item[{int}]{offset}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a98b29dcaca17db251bf375713b5dc0a8}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!drawElementsInstanced@{drawElementsInstanced}}
+\index{drawElementsInstanced@{drawElementsInstanced}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{drawElementsInstanced()}{drawElementsInstanced()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a98b29dcaca17db251bf375713b5dc0a8} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::draw\+Elements\+Instanced (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{Primitive\+Type}}}]{type}{, }\item[{int}]{count}{, }\item[{int}]{instance\+Count}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{Index\+Type}}}]{index\+Type}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317ae7956ed7be1c5025a27ed3cb42a396bd}{Index\+Type\+::\+UInt32}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ade2229b269fb02092ba3989d9a8b7895}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!endTimestampQuery@{endTimestampQuery}}
+\index{endTimestampQuery@{endTimestampQuery}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{endTimestampQuery()}{endTimestampQuery()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ade2229b269fb02092ba3989d9a8b7895} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::end\+Timestamp\+Query (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_adc263fae4016718988570d5734b316bf}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!generateMipmaps@{generateMipmaps}}
+\index{generateMipmaps@{generateMipmaps}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{generateMipmaps()}{generateMipmaps()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_adc263fae4016718988570d5734b316bf} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::generate\+Mipmaps (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a164bcc0e953abf2c149d03bab1841957}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getActiveBufferCount@{getActiveBufferCount}}
+\index{getActiveBufferCount@{getActiveBufferCount}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getActiveBufferCount()}{getActiveBufferCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a164bcc0e953abf2c149d03bab1841957} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Active\+Buffer\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a5754853f0c46f9e4fe26a7ec01d3663c}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getActiveShaderCount@{getActiveShaderCount}}
+\index{getActiveShaderCount@{getActiveShaderCount}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getActiveShaderCount()}{getActiveShaderCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a5754853f0c46f9e4fe26a7ec01d3663c} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Active\+Shader\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a92e5f1ad4855e14deebb0e678971b391}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getActiveTextureCount@{getActiveTextureCount}}
+\index{getActiveTextureCount@{getActiveTextureCount}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getActiveTextureCount()}{getActiveTextureCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a92e5f1ad4855e14deebb0e678971b391} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Active\+Texture\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a0cb449cd494751c6ccdcf7b950d18858}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getBufferInfo@{getBufferInfo}}
+\index{getBufferInfo@{getBufferInfo}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getBufferInfo()}{getBufferInfo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a0cb449cd494751c6ccdcf7b950d18858} 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_buffer_info}{Buffer\+Info}} \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Buffer\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a9c452ed99b8e2a882a725041f91d0296}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getMaxAnisotropy@{getMaxAnisotropy}}
+\index{getMaxAnisotropy@{getMaxAnisotropy}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getMaxAnisotropy()}{getMaxAnisotropy()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a9c452ed99b8e2a882a725041f91d0296} 
+float Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Max\+Anisotropy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3421140576806ea58010906941e0cda9}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getMaxTextureSize@{getMaxTextureSize}}
+\index{getMaxTextureSize@{getMaxTextureSize}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getMaxTextureSize()}{getMaxTextureSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3421140576806ea58010906941e0cda9} 
+int Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Max\+Texture\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7852c903a597e5221ff4142af7806e7a}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getMaxTextureUnits@{getMaxTextureUnits}}
+\index{getMaxTextureUnits@{getMaxTextureUnits}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getMaxTextureUnits()}{getMaxTextureUnits()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7852c903a597e5221ff4142af7806e7a} 
+int Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Max\+Texture\+Units (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a66eb3883a2c279df3dd25212369b0d22}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getProgramInfo@{getProgramInfo}}
+\index{getProgramInfo@{getProgramInfo}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getProgramInfo()}{getProgramInfo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a66eb3883a2c279df3dd25212369b0d22} 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_program_info}{Program\+Info}} \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Program\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{program\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7c263791dd4a9535514fb414a7304cd1}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getQueryTime@{getQueryTime}}
+\index{getQueryTime@{getQueryTime}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getQueryTime()}{getQueryTime()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7c263791dd4a9535514fb414a7304cd1} 
+float Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Query\+Time (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa15c01f88d904ca3e042391ef1cb982b}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getRendererInfo@{getRendererInfo}}
+\index{getRendererInfo@{getRendererInfo}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getRendererInfo()}{getRendererInfo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa15c01f88d904ca3e042391ef1cb982b} 
+const std\+::string \& Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Renderer\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abe711fc3361a16ad466772a2e97a181f}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getShaderInfo@{getShaderInfo}}
+\index{getShaderInfo@{getShaderInfo}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getShaderInfo()}{getShaderInfo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abe711fc3361a16ad466772a2e97a181f} 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_info}{Shader\+Info}} \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Shader\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{shader\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a86be6f74d643a00579a0d45a10e51e0d}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getTextureInfo@{getTextureInfo}}
+\index{getTextureInfo@{getTextureInfo}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getTextureInfo()}{getTextureInfo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a86be6f74d643a00579a0d45a10e51e0d} 
+const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_texture_info}{Texture\+Info}} \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Texture\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a004efe1de19bcaa0c3c9cc38b3860e56}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getTotalBufferMemory@{getTotalBufferMemory}}
+\index{getTotalBufferMemory@{getTotalBufferMemory}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getTotalBufferMemory()}{getTotalBufferMemory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a004efe1de19bcaa0c3c9cc38b3860e56} 
+size\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Total\+Buffer\+Memory (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6b5370a90b9e3a4f8300b686e5afb2d1}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getTotalTextureMemory@{getTotalTextureMemory}}
+\index{getTotalTextureMemory@{getTotalTextureMemory}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getTotalTextureMemory()}{getTotalTextureMemory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6b5370a90b9e3a4f8300b686e5afb2d1} 
+size\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Total\+Texture\+Memory (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a16dc409bc9a26e00ed2a1d389f5946ca}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!getUniformLocation@{getUniformLocation}}
+\index{getUniformLocation@{getUniformLocation}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{getUniformLocation()}{getUniformLocation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a16dc409bc9a26e00ed2a1d389f5946ca} 
+int Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::get\+Uniform\+Location (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{program\+Id}{, }\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abff5065b9e7ead583f697b31d4119873}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!initializeContext@{initializeContext}}
+\index{initializeContext@{initializeContext}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{initializeContext()}{initializeContext()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_abff5065b9e7ead583f697b31d4119873} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::initialize\+Context (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{Render\+Config}} \&}]{config}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a4cc14992c734159272fdb0f80dfb157f}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!isContextValid@{isContextValid}}
+\index{isContextValid@{isContextValid}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{isContextValid()}{isContextValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a4cc14992c734159272fdb0f80dfb157f} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::is\+Context\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a22255cbd4d2226f71b3802caefa21b71}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!popDebugGroup@{popDebugGroup}}
+\index{popDebugGroup@{popDebugGroup}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{popDebugGroup()}{popDebugGroup()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a22255cbd4d2226f71b3802caefa21b71} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::pop\+Debug\+Group (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a220f0b68e4f08933ba62cc538812dc8c}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!pushDebugGroup@{pushDebugGroup}}
+\index{pushDebugGroup@{pushDebugGroup}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{pushDebugGroup()}{pushDebugGroup()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a220f0b68e4f08933ba62cc538812dc8c} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::push\+Debug\+Group (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a8d423252627332d02a0167bc989c7b2c}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setBlending@{setBlending}}
+\index{setBlending@{setBlending}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setBlending()}{setBlending()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a8d423252627332d02a0167bc989c7b2c} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Blending (\begin{DoxyParamCaption}\item[{bool}]{enabled}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}}}]{mode}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}{Blend\+Mode\+::\+Alpha}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae89d11cf47f1bb4dc5ead2fb4203724e}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setClearColor@{setClearColor}}
+\index{setClearColor@{setClearColor}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setClearColor()}{setClearColor()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae89d11cf47f1bb4dc5ead2fb4203724e} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Clear\+Color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&}]{color}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3a2b6a659e17fcc44cbbb17428f350f3}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setCulling@{setCulling}}
+\index{setCulling@{setCulling}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setCulling()}{setCulling()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a3a2b6a659e17fcc44cbbb17428f350f3} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Culling (\begin{DoxyParamCaption}\item[{bool}]{enabled}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}}}]{mode}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Cull\+Mode\+::\+Back}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae4a5ab7c774a1010d92ca1193564594e}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setDepthTest@{setDepthTest}}
+\index{setDepthTest@{setDepthTest}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setDepthTest()}{setDepthTest()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae4a5ab7c774a1010d92ca1193564594e} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Depth\+Test (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa9eb28367f33c03ef0e35e5cfc94768f}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setDepthWrite@{setDepthWrite}}
+\index{setDepthWrite@{setDepthWrite}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setDepthWrite()}{setDepthWrite()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa9eb28367f33c03ef0e35e5cfc94768f} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Depth\+Write (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7e15d07afa8f8f9246a8fa1675d76973}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setLineWidth@{setLineWidth}}
+\index{setLineWidth@{setLineWidth}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setLineWidth()}{setLineWidth()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a7e15d07afa8f8f9246a8fa1675d76973} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Line\+Width (\begin{DoxyParamCaption}\item[{float}]{width}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae6f38a785a51e7d58aeccd317299a5b4}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setObjectLabel@{setObjectLabel}}
+\index{setObjectLabel@{setObjectLabel}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setObjectLabel()}{setObjectLabel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ae6f38a785a51e7d58aeccd317299a5b4} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Object\+Label (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{gl\+Handle}{, }\item[{const std\+::string \&}]{label}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a714d665d427c314420d9ca5b71151a8f}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setPointSize@{setPointSize}}
+\index{setPointSize@{setPointSize}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setPointSize()}{setPointSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a714d665d427c314420d9ca5b71151a8f} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Point\+Size (\begin{DoxyParamCaption}\item[{float}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ad0ed242c6a8b623ef2f7336f2e7548b8}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setPolygonMode@{setPolygonMode}}
+\index{setPolygonMode@{setPolygonMode}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setPolygonMode()}{setPolygonMode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ad0ed242c6a8b623ef2f7336f2e7548b8} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Polygon\+Mode (\begin{DoxyParamCaption}\item[{bool}]{wireframe}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a90e44ad8770d4ee41ff2ad597d019c2a}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setTextureParameters@{setTextureParameters}}
+\index{setTextureParameters@{setTextureParameters}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setTextureParameters()}{setTextureParameters()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a90e44ad8770d4ee41ff2ad597d019c2a} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Texture\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{, }\item[{bool}]{mipmapping}{, }\item[{float}]{anisotropy}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a2a670b2de7fb463d988b7acd4207ef68}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a2a670b2de7fb463d988b7acd4207ef68} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a86c1ac1f2c7a11dbe06eae73847e6af0}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a86c1ac1f2c7a11dbe06eae73847e6af0} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Uniform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{program\+Id}{, }\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a9b929259069bdccd3f3e71a79cc732bd}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setupVertexAttributes@{setupVertexAttributes}}
+\index{setupVertexAttributes@{setupVertexAttributes}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setupVertexAttributes()}{setupVertexAttributes()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a9b929259069bdccd3f3e71a79cc732bd} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::setup\+Vertex\+Attributes (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032fa}{Vertex\+Attribute}} $>$ \&}]{attributes}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa9d0bdcd3d003e5fcc5d98e9e5f328e7}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!setViewport@{setViewport}}
+\index{setViewport@{setViewport}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{setViewport()}{setViewport()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aa9d0bdcd3d003e5fcc5d98e9e5f328e7} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::set\+Viewport (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{int}]{width}{, }\item[{int}]{height}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_add0145674aea46191c8d33f8bf00fe40}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!supportsAnisotropicFiltering@{supportsAnisotropicFiltering}}
+\index{supportsAnisotropicFiltering@{supportsAnisotropicFiltering}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{supportsAnisotropicFiltering()}{supportsAnisotropicFiltering()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_add0145674aea46191c8d33f8bf00fe40} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::supports\+Anisotropic\+Filtering (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a90b1152079e78a420815205a078f9308}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!supportsDebugOutput@{supportsDebugOutput}}
+\index{supportsDebugOutput@{supportsDebugOutput}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{supportsDebugOutput()}{supportsDebugOutput()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a90b1152079e78a420815205a078f9308} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::supports\+Debug\+Output (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6f70000cf84c6ea3c1287b5d63170539}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!supportsTimestampQueries@{supportsTimestampQueries}}
+\index{supportsTimestampQueries@{supportsTimestampQueries}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{supportsTimestampQueries()}{supportsTimestampQueries()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a6f70000cf84c6ea3c1287b5d63170539} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::supports\+Timestamp\+Queries (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a2e129ec8d605d330b4d236db5f87266d}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!updateBuffer@{updateBuffer}}
+\index{updateBuffer@{updateBuffer}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{updateBuffer()}{updateBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_a2e129ec8d605d330b4d236db5f87266d} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::update\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{, }\item[{size\+\_\+t}]{offset}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ad2452377bb776f09676722d362eacb91}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!updateTexture@{updateTexture}}
+\index{updateTexture@{updateTexture}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{updateTexture()}{updateTexture()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_ad2452377bb776f09676722d362eacb91} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::update\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{, }\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{int}]{width}{, }\item[{int}]{height}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aba7e59ce2348b641cad4f6b1d692bb0d}\index{VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}!useProgram@{useProgram}}
+\index{useProgram@{useProgram}!VoxelEditor::Rendering::OpenGLRenderer@{VoxelEditor::Rendering::OpenGLRenderer}}
+\doxysubsubsection{\texorpdfstring{useProgram()}{useProgram()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer_aba7e59ce2348b641cad4f6b1d692bb0d} 
+void Voxel\+Editor\+::\+Rendering\+::\+Open\+GLRenderer\+::use\+Program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{program\+Id}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/rendering/\mbox{\hyperlink{_open_g_l_renderer_8h}{Open\+GLRenderer.\+h}}\item 
+core/rendering/\mbox{\hyperlink{_open_g_l_renderer_8cpp}{Open\+GLRenderer.\+cpp}}\end{DoxyCompactItemize}

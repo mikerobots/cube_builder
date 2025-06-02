@@ -1,0 +1,144 @@
+\doxysection{Vector4f.\+h}
+\hypertarget{_vector4f_8h_source}{}\label{_vector4f_8h_source}\index{foundation/math/Vector4f.h@{foundation/math/Vector4f.h}}
+\mbox{\hyperlink{_vector4f_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Math}}\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}()\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}(0.0f),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}(0.0f),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}(0.0f),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}(0.0f)\ \{\}}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_aea3db092f2de2a208cb0ef297f3f1d6b}{Vector4f}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}})\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}})\ \{\}}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a7ec31e6bf5d7cb4b0a79f3b952af4066}{Vector4f}}(\textcolor{keywordtype}{float}\ value)\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}(value),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}(value),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}(value),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}(value)\ \{\}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a9ec0679455905f72c6861da9d9eba5cd}{operator+}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}});}
+\DoxyCodeLine{00019\ \ \ \ \ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af0e9ccecba51e11848c2617341f72986}{operator-\/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}});}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a121c289881e55041c198a3536c22bcc3}{operator*}}(\textcolor{keywordtype}{float}\ scalar)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ scalar);}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Element-\/wise\ multiplication}}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a30fe53fc757cf4db2113d833c3f4b616}{operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}});}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a03b902d7fd7b0cae0cb1e862399d2fa7}{operator/}}(\textcolor{keywordtype}{float}\ scalar)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ inv\ =\ 1.0f\ /\ scalar;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ inv,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ inv,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ inv,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ inv);}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a2dd0521a9ac287cda8583a36d91d7bcd}{operator-\/}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(-\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}},\ -\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}},\ -\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}},\ -\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}});}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a1611ea00d464dfa5a5b52a79402ccf1e}{operator+=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a9b011cec0c4e5939aead7520f2f4a882}{operator-\/=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a266b1839b150519f658f34ea522f8c05}{operator*=}}(\textcolor{keywordtype}{float}\ scalar)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *=\ scalar;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *=\ scalar;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *=\ scalar;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *=\ scalar;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a05c41655f69c3063adae661db9016a52}{operator/=}}(\textcolor{keywordtype}{float}\ scalar)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ inv\ =\ 1.0f\ /\ scalar;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *=\ inv;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *=\ inv;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *=\ inv;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *=\ inv;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_aa7199ecc4ca44b4de4d3597c30cd65e1}{dot}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}};}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a05b5662adb8ea3963961891c03418b01}{length}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::sqrt(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}});}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ac282e80e0e8a23faa8bfe5cb0bd7c02d}{lengthSquared}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}};}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a1438a6f96d018c4dc7b53b291a5b3b16}{normalized}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ len\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a05b5662adb8ea3963961891c03418b01}{length}}();}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ 0.0f)\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ invLen\ =\ 1.0f\ /\ len;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *\ invLen,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *\ invLen,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *\ invLen,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *\ invLen);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af16d8054bb0a2ead370575246f2edb8f}{normalize}}()\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ len\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a05b5662adb8ea3963961891c03418b01}{length}}();}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ 0.0f)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ invLen\ =\ 1.0f\ /\ len;}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ *=\ invLen;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ *=\ invLen;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ *=\ invLen;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ *=\ invLen;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a7d8a8223e4e2dbc23bf2ffd7a50d177a}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}}\ \&\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}}\ \&\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}}\ \&\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}};}
+\DoxyCodeLine{00110\ \ \ \ \ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a5d19487a7ef2bd49769b427318ce42f4}{operator!=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ other);}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{float}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ac70f4ceb8f61e881c12ea08f3ad34060}{operator[]}}(\textcolor{keywordtype}{int}\ index)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\&\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}})[index];}
+\DoxyCodeLine{00118\ \ \ \ \ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ac0bbfd82f1ab4e96a8a72d39814b38ef}{operator[]}}(\textcolor{keywordtype}{int}\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\&\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}})[index];}
+\DoxyCodeLine{00122\ \ \ \ \ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a495920386bac59ae79ac61802dacacfd}{toString}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Vector4f("{}}\ +\ std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_af3ebb827f124a4dec35e745b4df12df5}{x}})\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a11dd87a727248d7b4319961821db51b9}{y}})\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae6042eaa7100eaf5ec57d7221c92f1d0}{z}})\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a0891b6f8cd0a0a88f3b0712221661a55}{w}})\ +\ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_a990f32a50e4dce7bed1f1057e08dd200}{Zero}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(0.0f,\ 0.0f,\ 0.0f,\ 0.0f);\ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_afdc91a41ff1208c353f57af2e5f65dc2}{One}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f_ae2d03fd8cc3db0d629a454c0239f5e37}{Vector4f}}(1.0f,\ 1.0f,\ 1.0f,\ 1.0f);\ \}}
+\DoxyCodeLine{00131\ \};}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f}{Vector4f}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keywordtype}{float}\ scalar,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f}{Vector4f}}\&\ vec)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ vec\ *\ scalar;}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \}}
+\DoxyCodeLine{00138\ \}}
+
+\end{DoxyCode}

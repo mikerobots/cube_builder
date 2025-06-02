@@ -1,0 +1,1083 @@
+\doxysection{Voxel\+Editor\+::Input Namespace Reference}
+\hypertarget{namespace_voxel_editor_1_1_input}{}\label{namespace_voxel_editor_1_1_input}\index{VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_actions}{Actions}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_events}{Events}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_binding}{Action\+Binding}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_context}{Action\+Context}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_finger_pose}{Finger\+Pose}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer}{Gesture\+Recognizer}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_hand_pose}{Hand\+Pose}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler}{Input\+Handler}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_manager}{Input\+Manager}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_mapping}{Input\+Mapping}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_state}{Input\+State}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_input_trigger}{Input\+Trigger}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler}{Keyboard\+Handler}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{Key\+Combination}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{Key\+Event}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_mouse_event}{Mouse\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_mouse_handler}{Mouse\+Handler}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_event}{Touch\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler}{Touch\+Handler}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_point}{Touch\+Point}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_comfort_settings}{VRComfort\+Settings}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_v_r_event}{VREvent}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_gesture_recognizer}{VRGesture\+Recognizer}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_v_r_input_handler}{VRInput\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a7c9606a8732184925ebed4f98288667a}{Action\+Id}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Time\+Point}} = std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a658f77a535b8a869ae89c9a69646c434}{Action\+Callback}} = std\+::function$<$void(const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_context}{Action\+Context}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}{Input\+Device}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa88183b946cc5f0e8c96b2e66e1c74a7e}{Unknown}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf2a47c6809d88e175dade0ef7b16aa13}{Mouse}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa6ce4d85a628a88bbdb3ac24a8e5a9c2e}{Keyboard}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf0f31c9700c6b10d8a20dc487b2ae6a8}{Touch}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa872f259ff5adda3c4ec659710b5c1b0e}{VRController}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aacb1e9bb5e7d251426cc714667a9cf771}{VRHands}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb}{Mouse\+Event\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbae331802be240d79912c365112ad41ddb}{Button\+Press}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbac58a283b80d411649376455b98710c95}{Button\+Release}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bba6bc362dbf494c61ea117fe3c71ca48a5}{Move}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa5df60ef4fc4447353769d66661d2229}{Wheel}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaf1851d5600eae616ee802a31ac74701b}{Enter}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa52945dbe283de2f7e9d63ca3417f36a}{Leave}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{Mouse\+Button}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da945d5e233cf7d6240f6b783b36a374ff}{Left}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da92b09c7c48c520c3c55e497875da437c}{Right}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681dab1ca34f82e83c52b010f86955f264e05}{Middle}} = 2
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da91ff24acfc01cc2c3a4238a272a37d07}{Button4}} = 3
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daf8849babaeaee3344306b87310664d65}{Button5}} = 4
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da375ccc6b3a6125cc5c67f2c700a55b72}{Button6}} = 5
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daa00c628d1b186fa4fe9c7f633426979e}{Button7}} = 6
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da4f651f24c0b38f6e7ea0d52b0c514e36}{Button8}} = 7
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da6adf97f83acf6453d4a6a4b1070f3754}{None}} = 255
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af}{Key\+Event\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa0610123bdd4ffc191a3ea05a847e1307}{Press}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afab8e7b465df7c5979dc731d06e84ce2cf}{Release}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa76a40e4f974fd895a0a2598c1cee28b4}{Character}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Key\+Code}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7fc56270e7a70fa81a5935b72eacbe29}{A}} = 65
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9d5ed678fe57bcca610140957afab571}{B}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0d61f8370cad1d412f80b84d143e1257}{C}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af623e75af30e62bbd73d6df5b50bb7b5}{D}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a800618943025315f869e4e1f09471012}{F}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530adfcf28d0734569a6a693bc8194de62bf}{G}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac1d9f50f86825a1a2302ec2449c17196}{H}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530add7536794b63bf90eccfd37f9b147d7f}{I}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aff44570aca8241914870afbc310cdb85}{J}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa5f3c6a11b03839d46af9fb43c97c188}{K}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad20caec3b48a1eef164cb4ca81ba2587}{L}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a69691c7bdcc3ce6d5d8a1361f22d04ac}{M}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8d9c307cb7f3c4a32822a51922d1ceaa}{N}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af186217753c37b9b9f958d906208506e}{O}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a44c29edb103a2872f519ad0c9a0fdaaa}{P}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af09564c9ca56850d4cd6b3319e541aee}{Q}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1e1d3d40573127e9ee0480caf1283d6}{R}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5dbc98dcc983a70728bd082d1a47546e}{S}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4c614360da93c0a041b22e537de151eb}{U}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5206560a306a2e085a437fd258eb57ce}{V}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a61e9c06ea9a85a5088a499df6458d276}{W}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a02129bb861061d1a052c592e2dc6b383}{X}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a57cec4137b614c87cb4e24a3d003a3e0}{Y}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a21c2e59531c8710156d34a3c30ac81d5}{Z}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a845787798a45b48e825e9b99a338537a}{Num0}} = 48
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530abacb69a042a9fdc268a672919052d1f2}{Num1}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a72bd76d6e2b68a539c8d1a77b564ed72}{Num2}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa3a965b443a13522aa59fbdea31d00ce}{Num3}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae0af89b5f83c670e4cc584c73c4732ca}{Num4}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7e89a79bbb017bfcaff80ff820a15d8a}{Num5}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0581cd1de881a0f697f3b46741fb326b}{Num6}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4911ceac5c68b5a3f1499d68b27b0938}{Num7}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a894e7d9b7dcced78e8007ba2d38b8dd2}{Num8}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad7b1dbe22119bc7acf6e4a1afcc06e46}{Num9}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1dffc8709f31a4987c8a88334107e89}{F1}} = 112
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530afe5c3684dce76cdd9f7f42430868aa74}{F2}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4b6bf4b531770872d4328ce69bef5627}{F3}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae7e0e72401a9f2718ed0f39f2861d702}{F4}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a37f438df6a6d5ba4c17ef8ca58562f00}{F5}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1faf42f2823f184eb2c9f0dffe5d73f2}{F6}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a47489eb597b7db34caa24b1fc78fc839}{F7}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4787509ad9f9d747a81a30e9dde3d4a7}{F8}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a892a245e287c163080b23db737d3c4c9}{F9}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab213ce22ca6ad4eda8db82966b9b6e5a}{F10}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a643b0662422d1d0dffa3fca2e2bf28a8}{F11}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae902674982fc99aa343cdd94da7476c3}{F12}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad511f8439ecde36647437fbba67a4394}{Space}} = 32
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af1851d5600eae616ee802a31ac74701b}{Enter}} = 13
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a013ec032d3460d4be4431c6ab1f8f224}{Escape}} = 27
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5c6ba25104401c9ee0650230fc6ba413}{Tab}} = 9
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530acd7d13ceea728b08555f7c818cfb13ef}{Backspace}} = 8
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af2a6c498fb90ee345d997f888fce3b18}{Delete}} = 127
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa458be0f08b7e4ff3c0f633c100176c0}{Insert}} = 155
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8cf04a9734132302f96da8e113e80ce5}{Home}} = 156
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a87557f11575c0ad78e4e28abedc13b6e}{End}} = 157
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9b869c510c75c5827ac82e49d4340927}{Page\+Up}} = 158
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aee3677bcca83ece9384b01e43952bf33}{Page\+Down}} = 159
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a258f49887ef8d14ac268c92b02503aaa}{Up}} = 200
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a08a38277b0309070706f6652eeae9a53}{Down}} = 201
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a945d5e233cf7d6240f6b783b36a374ff}{Left}} = 202
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a92b09c7c48c520c3c55e497875da437c}{Right}} = 203
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a825a3d98017bab11815ad2817201324c}{Shift}} = 160
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a2b61e0d5977f2e38f06e16281c802b47}{Ctrl}} = 162
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa2e92861b757ab878312dd57993d60cf}{Alt}} = 164
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ce3266d4eb71ad50f7a90aee6d21dcd}{Super}} = 166
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a453fb623e752c5993f65bc410fd74fe5}{Minus}} = 45
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a32ba78fe43257d3e7f88e3935a8ea0d4}{Plus}} = 43
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ccb67e7eaae09d9e4078d161eeca100}{Equals}} = 61
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a481c09f513474b2d31ba5c2992947b17}{Left\+Bracket}} = 91
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a455364d8991395f71ef9ccc5cc449e5c}{Right\+Bracket}} = 93
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af6c6379402dce27659f7cffee6bc1f00}{Backslash}} = 92
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9806fa37a3ecd39bf637c203aa011ed0}{Semicolon}} = 59
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac48e929b2b1eabba2ba036884433345e}{Quote}} = 39
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a58be47db9455679e6a44df2eff9c9fa6}{Comma}} = 44
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1901606ea069a83dc7beea17881ef95a}{Period}} = 46
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a358cfe58715d680d9ab09f82e4010cbc}{Slash}} = 47
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a77a804418d76dc407383a618b60853ab}{Tilde}} = 96
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a88183b946cc5f0e8c96b2e66e1c74a7e}{Unknown}} = 0
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{None}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a825a3d98017bab11815ad2817201324c}{Shift}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a2b61e0d5977f2e38f06e16281c802b47}{Ctrl}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7aa2e92861b757ab878312dd57993d60cf}{Alt}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a0ce3266d4eb71ad50f7a90aee6d21dcd}{Super}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{Touch\+State}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5ad78a68f6a85421ae121c2cb5b73a1040}{Pressed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5a95bfdefaaf01553cbf21ccd942855c69}{Moved}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aea1e34304a5d8ffa7c9b0ed8ede4ef1a}{Released}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aa149e85a44aeec9140e92733d9ed694e}{Cancelled}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35}{Touch\+Event\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a00c33f82857e7edddaa3f8ec002c515b}{Touch\+Begin}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a889fb266ddac0a84f0dc787775e85d17}{Touch\+Update}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a73beb4ea238cde276649f819b7e1682b}{Touch\+End}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a528ee64d2b9cbbdbfd7d3538b5be0b69}{Touch\+Cancel}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Touch\+Gesture}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a73cf2f244bc0cb0d205b99c04fa13978}{Tap}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a8f3f96ab0875983edbc267d3cec4aed9}{Double\+Tap}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a00d900000cd9029ba6de8dc9349da768}{Long\+Press}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af6d4a17b27da35c2d90ce13801f36782}{Pan}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a1e4ddf6f135e4c639929b4633c29d4f2}{Pinch}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af1a42bd417390fc63b030a519624607a}{Rotation}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a78076ce792c4640bf99c598c92bd69e7}{Swipe}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a25e1bddc8aaf7f018dfa2631d2d5f2ed}{Two\+Finger\+Pan}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a3e970866ef378e94ede4efee35d4db49}{Three\+Finger\+Pan}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Hand\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a945d5e233cf7d6240f6b783b36a374ff}{Left}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a92b09c7c48c520c3c55e497875da437c}{Right}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{Either}} = 2
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3}{VREvent\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3aa6b6cb3fb82a7035b13231db241d5a81}{Hand\+Update}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a2aaf17e02c3abe2a426db1467b049412}{Gesture\+Detected}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a95d034aeadfbf1e658c5cab5043d80e9}{Gesture\+Completed}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a2a3cd5946cfd317eb99c3d32e35e2d4c}{Point}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a1e4ddf6f135e4c639929b4633c29d4f2}{Pinch}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ab635ceb01a10e96cdbefa95d72b25750}{Grab}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a65adf7b9eb629336c1726ec078dc0a11}{Thumbs\+Up}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10afb97b89e2f05ccab67af971669dfcf06}{Thumbs\+Down}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10aae8faf2882fb1dfc7183a0a7a6784f9a}{Fist}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ac24a1d6c75101e1f4b9e2a8f6f65520a}{Open\+Palm}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10acc2073b04d2e90482ab2c7b7f03dfcc1}{Peace}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a8243d605a8dc617fd65ebc94e909f7e1}{Two\+Hand\+Grab}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a514ae3c77cf05768d4b3f4d9d820b9e8}{Two\+Hand\+Scale}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a71bc5c310a9ec29c40510435741800e7}{Two\+Hand\+Rotate}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}{Action\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a87b7760f14fbff78d8819291f36ab9a0}{Button}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a39e6b4ab3e4adecf031d3aa8410bb3ce}{Axis}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a1bebc5ae2822f8e361fb0ce57b5e09e2}{Vector2}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a02b4dab58bbc49e0851fb3fd8df520cc}{Vector3}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820}{Cursor\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a960b44c579bc2f6818d2daaf9e4c16f0}{Normal}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a7acdf85c69cc3c5305456a293524386e}{Hidden}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820ab8786828a1c422c20e2ce788075a732a}{Captured}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{Hand\+Tracking\+Quality}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea6adf97f83acf6453d4a6a4b1070f3754}{None}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea28d0edd045e05cf5af64e35ae0c4c6ef}{Low}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea87f8a6ab85c9ced3702b4ea641ad4bb5}{Medium}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35}{High}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a01c5e816fc1fc6e24b638b7b2a056d48}{operator\texorpdfstring{$\vert$}{|}}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} a, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} b)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a4038af4e4fb29e1a7ba83527c7f6f27d}{operator\&}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} a, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} b)
+\item 
+bool \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a93ae6570964bcb5edf9ce3841b044020}{has\+Modifier}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} flags, \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} modifier)
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_voxel_editor_1_1_input_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_input_a658f77a535b8a869ae89c9a69646c434}\index{VoxelEditor::Input@{VoxelEditor::Input}!ActionCallback@{ActionCallback}}
+\index{ActionCallback@{ActionCallback}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{ActionCallback}{ActionCallback}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a658f77a535b8a869ae89c9a69646c434} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a658f77a535b8a869ae89c9a69646c434}{Voxel\+Editor\+::\+Input\+::\+Action\+Callback}} = std\+::function$<$void(const \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_action_context}{Action\+Context}}\&)$>$}
+
+\Hypertarget{namespace_voxel_editor_1_1_input_a7c9606a8732184925ebed4f98288667a}\index{VoxelEditor::Input@{VoxelEditor::Input}!ActionId@{ActionId}}
+\index{ActionId@{ActionId}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{ActionId}{ActionId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a7c9606a8732184925ebed4f98288667a} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a7c9606a8732184925ebed4f98288667a}{Voxel\+Editor\+::\+Input\+::\+Action\+Id}} = uint32\+\_\+t}
+
+\Hypertarget{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}\index{VoxelEditor::Input@{VoxelEditor::Input}!TimePoint@{TimePoint}}
+\index{TimePoint@{TimePoint}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{TimePoint}{TimePoint}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{Voxel\+Editor\+::\+Input\+::\+Time\+Point}} = std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_voxel_editor_1_1_input_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}\index{VoxelEditor::Input@{VoxelEditor::Input}!ActionType@{ActionType}}
+\index{ActionType@{ActionType}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{ActionType}{ActionType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}{Voxel\+Editor\+::\+Input\+::\+Action\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Button@{Button}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Button@{Button}}}\Hypertarget{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a87b7760f14fbff78d8819291f36ab9a0}\label{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a87b7760f14fbff78d8819291f36ab9a0} 
+Button&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Axis@{Axis}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Axis@{Axis}}}\Hypertarget{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a39e6b4ab3e4adecf031d3aa8410bb3ce}\label{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a39e6b4ab3e4adecf031d3aa8410bb3ce} 
+Axis&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Vector2@{Vector2}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Vector2@{Vector2}}}\Hypertarget{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a1bebc5ae2822f8e361fb0ce57b5e09e2}\label{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a1bebc5ae2822f8e361fb0ce57b5e09e2} 
+Vector2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Vector3@{Vector3}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Vector3@{Vector3}}}\Hypertarget{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a02b4dab58bbc49e0851fb3fd8df520cc}\label{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a02b4dab58bbc49e0851fb3fd8df520cc} 
+Vector3&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820}\index{VoxelEditor::Input@{VoxelEditor::Input}!CursorMode@{CursorMode}}
+\index{CursorMode@{CursorMode}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{CursorMode}{CursorMode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820}{Voxel\+Editor\+::\+Input\+::\+Cursor\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Normal@{Normal}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Normal@{Normal}}}\Hypertarget{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a960b44c579bc2f6818d2daaf9e4c16f0}\label{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a960b44c579bc2f6818d2daaf9e4c16f0} 
+Normal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Hidden@{Hidden}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Hidden@{Hidden}}}\Hypertarget{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a7acdf85c69cc3c5305456a293524386e}\label{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a7acdf85c69cc3c5305456a293524386e} 
+Hidden&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Captured@{Captured}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Captured@{Captured}}}\Hypertarget{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820ab8786828a1c422c20e2ce788075a732a}\label{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820ab8786828a1c422c20e2ce788075a732a} 
+Captured&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}\index{VoxelEditor::Input@{VoxelEditor::Input}!HandTrackingQuality@{HandTrackingQuality}}
+\index{HandTrackingQuality@{HandTrackingQuality}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{HandTrackingQuality}{HandTrackingQuality}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{Voxel\+Editor\+::\+Input\+::\+Hand\+Tracking\+Quality}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!None@{None}}}\Hypertarget{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea6adf97f83acf6453d4a6a4b1070f3754}\label{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea6adf97f83acf6453d4a6a4b1070f3754} 
+None&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Low@{Low}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Low@{Low}}}\Hypertarget{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea28d0edd045e05cf5af64e35ae0c4c6ef}\label{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea28d0edd045e05cf5af64e35ae0c4c6ef} 
+Low&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Medium@{Medium}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Medium@{Medium}}}\Hypertarget{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea87f8a6ab85c9ced3702b4ea641ad4bb5}\label{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea87f8a6ab85c9ced3702b4ea641ad4bb5} 
+Medium&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{High@{High}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!High@{High}}}\Hypertarget{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35}\label{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35} 
+High&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}\index{VoxelEditor::Input@{VoxelEditor::Input}!HandType@{HandType}}
+\index{HandType@{HandType}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{HandType}{HandType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Voxel\+Editor\+::\+Input\+::\+Hand\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Left@{Left}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Left@{Left}}}\Hypertarget{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a945d5e233cf7d6240f6b783b36a374ff}\label{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a945d5e233cf7d6240f6b783b36a374ff} 
+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Right@{Right}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Right@{Right}}}\Hypertarget{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a92b09c7c48c520c3c55e497875da437c}\label{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a92b09c7c48c520c3c55e497875da437c} 
+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Either@{Either}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Either@{Either}}}\Hypertarget{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}\label{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e} 
+Either&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}\index{VoxelEditor::Input@{VoxelEditor::Input}!InputDevice@{InputDevice}}
+\index{InputDevice@{InputDevice}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{InputDevice}{InputDevice}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}{Voxel\+Editor\+::\+Input\+::\+Input\+Device}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Unknown@{Unknown}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Unknown@{Unknown}}}\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa88183b946cc5f0e8c96b2e66e1c74a7e}\label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa88183b946cc5f0e8c96b2e66e1c74a7e} 
+Unknown&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Mouse@{Mouse}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Mouse@{Mouse}}}\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf2a47c6809d88e175dade0ef7b16aa13}\label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf2a47c6809d88e175dade0ef7b16aa13} 
+Mouse&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keyboard@{Keyboard}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Keyboard@{Keyboard}}}\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa6ce4d85a628a88bbdb3ac24a8e5a9c2e}\label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa6ce4d85a628a88bbdb3ac24a8e5a9c2e} 
+Keyboard&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Touch@{Touch}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Touch@{Touch}}}\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf0f31c9700c6b10d8a20dc487b2ae6a8}\label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aaf0f31c9700c6b10d8a20dc487b2ae6a8} 
+Touch&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VRController@{VRController}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!VRController@{VRController}}}\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa872f259ff5adda3c4ec659710b5c1b0e}\label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aa872f259ff5adda3c4ec659710b5c1b0e} 
+VRController&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VRHands@{VRHands}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!VRHands@{VRHands}}}\Hypertarget{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aacb1e9bb5e7d251426cc714667a9cf771}\label{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6aacb1e9bb5e7d251426cc714667a9cf771} 
+VRHands&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}\index{VoxelEditor::Input@{VoxelEditor::Input}!KeyCode@{KeyCode}}
+\index{KeyCode@{KeyCode}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{KeyCode}{KeyCode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{Voxel\+Editor\+::\+Input\+::\+Key\+Code}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{A@{A}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!A@{A}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7fc56270e7a70fa81a5935b72eacbe29}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7fc56270e7a70fa81a5935b72eacbe29} 
+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B@{B}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!B@{B}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9d5ed678fe57bcca610140957afab571}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9d5ed678fe57bcca610140957afab571} 
+B&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C@{C}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!C@{C}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0d61f8370cad1d412f80b84d143e1257}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0d61f8370cad1d412f80b84d143e1257} 
+C&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D@{D}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!D@{D}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af623e75af30e62bbd73d6df5b50bb7b5}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af623e75af30e62bbd73d6df5b50bb7b5} 
+D&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E@{E}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!E@{E}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a3a3ea00cfc35332cedf6e5e9a32e94da}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a3a3ea00cfc35332cedf6e5e9a32e94da} 
+E&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F@{F}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F@{F}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a800618943025315f869e4e1f09471012}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a800618943025315f869e4e1f09471012} 
+F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G@{G}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!G@{G}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530adfcf28d0734569a6a693bc8194de62bf}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530adfcf28d0734569a6a693bc8194de62bf} 
+G&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{H@{H}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!H@{H}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac1d9f50f86825a1a2302ec2449c17196}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac1d9f50f86825a1a2302ec2449c17196} 
+H&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{I@{I}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!I@{I}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530add7536794b63bf90eccfd37f9b147d7f}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530add7536794b63bf90eccfd37f9b147d7f} 
+I&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{J@{J}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!J@{J}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aff44570aca8241914870afbc310cdb85}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aff44570aca8241914870afbc310cdb85} 
+J&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{K@{K}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!K@{K}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa5f3c6a11b03839d46af9fb43c97c188}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa5f3c6a11b03839d46af9fb43c97c188} 
+K&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{L@{L}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!L@{L}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad20caec3b48a1eef164cb4ca81ba2587}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad20caec3b48a1eef164cb4ca81ba2587} 
+L&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M@{M}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!M@{M}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a69691c7bdcc3ce6d5d8a1361f22d04ac}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a69691c7bdcc3ce6d5d8a1361f22d04ac} 
+M&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N@{N}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!N@{N}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8d9c307cb7f3c4a32822a51922d1ceaa}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8d9c307cb7f3c4a32822a51922d1ceaa} 
+N&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{O@{O}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!O@{O}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af186217753c37b9b9f958d906208506e}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af186217753c37b9b9f958d906208506e} 
+O&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P@{P}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!P@{P}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a44c29edb103a2872f519ad0c9a0fdaaa}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a44c29edb103a2872f519ad0c9a0fdaaa} 
+P&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Q@{Q}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Q@{Q}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af09564c9ca56850d4cd6b3319e541aee}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af09564c9ca56850d4cd6b3319e541aee} 
+Q&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R@{R}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!R@{R}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1e1d3d40573127e9ee0480caf1283d6}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1e1d3d40573127e9ee0480caf1283d6} 
+R&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S@{S}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!S@{S}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5dbc98dcc983a70728bd082d1a47546e}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5dbc98dcc983a70728bd082d1a47546e} 
+S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T@{T}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!T@{T}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3} 
+T&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{U@{U}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!U@{U}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4c614360da93c0a041b22e537de151eb}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4c614360da93c0a041b22e537de151eb} 
+U&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V@{V}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!V@{V}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5206560a306a2e085a437fd258eb57ce}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5206560a306a2e085a437fd258eb57ce} 
+V&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{W@{W}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!W@{W}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a61e9c06ea9a85a5088a499df6458d276}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a61e9c06ea9a85a5088a499df6458d276} 
+W&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{X@{X}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!X@{X}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a02129bb861061d1a052c592e2dc6b383}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a02129bb861061d1a052c592e2dc6b383} 
+X&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Y@{Y}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Y@{Y}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a57cec4137b614c87cb4e24a3d003a3e0}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a57cec4137b614c87cb4e24a3d003a3e0} 
+Y&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Z@{Z}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Z@{Z}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a21c2e59531c8710156d34a3c30ac81d5}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a21c2e59531c8710156d34a3c30ac81d5} 
+Z&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num0@{Num0}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num0@{Num0}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a845787798a45b48e825e9b99a338537a}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a845787798a45b48e825e9b99a338537a} 
+Num0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num1@{Num1}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num1@{Num1}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530abacb69a042a9fdc268a672919052d1f2}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530abacb69a042a9fdc268a672919052d1f2} 
+Num1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num2@{Num2}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num2@{Num2}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a72bd76d6e2b68a539c8d1a77b564ed72}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a72bd76d6e2b68a539c8d1a77b564ed72} 
+Num2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num3@{Num3}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num3@{Num3}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa3a965b443a13522aa59fbdea31d00ce}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa3a965b443a13522aa59fbdea31d00ce} 
+Num3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num4@{Num4}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num4@{Num4}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae0af89b5f83c670e4cc584c73c4732ca}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae0af89b5f83c670e4cc584c73c4732ca} 
+Num4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num5@{Num5}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num5@{Num5}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7e89a79bbb017bfcaff80ff820a15d8a}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a7e89a79bbb017bfcaff80ff820a15d8a} 
+Num5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num6@{Num6}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num6@{Num6}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0581cd1de881a0f697f3b46741fb326b}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0581cd1de881a0f697f3b46741fb326b} 
+Num6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num7@{Num7}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num7@{Num7}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4911ceac5c68b5a3f1499d68b27b0938}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4911ceac5c68b5a3f1499d68b27b0938} 
+Num7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num8@{Num8}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num8@{Num8}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a894e7d9b7dcced78e8007ba2d38b8dd2}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a894e7d9b7dcced78e8007ba2d38b8dd2} 
+Num8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Num9@{Num9}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Num9@{Num9}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad7b1dbe22119bc7acf6e4a1afcc06e46}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad7b1dbe22119bc7acf6e4a1afcc06e46} 
+Num9&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F1@{F1}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F1@{F1}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1dffc8709f31a4987c8a88334107e89}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae1dffc8709f31a4987c8a88334107e89} 
+F1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F2@{F2}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F2@{F2}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530afe5c3684dce76cdd9f7f42430868aa74}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530afe5c3684dce76cdd9f7f42430868aa74} 
+F2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F3@{F3}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F3@{F3}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4b6bf4b531770872d4328ce69bef5627}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4b6bf4b531770872d4328ce69bef5627} 
+F3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F4@{F4}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F4@{F4}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae7e0e72401a9f2718ed0f39f2861d702}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae7e0e72401a9f2718ed0f39f2861d702} 
+F4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F5@{F5}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F5@{F5}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a37f438df6a6d5ba4c17ef8ca58562f00}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a37f438df6a6d5ba4c17ef8ca58562f00} 
+F5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F6@{F6}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F6@{F6}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1faf42f2823f184eb2c9f0dffe5d73f2}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1faf42f2823f184eb2c9f0dffe5d73f2} 
+F6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F7@{F7}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F7@{F7}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a47489eb597b7db34caa24b1fc78fc839}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a47489eb597b7db34caa24b1fc78fc839} 
+F7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F8@{F8}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F8@{F8}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4787509ad9f9d747a81a30e9dde3d4a7}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a4787509ad9f9d747a81a30e9dde3d4a7} 
+F8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F9@{F9}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F9@{F9}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a892a245e287c163080b23db737d3c4c9}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a892a245e287c163080b23db737d3c4c9} 
+F9&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F10@{F10}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F10@{F10}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab213ce22ca6ad4eda8db82966b9b6e5a}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab213ce22ca6ad4eda8db82966b9b6e5a} 
+F10&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F11@{F11}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F11@{F11}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a643b0662422d1d0dffa3fca2e2bf28a8}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a643b0662422d1d0dffa3fca2e2bf28a8} 
+F11&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F12@{F12}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!F12@{F12}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae902674982fc99aa343cdd94da7476c3}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ae902674982fc99aa343cdd94da7476c3} 
+F12&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Space@{Space}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Space@{Space}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad511f8439ecde36647437fbba67a4394}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ad511f8439ecde36647437fbba67a4394} 
+Space&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Enter@{Enter}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Enter@{Enter}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af1851d5600eae616ee802a31ac74701b}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af1851d5600eae616ee802a31ac74701b} 
+Enter&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Escape@{Escape}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Escape@{Escape}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a013ec032d3460d4be4431c6ab1f8f224}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a013ec032d3460d4be4431c6ab1f8f224} 
+Escape&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Tab@{Tab}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Tab@{Tab}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5c6ba25104401c9ee0650230fc6ba413}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a5c6ba25104401c9ee0650230fc6ba413} 
+Tab&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Backspace@{Backspace}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Backspace@{Backspace}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530acd7d13ceea728b08555f7c818cfb13ef}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530acd7d13ceea728b08555f7c818cfb13ef} 
+Backspace&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Delete@{Delete}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Delete@{Delete}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af2a6c498fb90ee345d997f888fce3b18}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af2a6c498fb90ee345d997f888fce3b18} 
+Delete&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Insert@{Insert}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Insert@{Insert}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa458be0f08b7e4ff3c0f633c100176c0}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa458be0f08b7e4ff3c0f633c100176c0} 
+Insert&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Home@{Home}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Home@{Home}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8cf04a9734132302f96da8e113e80ce5}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a8cf04a9734132302f96da8e113e80ce5} 
+Home&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{End@{End}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!End@{End}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a87557f11575c0ad78e4e28abedc13b6e}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a87557f11575c0ad78e4e28abedc13b6e} 
+End&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PageUp@{PageUp}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!PageUp@{PageUp}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9b869c510c75c5827ac82e49d4340927}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9b869c510c75c5827ac82e49d4340927} 
+Page\+Up&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PageDown@{PageDown}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!PageDown@{PageDown}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aee3677bcca83ece9384b01e43952bf33}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aee3677bcca83ece9384b01e43952bf33} 
+Page\+Down&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Up@{Up}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Up@{Up}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a258f49887ef8d14ac268c92b02503aaa}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a258f49887ef8d14ac268c92b02503aaa} 
+Up&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Down@{Down}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Down@{Down}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a08a38277b0309070706f6652eeae9a53}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a08a38277b0309070706f6652eeae9a53} 
+Down&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Left@{Left}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Left@{Left}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a945d5e233cf7d6240f6b783b36a374ff}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a945d5e233cf7d6240f6b783b36a374ff} 
+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Right@{Right}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Right@{Right}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a92b09c7c48c520c3c55e497875da437c}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a92b09c7c48c520c3c55e497875da437c} 
+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Shift@{Shift}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Shift@{Shift}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a825a3d98017bab11815ad2817201324c}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a825a3d98017bab11815ad2817201324c} 
+Shift&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Ctrl@{Ctrl}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Ctrl@{Ctrl}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a2b61e0d5977f2e38f06e16281c802b47}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a2b61e0d5977f2e38f06e16281c802b47} 
+Ctrl&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alt@{Alt}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Alt@{Alt}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa2e92861b757ab878312dd57993d60cf}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa2e92861b757ab878312dd57993d60cf} 
+Alt&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Super@{Super}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Super@{Super}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ce3266d4eb71ad50f7a90aee6d21dcd}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ce3266d4eb71ad50f7a90aee6d21dcd} 
+Super&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Minus@{Minus}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Minus@{Minus}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a453fb623e752c5993f65bc410fd74fe5}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a453fb623e752c5993f65bc410fd74fe5} 
+Minus&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Plus@{Plus}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Plus@{Plus}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a32ba78fe43257d3e7f88e3935a8ea0d4}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a32ba78fe43257d3e7f88e3935a8ea0d4} 
+Plus&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Equals@{Equals}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Equals@{Equals}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ccb67e7eaae09d9e4078d161eeca100}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ccb67e7eaae09d9e4078d161eeca100} 
+Equals&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftBracket@{LeftBracket}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!LeftBracket@{LeftBracket}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a481c09f513474b2d31ba5c2992947b17}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a481c09f513474b2d31ba5c2992947b17} 
+Left\+Bracket&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightBracket@{RightBracket}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!RightBracket@{RightBracket}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a455364d8991395f71ef9ccc5cc449e5c}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a455364d8991395f71ef9ccc5cc449e5c} 
+Right\+Bracket&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Backslash@{Backslash}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Backslash@{Backslash}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af6c6379402dce27659f7cffee6bc1f00}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530af6c6379402dce27659f7cffee6bc1f00} 
+Backslash&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Semicolon@{Semicolon}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Semicolon@{Semicolon}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9806fa37a3ecd39bf637c203aa011ed0}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a9806fa37a3ecd39bf637c203aa011ed0} 
+Semicolon&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Quote@{Quote}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Quote@{Quote}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac48e929b2b1eabba2ba036884433345e}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ac48e929b2b1eabba2ba036884433345e} 
+Quote&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Comma@{Comma}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Comma@{Comma}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a58be47db9455679e6a44df2eff9c9fa6}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a58be47db9455679e6a44df2eff9c9fa6} 
+Comma&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Period@{Period}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Period@{Period}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1901606ea069a83dc7beea17881ef95a}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a1901606ea069a83dc7beea17881ef95a} 
+Period&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Slash@{Slash}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Slash@{Slash}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a358cfe58715d680d9ab09f82e4010cbc}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a358cfe58715d680d9ab09f82e4010cbc} 
+Slash&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Tilde@{Tilde}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Tilde@{Tilde}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a77a804418d76dc407383a618b60853ab}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a77a804418d76dc407383a618b60853ab} 
+Tilde&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Unknown@{Unknown}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Unknown@{Unknown}}}\Hypertarget{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a88183b946cc5f0e8c96b2e66e1c74a7e}\label{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a88183b946cc5f0e8c96b2e66e1c74a7e} 
+Unknown&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af}\index{VoxelEditor::Input@{VoxelEditor::Input}!KeyEventType@{KeyEventType}}
+\index{KeyEventType@{KeyEventType}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{KeyEventType}{KeyEventType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af}{Voxel\+Editor\+::\+Input\+::\+Key\+Event\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Press@{Press}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Press@{Press}}}\Hypertarget{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa0610123bdd4ffc191a3ea05a847e1307}\label{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa0610123bdd4ffc191a3ea05a847e1307} 
+Press&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Release@{Release}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Release@{Release}}}\Hypertarget{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afab8e7b465df7c5979dc731d06e84ce2cf}\label{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afab8e7b465df7c5979dc731d06e84ce2cf} 
+Release&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Character@{Character}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Character@{Character}}}\Hypertarget{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa76a40e4f974fd895a0a2598c1cee28b4}\label{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa76a40e4f974fd895a0a2598c1cee28b4} 
+Character&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}\index{VoxelEditor::Input@{VoxelEditor::Input}!ModifierFlags@{ModifierFlags}}
+\index{ModifierFlags@{ModifierFlags}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{ModifierFlags}{ModifierFlags}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Voxel\+Editor\+::\+Input\+::\+Modifier\+Flags}} \+: uint32\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!None@{None}}}\Hypertarget{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}\label{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754} 
+None&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Shift@{Shift}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Shift@{Shift}}}\Hypertarget{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a825a3d98017bab11815ad2817201324c}\label{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a825a3d98017bab11815ad2817201324c} 
+Shift&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Ctrl@{Ctrl}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Ctrl@{Ctrl}}}\Hypertarget{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a2b61e0d5977f2e38f06e16281c802b47}\label{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a2b61e0d5977f2e38f06e16281c802b47} 
+Ctrl&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alt@{Alt}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Alt@{Alt}}}\Hypertarget{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7aa2e92861b757ab878312dd57993d60cf}\label{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7aa2e92861b757ab878312dd57993d60cf} 
+Alt&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Super@{Super}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Super@{Super}}}\Hypertarget{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a0ce3266d4eb71ad50f7a90aee6d21dcd}\label{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a0ce3266d4eb71ad50f7a90aee6d21dcd} 
+Super&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}\index{VoxelEditor::Input@{VoxelEditor::Input}!MouseButton@{MouseButton}}
+\index{MouseButton@{MouseButton}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{MouseButton}{MouseButton}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681d}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Button}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Left@{Left}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Left@{Left}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da945d5e233cf7d6240f6b783b36a374ff}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da945d5e233cf7d6240f6b783b36a374ff} 
+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Right@{Right}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Right@{Right}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da92b09c7c48c520c3c55e497875da437c}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da92b09c7c48c520c3c55e497875da437c} 
+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Middle@{Middle}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Middle@{Middle}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681dab1ca34f82e83c52b010f86955f264e05}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681dab1ca34f82e83c52b010f86955f264e05} 
+Middle&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Button4@{Button4}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Button4@{Button4}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da91ff24acfc01cc2c3a4238a272a37d07}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da91ff24acfc01cc2c3a4238a272a37d07} 
+Button4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Button5@{Button5}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Button5@{Button5}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daf8849babaeaee3344306b87310664d65}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daf8849babaeaee3344306b87310664d65} 
+Button5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Button6@{Button6}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Button6@{Button6}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da375ccc6b3a6125cc5c67f2c700a55b72}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da375ccc6b3a6125cc5c67f2c700a55b72} 
+Button6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Button7@{Button7}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Button7@{Button7}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daa00c628d1b186fa4fe9c7f633426979e}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daa00c628d1b186fa4fe9c7f633426979e} 
+Button7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Button8@{Button8}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Button8@{Button8}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da4f651f24c0b38f6e7ea0d52b0c514e36}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da4f651f24c0b38f6e7ea0d52b0c514e36} 
+Button8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!None@{None}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da6adf97f83acf6453d4a6a4b1070f3754}\label{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da6adf97f83acf6453d4a6a4b1070f3754} 
+None&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb}\index{VoxelEditor::Input@{VoxelEditor::Input}!MouseEventType@{MouseEventType}}
+\index{MouseEventType@{MouseEventType}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{MouseEventType}{MouseEventType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb}{Voxel\+Editor\+::\+Input\+::\+Mouse\+Event\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ButtonPress@{ButtonPress}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!ButtonPress@{ButtonPress}}}\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbae331802be240d79912c365112ad41ddb}\label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbae331802be240d79912c365112ad41ddb} 
+Button\+Press&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ButtonRelease@{ButtonRelease}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!ButtonRelease@{ButtonRelease}}}\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbac58a283b80d411649376455b98710c95}\label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbac58a283b80d411649376455b98710c95} 
+Button\+Release&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Move@{Move}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Move@{Move}}}\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bba6bc362dbf494c61ea117fe3c71ca48a5}\label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bba6bc362dbf494c61ea117fe3c71ca48a5} 
+Move&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wheel@{Wheel}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Wheel@{Wheel}}}\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa5df60ef4fc4447353769d66661d2229}\label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa5df60ef4fc4447353769d66661d2229} 
+Wheel&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Enter@{Enter}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Enter@{Enter}}}\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaf1851d5600eae616ee802a31ac74701b}\label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaf1851d5600eae616ee802a31ac74701b} 
+Enter&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Leave@{Leave}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Leave@{Leave}}}\Hypertarget{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa52945dbe283de2f7e9d63ca3417f36a}\label{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa52945dbe283de2f7e9d63ca3417f36a} 
+Leave&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchEventType@{TouchEventType}}
+\index{TouchEventType@{TouchEventType}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{TouchEventType}{TouchEventType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35}{Voxel\+Editor\+::\+Input\+::\+Touch\+Event\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TouchBegin@{TouchBegin}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchBegin@{TouchBegin}}}\Hypertarget{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a00c33f82857e7edddaa3f8ec002c515b}\label{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a00c33f82857e7edddaa3f8ec002c515b} 
+Touch\+Begin&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TouchUpdate@{TouchUpdate}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchUpdate@{TouchUpdate}}}\Hypertarget{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a889fb266ddac0a84f0dc787775e85d17}\label{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a889fb266ddac0a84f0dc787775e85d17} 
+Touch\+Update&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TouchEnd@{TouchEnd}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchEnd@{TouchEnd}}}\Hypertarget{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a73beb4ea238cde276649f819b7e1682b}\label{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a73beb4ea238cde276649f819b7e1682b} 
+Touch\+End&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TouchCancel@{TouchCancel}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchCancel@{TouchCancel}}}\Hypertarget{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a528ee64d2b9cbbdbfd7d3538b5be0b69}\label{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35a528ee64d2b9cbbdbfd7d3538b5be0b69} 
+Touch\+Cancel&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchGesture@{TouchGesture}}
+\index{TouchGesture@{TouchGesture}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{TouchGesture}{TouchGesture}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{Voxel\+Editor\+::\+Input\+::\+Touch\+Gesture}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Tap@{Tap}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Tap@{Tap}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a73cf2f244bc0cb0d205b99c04fa13978}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a73cf2f244bc0cb0d205b99c04fa13978} 
+Tap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DoubleTap@{DoubleTap}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!DoubleTap@{DoubleTap}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a8f3f96ab0875983edbc267d3cec4aed9}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a8f3f96ab0875983edbc267d3cec4aed9} 
+Double\+Tap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LongPress@{LongPress}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!LongPress@{LongPress}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a00d900000cd9029ba6de8dc9349da768}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a00d900000cd9029ba6de8dc9349da768} 
+Long\+Press&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pan@{Pan}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Pan@{Pan}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af6d4a17b27da35c2d90ce13801f36782}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af6d4a17b27da35c2d90ce13801f36782} 
+Pan&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pinch@{Pinch}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Pinch@{Pinch}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a1e4ddf6f135e4c639929b4633c29d4f2}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a1e4ddf6f135e4c639929b4633c29d4f2} 
+Pinch&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Rotation@{Rotation}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Rotation@{Rotation}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af1a42bd417390fc63b030a519624607a}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af1a42bd417390fc63b030a519624607a} 
+Rotation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Swipe@{Swipe}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Swipe@{Swipe}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a78076ce792c4640bf99c598c92bd69e7}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a78076ce792c4640bf99c598c92bd69e7} 
+Swipe&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TwoFingerPan@{TwoFingerPan}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TwoFingerPan@{TwoFingerPan}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a25e1bddc8aaf7f018dfa2631d2d5f2ed}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a25e1bddc8aaf7f018dfa2631d2d5f2ed} 
+Two\+Finger\+Pan&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ThreeFingerPan@{ThreeFingerPan}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!ThreeFingerPan@{ThreeFingerPan}}}\Hypertarget{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a3e970866ef378e94ede4efee35d4db49}\label{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a3e970866ef378e94ede4efee35d4db49} 
+Three\+Finger\+Pan&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}\index{VoxelEditor::Input@{VoxelEditor::Input}!TouchState@{TouchState}}
+\index{TouchState@{TouchState}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{TouchState}{TouchState}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{Voxel\+Editor\+::\+Input\+::\+Touch\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pressed@{Pressed}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Pressed@{Pressed}}}\Hypertarget{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5ad78a68f6a85421ae121c2cb5b73a1040}\label{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5ad78a68f6a85421ae121c2cb5b73a1040} 
+Pressed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Moved@{Moved}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Moved@{Moved}}}\Hypertarget{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5a95bfdefaaf01553cbf21ccd942855c69}\label{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5a95bfdefaaf01553cbf21ccd942855c69} 
+Moved&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Released@{Released}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Released@{Released}}}\Hypertarget{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aea1e34304a5d8ffa7c9b0ed8ede4ef1a}\label{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aea1e34304a5d8ffa7c9b0ed8ede4ef1a} 
+Released&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Cancelled@{Cancelled}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Cancelled@{Cancelled}}}\Hypertarget{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aa149e85a44aeec9140e92733d9ed694e}\label{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aa149e85a44aeec9140e92733d9ed694e} 
+Cancelled&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3}\index{VoxelEditor::Input@{VoxelEditor::Input}!VREventType@{VREventType}}
+\index{VREventType@{VREventType}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{VREventType}{VREventType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3}{Voxel\+Editor\+::\+Input\+::\+VREvent\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HandUpdate@{HandUpdate}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!HandUpdate@{HandUpdate}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3aa6b6cb3fb82a7035b13231db241d5a81}\label{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3aa6b6cb3fb82a7035b13231db241d5a81} 
+Hand\+Update&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GestureDetected@{GestureDetected}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!GestureDetected@{GestureDetected}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a2aaf17e02c3abe2a426db1467b049412}\label{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a2aaf17e02c3abe2a426db1467b049412} 
+Gesture\+Detected&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GestureCompleted@{GestureCompleted}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!GestureCompleted@{GestureCompleted}}}\Hypertarget{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a95d034aeadfbf1e658c5cab5043d80e9}\label{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a95d034aeadfbf1e658c5cab5043d80e9} 
+Gesture\+Completed&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}\index{VoxelEditor::Input@{VoxelEditor::Input}!VRGesture@{VRGesture}}
+\index{VRGesture@{VRGesture}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{VRGesture}{VRGesture}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{Voxel\+Editor\+::\+Input\+::\+VRGesture}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Point@{Point}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Point@{Point}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a2a3cd5946cfd317eb99c3d32e35e2d4c}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a2a3cd5946cfd317eb99c3d32e35e2d4c} 
+Point&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pinch@{Pinch}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Pinch@{Pinch}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a1e4ddf6f135e4c639929b4633c29d4f2}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a1e4ddf6f135e4c639929b4633c29d4f2} 
+Pinch&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Grab@{Grab}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Grab@{Grab}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ab635ceb01a10e96cdbefa95d72b25750}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ab635ceb01a10e96cdbefa95d72b25750} 
+Grab&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ThumbsUp@{ThumbsUp}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!ThumbsUp@{ThumbsUp}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a65adf7b9eb629336c1726ec078dc0a11}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a65adf7b9eb629336c1726ec078dc0a11} 
+Thumbs\+Up&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ThumbsDown@{ThumbsDown}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!ThumbsDown@{ThumbsDown}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10afb97b89e2f05ccab67af971669dfcf06}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10afb97b89e2f05ccab67af971669dfcf06} 
+Thumbs\+Down&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Fist@{Fist}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Fist@{Fist}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10aae8faf2882fb1dfc7183a0a7a6784f9a}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10aae8faf2882fb1dfc7183a0a7a6784f9a} 
+Fist&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OpenPalm@{OpenPalm}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!OpenPalm@{OpenPalm}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ac24a1d6c75101e1f4b9e2a8f6f65520a}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ac24a1d6c75101e1f4b9e2a8f6f65520a} 
+Open\+Palm&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Peace@{Peace}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!Peace@{Peace}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10acc2073b04d2e90482ab2c7b7f03dfcc1}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10acc2073b04d2e90482ab2c7b7f03dfcc1} 
+Peace&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TwoHandGrab@{TwoHandGrab}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TwoHandGrab@{TwoHandGrab}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a8243d605a8dc617fd65ebc94e909f7e1}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a8243d605a8dc617fd65ebc94e909f7e1} 
+Two\+Hand\+Grab&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TwoHandScale@{TwoHandScale}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TwoHandScale@{TwoHandScale}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a514ae3c77cf05768d4b3f4d9d820b9e8}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a514ae3c77cf05768d4b3f4d9d820b9e8} 
+Two\+Hand\+Scale&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TwoHandRotate@{TwoHandRotate}!VoxelEditor::Input@{VoxelEditor::Input}}\index{VoxelEditor::Input@{VoxelEditor::Input}!TwoHandRotate@{TwoHandRotate}}}\Hypertarget{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a71bc5c310a9ec29c40510435741800e7}\label{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a71bc5c310a9ec29c40510435741800e7} 
+Two\+Hand\+Rotate&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_voxel_editor_1_1_input_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_input_a93ae6570964bcb5edf9ce3841b044020}\index{VoxelEditor::Input@{VoxelEditor::Input}!hasModifier@{hasModifier}}
+\index{hasModifier@{hasModifier}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{hasModifier()}{hasModifier()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a93ae6570964bcb5edf9ce3841b044020} 
+bool Voxel\+Editor\+::\+Input\+::has\+Modifier (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{flags}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{modifier}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_voxel_editor_1_1_input_a4038af4e4fb29e1a7ba83527c7f6f27d}\index{VoxelEditor::Input@{VoxelEditor::Input}!operator\&@{operator\&}}
+\index{operator\&@{operator\&}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{operator\&()}{operator\&()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a4038af4e4fb29e1a7ba83527c7f6f27d} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::operator\& (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{a}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_voxel_editor_1_1_input_a01c5e816fc1fc6e24b638b7b2a056d48}\index{VoxelEditor::Input@{VoxelEditor::Input}!operator\texttt{"|}@{operator\texttt{"|}}}
+\index{operator\texttt{"|}@{operator\texttt{"|}}!VoxelEditor::Input@{VoxelEditor::Input}}
+\doxysubsubsection{\texorpdfstring{operator\texttt{"|}()}{operator|()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_input_a01c5e816fc1fc6e24b638b7b2a056d48} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}} Voxel\+Editor\+::\+Input\+::operator\texorpdfstring{$\vert$}{|} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{a}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{Modifier\+Flags}}}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+

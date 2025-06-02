@@ -1,0 +1,226 @@
+\doxysection{Voxel\+Editor\+::Undo\+Redo\+::History\+Manager Class Reference}
+\hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager}{}\label{class_voxel_editor_1_1_undo_redo_1_1_history_manager}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+
+
+{\ttfamily \#include $<$History\+Manager.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a19a222cc6b304b621d9614b0b7d8b78e}{History\+Manager}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a885d97fb5dabccb06f8b842d30e5e9e1}{\texorpdfstring{$\sim$}{\string~}\+History\+Manager}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_aa1014ce38d269fbe4b9aa5874384dc5a}{execute\+Command}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} $>$ command)
+\item 
+{\footnotesize template$<$typename T, typename... Args$>$ }\\bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a3ec4f06788f8da230ab572ed3a022591}{execute\+Command}} (Args \&\&... args)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ac493442671070d447ad1b47f86af2ac3}{can\+Undo}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a500683fa64e600587d349f8da9c89bd4}{can\+Redo}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a312c1b425e2fcd0e9581bda0ca1e1040}{undo}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a86687e6aab0872cafb19e3e56fa19bcc}{redo}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_acfb70b69d5caf1a66208c377d34fcbf6}{clear\+History}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ad556e58ed1f4c3ee85942b400d9f9cba}{set\+Max\+History\+Size}} (size\+\_\+t size)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a537d24dc5c61c1632de6e5dafdf95f87}{set\+Max\+Memory\+Usage}} (size\+\_\+t bytes)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a748dfe52016fd7b8f5094ef28e74596b}{get\+History\+Size}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_af9d87b2046ca6eca0e683207c1494ba8}{get\+Memory\+Usage}} () const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a0b6b2e105004d438b87a33505dfd1265}{get\+Undo\+History}} () const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a5cf628bb6c1e673d2e3be6cbff2c8e68}{get\+Redo\+History}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ab8519db98d58571e71322bc62e48eb04}{get\+Last\+Executed\+Command}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a74c9573ac5262c83fe88d557da348b9b}{begin\+Transaction}} (const std\+::string \&name)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a7ba6a50537e2318e035755b394203779}{end\+Transaction}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a47eba0f63a052bb8bf10bb95ef7ee234}{is\+In\+Transaction}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a41e8066efc5b4f06beb35acf496ab4a4}{cancel\+Transaction}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a03e0d16316165945df358e7fc935bf95}{optimize\+Memory}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_aee91540e107c5215f5a7309d109a8c0b}{set\+Compression\+Enabled}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a80e3b1534fd030729cdcfab9289d9f70}{set\+Snapshot\+Interval}} (int command\+Count)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ae9fa5a7aa55132ae3dfd6e80d3f3afa9}{set\+Undo\+Redo\+Callback}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{Undo\+Redo\+Callback}} callback)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a740da63e5b5664cf5dfde4a656c454ba}{set\+Memory\+Pressure\+Callback}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{Memory\+Pressure\+Callback}} callback)
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a19a222cc6b304b621d9614b0b7d8b78e}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!HistoryManager@{HistoryManager}}
+\index{HistoryManager@{HistoryManager}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{HistoryManager()}{HistoryManager()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a19a222cc6b304b621d9614b0b7d8b78e} 
+Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::\+History\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a885d97fb5dabccb06f8b842d30e5e9e1}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!````~HistoryManager@{\texorpdfstring{$\sim$}{\string~}HistoryManager}}
+\index{````~HistoryManager@{\texorpdfstring{$\sim$}{\string~}HistoryManager}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}HistoryManager()}{\string~HistoryManager()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a885d97fb5dabccb06f8b842d30e5e9e1} 
+Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+History\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a74c9573ac5262c83fe88d557da348b9b}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!beginTransaction@{beginTransaction}}
+\index{beginTransaction@{beginTransaction}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{beginTransaction()}{beginTransaction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a74c9573ac5262c83fe88d557da348b9b} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::begin\+Transaction (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a41e8066efc5b4f06beb35acf496ab4a4}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!cancelTransaction@{cancelTransaction}}
+\index{cancelTransaction@{cancelTransaction}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{cancelTransaction()}{cancelTransaction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a41e8066efc5b4f06beb35acf496ab4a4} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::cancel\+Transaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a500683fa64e600587d349f8da9c89bd4}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!canRedo@{canRedo}}
+\index{canRedo@{canRedo}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{canRedo()}{canRedo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a500683fa64e600587d349f8da9c89bd4} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::can\+Redo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ac493442671070d447ad1b47f86af2ac3}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!canUndo@{canUndo}}
+\index{canUndo@{canUndo}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{canUndo()}{canUndo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ac493442671070d447ad1b47f86af2ac3} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::can\+Undo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_acfb70b69d5caf1a66208c377d34fcbf6}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!clearHistory@{clearHistory}}
+\index{clearHistory@{clearHistory}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{clearHistory()}{clearHistory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_acfb70b69d5caf1a66208c377d34fcbf6} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::clear\+History (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a7ba6a50537e2318e035755b394203779}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!endTransaction@{endTransaction}}
+\index{endTransaction@{endTransaction}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{endTransaction()}{endTransaction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a7ba6a50537e2318e035755b394203779} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::end\+Transaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a3ec4f06788f8da230ab572ed3a022591}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!executeCommand@{executeCommand}}
+\index{executeCommand@{executeCommand}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{executeCommand()}{executeCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a3ec4f06788f8da230ab572ed3a022591} 
+template$<$typename T, typename... Args$>$ \\
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::execute\+Command (\begin{DoxyParamCaption}\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_aa1014ce38d269fbe4b9aa5874384dc5a}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!executeCommand@{executeCommand}}
+\index{executeCommand@{executeCommand}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{executeCommand()}{executeCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_aa1014ce38d269fbe4b9aa5874384dc5a} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::execute\+Command (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}} $>$}]{command}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a748dfe52016fd7b8f5094ef28e74596b}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!getHistorySize@{getHistorySize}}
+\index{getHistorySize@{getHistorySize}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{getHistorySize()}{getHistorySize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a748dfe52016fd7b8f5094ef28e74596b} 
+size\+\_\+t Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::get\+History\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ab8519db98d58571e71322bc62e48eb04}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!getLastExecutedCommand@{getLastExecutedCommand}}
+\index{getLastExecutedCommand@{getLastExecutedCommand}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{getLastExecutedCommand()}{getLastExecutedCommand()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ab8519db98d58571e71322bc62e48eb04} 
+std\+::string Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::get\+Last\+Executed\+Command (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_af9d87b2046ca6eca0e683207c1494ba8}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!getMemoryUsage@{getMemoryUsage}}
+\index{getMemoryUsage@{getMemoryUsage}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{getMemoryUsage()}{getMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_af9d87b2046ca6eca0e683207c1494ba8} 
+size\+\_\+t Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::get\+Memory\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a5cf628bb6c1e673d2e3be6cbff2c8e68}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!getRedoHistory@{getRedoHistory}}
+\index{getRedoHistory@{getRedoHistory}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{getRedoHistory()}{getRedoHistory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a5cf628bb6c1e673d2e3be6cbff2c8e68} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::get\+Redo\+History (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a0b6b2e105004d438b87a33505dfd1265}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!getUndoHistory@{getUndoHistory}}
+\index{getUndoHistory@{getUndoHistory}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{getUndoHistory()}{getUndoHistory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a0b6b2e105004d438b87a33505dfd1265} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::get\+Undo\+History (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a47eba0f63a052bb8bf10bb95ef7ee234}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!isInTransaction@{isInTransaction}}
+\index{isInTransaction@{isInTransaction}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{isInTransaction()}{isInTransaction()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a47eba0f63a052bb8bf10bb95ef7ee234} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::is\+In\+Transaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a03e0d16316165945df358e7fc935bf95}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!optimizeMemory@{optimizeMemory}}
+\index{optimizeMemory@{optimizeMemory}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{optimizeMemory()}{optimizeMemory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a03e0d16316165945df358e7fc935bf95} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::optimize\+Memory (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a86687e6aab0872cafb19e3e56fa19bcc}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!redo@{redo}}
+\index{redo@{redo}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a86687e6aab0872cafb19e3e56fa19bcc} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::redo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_aee91540e107c5215f5a7309d109a8c0b}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!setCompressionEnabled@{setCompressionEnabled}}
+\index{setCompressionEnabled@{setCompressionEnabled}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{setCompressionEnabled()}{setCompressionEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_aee91540e107c5215f5a7309d109a8c0b} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::set\+Compression\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ad556e58ed1f4c3ee85942b400d9f9cba}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!setMaxHistorySize@{setMaxHistorySize}}
+\index{setMaxHistorySize@{setMaxHistorySize}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{setMaxHistorySize()}{setMaxHistorySize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ad556e58ed1f4c3ee85942b400d9f9cba} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::set\+Max\+History\+Size (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a537d24dc5c61c1632de6e5dafdf95f87}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!setMaxMemoryUsage@{setMaxMemoryUsage}}
+\index{setMaxMemoryUsage@{setMaxMemoryUsage}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{setMaxMemoryUsage()}{setMaxMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a537d24dc5c61c1632de6e5dafdf95f87} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::set\+Max\+Memory\+Usage (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{bytes}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a740da63e5b5664cf5dfde4a656c454ba}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!setMemoryPressureCallback@{setMemoryPressureCallback}}
+\index{setMemoryPressureCallback@{setMemoryPressureCallback}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{setMemoryPressureCallback()}{setMemoryPressureCallback()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a740da63e5b5664cf5dfde4a656c454ba} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::set\+Memory\+Pressure\+Callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{Memory\+Pressure\+Callback}}}]{callback}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a80e3b1534fd030729cdcfab9289d9f70}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!setSnapshotInterval@{setSnapshotInterval}}
+\index{setSnapshotInterval@{setSnapshotInterval}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{setSnapshotInterval()}{setSnapshotInterval()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a80e3b1534fd030729cdcfab9289d9f70} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::set\+Snapshot\+Interval (\begin{DoxyParamCaption}\item[{int}]{command\+Count}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ae9fa5a7aa55132ae3dfd6e80d3f3afa9}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!setUndoRedoCallback@{setUndoRedoCallback}}
+\index{setUndoRedoCallback@{setUndoRedoCallback}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{setUndoRedoCallback()}{setUndoRedoCallback()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_ae9fa5a7aa55132ae3dfd6e80d3f3afa9} 
+void Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::set\+Undo\+Redo\+Callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{Undo\+Redo\+Callback}}}]{callback}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a312c1b425e2fcd0e9581bda0ca1e1040}\index{VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}!undo@{undo}}
+\index{undo@{undo}!VoxelEditor::UndoRedo::HistoryManager@{VoxelEditor::UndoRedo::HistoryManager}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_undo_redo_1_1_history_manager_a312c1b425e2fcd0e9581bda0ca1e1040} 
+bool Voxel\+Editor\+::\+Undo\+Redo\+::\+History\+Manager\+::undo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/undo\+\_\+redo/\mbox{\hyperlink{_history_manager_8h}{History\+Manager.\+h}}\item 
+core/undo\+\_\+redo/\mbox{\hyperlink{_history_manager_8cpp}{History\+Manager.\+cpp}}\end{DoxyCompactItemize}

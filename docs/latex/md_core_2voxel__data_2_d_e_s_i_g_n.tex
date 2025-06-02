@@ -1,0 +1,199 @@
+\chapter{Voxel Data Management Subsystem }
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n}{}\label{md_core_2voxel__data_2_d_e_s_i_g_n}\index{Voxel Data Management Subsystem@{Voxel Data Management Subsystem}}
+\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md439}%
+\Hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md439}%
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md440}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md440}
+Manages multi-\/resolution voxel storage, workspace bounds, and provides efficient access to voxel data across all 10 resolution levels.\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md441}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md441}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md442}{}\doxysubsection{\texorpdfstring{Voxel\+Data\+Manager}{Voxel\+Data\+Manager}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md442}
+{\bfseries{Responsibility}}\+: Main interface for voxel operations
+\begin{DoxyItemize}
+\item Coordinate voxel placement/removal across resolutions
+\item Manage active resolution level
+\item Handle workspace resizing
+\item Memory pressure monitoring
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md443}{}\doxysubsection{\texorpdfstring{Multi\+Resolution\+Grid}{Multi\+Resolution\+Grid}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md443}
+{\bfseries{Responsibility}}\+: Container for all resolution levels
+\begin{DoxyItemize}
+\item Maintains array of 10 Voxel\+Grid instances
+\item Handles resolution switching
+\item Coordinates data between levels
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md444}{}\doxysubsection{\texorpdfstring{Voxel\+Grid}{Voxel\+Grid}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md444}
+{\bfseries{Responsibility}}\+: Single resolution level storage
+\begin{DoxyItemize}
+\item Sparse octree-\/based storage
+\item Efficient memory usage
+\item Fast spatial queries
+\item Streaming support for large grids
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md445}{}\doxysubsection{\texorpdfstring{Sparse\+Octree}{Sparse\+Octree}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md445}
+{\bfseries{Responsibility}}\+: Memory-\/efficient voxel storage
+\begin{DoxyItemize}
+\item Hierarchical space partitioning
+\item Automatic memory optimization
+\item Fast insertion/deletion
+\item Spatial locality preservation
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md446}{}\doxysubsection{\texorpdfstring{Workspace\+Manager}{Workspace\+Manager}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md446}
+{\bfseries{Responsibility}}\+: Workspace bounds and scaling
+\begin{DoxyItemize}
+\item Enforce 2m³ -\/ 8m³ limits
+\item Dynamic resizing validation
+\item Coordinate system management
+\item Bounds checking
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md447}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md447}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }VoxelDataManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Voxel\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res,\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Resolution\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ getActiveResolution()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Workspace\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ resizeWorkspace(\textcolor{keyword}{const}\ Vector3f\&\ newSize);}
+\DoxyCodeLine{\ \ \ \ Vector3f\ getWorkspaceSize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValidPosition(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Bulk\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearAll();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getVoxelCount(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ optimizeMemory();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::array<std::unique\_ptr<VoxelGrid>,\ 10>\ m\_grids;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ m\_activeResolution;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<WorkspaceManager>\ m\_workspace;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md448}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md448}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md449}{}\doxysubsection{\texorpdfstring{Voxel Resolution Enum}{Voxel Resolution Enum}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md449}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8aeb3107023563be5a16dd90314394c80e}{Size\_1cm}}\ =\ 0,\ \ \ \textcolor{comment}{//\ 1cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a1b98375d02731e698132094793ada6c7}{Size\_2cm}}\ =\ 1,\ \ \ \textcolor{comment}{//\ 2cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a4760c53267fc13b78962fe379583ed73}{Size\_4cm}}\ =\ 2,\ \ \ \textcolor{comment}{//\ 4cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a89edd42eddb2e52c1ac16c5b4bbc56b7}{Size\_8cm}}\ =\ 3,\ \ \ \textcolor{comment}{//\ 8cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8ae3ac033f5ce503ed4d798c81afd6a0bc}{Size\_16cm}}\ =\ 4,\ \ \textcolor{comment}{//\ 16cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a9c8b2cde7074df3df198a124ecb7c95d}{Size\_32cm}}\ =\ 5,\ \ \textcolor{comment}{//\ 32cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a5c3938a2f7b9af6f0c52f45e29e6bf93}{Size\_64cm}}\ =\ 6,\ \ \textcolor{comment}{//\ 64cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a3ed34b80d31717f43fedc0a4ffa29c46}{Size\_128cm}}\ =\ 7,\ \textcolor{comment}{//\ 128cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8abb36185c3447faea14b1bd945b8af16f}{Size\_256cm}}\ =\ 8,\ \textcolor{comment}{//\ 256cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a68044428fd9ade682008ff6672d66777}{Size\_512cm}}\ =\ 9\ \ \textcolor{comment}{//\ 512cm\ voxels}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md450}{}\doxysubsection{\texorpdfstring{Voxel Position}{Voxel Position}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md450}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }VoxelPosition\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3i\ gridPos;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Conversion\ utilities}}
+\DoxyCodeLine{\ \ \ \ Vector3f\ toWorldSpace(\textcolor{keyword}{const}\ Vector3f\&\ workspaceSize)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ VoxelPosition\ fromWorldSpace(\textcolor{keyword}{const}\ Vector3f\&\ worldPos,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vector3f\&\ workspaceSize);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md451}{}\doxysection{\texorpdfstring{Memory Management}{Memory Management}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md451}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md452}{}\doxysubsection{\texorpdfstring{Sparse Storage Strategy}{Sparse Storage Strategy}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md452}
+
+\begin{DoxyItemize}
+\item Empty regions consume no memory
+\item Octree nodes created on-\/demand
+\item Automatic pruning of empty branches
+\item Memory pooling for frequent allocations
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md453}{}\doxysubsection{\texorpdfstring{Memory Pressure Handling}{Memory Pressure Handling}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md453}
+
+\begin{DoxyItemize}
+\item Monitor total memory usage
+\item Trigger cleanup when approaching limits
+\item Prioritize higher resolution data
+\item Background compression for inactive levels
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md454}{}\doxysubsection{\texorpdfstring{Performance Targets}{Performance Targets}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md454}
+
+\begin{DoxyItemize}
+\item Voxel set/get\+: \texorpdfstring{$<$}{<}1μs
+\item Resolution switching\+: \texorpdfstring{$<$}{<}100ms
+\item Memory usage\+: \texorpdfstring{$<$}{<}2GB total for VR
+\item Workspace resize\+: \texorpdfstring{$<$}{<}50ms
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md455}{}\doxysection{\texorpdfstring{Events}{Events}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md455}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md456}{}\doxysubsection{\texorpdfstring{Voxel\+Changed Event}{Voxel\+Changed Event}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md456}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }VoxelChangedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3i\ position;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md457}{}\doxysubsection{\texorpdfstring{Resolution\+Changed Event}{Resolution\+Changed Event}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md457}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }ResolutionChangedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ oldResolution;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ newResolution;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md458}{}\doxysubsection{\texorpdfstring{Workspace\+Resized Event}{Workspace\+Resized Event}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md458}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }WorkspaceResizedEvent\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3f\ oldSize;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ newSize;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md459}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md459}
+\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md460}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md460}
+
+\begin{DoxyItemize}
+\item Voxel placement accuracy across all resolutions
+\item Workspace bounds validation
+\item Memory usage verification
+\item Resolution switching correctness
+\item Coordinate space conversions
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md461}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md461}
+
+\begin{DoxyItemize}
+\item Memory usage under various voxel densities
+\item Set/get operation speed
+\item Resolution switching performance
+\item Large workspace handling
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md462}{}\doxysubsection{\texorpdfstring{Stress Tests}{Stress Tests}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md462}
+
+\begin{DoxyItemize}
+\item Maximum voxel count handling
+\item Memory pressure scenarios
+\item Rapid resolution switching
+\item Concurrent access patterns
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md463}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md463}
+
+\begin{DoxyItemize}
+\item {\bfseries{Foundation/\+Math}}\+: Vector3i, Vector3f operations
+\item {\bfseries{Foundation/\+Memory}}\+: Memory pool for octree nodes
+\item {\bfseries{Foundation/\+Events}}\+: Event dispatching for changes
+\item {\bfseries{Foundation/\+Config}}\+: Memory limits and thresholds
+\end{DoxyItemize}\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md464}{}\doxysection{\texorpdfstring{File I/O Integration}{File I/O Integration}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md464}
+
+\begin{DoxyItemize}
+\item Serialize/deserialize all resolution levels
+\item Compress sparse data efficiently
+\item Maintain version compatibility
+\item Support incremental saves 
+\end{DoxyItemize}

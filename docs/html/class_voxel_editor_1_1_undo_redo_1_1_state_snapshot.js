@@ -1,0 +1,28 @@
+var class_voxel_editor_1_1_undo_redo_1_1_state_snapshot =
+[
+    [ "CameraSnapshot", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot.html", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_camera_snapshot" ],
+    [ "RenderSnapshot", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot.html", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_render_snapshot" ],
+    [ "SelectionSnapshot", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_selection_snapshot.html", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_selection_snapshot" ],
+    [ "VoxelDataSnapshot", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_voxel_data_snapshot.html", "struct_voxel_editor_1_1_undo_redo_1_1_state_snapshot_1_1_voxel_data_snapshot" ],
+    [ "StateSnapshot", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#afb62ff7f796240c598fb827f9b6b1d25", null ],
+    [ "~StateSnapshot", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#aee3a68203835b376ea334096cf728443", null ],
+    [ "captureCamera", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a60afffcf176a933b5a0474f7c6e15d56", null ],
+    [ "captureFullState", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a02526f1775729042878f5bb42fc9a9ba", null ],
+    [ "captureRenderSettings", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a1a7f38de56629383f10194e9f3907311", null ],
+    [ "captureSelections", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#ae02098ee7ea9f4c84ca75cf117e29b36", null ],
+    [ "captureVoxelData", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a8dc0f0d8a55f3f76e967eebaf371149a", null ],
+    [ "compress", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#adc1e56a462a02d6877d26331fecb1641", null ],
+    [ "decompress", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a032be84884f60befa9508fba5ad5b0a8", null ],
+    [ "getDescription", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a99d67c49f602682e3209534347e46347", null ],
+    [ "getMemoryUsage", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#ac3d4766cd90db393fc737789fa5ee1af", null ],
+    [ "getTimestamp", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#ad74280f183f16880f6c7cfe2414090de", null ],
+    [ "isCompressed", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a0b57c527619423f50639f9c541e1be60", null ],
+    [ "loadFromFile", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a55aa7372db713f797b691564876bf58e", null ],
+    [ "restoreCamera", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a49c3e32b264ad99ea907199693682c9b", null ],
+    [ "restoreFullState", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a63afbae12c966a9bd583308287ab0299", null ],
+    [ "restoreRenderSettings", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a45583051821a031e5eb64a5c065f6888", null ],
+    [ "restoreSelections", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#aaa6a62bcabd3a0fd3a10ef2053da5b27", null ],
+    [ "restoreVoxelData", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a0e8806747814c9eb159600fbfeb075c4", null ],
+    [ "saveToFile", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#ae54a8499ea53f2feefa667452f3bb3bb", null ],
+    [ "setDescription", "class_voxel_editor_1_1_undo_redo_1_1_state_snapshot.html#a66e978e304820f546153426faeccb0b6", null ]
+];

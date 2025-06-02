@@ -1,0 +1,164 @@
+\doxysection{Voxel\+Editor\+::Voxel\+Data\+::Sparse\+Octree Class Reference}
+\hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{}\label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+
+
+{\ttfamily \#include $<$Sparse\+Octree.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a4d33a446799fc991220ee72c71a594fb}{Sparse\+Octree}} (int max\+Depth=10)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a9f99dec1f4a26cdea5ad112950caa8ef}{\texorpdfstring{$\sim$}{\string~}\+Sparse\+Octree}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a61db985ffab7b84330138cb4ac8d57a9}{Sparse\+Octree}} (const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{Sparse\+Octree}} \&)=delete
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{Sparse\+Octree}} \& \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a0fddaf39b5639da336233fd0dce3e81e}{operator=}} (const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{Sparse\+Octree}} \&)=delete
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a3e017f1c361a4b95331ada59aa53ebc4}{set\+Voxel}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&pos, bool value)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a30da2590d9af70036c199be37e24aa3a}{get\+Voxel}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&pos) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a46fa0333d3e92d35ba92d5bb7f2569e0}{has\+Voxel}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&pos) const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_ac0b5bf9f0b35febb8b8e3cc072b06e83}{clear}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_ace9f38ac68e30874418e0ad137120e42}{get\+Memory\+Usage}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a1a9bdd8ac91bb0ddf1d63da8414e80f8}{get\+Node\+Count}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a8fa964fb538261d55cfee46f66fae5a9}{get\+Voxel\+Count}} () const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a3eb010474b928c1373a7035bd0c6a798}{get\+All\+Voxels}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a8346ca27aaa6eb2cf782e1871df064e3}{optimize}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a5f50bad0a7fcf0b56edcc5bf2334214a}{initialize\+Pool}} (size\+\_\+t initial\+Size=1024)
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_aae6b43e11c1e4c21edb5fbb11fefca79}{shutdown\+Pool}} ()
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_octree_node}{Octree\+Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_adea1068c0b5d16e200241de49553ef9f}{allocate\+Node}} ()
+\item 
+static void \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a0f2cbefc31e0e84de37058ae31d31fc5}{deallocate\+Node}} (\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_octree_node}{Octree\+Node}} \texorpdfstring{$\ast$}{*}node)
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a4d33a446799fc991220ee72c71a594fb}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!SparseOctree@{SparseOctree}}
+\index{SparseOctree@{SparseOctree}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{SparseOctree()}{SparseOctree()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a4d33a446799fc991220ee72c71a594fb} 
+Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::\+Sparse\+Octree (\begin{DoxyParamCaption}\item[{int}]{max\+Depth}{ = {\ttfamily 10}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a9f99dec1f4a26cdea5ad112950caa8ef}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!````~SparseOctree@{\texorpdfstring{$\sim$}{\string~}SparseOctree}}
+\index{````~SparseOctree@{\texorpdfstring{$\sim$}{\string~}SparseOctree}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SparseOctree()}{\string~SparseOctree()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a9f99dec1f4a26cdea5ad112950caa8ef} 
+Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::\texorpdfstring{$\sim$}{\string~}\+Sparse\+Octree (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a61db985ffab7b84330138cb4ac8d57a9}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!SparseOctree@{SparseOctree}}
+\index{SparseOctree@{SparseOctree}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{SparseOctree()}{SparseOctree()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a61db985ffab7b84330138cb4ac8d57a9} 
+Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::\+Sparse\+Octree (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{Sparse\+Octree}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_adea1068c0b5d16e200241de49553ef9f}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!allocateNode@{allocateNode}}
+\index{allocateNode@{allocateNode}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{allocateNode()}{allocateNode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_adea1068c0b5d16e200241de49553ef9f} 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_octree_node}{Octree\+Node}} \texorpdfstring{$\ast$}{*} Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::allocate\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_ac0b5bf9f0b35febb8b8e3cc072b06e83}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!clear@{clear}}
+\index{clear@{clear}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_ac0b5bf9f0b35febb8b8e3cc072b06e83} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a0f2cbefc31e0e84de37058ae31d31fc5}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!deallocateNode@{deallocateNode}}
+\index{deallocateNode@{deallocateNode}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{deallocateNode()}{deallocateNode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a0f2cbefc31e0e84de37058ae31d31fc5} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::deallocate\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_octree_node}{Octree\+Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a3eb010474b928c1373a7035bd0c6a798}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!getAllVoxels@{getAllVoxels}}
+\index{getAllVoxels@{getAllVoxels}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{getAllVoxels()}{getAllVoxels()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a3eb010474b928c1373a7035bd0c6a798} 
+std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} $>$ Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::get\+All\+Voxels (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_ace9f38ac68e30874418e0ad137120e42}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!getMemoryUsage@{getMemoryUsage}}
+\index{getMemoryUsage@{getMemoryUsage}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{getMemoryUsage()}{getMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_ace9f38ac68e30874418e0ad137120e42} 
+size\+\_\+t Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::get\+Memory\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a1a9bdd8ac91bb0ddf1d63da8414e80f8}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!getNodeCount@{getNodeCount}}
+\index{getNodeCount@{getNodeCount}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{getNodeCount()}{getNodeCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a1a9bdd8ac91bb0ddf1d63da8414e80f8} 
+size\+\_\+t Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::get\+Node\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a30da2590d9af70036c199be37e24aa3a}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!getVoxel@{getVoxel}}
+\index{getVoxel@{getVoxel}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{getVoxel()}{getVoxel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a30da2590d9af70036c199be37e24aa3a} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::get\+Voxel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{pos}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a8fa964fb538261d55cfee46f66fae5a9}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!getVoxelCount@{getVoxelCount}}
+\index{getVoxelCount@{getVoxelCount}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{getVoxelCount()}{getVoxelCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a8fa964fb538261d55cfee46f66fae5a9} 
+size\+\_\+t Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::get\+Voxel\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a46fa0333d3e92d35ba92d5bb7f2569e0}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!hasVoxel@{hasVoxel}}
+\index{hasVoxel@{hasVoxel}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{hasVoxel()}{hasVoxel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a46fa0333d3e92d35ba92d5bb7f2569e0} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::has\+Voxel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{pos}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a5f50bad0a7fcf0b56edcc5bf2334214a}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!initializePool@{initializePool}}
+\index{initializePool@{initializePool}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{initializePool()}{initializePool()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a5f50bad0a7fcf0b56edcc5bf2334214a} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::initialize\+Pool (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{initial\+Size}{ = {\ttfamily 1024}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a0fddaf39b5639da336233fd0dce3e81e}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!operator=@{operator=}}
+\index{operator=@{operator=}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a0fddaf39b5639da336233fd0dce3e81e} 
+\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{Sparse\+Octree}} \& Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree}{Sparse\+Octree}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a8346ca27aaa6eb2cf782e1871df064e3}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!optimize@{optimize}}
+\index{optimize@{optimize}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{optimize()}{optimize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a8346ca27aaa6eb2cf782e1871df064e3} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::optimize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a3e017f1c361a4b95331ada59aa53ebc4}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!setVoxel@{setVoxel}}
+\index{setVoxel@{setVoxel}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{setVoxel()}{setVoxel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a3e017f1c361a4b95331ada59aa53ebc4} 
+bool Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::set\+Voxel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \&}]{pos}{, }\item[{bool}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_aae6b43e11c1e4c21edb5fbb11fefca79}\index{VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}!shutdownPool@{shutdownPool}}
+\index{shutdownPool@{shutdownPool}!VoxelEditor::VoxelData::SparseOctree@{VoxelEditor::VoxelData::SparseOctree}}
+\doxysubsubsection{\texorpdfstring{shutdownPool()}{shutdownPool()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_aae6b43e11c1e4c21edb5fbb11fefca79} 
+void Voxel\+Editor\+::\+Voxel\+Data\+::\+Sparse\+Octree\+::shutdown\+Pool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/voxel\+\_\+data/\mbox{\hyperlink{_sparse_octree_8h}{Sparse\+Octree.\+h}}\item 
+core/voxel\+\_\+data/\mbox{\hyperlink{_sparse_octree_8cpp}{Sparse\+Octree.\+cpp}}\end{DoxyCompactItemize}

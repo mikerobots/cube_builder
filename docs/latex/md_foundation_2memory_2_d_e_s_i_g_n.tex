@@ -1,0 +1,102 @@
+\chapter{Memory Management Foundation }
+\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n}{}\label{md_foundation_2memory_2_d_e_s_i_g_n}\index{Memory Management Foundation@{Memory Management Foundation}}
+\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md535}%
+\Hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md535}%
+\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md536}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md536}
+Provides memory pooling, allocation tracking, memory pressure detection, and optimization for performance-\/critical operations.\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md537}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md537}
+\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md538}{}\doxysubsection{\texorpdfstring{Memory\+Pool}{Memory\+Pool}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md538}
+
+\begin{DoxyItemize}
+\item Object pooling for frequent allocations
+\item Fixed-\/size and variable-\/size pools
+\item Thread-\/safe pool operations
+\item Automatic pool expansion
+\end{DoxyItemize}\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md539}{}\doxysubsection{\texorpdfstring{Memory\+Tracker}{Memory\+Tracker}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md539}
+
+\begin{DoxyItemize}
+\item Allocation tracking and profiling
+\item Memory usage statistics
+\item Leak detection
+\item Memory pressure monitoring
+\end{DoxyItemize}\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md540}{}\doxysubsection{\texorpdfstring{Memory\+Optimizer}{Memory\+Optimizer}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md540}
+
+\begin{DoxyItemize}
+\item Memory pressure response
+\item Automatic cleanup triggers
+\item Cache eviction policies
+\item Memory defragmentation
+\end{DoxyItemize}\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md541}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md541}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MemoryPool\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ MemoryPool(\textcolor{keywordtype}{size\_t}\ objectSize,\ \textcolor{keywordtype}{size\_t}\ initialCapacity\ =\ 64);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}*\ allocate();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deallocate(\textcolor{keywordtype}{void}*\ ptr);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getObjectSize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getCapacity()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getUsedCount()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ shrink();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }Block\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ memory;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<bool>\ used;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ freeCount;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<Block>\ m\_blocks;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_objectSize;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_blockSize;}
+\DoxyCodeLine{\ \ \ \ std::stack<void*>\ m\_freeList;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MemoryTracker\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ MemoryTracker\&\ getInstance();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ recordAllocation(\textcolor{keywordtype}{void}*\ ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ category\ =\ \textcolor{stringliteral}{"{}Unknown"{}});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ recordDeallocation(\textcolor{keywordtype}{void}*\ ptr);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalAllocated()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalDeallocated()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getCurrentUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getPeakUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ size\_t>\ getUsageByCategory()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::vector<AllocationInfo>\ getActiveAllocations()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMemoryLimit(\textcolor{keywordtype}{size\_t}\ limit);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isMemoryPressure()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }AllocationInfo\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ ptr;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ category;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ timestamp;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<void*,\ AllocationInfo>\ m\_allocations;}
+\DoxyCodeLine{\ \ \ \ std::atomic<size\_t>\ m\_totalAllocated\{0\};}
+\DoxyCodeLine{\ \ \ \ std::atomic<size\_t>\ m\_totalDeallocated\{0\};}
+\DoxyCodeLine{\ \ \ \ std::atomic<size\_t>\ m\_currentUsage\{0\};}
+\DoxyCodeLine{\ \ \ \ std::atomic<size\_t>\ m\_peakUsage\{0\};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_memoryLimit\ =\ SIZE\_MAX;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md542}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_foundation_2memory_2_d_e_s_i_g_n_autotoc_md542}
+
+\begin{DoxyItemize}
+\item {\bfseries{Foundation/\+Events}}\+: Memory pressure notifications
+\item Standard C++ threading library
+\item Platform-\/specific memory APIs (optional) 
+\end{DoxyItemize}

@@ -1,0 +1,100 @@
+\doxysection{Voxel\+Editor\+::Groups\+::Split\+Group\+Operation Class Reference}
+\hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation}{}\label{class_voxel_editor_1_1_groups_1_1_split_group_operation}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+
+
+{\ttfamily \#include $<$Group\+Operations.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Groups\+::Split\+Group\+Operation\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_groups_1_1_split_group_operation}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_aca2718565c6e6bb94188bed50de7f680}{Split\+Group\+Operation}} (\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Group\+Manager}} \texorpdfstring{$\ast$}{*}group\+Manager, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} source\+Id, const std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ $>$ \&voxel\+Sets, const std\+::vector$<$ std\+::string $>$ \&new\+Names)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_ad0a81d462275a1b588c751f7644ac99e}{execute}} () override
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_ab3994e9c458062c82d48f6b7aff8342a}{undo}} () override
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_a13822ebcc3cf6492542e162226bf7367}{get\+Description}} () const override
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{Group\+Modification\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_aa82f9d53cb9567d1cb0d57ef505b34bf}{get\+Type}} () const override
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \& \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_a2129ce3b918cdf152766293c3d7cb653}{get\+Created\+Group\+Ids}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a714b3cc5c88c8924b157217c4b4a2f40}{\texorpdfstring{$\sim$}{\string~}\+Group\+Operation}} ()=default
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_aca2718565c6e6bb94188bed50de7f680}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}!SplitGroupOperation@{SplitGroupOperation}}
+\index{SplitGroupOperation@{SplitGroupOperation}!VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+\doxysubsubsection{\texorpdfstring{SplitGroupOperation()}{SplitGroupOperation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_split_group_operation_aca2718565c6e6bb94188bed50de7f680} 
+Voxel\+Editor\+::\+Groups\+::\+Split\+Group\+Operation\+::\+Split\+Group\+Operation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Group\+Manager}} \texorpdfstring{$\ast$}{*}}]{group\+Manager}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{source\+Id}{, }\item[{const std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ $>$ \&}]{voxel\+Sets}{, }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{new\+Names}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_ad0a81d462275a1b588c751f7644ac99e}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}!execute@{execute}}
+\index{execute@{execute}!VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_split_group_operation_ad0a81d462275a1b588c751f7644ac99e} 
+bool Voxel\+Editor\+::\+Groups\+::\+Split\+Group\+Operation\+::execute (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a3ca9eb196854632165b20b3183bfb5f0}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_a2129ce3b918cdf152766293c3d7cb653}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}!getCreatedGroupIds@{getCreatedGroupIds}}
+\index{getCreatedGroupIds@{getCreatedGroupIds}!VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+\doxysubsubsection{\texorpdfstring{getCreatedGroupIds()}{getCreatedGroupIds()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_split_group_operation_a2129ce3b918cdf152766293c3d7cb653} 
+const std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \& Voxel\+Editor\+::\+Groups\+::\+Split\+Group\+Operation\+::get\+Created\+Group\+Ids (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_a13822ebcc3cf6492542e162226bf7367}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_split_group_operation_a13822ebcc3cf6492542e162226bf7367} 
+std\+::string Voxel\+Editor\+::\+Groups\+::\+Split\+Group\+Operation\+::get\+Description (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a71ee2c8a2f6f32d6054822867d162795}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_aa82f9d53cb9567d1cb0d57ef505b34bf}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}!getType@{getType}}
+\index{getType@{getType}!VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_split_group_operation_aa82f9d53cb9567d1cb0d57ef505b34bf} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{Group\+Modification\+Type}} Voxel\+Editor\+::\+Groups\+::\+Split\+Group\+Operation\+::get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_ad40e0a3a849f191187993f4e2ec99b98}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_split_group_operation_ab3994e9c458062c82d48f6b7aff8342a}\index{VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}!undo@{undo}}
+\index{undo@{undo}!VoxelEditor::Groups::SplitGroupOperation@{VoxelEditor::Groups::SplitGroupOperation}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_split_group_operation_ab3994e9c458062c82d48f6b7aff8342a} 
+bool Voxel\+Editor\+::\+Groups\+::\+Split\+Group\+Operation\+::undo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_aeb75ac351fecbef742c4a68aa408dbc3}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/groups/include/groups/\mbox{\hyperlink{_group_operations_8h}{Group\+Operations.\+h}}\item 
+core/groups/src/\mbox{\hyperlink{_group_operations_8cpp}{Group\+Operations.\+cpp}}\end{DoxyCompactItemize}

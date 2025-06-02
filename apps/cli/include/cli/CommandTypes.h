@@ -7,7 +7,6 @@
 #include <memory>
 
 namespace VoxelEditor {
-namespace CLI {
 
 // Forward declarations
 class Application;
@@ -155,5 +154,4 @@ namespace Commands {
     constexpr const char* SETTINGS = "settings";
 }
 
-} // namespace CLI
 } // namespace VoxelEditor

@@ -1,0 +1,111 @@
+\doxysection{foundation/memory/tests/test\+\_\+\+Memory\+Tracker.cpp File Reference}
+\hypertarget{test___memory_tracker_8cpp}{}\label{test___memory_tracker_8cpp}\index{foundation/memory/tests/test\_MemoryTracker.cpp@{foundation/memory/tests/test\_MemoryTracker.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Memory\+Tracker.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Memory\+Optimizer.\+h"{}}\newline
+{\ttfamily \#include "{}../../events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}
+\item 
+class \mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a5962d4faf3d1acfeac1111acee6be678}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Basic\+Allocation\+Tracking)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a0a911d407a8fcaad8d7bc6d8d13632b9}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Category\+Tracking)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a6b925f22def79cbe19b8289d4d69afb7}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Peak\+Usage\+Tracking)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a7b308f0be588e111d3154aae66716313}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Memory\+Pressure\+Detection)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a2b726ee64a42a60fe19342616ccc990c}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Active\+Allocations)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a2e7b799af7f0eddded6bb66e6d03e83e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Memory\+Stats)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a848b5841ae6c49eb43ad947d3847e06d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}, Cleanup\+Callbacks)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a6fb1a4bf1fa8712fa14ac03588137f70}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}, \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{Cleanup\+Priority}})
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_abc535509a0021dddc67d77826a7b11d7}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}, Memory\+Pressure\+Response)
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_af0d28f25f8f07ff42d699b0ea00bf708}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}, \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool}{Managed\+Memory\+Pool}})
+\item 
+\mbox{\hyperlink{test___memory_tracker_8cpp_a5520484dbd697882a12a259b5cebbde3}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}, Thread\+Safety)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___memory_tracker_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___memory_tracker_8cpp_a848b5841ae6c49eb43ad947d3847e06d}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a848b5841ae6c49eb43ad947d3847e06d} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}}]{}{, }\item[{Cleanup\+Callbacks}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a6fb1a4bf1fa8712fa14ac03588137f70}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a6fb1a4bf1fa8712fa14ac03588137f70} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}}]{}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{Cleanup\+Priority}}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_af0d28f25f8f07ff42d699b0ea00bf708}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_af0d28f25f8f07ff42d699b0ea00bf708} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}}]{}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool}{Managed\+Memory\+Pool}}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_abc535509a0021dddc67d77826a7b11d7}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_abc535509a0021dddc67d77826a7b11d7} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_optimizer_test}{Memory\+Optimizer\+Test}}}]{}{, }\item[{Memory\+Pressure\+Response}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a2b726ee64a42a60fe19342616ccc990c}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a2b726ee64a42a60fe19342616ccc990c} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Active\+Allocations}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a5962d4faf3d1acfeac1111acee6be678}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a5962d4faf3d1acfeac1111acee6be678} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Basic\+Allocation\+Tracking}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a0a911d407a8fcaad8d7bc6d8d13632b9}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a0a911d407a8fcaad8d7bc6d8d13632b9} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Category\+Tracking}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a7b308f0be588e111d3154aae66716313}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a7b308f0be588e111d3154aae66716313} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Memory\+Pressure\+Detection}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a2e7b799af7f0eddded6bb66e6d03e83e}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a2e7b799af7f0eddded6bb66e6d03e83e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Memory\+Stats}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a6b925f22def79cbe19b8289d4d69afb7}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a6b925f22def79cbe19b8289d4d69afb7} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Peak\+Usage\+Tracking}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_tracker_8cpp_a5520484dbd697882a12a259b5cebbde3}\index{test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryTracker.cpp@{test\_MemoryTracker.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/11]}}
+{\footnotesize\ttfamily \label{test___memory_tracker_8cpp_a5520484dbd697882a12a259b5cebbde3} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_tracker_test}{Memory\+Tracker\+Test}}}]{}{, }\item[{Thread\+Safety}]{}{}\end{DoxyParamCaption})}
+

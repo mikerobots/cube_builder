@@ -1,0 +1,161 @@
+\doxysection{Voxel\+Editor\+::Visual\+Feedback\+::Overlay\+Renderer Class Reference}
+\hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer}{}\label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+
+
+{\ttfamily \#include $<$Overlay\+Renderer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a0ef2489392175466aef6a335ca2c9124}{Overlay\+Renderer}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ad732a94b0af1d5084ad0b802e7c856a3}{\texorpdfstring{$\sim$}{\string~}\+Overlay\+Renderer}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a887325f57a6910f47230e9f0b7188d77}{render\+Text}} (const std\+::string \&text, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position, const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_text_style}{Text\+Style}} \&style)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a6217b81fdd33df74cd4332d1e67d3325}{render\+World\+Text}} (const std\+::string \&text, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&world\+Position, const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_text_style}{Text\+Style}} \&style, const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_aa54ac07b347d09d14237e795902b0eb9}{render\+Performance\+Metrics}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_render_stats}{Render\+Stats}} \&stats, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ab5eccb2b86e68c77a344fe57a5c08cc8}{render\+Memory\+Usage}} (size\+\_\+t used, size\+\_\+t total, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a02660024846e2605deab25ca8d6a6704}{render\+Voxel\+Count}} (const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}, size\+\_\+t $>$ \&counts, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a3df85d1e2c855c88699ab2f0ebfc1d2c}{render\+Resolution\+Indicator}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} current, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a0ff07a9c9a7191551aee62c38e2ffad3}{render\+Workspace\+Indicator}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&size, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a93b522b67f439f2bcf9c44ea073e2ebc}{render\+Camera\+Info}} (const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a44d95a69ca48f07d357c882f16546c7b}{render\+Grid}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&center, float extent, const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ad466445f780db3cfc8d76b3b106cdfd5}{render\+Axes}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&origin, float length, const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a86a488086de1db3964403182423796ab}{render\+Compass}} (const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&position, float size)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a815c9253004c968f468be4cc10e82fba}{render\+Bounding\+Boxes}} (const std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} $>$ \&boxes, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering\+::\+Color}} \&color, const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_aa967288e639e99480c868b7bdb355ea0}{render\+Raycast}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}} \&ray, float length, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering\+::\+Color}} \&color, const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&camera)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a133deb5f77adebd763cb4538f058264f}{begin\+Frame}} (int screen\+Width, int screen\+Height)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a980fc953bfb3168b201c032d191a5b6f}{end\+Frame}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a0ef2489392175466aef6a335ca2c9124}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!OverlayRenderer@{OverlayRenderer}}
+\index{OverlayRenderer@{OverlayRenderer}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{OverlayRenderer()}{OverlayRenderer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a0ef2489392175466aef6a335ca2c9124} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::\+Overlay\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ad732a94b0af1d5084ad0b802e7c856a3}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!````~OverlayRenderer@{\texorpdfstring{$\sim$}{\string~}OverlayRenderer}}
+\index{````~OverlayRenderer@{\texorpdfstring{$\sim$}{\string~}OverlayRenderer}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}OverlayRenderer()}{\string~OverlayRenderer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ad732a94b0af1d5084ad0b802e7c856a3} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::\texorpdfstring{$\sim$}{\string~}\+Overlay\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a133deb5f77adebd763cb4538f058264f}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!beginFrame@{beginFrame}}
+\index{beginFrame@{beginFrame}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{beginFrame()}{beginFrame()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a133deb5f77adebd763cb4538f058264f} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::begin\+Frame (\begin{DoxyParamCaption}\item[{int}]{screen\+Width}{, }\item[{int}]{screen\+Height}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a980fc953bfb3168b201c032d191a5b6f}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!endFrame@{endFrame}}
+\index{endFrame@{endFrame}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{endFrame()}{endFrame()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a980fc953bfb3168b201c032d191a5b6f} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::end\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ad466445f780db3cfc8d76b3b106cdfd5}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderAxes@{renderAxes}}
+\index{renderAxes@{renderAxes}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderAxes()}{renderAxes()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ad466445f780db3cfc8d76b3b106cdfd5} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Axes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{origin}{, }\item[{float}]{length}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a815c9253004c968f468be4cc10e82fba}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderBoundingBoxes@{renderBoundingBoxes}}
+\index{renderBoundingBoxes@{renderBoundingBoxes}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderBoundingBoxes()}{renderBoundingBoxes()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a815c9253004c968f468be4cc10e82fba} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Bounding\+Boxes (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} $>$ \&}]{boxes}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering\+::\+Color}} \&}]{color}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a93b522b67f439f2bcf9c44ea073e2ebc}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderCameraInfo@{renderCameraInfo}}
+\index{renderCameraInfo@{renderCameraInfo}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderCameraInfo()}{renderCameraInfo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a93b522b67f439f2bcf9c44ea073e2ebc} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Camera\+Info (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a86a488086de1db3964403182423796ab}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderCompass@{renderCompass}}
+\index{renderCompass@{renderCompass}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderCompass()}{renderCompass()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a86a488086de1db3964403182423796ab} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Compass (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{, }\item[{float}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a44d95a69ca48f07d357c882f16546c7b}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderGrid@{renderGrid}}
+\index{renderGrid@{renderGrid}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderGrid()}{renderGrid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a44d95a69ca48f07d357c882f16546c7b} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Grid (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{center}{, }\item[{float}]{extent}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ab5eccb2b86e68c77a344fe57a5c08cc8}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderMemoryUsage@{renderMemoryUsage}}
+\index{renderMemoryUsage@{renderMemoryUsage}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderMemoryUsage()}{renderMemoryUsage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_ab5eccb2b86e68c77a344fe57a5c08cc8} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Memory\+Usage (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{used}{, }\item[{size\+\_\+t}]{total}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_aa54ac07b347d09d14237e795902b0eb9}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderPerformanceMetrics@{renderPerformanceMetrics}}
+\index{renderPerformanceMetrics@{renderPerformanceMetrics}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderPerformanceMetrics()}{renderPerformanceMetrics()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_aa54ac07b347d09d14237e795902b0eb9} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Performance\+Metrics (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_render_stats}{Render\+Stats}} \&}]{stats}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_aa967288e639e99480c868b7bdb355ea0}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderRaycast@{renderRaycast}}
+\index{renderRaycast@{renderRaycast}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderRaycast()}{renderRaycast()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_aa967288e639e99480c868b7bdb355ea0} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Raycast (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}} \&}]{ray}{, }\item[{float}]{length}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering\+::\+Color}} \&}]{color}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a3df85d1e2c855c88699ab2f0ebfc1d2c}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderResolutionIndicator@{renderResolutionIndicator}}
+\index{renderResolutionIndicator@{renderResolutionIndicator}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderResolutionIndicator()}{renderResolutionIndicator()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a3df85d1e2c855c88699ab2f0ebfc1d2c} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Resolution\+Indicator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{current}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a887325f57a6910f47230e9f0b7188d77}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderText@{renderText}}
+\index{renderText@{renderText}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderText()}{renderText()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a887325f57a6910f47230e9f0b7188d77} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Text (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{text}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_text_style}{Text\+Style}} \&}]{style}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a02660024846e2605deab25ca8d6a6704}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderVoxelCount@{renderVoxelCount}}
+\index{renderVoxelCount@{renderVoxelCount}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderVoxelCount()}{renderVoxelCount()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a02660024846e2605deab25ca8d6a6704} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Voxel\+Count (\begin{DoxyParamCaption}\item[{const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}, size\+\_\+t $>$ \&}]{counts}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a0ff07a9c9a7191551aee62c38e2ffad3}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderWorkspaceIndicator@{renderWorkspaceIndicator}}
+\index{renderWorkspaceIndicator@{renderWorkspaceIndicator}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderWorkspaceIndicator()}{renderWorkspaceIndicator()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a0ff07a9c9a7191551aee62c38e2ffad3} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+Workspace\+Indicator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{size}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a6217b81fdd33df74cd4332d1e67d3325}\index{VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}!renderWorldText@{renderWorldText}}
+\index{renderWorldText@{renderWorldText}!VoxelEditor::VisualFeedback::OverlayRenderer@{VoxelEditor::VisualFeedback::OverlayRenderer}}
+\doxysubsubsection{\texorpdfstring{renderWorldText()}{renderWorldText()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_overlay_renderer_a6217b81fdd33df74cd4332d1e67d3325} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Overlay\+Renderer\+::render\+World\+Text (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{text}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{world\+Position}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_text_style}{Text\+Style}} \&}]{style}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera\+::\+Camera}} \&}]{camera}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/visual\+\_\+feedback/include/visual\+\_\+feedback/\mbox{\hyperlink{_overlay_renderer_8h}{Overlay\+Renderer.\+h}}\item 
+core/visual\+\_\+feedback/src/\mbox{\hyperlink{_overlay_renderer_8cpp}{Overlay\+Renderer.\+cpp}}\end{DoxyCompactItemize}

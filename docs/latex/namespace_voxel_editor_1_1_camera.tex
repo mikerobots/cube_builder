@@ -1,0 +1,98 @@
+\doxysection{Voxel\+Editor\+::Camera Namespace Reference}
+\hypertarget{namespace_voxel_editor_1_1_camera}{}\label{namespace_voxel_editor_1_1_camera}\index{VoxelEditor::Camera@{VoxelEditor::Camera}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_controller}{Camera\+Controller}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera}{Orbit\+Camera}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport}{Viewport}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}{View\+Preset}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964abb2fe5c916efb43aab8cbb68f997d2ee}{FRONT}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a1dd26f1f1790f0b56d5752fb0fbecef0}{BACK}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a684d325a7303f52e64011467ff5c5758}{LEFT}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a21507b40c80068eda19865706fdc2403}{RIGHT}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a6705777b712ee811e76fb07162081d63}{TOP}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a1fabf63de5c96c78e2a40805bcdeb73b}{BOTTOM}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a3f227c54a6fea029238f9f538ebece48}{ISOMETRIC}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}{Interaction\+Mode}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}{NONE}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a48d80811ec81276fb3ee0df3944e7aee}{ORBIT}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ad74461db15255d85a44ffd72419646b3}{PAN}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a66f276916d5a97cbb3b0008213bda1c3}{ZOOM}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_voxel_editor_1_1_camera_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!InteractionMode@{InteractionMode}}
+\index{InteractionMode@{InteractionMode}!VoxelEditor::Camera@{VoxelEditor::Camera}}
+\doxysubsubsection{\texorpdfstring{InteractionMode}{InteractionMode}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02}{Voxel\+Editor\+::\+Camera\+::\+Interaction\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!NONE@{NONE}}}\Hypertarget{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693}\label{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ab50339a10e1de285ac99d4c3990b8693} 
+NONE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ORBIT@{ORBIT}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!ORBIT@{ORBIT}}}\Hypertarget{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a48d80811ec81276fb3ee0df3944e7aee}\label{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a48d80811ec81276fb3ee0df3944e7aee} 
+ORBIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PAN@{PAN}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!PAN@{PAN}}}\Hypertarget{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ad74461db15255d85a44ffd72419646b3}\label{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02ad74461db15255d85a44ffd72419646b3} 
+PAN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZOOM@{ZOOM}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!ZOOM@{ZOOM}}}\Hypertarget{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a66f276916d5a97cbb3b0008213bda1c3}\label{namespace_voxel_editor_1_1_camera_a897fd7313ef49f495e34bf26c806cd02a66f276916d5a97cbb3b0008213bda1c3} 
+ZOOM&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!ViewPreset@{ViewPreset}}
+\index{ViewPreset@{ViewPreset}!VoxelEditor::Camera@{VoxelEditor::Camera}}
+\doxysubsubsection{\texorpdfstring{ViewPreset}{ViewPreset}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}{Voxel\+Editor\+::\+Camera\+::\+View\+Preset}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FRONT@{FRONT}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!FRONT@{FRONT}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964abb2fe5c916efb43aab8cbb68f997d2ee}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964abb2fe5c916efb43aab8cbb68f997d2ee} 
+FRONT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BACK@{BACK}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!BACK@{BACK}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a1dd26f1f1790f0b56d5752fb0fbecef0}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a1dd26f1f1790f0b56d5752fb0fbecef0} 
+BACK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT@{LEFT}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!LEFT@{LEFT}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a684d325a7303f52e64011467ff5c5758}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a684d325a7303f52e64011467ff5c5758} 
+LEFT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT@{RIGHT}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!RIGHT@{RIGHT}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a21507b40c80068eda19865706fdc2403}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a21507b40c80068eda19865706fdc2403} 
+RIGHT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOP@{TOP}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!TOP@{TOP}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a6705777b712ee811e76fb07162081d63}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a6705777b712ee811e76fb07162081d63} 
+TOP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BOTTOM@{BOTTOM}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!BOTTOM@{BOTTOM}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a1fabf63de5c96c78e2a40805bcdeb73b}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a1fabf63de5c96c78e2a40805bcdeb73b} 
+BOTTOM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ISOMETRIC@{ISOMETRIC}!VoxelEditor::Camera@{VoxelEditor::Camera}}\index{VoxelEditor::Camera@{VoxelEditor::Camera}!ISOMETRIC@{ISOMETRIC}}}\Hypertarget{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a3f227c54a6fea029238f9f538ebece48}\label{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964a3f227c54a6fea029238f9f538ebece48} 
+ISOMETRIC&\\
+\hline
+
+\end{DoxyEnumFields}

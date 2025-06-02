@@ -1,0 +1,171 @@
+\doxysection{Voxel\+Editor\+::Surface\+Gen Namespace Reference}
+\hypertarget{namespace_voxel_editor_1_1_surface_gen}{}\label{namespace_voxel_editor_1_1_surface_gen}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring}{Dual\+Contouring}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables}{Dual\+Contouring\+Tables}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data}{Edge\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data}{Hermite\+Data}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager}{LODManager}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder}{Mesh\+Builder}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache}{Mesh\+Cache}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry}{Mesh\+Cache\+Entry}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event}{Mesh\+Generation\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier}{Mesh\+Simplifier}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats}{Mesh\+Stats}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils}{Mesh\+Utils}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face}{Quad\+Face}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{Simplification\+Settings}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator}{Surface\+Generator}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{Surface\+Settings}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes}{Vertex\+Attributes}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash}{Voxel\+Grid\+Hash}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{Material\+Id}} = uint32\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{Export\+Quality}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9}{Draft}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b}{Standard}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca655d20c1ca69519ca647684edbb2db35}{High}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892}{Maximum}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{LOD0}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c}{LOD1}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca}{LOD2}} = 2
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83}{LOD3}} = 3
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86}{LOD4}} = 4
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}{Mesh\+Generation\+Event\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea8428552d86c0d262a542a528af490afa}{Started}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea46b5f8c58b679b4243cbdb5749642c86}{Progress}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea07ca5050e697392c9ed47e6453f1453f}{Completed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eead7c8c85bf79bbe1b7188497c32c3b0ca}{Failed}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eeaa149e85a44aeec9140e92733d9ed694e}{Cancelled}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_voxel_editor_1_1_surface_gen_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!MaterialId@{MaterialId}}
+\index{MaterialId@{MaterialId}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}
+\doxysubsubsection{\texorpdfstring{MaterialId}{MaterialId}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Material\+Id}} = uint32\+\_\+t}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_voxel_editor_1_1_surface_gen_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!ExportQuality@{ExportQuality}}
+\index{ExportQuality@{ExportQuality}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}
+\doxysubsubsection{\texorpdfstring{ExportQuality}{ExportQuality}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Export\+Quality}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Draft@{Draft}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Draft@{Draft}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9}\label{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9} 
+Draft&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Standard@{Standard}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Standard@{Standard}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b}\label{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b} 
+Standard&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{High@{High}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!High@{High}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca655d20c1ca69519ca647684edbb2db35}\label{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca655d20c1ca69519ca647684edbb2db35} 
+High&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Maximum@{Maximum}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Maximum@{Maximum}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892}\label{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892} 
+Maximum&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!LODLevel@{LODLevel}}
+\index{LODLevel@{LODLevel}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}
+\doxysubsubsection{\texorpdfstring{LODLevel}{LODLevel}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LODLevel}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOD0@{LOD0}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!LOD0@{LOD0}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}\label{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0} 
+LOD0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOD1@{LOD1}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!LOD1@{LOD1}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c}\label{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c} 
+LOD1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOD2@{LOD2}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!LOD2@{LOD2}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca}\label{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca} 
+LOD2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOD3@{LOD3}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!LOD3@{LOD3}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83}\label{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83} 
+LOD3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOD4@{LOD4}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!LOD4@{LOD4}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86}\label{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86} 
+LOD4&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!MeshGenerationEventType@{MeshGenerationEventType}}
+\index{MeshGenerationEventType@{MeshGenerationEventType}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}
+\doxysubsubsection{\texorpdfstring{MeshGenerationEventType}{MeshGenerationEventType}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee} 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Generation\+Event\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Started@{Started}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Started@{Started}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea8428552d86c0d262a542a528af490afa}\label{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea8428552d86c0d262a542a528af490afa} 
+Started&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Progress@{Progress}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Progress@{Progress}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea46b5f8c58b679b4243cbdb5749642c86}\label{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea46b5f8c58b679b4243cbdb5749642c86} 
+Progress&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Completed@{Completed}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Completed@{Completed}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea07ca5050e697392c9ed47e6453f1453f}\label{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea07ca5050e697392c9ed47e6453f1453f} 
+Completed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Failed@{Failed}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Failed@{Failed}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eead7c8c85bf79bbe1b7188497c32c3b0ca}\label{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eead7c8c85bf79bbe1b7188497c32c3b0ca} 
+Failed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Cancelled@{Cancelled}!VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}}\index{VoxelEditor::SurfaceGen@{VoxelEditor::SurfaceGen}!Cancelled@{Cancelled}}}\Hypertarget{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eeaa149e85a44aeec9140e92733d9ed694e}\label{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eeaa149e85a44aeec9140e92733d9ed694e} 
+Cancelled&\\
+\hline
+
+\end{DoxyEnumFields}

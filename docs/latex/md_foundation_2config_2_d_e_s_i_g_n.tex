@@ -1,0 +1,99 @@
+\chapter{Configuration Management Foundation }
+\hypertarget{md_foundation_2config_2_d_e_s_i_g_n}{}\label{md_foundation_2config_2_d_e_s_i_g_n}\index{Configuration Management Foundation@{Configuration Management Foundation}}
+\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md491}%
+\Hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md491}%
+\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md492}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md492}
+Manages application settings, user preferences, platform-\/specific configurations, and runtime parameter adjustment.\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md493}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md493}
+\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md494}{}\doxysubsection{\texorpdfstring{Config\+Manager}{Config\+Manager}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md494}
+
+\begin{DoxyItemize}
+\item Hierarchical configuration system
+\item Type-\/safe value access
+\item Configuration file I/O
+\item Runtime configuration updates
+\end{DoxyItemize}\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md495}{}\doxysubsection{\texorpdfstring{Config\+Value}{Config\+Value}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md495}
+
+\begin{DoxyItemize}
+\item Strongly-\/typed configuration values
+\item Validation and constraints
+\item Default value management
+\item Change notifications
+\end{DoxyItemize}\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md496}{}\doxysubsection{\texorpdfstring{Config\+Schema}{Config\+Schema}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md496}
+
+\begin{DoxyItemize}
+\item Configuration validation
+\item Schema versioning
+\item Migration support
+\item Documentation generation
+\end{DoxyItemize}\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md497}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md497}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ConfigManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ ConfigManager\&\ getInstance();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Configuration\ loading/saving}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadFromFile(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ saveToFile(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadDefaults();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Value\ access}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ getValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ value);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasValue(\textcolor{keyword}{const}\ std::string\&\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ removeValue(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Hierarchical\ access}}
+\DoxyCodeLine{\ \ \ \ std::shared\_ptr<ConfigSection>\ getSection(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ createSection(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Change\ notifications}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ subscribe(\textcolor{keyword}{const}\ std::string\&\ key,\ ConfigChangeCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ unsubscribe(\textcolor{keyword}{const}\ std::string\&\ key,\ ConfigChangeCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSchema(std::shared\_ptr<ConfigSchema>\ schema);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validate(std::vector<std::string>\&\ errors)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ ConfigValue>\ m\_values;}
+\DoxyCodeLine{\ \ \ \ std::shared\_ptr<ConfigSchema>\ m\_schema;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ std::vector<ConfigChangeCallback>>\ m\_callbacks;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ConfigValue\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\ \ \ \ ConfigValue(\textcolor{keyword}{const}\ T\&\ value);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ get()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ set(\textcolor{keyword}{const}\ T\&\ value);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::string\ getType()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ serialize(std::ostream\&\ stream)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deserialize(std::istream\&\ stream);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::any\ m\_value;}
+\DoxyCodeLine{\ \ \ \ std::type\_index\ m\_type;}
+\DoxyCodeLine{\ \ \ \ ConfigConstraints\ m\_constraints;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md498}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md498}
+
+\begin{DoxyItemize}
+\item Standard C++ library
+\item JSON library for configuration files
+\item {\bfseries{Foundation/\+Events}}\+: Configuration change events 
+\end{DoxyItemize}

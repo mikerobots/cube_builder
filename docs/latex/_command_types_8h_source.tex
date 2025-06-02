@@ -1,0 +1,163 @@
+\doxysection{Command\+Types.\+h}
+\hypertarget{_command_types_8h_source}{}\label{_command_types_8h_source}\index{apps/cli/include/cli/CommandTypes.h@{apps/cli/include/cli/CommandTypes.h}}
+\mbox{\hyperlink{_command_types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}};}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_command_context}{CommandContext}};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Command\ result}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result_a620deb5e8647db016edc85fbc156c185}{success}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result_a261444d22df62761d6338ae9d96b0791}{message}};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result_ab27b686e9f791bd383730b5cd24b6edb}{shouldExit}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result_aaf6ab08fdef602bcd9a03d4f857b8634}{Success}}(\textcolor{keyword}{const}\ std::string\&\ msg\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{true},\ msg,\ \textcolor{keyword}{false}\};}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result_a5d1913a6cc51ecc9a67f24d613a76136}{Error}}(\textcolor{keyword}{const}\ std::string\&\ msg)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{false},\ msg,\ \textcolor{keyword}{false}\};}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result_aacba82a4c80ad545cc20ef15b4bbdfa0}{Exit}}(\textcolor{keyword}{const}\ std::string\&\ msg\ =\ \textcolor{stringliteral}{"{}Goodbye!"{}})\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{true},\ msg,\ \textcolor{keyword}{true}\};}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ Command\ argument}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_command_argument}{CommandArgument}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_argument_aef677208892955c95614cd577dea23f7}{name}};}
+\DoxyCodeLine{00037\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_argument_a9be459ff3ae997108086f4ee900ffe3a}{description}};}
+\DoxyCodeLine{00038\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_argument_a5a6a13ff916eb3e0d9aac4d5a7a2c8d7}{type}};\ \textcolor{comment}{//\ "{}string"{},\ "{}int"{},\ "{}float"{},\ "{}bool"{}}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_argument_ac7554af9f410632ec452de7dcb1ef559}{required}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00040\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_argument_a4e7ca4f32627509a117782e231a51240}{defaultValue}};}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ Command\ definition}}
+\DoxyCodeLine{00044\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_command_definition}{CommandDefinition}}\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_a551bc6fc6be84414d350ca19bd91ba65}{name}};}
+\DoxyCodeLine{00046\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_afacae507c61a962089374a0a9bafb9af}{description}};}
+\DoxyCodeLine{00047\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_a2fe739c71e1e9c3f201cf0b45f46d590}{category}};}
+\DoxyCodeLine{00048\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_a09d648e2512bedcb0e5c3135a755f066}{aliases}};}
+\DoxyCodeLine{00049\ \ \ \ \ std::vector<CommandArgument>\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_acdbddda0bed1f888891dbc234028ef48}{arguments}};}
+\DoxyCodeLine{00050\ \ \ \ \ std::function<\mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context}{CommandContext}}\&)>\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_a3a36ee813158721d1cee5e6c1d1ff04d}{handler}};}
+\DoxyCodeLine{00051\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Usage\ string}}
+\DoxyCodeLine{00053\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_acbefae1f6b96a4bf4fd35db30571c34b}{getUsage}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition_ad09ce38c083be6d0c6aa3e13043db40f}{getHelp}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Command\ context\ passed\ to\ handlers}}
+\DoxyCodeLine{00058\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_command_context_a14bc26cff351ddb9a49fd52f8ad9dcbb}{CommandContext}}\ \{}
+\DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a14bc26cff351ddb9a49fd52f8ad9dcbb}{CommandContext}}(\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ app,\ \textcolor{keyword}{const}\ std::string\&\ cmd,\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ args);}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Access\ to\ application}}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a271f9fae7a835cff5b4dde9eff1079e9}{getApp}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_app;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Command\ info}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a8bcadf71dd750cf95e63ccc4d33eb663}{getCommand}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_command;\ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_af007c2df01c3de32caad37c8774be642}{getArgs}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_args;\ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a693346340e7dca1a7323a3df582c3d83}{getArgCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_args.size();\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Argument\ access}}
+\DoxyCodeLine{00072\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a8e11072473ac2915756fc96589bccb37}{getArg}}(\textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keyword}{const}\ std::string\&\ defaultValue\ =\ \textcolor{stringliteral}{"{}"{}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a7ea197e1ba97ade8c3f879e8114704c7}{getIntArg}}(\textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keywordtype}{int}\ defaultValue\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a066eef4180a921d73ad0b2b33edf67cb}{getFloatArg}}(\textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keywordtype}{float}\ defaultValue\ =\ 0.0f)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a2cd2af4fb9131d82e8b32d78479d33fd}{getBoolArg}}(\textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keywordtype}{bool}\ defaultValue\ =\ \textcolor{keyword}{false})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Named\ argument\ access\ (for\ future\ -\/-\/name=value\ style)}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a7a5fe01c47a5a0bb324b710101ff12ed}{hasOption}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_context_a1d9a6f49cc0a04038cf96ef006ce4015}{getOption}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ defaultValue\ =\ \textcolor{stringliteral}{"{}"{}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ m\_app;}
+\DoxyCodeLine{00083\ \ \ \ \ std::string\ m\_command;}
+\DoxyCodeLine{00084\ \ \ \ \ std::vector<std::string>\ m\_args;}
+\DoxyCodeLine{00085\ \ \ \ \ std::unordered\_map<std::string,\ std::string>\ m\_options;}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ parseOptions();}
+\DoxyCodeLine{00088\ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{comment}{//\ Command\ categories}}
+\DoxyCodeLine{00091\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_command_category}{CommandCategory}}\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a0b4ddb35532fa451a0bd08c8537c6bae}{FILE}}\ =\ \textcolor{stringliteral}{"{}File\ Operations"{}};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a9d7ba94b28eeb6d27b6ede0386f5f768}{EDIT}}\ =\ \textcolor{stringliteral}{"{}Edit\ Operations"{}};}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a7a6e652425997fa1df3b55db564badd9}{VIEW}}\ =\ \textcolor{stringliteral}{"{}View\ Controls"{}};}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_affa5f5ef8324e0e230866b7514e29ee1}{SELECT}}\ =\ \textcolor{stringliteral}{"{}Selection"{}};}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a1d29ff9930f6b0d9b22e764581459426}{GROUP}}\ =\ \textcolor{stringliteral}{"{}Group\ Management"{}};}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a79bd55811b5c9424ae3a20c2de27b82d}{HELP}}\ =\ \textcolor{stringliteral}{"{}Help\ \&\ Info"{}};}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a715cd3ecdd1746cc4affd20f41e96955}{SYSTEM}}\ =\ \textcolor{stringliteral}{"{}System"{}};}
+\DoxyCodeLine{00099\ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{comment}{//\ Common\ command\ names}}
+\DoxyCodeLine{00102\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_commands}{Commands}}\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ File\ operations}}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a3b67ec47b269a2f87608e4786c8bb4bc}{NEW}}\ =\ \textcolor{stringliteral}{"{}new"{}};}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a5504d71d6fdb4122153bd40e9a0a02be}{OPEN}}\ =\ \textcolor{stringliteral}{"{}open"{}};}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a605bc1cbd70a2bfdd8b2723f3c0b760e}{SAVE}}\ =\ \textcolor{stringliteral}{"{}save"{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a1f999fcd6bc2bd7be45f6914d24725d0}{SAVE\_AS}}\ =\ \textcolor{stringliteral}{"{}saveas"{}};}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a5e3066067cedaecf6be6a5c246bc76f8}{EXPORT}}\ =\ \textcolor{stringliteral}{"{}export"{}};}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aecb0fd0f35e74ca695b13f0db679e858}{IMPORT}}\ =\ \textcolor{stringliteral}{"{}import"{}};}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//\ Edit\ operations}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a73cf0cbc013bb1890b7b284e94117a4d}{PLACE}}\ =\ \textcolor{stringliteral}{"{}place"{}};}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ac17b01ca6865e1d301a2415f9f2f65ab}{DELETE}}\ =\ \textcolor{stringliteral}{"{}delete"{}};}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a7c0776274e33a7df1f4eda7db13cac35}{FILL}}\ =\ \textcolor{stringliteral}{"{}fill"{}};}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a113a00a7e5e7bd7132ceb017bd035756}{PAINT}}\ =\ \textcolor{stringliteral}{"{}paint"{}};}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a629b4798c409daa4cfc03cc5fa6d0dcd}{MOVE}}\ =\ \textcolor{stringliteral}{"{}move"{}};}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a5a40bbb9a5e35f9390ffa95b98ef70c8}{COPY}}\ =\ \textcolor{stringliteral}{"{}copy"{}};}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a72de7609da2d604eac492f501d778355}{PASTE}}\ =\ \textcolor{stringliteral}{"{}paste"{}};}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_afdf6cedae8cbb2d441170cda0be9eab1}{UNDO}}\ =\ \textcolor{stringliteral}{"{}undo"{}};}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a3b6430a70cada978a8716c3744ceaf57}{REDO}}\ =\ \textcolor{stringliteral}{"{}redo"{}};}
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ View\ controls}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ac7112d0f28820c278c5b2d251e5cb150}{CAMERA}}\ =\ \textcolor{stringliteral}{"{}camera"{}};}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab396fd8b0e130422e479f07371acfa51}{ZOOM}}\ =\ \textcolor{stringliteral}{"{}zoom"{}};}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a3031727b92343ab1dbb71f69311c58eb}{PAN}}\ =\ \textcolor{stringliteral}{"{}pan"{}};}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a780772dc0870364fe934a54c348f75e6}{ROTATE}}\ =\ \textcolor{stringliteral}{"{}rotate"{}};}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a60d2775567501406583a70045c054ff0}{RESET\_VIEW}}\ =\ \textcolor{stringliteral}{"{}resetview"{}};}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab3e9be50874167da35577d434cacf885}{GRID}}\ =\ \textcolor{stringliteral}{"{}grid"{}};}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ae972d025d36d8a3b032218c467989b67}{AXES}}\ =\ \textcolor{stringliteral}{"{}axes"{}};}
+\DoxyCodeLine{00130\ \ \ \ \ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ Selection}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a7d6c143dbbcb6e816f133adcbaae543d}{SELECT}}\ =\ \textcolor{stringliteral}{"{}select"{}};}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aa4ac4a20b42d48cfc4eb29bf581fd870}{DESELECT}}\ =\ \textcolor{stringliteral}{"{}deselect"{}};}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a863c9e6e818d47d4838141f23a631912}{SELECT\_ALL}}\ =\ \textcolor{stringliteral}{"{}selectall"{}};}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ac5c1379a8556e212c9711bf533cbc8ef}{SELECT\_NONE}}\ =\ \textcolor{stringliteral}{"{}selectnone"{}};}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aec8ab7f035c13f222735b62574ac82c5}{SELECT\_BOX}}\ =\ \textcolor{stringliteral}{"{}selectbox"{}};}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a4453b5daa7905de811bea730de895069}{SELECT\_SPHERE}}\ =\ \textcolor{stringliteral}{"{}selectsphere"{}};}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{comment}{//\ Group\ management}}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a4a41680bcfa1533544c4a838687ea314}{GROUP}}\ =\ \textcolor{stringliteral}{"{}group"{}};}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_add6e991ee9876bdc403aeae12ddee736}{UNGROUP}}\ =\ \textcolor{stringliteral}{"{}ungroup"{}};}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a42f002ddf2e1dd7a7bcf7e3f8c7deb28}{GROUP\_LIST}}\ =\ \textcolor{stringliteral}{"{}groups"{}};}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a8dcb44694dc84afeedabfc723427af01}{GROUP\_HIDE}}\ =\ \textcolor{stringliteral}{"{}hide"{}};}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a687baaa0f0296f5ec5e129270d80ae31}{GROUP\_SHOW}}\ =\ \textcolor{stringliteral}{"{}show"{}};}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab9aeff03d2a2f834b89965eec4729f92}{GROUP\_LOCK}}\ =\ \textcolor{stringliteral}{"{}lock"{}};}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a7525fee14dba1fc8b0a034bedb2add81}{GROUP\_UNLOCK}}\ =\ \textcolor{stringliteral}{"{}unlock"{}};}
+\DoxyCodeLine{00147\ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ System}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a8bfa33b0fce9c201f3f7882847e4c524}{HELP}}\ =\ \textcolor{stringliteral}{"{}help"{}};}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a74c2ef3fbf77e26f788b377cf5a01542}{QUIT}}\ =\ \textcolor{stringliteral}{"{}quit"{}};}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a6ddce3bf776997801a63fe7494bc5820}{EXIT}}\ =\ \textcolor{stringliteral}{"{}exit"{}};}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab5a8fcb8976b6aa9cb438db18d478509}{CLEAR}}\ =\ \textcolor{stringliteral}{"{}clear"{}};}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aa8644c2b83726f38ad35d1be328874f3}{STATUS}}\ =\ \textcolor{stringliteral}{"{}status"{}};}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_af9b8bdf86ab5e6390237a16995dc05a6}{SETTINGS}}\ =\ \textcolor{stringliteral}{"{}settings"{}};}
+\DoxyCodeLine{00155\ \}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

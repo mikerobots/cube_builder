@@ -1,0 +1,50 @@
+\doxysection{Voxel\+Editor\+::Groups\+::Group\+Operation\+Utils Namespace Reference}
+\hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils}{}\label{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils}\index{VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_ae12da07a4dd578fd3321c22b7994a867}{transform\+Voxel}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} \&voxel, const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform}{Group\+Transform}} \&transform)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba}{calculate\+Bounds}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&voxels)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a82e0ef532e160476f08ef0dd3b18b00d}{calculate\+Optimal\+Pivot}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&voxels)
+\item 
+bool \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a48e7c7adf7b9020b05a17ac875b4e766}{validate\+Voxel\+Positions}} (const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&voxels, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&workspace\+Bounds)
+\item 
+std\+::string \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_aaba64228af763adcdf1a8aa71e8d00ca}{generate\+Unique\+Name}} (const std\+::string \&base\+Name, const std\+::vector$<$ std\+::string $>$ \&existing\+Names)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba}\index{VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}!calculateBounds@{calculateBounds}}
+\index{calculateBounds@{calculateBounds}!VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}}
+\doxysubsubsection{\texorpdfstring{calculateBounds()}{calculateBounds()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::calculate\+Bounds (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&}]{voxels}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a82e0ef532e160476f08ef0dd3b18b00d}\index{VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}!calculateOptimalPivot@{calculateOptimalPivot}}
+\index{calculateOptimalPivot@{calculateOptimalPivot}!VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}}
+\doxysubsubsection{\texorpdfstring{calculateOptimalPivot()}{calculateOptimalPivot()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a82e0ef532e160476f08ef0dd3b18b00d} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::calculate\+Optimal\+Pivot (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&}]{voxels}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_aaba64228af763adcdf1a8aa71e8d00ca}\index{VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}!generateUniqueName@{generateUniqueName}}
+\index{generateUniqueName@{generateUniqueName}!VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}}
+\doxysubsubsection{\texorpdfstring{generateUniqueName()}{generateUniqueName()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_aaba64228af763adcdf1a8aa71e8d00ca} 
+std\+::string Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::generate\+Unique\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{base\+Name}{, }\item[{const std\+::vector$<$ std\+::string $>$ \&}]{existing\+Names}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_ae12da07a4dd578fd3321c22b7994a867}\index{VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}!transformVoxel@{transformVoxel}}
+\index{transformVoxel@{transformVoxel}!VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}}
+\doxysubsubsection{\texorpdfstring{transformVoxel()}{transformVoxel()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_ae12da07a4dd578fd3321c22b7994a867} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::transform\+Voxel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} \&}]{voxel}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform}{Group\+Transform}} \&}]{transform}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a48e7c7adf7b9020b05a17ac875b4e766}\index{VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}!validateVoxelPositions@{validateVoxelPositions}}
+\index{validateVoxelPositions@{validateVoxelPositions}!VoxelEditor::Groups::GroupOperationUtils@{VoxelEditor::Groups::GroupOperationUtils}}
+\doxysubsubsection{\texorpdfstring{validateVoxelPositions()}{validateVoxelPositions()}}
+{\footnotesize\ttfamily \label{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a48e7c7adf7b9020b05a17ac875b4e766} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Operation\+Utils\+::validate\+Voxel\+Positions (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{Voxel\+Id}} $>$ \&}]{voxels}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&}]{workspace\+Bounds}{}\end{DoxyParamCaption})}
+

@@ -1,0 +1,222 @@
+\doxysection{Memory\+Optimizer.\+h}
+\hypertarget{_memory_optimizer_8h_source}{}\label{_memory_optimizer_8h_source}\index{foundation/memory/MemoryOptimizer.h@{foundation/memory/MemoryOptimizer.h}}
+\mbox{\hyperlink{_memory_optimizer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_memory_tracker_8h}{MemoryTracker.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_memory_pool_8h}{MemoryPool.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_handler_8h}{../events/EventHandler.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_common_events_8h}{../events/CommonEvents.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_memory}{Memory}}\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{Low}}\ =\ 0,}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a87f8a6ab85c9ced3702b4ea641ad4bb5}{Medium}}\ =\ 1,}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a655d20c1ca69519ca647684edbb2db35}{High}}\ =\ 2,}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a278d01e5af56273bae1bb99a98b370cd}{Critical}}\ =\ 3}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback_a37ac99fde19a8382c5af818f1ecb20cb}{CleanupCallback}}\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback_a37ac99fde19a8382c5af818f1ecb20cb}{CleanupCallback}}(std::function<\textcolor{keywordtype}{size\_t}()>\ callback,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ priority,\ \textcolor{keyword}{const}\ std::string\&\ name)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ :\ m\_callback(callback),\ m\_priority(priority),\ m\_name(name)\ \{\}}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback_a7d33a3722be776e67a1356cf9622ab85}{execute}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_callback\ ?\ m\_callback()\ :\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \}}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback_af67dfa7dd8969035284822d2de777c8f}{getPriority}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_priority;\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback_a35f68d21ebe7cad596353d3810480993}{getName}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00034\ \ \ \ \ std::function<size\_t()>\ m\_callback;}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ m\_priority;}
+\DoxyCodeLine{00036\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_abb1422253d4ad03775d08a4556011e32}{MemoryOptimizer}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{Events::EventHandler}}<Events::MemoryPressureEvent>\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_abb1422253d4ad03775d08a4556011e32}{MemoryOptimizer}}()\ :\ m\_enabled(true),\ m\_aggressiveMode(false)\ \{\}}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_af9085aacfd697b387f79562f494dee13}{handleEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Events::MemoryPressureEvent}}\&\ event)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_enabled)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pressureRatio\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(\textcolor{keyword}{event}.currentUsage)\ /\ event.\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a1a67c7eabc747566aecb50852d2915ab}{maxUsage}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pressureRatio\ >\ 0.95f)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}{performCleanup}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a278d01e5af56273bae1bb99a98b370cd}{CleanupPriority::Critical}});}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (pressureRatio\ >\ 0.90f)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}{performCleanup}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a655d20c1ca69519ca647684edbb2db35}{CleanupPriority::High}});}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (pressureRatio\ >\ 0.80f)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}{performCleanup}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a87f8a6ab85c9ced3702b4ea641ad4bb5}{CleanupPriority::Medium}});}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a220a8212014107c07e6c78862c1ed6de}{registerCleanupCallback}}(std::function<\textcolor{keywordtype}{size\_t}()>\ callback,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ priority,\ \textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ m\_cleanupCallbacks.emplace\_back(callback,\ priority,\ name);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ std::sort(m\_cleanupCallbacks.begin(),\ m\_cleanupCallbacks.end(),}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback}{CleanupCallback}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_cleanup_callback}{CleanupCallback}}\&\ b)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ static\_cast<int>(a.getPriority())\ >\ static\_cast<int>(b.getPriority());}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}{performCleanup}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ minPriority\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{CleanupPriority::Low}})\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalFreed\ =\ 0;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ callback\ :\ m\_cleanupCallbacks)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(callback.getPriority())\ >=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(minPriority))\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ freed\ =\ callback.execute();}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ totalFreed\ +=\ freed;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (freed\ >\ 0)\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Log\ cleanup\ action}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_aggressiveMode\ \&\&\ totalFreed\ >\ 0)\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ totalFreed;}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae0d12fa0ce450d64c5d6fde8e6140a74}{setEnabled}}(\textcolor{keywordtype}{bool}\ enabled)\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ m\_enabled\ =\ enabled;}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8513980197e94c9d3c1a6c85c16e25e8}{isEnabled}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_enabled;}
+\DoxyCodeLine{00093\ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_ae5afd3c9b7fe2bfaab172d3970a1b0aa}{setAggressiveMode}}(\textcolor{keywordtype}{bool}\ aggressive)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ m\_aggressiveMode\ =\ aggressive;}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a70a3c4b99cf95e194544e1e85de1b085}{isAggressiveMode}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_aggressiveMode;}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a9b296c65a56f71d983b41071a1d1a770}{forceCleanup}}()\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_acdcc8ef11c0ca325e1d75df203fd6a89}{performCleanup}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{CleanupPriority::Low}});}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a8f127806d3865094f1efa68b24a257e7}{getCallbackCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_cleanupCallbacks.size();}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer_a873c822f838beac3bfcd9265a15f4771}{getCallbackNames}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ std::vector<std::string>\ names;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ names.reserve(m\_cleanupCallbacks.size());}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ callback\ :\ m\_cleanupCallbacks)\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ names.push\_back(callback.getName());}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ names;}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00123\ \ \ \ \ std::vector<CleanupCallback>\ m\_cleanupCallbacks;}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_enabled;}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_aggressiveMode;}
+\DoxyCodeLine{00126\ \};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keyword}{class\ }MemoryManager\ \{}
+\DoxyCodeLine{00129\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ MemoryManager\&\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a44ebe3cc73435482d6c1dc1aa37b7e20}{getInstance}}()\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ MemoryManager\ instance;}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a39cc672e0fbe5d62bf1f163e7e25a126}{initialize}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher)\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ m\_tracker.setEventDispatcher(eventDispatcher);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ eventDispatcher-\/>\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_acad55493bbb9e1d888c689a668d14704}{subscribe}}<\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Events::MemoryPressureEvent}}>(\&m\_optimizer);}
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker}{MemoryTracker}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a187c15e28604936301bc39c7c35d506c}{getTracker}}()\ \{\ \textcolor{keywordflow}{return}\ m\_tracker;\ \}}
+\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer}{MemoryOptimizer}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a844368578671cb75563572295eb96980}{getOptimizer}}()\ \{\ \textcolor{keywordflow}{return}\ m\_optimizer;\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a38a50842c130f62b873aaf781f1d5249}{setMemoryLimit}}(\textcolor{keywordtype}{size\_t}\ limitBytes)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ m\_tracker.setMemoryLimit(limitBytes);}
+\DoxyCodeLine{00145\ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a1eee10ea700bd424dc3bef9a46284e67}{registerCleanupCallback}}(std::function<\textcolor{keywordtype}{size\_t}()>\ callback,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ priority,\ \textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ m\_optimizer.registerCleanupCallback(callback,\ priority,\ name);}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}{MemoryTracker::MemoryStats}}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a466df3f5f1cc6e7d1109406d38ce7e3e}{getStats}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_tracker.getStats();}
+\DoxyCodeLine{00153\ \ \ \ \ \}}
+\DoxyCodeLine{00154\ \ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_aea7dc8b453ab0aedba710356512c2506}{isMemoryPressure}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_tracker.isMemoryPressure();}
+\DoxyCodeLine{00157\ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_afa99906bae7418f292418fe0b74b8073}{performCleanup}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903}{CleanupPriority}}\ minPriority\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{CleanupPriority::Low}})\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_optimizer.performCleanup(minPriority);}
+\DoxyCodeLine{00161\ \ \ \ \ \}}
+\DoxyCodeLine{00162\ \ \ \ \ }
+\DoxyCodeLine{00163\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager}{MemoryManager}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00165\ \ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker}{MemoryTracker}}\&\ m\_tracker\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a114f6860e742485d0c7c77d2cdf6bd7a}{MemoryTracker::getInstance}}();}
+\DoxyCodeLine{00167\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_optimizer}{MemoryOptimizer}}\ m\_optimizer;}
+\DoxyCodeLine{00168\ \};}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00171\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_af9c558a1de507bc3864446bf41758b11}{ManagedMemoryPool}}\ \{}
+\DoxyCodeLine{00172\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00173\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_af9c558a1de507bc3864446bf41758b11}{ManagedMemoryPool}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{size\_t}\ initialCapacity\ =\ 64)}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ :\ m\_pool(initialCapacity),\ m\_name(name)\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a44ebe3cc73435482d6c1dc1aa37b7e20}{MemoryManager::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_manager_a1eee10ea700bd424dc3bef9a46284e67}{registerCleanupCallback}}(}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this}]()\ -\/>\ \textcolor{keywordtype}{size\_t}\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ beforeUsage\ =\ m\_pool.getMemoryUsage();}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_pool.shrink();}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ afterUsage\ =\ m\_pool.getMemoryUsage();}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ beforeUsage\ -\/\ afterUsage;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_memory_a5187c3341c129c081685e8d16b7b6903a28d0edd045e05cf5af64e35ae0c4c6ef}{CleanupPriority::Low}},}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Pool\_"{}}\ +\ m\_name}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00186\ \ \ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00189\ \ \ \ \ T*\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_afa9edf1e23d7f9d4513a6e40495fc949}{construct}}(Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ T*\ ptr\ =\ m\_pool.construct(std::forward<Args>(args)...);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ptr)\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a114f6860e742485d0c7c77d2cdf6bd7a}{MemoryTracker::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a51a4ca6671b260c9c3e4c1e43b7aa237}{recordAllocation}}(ptr,\ \textcolor{keyword}{sizeof}(T),\ m\_name.c\_str());}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{00195\ \ \ \ \ \}}
+\DoxyCodeLine{00196\ \ \ \ \ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_a0b96b69e6e5abda4ccef351d9781b3b0}{destroy}}(T*\ ptr)\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ptr)\ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a114f6860e742485d0c7c77d2cdf6bd7a}{MemoryTracker::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a20e0cbf7ab47f6c3a3e6007ee22c1ba2}{recordDeallocation}}(ptr);}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ m\_pool.destroy(ptr);}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_a44acb7a90deafeff307596142100ce4a}{getCapacity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getCapacity();\ \}}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_afeafe468eefc90194300bae76725777c}{getUsedCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getUsedCount();\ \}}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_ad1ea19f52e74e48d4ee6c6357af7d1bd}{getFreeCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getFreeCount();\ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_a3a51b498c451b44974611537b8bfa6e2}{getMemoryUsage}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getMemoryUsage();\ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_managed_memory_pool_ae7ce18f29f41017849478efdfdf4165a}{getUtilization}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getUtilization();\ \}}
+\DoxyCodeLine{00209\ \ \ \ \ }
+\DoxyCodeLine{00210\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool}{TypedMemoryPool<T>}}\ m\_pool;}
+\DoxyCodeLine{00212\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00213\ \};}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \}}
+\DoxyCodeLine{00216\ \}}
+
+\end{DoxyCode}

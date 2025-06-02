@@ -11,9 +11,9 @@ add_library(VoxelEditor_Rendering STATIC
     
     # Source files
     RenderTypes.cpp
+    # RenderEngine.cpp  # TODO: Fix incomplete type issues
+    OpenGLRenderer.cpp
     # TODO: Add implementations when OpenGL integration is complete
-    # RenderEngine.cpp
-    # OpenGLRenderer.cpp
     # RenderState.cpp
     # ShaderManager.cpp
 )

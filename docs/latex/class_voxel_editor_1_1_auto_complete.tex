@@ -1,0 +1,153 @@
+\doxysection{Voxel\+Editor\+::Auto\+Complete Class Reference}
+\hypertarget{class_voxel_editor_1_1_auto_complete}{}\label{class_voxel_editor_1_1_auto_complete}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+
+
+{\ttfamily \#include $<$Auto\+Complete.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_aa40df766d201bdaff0224f3f143bb542}{Auto\+Complete}} (\mbox{\hyperlink{class_voxel_editor_1_1_command_processor}{Command\+Processor}} \texorpdfstring{$\ast$}{*}processor, \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}} \texorpdfstring{$\ast$}{*}app)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a69457806e99f822417d6c8d1b4abfb3c}{\texorpdfstring{$\sim$}{\string~}\+Auto\+Complete}} ()=default
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a75efc423e5804bab2704c286dd1b55f1}{reset}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a0a99c37103f6f8dd56f90bb289d59e7f}{set\+Input}} (const std\+::string \&input)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_aa274a698d9b5c8700c01267947f3676e}{set\+Cursor\+Position}} (size\+\_\+t pos)
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_ae062a95b9f0c9d765890e4ec451e4682}{get\+Completions}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a6312a925ae7bf9964c438fd56df703e1}{get\+Completion}} (size\+\_\+t index) const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a0c437a398342803ca4f56227aafcdc80}{apply\+Completion}} (size\+\_\+t index) const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a33c70e0602bcf190f86ef029b2a2f895}{next\+Completion}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_abc3b507f1ade701e69239b2fba21d9b7}{previous\+Completion}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a01060e6724fd38b6ef0d8088eea9769b}{get\+Current\+Completion}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_ad4ed9a9bfee8f68ae80233728522ee89}{has\+Completions}} () const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a1808305e175c0f64fbd888ec978be54a}{get\+File\+Completions}} (const std\+::string \&partial) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a12e2690918d6993dc77f95d75aa8bf5b}{get\+Group\+Completions}} (const std\+::string \&partial) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_ad2a59f2d7b44456c05e489090e12e504}{get\+View\+Completions}} (const std\+::string \&partial) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_auto_complete_a27f65c0e8a032ab8f28b6ef870964e1c}{get\+Resolution\+Completions}} (const std\+::string \&partial) const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_auto_complete_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_auto_complete_aa40df766d201bdaff0224f3f143bb542}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!AutoComplete@{AutoComplete}}
+\index{AutoComplete@{AutoComplete}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{AutoComplete()}{AutoComplete()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_aa40df766d201bdaff0224f3f143bb542} 
+Voxel\+Editor\+::\+Auto\+Complete\+::\+Auto\+Complete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_command_processor}{Command\+Processor}} \texorpdfstring{$\ast$}{*}}]{processor}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}} \texorpdfstring{$\ast$}{*}}]{app}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a69457806e99f822417d6c8d1b4abfb3c}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!````~AutoComplete@{\texorpdfstring{$\sim$}{\string~}AutoComplete}}
+\index{````~AutoComplete@{\texorpdfstring{$\sim$}{\string~}AutoComplete}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AutoComplete()}{\string~AutoComplete()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a69457806e99f822417d6c8d1b4abfb3c} 
+Voxel\+Editor\+::\+Auto\+Complete\+::\texorpdfstring{$\sim$}{\string~}\+Auto\+Complete (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_auto_complete_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a0c437a398342803ca4f56227aafcdc80}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!applyCompletion@{applyCompletion}}
+\index{applyCompletion@{applyCompletion}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{applyCompletion()}{applyCompletion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a0c437a398342803ca4f56227aafcdc80} 
+std\+::string Voxel\+Editor\+::\+Auto\+Complete\+::apply\+Completion (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a6312a925ae7bf9964c438fd56df703e1}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getCompletion@{getCompletion}}
+\index{getCompletion@{getCompletion}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getCompletion()}{getCompletion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a6312a925ae7bf9964c438fd56df703e1} 
+std\+::string Voxel\+Editor\+::\+Auto\+Complete\+::get\+Completion (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_ae062a95b9f0c9d765890e4ec451e4682}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getCompletions@{getCompletions}}
+\index{getCompletions@{getCompletions}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getCompletions()}{getCompletions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_ae062a95b9f0c9d765890e4ec451e4682} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Auto\+Complete\+::get\+Completions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a01060e6724fd38b6ef0d8088eea9769b}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getCurrentCompletion@{getCurrentCompletion}}
+\index{getCurrentCompletion@{getCurrentCompletion}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getCurrentCompletion()}{getCurrentCompletion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a01060e6724fd38b6ef0d8088eea9769b} 
+std\+::string Voxel\+Editor\+::\+Auto\+Complete\+::get\+Current\+Completion (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a1808305e175c0f64fbd888ec978be54a}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getFileCompletions@{getFileCompletions}}
+\index{getFileCompletions@{getFileCompletions}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getFileCompletions()}{getFileCompletions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a1808305e175c0f64fbd888ec978be54a} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Auto\+Complete\+::get\+File\+Completions (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{partial}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a12e2690918d6993dc77f95d75aa8bf5b}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getGroupCompletions@{getGroupCompletions}}
+\index{getGroupCompletions@{getGroupCompletions}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getGroupCompletions()}{getGroupCompletions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a12e2690918d6993dc77f95d75aa8bf5b} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Auto\+Complete\+::get\+Group\+Completions (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{partial}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a27f65c0e8a032ab8f28b6ef870964e1c}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getResolutionCompletions@{getResolutionCompletions}}
+\index{getResolutionCompletions@{getResolutionCompletions}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getResolutionCompletions()}{getResolutionCompletions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a27f65c0e8a032ab8f28b6ef870964e1c} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Auto\+Complete\+::get\+Resolution\+Completions (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{partial}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_ad2a59f2d7b44456c05e489090e12e504}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!getViewCompletions@{getViewCompletions}}
+\index{getViewCompletions@{getViewCompletions}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{getViewCompletions()}{getViewCompletions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_ad2a59f2d7b44456c05e489090e12e504} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Auto\+Complete\+::get\+View\+Completions (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{partial}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_ad4ed9a9bfee8f68ae80233728522ee89}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!hasCompletions@{hasCompletions}}
+\index{hasCompletions@{hasCompletions}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{hasCompletions()}{hasCompletions()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_ad4ed9a9bfee8f68ae80233728522ee89} 
+bool Voxel\+Editor\+::\+Auto\+Complete\+::has\+Completions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a33c70e0602bcf190f86ef029b2a2f895}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!nextCompletion@{nextCompletion}}
+\index{nextCompletion@{nextCompletion}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{nextCompletion()}{nextCompletion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a33c70e0602bcf190f86ef029b2a2f895} 
+void Voxel\+Editor\+::\+Auto\+Complete\+::next\+Completion (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_abc3b507f1ade701e69239b2fba21d9b7}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!previousCompletion@{previousCompletion}}
+\index{previousCompletion@{previousCompletion}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{previousCompletion()}{previousCompletion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_abc3b507f1ade701e69239b2fba21d9b7} 
+void Voxel\+Editor\+::\+Auto\+Complete\+::previous\+Completion (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a75efc423e5804bab2704c286dd1b55f1}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!reset@{reset}}
+\index{reset@{reset}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a75efc423e5804bab2704c286dd1b55f1} 
+void Voxel\+Editor\+::\+Auto\+Complete\+::reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_aa274a698d9b5c8700c01267947f3676e}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!setCursorPosition@{setCursorPosition}}
+\index{setCursorPosition@{setCursorPosition}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{setCursorPosition()}{setCursorPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_aa274a698d9b5c8700c01267947f3676e} 
+void Voxel\+Editor\+::\+Auto\+Complete\+::set\+Cursor\+Position (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{pos}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_auto_complete_a0a99c37103f6f8dd56f90bb289d59e7f}\index{VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}!setInput@{setInput}}
+\index{setInput@{setInput}!VoxelEditor::AutoComplete@{VoxelEditor::AutoComplete}}
+\doxysubsubsection{\texorpdfstring{setInput()}{setInput()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_auto_complete_a0a99c37103f6f8dd56f90bb289d59e7f} 
+void Voxel\+Editor\+::\+Auto\+Complete\+::set\+Input (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{input}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+apps/cli/include/cli/\mbox{\hyperlink{_auto_complete_8h}{Auto\+Complete.\+h}}\item 
+apps/cli/src/\mbox{\hyperlink{_auto_complete_8cpp}{Auto\+Complete.\+cpp}}\end{DoxyCompactItemize}

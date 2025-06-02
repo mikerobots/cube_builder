@@ -1,0 +1,439 @@
+\chapter{Voxel Editor Architecture }
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e}{}\label{md__a_r_c_h_i_t_e_c_t_u_r_e}\index{Voxel Editor Architecture@{Voxel Editor Architecture}}
+\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md25}%
+\Hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md25}%
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md26}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md26}
+The voxel editor is built with a modular architecture centered around a shared core library. Each subsystem is designed to be independently testable and loosely coupled.\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md27}{}\doxysection{\texorpdfstring{System Architecture}{System Architecture}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md27}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{┌─────────────────────────────────────────────────────────────┐}
+\DoxyCodeLine{│\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application\ Layer\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ │}
+\DoxyCodeLine{├─────────────────┬─────────────────┬─────────────────────────┤}
+\DoxyCodeLine{│\ \ \ Command\ Line\ \ │\ \ \ Qt\ Desktop\ \ \ \ │\ \ \ \ \ \ VR\ Application\ \ \ \ \ │}
+\DoxyCodeLine{│\ \ \ Application\ \ \ │\ \ \ Application\ \ \ │\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ │}
+\DoxyCodeLine{└─────────────────┴─────────────────┴─────────────────────────┘}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ │}
+\DoxyCodeLine{┌─────────────────────────────────────────────────────────────┐}
+\DoxyCodeLine{│\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Core\ Library\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ │}
+\DoxyCodeLine{├─────────────────────────────────────────────────────────────┤}
+\DoxyCodeLine{│\ \ Input\ System\ │\ Rendering\ │\ Camera\ │\ Visual\ Feedback\ │\ I/O\ \ │}
+\DoxyCodeLine{├─────────────────────────────────────────────────────────────┤}
+\DoxyCodeLine{│\ \ \ Voxel\ Data\ \ │\ \ Groups\ \ \ │\ Surface\ │\ \ \ Selection\ \ \ \ \ │\ Undo\ │}
+\DoxyCodeLine{│\ \ \ Management\ \ │\ \ System\ \ \ │\ \ Gen\ \ \ \ │\ \ \ System\ \ \ \ \ \ \ \ │\ Redo\ │}
+\DoxyCodeLine{└─────────────────────────────────────────────────────────────┘}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ │}
+\DoxyCodeLine{┌─────────────────────────────────────────────────────────────┐}
+\DoxyCodeLine{│\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Foundation\ Layer\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ │}
+\DoxyCodeLine{├─────────────────────────────────────────────────────────────┤}
+\DoxyCodeLine{│\ \ \ \ Math\ Utils\ │\ Memory\ Pool\ │\ Logger\ │\ Event\ System\ │\ Config\ │}
+\DoxyCodeLine{└─────────────────────────────────────────────────────────────┘}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md28}{}\doxysection{\texorpdfstring{Core Library Subsystems}{Core Library Subsystems}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md28}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md29}{}\doxysubsection{\texorpdfstring{1. Voxel Data Management ({\ttfamily Voxel\+Data\+Manager})}{1. Voxel Data Management ({\ttfamily Voxel\+Data\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md29}
+{\bfseries{Purpose}}\+: Manages multi-\/resolution voxel storage and workspace {\bfseries{Dependencies}}\+: Math Utils, Memory Pool, Event System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md30}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md30}
+
+\begin{DoxyItemize}
+\item {\ttfamily Voxel\+Grid} -\/ Individual resolution level storage
+\item {\ttfamily Multi\+Resolution\+Grid} -\/ Manages all 10 resolution levels
+\item {\ttfamily Sparse\+Octree} -\/ Memory-\/efficient voxel storage
+\item {\ttfamily Workspace\+Manager} -\/ Handles workspace bounds and resizing
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md31}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md31}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }VoxelDataManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res,\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ resizeWorkspace(\textcolor{keyword}{const}\ Vector3f\&\ size);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::array<std::unique\_ptr<VoxelGrid>,\ 10>\ m\_grids;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ m\_activeResolution;}
+\DoxyCodeLine{\ \ \ \ Vector3f\ m\_workspaceSize;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md32}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md32}
+
+\begin{DoxyItemize}
+\item Voxel placement and retrieval
+\item Resolution switching
+\item Workspace resizing
+\item Memory usage validation
+\item Sparse storage efficiency
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md33}{}\doxysubsection{\texorpdfstring{2. Group Management System ({\ttfamily Group\+Manager})}{2. Group Management System ({\ttfamily Group\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md33}
+{\bfseries{Purpose}}\+: Handles voxel grouping, operations, and metadata {\bfseries{Dependencies}}\+: Voxel Data Manager, Event System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md34}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md34}
+
+\begin{DoxyItemize}
+\item {\ttfamily Voxel\+Group} -\/ Individual group with metadata
+\item {\ttfamily Group\+Hierarchy} -\/ Manages nested groups
+\item {\ttfamily Group\+Operations} -\/ Move, hide, copy operations
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md35}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md35}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }GroupManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ createGroup(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ hideGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ showGroup(GroupId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ moveGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
+\DoxyCodeLine{\ \ \ \ std::vector<GroupInfo>\ listGroups()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<GroupId,\ VoxelGroup>\ m\_groups;}
+\DoxyCodeLine{\ \ \ \ GroupHierarchy\ m\_hierarchy;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md36}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md36}
+
+\begin{DoxyItemize}
+\item Group creation and deletion
+\item Visibility toggling
+\item Group movement operations
+\item Hierarchy validation
+\item Metadata persistence
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md37}{}\doxysubsection{\texorpdfstring{3. Surface Generation ({\ttfamily Surface\+Generator})}{3. Surface Generation ({\ttfamily Surface\+Generator})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md37}
+{\bfseries{Purpose}}\+: Converts voxel data to smooth 3D meshes {\bfseries{Dependencies}}\+: Voxel Data Manager, Math Utils\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md38}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md38}
+
+\begin{DoxyItemize}
+\item {\ttfamily Dual\+Contouring} -\/ Core algorithm implementation
+\item {\ttfamily Mesh\+Builder} -\/ Constructs output meshes
+\item {\ttfamily LODManager} -\/ Level-\/of-\/detail optimization
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md39}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md39}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SurfaceGenerator\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateSurface(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keywordtype}{float}\ isoValue\ =\ 0.5f);}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateLOD(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keywordtype}{int}\ lodLevel);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setQualitySettings(\textcolor{keyword}{const}\ SurfaceQuality\&\ settings);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ DualContouring\ m\_algorithm;}
+\DoxyCodeLine{\ \ \ \ MeshBuilder\ m\_meshBuilder;}
+\DoxyCodeLine{\ \ \ \ LODManager\ m\_lodManager;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md40}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md40}
+
+\begin{DoxyItemize}
+\item Mesh generation accuracy
+\item Edge case handling (empty grids, single voxels)
+\item LOD quality verification
+\item Performance benchmarks
+\item Memory usage validation
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md41}{}\doxysubsection{\texorpdfstring{4. Selection System ({\ttfamily Selection\+Manager})}{4. Selection System ({\ttfamily Selection\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md41}
+{\bfseries{Purpose}}\+: Manages voxel selection and multi-\/selection operations {\bfseries{Dependencies}}\+: Voxel Data Manager, Visual Feedback System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md42}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md42}
+
+\begin{DoxyItemize}
+\item {\ttfamily Selection\+Set} -\/ Manages selected voxels
+\item {\ttfamily Selection\+Operations} -\/ Bulk operations on selections
+\item {\ttfamily Selection\+Persistence} -\/ Save/restore selections
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md43}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md43}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }SelectionManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deselectVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectAll();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearSelection();}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getSelection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ m\_currentSelection;}
+\DoxyCodeLine{\ \ \ \ std::stack<SelectionSet>\ m\_selectionHistory;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md44}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md44}
+
+\begin{DoxyItemize}
+\item Single and multi-\/selection
+\item Selection persistence
+\item Bulk operations
+\item Selection validation
+\item Performance with large selections
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md45}{}\doxysubsection{\texorpdfstring{5. Camera System ({\ttfamily Camera\+Manager})}{5. Camera System ({\ttfamily Camera\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md45}
+{\bfseries{Purpose}}\+: Manages 3D camera movement and view presets {\bfseries{Dependencies}}\+: Math Utils, Event System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md46}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md46}
+
+\begin{DoxyItemize}
+\item {\ttfamily Orbit\+Camera} -\/ Camera with orbit controls
+\item {\ttfamily View\+Presets} -\/ Predefined view positions
+\item {\ttfamily Camera\+Animator} -\/ Smooth transitions
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md47}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md47}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }CameraManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setView(ViewType\ view);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ zoom(\textcolor{keywordtype}{float}\ factor);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ rotate(\textcolor{keywordtype}{float}\ deltaX,\ \textcolor{keywordtype}{float}\ deltaY);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ getViewMatrix()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ OrbitCamera\ m\_camera;}
+\DoxyCodeLine{\ \ \ \ ViewPresets\ m\_presets;}
+\DoxyCodeLine{\ \ \ \ CameraAnimator\ m\_animator;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md48}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md48}
+
+\begin{DoxyItemize}
+\item View transitions
+\item Zoom limits
+\item Rotation calculations
+\item Animation smoothness
+\item Matrix calculations
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md49}{}\doxysubsection{\texorpdfstring{6. Rendering Engine ({\ttfamily Render\+Engine})}{6. Rendering Engine ({\ttfamily Render\+Engine})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md49}
+{\bfseries{Purpose}}\+: Open\+GL abstraction and rendering pipeline {\bfseries{Dependencies}}\+: Camera System, Visual Feedback System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md50}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md50}
+
+\begin{DoxyItemize}
+\item {\ttfamily Open\+GLRenderer} -\/ Low-\/level Open\+GL wrapper
+\item {\ttfamily Shader\+Manager} -\/ Shader compilation and management
+\item {\ttfamily Render\+State} -\/ Open\+GL state management
+\item {\ttfamily Frame\+Buffer} -\/ Render target management
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md51}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md51}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }RenderEngine\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ initialize();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ render(\textcolor{keyword}{const}\ Scene\&\ scene,\ \textcolor{keyword}{const}\ Camera\&\ camera);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setRenderMode(RenderMode\ mode);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ resize(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ OpenGLRenderer\ m\_renderer;}
+\DoxyCodeLine{\ \ \ \ ShaderManager\ m\_shaders;}
+\DoxyCodeLine{\ \ \ \ RenderState\ m\_state;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md52}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md52}
+
+\begin{DoxyItemize}
+\item Shader compilation
+\item Render mode switching
+\item Performance benchmarks
+\item Memory usage
+\item Cross-\/platform compatibility
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md53}{}\doxysubsection{\texorpdfstring{7. Visual Feedback System ({\ttfamily Feedback\+Renderer})}{7. Visual Feedback System ({\ttfamily Feedback\+Renderer})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md53}
+{\bfseries{Purpose}}\+: Renders visual cues and overlays {\bfseries{Dependencies}}\+: Rendering Engine, Selection System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md54}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md54}
+
+\begin{DoxyItemize}
+\item {\ttfamily Highlight\+Renderer} -\/ Face and voxel highlighting
+\item {\ttfamily Outline\+Renderer} -\/ Green outline previews
+\item {\ttfamily Overlay\+Renderer} -\/ UI overlays and indicators
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md55}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md55}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }FeedbackRenderer\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderFaceHighlight(\textcolor{keyword}{const}\ Face\&\ face);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelPreview(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGroupOutlines(\textcolor{keyword}{const}\ std::vector<GroupId>\&\ groups);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ HighlightRenderer\ m\_highlighter;}
+\DoxyCodeLine{\ \ \ \ OutlineRenderer\ m\_outliner;}
+\DoxyCodeLine{\ \ \ \ OverlayRenderer\ m\_overlay;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md56}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md56}
+
+\begin{DoxyItemize}
+\item Highlight rendering accuracy
+\item Preview positioning
+\item Overlay performance
+\item Visual correctness
+\item Depth testing
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md57}{}\doxysubsection{\texorpdfstring{8. Input System ({\ttfamily Input\+Manager})}{8. Input System ({\ttfamily Input\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md57}
+{\bfseries{Purpose}}\+: Unified input handling across platforms {\bfseries{Dependencies}}\+: Event System, Camera System, Selection System\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md58}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md58}
+
+\begin{DoxyItemize}
+\item {\ttfamily Mouse\+Handler} -\/ Mouse input processing
+\item {\ttfamily Keyboard\+Handler} -\/ Keyboard input processing
+\item {\ttfamily Touch\+Handler} -\/ Touch input processing (Qt)
+\item {\ttfamily VRInput\+Handler} -\/ VR hand tracking processing
+\item {\ttfamily Input\+Mapper} -\/ Maps inputs to actions
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md59}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md59}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }InputManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processMouseInput(\textcolor{keyword}{const}\ MouseEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processKeyboardInput(\textcolor{keyword}{const}\ KeyEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processVRInput(\textcolor{keyword}{const}\ VREvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerHandler(InputType\ type,\ InputHandler*\ handler);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::map<InputType,\ InputHandler*>\ m\_handlers;}
+\DoxyCodeLine{\ \ \ \ InputMapper\ m\_mapper;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md60}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md60}
+
+\begin{DoxyItemize}
+\item Input event processing
+\item Platform-\/specific handlers
+\item Input mapping accuracy
+\item Event priority handling
+\item Performance under load
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md61}{}\doxysubsection{\texorpdfstring{9. File I/O System ({\ttfamily File\+Manager})}{9. File I/O System ({\ttfamily File\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md61}
+{\bfseries{Purpose}}\+: Handles project save/load and export operations {\bfseries{Dependencies}}\+: Voxel Data Manager, Group Manager\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md62}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md62}
+
+\begin{DoxyItemize}
+\item {\ttfamily Binary\+Format} -\/ Custom binary format handling
+\item {\ttfamily STLExporter} -\/ STL file export
+\item {\ttfamily Compression} -\/ LZ4 compression wrapper
+\item {\ttfamily File\+Versioning} -\/ Format version management
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md63}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md63}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }FileManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ saveProject(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Project\&\ project);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ loadProject(\textcolor{keyword}{const}\ std::string\&\ filename,\ Project\&\ project);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exportSTL(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ BinaryFormat\ m\_format;}
+\DoxyCodeLine{\ \ \ \ STLExporter\ m\_stlExporter;}
+\DoxyCodeLine{\ \ \ \ Compression\ m\_compression;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md64}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md64}
+
+\begin{DoxyItemize}
+\item Save/load roundtrip integrity
+\item File format versioning
+\item Compression efficiency
+\item Export accuracy
+\item Error handling
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md65}{}\doxysubsection{\texorpdfstring{10. Undo/\+Redo System ({\ttfamily History\+Manager})}{10. Undo/\+Redo System ({\ttfamily History\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md65}
+{\bfseries{Purpose}}\+: Manages operation history and state restoration {\bfseries{Dependencies}}\+: Event System, Memory Pool\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md66}{}\doxysubsubsection{\texorpdfstring{Components\+:}{Components\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md66}
+
+\begin{DoxyItemize}
+\item {\ttfamily Command} -\/ Base command interface
+\item {\ttfamily Command\+History} -\/ Command stack management
+\item {\ttfamily State\+Snapshot} -\/ Efficient state capture
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md67}{}\doxysubsubsection{\texorpdfstring{Key Classes\+:}{Key Classes\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md67}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }HistoryManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ executeCommand(std::unique\_ptr<Command>\ command);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ redo();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMaxHistorySize(\textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<Command>>\ m\_history;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_currentIndex;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxSize;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md68}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md68}
+
+\begin{DoxyItemize}
+\item Command execution
+\item Undo/redo functionality
+\item Memory limits
+\item State consistency
+\item Performance with large operations
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md69}{}\doxysection{\texorpdfstring{Foundation Layer}{Foundation Layer}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md69}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md70}{}\doxysubsection{\texorpdfstring{1. Math Utilities ({\ttfamily Math\+Utils})}{1. Math Utilities ({\ttfamily Math\+Utils})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md70}
+
+\begin{DoxyItemize}
+\item Vector and matrix operations
+\item Intersection calculations
+\item Geometric utilities
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md71}{}\doxysubsection{\texorpdfstring{2. Memory Pool ({\ttfamily Memory\+Manager})}{2. Memory Pool ({\ttfamily Memory\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md71}
+
+\begin{DoxyItemize}
+\item Object pooling for performance
+\item Memory pressure detection
+\item Allocation tracking
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md72}{}\doxysubsection{\texorpdfstring{3. Event System ({\ttfamily Event\+Dispatcher})}{3. Event System ({\ttfamily Event\+Dispatcher})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md72}
+
+\begin{DoxyItemize}
+\item Decoupled component communication
+\item Event queuing and processing
+\item Thread-\/safe event handling
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md73}{}\doxysubsection{\texorpdfstring{4. Configuration ({\ttfamily Config\+Manager})}{4. Configuration ({\ttfamily Config\+Manager})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md73}
+
+\begin{DoxyItemize}
+\item Application settings
+\item Platform-\/specific configs
+\item Runtime parameter adjustment
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md74}{}\doxysubsection{\texorpdfstring{5. Logging ({\ttfamily Logger})}{5. Logging ({\ttfamily Logger})}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md74}
+
+\begin{DoxyItemize}
+\item Multi-\/level logging
+\item Performance profiling
+\item Debug output management
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md75}{}\doxysection{\texorpdfstring{Application Layer}{Application Layer}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md75}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md76}{}\doxysubsection{\texorpdfstring{Command Line Application}{Command Line Application}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md76}
+
+\begin{DoxyItemize}
+\item {\ttfamily Command\+Processor} -\/ Command parsing and execution
+\item {\ttfamily Auto\+Complete} -\/ Tab completion system
+\item {\ttfamily Help\+System} -\/ Interactive help
+\item {\ttfamily Mouse\+Interface} -\/ Window mouse handling
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md77}{}\doxysubsection{\texorpdfstring{Qt Desktop Application}{Qt Desktop Application}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md77}
+
+\begin{DoxyItemize}
+\item Standard Qt widgets and layouts
+\item Integration with core library
+\item Advanced UI features
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md78}{}\doxysubsection{\texorpdfstring{VR Application}{VR Application}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md78}
+
+\begin{DoxyItemize}
+\item Open\+XR integration
+\item Hand tracking interface
+\item VR-\/optimized rendering
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md79}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md79}
+Each subsystem includes\+:
+\begin{DoxyItemize}
+\item {\bfseries{Unit Tests}}\+: Individual component testing
+\item {\bfseries{Integration Tests}}\+: Cross-\/component interaction
+\item {\bfseries{Performance Tests}}\+: Memory and speed benchmarks
+\item {\bfseries{Visual Tests}}\+: Rendering correctness validation
+\item {\bfseries{Platform Tests}}\+: Cross-\/platform compatibility
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md80}{}\doxysection{\texorpdfstring{Dependencies and Build}{Dependencies and Build}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md80}
+\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md81}{}\doxysubsection{\texorpdfstring{External Dependencies}{External Dependencies}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md81}
+
+\begin{DoxyItemize}
+\item Open\+GL 3.\+3+
+\item Qt6 (desktop app only)
+\item Open\+XR SDK (VR app only)
+\item Meta Hand Tracking SDK (VR app only)
+\item LZ4 compression
+\item Google Test framework
+\end{DoxyItemize}\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md82}{}\doxysubsection{\texorpdfstring{Internal Dependencies}{Internal Dependencies}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md82}
+
+\begin{DoxyItemize}
+\item Foundation layer has no internal dependencies
+\item Core library depends only on foundation layer
+\item Application layer depends on core library
+\end{DoxyItemize}
+
+This architecture ensures\+:
+\begin{DoxyEnumerate}
+\item {\bfseries{Testability}}\+: Each subsystem can be tested in isolation
+\item {\bfseries{Modularity}}\+: Clear separation of concerns
+\item {\bfseries{Reusability}}\+: Core library shared across applications
+\item {\bfseries{Maintainability}}\+: Well-\/defined interfaces and dependencies
+\item {\bfseries{Performance}}\+: Optimized data structures and algorithms 
+\end{DoxyEnumerate}

@@ -1,0 +1,197 @@
+\chapter{Voxel Editor CLI Guide }
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e}{}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e}\index{Voxel Editor CLI Guide@{Voxel Editor CLI Guide}}
+\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md0}%
+\Hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md0}%
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md1}{}\doxysection{\texorpdfstring{Quick Start}{Quick Start}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md1}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Launch the application}}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./build/bin/VoxelEditor\_CLI}
+
+\end{DoxyCode}
+
+\item {\bfseries{Create your first voxel}}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ place\ 0\ 0\ 0}
+
+\end{DoxyCode}
+
+\item {\bfseries{View from different angles}}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ camera\ front}
+\DoxyCodeLine{>\ camera\ iso}
+
+\end{DoxyCode}
+
+\item {\bfseries{Save your work}}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ save\ myproject.cvef}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md2}{}\doxysection{\texorpdfstring{Basic Workflow}{Basic Workflow}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md2}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md3}{}\doxysubsection{\texorpdfstring{Starting a New Project}{Starting a New Project}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ new\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Clear\ everything}
+\DoxyCodeLine{>\ resolution\ 8cm\ \ \ \ \ \ \ \ \ \#\ Set\ voxel\ size}
+\DoxyCodeLine{>\ workspace\ 5\ 5\ 5\ \ \ \ \ \ \ \ \#\ Set\ 5x5x5\ meter\ workspace}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md4}{}\doxysubsection{\texorpdfstring{Building with Voxels}{Building with Voxels}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ place\ 0\ 0\ 0\ \ \ \ \ \ \ \ \ \ \ \#\ Place\ first\ voxel}
+\DoxyCodeLine{>\ place\ 1\ 0\ 0\ \ \ \ \ \ \ \ \ \ \ \#\ Place\ adjacent\ voxel}
+\DoxyCodeLine{>\ fill\ 0\ 0\ 0\ 5\ 0\ 5\ \ \ \ \ \ \#\ Fill\ a\ wall}
+\DoxyCodeLine{>\ delete\ 2\ 0\ 2\ \ \ \ \ \ \ \ \ \ \#\ Remove\ a\ voxel}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md5}{}\doxysubsection{\texorpdfstring{Using the Mouse}{Using the Mouse}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item Hover over the render window to see green outline preview
+\item Left-\/click to place voxels
+\item Right-\/click to remove voxels
+\item Middle-\/mouse drag to rotate view
+\item Scroll to zoom
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md6}{}\doxysubsection{\texorpdfstring{Working with Groups}{Working with Groups}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ selectbox\ 0\ 0\ 0\ 5\ 5\ 5\ \ \#\ Select\ a\ region}
+\DoxyCodeLine{>\ group\ "{}wall"{}\ \ \ \ \ \ \ \ \ \ \ \#\ Create\ group\ from\ selection}
+\DoxyCodeLine{>\ hide\ wall\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Hide\ the\ group}
+\DoxyCodeLine{>\ show\ wall\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Show\ it\ again}
+\DoxyCodeLine{>\ groups\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ List\ all\ groups}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{Camera Control}{Camera Control}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md7}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ camera\ front\ \ \ \ \ \ \ \ \ \ \#\ Front\ view}
+\DoxyCodeLine{>\ camera\ top\ \ \ \ \ \ \ \ \ \ \ \ \#\ Top-\/down\ view}
+\DoxyCodeLine{>\ camera\ iso\ \ \ \ \ \ \ \ \ \ \ \ \#\ Isometric\ view}
+\DoxyCodeLine{>\ zoom\ 1.5\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Zoom\ in\ 50\%}
+\DoxyCodeLine{>\ rotate\ 45\ 0\ \ \ \ \ \ \ \ \ \ \ \#\ Rotate\ 45°\ horizontally}
+\DoxyCodeLine{>\ resetview\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Reset\ to\ default}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md8}{}\doxysubsection{\texorpdfstring{File Operations}{File Operations}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md8}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ save\ myproject.cvef\ \ \ \ \#\ Save\ project}
+\DoxyCodeLine{>\ open\ myproject.cvef\ \ \ \ \#\ Load\ project}
+\DoxyCodeLine{>\ export\ model.stl\ \ \ \ \ \ \ \#\ Export\ for\ 3D\ printing}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md9}{}\doxysection{\texorpdfstring{Advanced Tips}{Advanced Tips}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md9}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md10}{}\doxysubsection{\texorpdfstring{Efficient Building}{Efficient Building}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md10}
+
+\begin{DoxyEnumerate}
+\item Use larger resolutions (16cm, 32cm) for rough shapes
+\item Switch to smaller resolutions (4cm, 2cm) for details
+\item Use {\ttfamily fill} command for large areas
+\item Group related voxels for easy management
+\end{DoxyEnumerate}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md11}{}\doxysubsection{\texorpdfstring{Keyboard Shortcuts}{Keyboard Shortcuts}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md11}
+
+\begin{DoxyItemize}
+\item {\bfseries{Tab}}\+: Auto-\/complete commands and filenames
+\item {\bfseries{Up/\+Down}}\+: Navigate command history
+\item {\bfseries{Ctrl+L}}\+: Clear screen (same as {\ttfamily clear} command)
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md12}{}\doxysubsection{\texorpdfstring{Selection Techniques}{Selection Techniques}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md12}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ select\ 0\ 0\ 0\ \ \ \ \ \ \ \ \ \ \#\ Select\ single\ voxel}
+\DoxyCodeLine{>\ selectbox\ 0\ 0\ 0\ 10\ 10\ 10\ \ \#\ Select\ box\ region}
+\DoxyCodeLine{>\ selectall\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Select\ everything}
+\DoxyCodeLine{>\ selectnone\ \ \ \ \ \ \ \ \ \ \ \ \#\ Clear\ selection}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md13}{}\doxysubsection{\texorpdfstring{Undo/\+Redo}{Undo/\+Redo}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md13}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ undo\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Undo\ last\ action}
+\DoxyCodeLine{>\ undo\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Keep\ undoing}
+\DoxyCodeLine{>\ redo\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Redo\ undone\ action}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md14}{}\doxysection{\texorpdfstring{Command Reference}{Command Reference}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md14}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{Essential Commands}{Essential Commands}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md15}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Command  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Example  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Command  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description  }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Example  }\\\cline{1-3}
+\endhead
+{\ttfamily place}  &Add a voxel  &{\ttfamily place 0 0 0}  \\\cline{1-3}
+{\ttfamily delete}  &Remove a voxel  &{\ttfamily delete 0 0 0}  \\\cline{1-3}
+{\ttfamily fill}  &Fill box region  &{\ttfamily fill 0 0 0 5 5 5}  \\\cline{1-3}
+{\ttfamily camera}  &Change view  &{\ttfamily camera front}  \\\cline{1-3}
+{\ttfamily save}  &Save project  &{\ttfamily save project.\+cvef}  \\\cline{1-3}
+{\ttfamily help}  &Get help  &{\ttfamily help place}  \\\cline{1-3}
+\end{longtabu}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md16}{}\doxysubsection{\texorpdfstring{View Presets}{View Presets}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md16}
+
+\begin{DoxyItemize}
+\item {\ttfamily front}, {\ttfamily back}, {\ttfamily left}, {\ttfamily right}, {\ttfamily top}, {\ttfamily bottom}
+\item {\ttfamily iso} -\/ Isometric view (good for 3D building)
+\item {\ttfamily default} -\/ Default perspective view
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md17}{}\doxysubsection{\texorpdfstring{Resolution Sizes}{Resolution Sizes}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md17}
+
+\begin{DoxyItemize}
+\item {\ttfamily 1cm} -\/ Finest detail
+\item {\ttfamily 2cm}, {\ttfamily 4cm}, {\ttfamily 8cm} -\/ Common sizes
+\item {\ttfamily 16cm}, {\ttfamily 32cm}, {\ttfamily 64cm} -\/ Medium sizes
+\item {\ttfamily 128cm}, {\ttfamily 256cm}, {\ttfamily 512cm} -\/ Large blocks
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md18}{}\doxysection{\texorpdfstring{Troubleshooting}{Troubleshooting}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md18}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md19}{}\doxysubsection{\texorpdfstring{Can\textquotesingle{}t see my voxels?}{Can\textquotesingle{}t see my voxels?}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md19}
+
+\begin{DoxyItemize}
+\item Try {\ttfamily camera iso} or {\ttfamily camera front}
+\item Check if voxels are in a hidden group with {\ttfamily groups}
+\item Use {\ttfamily status} to see total voxel count
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md20}{}\doxysubsection{\texorpdfstring{Mouse not working?}{Mouse not working?}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md20}
+
+\begin{DoxyItemize}
+\item Make sure the render window has focus
+\item Click on the window first
+\item Check if you\textquotesingle{}re in the right resolution
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md21}{}\doxysubsection{\texorpdfstring{Performance issues?}{Performance issues?}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md21}
+
+\begin{DoxyItemize}
+\item Use larger voxel sizes for big structures
+\item Hide groups you\textquotesingle{}re not working on
+\item Save and restart if memory usage is high
+\end{DoxyItemize}\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md22}{}\doxysection{\texorpdfstring{Example Projects}{Example Projects}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md22}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md23}{}\doxysubsection{\texorpdfstring{Simple House}{Simple House}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md23}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ new}
+\DoxyCodeLine{>\ resolution\ 32cm}
+\DoxyCodeLine{>\ fill\ 0\ 0\ 0\ 10\ 0\ 10\ \ \ \ \#\ Floor}
+\DoxyCodeLine{>\ fill\ 0\ 0\ 0\ 0\ 8\ 10\ \ \ \ \#\ Left\ wall}
+\DoxyCodeLine{>\ fill\ 10\ 0\ 0\ 10\ 8\ 10\ \ \#\ Right\ wall}
+\DoxyCodeLine{>\ fill\ 0\ 0\ 0\ 10\ 0\ 0\ \ \ \ \#\ Front\ wall}
+\DoxyCodeLine{>\ fill\ 0\ 0\ 10\ 10\ 0\ 10\ \ \#\ Back\ wall}
+\DoxyCodeLine{>\ fill\ 0\ 8\ 0\ 10\ 8\ 10\ \ \ \#\ Roof}
+\DoxyCodeLine{>\ save\ house.cvef}
+
+\end{DoxyCode}
+\hypertarget{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md24}{}\doxysubsection{\texorpdfstring{Detailed Sculpture}{Detailed Sculpture}}\label{md_apps_2cli_2_c_l_i___g_u_i_d_e_autotoc_md24}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ new}
+\DoxyCodeLine{>\ resolution\ 8cm\ \ \ \ \ \ \ \ \#\ Start\ with\ medium\ size}
+\DoxyCodeLine{>\ place\ 0\ 0\ 0\ \ \ \ \ \ \ \ \ \ \#\ Build\ base\ shape}
+\DoxyCodeLine{>\ resolution\ 4cm\ \ \ \ \ \ \ \#\ Switch\ to\ finer\ detail}
+\DoxyCodeLine{>\ place\ 0\ 1\ 0\ \ \ \ \ \ \ \ \ \ \#\ Add\ details}
+\DoxyCodeLine{>\ resolution\ 2cm\ \ \ \ \ \ \ \#\ Finest\ details}
+\DoxyCodeLine{>\ export\ sculpture.stl\ \#\ Export\ for\ 3D\ printing}
+
+\end{DoxyCode}
+ 

@@ -1,14 +1,21 @@
 #pragma once
 
+#include <array>
+#include <memory>
+#include <mutex>
+#include <vector>
+#include <unordered_map>
+#include <typeindex>
+#include <queue>
+#include <algorithm>
+#include <stack>
+
 #include "VoxelTypes.h"
 #include "VoxelGrid.h"
 #include "WorkspaceManager.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
 #include "../../foundation/memory/MemoryTracker.h"
-#include <array>
-#include <memory>
-#include <mutex>
 
 namespace VoxelEditor {
 namespace VoxelData {
@@ -36,11 +43,11 @@ public:
         SparseOctree::shutdownPool();
     }
     
-    // Non-copyable but movable
+    // Non-copyable and non-movable (due to mutex)
     VoxelDataManager(const VoxelDataManager&) = delete;
     VoxelDataManager& operator=(const VoxelDataManager&) = delete;
-    VoxelDataManager(VoxelDataManager&&) = default;
-    VoxelDataManager& operator=(VoxelDataManager&&) = default;
+    VoxelDataManager(VoxelDataManager&&) = delete;
+    VoxelDataManager& operator=(VoxelDataManager&&) = delete;
     
     // Voxel operations
     bool setVoxel(const Math::Vector3i& pos, VoxelResolution resolution, bool value) {
@@ -176,7 +183,7 @@ public:
     
     bool isValidWorldPosition(const Math::Vector3f& worldPos) const {
         std::lock_guard<std::mutex> lock(m_mutex);
-        return m_workspaceManager->isPositionInBounds(worldPos);
+        return m_workspaceManager->isPositionValid(worldPos);
     }
     
     // Bulk operations

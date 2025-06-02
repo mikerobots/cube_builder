@@ -1,0 +1,89 @@
+\doxysection{Voxel\+Editor\+::Surface\+Gen\+::Dual\+Contouring Class Reference}
+\hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring}{}\label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+
+
+{\ttfamily \#include $<$Dual\+Contouring.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{Progress\+Callback}} = std\+::function$<$void(float progress)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a31cc57cba9e12fe5ceb0924f9a68481e}{Dual\+Contouring}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a4f6bd75dddc70c34c4b0e4e923e5a3a3}{\texorpdfstring{$\sim$}{\string~}\+Dual\+Contouring}} ()
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a552b9c3eb4e3621abe7a5feec0120b60}{generate\+Mesh}} (const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&grid, const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{Surface\+Settings}} \&settings)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a06cadf2ac47754a6d985046efe49c082}{set\+Progress\+Callback}} (\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{Progress\+Callback}} callback)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_afee0296a381291650c2a381014879c26}{cancel}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a5d0cf37291571cea023e0f1da4ff26f9}{is\+Cancelled}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!ProgressCallback@{ProgressCallback}}
+\index{ProgressCallback@{ProgressCallback}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{ProgressCallback}{ProgressCallback}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8} 
+using \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::\+Progress\+Callback}} = std\+::function$<$void(float progress)$>$}
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a31cc57cba9e12fe5ceb0924f9a68481e}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!DualContouring@{DualContouring}}
+\index{DualContouring@{DualContouring}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{DualContouring()}{DualContouring()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a31cc57cba9e12fe5ceb0924f9a68481e} 
+Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::\+Dual\+Contouring (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a4f6bd75dddc70c34c4b0e4e923e5a3a3}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!````~DualContouring@{\texorpdfstring{$\sim$}{\string~}DualContouring}}
+\index{````~DualContouring@{\texorpdfstring{$\sim$}{\string~}DualContouring}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}DualContouring()}{\string~DualContouring()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a4f6bd75dddc70c34c4b0e4e923e5a3a3} 
+Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::\texorpdfstring{$\sim$}{\string~}\+Dual\+Contouring (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_afee0296a381291650c2a381014879c26}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!cancel@{cancel}}
+\index{cancel@{cancel}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{cancel()}{cancel()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_afee0296a381291650c2a381014879c26} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::cancel (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a552b9c3eb4e3621abe7a5feec0120b60}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!generateMesh@{generateMesh}}
+\index{generateMesh@{generateMesh}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{generateMesh()}{generateMesh()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a552b9c3eb4e3621abe7a5feec0120b60} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}} Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::generate\+Mesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&}]{grid}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{Surface\+Settings}} \&}]{settings}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a5d0cf37291571cea023e0f1da4ff26f9}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!isCancelled@{isCancelled}}
+\index{isCancelled@{isCancelled}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{isCancelled()}{isCancelled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a5d0cf37291571cea023e0f1da4ff26f9} 
+bool Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::is\+Cancelled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a06cadf2ac47754a6d985046efe49c082}\index{VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}!setProgressCallback@{setProgressCallback}}
+\index{setProgressCallback@{setProgressCallback}!VoxelEditor::SurfaceGen::DualContouring@{VoxelEditor::SurfaceGen::DualContouring}}
+\doxysubsubsection{\texorpdfstring{setProgressCallback()}{setProgressCallback()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a06cadf2ac47754a6d985046efe49c082} 
+void Voxel\+Editor\+::\+Surface\+Gen\+::\+Dual\+Contouring\+::set\+Progress\+Callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{Progress\+Callback}}}]{callback}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/surface\+\_\+gen/\mbox{\hyperlink{_dual_contouring_8h}{Dual\+Contouring.\+h}}\item 
+core/surface\+\_\+gen/\mbox{\hyperlink{_dual_contouring_8cpp}{Dual\+Contouring.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,136 @@
+\doxysection{foundation/config/tests/test\+\_\+\+Config\+Manager.cpp File Reference}
+\hypertarget{test___config_manager_8cpp}{}\label{test___config_manager_8cpp}\index{foundation/config/tests/test\_ConfigManager.cpp@{foundation/config/tests/test\_ConfigManager.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Config\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}../../events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}
+\item 
+class \mbox{\hyperlink{class_test_config_handler}{Test\+Config\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_addbcf25a8e2175526194a46fb1a1dcca}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Singleton)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a325e0185be858a1c90a1cdd2c7045fc9}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Default\+Configuration)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a972ad5e94c33f7dc9cbc7bb6b1a6cea2}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Value\+Operations)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a40fabbd4377a6fec56e4ec0999ae4b21}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Default\+Values)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a3010542bd33e7f564720134854667219}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Has\+Value)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a419e361fac639a6fa646b77f7eca16f1}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Remove\+Value)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_afc994d1e6c8bc411af5aaaf9ac6a9c0e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Section\+Access)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_ac25430db03d63dfe81619286e37349c1}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Create\+Section)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_addeef5d6ad79e77009eb68b132b8d507}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Event\+Notification)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a8262f4ba30d814f0eeab05007167c5e7}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Get\+All\+Keys)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a75308815a9a5ca9a8962bf5012ef7e75}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, File\+IO)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a635202b7b2212c5ce4f81d3000d86e5c}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Stream\+IO)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a142f0e9e4a12664aa84109a1264a7207}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Config\+File\+Format)
+\item 
+\mbox{\hyperlink{test___config_manager_8cpp_a16907359abec0ea15d15c09fbdf6fafb}{TEST\+\_\+F}} (\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}, Thread\+Safety)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___config_manager_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___config_manager_8cpp_a142f0e9e4a12664aa84109a1264a7207}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a142f0e9e4a12664aa84109a1264a7207} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Config\+File\+Format}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_ac25430db03d63dfe81619286e37349c1}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_ac25430db03d63dfe81619286e37349c1} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Create\+Section}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a325e0185be858a1c90a1cdd2c7045fc9}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a325e0185be858a1c90a1cdd2c7045fc9} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Default\+Configuration}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a40fabbd4377a6fec56e4ec0999ae4b21}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a40fabbd4377a6fec56e4ec0999ae4b21} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Default\+Values}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_addeef5d6ad79e77009eb68b132b8d507}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_addeef5d6ad79e77009eb68b132b8d507} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Event\+Notification}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a75308815a9a5ca9a8962bf5012ef7e75}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a75308815a9a5ca9a8962bf5012ef7e75} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{File\+IO}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a8262f4ba30d814f0eeab05007167c5e7}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a8262f4ba30d814f0eeab05007167c5e7} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Get\+All\+Keys}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a3010542bd33e7f564720134854667219}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a3010542bd33e7f564720134854667219} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Has\+Value}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a419e361fac639a6fa646b77f7eca16f1}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a419e361fac639a6fa646b77f7eca16f1} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Remove\+Value}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_afc994d1e6c8bc411af5aaaf9ac6a9c0e}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_afc994d1e6c8bc411af5aaaf9ac6a9c0e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Section\+Access}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_addbcf25a8e2175526194a46fb1a1dcca}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_addbcf25a8e2175526194a46fb1a1dcca} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Singleton}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a635202b7b2212c5ce4f81d3000d86e5c}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a635202b7b2212c5ce4f81d3000d86e5c} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Stream\+IO}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a16907359abec0ea15d15c09fbdf6fafb}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a16907359abec0ea15d15c09fbdf6fafb} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Thread\+Safety}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___config_manager_8cpp_a972ad5e94c33f7dc9cbc7bb6b1a6cea2}\index{test\_ConfigManager.cpp@{test\_ConfigManager.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_ConfigManager.cpp@{test\_ConfigManager.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [14/14]}}
+{\footnotesize\ttfamily \label{test___config_manager_8cpp_a972ad5e94c33f7dc9cbc7bb6b1a6cea2} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_config_manager_test}{Config\+Manager\+Test}}}]{}{, }\item[{Value\+Operations}]{}{}\end{DoxyParamCaption})}
+

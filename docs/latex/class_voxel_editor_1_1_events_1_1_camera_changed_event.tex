@@ -1,0 +1,112 @@
+\doxysection{Voxel\+Editor\+::Events\+::Camera\+Changed\+Event Class Reference}
+\hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event}{}\label{class_voxel_editor_1_1_events_1_1_camera_changed_event}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}
+
+
+{\ttfamily \#include $<$Common\+Events.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::Camera\+Changed\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_voxel_editor_1_1_events_1_1_camera_changed_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Change\+Type}} \{ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a90b4ba73224408e82ade8a072a3712c1}{POSITION}}
+, \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2aa27939099e0fe4086159364fcf8d5f73}{ROTATION}}
+, \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a66f276916d5a97cbb3b0008213bda1c3}{ZOOM}}
+, \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2acdf58dc656ab87fec541b5f278fde32e}{VIEW\+\_\+\+PRESET}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a90083a8f65b1214f4309211808cfc081}{Camera\+Changed\+Event}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Change\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}{change\+Type}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Camera\+Changed\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Change\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}{change\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Camera\+Changed\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!ChangeType@{ChangeType}}
+\index{ChangeType@{ChangeType}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}
+\doxysubsubsection{\texorpdfstring{ChangeType}{ChangeType}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2} 
+enum class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Voxel\+Editor\+::\+Events\+::\+Camera\+Changed\+Event\+::\+Change\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POSITION@{POSITION}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!POSITION@{POSITION}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a90b4ba73224408e82ade8a072a3712c1}\label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a90b4ba73224408e82ade8a072a3712c1} 
+POSITION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ROTATION@{ROTATION}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!ROTATION@{ROTATION}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2aa27939099e0fe4086159364fcf8d5f73}\label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2aa27939099e0fe4086159364fcf8d5f73} 
+ROTATION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZOOM@{ZOOM}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!ZOOM@{ZOOM}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a66f276916d5a97cbb3b0008213bda1c3}\label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a66f276916d5a97cbb3b0008213bda1c3} 
+ZOOM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VIEW\_PRESET@{VIEW\_PRESET}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!VIEW\_PRESET@{VIEW\_PRESET}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2acdf58dc656ab87fec541b5f278fde32e}\label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2acdf58dc656ab87fec541b5f278fde32e} 
+VIEW\+\_\+\+PRESET&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a90083a8f65b1214f4309211808cfc081}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!CameraChangedEvent@{CameraChangedEvent}}
+\index{CameraChangedEvent@{CameraChangedEvent}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}
+\doxysubsubsection{\texorpdfstring{CameraChangedEvent()}{CameraChangedEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a90083a8f65b1214f4309211808cfc081} 
+Voxel\+Editor\+::\+Events\+::\+Camera\+Changed\+Event\+::\+Camera\+Changed\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Change\+Type}}}]{change\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}\index{VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}!changeType@{changeType}}
+\index{changeType@{changeType}!VoxelEditor::Events::CameraChangedEvent@{VoxelEditor::Events::CameraChangedEvent}}
+\doxysubsubsection{\texorpdfstring{changeType}{changeType}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660} 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{Change\+Type}} Voxel\+Editor\+::\+Events\+::\+Camera\+Changed\+Event\+::change\+Type}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/\mbox{\hyperlink{_common_events_8h}{Common\+Events.\+h}}\end{DoxyCompactItemize}

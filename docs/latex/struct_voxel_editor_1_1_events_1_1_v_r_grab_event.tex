@@ -1,0 +1,90 @@
+\doxysection{Voxel\+Editor\+::Events\+::VRGrab\+Event Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event}{}\label{struct_voxel_editor_1_1_events_1_1_v_r_grab_event}\index{VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}}
+
+
+{\ttfamily \#include $<$VRInput\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::VRGrab\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_voxel_editor_1_1_events_1_1_v_r_grab_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a00c76d6a2e18c911da9c3037daf270f6}{VRGrab\+Event}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}} h, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&pos, bool s)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ VRGrab\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}} \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_aed5faa114bcb5d490aa78b47c9817dc7}{hand}}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a5dfbc83f3e420c273ea34b27d2424098}{position}}
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a72c45dd246c154e2318622cdccb17b18}{started}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ VRGrab\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a00c76d6a2e18c911da9c3037daf270f6}\index{VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}!VRGrabEvent@{VRGrabEvent}}
+\index{VRGrabEvent@{VRGrabEvent}!VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}}
+\doxysubsubsection{\texorpdfstring{VRGrabEvent()}{VRGrabEvent()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a00c76d6a2e18c911da9c3037daf270f6} 
+Voxel\+Editor\+::\+Events\+::\+VRGrab\+Event\+::\+VRGrab\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}}}]{h}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{pos}{, }\item[{bool}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_aed5faa114bcb5d490aa78b47c9817dc7}\index{VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}!hand@{hand}}
+\index{hand@{hand}!VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}}
+\doxysubsubsection{\texorpdfstring{hand}{hand}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_aed5faa114bcb5d490aa78b47c9817dc7} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{Input\+::\+Hand\+Type}} Voxel\+Editor\+::\+Events\+::\+VRGrab\+Event\+::hand}
+
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a5dfbc83f3e420c273ea34b27d2424098}\index{VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}!position@{position}}
+\index{position@{position}!VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a5dfbc83f3e420c273ea34b27d2424098} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} Voxel\+Editor\+::\+Events\+::\+VRGrab\+Event\+::position}
+
+\Hypertarget{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a72c45dd246c154e2318622cdccb17b18}\index{VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}!started@{started}}
+\index{started@{started}!VoxelEditor::Events::VRGrabEvent@{VoxelEditor::Events::VRGrabEvent}}
+\doxysubsubsection{\texorpdfstring{started}{started}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_events_1_1_v_r_grab_event_a72c45dd246c154e2318622cdccb17b18} 
+bool Voxel\+Editor\+::\+Events\+::\+VRGrab\+Event\+::started}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/input/\mbox{\hyperlink{_v_r_input_handler_8h}{VRInput\+Handler.\+h}}\end{DoxyCompactItemize}

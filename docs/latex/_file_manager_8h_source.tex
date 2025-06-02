@@ -1,0 +1,194 @@
+\doxysection{File\+Manager.\+h}
+\hypertarget{_file_manager_8h_source}{}\label{_file_manager_8h_source}\index{core/file\_io/include/file\_io/FileManager.h@{core/file\_io/include/file\_io/FileManager.h}}
+\mbox{\hyperlink{_file_manager_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_types_8h}{FileTypes.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_project_8h}{Project.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_binary_format_8h}{BinaryFormat.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_s_t_l_exporter_8h}{STLExporter.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_versioning_8h}{FileVersioning.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_compression_8h}{Compression.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Main\ file\ management\ interface}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ad30b3b33a51aee4813656a89337fff01}{FileManager}}\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ad30b3b33a51aee4813656a89337fff01}{FileManager}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_add32bf37036abfc01f79910e5dca9a1b}{\string~FileManager}}();}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Project\ operations}}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_result}{FileResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ab32e02c922fb2c6a848dae7ed12cf6f2}{saveProject}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_save_options}{SaveOptions}}\&\ options\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_save_options_aafe8487512758fc115a0e543836dc41d}{SaveOptions::Default}}());}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_result}{FileResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ad35db1aa66cf9d174145dc33a90d342c}{loadProject}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_load_options}{LoadOptions}}\&\ options\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_load_options_a57dad85d450c3f3791a6e7a60b329b8a}{LoadOptions::Default}}());}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a3fd605be97d765440c0615a40b0b1d34}{hasProject}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Export\ operations}}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_result}{FileResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a3e945f04c63361c47638325d418e4605}{exportSTL}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Rendering::Mesh}}\&\ mesh,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExportOptions::Default}}());}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_result}{FileResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_afcaf47cdc968341cd8bb3a2ddf507c96}{exportMultiSTL}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ std::vector<Rendering::Mesh>\&\ meshes,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options}{STLExportOptions}}\&\ options\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_s_t_l_export_options_a5be70b2bdc9472aebfc007cad719a0cc}{STLExportOptions::Default}}());}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ File\ information}}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_info}{FileInfo}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a0c4ae72ff9c6f6c9de3ca8b123a7d11a}{getFileInfo}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ae48d700741c2c405eabb6cef46187701}{getRecentFiles}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ab01e7ffbf201aec72ce4dc42cedccdec}{addToRecentFiles}}(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_aee5e7f190fe4b53b663fe1a70231f467}{clearRecentFiles}}();}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Format\ validation}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a32878c0513600dc8e89ba8a41a73ed3d}{isValidProjectFile}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a9bffd3a1c2a6edb1793e3d091b237517}{getFileVersion}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a9f21b52b9614f6606f5a4f8f04b08b15}{canUpgradeFile}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_result}{FileResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a4fb72ef5a206e72102ab6f3597d3c29f}{upgradeFile}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ std::string\&\ outputFilename);}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Progress\ callbacks}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_adac1d5878c30094e15d02ed59440d0c3}{setProgressCallback}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_afc10f59d0bd4c862af3b94ae247dd603}{ProgressCallback}}\ callback)\ \{\ m\_progressCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a209c182d30c78495dea8ada83e53e58a}{setSaveCompleteCallback}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a479d10236ee78cb58a0f0429f1c3e91c}{SaveCompleteCallback}}\ callback)\ \{\ m\_saveCompleteCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a81d8e697205c727b4da4e2fa3fb71035}{setLoadCompleteCallback}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_aa256a07fb67dc8cdd82f0820fdac019c}{LoadCompleteCallback}}\ callback)\ \{\ m\_loadCompleteCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a65245dd08dd7e5ffa5dd256752a06043}{setCompressionEnabled}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_compressionEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a20e31145fe4164f6ada285eba3f5a649}{isCompressionEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_compressionEnabled;\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a34bdbe6a86abe817bfee61fcaf02764d}{setCompressionLevel}}(\textcolor{keywordtype}{int}\ level)\ \{\ m\_compressionLevel\ =\ level;\ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_acf8db9b230eb926fc8a3eea105980b32}{getCompressionLevel}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_compressionLevel;\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ac935bf4f6a74c9a802a59a8dbc31b9bf}{setBackupEnabled}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_backupEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ad2c72d53f5bcc25d67e348670342b4d7}{isBackupEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_backupEnabled;\ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_adff9647a19aa2831e37eb76552f868a4}{setAutoSaveEnabled}}(\textcolor{keywordtype}{bool}\ enabled,\ \textcolor{keywordtype}{float}\ intervalSeconds\ =\ 300.0f);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_aa5052dc97211ad207f410a7ca5107406}{isAutoSaveEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_autoSaveEnabled;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_aea9104e657180129b6747d4db284bc9b}{getAutoSaveInterval}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_autoSaveInterval;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Auto-\/save\ management}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a4a90b37a5222b3b742addd97e86224cc}{registerProjectForAutoSave}}(\textcolor{keyword}{const}\ std::string\&\ filename,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}*\ project);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a76dd1670a9846eb784c4a87921a5bc2c}{unregisterProjectFromAutoSave}}(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a5d9aca1a5506fc24c36d49b54e77220c}{triggerAutoSave}}();}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a9ce35385a40d0de96277c3f0a11eded3}{updateAutoSave}}(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Backup\ management}}
+\DoxyCodeLine{00073\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_aada94ae12da71e03f05832a007b192b4}{getBackupFilename}}(\textcolor{keyword}{const}\ std::string\&\ originalFilename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ae060dc60f79ac8caff78ef2717e3d929}{getBackupFiles}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ab6196901112ee4f2dc279813c1f30f62}{restoreFromBackup}}(\textcolor{keyword}{const}\ std::string\&\ backupFilename,\ \textcolor{keyword}{const}\ std::string\&\ targetFilename);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a6b388493e4cc26de0f42f7b43fc4cb16}{setMaxBackupCount}}(\textcolor{keywordtype}{int}\ count)\ \{\ m\_maxBackupCount\ =\ count;\ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_a749f8d4ab1464bc4060f6b527a4fb3a6}{getMaxBackupCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxBackupCount;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats}{IOStats}}\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_ae3b8ee13f240f96b7b5fa45c97598c2a}{totalBytesRead}}\ =\ 0;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_a3be50af256118dae7b5c1a415dcf6f27}{totalBytesWritten}}\ =\ 0;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_a37ffb6792d817fc74ad61a8031f495aa}{filesLoaded}}\ =\ 0;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_ae5961b34388506fc8d9a1d2edc2679fe}{filesSaved}}\ =\ 0;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_a6dc3e9d37dccdff706f4eb40167eb5e7}{averageLoadTime}}\ =\ 0.0f;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_ae0291649a3fc14ce8b197b9707d66c99}{averageSaveTime}}\ =\ 0.0f;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats_ac7165d8056259d1b68da4b1a9b9c49e4}{compressionRatio}}\ =\ 1.0f;}
+\DoxyCodeLine{00088\ \ \ \ \ \};}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats}{IOStats}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_acf2652bac2ff114215b1b372ef1b89da}{getStatistics}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stats;\ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_ae8759717a3e772088b2845e427e62c6f}{resetStatistics}}()\ \{\ m\_stats\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_manager_1_1_i_o_stats}{IOStats}}();\ \}}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Components}}
+\DoxyCodeLine{00095\ \ \ \ \ std::unique\_ptr<BinaryFormat>\ m\_binaryFormat;}
+\DoxyCodeLine{00096\ \ \ \ \ std::unique\_ptr<STLExporter>\ m\_stlExporter;}
+\DoxyCodeLine{00097\ \ \ \ \ std::unique\_ptr<FileVersioning>\ m\_versioning;}
+\DoxyCodeLine{00098\ \ \ \ \ std::unique\_ptr<Compression>\ m\_compression;}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Callbacks}}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_afc10f59d0bd4c862af3b94ae247dd603}{ProgressCallback}}\ m\_progressCallback;}
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a479d10236ee78cb58a0f0429f1c3e91c}{SaveCompleteCallback}}\ m\_saveCompleteCallback;}
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_aa256a07fb67dc8cdd82f0820fdac019c}{LoadCompleteCallback}}\ m\_loadCompleteCallback;}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressionEnabled\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_compressionLevel\ =\ 6;}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_backupEnabled\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_autoSaveEnabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_autoSaveInterval\ =\ 300.0f;\ \textcolor{comment}{//\ 5\ minutes}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_maxBackupCount\ =\ 5;}
+\DoxyCodeLine{00112\ \ \ \ \ std::string\ m\_backupSuffix\ =\ \textcolor{stringliteral}{"{}.bak"{}};}
+\DoxyCodeLine{00113\ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Recent\ files}}
+\DoxyCodeLine{00115\ \ \ \ \ std::vector<std::string>\ m\_recentFiles;}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ MAX\_RECENT\_FILES\ =\ 10;}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Auto-\/save\ data}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{struct\ }AutoSaveEntry\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ std::string\ filename;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}*\ project;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ timeSinceLastSave\ =\ 0.0f;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ needsSave\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ std::chrono::steady\_clock::time\_point\ lastModified;}
+\DoxyCodeLine{00125\ \ \ \ \ \};}
+\DoxyCodeLine{00126\ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ std::vector<AutoSaveEntry>\ m\_autoSaveEntries;}
+\DoxyCodeLine{00128\ \ \ \ \ std::mutex\ m\_autoSaveMutex;}
+\DoxyCodeLine{00129\ \ \ \ \ std::thread\ m\_autoSaveThread;}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_autoSaveThreadRunning\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{mutable}\ IOStats\ m\_stats;}
+\DoxyCodeLine{00134\ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Internal\ operations}}
+\DoxyCodeLine{00136\ \ \ \ \ FileResult\ saveProjectInternal(\textcolor{keyword}{const}\ std::string\&\ filename,\ \textcolor{keyword}{const}\ Project\&\ project,}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SaveOptions\&\ options);}
+\DoxyCodeLine{00138\ \ \ \ \ FileResult\ loadProjectInternal(\textcolor{keyword}{const}\ std::string\&\ filename,\ Project\&\ project,}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ LoadOptions\&\ options);}
+\DoxyCodeLine{00140\ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Backup\ operations}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{bool}\ createBackup(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{void}\ cleanupOldBackups(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00144\ \ \ \ \ std::vector<std::string>\ findBackupFiles(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00145\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Auto-\/save\ operations}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{void}\ autoSaveThreadFunc();}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ performAutoSave(AutoSaveEntry\&\ entry);}
+\DoxyCodeLine{00149\ \ \ \ \ std::string\ getAutoSaveFilename(\textcolor{keyword}{const}\ std::string\&\ originalFilename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00150\ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ Progress\ reporting}}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ reportProgress(\textcolor{keywordtype}{float}\ progress,\ \textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ reportSaveComplete(\textcolor{keywordtype}{bool}\ success,\ \textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ reportLoadComplete(\textcolor{keywordtype}{bool}\ success,\ \textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00155\ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//\ File\ operations}}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{bool}\ fileExists(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getFileSize(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00159\ \ \ \ \ std::chrono::system\_clock::time\_point\ getFileModificationTime(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFileWritable(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{bool}\ ensureDirectoryExists(\textcolor{keyword}{const}\ std::string\&\ path)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00162\ \ \ \ \ std::string\ getDirectory(\textcolor{keyword}{const}\ std::string\&\ filepath)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00163\ \ \ \ \ std::string\ getFilename(\textcolor{keyword}{const}\ std::string\&\ filepath)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00164\ \ \ \ \ std::string\ getExtension(\textcolor{keyword}{const}\ std::string\&\ filepath)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00165\ \ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//\ Recent\ files\ management}}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{void}\ loadRecentFiles();}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{void}\ saveRecentFiles();}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{void}\ addToRecentFilesInternal(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00170\ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Statistics\ tracking}}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ updateLoadStats(\textcolor{keywordtype}{size\_t}\ bytesRead,\ \textcolor{keywordtype}{float}\ loadTime);}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{void}\ updateSaveStats(\textcolor{keywordtype}{size\_t}\ bytesWritten,\ \textcolor{keywordtype}{float}\ saveTime,\ \textcolor{keywordtype}{float}\ compressionRatio);}
+\DoxyCodeLine{00174\ \};}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{comment}{//\ Global\ file\ manager\ instance}}
+\DoxyCodeLine{00177\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_instance}{FileManagerInstance}}\ \{}
+\DoxyCodeLine{00178\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager}{FileManager}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_instance_aa89c6d2542c4e24924baed3be49c0b8a}{getInstance}}();}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_manager_instance_a211a814184a189786ac972c3315b2a87}{destroy}}();}
+\DoxyCodeLine{00181\ \ \ \ \ }
+\DoxyCodeLine{00182\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<FileManager>\ s\_instance;}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{static}\ std::mutex\ s\_mutex;}
+\DoxyCodeLine{00185\ \};}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \}\ \textcolor{comment}{//\ namespace\ FileIO}}
+\DoxyCodeLine{00188\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

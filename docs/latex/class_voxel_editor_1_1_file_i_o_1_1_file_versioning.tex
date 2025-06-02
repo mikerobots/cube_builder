@@ -1,0 +1,137 @@
+\doxysection{Voxel\+Editor\+::File\+IO\+::File\+Versioning Class Reference}
+\hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning}{}\label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+
+
+{\ttfamily \#include $<$File\+Versioning.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7b21358edacbc6c1f1070233ccf4e48e}{File\+Versioning}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a56156258d8be808bb99be8af8aeb962b}{\texorpdfstring{$\sim$}{\string~}\+File\+Versioning}} ()
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a426363a1b19a4840958dfc572e27be38}{get\+Current\+Version}} () const
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7340afbb1d0e81c358b1a217ad781571}{detect\+Version}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&reader)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ab1794674854d50718ef90b5b8e636dbf}{is\+Compatible}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} version) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a6493e76a28bbe01d54819cc099ac74d1}{can\+Upgrade}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} from, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} to) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_acf7a1e02e8d28b140d829efd52d98b9b}{needs\+Upgrade}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} version) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7a3594873b47b785027b5779ccb5a1c9}{upgrade\+File}} (const std\+::string \&input\+File, const std\+::string \&output\+File, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} target\+Version=\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version_af9e153735481f38f923cdc3966375403}{File\+Version\+::\+Current}}())
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a43df1e08c5ce39045672ef7fcc1e50c8}{migrate\+Data}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&reader, \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{Binary\+Writer}} \&writer, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} from\+Version, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} to\+Version)
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ad2be96e9d84b85261297ec18044763fc}{get\+Upgrade\+Warnings}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} from, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} to) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a0b5776a82e59af3fc736a6f63539f227}{get\+Breaking\+Changes}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} from, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} to) const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_adfb51d1c6a1162dfda6f9c0a48f75e4f}{get\+Migration\+Notes}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} from, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} to) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ae5bc39bdfa071c6234d8edfee41d1c20}{get\+Version\+History}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ac7e0ad2b617f05de825b6007da7964f8}{get\+Version\+Changelog}} (\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} version) const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7b21358edacbc6c1f1070233ccf4e48e}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!FileVersioning@{FileVersioning}}
+\index{FileVersioning@{FileVersioning}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{FileVersioning()}{FileVersioning()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7b21358edacbc6c1f1070233ccf4e48e} 
+Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::\+File\+Versioning (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a56156258d8be808bb99be8af8aeb962b}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!````~FileVersioning@{\texorpdfstring{$\sim$}{\string~}FileVersioning}}
+\index{````~FileVersioning@{\texorpdfstring{$\sim$}{\string~}FileVersioning}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}FileVersioning()}{\string~FileVersioning()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a56156258d8be808bb99be8af8aeb962b} 
+Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::\texorpdfstring{$\sim$}{\string~}\+File\+Versioning (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a6493e76a28bbe01d54819cc099ac74d1}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!canUpgrade@{canUpgrade}}
+\index{canUpgrade@{canUpgrade}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{canUpgrade()}{canUpgrade()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a6493e76a28bbe01d54819cc099ac74d1} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::can\+Upgrade (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{from}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{to}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7340afbb1d0e81c358b1a217ad781571}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!detectVersion@{detectVersion}}
+\index{detectVersion@{detectVersion}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{detectVersion()}{detectVersion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7340afbb1d0e81c358b1a217ad781571} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::detect\+Version (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&}]{reader}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a0b5776a82e59af3fc736a6f63539f227}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!getBreakingChanges@{getBreakingChanges}}
+\index{getBreakingChanges@{getBreakingChanges}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{getBreakingChanges()}{getBreakingChanges()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a0b5776a82e59af3fc736a6f63539f227} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::get\+Breaking\+Changes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{from}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{to}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a426363a1b19a4840958dfc572e27be38}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!getCurrentVersion@{getCurrentVersion}}
+\index{getCurrentVersion@{getCurrentVersion}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{getCurrentVersion()}{getCurrentVersion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a426363a1b19a4840958dfc572e27be38} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::get\+Current\+Version (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_adfb51d1c6a1162dfda6f9c0a48f75e4f}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!getMigrationNotes@{getMigrationNotes}}
+\index{getMigrationNotes@{getMigrationNotes}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{getMigrationNotes()}{getMigrationNotes()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_adfb51d1c6a1162dfda6f9c0a48f75e4f} 
+std\+::string Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::get\+Migration\+Notes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{from}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{to}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ad2be96e9d84b85261297ec18044763fc}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!getUpgradeWarnings@{getUpgradeWarnings}}
+\index{getUpgradeWarnings@{getUpgradeWarnings}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{getUpgradeWarnings()}{getUpgradeWarnings()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ad2be96e9d84b85261297ec18044763fc} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::get\+Upgrade\+Warnings (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{from}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{to}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ac7e0ad2b617f05de825b6007da7964f8}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!getVersionChangelog@{getVersionChangelog}}
+\index{getVersionChangelog@{getVersionChangelog}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{getVersionChangelog()}{getVersionChangelog()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ac7e0ad2b617f05de825b6007da7964f8} 
+std\+::string Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::get\+Version\+Changelog (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{version}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ae5bc39bdfa071c6234d8edfee41d1c20}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!getVersionHistory@{getVersionHistory}}
+\index{getVersionHistory@{getVersionHistory}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{getVersionHistory()}{getVersionHistory()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ae5bc39bdfa071c6234d8edfee41d1c20} 
+std\+::vector$<$ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} $>$ Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::get\+Version\+History (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ab1794674854d50718ef90b5b8e636dbf}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!isCompatible@{isCompatible}}
+\index{isCompatible@{isCompatible}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{isCompatible()}{isCompatible()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_ab1794674854d50718ef90b5b8e636dbf} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::is\+Compatible (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{version}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a43df1e08c5ce39045672ef7fcc1e50c8}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!migrateData@{migrateData}}
+\index{migrateData@{migrateData}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{migrateData()}{migrateData()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a43df1e08c5ce39045672ef7fcc1e50c8} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::migrate\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&}]{reader}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{Binary\+Writer}} \&}]{writer}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{from\+Version}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{to\+Version}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_acf7a1e02e8d28b140d829efd52d98b9b}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!needsUpgrade@{needsUpgrade}}
+\index{needsUpgrade@{needsUpgrade}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{needsUpgrade()}{needsUpgrade()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_acf7a1e02e8d28b140d829efd52d98b9b} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::needs\+Upgrade (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{version}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7a3594873b47b785027b5779ccb5a1c9}\index{VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}!upgradeFile@{upgradeFile}}
+\index{upgradeFile@{upgradeFile}!VoxelEditor::FileIO::FileVersioning@{VoxelEditor::FileIO::FileVersioning}}
+\doxysubsubsection{\texorpdfstring{upgradeFile()}{upgradeFile()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_file_versioning_a7a3594873b47b785027b5779ccb5a1c9} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+File\+Versioning\+::upgrade\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{input\+File}{, }\item[{const std\+::string \&}]{output\+File}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}}}]{target\+Version}{ = {\ttfamily \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version_af9e153735481f38f923cdc3966375403}{File\+Version\+::\+Current}}()}}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/file\+\_\+io/include/file\+\_\+io/\mbox{\hyperlink{_file_versioning_8h}{File\+Versioning.\+h}}\item 
+core/file\+\_\+io/src/\mbox{\hyperlink{_file_versioning_8cpp}{File\+Versioning.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,43 @@
+\doxysection{Group\+Events.\+h}
+\hypertarget{_group_events_8h_source}{}\label{_group_events_8h_source}\index{core/groups/include/groups/GroupEvents.h@{core/groups/include/groups/GroupEvents.h}}
+\mbox{\hyperlink{_group_events_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_group_types_8h}{groups/GroupTypes.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{events/EventBase.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Groups}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ Group\ created\ event}}
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_created_event}{GroupCreatedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Events::Event}}<GroupCreatedEvent>\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_created_event_aa9d2c07f6227a12a78f8e1f66b984f5d}{groupId}};}
+\DoxyCodeLine{00014\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_created_event_ad80363fc5f44182d681d992d70774d3b}{name}};}
+\DoxyCodeLine{00015\ \ \ \ \ std::vector<VoxelId>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_created_event_a3afb466a0f648e443790c09161295b57}{voxels}};}
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ Group\ modified\ event}}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event}{GroupModifiedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Events::Event}}<GroupModifiedEvent>\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_a1453f00445eb195cd7d0f47d3eabc410}{groupId}};}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_ae61f7420a760074b973b457f008082ba}{type}};}
+\DoxyCodeLine{00022\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_a13eedd0dd85b4c0c3a00f800c8fdc3c3}{oldName}};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ rename\ events}}
+\DoxyCodeLine{00023\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_af0cf417abefbac3b7e315671b4c6158e}{newName}};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ rename\ events}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_aa802ee8f2612441c2f1ec9a862db1f46}{oldVisible}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ visibility\ events}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_af0c94f23fe188b7c64ee5594703f0f53}{newVisible}};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ visibility\ events}}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_modified_event_a5d651cedd76df9b5fd76753e7f28a0d3}{offset}};\ \ \ \ \ \ \textcolor{comment}{//\ for\ move\ events}}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Group\ deleted\ event}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_deleted_event}{GroupDeletedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Events::Event}}<GroupDeletedEvent>\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_deleted_event_adf7d4843f91e779bcae37299ff935a45}{groupId}};}
+\DoxyCodeLine{00032\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_deleted_event_a12f5a71d7ea6c728b1ddd52a0abef002}{name}};}
+\DoxyCodeLine{00033\ \ \ \ \ std::vector<VoxelId>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_deleted_event_a1b5594f063bead5d6833271afa71c649}{releasedVoxels}};}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \}\ \textcolor{comment}{//\ namespace\ Groups}}
+\DoxyCodeLine{00037\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

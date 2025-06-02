@@ -1,0 +1,100 @@
+\chapter{Math Utilities Foundation }
+\hypertarget{md_foundation_2math_2_d_e_s_i_g_n}{}\label{md_foundation_2math_2_d_e_s_i_g_n}\index{Math Utilities Foundation@{Math Utilities Foundation}}
+\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md520}%
+\Hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md520}%
+\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md521}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md521}
+Provides fundamental mathematical operations, vector/matrix mathematics, geometric calculations, and spatial utilities used throughout the voxel editor.\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md522}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md522}
+\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md523}{}\doxysubsection{\texorpdfstring{Vector Operations}{Vector Operations}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md523}
+
+\begin{DoxyItemize}
+\item Vector2f, Vector3f, Vector4f classes
+\item Vector arithmetic and operations
+\item Normalization and distance calculations
+\item Cross and dot products
+\end{DoxyItemize}\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md524}{}\doxysubsection{\texorpdfstring{Matrix Operations}{Matrix Operations}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md524}
+
+\begin{DoxyItemize}
+\item Matrix3f, Matrix4f classes
+\item Transformation matrices
+\item Matrix multiplication and inversion
+\item Decomposition operations
+\end{DoxyItemize}\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md525}{}\doxysubsection{\texorpdfstring{Geometric Utilities}{Geometric Utilities}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md525}
+
+\begin{DoxyItemize}
+\item Ray and plane intersections
+\item Bounding box operations
+\item Frustum calculations
+\item Collision detection
+\end{DoxyItemize}\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md526}{}\doxysubsection{\texorpdfstring{Spatial Mathematics}{Spatial Mathematics}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md526}
+
+\begin{DoxyItemize}
+\item Coordinate space conversions
+\item Voxel space calculations
+\item Octree spatial indexing
+\item LOD distance calculations
+\end{DoxyItemize}\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md527}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md527}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Vector\ Classes}}
+\DoxyCodeLine{\textcolor{keyword}{class\ }Vector3f\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ x,\ y,\ z;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ Vector3f(\textcolor{keywordtype}{float}\ x\ =\ 0,\ \textcolor{keywordtype}{float}\ y\ =\ 0,\ \textcolor{keywordtype}{float}\ z\ =\ 0);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Arithmetic\ operations}}
+\DoxyCodeLine{\ \ \ \ Vector3f\ operator+(\textcolor{keyword}{const}\ Vector3f\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ operator-\/(\textcolor{keyword}{const}\ Vector3f\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keywordtype}{float}\ scalar)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ operator/(\textcolor{keywordtype}{float}\ scalar)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Vector\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ dot(\textcolor{keyword}{const}\ Vector3f\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ cross(\textcolor{keyword}{const}\ Vector3f\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ length()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ lengthSquared()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ normalized()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ normalize();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Static\ utilities}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ Zero();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ One();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ UnitX();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ UnitY();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ UnitZ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ distance(\textcolor{keyword}{const}\ Vector3f\&\ a,\ \textcolor{keyword}{const}\ Vector3f\&\ b);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{lerp}}(\textcolor{keyword}{const}\ Vector3f\&\ a,\ \textcolor{keyword}{const}\ Vector3f\&\ b,\ \textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Matrix\ Classes}}
+\DoxyCodeLine{\textcolor{keyword}{class\ }Matrix4f\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m[16];}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ Matrix4f();}
+\DoxyCodeLine{\ \ \ \ Matrix4f(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ data);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Matrix\ operations}}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keyword}{const}\ Matrix4f\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keyword}{const}\ Vector3f\&\ vec)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ transposed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ inverted()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ determinant()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Transformation\ creation}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Matrix4f\ translation(\textcolor{keyword}{const}\ Vector3f\&\ translation);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Matrix4f\ rotation(\textcolor{keyword}{const}\ Vector3f\&\ axis,\ \textcolor{keywordtype}{float}\ angle);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Matrix4f\ scale(\textcolor{keyword}{const}\ Vector3f\&\ scale);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Matrix4f\ perspective(\textcolor{keywordtype}{float}\ fov,\ \textcolor{keywordtype}{float}\ aspect,\ \textcolor{keywordtype}{float}\ near,\ \textcolor{keywordtype}{float}\ far);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Matrix4f\ orthographic(\textcolor{keywordtype}{float}\ left,\ \textcolor{keywordtype}{float}\ right,\ \textcolor{keywordtype}{float}\ bottom,\ \textcolor{keywordtype}{float}\ top,\ \textcolor{keywordtype}{float}\ near,\ \textcolor{keywordtype}{float}\ far);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Matrix4f\ lookAt(\textcolor{keyword}{const}\ Vector3f\&\ eye,\ \textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keyword}{const}\ Vector3f\&\ up);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md528}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md528}
+
+\begin{DoxyItemize}
+\item Standard C++ library only
+\item Platform-\/specific SIMD optimizations (optional)
+\item No external dependencies 
+\end{DoxyItemize}

@@ -1,0 +1,118 @@
+\doxysection{foundation/memory/tests/test\+\_\+\+Memory\+Pool.cpp File Reference}
+\hypertarget{test___memory_pool_8cpp}{}\label{test___memory_pool_8cpp}\index{foundation/memory/tests/test\_MemoryPool.cpp@{foundation/memory/tests/test\_MemoryPool.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Memory\+Pool.\+h"{}}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}
+\item 
+class \mbox{\hyperlink{class_test_object}{Test\+Object}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a81f3fd5fcd3680506557259ad628a1c2}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Basic\+Allocation)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a8b4b122e1fddaf58a7c9be5b9acafe8e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Allocate\+And\+Deallocate)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a2fafd95034ee0abe10a4c9199de5edc5}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Auto\+Expansion)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a7f3aa41b3b3c0f251f92af019205a26b}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Memory\+Alignment)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a2ec58ad5359bfd7ddcde2f783304356f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Invalid\+Pointer\+Handling)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_ac912d39f7f95fec74d483cfd42c92519}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Utilization)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a1849769fd146f18c1150db3152eada7c}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Clear)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_ae69b360dab1027e8bf9fb09bd782ca5c}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Shrink)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a53df7a3cec2acf271132230817e25615}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Reserve)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_a87580d44e358c4695df1377db08e561f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Object\+Construction)
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_aecea5604f2d66928e55710daed06fb22}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool}{Typed\+Memory\+Pool}})
+\item 
+\mbox{\hyperlink{test___memory_pool_8cpp_ae42274a3c87c535e9a42672fb549c334}{TEST\+\_\+F}} (\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}, Thread\+Safety)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___memory_pool_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___memory_pool_8cpp_a8b4b122e1fddaf58a7c9be5b9acafe8e}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a8b4b122e1fddaf58a7c9be5b9acafe8e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Allocate\+And\+Deallocate}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a2fafd95034ee0abe10a4c9199de5edc5}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a2fafd95034ee0abe10a4c9199de5edc5} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Auto\+Expansion}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a81f3fd5fcd3680506557259ad628a1c2}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a81f3fd5fcd3680506557259ad628a1c2} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Basic\+Allocation}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a1849769fd146f18c1150db3152eada7c}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a1849769fd146f18c1150db3152eada7c} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Clear}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a2ec58ad5359bfd7ddcde2f783304356f}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a2ec58ad5359bfd7ddcde2f783304356f} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Invalid\+Pointer\+Handling}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a7f3aa41b3b3c0f251f92af019205a26b}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a7f3aa41b3b3c0f251f92af019205a26b} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Memory\+Alignment}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a87580d44e358c4695df1377db08e561f}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a87580d44e358c4695df1377db08e561f} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Object\+Construction}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_a53df7a3cec2acf271132230817e25615}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_a53df7a3cec2acf271132230817e25615} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Reserve}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_ae69b360dab1027e8bf9fb09bd782ca5c}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_ae69b360dab1027e8bf9fb09bd782ca5c} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Shrink}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_ae42274a3c87c535e9a42672fb549c334}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_ae42274a3c87c535e9a42672fb549c334} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Thread\+Safety}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_aecea5604f2d66928e55710daed06fb22}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_aecea5604f2d66928e55710daed06fb22} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool}{Typed\+Memory\+Pool}}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___memory_pool_8cpp_ac912d39f7f95fec74d483cfd42c92519}\index{test\_MemoryPool.cpp@{test\_MemoryPool.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MemoryPool.cpp@{test\_MemoryPool.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/12]}}
+{\footnotesize\ttfamily \label{test___memory_pool_8cpp_ac912d39f7f95fec74d483cfd42c92519} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_memory_pool_test}{Memory\+Pool\+Test}}}]{}{, }\item[{Utilization}]{}{}\end{DoxyParamCaption})}
+

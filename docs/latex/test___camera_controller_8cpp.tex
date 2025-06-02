@@ -1,0 +1,218 @@
+\doxysection{core/camera/tests/test\+\_\+\+Camera\+Controller.cpp File Reference}
+\hypertarget{test___camera_controller_8cpp}{}\label{test___camera_controller_8cpp}\index{core/camera/tests/test\_CameraController.cpp@{core/camera/tests/test\_CameraController.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Camera\+Controller.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/events/\+Event\+Dispatcher.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_abf743de799f15fcee6f7b63b83ed1e0c}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Default\+Construction)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a861422f9efc4fb4cd12f9b5a82c65d38}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Viewport\+Management)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a9311c1601b988c2b6dacfde5099fb38f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Button\+Interaction)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a8d9b88662202b261a10263c84aee5fe9}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Button\+Outside\+Viewport)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_afb2572555556b1cd15e937d51e213cd1}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Drag\+Threshold)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_aad07916562797bfb323d652ba4a39397}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Orbit\+Control)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_ae46e5ed28ba6fe57e40277f20d40e7da}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Pan\+Control)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a57473406ef8e4e6269eda8583cb25960}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Zoom\+Control)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a393d843db89865664d8a3060c04d9072}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Wheel\+Zoom)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_aa89ec8cc7320a872002b0e50f70604a4}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Wheel\+Outside\+Viewport)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a71eeaaa2618abff8b78d60f830d3f4ff}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, View\+Presets)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_aedf88183f16b2aa33fa74a316a5d9f30}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Frame\+All)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a382270eaf45a042da14487d7d51348cc}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Focus\+On)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_ad1d8913c23b0de2aa3913754cf08cfd0}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Ray\+Generation)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_aa8b9dc01c1237b0cd4dc257ffb418877}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, World\+To\+Screen)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a0e70e9dc45c9123b939f398d06eeb604}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Update\+Animation)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a5a55158c7ede4f197afefde75c43bc4d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Sensitivity\+Settings)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_aafafdd57abebf549b1c6e8032a0c1a0c}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Smoothing\+Settings)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_aa64ba25d2726c57aee488513f56dbd5e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Constraint\+Settings)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a6b543c787d349fe290ae713272342fcd}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Drag\+Threshold\+Settings)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a4fea9d3e0a8a0f6b36990acd6f732b73}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Mouse\+Move\+Outside\+Viewport)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a088305106472b157e0640eb4cd2a23ed}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Multiple\+Mouse\+Buttons)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_a52b2d0e464f431fa863ec81be70d48a3}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Invalid\+Mouse\+Button)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_adf0882b0059f05e5888d27a295f53bf2}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Continuous\+Mouse\+Movement)
+\item 
+\mbox{\hyperlink{test___camera_controller_8cpp_abad2a8588c66c716e52518eb8387db21}{TEST\+\_\+F}} (\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}, Zero\+Mouse\+Movement)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___camera_controller_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___camera_controller_8cpp_aa64ba25d2726c57aee488513f56dbd5e}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_aa64ba25d2726c57aee488513f56dbd5e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Constraint\+Settings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_adf0882b0059f05e5888d27a295f53bf2}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_adf0882b0059f05e5888d27a295f53bf2} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Continuous\+Mouse\+Movement}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_abf743de799f15fcee6f7b63b83ed1e0c}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_abf743de799f15fcee6f7b63b83ed1e0c} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Default\+Construction}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a6b543c787d349fe290ae713272342fcd}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a6b543c787d349fe290ae713272342fcd} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Drag\+Threshold\+Settings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a382270eaf45a042da14487d7d51348cc}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a382270eaf45a042da14487d7d51348cc} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Focus\+On}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_aedf88183f16b2aa33fa74a316a5d9f30}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_aedf88183f16b2aa33fa74a316a5d9f30} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Frame\+All}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a52b2d0e464f431fa863ec81be70d48a3}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a52b2d0e464f431fa863ec81be70d48a3} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Invalid\+Mouse\+Button}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a9311c1601b988c2b6dacfde5099fb38f}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a9311c1601b988c2b6dacfde5099fb38f} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Button\+Interaction}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a8d9b88662202b261a10263c84aee5fe9}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a8d9b88662202b261a10263c84aee5fe9} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Button\+Outside\+Viewport}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_afb2572555556b1cd15e937d51e213cd1}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_afb2572555556b1cd15e937d51e213cd1} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Drag\+Threshold}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a4fea9d3e0a8a0f6b36990acd6f732b73}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a4fea9d3e0a8a0f6b36990acd6f732b73} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Move\+Outside\+Viewport}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_ad1d8913c23b0de2aa3913754cf08cfd0}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_ad1d8913c23b0de2aa3913754cf08cfd0} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Ray\+Generation}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_aa89ec8cc7320a872002b0e50f70604a4}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_aa89ec8cc7320a872002b0e50f70604a4} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Wheel\+Outside\+Viewport}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a393d843db89865664d8a3060c04d9072}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [14/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a393d843db89865664d8a3060c04d9072} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Mouse\+Wheel\+Zoom}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a088305106472b157e0640eb4cd2a23ed}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [15/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a088305106472b157e0640eb4cd2a23ed} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Multiple\+Mouse\+Buttons}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_aad07916562797bfb323d652ba4a39397}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [16/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_aad07916562797bfb323d652ba4a39397} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Orbit\+Control}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_ae46e5ed28ba6fe57e40277f20d40e7da}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [17/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_ae46e5ed28ba6fe57e40277f20d40e7da} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Pan\+Control}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a5a55158c7ede4f197afefde75c43bc4d}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [18/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a5a55158c7ede4f197afefde75c43bc4d} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Sensitivity\+Settings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_aafafdd57abebf549b1c6e8032a0c1a0c}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [19/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_aafafdd57abebf549b1c6e8032a0c1a0c} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Smoothing\+Settings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a0e70e9dc45c9123b939f398d06eeb604}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [20/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a0e70e9dc45c9123b939f398d06eeb604} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Update\+Animation}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a861422f9efc4fb4cd12f9b5a82c65d38}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [21/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a861422f9efc4fb4cd12f9b5a82c65d38} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Viewport\+Management}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a71eeaaa2618abff8b78d60f830d3f4ff}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [22/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a71eeaaa2618abff8b78d60f830d3f4ff} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{View\+Presets}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_aa8b9dc01c1237b0cd4dc257ffb418877}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [23/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_aa8b9dc01c1237b0cd4dc257ffb418877} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{World\+To\+Screen}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_abad2a8588c66c716e52518eb8387db21}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [24/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_abad2a8588c66c716e52518eb8387db21} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Zero\+Mouse\+Movement}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___camera_controller_8cpp_a57473406ef8e4e6269eda8583cb25960}\index{test\_CameraController.cpp@{test\_CameraController.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_CameraController.cpp@{test\_CameraController.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [25/25]}}
+{\footnotesize\ttfamily \label{test___camera_controller_8cpp_a57473406ef8e4e6269eda8583cb25960} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_camera_controller_test}{Camera\+Controller\+Test}}}]{}{, }\item[{Zoom\+Control}]{}{}\end{DoxyParamCaption})}
+

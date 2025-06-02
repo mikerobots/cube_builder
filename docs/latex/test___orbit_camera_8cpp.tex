@@ -1,0 +1,170 @@
+\doxysection{core/camera/tests/test\+\_\+\+Orbit\+Camera.cpp File Reference}
+\hypertarget{test___orbit_camera_8cpp}{}\label{test___orbit_camera_8cpp}\index{core/camera/tests/test\_OrbitCamera.cpp@{core/camera/tests/test\_OrbitCamera.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Orbit\+Camera.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/events/\+Event\+Dispatcher.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_ade5a6e2f95938a05c9595a297464f31a}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Default\+Construction)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_af4437f72c2a5ac901454ab7163f512a6}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Distance\+Control)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_afb42fd00bc0ab7a24040bc3ce1a5570b}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Distance\+Constraints)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_ade905f167006a45dff6b4aba4316dbc5}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Angle\+Control)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_a1f55fcca0415928337c29f465cdcf46b}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Pitch\+Constraints)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_ab00774dfa307e33d8ddec8c3ec740f3e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Orbit\+Control)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_ad8f3df06d6b7e4675843b5ebc8d9cbf8}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Zoom\+Control)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_a72bb2da6991514408f100adb86233846}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Pan\+Control)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_a8c5b3f994439cdc807f52151b718bbb1}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, View\+Presets)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_acfcd2e39e60cd0eb5ea7a6d539552865}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Focus\+On\+Point)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_ab113f263c4ae4b66dba06f71d30c940e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Frame\+Box)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_aac2ea42114d09fc91ce8166a79713e17}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Sensitivity\+Settings)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_aa29b4bb1846678b1a48e6f5af7902a87}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Smoothing\+System)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_afba9d7e56bdc9417bd147c503daa9f97}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Smoothing\+Behavior)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_a1595da04a0a4414c44d23adbb8318fe6}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Update\+Without\+Smoothing)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_a32bcba4806906560a141429b68ac204f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Position\+Calculation)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_a2aa56674b2962cf3cb4b5586b2f1f5bc}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Target\+Override)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_ae3edcbc9cf73bed8c695125d949f90bc}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Edge\+Case\+Angles)
+\item 
+\mbox{\hyperlink{test___orbit_camera_8cpp_acda7d89f55dc3b36520afc7e349eb566}{TEST\+\_\+F}} (\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}, Zero\+Distance)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___orbit_camera_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___orbit_camera_8cpp_ade905f167006a45dff6b4aba4316dbc5}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_ade905f167006a45dff6b4aba4316dbc5} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Angle\+Control}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_ade5a6e2f95938a05c9595a297464f31a}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_ade5a6e2f95938a05c9595a297464f31a} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Default\+Construction}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_afb42fd00bc0ab7a24040bc3ce1a5570b}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_afb42fd00bc0ab7a24040bc3ce1a5570b} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Distance\+Constraints}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_af4437f72c2a5ac901454ab7163f512a6}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_af4437f72c2a5ac901454ab7163f512a6} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Distance\+Control}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_ae3edcbc9cf73bed8c695125d949f90bc}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_ae3edcbc9cf73bed8c695125d949f90bc} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Edge\+Case\+Angles}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_acfcd2e39e60cd0eb5ea7a6d539552865}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_acfcd2e39e60cd0eb5ea7a6d539552865} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Focus\+On\+Point}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_ab113f263c4ae4b66dba06f71d30c940e}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_ab113f263c4ae4b66dba06f71d30c940e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Frame\+Box}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_ab00774dfa307e33d8ddec8c3ec740f3e}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_ab00774dfa307e33d8ddec8c3ec740f3e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Orbit\+Control}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_a72bb2da6991514408f100adb86233846}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_a72bb2da6991514408f100adb86233846} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Pan\+Control}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_a1f55fcca0415928337c29f465cdcf46b}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_a1f55fcca0415928337c29f465cdcf46b} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Pitch\+Constraints}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_a32bcba4806906560a141429b68ac204f}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_a32bcba4806906560a141429b68ac204f} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Position\+Calculation}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_aac2ea42114d09fc91ce8166a79713e17}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_aac2ea42114d09fc91ce8166a79713e17} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Sensitivity\+Settings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_afba9d7e56bdc9417bd147c503daa9f97}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_afba9d7e56bdc9417bd147c503daa9f97} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Smoothing\+Behavior}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_aa29b4bb1846678b1a48e6f5af7902a87}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [14/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_aa29b4bb1846678b1a48e6f5af7902a87} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Smoothing\+System}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_a2aa56674b2962cf3cb4b5586b2f1f5bc}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [15/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_a2aa56674b2962cf3cb4b5586b2f1f5bc} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Target\+Override}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_a1595da04a0a4414c44d23adbb8318fe6}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [16/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_a1595da04a0a4414c44d23adbb8318fe6} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Update\+Without\+Smoothing}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_a8c5b3f994439cdc807f52151b718bbb1}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [17/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_a8c5b3f994439cdc807f52151b718bbb1} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{View\+Presets}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_acda7d89f55dc3b36520afc7e349eb566}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [18/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_acda7d89f55dc3b36520afc7e349eb566} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Zero\+Distance}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___orbit_camera_8cpp_ad8f3df06d6b7e4675843b5ebc8d9cbf8}\index{test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_OrbitCamera.cpp@{test\_OrbitCamera.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [19/19]}}
+{\footnotesize\ttfamily \label{test___orbit_camera_8cpp_ad8f3df06d6b7e4675843b5ebc8d9cbf8} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_orbit_camera_test}{Orbit\+Camera\+Test}}}]{}{, }\item[{Zoom\+Control}]{}{}\end{DoxyParamCaption})}
+

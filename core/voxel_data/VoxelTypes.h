@@ -1,9 +1,19 @@
 #pragma once
 
-#include "../../foundation/math/Vector3f.h"
-#include "../../foundation/math/Vector3i.h"
 #include <cstdint>
 #include <cmath>
+#include <vector>
+#include <unordered_map>
+#include <typeindex>
+#include <queue>
+#include <mutex>
+#include <algorithm>
+#include <stack>
+#include <memory>
+#include <typeinfo>
+
+#include "../../foundation/math/Vector3f.h"
+#include "../../foundation/math/Vector3i.h"
 
 namespace VoxelEditor {
 namespace VoxelData {

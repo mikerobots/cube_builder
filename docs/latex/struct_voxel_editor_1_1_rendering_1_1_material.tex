@@ -1,0 +1,155 @@
+\doxysection{Voxel\+Editor\+::Rendering\+::Material Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_rendering_1_1_material}{}\label{struct_voxel_editor_1_1_rendering_1_1_material}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+
+
+{\ttfamily \#include $<$Render\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a3063593aad6a6e251ee15808ee614684}{Material}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_ad676141cbeb5f278cdbaab38ab84c2e5}{create\+Default}} ()
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a3899470e0eaa0854561b4b4fe052a557}{create\+Voxel}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&color)
+\item 
+static \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_ab3857f18fc4134900a1885bd3e15ccb9}{create\+Wireframe}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&color)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a14ee3366222bf75d07e879c56388a450}{albedo}} = \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_ad530021797157aaa737b78d7610993e8}{Color\+::\+White}}()
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a07eea0a99f22ddaf372d23f2a5102d9f}{metallic}} = 0.\+0f
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a1128a0ea972e1cd5ad449d56904869e9}{roughness}} = 0.\+5f
+\item 
+float \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_aad04e86e0b3677163c71b2988c6afe02}{emission}} = 0.\+0f
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a7ea1de9404e5d83c3b4a3ecbe75fa53c}{albedo\+Texture}} = 0
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_ad2486ac49819e5d97a30f7b8b888977f}{normal\+Texture}} = 0
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a20dd30aba7259b8bf02680fbc3c4e76e}{metallic\+Roughness\+Texture}} = 0
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_abcc03402f15b01428769a05573a8463b}{shader}} = 0
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_ad175888ed415d613cae3d3ce56d2ad55}{double\+Sided}} = false
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_a8058408789002d467fc3e268cfbf3aec}{blend\+Mode}} = \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeafaa90538de35640e4b1e31ccf35b6eb5}{Blend\+Mode\+::\+Opaque}}
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_af99b7b40ca5f40770f43ee508fd26e14}{cull\+Mode}} = \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Cull\+Mode\+::\+Back}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a3063593aad6a6e251ee15808ee614684}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!Material@{Material}}
+\index{Material@{Material}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{Material()}{Material()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a3063593aad6a6e251ee15808ee614684} 
+Voxel\+Editor\+::\+Rendering\+::\+Material\+::\+Material (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_ad676141cbeb5f278cdbaab38ab84c2e5}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!createDefault@{createDefault}}
+\index{createDefault@{createDefault}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{createDefault()}{createDefault()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_ad676141cbeb5f278cdbaab38ab84c2e5} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::create\+Default (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a3899470e0eaa0854561b4b4fe052a557}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!createVoxel@{createVoxel}}
+\index{createVoxel@{createVoxel}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{createVoxel()}{createVoxel()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a3899470e0eaa0854561b4b4fe052a557} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::create\+Voxel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_ab3857f18fc4134900a1885bd3e15ccb9}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!createWireframe@{createWireframe}}
+\index{createWireframe@{createWireframe}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{createWireframe()}{createWireframe()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_ab3857f18fc4134900a1885bd3e15ccb9} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::create\+Wireframe (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a14ee3366222bf75d07e879c56388a450}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!albedo@{albedo}}
+\index{albedo@{albedo}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{albedo}{albedo}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a14ee3366222bf75d07e879c56388a450} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::albedo = \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_ad530021797157aaa737b78d7610993e8}{Color\+::\+White}}()}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a7ea1de9404e5d83c3b4a3ecbe75fa53c}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!albedoTexture@{albedoTexture}}
+\index{albedoTexture@{albedoTexture}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{albedoTexture}{albedoTexture}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a7ea1de9404e5d83c3b4a3ecbe75fa53c} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::albedo\+Texture = 0}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a8058408789002d467fc3e268cfbf3aec}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!blendMode@{blendMode}}
+\index{blendMode@{blendMode}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{blendMode}{blendMode}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a8058408789002d467fc3e268cfbf3aec} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::blend\+Mode = \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeafaa90538de35640e4b1e31ccf35b6eb5}{Blend\+Mode\+::\+Opaque}}}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_af99b7b40ca5f40770f43ee508fd26e14}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!cullMode@{cullMode}}
+\index{cullMode@{cullMode}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{cullMode}{cullMode}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_af99b7b40ca5f40770f43ee508fd26e14} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::cull\+Mode = \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Cull\+Mode\+::\+Back}}}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_ad175888ed415d613cae3d3ce56d2ad55}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!doubleSided@{doubleSided}}
+\index{doubleSided@{doubleSided}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{doubleSided}{doubleSided}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_ad175888ed415d613cae3d3ce56d2ad55} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Material\+::double\+Sided = false}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_aad04e86e0b3677163c71b2988c6afe02}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!emission@{emission}}
+\index{emission@{emission}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{emission}{emission}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_aad04e86e0b3677163c71b2988c6afe02} 
+float Voxel\+Editor\+::\+Rendering\+::\+Material\+::emission = 0.\+0f}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a07eea0a99f22ddaf372d23f2a5102d9f}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!metallic@{metallic}}
+\index{metallic@{metallic}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{metallic}{metallic}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a07eea0a99f22ddaf372d23f2a5102d9f} 
+float Voxel\+Editor\+::\+Rendering\+::\+Material\+::metallic = 0.\+0f}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a20dd30aba7259b8bf02680fbc3c4e76e}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!metallicRoughnessTexture@{metallicRoughnessTexture}}
+\index{metallicRoughnessTexture@{metallicRoughnessTexture}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{metallicRoughnessTexture}{metallicRoughnessTexture}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a20dd30aba7259b8bf02680fbc3c4e76e} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::metallic\+Roughness\+Texture = 0}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_ad2486ac49819e5d97a30f7b8b888977f}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!normalTexture@{normalTexture}}
+\index{normalTexture@{normalTexture}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{normalTexture}{normalTexture}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_ad2486ac49819e5d97a30f7b8b888977f} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::normal\+Texture = 0}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_a1128a0ea972e1cd5ad449d56904869e9}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!roughness@{roughness}}
+\index{roughness@{roughness}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{roughness}{roughness}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_a1128a0ea972e1cd5ad449d56904869e9} 
+float Voxel\+Editor\+::\+Rendering\+::\+Material\+::roughness = 0.\+5f}
+
+\Hypertarget{struct_voxel_editor_1_1_rendering_1_1_material_abcc03402f15b01428769a05573a8463b}\index{VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}!shader@{shader}}
+\index{shader@{shader}!VoxelEditor::Rendering::Material@{VoxelEditor::Rendering::Material}}
+\doxysubsubsection{\texorpdfstring{shader}{shader}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_rendering_1_1_material_abcc03402f15b01428769a05573a8463b} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Material\+::shader = 0}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/rendering/\mbox{\hyperlink{_render_types_8h}{Render\+Types.\+h}}\end{DoxyCompactItemize}

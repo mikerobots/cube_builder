@@ -1,0 +1,220 @@
+\chapter{Build Instructions for Voxel Editor }
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s}{}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s}\index{Build Instructions for Voxel Editor@{Build Instructions for Voxel Editor}}
+\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md83}%
+\Hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md83}%
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md84}{}\doxysection{\texorpdfstring{Prerequisites Check}{Prerequisites Check}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md84}
+Before building, ensure you have\+:
+\begin{DoxyItemize}
+\item CMake 3.\+16 or higher
+\item C++ compiler with C++20 support (GCC 10+, Clang 10+, or MSVC 2019+)
+\item Git
+\item Open\+GL development libraries
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md85}{}\doxysubsection{\texorpdfstring{On mac\+OS\+:}{On mac\+OS\+:}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md85}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Install\ Xcode\ Command\ Line\ Tools\ (if\ not\ already\ installed)}
+\DoxyCodeLine{xcode-\/select\ -\/-\/install}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Install\ CMake\ via\ Homebrew\ (if\ needed)}
+\DoxyCodeLine{brew\ install\ cmake}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md86}{}\doxysubsection{\texorpdfstring{On Ubuntu/\+Debian\+:}{On Ubuntu/\+Debian\+:}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md86}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo\ apt\ update}
+\DoxyCodeLine{sudo\ apt\ install\ build-\/essential\ cmake\ git\ libgl1-\/mesa-\/dev\ libglu1-\/mesa-\/dev}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md87}{}\doxysubsection{\texorpdfstring{On Windows\+:}{On Windows\+:}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md87}
+
+\begin{DoxyItemize}
+\item Install Visual Studio 2019 or later with C++ desktop development
+\item Install CMake from \href{https://cmake.org/download/}{\texttt{https\+://cmake.\+org/download/}}
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md88}{}\doxysection{\texorpdfstring{Build Steps}{Build Steps}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md88}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md89}{}\doxysubsection{\texorpdfstring{Option 1\+: Using the Build Script (Recommended)}{Option 1\+: Using the Build Script (Recommended)}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md89}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Clean\ build\ (removes\ existing\ build\ directory)}
+\DoxyCodeLine{./build.sh}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ The\ script\ will:}
+\DoxyCodeLine{\#\ 1.\ Create/clean\ build\ directory}
+\DoxyCodeLine{\#\ 2.\ Configure\ with\ CMake}
+\DoxyCodeLine{\#\ 3.\ Build\ with\ all\ available\ cores}
+\DoxyCodeLine{\#\ 4.\ Report\ success/failure}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md90}{}\doxysubsection{\texorpdfstring{Option 2\+: Manual Build}{Option 2\+: Manual Build}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md90}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ 1.\ Clean\ existing\ build\ (optional)}
+\DoxyCodeLine{rm\ -\/rf\ build}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ 2.\ Create\ build\ directory}
+\DoxyCodeLine{mkdir\ build}
+\DoxyCodeLine{cd\ build}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ 3.\ Configure\ with\ CMake}
+\DoxyCodeLine{cmake\ ..\ -\/DCMAKE\_BUILD\_TYPE=Release\ -\/DBUILD\_TESTS=ON\ -\/DBUILD\_CLI=ON}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ 4.\ Build}
+\DoxyCodeLine{\#\ On\ Unix-\/like\ systems:}
+\DoxyCodeLine{make\ -\/j\$(nproc)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ On\ macOS:}
+\DoxyCodeLine{make\ -\/j\$(sysctl\ -\/n\ hw.ncpu)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ On\ Windows\ with\ Visual\ Studio:}
+\DoxyCodeLine{cmake\ -\/-\/build\ .\ -\/-\/config\ Release}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md91}{}\doxysection{\texorpdfstring{Troubleshooting}{Troubleshooting}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md91}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md92}{}\doxysubsection{\texorpdfstring{Issue\+: CMake version too old}{Issue\+: CMake version too old}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md92}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Check\ CMake\ version}
+\DoxyCodeLine{cmake\ -\/-\/version}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ If\ <\ 3.16,\ update\ CMake:}
+\DoxyCodeLine{\#\ macOS:\ brew\ upgrade\ cmake}
+\DoxyCodeLine{\#\ Linux:\ Follow\ instructions\ at\ https://cmake.org/download/}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md93}{}\doxysubsection{\texorpdfstring{Issue\+: C++20 not supported}{Issue\+: C++20 not supported}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md93}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Check\ compiler\ version}
+\DoxyCodeLine{g++\ -\/-\/version\ \ \#\ For\ GCC}
+\DoxyCodeLine{clang++\ -\/-\/version\ \ \#\ For\ Clang}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Update\ compiler\ if\ needed}
+\DoxyCodeLine{\#\ macOS:\ Update\ Xcode}
+\DoxyCodeLine{\#\ Linux:\ sudo\ apt\ install\ g++-\/10}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md94}{}\doxysubsection{\texorpdfstring{Issue\+: Open\+GL not found}{Issue\+: Open\+GL not found}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md94}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ macOS:\ Should\ be\ included\ with\ Xcode}
+\DoxyCodeLine{\#\ Linux:\ sudo\ apt\ install\ libgl1-\/mesa-\/dev}
+\DoxyCodeLine{\#\ Windows:\ Should\ be\ included\ with\ Visual\ Studio}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md95}{}\doxysubsection{\texorpdfstring{Issue\+: GLFW download fails}{Issue\+: GLFW download fails}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md95}
+The project uses Fetch\+Content to download GLFW. If this fails\+:
+\begin{DoxyEnumerate}
+\item Check internet connection
+\item Try manual build with system GLFW\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Install\ system\ GLFW}
+\DoxyCodeLine{\#\ macOS:\ brew\ install\ glfw}
+\DoxyCodeLine{\#\ Linux:\ sudo\ apt\ install\ libglfw3-\/dev}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Then\ modify\ CMakeLists.txt\ to\ use\ find\_package(glfw3)\ instead}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md96}{}\doxysubsection{\texorpdfstring{Issue\+: Missing dependencies}{Issue\+: Missing dependencies}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md96}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ The\ project\ will\ automatically\ download:}
+\DoxyCodeLine{\#\ -\/\ GLFW\ (window\ management)}
+\DoxyCodeLine{\#\ -\/\ GLM\ (math\ library)}
+\DoxyCodeLine{\#\ -\/\ Google\ Test\ (if\ BUILD\_TESTS=ON)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ If\ downloads\ fail,\ check:}
+\DoxyCodeLine{\#\ 1.\ Internet\ connectivity}
+\DoxyCodeLine{\#\ 2.\ Firewall/proxy\ settings}
+\DoxyCodeLine{\#\ 3.\ Git\ configuration}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md97}{}\doxysection{\texorpdfstring{Verify Build}{Verify Build}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md97}
+After successful build\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Check\ if\ executable\ exists}
+\DoxyCodeLine{ls\ -\/la\ build/bin/VoxelEditor\_CLI}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Run\ the\ CLI}
+\DoxyCodeLine{./build/bin/VoxelEditor\_CLI}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Run\ tests}
+\DoxyCodeLine{cd\ build}
+\DoxyCodeLine{ctest\ -\/-\/verbose}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Or\ run\ specific\ test}
+\DoxyCodeLine{./foundation/math/tests/VoxelEditor\_Math\_Tests}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md98}{}\doxysection{\texorpdfstring{Quick Test}{Quick Test}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md98}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Run\ integration\ test}
+\DoxyCodeLine{./integration\_test.sh}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Run\ validation}
+\DoxyCodeLine{./validate\_project.sh}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md99}{}\doxysection{\texorpdfstring{Common Build Configurations}{Common Build Configurations}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md99}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md100}{}\doxysubsection{\texorpdfstring{Debug Build}{Debug Build}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md100}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ ..\ -\/DCMAKE\_BUILD\_TYPE=Debug}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md101}{}\doxysubsection{\texorpdfstring{Release with Debug Info}{Release with Debug Info}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md101}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ ..\ -\/DCMAKE\_BUILD\_TYPE=RelWithDebInfo}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md102}{}\doxysubsection{\texorpdfstring{Minimal Build (CLI only, no tests)}{Minimal Build (CLI only, no tests)}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md102}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ ..\ -\/DBUILD\_TESTS=OFF\ -\/DBUILD\_CLI=ON}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md103}{}\doxysubsection{\texorpdfstring{Full Build (all components)}{Full Build (all components)}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md103}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ ..\ -\/DBUILD\_TESTS=ON\ -\/DBUILD\_CLI=ON\ -\/DBUILD\_QT\_DESKTOP=OFF\ -\/DBUILD\_VR=OFF}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md104}{}\doxysection{\texorpdfstring{Platform-\/\+Specific Notes}{Platform-\/\+Specific Notes}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md104}
+\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md105}{}\doxysubsection{\texorpdfstring{mac\+OS}{mac\+OS}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md105}
+
+\begin{DoxyItemize}
+\item Requires mac\+OS 10.\+15 or later
+\item Open\+GL is deprecated but still works
+\item May see Open\+GL deprecation warnings (safe to ignore)
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md106}{}\doxysubsection{\texorpdfstring{Linux}{Linux}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md106}
+
+\begin{DoxyItemize}
+\item Tested on Ubuntu 20.\+04+, Debian 10+
+\item Requires X11 for windowing
+\item Wayland support through XWayland
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md107}{}\doxysubsection{\texorpdfstring{Windows}{Windows}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md107}
+
+\begin{DoxyItemize}
+\item Use Visual Studio 2019 or later
+\item Open "{}x64 Native Tools Command Prompt"{}
+\item Use cmake --build instead of make
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md108}{}\doxysection{\texorpdfstring{Next Steps}{Next Steps}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md108}
+After successful build\+:
+\begin{DoxyEnumerate}
+\item Read {\ttfamily \doxylink{_c_l_i___g_u_i_d_e_8md}{CLI\+\_\+\+GUIDE.\+md}} for usage instructions
+\item Try the example commands in the guide
+\item Run performance tests to verify system capabilities
+\item Start building your voxel creations!
+\end{DoxyEnumerate}\hypertarget{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md109}{}\doxysection{\texorpdfstring{Getting Help}{Getting Help}}\label{md__b_u_i_l_d___i_n_s_t_r_u_c_t_i_o_n_s_autotoc_md109}
+If build fails\+:
+\begin{DoxyEnumerate}
+\item Check the error message carefully
+\item Verify all prerequisites are installed
+\item Try a clean build (delete build directory)
+\item Check if the issue is listed in troubleshooting above
+\item Review the CMake output for missing dependencies 
+\end{DoxyEnumerate}

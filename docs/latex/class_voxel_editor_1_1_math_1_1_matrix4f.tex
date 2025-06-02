@@ -1,0 +1,307 @@
+\doxysection{Voxel\+Editor\+::Math\+::Matrix4f Class Reference}
+\hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f}{}\label{class_voxel_editor_1_1_math_1_1_matrix4f}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+
+
+{\ttfamily \#include $<$Matrix4f.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ab39de097d5c14843903fdec0f4c940d2}{Matrix4f}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ad2abf1c486657732e332b365e92d1018}{Matrix4f}} (const float \texorpdfstring{$\ast$}{*}data)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ae16755ea5c619eae5a32734069e12d1e}{Matrix4f}} (float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a3a2efa74c5b453bf6f4daef265177d93}{identity}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a094e3848fc7baf472bcee3485ceadc7a}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&other) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a5e6cc3d8246db7ba0c45a4ac2a7058a6}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&vec) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f}{Vector4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a7b9b74f102a435ee122493e9cf4776c3}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f}{Vector4f}} \&vec) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a64977e3421f11834be28e744658fb141}{transform\+Direction}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&dir) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \& \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a21fea90cb8c652d73f0811ab310a00f8}{operator\texorpdfstring{$\ast$}{*}=}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&other)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ae661f765cf24f3c8ec0e3f58b57811af}{operator==}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&other) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a8d2aff9c22b4a2f720bced8a53eeaf58}{operator!=}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&other) const
+\item 
+float \& \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ad0d1ddf109bf3770934cf61cfde3c466}{operator\mbox{[}$\,$\mbox{]}}} (int index)
+\item 
+const float \& \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a1577ec44792ed22ffe076238e2bfa5f6}{operator\mbox{[}$\,$\mbox{]}}} (int index) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a9f1b8e79431fd9faa165d9591e30c0d3}{transposed}} () const
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_aad73f437329c4b5908762db59d1a6ece}{determinant}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_aac7440377896e7278b62c4420a98a870}{inverted}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a0a6a32e1db90a0003ad04179fecdaef8}{get\+Translation}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a800bf4f59b0e61269eef97c57df7e123}{set\+Translation}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a9868f7d5aa870da6a0fb28be836285bb}{translation}})
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a5425cb5b35b4412fc7e5758987c956b5}{to\+String}} () const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a09ded88989eb73e900ba329eba25f251}{transform\+Point}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&point) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ac191209a6365ed419043c2be416a96cf}{transform\+Vector}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&vector) const
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a5d3b0300966ca9765e8eb31804003a35}{inverse}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_ac5e13559b6fa6876506d013c1f718d68}{Identity}} ()
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a9868f7d5aa870da6a0fb28be836285bb}{translation}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&translation)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_aa37944c5366676b489e79e780b0a5a56}{rotation}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&axis, float angle)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_af118a3ccfe781b4eb4b547b87694746f}{rotationX}} (float angle)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a9d4265076a289d9dbfa1a9a14f88b601}{rotationY}} (float angle)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a6d53f3d6ed252ada9d7e6f7810f192b8}{rotationZ}} (float angle)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a27a1b7b6ab058fc730b68f98d3a380b8}{scale}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&scale)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a4099efd3890f6b6d5ba748eebc481150}{scale}} (float uniform\+Scale)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a9785eeb37bbfbfeea6ad737566aab9e9}{perspective}} (float fov\+Radians, float aspect, float near\+Plane, float far\+Plane)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a5c24a72f1610a27abc17eaec5160f576}{orthographic}} (float left, float right, float bottom, float top, float near\+Plane, float far\+Plane)
+\item 
+static \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a6779ba093179941009a1d66ca3dec6ad}{look\+At}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&eye, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&center, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&up)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a64d07055a1c96077f559811d6ef354f0}{m}} \mbox{[}16\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ab39de097d5c14843903fdec0f4c940d2}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!Matrix4f@{Matrix4f}}
+\index{Matrix4f@{Matrix4f}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{Matrix4f()}{Matrix4f()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ab39de097d5c14843903fdec0f4c940d2} 
+Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::\+Matrix4f (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ad2abf1c486657732e332b365e92d1018}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!Matrix4f@{Matrix4f}}
+\index{Matrix4f@{Matrix4f}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{Matrix4f()}{Matrix4f()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ad2abf1c486657732e332b365e92d1018} 
+Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::\+Matrix4f (\begin{DoxyParamCaption}\item[{const float \texorpdfstring{$\ast$}{*}}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ae16755ea5c619eae5a32734069e12d1e}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!Matrix4f@{Matrix4f}}
+\index{Matrix4f@{Matrix4f}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{Matrix4f()}{Matrix4f()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ae16755ea5c619eae5a32734069e12d1e} 
+Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::\+Matrix4f (\begin{DoxyParamCaption}\item[{float}]{m00}{, }\item[{float}]{m01}{, }\item[{float}]{m02}{, }\item[{float}]{m03}{, }\item[{float}]{m10}{, }\item[{float}]{m11}{, }\item[{float}]{m12}{, }\item[{float}]{m13}{, }\item[{float}]{m20}{, }\item[{float}]{m21}{, }\item[{float}]{m22}{, }\item[{float}]{m23}{, }\item[{float}]{m30}{, }\item[{float}]{m31}{, }\item[{float}]{m32}{, }\item[{float}]{m33}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_aad73f437329c4b5908762db59d1a6ece}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!determinant@{determinant}}
+\index{determinant@{determinant}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{determinant()}{determinant()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_aad73f437329c4b5908762db59d1a6ece} 
+float Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::determinant (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a0a6a32e1db90a0003ad04179fecdaef8}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!getTranslation@{getTranslation}}
+\index{getTranslation@{getTranslation}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{getTranslation()}{getTranslation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a0a6a32e1db90a0003ad04179fecdaef8} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::get\+Translation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ac5e13559b6fa6876506d013c1f718d68}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!Identity@{Identity}}
+\index{Identity@{Identity}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{Identity()}{Identity()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ac5e13559b6fa6876506d013c1f718d68} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::\+Identity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a3a2efa74c5b453bf6f4daef265177d93}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!identity@{identity}}
+\index{identity@{identity}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{identity()}{identity()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a3a2efa74c5b453bf6f4daef265177d93} 
+void Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::identity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a5d3b0300966ca9765e8eb31804003a35}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!inverse@{inverse}}
+\index{inverse@{inverse}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{inverse()}{inverse()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a5d3b0300966ca9765e8eb31804003a35} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::inverse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_aac7440377896e7278b62c4420a98a870}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!inverted@{inverted}}
+\index{inverted@{inverted}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{inverted()}{inverted()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_aac7440377896e7278b62c4420a98a870} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::inverted (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a6779ba093179941009a1d66ca3dec6ad}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!lookAt@{lookAt}}
+\index{lookAt@{lookAt}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{lookAt()}{lookAt()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a6779ba093179941009a1d66ca3dec6ad} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::look\+At (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{eye}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{center}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{up}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a8d2aff9c22b4a2f720bced8a53eeaf58}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a8d2aff9c22b4a2f720bced8a53eeaf58} 
+bool Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a094e3848fc7baf472bcee3485ceadc7a}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a094e3848fc7baf472bcee3485ceadc7a} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a5e6cc3d8246db7ba0c45a4ac2a7058a6}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a5e6cc3d8246db7ba0c45a4ac2a7058a6} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{vec}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a7b9b74f102a435ee122493e9cf4776c3}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a7b9b74f102a435ee122493e9cf4776c3} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f}{Vector4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector4f}{Vector4f}} \&}]{vec}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a21fea90cb8c652d73f0811ab310a00f8}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a21fea90cb8c652d73f0811ab310a00f8} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \& Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ae661f765cf24f3c8ec0e3f58b57811af}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator==@{operator==}}
+\index{operator==@{operator==}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ae661f765cf24f3c8ec0e3f58b57811af} 
+bool Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ad0d1ddf109bf3770934cf61cfde3c466}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ad0d1ddf109bf3770934cf61cfde3c466} 
+float \& Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a1577ec44792ed22ffe076238e2bfa5f6}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a1577ec44792ed22ffe076238e2bfa5f6} 
+const float \& Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a5c24a72f1610a27abc17eaec5160f576}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!orthographic@{orthographic}}
+\index{orthographic@{orthographic}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{orthographic()}{orthographic()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a5c24a72f1610a27abc17eaec5160f576} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::orthographic (\begin{DoxyParamCaption}\item[{float}]{left}{, }\item[{float}]{right}{, }\item[{float}]{bottom}{, }\item[{float}]{top}{, }\item[{float}]{near\+Plane}{, }\item[{float}]{far\+Plane}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a9785eeb37bbfbfeea6ad737566aab9e9}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!perspective@{perspective}}
+\index{perspective@{perspective}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{perspective()}{perspective()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a9785eeb37bbfbfeea6ad737566aab9e9} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::perspective (\begin{DoxyParamCaption}\item[{float}]{fov\+Radians}{, }\item[{float}]{aspect}{, }\item[{float}]{near\+Plane}{, }\item[{float}]{far\+Plane}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_aa37944c5366676b489e79e780b0a5a56}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!rotation@{rotation}}
+\index{rotation@{rotation}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{rotation()}{rotation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_aa37944c5366676b489e79e780b0a5a56} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::rotation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{axis}{, }\item[{float}]{angle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_af118a3ccfe781b4eb4b547b87694746f}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!rotationX@{rotationX}}
+\index{rotationX@{rotationX}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{rotationX()}{rotationX()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_af118a3ccfe781b4eb4b547b87694746f} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::rotationX (\begin{DoxyParamCaption}\item[{float}]{angle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a9d4265076a289d9dbfa1a9a14f88b601}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!rotationY@{rotationY}}
+\index{rotationY@{rotationY}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{rotationY()}{rotationY()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a9d4265076a289d9dbfa1a9a14f88b601} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::rotationY (\begin{DoxyParamCaption}\item[{float}]{angle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a6d53f3d6ed252ada9d7e6f7810f192b8}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!rotationZ@{rotationZ}}
+\index{rotationZ@{rotationZ}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{rotationZ()}{rotationZ()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a6d53f3d6ed252ada9d7e6f7810f192b8} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::rotationZ (\begin{DoxyParamCaption}\item[{float}]{angle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a27a1b7b6ab058fc730b68f98d3a380b8}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!scale@{scale}}
+\index{scale@{scale}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{scale()}{scale()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a27a1b7b6ab058fc730b68f98d3a380b8} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::scale (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{scale}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a4099efd3890f6b6d5ba748eebc481150}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!scale@{scale}}
+\index{scale@{scale}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{scale()}{scale()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a4099efd3890f6b6d5ba748eebc481150} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::scale (\begin{DoxyParamCaption}\item[{float}]{uniform\+Scale}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a800bf4f59b0e61269eef97c57df7e123}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!setTranslation@{setTranslation}}
+\index{setTranslation@{setTranslation}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{setTranslation()}{setTranslation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a800bf4f59b0e61269eef97c57df7e123} 
+void Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::set\+Translation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{translation}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a5425cb5b35b4412fc7e5758987c956b5}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!toString@{toString}}
+\index{toString@{toString}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a5425cb5b35b4412fc7e5758987c956b5} 
+std\+::string Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::to\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a64977e3421f11834be28e744658fb141}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!transformDirection@{transformDirection}}
+\index{transformDirection@{transformDirection}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{transformDirection()}{transformDirection()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a64977e3421f11834be28e744658fb141} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::transform\+Direction (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{dir}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a09ded88989eb73e900ba329eba25f251}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!transformPoint@{transformPoint}}
+\index{transformPoint@{transformPoint}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{transformPoint()}{transformPoint()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a09ded88989eb73e900ba329eba25f251} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::transform\+Point (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{point}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_ac191209a6365ed419043c2be416a96cf}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!transformVector@{transformVector}}
+\index{transformVector@{transformVector}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{transformVector()}{transformVector()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_ac191209a6365ed419043c2be416a96cf} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::transform\+Vector (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{vector}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a9868f7d5aa870da6a0fb28be836285bb}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!translation@{translation}}
+\index{translation@{translation}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{translation()}{translation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a9868f7d5aa870da6a0fb28be836285bb} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::translation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}} \&}]{translation}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a9f1b8e79431fd9faa165d9591e30c0d3}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!transposed@{transposed}}
+\index{transposed@{transposed}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{transposed()}{transposed()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a9f1b8e79431fd9faa165d9591e30c0d3} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}} Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::transposed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_voxel_editor_1_1_math_1_1_matrix4f_a64d07055a1c96077f559811d6ef354f0}\index{VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}!m@{m}}
+\index{m@{m}!VoxelEditor::Math::Matrix4f@{VoxelEditor::Math::Matrix4f}}
+\doxysubsubsection{\texorpdfstring{m}{m}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_math_1_1_matrix4f_a64d07055a1c96077f559811d6ef354f0} 
+float Voxel\+Editor\+::\+Math\+::\+Matrix4f\+::m\mbox{[}16\mbox{]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/math/\mbox{\hyperlink{_matrix4f_8h}{Matrix4f.\+h}}\end{DoxyCompactItemize}

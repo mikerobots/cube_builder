@@ -1,0 +1,497 @@
+\chapter{Rendering Engine Subsystem }
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n}{}\label{md_core_2rendering_2_d_e_s_i_g_n}\index{Rendering Engine Subsystem@{Rendering Engine Subsystem}}
+\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md256}%
+\Hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md256}%
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md257}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md257}
+Provides Open\+GL abstraction layer, manages rendering pipeline, handles multiple render modes, and coordinates with all visual systems.\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md258}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md258}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md259}{}\doxysubsection{\texorpdfstring{Render\+Engine}{Render\+Engine}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md259}
+{\bfseries{Responsibility}}\+: Main rendering interface and pipeline coordination
+\begin{DoxyItemize}
+\item Initialize and manage Open\+GL context
+\item Coordinate rendering passes
+\item Manage render targets and framebuffers
+\item Handle render mode switching
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md260}{}\doxysubsection{\texorpdfstring{Open\+GLRenderer}{Open\+GLRenderer}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md260}
+{\bfseries{Responsibility}}\+: Low-\/level Open\+GL wrapper and abstraction
+\begin{DoxyItemize}
+\item Open\+GL state management
+\item Resource creation and binding
+\item Command buffer optimization
+\item Cross-\/platform Open\+GL compatibility
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md261}{}\doxysubsection{\texorpdfstring{Shader\+Manager}{Shader\+Manager}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md261}
+{\bfseries{Responsibility}}\+: Shader compilation, management, and caching
+\begin{DoxyItemize}
+\item Shader program compilation and linking
+\item Uniform management and binding
+\item Shader hot-\/reloading for development
+\item Platform-\/specific shader variants
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md262}{}\doxysubsection{\texorpdfstring{Render\+State}{Render\+State}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md262}
+{\bfseries{Responsibility}}\+: Open\+GL state tracking and optimization
+\begin{DoxyItemize}
+\item State change minimization
+\item Render state caching
+\item Batch similar operations
+\item Performance profiling
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md263}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md263}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }RenderEngine\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Initialization}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ initialize(\textcolor{keyword}{const}\ RenderConfig\&\ config);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ shutdown();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isInitialized()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Frame\ rendering}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ beginFrame();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ endFrame();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ present();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Scene\ rendering}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderScene(\textcolor{keyword}{const}\ Scene\&\ scene,\ \textcolor{keyword}{const}\ Camera\&\ camera);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform,\ \textcolor{keyword}{const}\ Material\&\ material);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxels(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Render\ modes}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setRenderMode(RenderMode\ mode);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ getRenderMode()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setWireframeEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSolidEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Viewport\ and\ targets}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setViewport(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setRenderTarget(RenderTarget*\ target);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDefaultRenderTarget();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Debug\ and\ profiling}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDebugMode(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ RenderStats\ getRenderStats()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ captureFrame(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Resource\ management}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createVertexBuffer(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createIndexBuffer(\textcolor{keyword}{const}\ uint32\_t*\ indices,\ \textcolor{keywordtype}{size\_t}\ count);}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createTexture(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ TextureFormat\ format,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deleteBuffer(uint32\_t\ bufferId);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deleteTexture(uint32\_t\ textureId);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<OpenGLRenderer>\ m\_glRenderer;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<ShaderManager>\ m\_shaderManager;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<RenderState>\ m\_renderState;}
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<FrameBuffer>\ m\_frameBuffer;}
+\DoxyCodeLine{\ \ \ \ RenderConfig\ m\_config;}
+\DoxyCodeLine{\ \ \ \ RenderStats\ m\_stats;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md264}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md264}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md265}{}\doxysubsection{\texorpdfstring{Render\+Mode}{Render\+Mode}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md265}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}{Solid}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solid\ surfaces\ only}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2}{Wireframe}},\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wireframe\ only}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca55f4b4a94111759e08b3acb1acd12b8c}{Combined}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solid\ +\ wireframe\ overlay}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca75dd5f1160a3f02b6fae89c54361a1b3}{Points}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Point\ cloud\ rendering}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md266}{}\doxysubsection{\texorpdfstring{Render\+Config}{Render\+Config}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md266}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }RenderConfig\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ windowWidth\ =\ 1920;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ windowHeight\ =\ 1080;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ fullscreen\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ samples\ =\ 4;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ MSAA\ samples}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ vsync\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ debugContext\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683}{ColorFormat}}\ colorFormat\ =\ ColorFormat::RGBA8;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b}{DepthFormat}}\ depthFormat\ =\ DepthFormat::Depth24Stencil8;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Performance\ settings}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ frustumCulling\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ occlusionCulling\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ maxLights\ =\ 8;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ shadowMapping\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ Default();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ HighQuality();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ Performance();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ VR();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md267}{}\doxysubsection{\texorpdfstring{Material}{Material}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md267}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }Material\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ albedo\ =\ Color::White();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ metallic\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ roughness\ =\ 0.5f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ emission\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ albedoTexture\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ normalTexture\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ metallicRoughnessTexture\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ shader\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Rendering\ properties}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ doubleSided\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ blendMode\ =\ BlendMode::Opaque;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ cullMode\ =\ CullMode::Back;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bind(RenderEngine\&\ engine)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md268}{}\doxysubsection{\texorpdfstring{Render\+Stats}{Render\+Stats}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md268}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }RenderStats\ \{}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ frameCount\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ frameTime\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ fps\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Geometry\ stats}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ trianglesRendered\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ verticesProcessed\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ drawCalls\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ stats}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ vertexBufferMemory\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ indexBufferMemory\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ textureMemory\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Performance\ stats}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ cpuTime\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ gpuTime\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ stateChanges\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ shaderSwitches\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md269}{}\doxysection{\texorpdfstring{Open\+GL Abstraction}{Open\+GL Abstraction}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md269}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md270}{}\doxysubsection{\texorpdfstring{Open\+GLRenderer}{Open\+GLRenderer}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md270}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }OpenGLRenderer\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Context\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ initializeContext(\textcolor{keyword}{const}\ RenderConfig\&\ config);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ destroyContext();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isContextValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Buffer\ operations}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createVertexBuffer(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ BufferUsage\ usage\ =\ BufferUsage::Static);}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createIndexBuffer(\textcolor{keyword}{const}\ uint32\_t*\ indices,\ \textcolor{keywordtype}{size\_t}\ count,\ BufferUsage\ usage\ =\ BufferUsage::Static);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateBuffer(uint32\_t\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindVertexBuffer(uint32\_t\ bufferId);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindIndexBuffer(uint32\_t\ bufferId);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Texture\ operations}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createTexture2D(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ TextureFormat\ format,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createTextureCube(\textcolor{keywordtype}{int}\ size,\ TextureFormat\ format,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data[6]\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateTexture(uint32\_t\ textureId,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindTexture(uint32\_t\ textureId,\ \textcolor{keywordtype}{int}\ slot\ =\ 0);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Shader\ operations}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createShader(ShaderType\ type,\ \textcolor{keyword}{const}\ std::string\&\ source);}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ createProgram(\textcolor{keyword}{const}\ std::vector<uint32\_t>\&\ shaders);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ useProgram(uint32\_t\ programId);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setUniform(uint32\_t\ programId,\ \textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ UniformValue\&\ value);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Drawing\ operations}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ drawArrays(PrimitiveType\ type,\ \textcolor{keywordtype}{int}\ first,\ \textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ drawElements(PrimitiveType\ type,\ \textcolor{keywordtype}{int}\ count,\ IndexType\ indexType\ =\ IndexType::UInt32);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ drawInstanced(PrimitiveType\ type,\ \textcolor{keywordtype}{int}\ count,\ \textcolor{keywordtype}{int}\ instanceCount);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ State\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDepthTest(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDepthWrite(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setBlending(\textcolor{keywordtype}{bool}\ enabled,\ BlendMode\ mode\ =\ BlendMode::Alpha);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCulling(\textcolor{keywordtype}{bool}\ enabled,\ CullMode\ mode\ =\ CullMode::Back);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setViewport(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clear(ClearFlags\ flags,\ \textcolor{keyword}{const}\ Color\&\ color\ =\ Color::Black(),\ \textcolor{keywordtype}{float}\ depth\ =\ 1.0f);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ RenderState*\ m\_state;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ m\_contextHandle;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<uint32\_t,\ BufferInfo>\ m\_buffers;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<uint32\_t,\ TextureInfo>\ m\_textures;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<uint32\_t,\ ShaderInfo>\ m\_shaders;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md271}{}\doxysubsection{\texorpdfstring{Shader\+Manager}{Shader\+Manager}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md271}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ShaderManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Shader\ compilation}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ compileShader(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ ShaderSource\&\ source);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ loadShaderFromFile(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ reloadShader(ShaderId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Shader\ access}}
+\DoxyCodeLine{\ \ \ \ ShaderProgram*\ getShader(ShaderId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ findShader(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getShaderNames()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Built-\/in\ shaders}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getVoxelShader();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getWireframeShader();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getSelectionShader();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getGroupOutlineShader();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Uniform\ management}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setGlobalUniform(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ UniformValue\&\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updatePerFrameUniforms(\textcolor{keyword}{const}\ Camera\&\ camera,\ \textcolor{keyword}{const}\ RenderStats\&\ stats);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Hot\ reloading}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ enableHotReload(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ checkForChanges();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ShaderEntry\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ id;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ path;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::unique\_ptr<ShaderProgram>\ program;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::time\_t\ lastModified;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<ShaderId,\ ShaderEntry>\ m\_shaders;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ UniformValue>\ m\_globalUniforms;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_nextShaderId;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_hotReloadEnabled;}
+\DoxyCodeLine{\ \ \ \ OpenGLRenderer*\ m\_glRenderer;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ compileShaderProgram(ShaderEntry\&\ entry,\ \textcolor{keyword}{const}\ ShaderSource\&\ source);}
+\DoxyCodeLine{\ \ \ \ std::string\ preprocessShader(\textcolor{keyword}{const}\ std::string\&\ source,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ defines);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md272}{}\doxysection{\texorpdfstring{Rendering Pipeline}{Rendering Pipeline}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md272}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md273}{}\doxysubsection{\texorpdfstring{Frame Rendering}{Frame Rendering}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md273}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ RenderEngine::renderScene(\textcolor{keyword}{const}\ Scene\&\ scene,\ \textcolor{keyword}{const}\ Camera\&\ camera)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Update\ per-\/frame\ uniforms}}
+\DoxyCodeLine{\ \ \ \ m\_shaderManager-\/>updatePerFrameUniforms(camera,\ m\_stats);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Frustum\ culling}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ visibleObjects\ =\ scene.cull(camera.getFrustum());}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Sort\ objects\ by\ material/shader\ to\ minimize\ state\ changes}}
+\DoxyCodeLine{\ \ \ \ std::sort(visibleObjects.begin(),\ visibleObjects.end(),\ MaterialSorter());}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Render\ opaque\ objects}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \textcolor{keywordtype}{object}\ :\ visibleObjects)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.material.blendMode\ ==\ BlendMode::Opaque)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ renderObject(\textcolor{keywordtype}{object},\ camera);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Render\ transparent\ objects\ (back\ to\ front)}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ transparentObjects\ =\ filterTransparent(visibleObjects);}
+\DoxyCodeLine{\ \ \ \ std::sort(transparentObjects.begin(),\ transparentObjects.end(),\ DepthSorter(camera.getPosition()));}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \textcolor{keywordtype}{object}\ :\ transparentObjects)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ renderObject(\textcolor{keywordtype}{object},\ camera);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Render\ debug\ overlays}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (m\_config.debugMode)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ renderDebugOverlays(scene,\ camera);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md274}{}\doxysubsection{\texorpdfstring{Voxel Rendering}{Voxel Rendering}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md274}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ VoxelRenderer::renderVoxels(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Generate\ or\ retrieve\ cached\ mesh}}
+\DoxyCodeLine{\ \ \ \ Mesh\ mesh\ =\ m\_surfaceGenerator-\/>generateSurface(grid,\ settings.surfaceSettings);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Setup\ material\ based\ on\ render\ mode}}
+\DoxyCodeLine{\ \ \ \ Material\ material\ =\ createVoxelMaterial(settings.renderMode,\ resolution);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Render\ based\ on\ mode}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{switch}\ (settings.renderMode)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RenderMode::Solid:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ renderSolidMesh(mesh,\ material);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RenderMode::Wireframe:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ renderWireframeMesh(mesh,\ material);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RenderMode::Combined:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ renderSolidMesh(mesh,\ material);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ material.wireframe\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ material.color.a\ =\ 0.3f;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ renderWireframeMesh(mesh,\ material);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RenderMode::Points:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ renderPointCloud(grid,\ material);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md275}{}\doxysection{\texorpdfstring{Performance Optimization}{Performance Optimization}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md275}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md276}{}\doxysubsection{\texorpdfstring{State Management}{State Management}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md276}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }RenderState\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDepthTest(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setBlending(\textcolor{keywordtype}{bool}\ enabled,\ BlendMode\ mode);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindShader(ShaderId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindTexture(uint32\_t\ textureId,\ \textcolor{keywordtype}{int}\ slot);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Batch\ state\ changes}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ flush();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Statistics}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ getStateChanges()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stateChanges;\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }CurrentState\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ depthTest\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ blending\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ blendMode\ =\ BlendMode::Opaque;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ boundShader\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<uint32\_t,\ 16>\ boundTextures\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \}\ m\_current,\ m\_pending;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ uint32\_t\ m\_stateChanges\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_stateDirty\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ applyStateChanges();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md277}{}\doxysubsection{\texorpdfstring{Instanced Rendering}{Instanced Rendering}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md277}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }InstancedRenderer\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addInstance(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform,\ \textcolor{keyword}{const}\ Material\&\ material);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderInstances();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }InstanceBatch\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Mesh\ mesh;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Material\ material;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<Transform>\ transforms;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ instanceBuffer;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<InstanceBatch>\ m\_batches;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateInstanceBuffer(InstanceBatch\&\ batch);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md278}{}\doxysection{\texorpdfstring{Debug and Profiling}{Debug and Profiling}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md278}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md279}{}\doxysubsection{\texorpdfstring{Debug Rendering}{Debug Rendering}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md279}
+
+\begin{DoxyItemize}
+\item Wireframe overlays
+\item Normal visualization
+\item Bounding box rendering
+\item Light visualization
+\item Performance metrics overlay
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md280}{}\doxysubsection{\texorpdfstring{GPU Profiling}{GPU Profiling}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md280}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }GPUProfiler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ beginSection(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ endSection();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ProfileData\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ gpuTime;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cpuTime;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<ProfileData>\ getResults()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ProfileSection\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ startQuery;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ endQuery;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ cpuStart;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::stack<ProfileSection>\ m\_sectionStack;}
+\DoxyCodeLine{\ \ \ \ std::vector<ProfileData>\ m\_results;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md281}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md281}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md282}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md282}
+
+\begin{DoxyItemize}
+\item Shader compilation
+\item State management
+\item Resource creation/deletion
+\item Matrix calculations
+\item Performance metrics
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md283}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md283}
+
+\begin{DoxyItemize}
+\item Rendering pipeline
+\item Multi-\/platform compatibility
+\item Memory management
+\item Performance benchmarks
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md284}{}\doxysubsection{\texorpdfstring{Visual Tests}{Visual Tests}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md284}
+
+\begin{DoxyItemize}
+\item Render mode correctness
+\item Visual artifact detection
+\item Cross-\/platform consistency
+\item Performance profiling
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md285}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md285}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Camera}}\+: View and projection matrices
+\item {\bfseries{Core/\+Surface\+Gen}}\+: Mesh generation for voxels
+\item {\bfseries{Core/\+Visual\+Feedback}}\+: Overlay rendering
+\item {\bfseries{Foundation/\+Math}}\+: Matrix and vector operations
+\item {\bfseries{Foundation/\+Events}}\+: Rendering events
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md286}{}\doxysection{\texorpdfstring{Platform Considerations}{Platform Considerations}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md286}
+\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md287}{}\doxysubsection{\texorpdfstring{Desktop Open\+GL}{Desktop Open\+GL}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md287}
+
+\begin{DoxyItemize}
+\item Open\+GL 3.\+3+ core profile
+\item Extension loading and validation
+\item Multi-\/context support
+\item High-\/\+DPI display support
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md288}{}\doxysubsection{\texorpdfstring{Mobile Open\+GL ES}{Mobile Open\+GL ES}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md288}
+
+\begin{DoxyItemize}
+\item Open\+GL ES 3.\+0+ support
+\item Reduced precision handling
+\item Power management optimization
+\item Limited texture formats
+\end{DoxyItemize}\hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md289}{}\doxysubsection{\texorpdfstring{VR Rendering}{VR Rendering}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md289}
+
+\begin{DoxyItemize}
+\item Stereo rendering support
+\item Foveated rendering optimization
+\item Low-\/latency pipeline
+\item Temporal upsampling 
+\end{DoxyItemize}

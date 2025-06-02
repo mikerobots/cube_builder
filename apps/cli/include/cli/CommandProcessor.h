@@ -9,7 +9,6 @@
 #include "cli/CommandTypes.h"
 
 namespace VoxelEditor {
-namespace CLI {
 
 class Application;
 
@@ -66,5 +65,4 @@ private:
     void registerBuiltinCommands();
 };
 
-} // namespace CLI
 } // namespace VoxelEditor

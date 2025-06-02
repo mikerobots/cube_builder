@@ -1,0 +1,145 @@
+\doxysection{foundation/events/tests/test\+\_\+\+Event\+Dispatcher.cpp File Reference}
+\hypertarget{test___event_dispatcher_8cpp}{}\label{test___event_dispatcher_8cpp}\index{foundation/events/tests/test\_EventDispatcher.cpp@{foundation/events/tests/test\_EventDispatcher.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Common\+Events.\+h"{}}\newline
+{\ttfamily \#include "{}../../../core/voxel\+\_\+data/\+Voxel\+Types.\+h"{}}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_test_event}{Test\+Event}}
+\item 
+class \mbox{\hyperlink{class_test_handler}{Test\+Handler}}
+\item 
+class \mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{Voxel\+Resolution}} = \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a1f75d654704ff57e159446f2c24fc88a}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Basic\+Event\+Dispatch)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a462c69e77f7e377e9d0e36da8bf59d8d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Multiple\+Handlers)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_abdd919cd43a83595149662cdac66c4ac}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Handler\+Priority)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_ac7e541682ab207208807b89f645932f2}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Handler\+Filtering)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_af214d9a7930d9766d6c2043a19bc3051}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Unsubscribe)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a4dc1a64ea7c66cbd4fda200b81f414fe}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Async\+Event\+Dispatch)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a6ff01a5520a5c6eb6a2b3c47cc581fe9}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Queue\+Size\+Limit)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a3abc82f36033d3ffb6f840843d481235}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Clear\+Queue)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_aafd68adfa85e79a5099d895902c7f9f5}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Handler\+Count)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a6a594e282cedd0ca517195fad9d15113}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Common\+Voxel\+Changed\+Event)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a68e5a31cbf30e71d3294d45a31c41388}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Event\+Timestamp)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a328769d8f33b1a1efbfc57d48a46bdf3}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Event\+Id)
+\item 
+\mbox{\hyperlink{test___event_dispatcher_8cpp_a749c04efb2d679b8dd590bd33317c370}{TEST\+\_\+F}} (\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}, Thread\+Safety)
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{test___event_dispatcher_8cpp_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!VoxelResolution@{VoxelResolution}}
+\index{VoxelResolution@{VoxelResolution}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{VoxelResolution}{VoxelResolution}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9} 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Resolution}} = \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Editor\+::\+Voxel\+Data\+::\+Voxel\+Resolution}}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{test___event_dispatcher_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___event_dispatcher_8cpp_a4dc1a64ea7c66cbd4fda200b81f414fe}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a4dc1a64ea7c66cbd4fda200b81f414fe} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Async\+Event\+Dispatch}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a1f75d654704ff57e159446f2c24fc88a}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a1f75d654704ff57e159446f2c24fc88a} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Basic\+Event\+Dispatch}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a3abc82f36033d3ffb6f840843d481235}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a3abc82f36033d3ffb6f840843d481235} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Clear\+Queue}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a6a594e282cedd0ca517195fad9d15113}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a6a594e282cedd0ca517195fad9d15113} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Common\+Voxel\+Changed\+Event}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a328769d8f33b1a1efbfc57d48a46bdf3}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a328769d8f33b1a1efbfc57d48a46bdf3} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Event\+Id}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a68e5a31cbf30e71d3294d45a31c41388}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a68e5a31cbf30e71d3294d45a31c41388} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Event\+Timestamp}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_aafd68adfa85e79a5099d895902c7f9f5}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_aafd68adfa85e79a5099d895902c7f9f5} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Handler\+Count}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_ac7e541682ab207208807b89f645932f2}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_ac7e541682ab207208807b89f645932f2} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Handler\+Filtering}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_abdd919cd43a83595149662cdac66c4ac}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_abdd919cd43a83595149662cdac66c4ac} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Handler\+Priority}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a462c69e77f7e377e9d0e36da8bf59d8d}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a462c69e77f7e377e9d0e36da8bf59d8d} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Multiple\+Handlers}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a6ff01a5520a5c6eb6a2b3c47cc581fe9}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a6ff01a5520a5c6eb6a2b3c47cc581fe9} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Queue\+Size\+Limit}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_a749c04efb2d679b8dd590bd33317c370}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_a749c04efb2d679b8dd590bd33317c370} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Thread\+Safety}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___event_dispatcher_8cpp_af214d9a7930d9766d6c2043a19bc3051}\index{test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_EventDispatcher.cpp@{test\_EventDispatcher.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/13]}}
+{\footnotesize\ttfamily \label{test___event_dispatcher_8cpp_af214d9a7930d9766d6c2043a19bc3051} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event_dispatcher_test}{Event\+Dispatcher\+Test}}}]{}{, }\item[{Unsubscribe}]{}{}\end{DoxyParamCaption})}
+

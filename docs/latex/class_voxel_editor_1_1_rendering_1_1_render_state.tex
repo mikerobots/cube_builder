@@ -1,0 +1,264 @@
+\doxysection{Voxel\+Editor\+::Rendering\+::Render\+State Class Reference}
+\hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state}{}\label{class_voxel_editor_1_1_rendering_1_1_render_state}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+
+
+{\ttfamily \#include $<$Render\+State.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a9c31141dc656481626e6c02929a170a8}{Render\+State}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a05f9cb94346ece783523b808d151becf}{\texorpdfstring{$\sim$}{\string~}\+Render\+State}} ()=default
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a849905ce7544f6a456def6a53b7c653c}{set\+Depth\+Test}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a28f29f1662cc749138b7c53997605258}{set\+Depth\+Write}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_abf90d6457eebe4c40a02715b578c3af0}{set\+Blending}} (bool enabled, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} mode=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}{Blend\+Mode\+::\+Alpha}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_abff77fcd7a16008f40ccdc6ddeabbc32}{set\+Culling}} (bool enabled, \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} mode=\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Cull\+Mode\+::\+Back}})
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_ae862e37ca513eff28c50982aeb3cacbf}{set\+Polygon\+Mode}} (bool wireframe)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_aa268d7c7dbeb77b466fdac16b69237fa}{set\+Line\+Width}} (float width)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_acd490bac927ff9fb5b684d85b47bed1e}{set\+Point\+Size}} (float size)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a3a6c057451b0d695b318a31e484e48f7}{bind\+Shader}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a726311a5cd7538beca8a727b85f0f3a8}{bind\+Texture}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}} texture\+Id, int slot)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_aaea801f5f534421677d7596c63f1a83c}{bind\+Vertex\+Array}} (uint32\+\_\+t vao\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a9db0d22b2e0594f97e9a3c4552064d45}{bind\+Vertex\+Buffer}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a86165c9de071459918f05bdfa213466c}{bind\+Index\+Buffer}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}} buffer\+Id)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a96cd757f88703f17a00bd5a60be9b660}{set\+Viewport}} (int x, int y, int width, int height)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a8c2c56f7dc8ecc4675d092e6c1f8c354}{set\+Clear\+Color}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&color)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a6c5d6158343ac1f73f8f6b47fb04c005}{force\+State\+Change}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a22dd2cc1914426bd6fcb3524ceb614d9}{flush}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_ac49daa23d9e50cd3c688db1abb58afcd}{reset}} ()
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a23228f37fa166ce65f93ef2ece8fc37d}{get\+State\+Changes}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_aa777e596660ddc7529403763057bb91d}{get\+Shader\+Switches}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a60a65dd623f8fd9d584df7e3d8c398cc}{get\+Texture\+Binds}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_ae8bd472c5b8420d91a02dbdf377e82ce}{reset\+Statistics}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a83fbcfcc0c248adba9553ea08c8cb0d5}{is\+Depth\+Test\+Enabled}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a2d436b6321ddce0612f2e3ebd2c96c2c}{is\+Depth\+Write\+Enabled}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a7b694b2bbb9d38a4533800a4fbf31ace}{is\+Blending\+Enabled}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a2a8ca9f060be283b811577fbf9191a1b}{get\+Blend\+Mode}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a0f73f4998bc2288633ec741b435d657e}{is\+Culling\+Enabled}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a29cb598fee756e6248f479a3e8c355e1}{get\+Cull\+Mode}} () const
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a24cfcdcd308eb197fb7306c329e92807}{get\+Bound\+Shader}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a9c31141dc656481626e6c02929a170a8}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!RenderState@{RenderState}}
+\index{RenderState@{RenderState}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{RenderState()}{RenderState()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a9c31141dc656481626e6c02929a170a8} 
+Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::\+Render\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a05f9cb94346ece783523b808d151becf}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!````~RenderState@{\texorpdfstring{$\sim$}{\string~}RenderState}}
+\index{````~RenderState@{\texorpdfstring{$\sim$}{\string~}RenderState}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}RenderState()}{\string~RenderState()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a05f9cb94346ece783523b808d151becf} 
+Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::\texorpdfstring{$\sim$}{\string~}\+Render\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a86165c9de071459918f05bdfa213466c}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!bindIndexBuffer@{bindIndexBuffer}}
+\index{bindIndexBuffer@{bindIndexBuffer}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{bindIndexBuffer()}{bindIndexBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a86165c9de071459918f05bdfa213466c} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::bind\+Index\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a3a6c057451b0d695b318a31e484e48f7}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!bindShader@{bindShader}}
+\index{bindShader@{bindShader}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{bindShader()}{bindShader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a3a6c057451b0d695b318a31e484e48f7} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::bind\+Shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a726311a5cd7538beca8a727b85f0f3a8}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!bindTexture@{bindTexture}}
+\index{bindTexture@{bindTexture}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{bindTexture()}{bindTexture()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a726311a5cd7538beca8a727b85f0f3a8} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::bind\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{Texture\+Id}}}]{texture\+Id}{, }\item[{int}]{slot}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_aaea801f5f534421677d7596c63f1a83c}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!bindVertexArray@{bindVertexArray}}
+\index{bindVertexArray@{bindVertexArray}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{bindVertexArray()}{bindVertexArray()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_aaea801f5f534421677d7596c63f1a83c} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::bind\+Vertex\+Array (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{vao\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a9db0d22b2e0594f97e9a3c4552064d45}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!bindVertexBuffer@{bindVertexBuffer}}
+\index{bindVertexBuffer@{bindVertexBuffer}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{bindVertexBuffer()}{bindVertexBuffer()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a9db0d22b2e0594f97e9a3c4552064d45} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::bind\+Vertex\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{Buffer\+Id}}}]{buffer\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a22dd2cc1914426bd6fcb3524ceb614d9}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!flush@{flush}}
+\index{flush@{flush}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a22dd2cc1914426bd6fcb3524ceb614d9} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::flush (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a6c5d6158343ac1f73f8f6b47fb04c005}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!forceStateChange@{forceStateChange}}
+\index{forceStateChange@{forceStateChange}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{forceStateChange()}{forceStateChange()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a6c5d6158343ac1f73f8f6b47fb04c005} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::force\+State\+Change (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a2a8ca9f060be283b811577fbf9191a1b}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!getBlendMode@{getBlendMode}}
+\index{getBlendMode@{getBlendMode}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{getBlendMode()}{getBlendMode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a2a8ca9f060be283b811577fbf9191a1b} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}} Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::get\+Blend\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a24cfcdcd308eb197fb7306c329e92807}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!getBoundShader@{getBoundShader}}
+\index{getBoundShader@{getBoundShader}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{getBoundShader()}{getBoundShader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a24cfcdcd308eb197fb7306c329e92807} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::get\+Bound\+Shader (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a29cb598fee756e6248f479a3e8c355e1}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!getCullMode@{getCullMode}}
+\index{getCullMode@{getCullMode}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{getCullMode()}{getCullMode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a29cb598fee756e6248f479a3e8c355e1} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}} Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::get\+Cull\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_aa777e596660ddc7529403763057bb91d}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!getShaderSwitches@{getShaderSwitches}}
+\index{getShaderSwitches@{getShaderSwitches}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{getShaderSwitches()}{getShaderSwitches()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_aa777e596660ddc7529403763057bb91d} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::get\+Shader\+Switches (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a23228f37fa166ce65f93ef2ece8fc37d}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!getStateChanges@{getStateChanges}}
+\index{getStateChanges@{getStateChanges}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{getStateChanges()}{getStateChanges()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a23228f37fa166ce65f93ef2ece8fc37d} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::get\+State\+Changes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a60a65dd623f8fd9d584df7e3d8c398cc}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!getTextureBinds@{getTextureBinds}}
+\index{getTextureBinds@{getTextureBinds}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{getTextureBinds()}{getTextureBinds()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a60a65dd623f8fd9d584df7e3d8c398cc} 
+uint32\+\_\+t Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::get\+Texture\+Binds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a7b694b2bbb9d38a4533800a4fbf31ace}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!isBlendingEnabled@{isBlendingEnabled}}
+\index{isBlendingEnabled@{isBlendingEnabled}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{isBlendingEnabled()}{isBlendingEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a7b694b2bbb9d38a4533800a4fbf31ace} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::is\+Blending\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a0f73f4998bc2288633ec741b435d657e}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!isCullingEnabled@{isCullingEnabled}}
+\index{isCullingEnabled@{isCullingEnabled}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{isCullingEnabled()}{isCullingEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a0f73f4998bc2288633ec741b435d657e} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::is\+Culling\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a83fbcfcc0c248adba9553ea08c8cb0d5}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!isDepthTestEnabled@{isDepthTestEnabled}}
+\index{isDepthTestEnabled@{isDepthTestEnabled}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{isDepthTestEnabled()}{isDepthTestEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a83fbcfcc0c248adba9553ea08c8cb0d5} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::is\+Depth\+Test\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a2d436b6321ddce0612f2e3ebd2c96c2c}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!isDepthWriteEnabled@{isDepthWriteEnabled}}
+\index{isDepthWriteEnabled@{isDepthWriteEnabled}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{isDepthWriteEnabled()}{isDepthWriteEnabled()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a2d436b6321ddce0612f2e3ebd2c96c2c} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::is\+Depth\+Write\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_ac49daa23d9e50cd3c688db1abb58afcd}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!reset@{reset}}
+\index{reset@{reset}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_ac49daa23d9e50cd3c688db1abb58afcd} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_ae8bd472c5b8420d91a02dbdf377e82ce}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!resetStatistics@{resetStatistics}}
+\index{resetStatistics@{resetStatistics}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{resetStatistics()}{resetStatistics()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_ae8bd472c5b8420d91a02dbdf377e82ce} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::reset\+Statistics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_abf90d6457eebe4c40a02715b578c3af0}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setBlending@{setBlending}}
+\index{setBlending@{setBlending}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setBlending()}{setBlending()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_abf90d6457eebe4c40a02715b578c3af0} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Blending (\begin{DoxyParamCaption}\item[{bool}]{enabled}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{Blend\+Mode}}}]{mode}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}{Blend\+Mode\+::\+Alpha}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a8c2c56f7dc8ecc4675d092e6c1f8c354}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setClearColor@{setClearColor}}
+\index{setClearColor@{setClearColor}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setClearColor()}{setClearColor()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a8c2c56f7dc8ecc4675d092e6c1f8c354} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Clear\+Color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&}]{color}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_abff77fcd7a16008f40ccdc6ddeabbc32}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setCulling@{setCulling}}
+\index{setCulling@{setCulling}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setCulling()}{setCulling()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_abff77fcd7a16008f40ccdc6ddeabbc32} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Culling (\begin{DoxyParamCaption}\item[{bool}]{enabled}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{Cull\+Mode}}}]{mode}{ = {\ttfamily \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Cull\+Mode\+::\+Back}}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a849905ce7544f6a456def6a53b7c653c}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setDepthTest@{setDepthTest}}
+\index{setDepthTest@{setDepthTest}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setDepthTest()}{setDepthTest()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a849905ce7544f6a456def6a53b7c653c} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Depth\+Test (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a28f29f1662cc749138b7c53997605258}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setDepthWrite@{setDepthWrite}}
+\index{setDepthWrite@{setDepthWrite}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setDepthWrite()}{setDepthWrite()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a28f29f1662cc749138b7c53997605258} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Depth\+Write (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_aa268d7c7dbeb77b466fdac16b69237fa}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setLineWidth@{setLineWidth}}
+\index{setLineWidth@{setLineWidth}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setLineWidth()}{setLineWidth()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_aa268d7c7dbeb77b466fdac16b69237fa} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Line\+Width (\begin{DoxyParamCaption}\item[{float}]{width}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_acd490bac927ff9fb5b684d85b47bed1e}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setPointSize@{setPointSize}}
+\index{setPointSize@{setPointSize}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setPointSize()}{setPointSize()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_acd490bac927ff9fb5b684d85b47bed1e} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Point\+Size (\begin{DoxyParamCaption}\item[{float}]{size}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_ae862e37ca513eff28c50982aeb3cacbf}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setPolygonMode@{setPolygonMode}}
+\index{setPolygonMode@{setPolygonMode}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setPolygonMode()}{setPolygonMode()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_ae862e37ca513eff28c50982aeb3cacbf} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Polygon\+Mode (\begin{DoxyParamCaption}\item[{bool}]{wireframe}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_render_state_a96cd757f88703f17a00bd5a60be9b660}\index{VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}!setViewport@{setViewport}}
+\index{setViewport@{setViewport}!VoxelEditor::Rendering::RenderState@{VoxelEditor::Rendering::RenderState}}
+\doxysubsubsection{\texorpdfstring{setViewport()}{setViewport()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_render_state_a96cd757f88703f17a00bd5a60be9b660} 
+void Voxel\+Editor\+::\+Rendering\+::\+Render\+State\+::set\+Viewport (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{int}]{width}{, }\item[{int}]{height}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/rendering/\mbox{\hyperlink{_render_state_8h}{Render\+State.\+h}}\end{DoxyCompactItemize}

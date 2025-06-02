@@ -1,0 +1,189 @@
+\chapter{Voxel Editor }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Voxel Editor@{Voxel Editor}}
+\label{md__r_e_a_d_m_e_autotoc_md575}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md575}%
+
+
+A multi-\/platform voxel editor with smooth surface generation, supporting desktop and VR (Meta Quest 3).\hypertarget{md__r_e_a_d_m_e_autotoc_md576}{}\doxysection{\texorpdfstring{Features}{Features}}\label{md__r_e_a_d_m_e_autotoc_md576}
+
+\begin{DoxyItemize}
+\item {\bfseries{Multi-\/resolution voxel system}}\+: 10 size levels (1cm to 512cm)
+\item {\bfseries{Dynamic workspace}}\+: Adjustable from 2m³ to 8m³
+\item {\bfseries{Smooth surface generation}}\+: Using Dual Contouring algorithm
+\item {\bfseries{Group management}}\+: Organize voxels into hierarchical groups
+\item {\bfseries{Visual feedback}}\+: Green outline previews and face highlighting
+\item {\bfseries{Command-\/line interface}}\+: Full-\/featured CLI with auto-\/completion
+\item {\bfseries{Mouse interaction}}\+: Click-\/to-\/place voxels with visual feedback
+\item {\bfseries{File formats}}\+: Custom binary format (.cvef) and STL export
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md577}{}\doxysection{\texorpdfstring{Project Structure}{Project Structure}}\label{md__r_e_a_d_m_e_autotoc_md577}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cube\_edit/}
+\DoxyCodeLine{├──\ foundation/\ \ \ \ \ \ \ \ \ \ \#\ Core\ utilities\ (math,\ events,\ memory,\ logging,\ config)}
+\DoxyCodeLine{├──\ core/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Main\ systems\ (voxels,\ camera,\ rendering,\ etc.)}
+\DoxyCodeLine{├──\ apps/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Applications}
+\DoxyCodeLine{│\ \ \ ├──\ cli/\ \ \ \ \ \ \ \ \ \ \ \#\ Command-\/line\ interface\ (complete)}
+\DoxyCodeLine{│\ \ \ ├──\ desktop/\ \ \ \ \ \ \ \#\ Qt\ desktop\ app\ (future)}
+\DoxyCodeLine{│\ \ \ └──\ vr/\ \ \ \ \ \ \ \ \ \ \ \#\ Meta\ Quest\ 3\ app\ (future)}
+\DoxyCodeLine{├──\ external/\ \ \ \ \ \ \ \ \ \ \#\ Third-\/party\ dependencies}
+\DoxyCodeLine{└──\ build/\ \ \ \ \ \ \ \ \ \ \ \ \#\ Build\ output\ directory}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md578}{}\doxysection{\texorpdfstring{Building}{Building}}\label{md__r_e_a_d_m_e_autotoc_md578}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md579}{}\doxysubsection{\texorpdfstring{Prerequisites}{Prerequisites}}\label{md__r_e_a_d_m_e_autotoc_md579}
+
+\begin{DoxyItemize}
+\item CMake 3.\+16+
+\item C++20 compatible compiler
+\item Open\+GL 3.\+3+
+\item Git
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md580}{}\doxysubsection{\texorpdfstring{Quick Build}{Quick Build}}\label{md__r_e_a_d_m_e_autotoc_md580}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Clone\ the\ repository}
+\DoxyCodeLine{git\ clone\ <repository-\/url>}
+\DoxyCodeLine{cd\ cube\_edit}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Run\ the\ build\ script}
+\DoxyCodeLine{./build.sh}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Or\ manually:}
+\DoxyCodeLine{mkdir\ build\ \&\&\ cd\ build}
+\DoxyCodeLine{cmake\ ..\ -\/DCMAKE\_BUILD\_TYPE=Release}
+\DoxyCodeLine{cmake\ -\/-\/build\ .\ -\/-\/parallel}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md581}{}\doxysubsection{\texorpdfstring{Build Options}{Build Options}}\label{md__r_e_a_d_m_e_autotoc_md581}
+
+\begin{DoxyItemize}
+\item {\ttfamily BUILD\+\_\+\+TESTS} -\/ Build unit tests (default\+: ON)
+\item {\ttfamily BUILD\+\_\+\+CLI} -\/ Build CLI application (default\+: ON)
+\item {\ttfamily BUILD\+\_\+\+QT\+\_\+\+DESKTOP} -\/ Build Qt desktop app (default\+: OFF)
+\item {\ttfamily BUILD\+\_\+\+VR} -\/ Build VR application (default\+: OFF)
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md582}{}\doxysection{\texorpdfstring{Running the CLI Application}{Running the CLI Application}}\label{md__r_e_a_d_m_e_autotoc_md582}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./build/bin/VoxelEditor\_CLI}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md583}{}\doxysection{\texorpdfstring{CLI Commands}{CLI Commands}}\label{md__r_e_a_d_m_e_autotoc_md583}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md584}{}\doxysubsection{\texorpdfstring{File Operations}{File Operations}}\label{md__r_e_a_d_m_e_autotoc_md584}
+
+\begin{DoxyItemize}
+\item {\ttfamily new} -\/ Create a new project
+\item {\ttfamily open \texorpdfstring{$<$}{<}filename\texorpdfstring{$>$}{>}} -\/ Open a project file
+\item {\ttfamily save \mbox{[}filename\mbox{]}} -\/ Save the current project
+\item {\ttfamily saveas \texorpdfstring{$<$}{<}filename\texorpdfstring{$>$}{>}} -\/ Save with a new name
+\item {\ttfamily export \texorpdfstring{$<$}{<}filename\texorpdfstring{$>$}{>}} -\/ Export to STL format
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md585}{}\doxysubsection{\texorpdfstring{Edit Operations}{Edit Operations}}\label{md__r_e_a_d_m_e_autotoc_md585}
+
+\begin{DoxyItemize}
+\item {\ttfamily place \texorpdfstring{$<$}{<}x\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z\texorpdfstring{$>$}{>}} -\/ Place a voxel at position
+\item {\ttfamily delete \texorpdfstring{$<$}{<}x\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z\texorpdfstring{$>$}{>}} -\/ Delete a voxel at position
+\item {\ttfamily fill \texorpdfstring{$<$}{<}x1\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y1\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z1\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}x2\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y2\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z2\texorpdfstring{$>$}{>}} -\/ Fill a box region
+\item {\ttfamily undo} -\/ Undo last operation
+\item {\ttfamily redo} -\/ Redo last undone operation
+\item {\ttfamily resolution \texorpdfstring{$<$}{<}size\texorpdfstring{$>$}{>}} -\/ Set voxel size (1cm, 2cm, 4cm, etc.)
+\item {\ttfamily workspace \texorpdfstring{$<$}{<}width\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}height\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}depth\texorpdfstring{$>$}{>}} -\/ Set workspace dimensions
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md586}{}\doxysubsection{\texorpdfstring{View Controls}{View Controls}}\label{md__r_e_a_d_m_e_autotoc_md586}
+
+\begin{DoxyItemize}
+\item {\ttfamily camera \texorpdfstring{$<$}{<}preset\texorpdfstring{$>$}{>}} -\/ Set camera view (front/back/left/right/top/bottom/iso/default)
+\item {\ttfamily zoom \texorpdfstring{$<$}{<}factor\texorpdfstring{$>$}{>}} -\/ Zoom in/out (e.\+g., 1.\+5 to zoom in)
+\item {\ttfamily rotate \texorpdfstring{$<$}{<}x\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y\texorpdfstring{$>$}{>}} -\/ Rotate camera by degrees
+\item {\ttfamily resetview} -\/ Reset camera to default
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md587}{}\doxysubsection{\texorpdfstring{Selection}{Selection}}\label{md__r_e_a_d_m_e_autotoc_md587}
+
+\begin{DoxyItemize}
+\item {\ttfamily select \texorpdfstring{$<$}{<}x\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z\texorpdfstring{$>$}{>}} -\/ Select a voxel
+\item {\ttfamily selectbox \texorpdfstring{$<$}{<}x1\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y1\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z1\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}x2\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}y2\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}z2\texorpdfstring{$>$}{>}} -\/ Select box region
+\item {\ttfamily selectall} -\/ Select all voxels
+\item {\ttfamily selectnone} -\/ Clear selection
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md588}{}\doxysubsection{\texorpdfstring{Groups}{Groups}}\label{md__r_e_a_d_m_e_autotoc_md588}
+
+\begin{DoxyItemize}
+\item {\ttfamily group \texorpdfstring{$<$}{<}name\texorpdfstring{$>$}{>}} -\/ Create group from selection
+\item {\ttfamily groups} -\/ List all groups
+\item {\ttfamily hide \texorpdfstring{$<$}{<}name\texorpdfstring{$>$}{>}} -\/ Hide a group
+\item {\ttfamily show \texorpdfstring{$<$}{<}name\texorpdfstring{$>$}{>}} -\/ Show a group
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md589}{}\doxysubsection{\texorpdfstring{System}{System}}\label{md__r_e_a_d_m_e_autotoc_md589}
+
+\begin{DoxyItemize}
+\item {\ttfamily help \mbox{[}command\mbox{]}} -\/ Show help
+\item {\ttfamily status} -\/ Show editor status
+\item {\ttfamily clear} -\/ Clear screen
+\item {\ttfamily quit} -\/ Exit application
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md590}{}\doxysection{\texorpdfstring{Mouse Controls}{Mouse Controls}}\label{md__r_e_a_d_m_e_autotoc_md590}
+
+\begin{DoxyItemize}
+\item {\bfseries{Left Click}}\+: Place voxel at cursor
+\item {\bfseries{Right Click}}\+: Remove voxel at cursor
+\item {\bfseries{Middle Mouse Drag}}\+: Orbit camera
+\item {\bfseries{Scroll Wheel}}\+: Zoom in/out
+\item {\bfseries{Hover}}\+: Preview placement with green outline
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md591}{}\doxysection{\texorpdfstring{Keyboard Shortcuts}{Keyboard Shortcuts}}\label{md__r_e_a_d_m_e_autotoc_md591}
+
+\begin{DoxyItemize}
+\item {\bfseries{Tab}}\+: Auto-\/complete commands
+\item {\bfseries{Up/\+Down Arrows}}\+: Command history
+\item {\bfseries{Ctrl+C}}\+: Cancel current command
+\item {\bfseries{1-\/7}}\+: Quick camera views (when in render window)
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md592}{}\doxysection{\texorpdfstring{Architecture}{Architecture}}\label{md__r_e_a_d_m_e_autotoc_md592}
+The project follows a modular architecture\+:\hypertarget{md__r_e_a_d_m_e_autotoc_md593}{}\doxysubsection{\texorpdfstring{Foundation Layer}{Foundation Layer}}\label{md__r_e_a_d_m_e_autotoc_md593}
+
+\begin{DoxyItemize}
+\item {\bfseries{Math}}\+: Vector/matrix operations, rays, intersections
+\item {\bfseries{Events}}\+: Type-\/safe event system
+\item {\bfseries{Memory}}\+: Object pooling and allocation tracking
+\item {\bfseries{Logging}}\+: Multi-\/level logging with profiling
+\item {\bfseries{Config}}\+: Hierarchical configuration management
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md594}{}\doxysubsection{\texorpdfstring{Core Systems}{Core Systems}}\label{md__r_e_a_d_m_e_autotoc_md594}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Voxel\+Data}}\+: Multi-\/resolution sparse voxel storage
+\item {\bfseries{Camera}}\+: Orbit camera with preset views
+\item {\bfseries{Rendering}}\+: Open\+GL-\/based rendering engine
+\item {\bfseries{Input}}\+: Unified input handling for mouse/keyboard/touch/\+VR
+\item {\bfseries{Selection}}\+: Voxel selection with multiple algorithms
+\item {\bfseries{Undo/\+Redo}}\+: Command pattern implementation
+\item {\bfseries{Surface Generation}}\+: Dual Contouring for smooth surfaces
+\item {\bfseries{Visual Feedback}}\+: Highlighting and preview rendering
+\item {\bfseries{Groups}}\+: Hierarchical voxel grouping
+\item {\bfseries{File\+IO}}\+: Project save/load and STL export
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md595}{}\doxysection{\texorpdfstring{Testing}{Testing}}\label{md__r_e_a_d_m_e_autotoc_md595}
+Run all tests\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ build}
+\DoxyCodeLine{ctest\ -\/-\/verbose}
+
+\end{DoxyCode}
+
+
+Run specific test suite\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./build/foundation/math/tests/VoxelEditor\_Math\_Tests}
+\DoxyCodeLine{./build/core/voxel\_data/tests/VoxelEditor\_VoxelData\_Tests}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md596}{}\doxysection{\texorpdfstring{Performance}{Performance}}\label{md__r_e_a_d_m_e_autotoc_md596}
+
+\begin{DoxyItemize}
+\item Supports up to millions of voxels
+\item Real-\/time rendering at 60+ FPS
+\item Memory-\/efficient sparse storage
+\item Optimized for Meta Quest 3 constraints (\texorpdfstring{$<$}{<}4GB memory)
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md597}{}\doxysection{\texorpdfstring{Future Development}{Future Development}}\label{md__r_e_a_d_m_e_autotoc_md597}
+
+\begin{DoxyItemize}
+\item {\bfseries{Qt Desktop Application}}\+: Full GUI with advanced editing tools
+\item {\bfseries{VR Application}}\+: Hand tracking interface for Meta Quest 3
+\item {\bfseries{Additional Features}}\+:
+\begin{DoxyItemize}
+\item Texture painting
+\item Advanced selection tools
+\item Animation support
+\item Collaborative editing
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md598}{}\doxysection{\texorpdfstring{License}{License}}\label{md__r_e_a_d_m_e_autotoc_md598}
+\mbox{[}License information here\mbox{]}\hypertarget{md__r_e_a_d_m_e_autotoc_md599}{}\doxysection{\texorpdfstring{Contributing}{Contributing}}\label{md__r_e_a_d_m_e_autotoc_md599}
+\mbox{[}Contributing guidelines here\mbox{]} 

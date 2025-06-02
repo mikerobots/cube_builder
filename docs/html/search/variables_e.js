@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['objectsculled_0',['objectsCulled',['../struct_voxel_editor_1_1_rendering_1_1_render_stats.html#a84562c7c7348e4ade90429e7b5618a69',1,'VoxelEditor::Rendering::RenderStats']]],
+  ['objectsrendered_1',['objectsRendered',['../struct_voxel_editor_1_1_rendering_1_1_render_stats.html#afb07b5e6528d4dce6870dafea775640d',1,'VoxelEditor::Rendering::RenderStats']]],
+  ['occlusionculling_2',['occlusionCulling',['../struct_voxel_editor_1_1_rendering_1_1_render_config.html#a501d61a30c192621d37aeaafe510779d',1,'VoxelEditor::Rendering::RenderConfig']]],
+  ['offset_3',['offset',['../struct_voxel_editor_1_1_groups_1_1_group_modified_event.html#a5d651cedd76df9b5fd76753e7f28a0d3',1,'VoxelEditor::Groups::GroupModifiedEvent::offset'],['../struct_voxel_editor_1_1_rendering_1_1_vertex_attribute_info.html#a6854e106ba65167b64b5a070e26ebe02',1,'VoxelEditor::Rendering::VertexAttributeInfo::offset'],['../struct_voxel_editor_1_1_rendering_1_1_vertex_layout_1_1_attribute.html#a44b13b525fc3e20288921a5df4448c52',1,'VoxelEditor::Rendering::VertexLayout::Attribute::offset']]],
+  ['oldname_4',['oldName',['../struct_voxel_editor_1_1_groups_1_1_group_modified_event.html#a13eedd0dd85b4c0c3a00f800c8fdc3c3',1,'VoxelEditor::Groups::GroupModifiedEvent']]],
+  ['oldresolution_5',['oldResolution',['../class_voxel_editor_1_1_events_1_1_resolution_changed_event.html#ae4288a5f1f7d841b9aa826513b3d1800',1,'VoxelEditor::Events::ResolutionChangedEvent']]],
+  ['oldselection_6',['oldSelection',['../struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event.html#a3bbc45a93298b37cd14ce49fb795cdb3',1,'VoxelEditor::Selection::Events::SelectionChangedEvent']]],
+  ['oldsize_7',['oldSize',['../class_voxel_editor_1_1_events_1_1_workspace_resized_event.html#ade87b3220c7577d028dd8b94e7187ad7',1,'VoxelEditor::Events::WorkspaceResizedEvent']]],
+  ['oldvalue_8',['oldValue',['../struct_voxel_editor_1_1_undo_redo_1_1_bulk_voxel_edit_command_1_1_voxel_change.html#aca1b339bcb6e16ae9362ac7fda3a877c',1,'VoxelEditor::UndoRedo::BulkVoxelEditCommand::VoxelChange::oldValue'],['../class_voxel_editor_1_1_events_1_1_voxel_changed_event.html#ab546371f31bb7bca1a72c3be49fe46d8',1,'VoxelEditor::Events::VoxelChangedEvent::oldValue']]],
+  ['oldvisible_9',['oldVisible',['../struct_voxel_editor_1_1_groups_1_1_group_modified_event.html#aa802ee8f2612441c2f1ec9a862db1f46',1,'VoxelEditor::Groups::GroupModifiedEvent']]],
+  ['opacity_10',['opacity',['../struct_voxel_editor_1_1_groups_1_1_group_metadata.html#aae981985a2874f41c9ae4da6e7df7286',1,'VoxelEditor::Groups::GroupMetadata::opacity'],['../struct_voxel_editor_1_1_groups_1_1_group_info.html#a7c710c2ea08c7e73b286606a44f31d61',1,'VoxelEditor::Groups::GroupInfo::opacity'],['../class_voxel_editor_1_1_visual_feedback_1_1_outline_style.html#a6eb40ff74ac2b4bc7fcaf7fd99cc65db',1,'VoxelEditor::VisualFeedback::OutlineStyle::opacity']]],
+  ['open_11',['OPEN',['../namespace_voxel_editor_1_1_commands.html#a5504d71d6fdb4122153bd40e9a0a02be',1,'VoxelEditor::Commands']]],
+  ['open_5ffile_12',['OPEN_FILE',['../namespace_voxel_editor_1_1_input_1_1_actions.html#a2a28f88cbdf1a26a232b332032812497',1,'VoxelEditor::Input::Actions']]],
+  ['operationtype_13',['operationType',['../struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event.html#a8a2e9ad8d4a65c0567507693deb0a083',1,'VoxelEditor::Selection::Events::SelectionOperationEvent']]],
+  ['orbit_5fcamera_14',['ORBIT_CAMERA',['../namespace_voxel_editor_1_1_input_1_1_actions.html#a8b397ae501b68a46571684361133fd5a',1,'VoxelEditor::Input::Actions']]],
+  ['orientation_15',['orientation',['../struct_voxel_editor_1_1_input_1_1_hand_pose.html#a8d65534b0a8f57630119c6915ae3dc1e',1,'VoxelEditor::Input::HandPose']]],
+  ['origin_16',['origin',['../struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings.html#aee5db870ac9cee2391d4afee485ed8bc',1,'VoxelEditor::FileIO::WorkspaceSettings::origin'],['../struct_voxel_editor_1_1_visual_feedback_1_1_ray.html#a427f5bbd4afad8c1d672b2ba1159c70b',1,'VoxelEditor::VisualFeedback::Ray::origin'],['../class_voxel_editor_1_1_math_1_1_ray.html#ab13306ef1b15512b946a8b23a8064c3b',1,'VoxelEditor::Math::Ray::origin']]],
+  ['originalsize_17',['originalSize',['../struct_voxel_editor_1_1_file_i_o_1_1_compression_header.html#a24ceebb48d6d5f0dfcddb852b207969f',1,'VoxelEditor::FileIO::CompressionHeader']]],
+  ['outlinecolor_18',['outlineColor',['../struct_voxel_editor_1_1_selection_1_1_selection_style.html#a84db3e4a261ddd292ebf8c41f4e02ec2',1,'VoxelEditor::Selection::SelectionStyle']]],
+  ['outlinethickness_19',['outlineThickness',['../struct_voxel_editor_1_1_selection_1_1_selection_style.html#af6d6ede38aca5170e9ef82b9aa8782d1',1,'VoxelEditor::Selection::SelectionStyle']]]
+];

@@ -1,0 +1,132 @@
+\doxysection{Math\+Utils.\+h}
+\hypertarget{_math_utils_8h_source}{}\label{_math_utils_8h_source}\index{foundation/math/MathUtils.h@{foundation/math/MathUtils.h}}
+\mbox{\hyperlink{_math_utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Math}}\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Constants}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}}\ =\ 3.14159265358979323846f;}
+\DoxyCodeLine{00011\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{TWO\_PI}}\ =\ 2.0f\ *\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}};}
+\DoxyCodeLine{00012\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab4a24fb7973931c1e4308312291e0ecf}{HALF\_PI}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}}\ *\ 0.5f;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a32b584f76d2c508bc075c6f5101b9b35}{DEG\_TO\_RAD}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}}\ /\ 180.0f;}
+\DoxyCodeLine{00014\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af2f9885f2b542065e16e69e083dff209}{RAD\_TO\_DEG}}\ =\ 180.0f\ /\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Angle\ conversions}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a8f0518eaf8cacc711204defa1dbfdf94}{toRadians}}(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{return}\ degrees\ *\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a32b584f76d2c508bc075c6f5101b9b35}{DEG\_TO\_RAD}};}
+\DoxyCodeLine{00019\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a3ff24a4febe4fa71e2744f6cbe54080d}{toDegrees}}(\textcolor{keywordtype}{float}\ radians)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{return}\ radians\ *\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af2f9885f2b542065e16e69e083dff209}{RAD\_TO\_DEG}};}
+\DoxyCodeLine{00023\ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Alternative\ names\ for\ angle\ conversions}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af73474ec5cabee42a66161784076cc75}{degreesToRadians}}(\textcolor{keywordtype}{float}\ degrees)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ degrees\ *\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a32b584f76d2c508bc075c6f5101b9b35}{DEG\_TO\_RAD}};}
+\DoxyCodeLine{00028\ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab3acc4d687e1cc9f9bac2acf89090889}{radiansToDegrees}}(\textcolor{keywordtype}{float}\ radians)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ radians\ *\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af2f9885f2b542065e16e69e083dff209}{RAD\_TO\_DEG}};}
+\DoxyCodeLine{00032\ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ Clamping}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00036\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{clamp}}(T\ value,\ T\ min,\ T\ max)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ std::max(min,\ std::min(value,\ max));}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ Linear\ interpolation}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00042\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{lerp}}(T\ a,\ T\ b,\ \textcolor{keywordtype}{float}\ t)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ (b\ -\/\ a)\ *\ t;}
+\DoxyCodeLine{00044\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ Smooth\ step\ function}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_af5d524bc8481602673d24ba833edf293}{smoothstep}}(\textcolor{keywordtype}{float}\ edge0,\ \textcolor{keywordtype}{float}\ edge1,\ \textcolor{keywordtype}{float}\ x)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{clamp}}((x\ -\/\ edge0)\ /\ (edge1\ -\/\ edge0),\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ t\ *\ t\ *\ (3.0f\ -\/\ 2.0f\ *\ t);}
+\DoxyCodeLine{00050\ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ Check\ if\ floating\ point\ number\ is\ approximately\ zero}}
+\DoxyCodeLine{00053\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a68448c333a2b6b3881895fd7d8303688}{isZero}}(\textcolor{keywordtype}{float}\ value,\ \textcolor{keywordtype}{float}\ epsilon\ =\ 1e-\/6f)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs(value)\ <\ epsilon;}
+\DoxyCodeLine{00055\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Check\ if\ two\ floating\ point\ numbers\ are\ approximately\ equal}}
+\DoxyCodeLine{00058\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ad4735381a452ee12919ae8309346c2fe}{isEqual}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ epsilon\ =\ 1e-\/6f)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs(a\ -\/\ b)\ <\ epsilon;}
+\DoxyCodeLine{00060\ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ Sign\ function}}
+\DoxyCodeLine{00063\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00064\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a233940b815f74c2c13a0c5639d614079}{sign}}(T\ value)\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{return}\ (T(0)\ <\ value)\ -\/\ (value\ <\ T(0));}
+\DoxyCodeLine{00066\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ Square\ function}}
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00070\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a73b74bfaefcbbdc0057fec09aa341e74}{square}}(T\ value)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ value\ *\ value;}
+\DoxyCodeLine{00072\ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{comment}{//\ Wrap\ angle\ to\ [0,\ 2π)\ range}}
+\DoxyCodeLine{00075\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a6697eeeba655badca4968fa9b475d583}{wrapAngle}}(\textcolor{keywordtype}{float}\ angle)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{while}\ (angle\ <\ 0.0f)\ angle\ +=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{TWO\_PI}};}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{while}\ (angle\ >=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{TWO\_PI}})\ angle\ -\/=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{TWO\_PI}};}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{return}\ angle;}
+\DoxyCodeLine{00079\ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{comment}{//\ Wrap\ angle\ to\ [-\/π,\ π)\ range}}
+\DoxyCodeLine{00082\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a6de54b9fc16129a5b14ede7ac13c59e7}{wrapAngleSigned}}(\textcolor{keywordtype}{float}\ angle)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{while}\ (angle\ <\ -\/\mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}})\ angle\ +=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{TWO\_PI}};}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{while}\ (angle\ >=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a59e502e2ba0ff5cfa67af529eec148bb}{PI}})\ angle\ -\/=\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a7b48a802230aaceda9405a164525504b}{TWO\_PI}};}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{return}\ angle;}
+\DoxyCodeLine{00086\ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ Distance\ between\ two\ angles\ (shortest\ path)}}
+\DoxyCodeLine{00089\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a828ff20164ad8bc9fa416f28027b9b08}{angleDistance}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{float}\ diff\ =\ b\ -\/\ a;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a6de54b9fc16129a5b14ede7ac13c59e7}{wrapAngleSigned}}(diff);}
+\DoxyCodeLine{00092\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ Power\ of\ 2\ utilities}}
+\DoxyCodeLine{00095\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a914665732b0d8555ab4bcf2c4d296205}{isPowerOfTwo}}(\textcolor{keywordtype}{int}\ value)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{return}\ value\ >\ 0\ \&\&\ (value\ \&\ (value\ -\/\ 1))\ ==\ 0;}
+\DoxyCodeLine{00097\ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b3ed7ed03d27c4a9cb345933ca911d2}{nextPowerOfTwo}}(\textcolor{keywordtype}{int}\ value)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ value-\/-\/;}
+\DoxyCodeLine{00101\ \ \ \ \ value\ |=\ value\ >>\ 1;}
+\DoxyCodeLine{00102\ \ \ \ \ value\ |=\ value\ >>\ 2;}
+\DoxyCodeLine{00103\ \ \ \ \ value\ |=\ value\ >>\ 4;}
+\DoxyCodeLine{00104\ \ \ \ \ value\ |=\ value\ >>\ 8;}
+\DoxyCodeLine{00105\ \ \ \ \ value\ |=\ value\ >>\ 16;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{return}\ value\ +\ 1;}
+\DoxyCodeLine{00107\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ Random\ number\ generation\ helpers}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_random}{Random}}\ \{}
+\DoxyCodeLine{00111\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_random_a836888c43913872dd50e908feba2ab13}{range}}(\textcolor{keywordtype}{float}\ min,\ \textcolor{keywordtype}{float}\ max)\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ min\ +\ (max\ -\/\ min)\ *\ (std::rand()\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(RAND\_MAX));}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_random_a5ee14992e1d563ea4dd21009552c6a7e}{range}}(\textcolor{keywordtype}{int}\ min,\ \textcolor{keywordtype}{int}\ max)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ min\ +\ std::rand()\ \%\ (max\ -\/\ min\ +\ 1);}
+\DoxyCodeLine{00118\ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_random_a4bb708ad65950f580560e8f7e17002e3}{chance}}(\textcolor{keywordtype}{float}\ probability)\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_random_a836888c43913872dd50e908feba2ab13}{range}}(0.0f,\ 1.0f)\ <\ probability;}
+\DoxyCodeLine{00122\ \ \ \ \ \}}
+\DoxyCodeLine{00123\ \};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \}}
+\DoxyCodeLine{00126\ \}}
+
+\end{DoxyCode}

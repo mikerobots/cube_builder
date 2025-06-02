@@ -1,0 +1,121 @@
+\chapter{Logging System Foundation }
+\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n}{}\label{md_foundation_2logging_2_d_e_s_i_g_n}\index{Logging System Foundation@{Logging System Foundation}}
+\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md512}%
+\Hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md512}%
+\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md513}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md513}
+Provides multi-\/level logging, performance profiling, debug output management, and structured logging across all components.\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md514}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md514}
+\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md515}{}\doxysubsection{\texorpdfstring{Logger}{Logger}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md515}
+
+\begin{DoxyItemize}
+\item Multi-\/level logging (Debug, Info, Warning, Error)
+\item Multiple output targets (console, file, network)
+\item Thread-\/safe logging operations
+\item Structured logging support
+\end{DoxyItemize}\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md516}{}\doxysubsection{\texorpdfstring{Log\+Formatter}{Log\+Formatter}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md516}
+
+\begin{DoxyItemize}
+\item Configurable log message formatting
+\item Timestamp and thread information
+\item Component identification
+\item Performance metrics integration
+\end{DoxyItemize}\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md517}{}\doxysubsection{\texorpdfstring{Performance\+Profiler}{Performance\+Profiler}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md517}
+
+\begin{DoxyItemize}
+\item Function and scope timing
+\item Memory allocation tracking
+\item GPU timing integration
+\item Statistical analysis
+\end{DoxyItemize}\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md518}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md518}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }Logger\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ Level\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047aa603905470e2a5b8c13e96b579ef0dba}{Debug}}\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047a4059b0251f66a18cb56f544728796875}{Info}}\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047a0eaadb4fcb48a0a0ed7bc9868be9fbaa}{Warning}}\ =\ 2,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047a902b0d55fddef6f8d651fe1035b7d4bd}{Error}}\ =\ 3,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{None}}\ =\ 4}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Logger\&\ getInstance();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setLevel(Level\ level);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addOutput(std::unique\_ptr<LogOutput>\ output);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ removeOutput(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ debug(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ info(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ warning(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ error(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ debug(\textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ info(\textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ warning(\textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ error(\textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ Level\ m\_level\ =\ Level::Info;}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<LogOutput>>\ m\_outputs;}
+\DoxyCodeLine{\ \ \ \ std::mutex\ m\_mutex;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ log(Level\ level,\ \textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }PerformanceProfiler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ PerformanceProfiler\&\ getInstance();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ beginSection(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ endSection(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ recordMemoryAllocation(\textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ std::string\&\ category);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ recordMemoryDeallocation(\textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ std::string\&\ category);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ProfileData\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ totalTime;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ averageTime;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint64\_t\ callCount;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ minTime;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ maxTime;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::vector<ProfileData>\ getResults()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ saveReport(\textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ ProfileSection>\ m\_sections;}
+\DoxyCodeLine{\ \ \ \ std::stack<std::string>\ m\_sectionStack;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ RAII\ profiling\ helper}}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ScopedProfiler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ ScopedProfiler(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ \string~ScopedProfiler();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ PROFILE\_SCOPE(name)\ ScopedProfiler\ \_prof(name)}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ PROFILE\_FUNCTION()\ ScopedProfiler\ \_prof(\_\_FUNCTION\_\_)}}
+
+\end{DoxyCode}
+\hypertarget{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md519}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_foundation_2logging_2_d_e_s_i_g_n_autotoc_md519}
+
+\begin{DoxyItemize}
+\item Standard C++ threading library
+\item Platform-\/specific high-\/resolution timers
+\item Optional network logging support 
+\end{DoxyItemize}

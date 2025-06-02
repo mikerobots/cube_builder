@@ -1,0 +1,134 @@
+\doxysection{core/input/tests/test\+\_\+\+Keyboard\+Handler.cpp File Reference}
+\hypertarget{test___keyboard_handler_8cpp}{}\label{test___keyboard_handler_8cpp}\index{core/input/tests/test\_KeyboardHandler.cpp@{core/input/tests/test\_KeyboardHandler.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Keyboard\+Handler.\+h"{}}\newline
+{\ttfamily \#include "{}../../../foundation/events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include "{}../../../foundation/events/\+Event\+Base.\+h"{}}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_mock_event_dispatcher}{Mock\+Event\+Dispatcher}}
+\item 
+class \mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a422262de709ddc30f6dabcd7d7806362}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Default\+State)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a7b8acc51a49a9e37d3728a2cc56b2982}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Key\+Press\+Release)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a1a96eeecea37d2aee441bfa8de914a23}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Modifier\+Keys)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_aa4d58de7b3f44ba835dccd4a80272af0}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, All\+Modifier\+Keys)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a018824ea1fec796641b1f031c2f733c5}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Key\+Bindings)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a329707a6820bec9eb9e4b01c74bf1cc7}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Key\+Bindings\+With\+Modifiers)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a62ca776563466e79f21217858da69c03}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Key\+Combination\+Bindings)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a9d91695ab112a4fa55e4cea435d6d53d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Unbinding\+Keys)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_aa7f6890807e16bf6c52811c87265b840}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Clear\+All\+Bindings)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a82c2853a7cb85570a481597a25f9f377}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Text\+Input)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_a308f47d0199eaf3348ff9449e7dc2eda}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Key\+Repeat)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_ab97390dab17022cd90bb6c8cc22a43b1}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Multiple\+Keys)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_aca815cf4bf37e6921b9b160cabe16523}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Enabled\+State)
+\item 
+\mbox{\hyperlink{test___keyboard_handler_8cpp_ad0d3c81795c1dbfea9cd677a60aca0b2}{TEST\+\_\+F}} (\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}, Key\+Utilities)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___keyboard_handler_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___keyboard_handler_8cpp_aa4d58de7b3f44ba835dccd4a80272af0}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_aa4d58de7b3f44ba835dccd4a80272af0} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{All\+Modifier\+Keys}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_aa7f6890807e16bf6c52811c87265b840}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_aa7f6890807e16bf6c52811c87265b840} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Clear\+All\+Bindings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a422262de709ddc30f6dabcd7d7806362}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a422262de709ddc30f6dabcd7d7806362} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Default\+State}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_aca815cf4bf37e6921b9b160cabe16523}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_aca815cf4bf37e6921b9b160cabe16523} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Enabled\+State}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a018824ea1fec796641b1f031c2f733c5}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a018824ea1fec796641b1f031c2f733c5} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Key\+Bindings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a329707a6820bec9eb9e4b01c74bf1cc7}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a329707a6820bec9eb9e4b01c74bf1cc7} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Key\+Bindings\+With\+Modifiers}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a62ca776563466e79f21217858da69c03}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a62ca776563466e79f21217858da69c03} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Key\+Combination\+Bindings}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a7b8acc51a49a9e37d3728a2cc56b2982}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a7b8acc51a49a9e37d3728a2cc56b2982} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Key\+Press\+Release}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a308f47d0199eaf3348ff9449e7dc2eda}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a308f47d0199eaf3348ff9449e7dc2eda} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Key\+Repeat}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_ad0d3c81795c1dbfea9cd677a60aca0b2}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_ad0d3c81795c1dbfea9cd677a60aca0b2} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Key\+Utilities}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a1a96eeecea37d2aee441bfa8de914a23}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a1a96eeecea37d2aee441bfa8de914a23} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Modifier\+Keys}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_ab97390dab17022cd90bb6c8cc22a43b1}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_ab97390dab17022cd90bb6c8cc22a43b1} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Multiple\+Keys}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a82c2853a7cb85570a481597a25f9f377}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a82c2853a7cb85570a481597a25f9f377} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Text\+Input}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___keyboard_handler_8cpp_a9d91695ab112a4fa55e4cea435d6d53d}\index{test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_KeyboardHandler.cpp@{test\_KeyboardHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [14/14]}}
+{\footnotesize\ttfamily \label{test___keyboard_handler_8cpp_a9d91695ab112a4fa55e4cea435d6d53d} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keyboard_handler_test}{Keyboard\+Handler\+Test}}}]{}{, }\item[{Unbinding\+Keys}]{}{}\end{DoxyParamCaption})}
+

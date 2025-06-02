@@ -1,0 +1,185 @@
+\doxysection{Group\+Types.\+h}
+\hypertarget{_group_types_8h_source}{}\label{_group_types_8h_source}\index{core/groups/include/groups/GroupTypes.h@{core/groups/include/groups/GroupTypes.h}}
+\mbox{\hyperlink{_group_types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{math/Vector3f.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_bounding_box_8h}{math/BoundingBox.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{rendering/RenderTypes.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_types_8h}{voxel\_data/VoxelTypes.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Groups}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Type\ aliases}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ =\ uint32\_t;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}}\ =\ 0;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ VoxelId\ structure\ for\ group\ membership}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a933d500b30cbffeba1b625f6bf07aba9}{VoxelId}}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}};}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a2845c128fdfab2555a060c04556ed424}{resolution}};}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a933d500b30cbffeba1b625f6bf07aba9}{VoxelId}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_ac8dc59409068ff16afa60b1844aae28b}{VoxelId}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ pos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ res)}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a2845c128fdfab2555a060c04556ed424}{resolution}}(res)\ \{\}}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a64bf16717f8e936fa3916ce9a05f0b66}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a933d500b30cbffeba1b625f6bf07aba9}{VoxelId}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}}\ ==\ other.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}}\ \&\&\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a2845c128fdfab2555a060c04556ed424}{resolution}}\ ==\ other.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a2845c128fdfab2555a060c04556ed424}{resolution}};}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_ae7fca5c03911fd6612c24e4f93e48af6}{operator!=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a933d500b30cbffeba1b625f6bf07aba9}{VoxelId}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ other);}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a59a480d163d8a406ddbfaf315d0ef4ee}{hash}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h1\ =\ std::hash<int>\{\}(\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}}.x);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h2\ =\ std::hash<int>\{\}(\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}}.y);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h3\ =\ std::hash<int>\{\}(\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a4b2e56a81a8f7340bc6ef8d443a7f9ce}{position}}.z);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h4\ =\ std::hash<int>\{\}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a2845c128fdfab2555a060c04556ed424}{resolution}}));}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Combine\ hashes}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h1\ \string^\ (h2\ <<\ 1)\ \string^\ (h3\ <<\ 2)\ \string^\ (h4\ <<\ 3);}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ Group\ modification\ types\ for\ events}}
+\DoxyCodeLine{00049\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a0eceeb45861f9585dd7a97a3e36f85c6}{Created}},}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a5fe6005bf6e415c950c011fb65f12b8f}{Deleted}},}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3ab28f2757ce8f7bb1a72486d7a3500a4e}{Renamed}},}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a8d2b3cab6cb246bf54b54325c056d725}{VoxelAdded}},}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a5e676f459b5ab50f4aecb16a9d2b5316}{VoxelRemoved}},}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a95bfdefaaf01553cbf21ccd942855c69}{Moved}},}
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a4f8d7de5d5a3860f0a27f8848de1ba40}{Rotated}},}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a7380ae6c5e1189eef50cfd0557d74e99}{Scaled}},}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a54f5b3c63b152e65a9dca79bf5815f75}{VisibilityChanged}},}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3acc299edf499f951d891f67fdbbb2ebfd}{OpacityChanged}},}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a82de5a14c890ba1158d4b7e0b779bf30}{ColorChanged}},}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3ad0f2e5376298c880665077b565ffd7dd}{Locked}},}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3ac76fd517e45cc95709f4ac106efa4a94}{Unlocked}},}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3ab5cfeabdf79ce874e29fb77c710ef9ed}{ParentChanged}},}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a43cbe52f8f4a02cbd8144d554eafe902}{PropertiesChanged}},}
+\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a7c82b6a2efb1cdb2d0023106a1a1c127}{LockChanged}}}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ Group\ metadata}}
+\DoxyCodeLine{00069\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_ae3871316eedaacacda7502376a4766c2}{GroupMetadata}}\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a22574231cd731e93ea2f88483c22273d}{name}};}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering::Color}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a57b0dbdeead0df0354ee5176c26283a7}{color}};}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a0152bce5831c873107d5904e180f234c}{visible}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a59b2f5a437fbd4c14382a3cb5876a4b0}{locked}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_aae981985a2874f41c9ae4da6e7df7286}{opacity}}\ =\ 1.0f;}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a03904167bdfd92a314923883d9cb2a4b}{pivot}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(0,\ 0,\ 0);}
+\DoxyCodeLine{00076\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_ae3e4a816298eb9f7cd73903fc92c842e}{description}};}
+\DoxyCodeLine{00077\ \ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a9b860b004e2f4f7b5f98a309738e2277}{created}};}
+\DoxyCodeLine{00078\ \ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_ae272fab99d54005627aae9316bcf1fa6}{modified}};}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_ae3871316eedaacacda7502376a4766c2}{GroupMetadata}}()\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ std::chrono::system\_clock::now();}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_a9b860b004e2f4f7b5f98a309738e2277}{created}}\ =\ now;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_ae272fab99d54005627aae9316bcf1fa6}{modified}}\ =\ now;}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_aaebeca5de7049ec8284df10593b29cae}{updateModified}}()\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata_ae272fab99d54005627aae9316bcf1fa6}{modified}}\ =\ std::chrono::system\_clock::now();}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ \};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ Group\ information\ for\ queries}}
+\DoxyCodeLine{00092\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_af09dfec237690374823671e702842782}{GroupInfo}}\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \textcolor{keywordtype}{id}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}};}
+\DoxyCodeLine{00094\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a32fff1cb06e3afed76d4070910763c86}{name}};}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering::Color}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a8412403f60e2516bd346baa57da532ca}{color}};}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a66ee299797b655a5754bf2fc3d5eed4a}{visible}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_ac06ad81bfeaf19c70aa61b345407f647}{locked}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a7c710c2ea08c7e73b286606a44f31d61}{opacity}}\ =\ 1.0f;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a471a5860a056b1c0538c9034aa66fa3c}{voxelCount}}\ =\ 0;}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a7721282b3b0846c22317ba7b25501d1c}{parentId}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}};}
+\DoxyCodeLine{00101\ \ \ \ \ std::vector<GroupId>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a385ffe09763df9525018608adfd05c8c}{childIds}};}
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a77d410bedd0ca8e65ea87c366f55b9e0}{bounds}};}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_af09dfec237690374823671e702842782}{GroupInfo}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a79bd35a5af431b1223bff10ecbef2ef3}{GroupInfo}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ gid,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_metadata}{GroupMetadata}}\&\ metadata)}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_ac79342111a1ff308d8e0053256fd8bfd}{id}}(gid),\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a32fff1cb06e3afed76d4070910763c86}{name}}(metadata.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a32fff1cb06e3afed76d4070910763c86}{name}}),\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a8412403f60e2516bd346baa57da532ca}{color}}(metadata.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a8412403f60e2516bd346baa57da532ca}{color}})}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a66ee299797b655a5754bf2fc3d5eed4a}{visible}}(metadata.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a66ee299797b655a5754bf2fc3d5eed4a}{visible}}),\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_ac06ad81bfeaf19c70aa61b345407f647}{locked}}(metadata.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_ac06ad81bfeaf19c70aa61b345407f647}{locked}})}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a7c710c2ea08c7e73b286606a44f31d61}{opacity}}(metadata.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_info_a7c710c2ea08c7e73b286606a44f31d61}{opacity}})\ \{\}}
+\DoxyCodeLine{00109\ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ Transform\ structure\ for\ group\ operations}}
+\DoxyCodeLine{00112\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a3afaccb408f16304ae1875d44dab3561}{GroupTransform}}\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a435eead80c17720ea25bf84d8b9a951f}{translation}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(0,\ 0,\ 0);}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a6a4a86ca0a4ea43ef8c917df582b9549}{rotation}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(0,\ 0,\ 0);\ \textcolor{comment}{//\ Euler\ angles\ in\ degrees}}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a528222269c60ca46a4fe87d9391e5a12}{scale}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(1,\ 1,\ 1);}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a3afaccb408f16304ae1875d44dab3561}{GroupTransform}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_afec1e2968a6fd3317bbd24444d788566}{GroupTransform}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ trans)\ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a435eead80c17720ea25bf84d8b9a951f}{translation}}(trans)\ \{\}}
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_ac278bcae1354b465a1d4cbe5c65e7f47}{isIdentity}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a435eead80c17720ea25bf84d8b9a951f}{translation}}.length()\ <\ 0.0001f\ \&\&}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a6a4a86ca0a4ea43ef8c917df582b9549}{rotation}}.length()\ <\ 0.0001f\ \&\&}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform_a528222269c60ca46a4fe87d9391e5a12}{scale}}\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(1,\ 1,\ 1)).length()\ <\ 0.0001f;}
+\DoxyCodeLine{00124\ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{comment}{//\ Color\ palette\ for\ auto-\/assigning\ group\ colors}}
+\DoxyCodeLine{00128\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_color_palette}{GroupColorPalette}}\ \{}
+\DoxyCodeLine{00129\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::vector<Rendering::Color>\&\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_color_palette_acd25452eafe7fcd1f3d738cd9f049221}{getDefaultPalette}}()\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Rendering::Color>\ palette\ =\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(1.0f,\ 0.0f,\ 0.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Red}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(0.0f,\ 1.0f,\ 0.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Green}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(0.0f,\ 0.0f,\ 1.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Blue}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(1.0f,\ 1.0f,\ 0.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Yellow}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(1.0f,\ 0.0f,\ 1.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Magenta}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(0.0f,\ 1.0f,\ 1.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Cyan}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(1.0f,\ 0.5f,\ 0.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Orange}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(0.5f,\ 0.0f,\ 1.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Purple}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(0.0f,\ 0.5f,\ 0.0f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Dark\ Green}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}(0.5f,\ 0.5f,\ 0.5f,\ 1.0f),\ \ \ \textcolor{comment}{//\ Gray}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ palette;}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering::Color}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_color_palette_a940ecddd90e15da72d7f4aa8e1606d83}{getColorForIndex}}(\textcolor{keywordtype}{size\_t}\ index)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ palette\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_color_palette_acd25452eafe7fcd1f3d738cd9f049221}{getDefaultPalette}}();}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ palette[index\ \%\ palette.size()];}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering::Color}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_color_palette_a80b0526df807364f4f8ddd3ec0f1ec7c}{getRandomColor}}()\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ palette\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_color_palette_acd25452eafe7fcd1f3d738cd9f049221}{getDefaultPalette}}();}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rand())\ \%\ palette.size();}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ palette[index];}
+\DoxyCodeLine{00155\ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \textcolor{comment}{//\ Statistics\ for\ group\ performance\ monitoring}}
+\DoxyCodeLine{00159\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats}{GroupStats}}\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats_a11bbe7ac8abb633e772d9d2bdc2cc2d7}{totalGroups}}\ =\ 0;}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats_a2cadd9afecabef62906915d470b29d90}{totalVoxels}}\ =\ 0;}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats_ab4391c882548421f9e3a2884b934d3ba}{maxGroupSize}}\ =\ 0;}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats_a58988ab341c3b706dcc414a0b2963328}{maxHierarchyDepth}}\ =\ 0;}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats_a654a3d34bc9861961bf16682551d3cf1}{averageGroupSize}}\ =\ 0.0f;}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_stats_adaf52c3bdc8cd6ad0f892d99425b766b}{memoryUsage}}\ =\ 0;}
+\DoxyCodeLine{00166\ \};}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \}\ \textcolor{comment}{//\ namespace\ Groups}}
+\DoxyCodeLine{00169\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{comment}{//\ Hash\ function\ for\ VoxelId\ to\ use\ in\ unordered\ containers}}
+\DoxyCodeLine{00172\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacestd}{std}}\ \{}
+\DoxyCodeLine{00173\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00174\ \textcolor{keyword}{struct\ }hash<\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}::Groups::VoxelId>\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structstd_1_1hash_3_01_voxel_editor_1_1_groups_1_1_voxel_id_01_4_a95d408bff789920f16bb715118ce014c}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{VoxelEditor::Groups::VoxelId}}\&\ voxel)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ voxel.\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id_a59a480d163d8a406ddbfaf315d0ef4ee}{hash}}();}
+\DoxyCodeLine{00177\ \ \ \ \ \}}
+\DoxyCodeLine{00178\ \};}
+\DoxyCodeLine{00179\ \}}
+
+\end{DoxyCode}

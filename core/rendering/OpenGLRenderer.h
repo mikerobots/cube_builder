@@ -3,6 +3,7 @@
 #include "RenderTypes.h"
 #include "RenderConfig.h"
 #include "RenderStats.h"
+#include "../../foundation/math/Matrix4f.h"
 #include <unordered_map>
 #include <vector>
 #include <string>

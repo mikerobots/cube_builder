@@ -1,0 +1,211 @@
+\doxysection{Surface\+Types.\+h}
+\hypertarget{_surface_types_8h_source}{}\label{_surface_types_8h_source}\index{core/surface\_gen/SurfaceTypes.h@{core/surface\_gen/SurfaceTypes.h}}
+\mbox{\hyperlink{_surface_types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{../../foundation/math/Vector3f.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector2f_8h}{../../foundation/math/Vector2f.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{../../foundation/math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector4f_8h}{../../foundation/math/Vector4f.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix4f_8h}{../../foundation/math/Matrix4f.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_bounding_box_8h}{../../foundation/math/BoundingBox.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_types_8h}{../voxel\_data/VoxelTypes.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen}{SurfaceGen}}\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}};}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Export\ quality\ levels}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{ExportQuality}}\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9}{Draft}},\ \ \ \ \ \ \textcolor{comment}{//\ Fast\ generation,\ lower\ quality}}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b}{Standard}},\ \ \ \textcolor{comment}{//\ Balanced\ quality/performance}}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca655d20c1ca69519ca647684edbb2db35}{High}},\ \ \ \ \ \ \ \textcolor{comment}{//\ High\ quality,\ slower\ generation}}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892}{Maximum}}\ \ \ \ \ \textcolor{comment}{//\ Best\ possible\ quality}}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Level\ of\ detail\ levels}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{LOD0}}\ =\ 0,\ \ \textcolor{comment}{//\ Full\ resolution\ (100\%)}}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c}{LOD1}}\ =\ 1,\ \ \textcolor{comment}{//\ Half\ resolution\ (50\%)}}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca}{LOD2}}\ =\ 2,\ \ \textcolor{comment}{//\ Quarter\ resolution\ (25\%)}}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83}{LOD3}}\ =\ 3,\ \ \textcolor{comment}{//\ Eighth\ resolution\ (12.5\%)}}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86}{LOD4}}\ =\ 4\ \ \ \textcolor{comment}{//\ Sixteenth\ resolution\ (6.25\%)}}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ Material\ ID\ for\ mesh\ sections}}
+\DoxyCodeLine{00039\ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ =\ uint32\_t;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ Mesh\ data\ structure}}
+\DoxyCodeLine{00042\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ std::vector<Math::Vector3f>\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a238703d16cc415997fa30ea2eea279d6}{vertices}};}
+\DoxyCodeLine{00044\ \ \ \ \ std::vector<Math::Vector3f>\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_acfc6670f6da17991ea77571bec5dac7d}{normals}};}
+\DoxyCodeLine{00045\ \ \ \ \ std::vector<Math::Vector2f>\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_aa241d36c1d1e419fde9dbf830527ef1a}{uvCoords}};}
+\DoxyCodeLine{00046\ \ \ \ \ std::vector<uint32\_t>\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a8362924fe111ab4e5a3d82bc3c8f830e}{indices}};}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_adc93850fd24da50061eb5e0898ec7421}{bounds}};}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a908d7c077d3b356b955a775a85870a1b}{materialId}}\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Utility\ functions}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a9420108c2933ffdb5fdeeb7a0fa8376f}{calculateNormals}}();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_ae6aacb1b3129e24ef0c3a7a9014fbf0c}{calculateBounds}}();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a1464b9db043c69b9c1c4bce978489dd4}{isValid}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_afd77e25accb073fe45f88ace7fa853ec}{getMemoryUsage}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a6614bf668d5b3797dd240f86d667bd70}{getVertexCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a238703d16cc415997fa30ea2eea279d6}{vertices}}.size();\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_aadea3eff61bb86ed7c2d522f9f624d2e}{getTriangleCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a8362924fe111ab4e5a3d82bc3c8f830e}{indices}}.size()\ /\ 3;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Clear\ all\ data}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_a6a98c06ae7690f38c90ec39cc89e130a}{clear}}();}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Reserve\ memory}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_aec283b2338eae0f1fd87e5e1386e89ba}{reserve}}(\textcolor{keywordtype}{size\_t}\ vertexCount,\ \textcolor{keywordtype}{size\_t}\ indexCount);}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Transform\ mesh}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_aebf68779f1898b52e0cce54021a7a6e4}{transform}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ matrix);}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ Surface\ generation\ settings}}
+\DoxyCodeLine{00069\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_af04f5c977a335b123eacabe93d9a3e0e}{adaptiveError}}\ =\ 0.01f;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Error\ threshold\ for\ adaptive\ subdivision}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_aba34aa2bec3100f33fae539aeae3c4c1}{generateNormals}}\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ vertex\ normals}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_aa766712eb75025cd7355b5b3a3cdaa2b}{generateUVs}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ UV\ coordinates}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_ac97f5cd5edf5a2e44fe1318762276d74}{smoothingIterations}}\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ smoothing\ iterations}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_aad4bed40f93d2a134889efc1642cc233}{simplificationRatio}}\ =\ 1.0f;\ \ \ \textcolor{comment}{//\ Mesh\ simplification\ ratio\ (0-\/1)}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_ad4f6ef6efe2a38a690c154f490708d3f}{preserveSharpFeatures}}\ =\ \textcolor{keyword}{true};\ \ \textcolor{comment}{//\ Preserve\ sharp\ features}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_a7e05e582d5fc41c0824d0e38bd6e8ba2}{sharpFeatureAngle}}\ =\ 30.0f;\ \ \ \ \textcolor{comment}{//\ Angle\ threshold\ for\ sharp\ features}}
+\DoxyCodeLine{00077\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_a16d5367ee51b2d896163fafb47db5cc0}{Default}}();}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_a70c111dda5e71bda30631b04d1a6e71c}{Preview}}();}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_a7e780f88db4c30ab665647edeb2c4c5e}{Export}}();}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_a4f0d0e0eb9b83edab2d2327adba2db3e}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_aafc4f6c0e3636aeb328b990e675fc93e}{operator!=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ other);\ \}}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Hash\ for\ cache\ key}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_ad87894d1f155d99102ac59246fd6fcef}{hash}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00087\ \};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ Hermite\ data\ for\ dual\ contouring}}
+\DoxyCodeLine{00090\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a371b9f258cb01b8c64114390bcd722ec}{HermiteData}}\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_aea67810dab3acca24f6d3b4bbfc488b9}{position}};}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a1a07b69fbc2b2e318332ebf5cdafa065}{normal}};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a02a3fa50a7d354718fb5e79b88fad2ce}{value}};}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a1b1b7d760910ed718f51c45f5c311fcb}{hasIntersection}};}
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a371b9f258cb01b8c64114390bcd722ec}{HermiteData}}()\ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a02a3fa50a7d354718fb5e79b88fad2ce}{value}}(0.0f),\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data_a1b1b7d760910ed718f51c45f5c311fcb}{hasIntersection}}(false)\ \{\}}
+\DoxyCodeLine{00097\ \};}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{comment}{//\ Edge\ data\ for\ dual\ contouring}}
+\DoxyCodeLine{00100\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_ac5cceba0ef0774d96fe7415e0235399d}{EdgeData}}\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_a9b70b7e81e675c506739c7c204acdf78}{v0}};\ \ \textcolor{comment}{//\ Start\ voxel\ position}}
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_a7db7603abb10841361c5590cbb68a441}{v1}};\ \ \textcolor{comment}{//\ End\ voxel\ position}}
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data}{HermiteData}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_a2e2c09d33e9e7aef042268dd7479e45f}{hermite}};}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_a7972e9e6e62620d4aa55d92ff338847b}{direction}};\ \ \textcolor{comment}{//\ 0=X,\ 1=Y,\ 2=Z}}
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_ac5cceba0ef0774d96fe7415e0235399d}{EdgeData}}()\ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data_a7972e9e6e62620d4aa55d92ff338847b}{direction}}(0)\ \{\}}
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ Quad\ face\ for\ mesh\ generation}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a0f72d64efb3807c9e7ab6e4f8991a277}{QuadFace}}\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a75a5bcaa03583d73e681231bbc3ca98a}{vertices}}[4];}
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a48523da57a0c7cadc0c8f8ee385cf0aa}{normal}};}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a5276c1cb997c0b6f2b8402e987aace3f}{material}};}
+\DoxyCodeLine{00114\ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a0f72d64efb3807c9e7ab6e4f8991a277}{QuadFace}}()\ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a5276c1cb997c0b6f2b8402e987aace3f}{material}}(0)\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a75a5bcaa03583d73e681231bbc3ca98a}{vertices}}[0]\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a75a5bcaa03583d73e681231bbc3ca98a}{vertices}}[1]\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a75a5bcaa03583d73e681231bbc3ca98a}{vertices}}[2]\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face_a75a5bcaa03583d73e681231bbc3ca98a}{vertices}}[3]\ =\ 0;}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{comment}{//\ Mesh\ generation\ event\ types}}
+\DoxyCodeLine{00121\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}{MeshGenerationEventType}}\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea8428552d86c0d262a542a528af490afa}{Started}},}
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea46b5f8c58b679b4243cbdb5749642c86}{Progress}},}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea07ca5050e697392c9ed47e6453f1453f}{Completed}},}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eead7c8c85bf79bbe1b7188497c32c3b0ca}{Failed}},}
+\DoxyCodeLine{00126\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eeaa149e85a44aeec9140e92733d9ed694e}{Cancelled}}}
+\DoxyCodeLine{00127\ \};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{comment}{//\ Mesh\ generation\ event}}
+\DoxyCodeLine{00130\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_a85939bdb8954ec5b86aa50aff4ea1646}{MeshGenerationEvent}}\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}{MeshGenerationEventType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_af93a052f63a14fa650764400a81a9b36}{type}};}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_ac152e3bba098818d6552f5100495b3aa}{progress}};\ \ \textcolor{comment}{//\ 0.0\ to\ 1.0}}
+\DoxyCodeLine{00133\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_a290b38c0e8434edf2174f48250601ee6}{message}};}
+\DoxyCodeLine{00134\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_a6f90fd11f9679217155e8c391d9523e3}{resolution}};}
+\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_ad59dbb2a6f46b3558134e74b3ee7616c}{lodLevel}};}
+\DoxyCodeLine{00136\ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_a85939bdb8954ec5b86aa50aff4ea1646}{MeshGenerationEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}{MeshGenerationEventType}}\ t\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea8428552d86c0d262a542a528af490afa}{MeshGenerationEventType::Started}})\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_af93a052f63a14fa650764400a81a9b36}{type}}(t),\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_ac152e3bba098818d6552f5100495b3aa}{progress}}(0.0f),\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_a6f90fd11f9679217155e8c391d9523e3}{resolution}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}::\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}::Size\_1cm),\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event_ad59dbb2a6f46b3558134e74b3ee7616c}{lodLevel}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}::\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{LOD0}})\ \{\}}
+\DoxyCodeLine{00140\ \};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{comment}{//\ Cache\ entry\ for\ mesh\ cache}}
+\DoxyCodeLine{00143\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry}{MeshCacheEntry}}\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry_ada43004fa7bce9ad0dc44e8d205e87d1}{mesh}};}
+\DoxyCodeLine{00145\ \ \ \ \ std::chrono::steady\_clock::time\_point\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry_a480ce9301a94400b688abc6f1b44c556}{lastAccess}};}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry_a2434c495fff40a709019e045cf21e07b}{memoryUsage}};}
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry_afd931a9a8006faf5cc95813b935e7d45}{settings}};}
+\DoxyCodeLine{00148\ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry_a15340f35e570bd14da4ec30a52f80e5c}{updateAccess}}()\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry_a480ce9301a94400b688abc6f1b44c556}{lastAccess}}\ =\ std::chrono::steady\_clock::now();}
+\DoxyCodeLine{00151\ \ \ \ \ \}}
+\DoxyCodeLine{00152\ \};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{comment}{//\ Hash\ for\ voxel\ grid\ (for\ caching)}}
+\DoxyCodeLine{00155\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash}{VoxelGridHash}}\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_a1191d36a9f6ae03f3ae105947c76885d}{hash}};}
+\DoxyCodeLine{00157\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_ad0541b0e4cd7a559f5452a2df9b1367b}{bounds}};}
+\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_aef8a5f7800d362dbca8dfd0ae6c38594}{resolution}};}
+\DoxyCodeLine{00159\ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_a9443b964e5be9c4d314792d71d9efccb}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash}{VoxelGridHash}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_a1191d36a9f6ae03f3ae105947c76885d}{hash}}\ ==\ other.\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_a1191d36a9f6ae03f3ae105947c76885d}{hash}}\ \&\&\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_ad0541b0e4cd7a559f5452a2df9b1367b}{bounds}}\ ==\ other.\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_ad0541b0e4cd7a559f5452a2df9b1367b}{bounds}}\ \&\&\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_aef8a5f7800d362dbca8dfd0ae6c38594}{resolution}}\ ==\ other.\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash_aef8a5f7800d362dbca8dfd0ae6c38594}{resolution}};}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \};}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \textcolor{comment}{//\ Vertex\ attributes\ for\ advanced\ rendering}}
+\DoxyCodeLine{00166\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes}{VertexAttributes}}\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes_a4edcd4f356d8b28b6a980e0f4e7aa15c}{position}};}
+\DoxyCodeLine{00168\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes_ad624b95877b1ed1afcf95c672b655a2e}{normal}};}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes_a1f6d1a1eddf1dd10e01cc21be43319bf}{uv}};}
+\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes_a79abdbae28adf8d86b9c297c4ea2d23e}{tangent}};}
+\DoxyCodeLine{00171\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes_a80728c76416d38bb5924fbcd8d5d9047}{bitangent}};}
+\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes_a1a3dac43f5780918050112040631f05b}{material}};}
+\DoxyCodeLine{00173\ \};}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{comment}{//\ Mesh\ statistics}}
+\DoxyCodeLine{00176\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats}{MeshStats}}\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_a4e65c2765903d6e35e4b288a302229d8}{vertexCount}}\ =\ 0;}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_afd7f345e515cffa879ed888cfc697064}{triangleCount}}\ =\ 0;}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_abfc652bc8db2fbcd106d82a42397cb25}{degenerateTriangles}}\ =\ 0;}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_aaeb8c8fb555514b5288ab42f2258171f}{duplicateVertices}}\ =\ 0;}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_a5185145a9d805be21108732444e885ca}{surfaceArea}}\ =\ 0.0f;}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_a6acf579c1945ce44ea4173a7b39a29a1}{volume}}\ =\ 0.0f;}
+\DoxyCodeLine{00183\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_a778980066b05ff36d98dddbb02b45d02}{bounds}};}
+\DoxyCodeLine{00184\ \ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats_ad1a323519e0cca9c8a3912c1023a3dd4}{clear}}()\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats}{MeshStats}}();}
+\DoxyCodeLine{00187\ \ \ \ \ \}}
+\DoxyCodeLine{00188\ \};}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \textcolor{comment}{//\ Simplification\ settings}}
+\DoxyCodeLine{00191\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{SimplificationSettings}}\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_a7a4c5f3ef9f78828567c617c88f56749}{targetRatio}}\ =\ 0.5f;\ \ \textcolor{comment}{//\ Target\ triangle\ count\ ratio}}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_a2bc5016b3a553dea0d5ed71885813d79}{maxError}}\ =\ 0.01f;\ \ \ \ \textcolor{comment}{//\ Maximum\ allowed\ error}}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_ae6e078fc2c36b3dadbd8dfb67038e541}{preserveBoundary}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_ac936e4e45f524360bb7b3f2ec52c169f}{preserveTopology}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_a56004b79623dd890310d7c68bf50c327}{preserveUVs}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00197\ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{SimplificationSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_acc58dee61fd9e93c96320e12dfac7fb4}{Aggressive}}();}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{SimplificationSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_ab59b8cbdb805df81fb4c558127984414}{Conservative}}();}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{SimplificationSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_ab03624f1b59c0153250966f7fb3af2ea}{Balanced}}();}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{SimplificationSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings_a6d54e1c876e454d6b34f81f351402e51}{Quality}}();}
+\DoxyCodeLine{00202\ \};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \}}
+\DoxyCodeLine{00205\ \}}
+
+\end{DoxyCode}

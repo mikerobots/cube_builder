@@ -1,0 +1,128 @@
+\doxysection{core/input/tests/test\+\_\+\+Mouse\+Handler.cpp File Reference}
+\hypertarget{test___mouse_handler_8cpp}{}\label{test___mouse_handler_8cpp}\index{core/input/tests/test\_MouseHandler.cpp@{core/input/tests/test\_MouseHandler.cpp}}
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Mouse\+Handler.\+h"{}}\newline
+{\ttfamily \#include "{}../../../foundation/events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include "{}../../../foundation/math/\+Vector2f.\+h"{}}\newline
+{\ttfamily \#include "{}../../../foundation/math/\+Vector2i.\+h"{}}\newline
+{\ttfamily \#include "{}../../../foundation/math/\+Ray.\+h"{}}\newline
+{\ttfamily \#include "{}../../../core/camera/\+Camera.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_mock_event_dispatcher}{Mock\+Event\+Dispatcher}}
+\item 
+class \mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_ab22e1932911e3248ea041538dad7bf32}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Default\+State)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_ab2fbe0e1bb5fd6111a55812ed5476e03}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Button\+Press\+Release)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a03af3f03fc793123b9483ed2c38b057e}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Mouse\+Movement)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a496056d8aa0a75af220321a5267ac758}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Mouse\+Wheel)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a8f294ac5e53e8a5b571f55e2cfb2f78d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Click\+Detection)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a9f9e5907805e040f5e36e6a006155c93}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Double\+Click\+Detection)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_ab4626a488e3133ae828c60bd77a9b21d}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Drag\+Detection)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a915ab3faa2193e69846016d419c06d26}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Multiple\+Buttons)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a2fea4702a029d49c7ea733418adb2fe6}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Configuration)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a685c84191eada235ac386573edb5b82b}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Position\+Filtering)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_ae3816707d0174b91b08b5f484a27ebdb}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Enabled\+State)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_abd588a598c5ba718e12d32fc67f4a8c8}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Mouse\+Button\+Utilities)
+\item 
+\mbox{\hyperlink{test___mouse_handler_8cpp_a7b462631d7de4f9a5156e0935fa9f99f}{TEST\+\_\+F}} (\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}, Ray\+Casting)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{test___mouse_handler_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{test___mouse_handler_8cpp_ab2fbe0e1bb5fd6111a55812ed5476e03}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [1/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_ab2fbe0e1bb5fd6111a55812ed5476e03} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Button\+Press\+Release}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a8f294ac5e53e8a5b571f55e2cfb2f78d}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [2/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a8f294ac5e53e8a5b571f55e2cfb2f78d} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Click\+Detection}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a2fea4702a029d49c7ea733418adb2fe6}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [3/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a2fea4702a029d49c7ea733418adb2fe6} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Configuration}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_ab22e1932911e3248ea041538dad7bf32}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [4/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_ab22e1932911e3248ea041538dad7bf32} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Default\+State}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a9f9e5907805e040f5e36e6a006155c93}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [5/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a9f9e5907805e040f5e36e6a006155c93} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Double\+Click\+Detection}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_ab4626a488e3133ae828c60bd77a9b21d}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [6/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_ab4626a488e3133ae828c60bd77a9b21d} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Drag\+Detection}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_ae3816707d0174b91b08b5f484a27ebdb}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [7/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_ae3816707d0174b91b08b5f484a27ebdb} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Enabled\+State}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_abd588a598c5ba718e12d32fc67f4a8c8}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [8/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_abd588a598c5ba718e12d32fc67f4a8c8} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Mouse\+Button\+Utilities}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a03af3f03fc793123b9483ed2c38b057e}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [9/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a03af3f03fc793123b9483ed2c38b057e} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Mouse\+Movement}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a496056d8aa0a75af220321a5267ac758}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [10/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a496056d8aa0a75af220321a5267ac758} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Mouse\+Wheel}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a915ab3faa2193e69846016d419c06d26}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [11/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a915ab3faa2193e69846016d419c06d26} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Multiple\+Buttons}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a685c84191eada235ac386573edb5b82b}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [12/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a685c84191eada235ac386573edb5b82b} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Position\+Filtering}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{test___mouse_handler_8cpp_a7b462631d7de4f9a5156e0935fa9f99f}\index{test\_MouseHandler.cpp@{test\_MouseHandler.cpp}!TEST\_F@{TEST\_F}}
+\index{TEST\_F@{TEST\_F}!test\_MouseHandler.cpp@{test\_MouseHandler.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_F()}{TEST\_F()}\hspace{0.1cm}{\footnotesize\ttfamily [13/13]}}
+{\footnotesize\ttfamily \label{test___mouse_handler_8cpp_a7b462631d7de4f9a5156e0935fa9f99f} 
+TEST\+\_\+F (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mouse_handler_test}{Mouse\+Handler\+Test}}}]{}{, }\item[{Ray\+Casting}]{}{}\end{DoxyParamCaption})}
+

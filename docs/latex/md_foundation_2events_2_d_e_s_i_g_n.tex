@@ -1,0 +1,98 @@
+\chapter{Event System Foundation }
+\hypertarget{md_foundation_2events_2_d_e_s_i_g_n}{}\label{md_foundation_2events_2_d_e_s_i_g_n}\index{Event System Foundation@{Event System Foundation}}
+\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md499}%
+\Hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md499}%
+\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md500}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md500}
+Provides decoupled communication between components through a type-\/safe event dispatching system with priority handling and filtering.\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md501}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md501}
+\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md502}{}\doxysubsection{\texorpdfstring{Event\+Dispatcher}{Event\+Dispatcher}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md502}
+
+\begin{DoxyItemize}
+\item Type-\/safe event registration and dispatch
+\item Priority-\/based event handling
+\item Event filtering and queuing
+\item Thread-\/safe event processing
+\end{DoxyItemize}\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md503}{}\doxysubsection{\texorpdfstring{Event Types}{Event Types}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md503}
+
+\begin{DoxyItemize}
+\item Strongly-\/typed event definitions
+\item Event inheritance hierarchy
+\item Event metadata and timestamps
+\item Serializable events
+\end{DoxyItemize}\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md504}{}\doxysubsection{\texorpdfstring{Event\+Handler}{Event\+Handler}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md504}
+
+\begin{DoxyItemize}
+\item Abstract base for event handlers
+\item Automatic registration/deregistration
+\item Handler priority management
+\item Conditional event processing
+\end{DoxyItemize}\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md505}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md505}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }EventDispatcher\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ subscribe(EventHandler<EventType>*\ handler,\ \textcolor{keywordtype}{int}\ priority\ =\ 0);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ unsubscribe(EventHandler<EventType>*\ handler);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ dispatch(\textcolor{keyword}{const}\ EventType\&\ event);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ dispatchAsync(\textcolor{keyword}{const}\ EventType\&\ event);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processQueuedEvents();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearQueue();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getQueueSize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMaxQueueSize(\textcolor{keywordtype}{size\_t}\ maxSize);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }HandlerEntry\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ EventHandler<EventType>*\ handler;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ priority;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ HandlerEntry\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ priority\ >\ other.priority;\ \textcolor{comment}{//\ Higher\ priority\ first}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::type\_index,\ std::vector<std::unique\_ptr<HandlerEntryBase>>>\ m\_handlers;}
+\DoxyCodeLine{\ \ \ \ std::queue<std::unique\_ptr<EventBase>>\ m\_eventQueue;}
+\DoxyCodeLine{\ \ \ \ std::mutex\ m\_mutex;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_maxQueueSize\ =\ 1000;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
+\DoxyCodeLine{\textcolor{keyword}{class\ }EventHandler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \string~EventHandler()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ handleEvent(\textcolor{keyword}{const}\ EventType\&\ event)\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ shouldHandle(\textcolor{keyword}{const}\ EventType\&\ event)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }EventBase\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \string~EventBase()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ getTimestamp()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_timestamp;\ \}}
+\DoxyCodeLine{\ \ \ \ uint64\_t\ getEventId()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_eventId;\ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{protected}:}
+\DoxyCodeLine{\ \ \ \ EventBase()\ :\ m\_timestamp(std::chrono::high\_resolution\_clock::now()),\ m\_eventId(generateEventId())\ \{\}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ m\_timestamp;}
+\DoxyCodeLine{\ \ \ \ uint64\_t\ m\_eventId;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ uint64\_t\ generateEventId();}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md506}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_foundation_2events_2_d_e_s_i_g_n_autotoc_md506}
+
+\begin{DoxyItemize}
+\item Standard C++ threading and type\+\_\+traits
+\item No external dependencies 
+\end{DoxyItemize}

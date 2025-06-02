@@ -1,0 +1,641 @@
+\chapter{Input System Subsystem }
+\hypertarget{md_core_2input_2_d_e_s_i_g_n}{}\label{md_core_2input_2_d_e_s_i_g_n}\index{Input System Subsystem@{Input System Subsystem}}
+\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md223}%
+\Hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md223}%
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md224}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md224}
+Provides unified input handling across all platforms (desktop, touch, VR) with platform-\/specific optimizations and consistent event processing.\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md225}{}\doxysection{\texorpdfstring{Key Components}{Key Components}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md225}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md226}{}\doxysubsection{\texorpdfstring{Input\+Manager}{Input\+Manager}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md226}
+{\bfseries{Responsibility}}\+: Main input coordination and event routing
+\begin{DoxyItemize}
+\item Unified input event processing
+\item Platform-\/specific input handler registration
+\item Input mapping and configuration
+\item Event priority and filtering
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md227}{}\doxysubsection{\texorpdfstring{Mouse\+Handler}{Mouse\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md227}
+{\bfseries{Responsibility}}\+: Desktop mouse input processing
+\begin{DoxyItemize}
+\item Mouse movement and click detection
+\item Ray casting for 3D interaction
+\item Scroll wheel and gesture support
+\item Multi-\/button mouse support
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md228}{}\doxysubsection{\texorpdfstring{Keyboard\+Handler}{Keyboard\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md228}
+{\bfseries{Responsibility}}\+: Keyboard input processing
+\begin{DoxyItemize}
+\item Key press/release events
+\item Modifier key combinations
+\item Text input handling
+\item Customizable key bindings
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md229}{}\doxysubsection{\texorpdfstring{Touch\+Handler}{Touch\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md229}
+{\bfseries{Responsibility}}\+: Touch and gesture input (Qt/\+Mobile)
+\begin{DoxyItemize}
+\item Multi-\/touch gesture recognition
+\item Touch raycast for 3D interaction
+\item Gesture mapping to actions
+\item Touch-\/specific optimizations
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md230}{}\doxysubsection{\texorpdfstring{VRInput\+Handler}{VRInput\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md230}
+{\bfseries{Responsibility}}\+: VR hand tracking and gesture input
+\begin{DoxyItemize}
+\item Hand pose recognition
+\item Gesture detection and classification
+\item 3D spatial interaction
+\item Comfort and accessibility features
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md231}{}\doxysection{\texorpdfstring{Interface Design}{Interface Design}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md231}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }InputManager\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Handler\ registration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerMouseHandler(MouseHandler*\ handler);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerKeyboardHandler(KeyboardHandler*\ handler);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerTouchHandler(TouchHandler*\ handler);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerVRHandler(VRInputHandler*\ handler);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Event\ processing}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processEvents();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ injectMouseEvent(\textcolor{keyword}{const}\ MouseEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ injectKeyboardEvent(\textcolor{keyword}{const}\ KeyEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ injectTouchEvent(\textcolor{keyword}{const}\ TouchEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ injectVREvent(\textcolor{keyword}{const}\ VREvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Input\ mapping}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setInputMapping(\textcolor{keyword}{const}\ InputMapping\&\ mapping);}
+\DoxyCodeLine{\ \ \ \ InputMapping\ getInputMapping()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ saveInputMapping(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ loadInputMapping(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ State\ queries}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isKeyPressed(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isMouseButtonPressed(MouseButton\ button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector2f\ getMousePosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector2f\ getMouseDelta()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Action\ system}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindAction(\textcolor{keyword}{const}\ std::string\&\ actionName,\ InputTrigger\ trigger);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isActionPressed(\textcolor{keyword}{const}\ std::string\&\ actionName)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isActionJustPressed(\textcolor{keyword}{const}\ std::string\&\ actionName)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getActionValue(\textcolor{keyword}{const}\ std::string\&\ actionName)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setMouseSensitivity(\textcolor{keywordtype}{float}\ sensitivity);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setTouchSensitivity(\textcolor{keywordtype}{float}\ sensitivity);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setVRSensitivity(\textcolor{keywordtype}{float}\ sensitivity);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<InputHandler>>\ m\_handlers;}
+\DoxyCodeLine{\ \ \ \ InputMapping\ m\_mapping;}
+\DoxyCodeLine{\ \ \ \ InputState\ m\_currentState;}
+\DoxyCodeLine{\ \ \ \ InputState\ m\_previousState;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ ActionBinding>\ m\_actions;}
+\DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_enabled;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md232}{}\doxysection{\texorpdfstring{Data Structures}{Data Structures}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md232}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md233}{}\doxysubsection{\texorpdfstring{Input Events}{Input Events}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md233}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MouseEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb}{MouseEventType}}\ type;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287baf}{MouseButton}}\ button;}
+\DoxyCodeLine{\ \ \ \ Vector2f\ position;}
+\DoxyCodeLine{\ \ \ \ Vector2f\ delta;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ wheelDelta;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers;}
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ timestamp;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bb}{MouseEventType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbae331802be240d79912c365112ad41ddb}{ButtonPress}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbac58a283b80d411649376455b98710c95}{ButtonRelease}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bba6bc362dbf494c61ea117fe3c71ca48a5}{Move}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa5df60ef4fc4447353769d66661d2229}{Wheel}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaf1851d5600eae616ee802a31ac74701b}{Enter}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a77994ac8455a9531a161ffb8fe2d15bbaa52945dbe283de2f7e9d63ca3417f36a}{Leave}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287baf}{MouseButton}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa945d5e233cf7d6240f6b783b36a374ff}{Left}},\ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa92b09c7c48c520c3c55e497875da437c}{Right}},\ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafab1ca34f82e83c52b010f86955f264e05}{Middle}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681da91ff24acfc01cc2c3a4238a272a37d07}{Button4}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec9e75c911b4b74d0574a680b159681daf8849babaeaee3344306b87310664d65}{Button5}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{None}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }KeyEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af}{KeyEventType}}\ type;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{char}\ character;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ repeat;}
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ timestamp;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85af}{KeyEventType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa0610123bdd4ffc191a3ea05a847e1307}{Press}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afab8e7b465df7c5979dc731d06e84ce2cf}{Release}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a84ead271ff430b616ab68fe54d0f85afa76a40e4f974fd895a0a2598c1cee28b4}{Character}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }TouchEvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ae320d81d0fc0de7cf66b9ce56dfdaf35}{TouchEventType}}\ type;}
+\DoxyCodeLine{\ \ \ \ std::vector<TouchPoint>\ points;}
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ timestamp;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }TouchPoint\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{\ \ \ \ Vector2f\ position;}
+\DoxyCodeLine{\ \ \ \ Vector2f\ delta;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ pressure;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{TouchState}}\ state;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{TouchState}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5ad78a68f6a85421ae121c2cb5b73a1040}{Pressed}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a95bfdefaaf01553cbf21ccd942855c69}{Moved}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aea1e34304a5d8ffa7c9b0ed8ede4ef1a}{Released}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5aa149e85a44aeec9140e92733d9ed694e}{Cancelled}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }VREvent\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3}{VREventType}}\ type;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand;}
+\DoxyCodeLine{\ \ \ \ HandPose\ pose;}
+\DoxyCodeLine{\ \ \ \ std::vector<Gesture>\ gestures;}
+\DoxyCodeLine{\ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ timestamp;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3}{VREventType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3aa6b6cb3fb82a7035b13231db241d5a81}{HandUpdate}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a2aaf17e02c3abe2a426db1467b049412}{GestureDetected}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aec3c37f000c7b59eed182026831250b3a95d034aeadfbf1e658c5cab5043d80e9}{GestureCompleted}}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md234}{}\doxysubsection{\texorpdfstring{Input Mapping}{Input Mapping}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md234}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }InputMapping\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Mouse\ mappings}}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<MouseButton,\ ActionId>\ mouseButtons;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<MouseGesture,\ ActionId>\ mouseGestures;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Keyboard\ mappings}}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<KeyCode,\ ActionId>\ keys;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<KeyCombination,\ ActionId>\ keyCombinations;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Touch\ mappings}}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<TouchGesture,\ ActionId>\ touchGestures;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ VR\ mappings}}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<VRGesture,\ ActionId>\ vrGestures;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<HandPose,\ ActionId>\ handPoses;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Sensitivity\ settings}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ mouseSensitivity\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ touchSensitivity\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ vrSensitivity\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ InputMapping\ Default();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ InputMapping\ Gaming();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ InputMapping\ Accessibility();}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }ActionBinding\ \{}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}{ActionType}}\ type;}
+\DoxyCodeLine{\ \ \ \ std::vector<InputTrigger>\ triggers;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ deadzone\ =\ 0.1f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ continuous\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}{ActionType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a87b7760f14fbff78d8819291f36ab9a0}{Button}},\ \ \ \ \ \textcolor{comment}{//\ On/off\ state}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a39e6b4ab3e4adecf031d3aa8410bb3ce}{Axis}},\ \ \ \ \ \ \ \textcolor{comment}{//\ Continuous\ value}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a1bebc5ae2822f8e361fb0ce57b5e09e2}{Vector2}},\ \ \ \ \textcolor{comment}{//\ 2D\ continuous\ value}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894a02b4dab58bbc49e0851fb3fd8df520cc}{Vector3}}\ \ \ \ \ \textcolor{comment}{//\ 3D\ continuous\ value}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md235}{}\doxysection{\texorpdfstring{Mouse Input Processing}{Mouse Input Processing}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md235}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md236}{}\doxysubsection{\texorpdfstring{Mouse\+Handler}{Mouse\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md236}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MouseHandler\ :\ \textcolor{keyword}{public}\ InputHandler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processEvent(\textcolor{keyword}{const}\ MouseEvent\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Ray\ casting}}
+\DoxyCodeLine{\ \ \ \ Ray\ createRayFromMouse(\textcolor{keyword}{const}\ Vector2f\&\ mousePos,\ \textcolor{keyword}{const}\ Camera\&\ camera,\ \textcolor{keyword}{const}\ Vector2i\&\ viewportSize);}
+\DoxyCodeLine{\ \ \ \ Face\ detectFaceUnderMouse(\textcolor{keyword}{const}\ Vector2f\&\ mousePos,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \textcolor{keyword}{const}\ Camera\&\ camera);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Mouse\ state}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isButtonPressed(MouseButton\ button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector2f\ getPosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector2f\ getDelta()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getWheelDelta()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setClickTimeout(\textcolor{keywordtype}{float}\ seconds);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDoubleClickTimeout(\textcolor{keywordtype}{float}\ seconds);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setDragThreshold(\textcolor{keywordtype}{float}\ pixels);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }MouseState\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<bool,\ 8>\ buttonsPressed\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector2f\ position\ =\ Vector2f::Zero();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector2f\ delta\ =\ Vector2f::Zero();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wheelDelta\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Click\ detection}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<std::chrono::high\_resolution\_clock::time\_point,\ 8>\ lastClickTime;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<Vector2f,\ 8>\ clickPosition;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<int,\ 8>\ clickCount\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \}\ m\_state;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_clickTimeout;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_doubleClickTimeout;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_dragThreshold;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleButtonPress(\textcolor{keyword}{const}\ MouseEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleButtonRelease(\textcolor{keyword}{const}\ MouseEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleMouseMove(\textcolor{keyword}{const}\ MouseEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleWheel(\textcolor{keyword}{const}\ MouseEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isDoubleClick(MouseButton\ button,\ \textcolor{keyword}{const}\ Vector2f\&\ position)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isDrag(MouseButton\ button,\ \textcolor{keyword}{const}\ Vector2f\&\ position)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md237}{}\doxysubsection{\texorpdfstring{Mouse Actions}{Mouse Actions}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md237}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ MouseAction\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Voxel\ operations}}
+\DoxyCodeLine{\ \ \ \ PlaceVoxel,}
+\DoxyCodeLine{\ \ \ \ RemoveVoxel,}
+\DoxyCodeLine{\ \ \ \ PaintVoxel,}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Camera\ controls}}
+\DoxyCodeLine{\ \ \ \ OrbitCamera,}
+\DoxyCodeLine{\ \ \ \ PanCamera,}
+\DoxyCodeLine{\ \ \ \ ZoomCamera,}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Selection}}
+\DoxyCodeLine{\ \ \ \ SelectVoxel,}
+\DoxyCodeLine{\ \ \ \ SelectMultiple,}
+\DoxyCodeLine{\ \ \ \ SelectBox,}
+\DoxyCodeLine{\ \ \ \ DeselectAll,}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Groups}}
+\DoxyCodeLine{\ \ \ \ CreateGroup,}
+\DoxyCodeLine{\ \ \ \ SelectGroup,}
+\DoxyCodeLine{\ \ \ \ MoveGroup,}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ View}}
+\DoxyCodeLine{\ \ \ \ FrameSelection,}
+\DoxyCodeLine{\ \ \ \ ResetView}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md238}{}\doxysection{\texorpdfstring{Keyboard Input Processing}{Keyboard Input Processing}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md238}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md239}{}\doxysubsection{\texorpdfstring{Keyboard\+Handler}{Keyboard\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md239}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }KeyboardHandler\ :\ \textcolor{keyword}{public}\ InputHandler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processEvent(\textcolor{keyword}{const}\ KeyEvent\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Key\ state\ queries}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isKeyPressed(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isKeyJustPressed(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isKeyJustReleased(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Modifier\ queries}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isShiftPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isCtrlPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isAltPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Text\ input}}
+\DoxyCodeLine{\ \ \ \ std::string\ getTextInput()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearTextInput();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setTextInputEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Key\ bindings}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindKey(KeyCode\ key,\ \textcolor{keyword}{const}\ std::string\&\ action);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bindKeyCombination(\textcolor{keyword}{const}\ KeyCombination\&\ combo,\ \textcolor{keyword}{const}\ std::string\&\ action);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }KeyState\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<bool,\ 256>\ keysPressed\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<bool,\ 256>\ keysJustPressed\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<bool,\ 256>\ keysJustReleased\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ textInput;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ textInputEnabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers\ =\ ModifierFlags::None;}
+\DoxyCodeLine{\ \ \ \ \}\ m\_state;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<KeyCode,\ std::string>\ m\_keyBindings;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<KeyCombination,\ std::string>\ m\_comboBindings;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateKeyState(\textcolor{keyword}{const}\ KeyEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleTextInput(\textcolor{keyword}{const}\ KeyEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ checkKeyBindings(\textcolor{keyword}{const}\ KeyEvent\&\ event);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md240}{}\doxysubsection{\texorpdfstring{Key Combinations}{Key Combinations}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md240}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }KeyCombination\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ primaryKey;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ matches(KeyCode\ key,\ ModifierFlags\ mods)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ std::string\ toString()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ KeyCombination\ fromString(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ :\ uint32\_t\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{None}}\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a825a3d98017bab11815ad2817201324c}{Shift}}\ =\ 1\ <<\ 0,}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a2b61e0d5977f2e38f06e16281c802b47}{Ctrl}}\ =\ 1\ <<\ 1,}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530aa2e92861b757ab878312dd57993d60cf}{Alt}}\ =\ 1\ <<\ 2,}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530a0ce3266d4eb71ad50f7a90aee6d21dcd}{Super}}\ =\ 1\ <<\ 3}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md241}{}\doxysection{\texorpdfstring{Touch Input Processing}{Touch Input Processing}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md241}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md242}{}\doxysubsection{\texorpdfstring{Touch\+Handler}{Touch\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md242}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }TouchHandler\ :\ \textcolor{keyword}{public}\ InputHandler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processEvent(\textcolor{keyword}{const}\ TouchEvent\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Gesture\ recognition}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ enableGesture(TouchGesture\ gesture,\ \textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isGestureActive(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector2f\ getGestureCenter(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getGestureScale(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Touch\ state}}
+\DoxyCodeLine{\ \ \ \ std::vector<TouchPoint>\ getActiveTouches()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ TouchPoint\ getPrimaryTouch()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasTouches()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setTapTimeout(\textcolor{keywordtype}{float}\ seconds);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setTapRadius(\textcolor{keywordtype}{float}\ pixels);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setPinchThreshold(\textcolor{keywordtype}{float}\ pixels);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSwipeThreshold(\textcolor{keywordtype}{float}\ pixels);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{TouchState}}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::unordered\_map<int,\ TouchPoint>\ activeTouches;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<TouchGesture>\ activeGestures;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gesture\ state}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector2f\ pinchCenter;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pinchScale\ =\ 1.0f;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector2f\ panDelta;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector2f\ rotationCenter;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rotationAngle\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \}\ m\_state;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<GestureRecognizer>\ m\_gestureRecognizer;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateTouchPoints(\textcolor{keyword}{const}\ TouchEvent\&\ event);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ recognizeGestures();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleGestureStart(TouchGesture\ gesture);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleGestureUpdate(TouchGesture\ gesture);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleGestureEnd(TouchGesture\ gesture);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a73cf2f244bc0cb0d205b99c04fa13978}{Tap}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a8f3f96ab0875983edbc267d3cec4aed9}{DoubleTap}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a00d900000cd9029ba6de8dc9349da768}{LongPress}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af6d4a17b27da35c2d90ce13801f36782}{Pan}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a1e4ddf6f135e4c639929b4633c29d4f2}{Pinch}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9af1a42bd417390fc63b030a519624607a}{Rotation}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a78076ce792c4640bf99c598c92bd69e7}{Swipe}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a25e1bddc8aaf7f018dfa2631d2d5f2ed}{TwoFingerPan}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a3e970866ef378e94ede4efee35d4db49}{ThreeFingerPan}}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md243}{}\doxysection{\texorpdfstring{VR Input Processing}{VR Input Processing}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md243}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md244}{}\doxysubsection{\texorpdfstring{VRInput\+Handler}{VRInput\+Handler}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md244}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }VRInputHandler\ :\ \textcolor{keyword}{public}\ InputHandler\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ processEvent(\textcolor{keyword}{const}\ VREvent\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Hand\ tracking}}
+\DoxyCodeLine{\ \ \ \ HandPose\ getHandPose(HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isHandTracking(HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ getHandPosition(HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Quaternion\ getHandOrientation(HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Gesture\ recognition}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isGestureActive(VRGesture\ gesture,\ HandType\ hand\ =\ HandType::Either)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getGestureConfidence(VRGesture\ gesture,\ HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ getGesturePosition(VRGesture\ gesture,\ HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Ray\ casting}}
+\DoxyCodeLine{\ \ \ \ Ray\ getHandRay(HandType\ hand)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Face\ detectFaceFromHand(HandType\ hand,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setGestureThreshold(VRGesture\ gesture,\ \textcolor{keywordtype}{float}\ threshold);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setHandTrackingEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setComfortSettings(\textcolor{keyword}{const}\ VRComfortSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VRState\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<HandPose,\ 2>\ handPoses;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<bool,\ 2>\ handTracking\ =\ \{\};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<std::pair<VRGesture,\ HandType>>\ activeGestures;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gesture\ history\ for\ filtering}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<std::deque<HandPose>,\ 2>\ poseHistory;}
+\DoxyCodeLine{\ \ \ \ \}\ m\_state;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unique\_ptr<VRGestureRecognizer>\ m\_gestureRecognizer;}
+\DoxyCodeLine{\ \ \ \ VRComfortSettings\ m\_comfortSettings;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateHandPose(HandType\ hand,\ \textcolor{keyword}{const}\ HandPose\&\ pose);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ recognizeGestures();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ filterHandPose(HandPose\&\ pose)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }HandPose\ \{}
+\DoxyCodeLine{\ \ \ \ Vector3f\ position;}
+\DoxyCodeLine{\ \ \ \ Quaternion\ orientation;}
+\DoxyCodeLine{\ \ \ \ std::array<FingerPose,\ 5>\ fingers;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ confidence;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ hand;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }FingerPose\ \{}
+\DoxyCodeLine{\ \ \ \ std::array<Vector3f,\ 4>\ joints;\ \textcolor{comment}{//\ MCP,\ PIP,\ DIP,\ TIP}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ bend;\ \textcolor{comment}{//\ 0.0\ =\ straight,\ 1.0\ =\ fully\ bent}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ extended;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10}{VRGesture}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a2a3cd5946cfd317eb99c3d32e35e2d4c}{Point}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9a1e4ddf6f135e4c639929b4633c29d4f2}{Pinch}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ab635ceb01a10e96cdbefa95d72b25750}{Grab}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a65adf7b9eb629336c1726ec078dc0a11}{ThumbsUp}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10afb97b89e2f05ccab67af971669dfcf06}{ThumbsDown}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10aae8faf2882fb1dfc7183a0a7a6784f9a}{Fist}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10ac24a1d6c75101e1f4b9e2a8f6f65520a}{OpenPalm}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10acc2073b04d2e90482ab2c7b7f03dfcc1}{Peace}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a8243d605a8dc617fd65ebc94e909f7e1}{TwoHandGrab}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a514ae3c77cf05768d4b3f4d9d820b9e8}{TwoHandScale}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_aba8a1c9686e57bd28b186769b04b2a10a71bc5c310a9ec29c40510435741800e7}{TwoHandRotate}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794}{HandType}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa945d5e233cf7d6240f6b783b36a374ff}{Left}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa92b09c7c48c520c3c55e497875da437c}{Right}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a403e838650d87da20b4ca5be77ceb794a9e70a5d3dab1960c04b55a29f310331e}{Either}}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md245}{}\doxysection{\texorpdfstring{Action System}{Action System}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md245}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md246}{}\doxysubsection{\texorpdfstring{Action Processing}{Action Processing}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md246}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ActionProcessor\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ registerAction(\textcolor{keyword}{const}\ std::string\&\ name,\ ActionCallback\ callback);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ triggerAction(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ ActionContext\&\ context);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isActionActive(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getActionValue(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector2f\ getActionVector2(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ getActionVector3(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ActionState\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ active\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector2f\ vector2\ =\ Vector2f::Zero();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3f\ vector3\ =\ Vector3f::Zero();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ lastTriggered;}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ ActionCallback>\ m\_callbacks;}
+\DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ ActionState>\ m\_states;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateActionState(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ ActionContext\&\ context);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }ActionContext\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_abbab65a0d9ca25edb7e3cb15b4b03894}{ActionType}}\ type;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ pressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ value\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ Vector2f\ vector2\ =\ Vector2f::Zero();}
+\DoxyCodeLine{\ \ \ \ Vector3f\ vector3\ =\ Vector3f::Zero();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers\ =\ ModifierFlags::None;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a5b920703bd6a22da70b3a6cf9618df6a}{InputDevice}}\ device\ =\ InputDevice::Unknown;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a658f77a535b8a869ae89c9a69646c434}{ActionCallback}}\ =\ std::function<void(\textcolor{keyword}{const}\ ActionContext\&)>;}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md247}{}\doxysection{\texorpdfstring{Platform Integration}{Platform Integration}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md247}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md248}{}\doxysubsection{\texorpdfstring{Desktop Integration}{Desktop Integration}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md248}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }DesktopInputIntegration\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ initializeForPlatform();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ handleNativeEvent(\textcolor{keywordtype}{void}*\ nativeEvent);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Window\ integration}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setWindow(\textcolor{keywordtype}{void}*\ windowHandle);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCursorMode(CursorMode\ mode);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setRawMouseInput(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}*\ m\_windowHandle;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820}{CursorMode}}\ m\_cursorMode;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_rawMouseInput;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820}{CursorMode}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a960b44c579bc2f6818d2daaf9e4c16f0}{Normal}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820a7acdf85c69cc3c5305456a293524386e}{Hidden}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a79e842c9cf544646e1439fc6b3f8c820ab8786828a1c422c20e2ce788075a732a}{Captured}}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md249}{}\doxysubsection{\texorpdfstring{VR Integration}{VR Integration}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md249}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }VRInputIntegration\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ initializeHandTracking();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateHandTracking();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ shutdown();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isHandTrackingSupported()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isHandTrackingEnabled()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{HandTrackingQuality}}\ getTrackingQuality()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}*\ m\_handTrackingHandle;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{HandTrackingQuality}}\ m\_trackingQuality;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4e}{HandTrackingQuality}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{None}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea28d0edd045e05cf5af64e35ae0c4c6ef}{Low}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea87f8a6ab85c9ced3702b4ea641ad4bb5}{Medium}},}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35}{High}}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md250}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md250}
+\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md251}{}\doxysubsection{\texorpdfstring{Unit Tests}{Unit Tests}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md251}
+
+\begin{DoxyItemize}
+\item Input event parsing
+\item Gesture recognition accuracy
+\item Key combination detection
+\item Action mapping validation
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md252}{}\doxysubsection{\texorpdfstring{Integration Tests}{Integration Tests}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md252}
+
+\begin{DoxyItemize}
+\item Cross-\/platform input handling
+\item VR hand tracking integration
+\item Touch gesture recognition
+\item Camera control responsiveness
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md253}{}\doxysubsection{\texorpdfstring{Performance Tests}{Performance Tests}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md253}
+
+\begin{DoxyItemize}
+\item Input latency measurement
+\item Event processing throughput
+\item Memory usage optimization
+\item VR tracking performance
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md254}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md254}
+
+\begin{DoxyItemize}
+\item {\bfseries{Core/\+Camera}}\+: Camera control integration
+\item {\bfseries{Core/\+Voxel\+Data}}\+: Voxel interaction
+\item {\bfseries{Core/\+Selection}}\+: Selection operations
+\item {\bfseries{Foundation/\+Events}}\+: Input event dispatching
+\item {\bfseries{Foundation/\+Math}}\+: 3D math for ray casting
+\end{DoxyItemize}\hypertarget{md_core_2input_2_d_e_s_i_g_n_autotoc_md255}{}\doxysection{\texorpdfstring{Configuration}{Configuration}}\label{md_core_2input_2_d_e_s_i_g_n_autotoc_md255}
+
+\begin{DoxyItemize}
+\item Customizable input mappings
+\item Platform-\/specific optimizations
+\item Accessibility options
+\item Sensitivity adjustments 
+\end{DoxyItemize}

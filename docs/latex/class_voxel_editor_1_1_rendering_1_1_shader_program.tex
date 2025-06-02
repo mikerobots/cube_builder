@@ -1,0 +1,208 @@
+\doxysection{Voxel\+Editor\+::Rendering\+::Shader\+Program Class Reference}
+\hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program}{}\label{class_voxel_editor_1_1_rendering_1_1_shader_program}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+
+
+{\ttfamily \#include $<$Shader\+Manager.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_affd342473379f85d0f478ba6eb81812c}{Shader\+Program}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} id, const std\+::string \&name, \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{Open\+GLRenderer}} \texorpdfstring{$\ast$}{*}renderer)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ab9cd161f941538153c3eb3d97e419d94}{\texorpdfstring{$\sim$}{\string~}\+Shader\+Program}} ()
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a31e2209ada7f44ee2440c669d75d44b4}{get\+Id}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a19b43d69268964b36ad3f67dc5223ec4}{get\+Name}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a2e18d4605956a26701d77bc5e081acc7}{is\+Valid}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ab2401003858e3f9c7d7a1848c3f7904d}{get\+Error\+Log}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a3d167efe5d07f64d87224efa19886731}{set\+Uniform}} (const std\+::string \&name, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}} \&value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_acd89e7b0e0e949e28022fe586b821d19}{set\+Uniform}} (const std\+::string \&name, float value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a03dc000bde58c40479c3fcfefa64ad04}{set\+Uniform}} (const std\+::string \&name, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a8477775a2f7b14d16428e736242293b4}{set\+Uniform}} (const std\+::string \&name, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a558cb1b9881f6e90fa39230f31c4c13f}{set\+Uniform}} (const std\+::string \&name, const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a860a762fcad92cd333b7be7003162a2b}{set\+Uniform}} (const std\+::string \&name, int value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_aa45be39392e62f9eb48b5173dc56b8b3}{set\+Uniform}} (const std\+::string \&name, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \&value)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a2575bed57b967be3c8e8766f0e98293f}{set\+Uniform}} (const std\+::string \&name, bool value)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a892be3cda9ec2581a8fa8b221506dc6b}{has\+Uniform}} (const std\+::string \&name) const
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_abb3d8f6b8c62d395f1be7bff0bb95fa0}{get\+Uniform\+Location}} (const std\+::string \&name) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a76c52dad6d934b521c80c2729a987d4a}{get\+Uniform\+Names}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a8c35c13f83dcb465e12c68a8d188330e}{use}} ()
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ad7f0059e43e8bcc40ff7068ccac3ed2a}{unuse}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ad84c2bf47375d004fb0bbc8ea0447875}{is\+In\+Use}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a2da71b8fdbac3eb0b8a67e5a3dc07ef8}{recompile}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{Shader\+Source}} \&source)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ac81747760d7b8de314418d9088858e48}{mark\+Dirty}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ae276e8fc09b04a183fe34bf986b631a5}{is\+Dirty}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_affd342473379f85d0f478ba6eb81812c}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!ShaderProgram@{ShaderProgram}}
+\index{ShaderProgram@{ShaderProgram}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{ShaderProgram()}{ShaderProgram()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_affd342473379f85d0f478ba6eb81812c} 
+Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::\+Shader\+Program (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}}}]{id}{, }\item[{const std\+::string \&}]{name}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{Open\+GLRenderer}} \texorpdfstring{$\ast$}{*}}]{renderer}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_ab9cd161f941538153c3eb3d97e419d94}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!````~ShaderProgram@{\texorpdfstring{$\sim$}{\string~}ShaderProgram}}
+\index{````~ShaderProgram@{\texorpdfstring{$\sim$}{\string~}ShaderProgram}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ShaderProgram()}{\string~ShaderProgram()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_ab9cd161f941538153c3eb3d97e419d94} 
+Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::\texorpdfstring{$\sim$}{\string~}\+Shader\+Program (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_ab2401003858e3f9c7d7a1848c3f7904d}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!getErrorLog@{getErrorLog}}
+\index{getErrorLog@{getErrorLog}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{getErrorLog()}{getErrorLog()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_ab2401003858e3f9c7d7a1848c3f7904d} 
+const std\+::string \& Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::get\+Error\+Log (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a31e2209ada7f44ee2440c669d75d44b4}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!getId@{getId}}
+\index{getId@{getId}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a31e2209ada7f44ee2440c669d75d44b4} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{Shader\+Id}} Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::get\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a19b43d69268964b36ad3f67dc5223ec4}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!getName@{getName}}
+\index{getName@{getName}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a19b43d69268964b36ad3f67dc5223ec4} 
+const std\+::string \& Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_abb3d8f6b8c62d395f1be7bff0bb95fa0}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!getUniformLocation@{getUniformLocation}}
+\index{getUniformLocation@{getUniformLocation}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{getUniformLocation()}{getUniformLocation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_abb3d8f6b8c62d395f1be7bff0bb95fa0} 
+int Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::get\+Uniform\+Location (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a76c52dad6d934b521c80c2729a987d4a}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!getUniformNames@{getUniformNames}}
+\index{getUniformNames@{getUniformNames}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{getUniformNames()}{getUniformNames()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a76c52dad6d934b521c80c2729a987d4a} 
+std\+::vector$<$ std\+::string $>$ Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::get\+Uniform\+Names (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a892be3cda9ec2581a8fa8b221506dc6b}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!hasUniform@{hasUniform}}
+\index{hasUniform@{hasUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{hasUniform()}{hasUniform()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a892be3cda9ec2581a8fa8b221506dc6b} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::has\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_ae276e8fc09b04a183fe34bf986b631a5}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!isDirty@{isDirty}}
+\index{isDirty@{isDirty}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{isDirty()}{isDirty()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_ae276e8fc09b04a183fe34bf986b631a5} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::is\+Dirty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_ad84c2bf47375d004fb0bbc8ea0447875}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!isInUse@{isInUse}}
+\index{isInUse@{isInUse}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{isInUse()}{isInUse()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_ad84c2bf47375d004fb0bbc8ea0447875} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::is\+In\+Use (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a2e18d4605956a26701d77bc5e081acc7}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!isValid@{isValid}}
+\index{isValid@{isValid}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a2e18d4605956a26701d77bc5e081acc7} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_ac81747760d7b8de314418d9088858e48}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!markDirty@{markDirty}}
+\index{markDirty@{markDirty}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{markDirty()}{markDirty()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_ac81747760d7b8de314418d9088858e48} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::mark\+Dirty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a2da71b8fdbac3eb0b8a67e5a3dc07ef8}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!recompile@{recompile}}
+\index{recompile@{recompile}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{recompile()}{recompile()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a2da71b8fdbac3eb0b8a67e5a3dc07ef8} 
+bool Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::recompile (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{Shader\+Source}} \&}]{source}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a2575bed57b967be3c8e8766f0e98293f}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a2575bed57b967be3c8e8766f0e98293f} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{bool}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a558cb1b9881f6e90fa39230f31c4c13f}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a558cb1b9881f6e90fa39230f31c4c13f} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_aa45be39392e62f9eb48b5173dc56b8b3}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_aa45be39392e62f9eb48b5173dc56b8b3} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math\+::\+Matrix4f}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a03dc000bde58c40479c3fcfefa64ad04}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a03dc000bde58c40479c3fcfefa64ad04} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math\+::\+Vector2f}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a8477775a2f7b14d16428e736242293b4}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a8477775a2f7b14d16428e736242293b4} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a3d167efe5d07f64d87224efa19886731}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a3d167efe5d07f64d87224efa19886731} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{Uniform\+Value}} \&}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_acd89e7b0e0e949e28022fe586b821d19}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_acd89e7b0e0e949e28022fe586b821d19} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{float}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a860a762fcad92cd333b7be7003162a2b}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!setUniform@{setUniform}}
+\index{setUniform@{setUniform}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{setUniform()}{setUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a860a762fcad92cd333b7be7003162a2b} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::set\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{int}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_ad7f0059e43e8bcc40ff7068ccac3ed2a}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!unuse@{unuse}}
+\index{unuse@{unuse}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{unuse()}{unuse()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_ad7f0059e43e8bcc40ff7068ccac3ed2a} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::unuse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_rendering_1_1_shader_program_a8c35c13f83dcb465e12c68a8d188330e}\index{VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}!use@{use}}
+\index{use@{use}!VoxelEditor::Rendering::ShaderProgram@{VoxelEditor::Rendering::ShaderProgram}}
+\doxysubsubsection{\texorpdfstring{use()}{use()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_rendering_1_1_shader_program_a8c35c13f83dcb465e12c68a8d188330e} 
+void Voxel\+Editor\+::\+Rendering\+::\+Shader\+Program\+::use (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/rendering/\mbox{\hyperlink{_shader_manager_8h}{Shader\+Manager.\+h}}\end{DoxyCompactItemize}

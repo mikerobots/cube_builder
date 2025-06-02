@@ -1,0 +1,104 @@
+\doxysection{Compression.\+h}
+\hypertarget{_compression_8h_source}{}\label{_compression_8h_source}\index{core/file\_io/include/file\_io/Compression.h@{core/file\_io/include/file\_io/Compression.h}}
+\mbox{\hyperlink{_compression_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_1_1_voxel_data}{VoxelData}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }VoxelGrid;}
+\DoxyCodeLine{00013\ \}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Compression\ wrapper\ for\ LZ4}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ad4f32c61e6af89ec5252ceae09bd6125}{Compression}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ad4f32c61e6af89ec5252ceae09bd6125}{Compression}}();}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a1c81373272c3d85eda239af5c7ce8dbd}{\string~Compression}}();}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Basic\ compression/decompression}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ae33741cb24de7237b06bbee54b97125c}{compress}}(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{int}\ level\ =\ 6);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ac0cf7fdf056ffd9c7635dfd1ca3b873a}{decompress}}(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{size\_t}\ expectedSize);}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Size\ calculations}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_ae1034d2610a0b8038077d2e20e8b7390}{getMaxCompressedSize}}(\textcolor{keywordtype}{size\_t}\ inputSize)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_acd2ac296d1554a77afc7aa0958b8484c}{getCompressionRatio}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastCompressionRatio;\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Stream\ compression}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a7cce17edcae93cffcdeba0ae608b675f}{compressStream}}(std::istream\&\ input,\ std::ostream\&\ output,\ \textcolor{keywordtype}{int}\ level\ =\ 6);}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a3437639f3f8d7312a064081f458fcdb2}{decompressStream}}(std::istream\&\ input,\ std::ostream\&\ output,\ \textcolor{keywordtype}{size\_t}\ expectedSize);}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Specialized\ voxel\ compression}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a1a1596f4e7062d48169a72b6c3f24ce2}{compressVoxelData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{int}\ level\ =\ 6);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a0df7efacf8a60ab14404907540d8fa0e}{decompressVoxelData}}(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid);}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a5debef51a857eeabe38edcb342942a52}{setCompressionLevel}}(\textcolor{keywordtype}{int}\ level)\ \{\ m\_compressionLevel\ =\ level;\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_adc638bebb55166a4da9a3813630ddf0d}{getCompressionLevel}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_compressionLevel;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_a47ca43682231d4aad778d02d1897ac6d}{getLastError}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_lastCompressionRatio\ =\ 1.0f;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_compressionLevel\ =\ 6;}
+\DoxyCodeLine{00049\ \ \ \ \ std::string\ m\_lastError;}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ LZ4-\/specific\ implementation}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ compressLZ4(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{int}\ level);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ decompressLZ4(\textcolor{keyword}{const}\ uint8\_t*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize,}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\&\ output,\ \textcolor{keywordtype}{size\_t}\ expectedSize);}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Voxel\ data\ optimization}}
+\DoxyCodeLine{00058\ \ \ \ \ std::vector<uint8\_t>\ optimizeVoxelDataForCompression(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ restoreVoxelDataFromOptimized(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid);}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Run-\/length\ encoding\ for\ sparse\ voxel\ data}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ runLengthEncode(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ input,\ std::vector<uint8\_t>\&\ output);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ runLengthDecode(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ input,\ std::vector<uint8\_t>\&\ output);}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ setError(\textcolor{keyword}{const}\ std::string\&\ error);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ clearError();}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ Compression\ utilities}}
+\DoxyCodeLine{00071\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_utils}{CompressionUtils}}\ \{}
+\DoxyCodeLine{00072\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ data\ appears\ to\ be\ compressed}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_utils_a41680b209e3c4bdc0972193aa170bac1}{isCompressed}}(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Calculate\ compression\ ratio}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_utils_a790edca944a7e8cce24f78566b0f5163}{calculateRatio}}(\textcolor{keywordtype}{size\_t}\ originalSize,\ \textcolor{keywordtype}{size\_t}\ compressedSize);}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Estimate\ compressed\ size}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_compression_utils_aa902653896e876b45f77b20411dd1c40}{estimateCompressedSize}}(\textcolor{keywordtype}{size\_t}\ originalSize,\ \textcolor{keywordtype}{float}\ expectedRatio\ =\ 0.5f);}
+\DoxyCodeLine{00081\ \};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{comment}{//\ Compression\ header\ for\ identifying\ compressed\ data}}
+\DoxyCodeLine{00084\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header}{CompressionHeader}}\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a86b8729bc1e06d817018965a11da4725}{magic}}\ =\ 0x4C5A3443;\ \textcolor{comment}{//\ 'LZ4C'}}
+\DoxyCodeLine{00086\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a24ceebb48d6d5f0dfcddb852b207969f}{originalSize}}\ =\ 0;}
+\DoxyCodeLine{00087\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a2c0b986232bfa6e4d23bd0c06979375a}{compressedSize}}\ =\ 0;}
+\DoxyCodeLine{00088\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a0268e25773c7948e27181d6fe7ebd050}{checksum}}\ =\ 0;}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af0e7e66cddd663c4aaebda74571dffb2}{SIZE}}\ =\ 16;}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af1b34b9e770ab5f4f35deabc531aab56}{write}}(uint8\_t*\ buffer)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_ad3576d14cbee5295e513c4f7f0cf408b}{read}}(\textcolor{keyword}{const}\ uint8\_t*\ buffer);}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a46b32e180a1d329381c809e8b301efaa}{isValid}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \}\ \textcolor{comment}{//\ namespace\ FileIO}}
+\DoxyCodeLine{00098\ \}\ \textcolor{comment}{//\ namespace\ VoxelEditor}}
+
+\end{DoxyCode}

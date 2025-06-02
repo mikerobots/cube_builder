@@ -1,0 +1,120 @@
+\doxysection{Voxel\+Editor\+::Events\+::Selection\+Changed\+Event Class Reference}
+\hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event}{}\label{class_voxel_editor_1_1_events_1_1_selection_changed_event}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}
+
+
+{\ttfamily \#include $<$Common\+Events.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::Selection\+Changed\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_voxel_editor_1_1_events_1_1_selection_changed_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{Change\+Type}} \{ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a55771bcb939a8afbf4d119d6e0099317}{ADDED}}
+, \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ab3461745d64b12346503b2980e436db5}{REMOVED}}
+, \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ad5edacc5c1724ff7055e7db625117c71}{REPLACED}}
+, \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a62574ee27e6c5f985a6bc1dc344e7438}{CLEARED}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_ae2080c0c283db6384f995d54b832213f}{Selection\+Changed\+Event}} (\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{Change\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}{change\+Type}}, size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}{selection\+Size}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Selection\+Changed\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a474a1f5a19a8e57daefeca1a9ade97dc}{get\+Event\+Type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a7745501203210f30b6f8315ed9644557}{\texorpdfstring{$\sim$}{\string~}\+Event\+Base}} ()=default
+\item 
+std\+::chrono\+::high\+\_\+resolution\+\_\+clock\+::time\+\_\+point \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a214d35ec52eb8c3ead2c4d5121633998}{get\+Timestamp}} () const
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a9a7efb500d1d8b1b4ec6f7c64b138a13}{get\+Event\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{Change\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}{change\+Type}}
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}{selection\+Size}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Voxel\+Editor\+::\+Events\+::\+Event$<$ Selection\+Changed\+Event $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_a4c3fe32d28867f769f7da60781786f22}{get\+Static\+Event\+Type}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Voxel\+Editor\+::\+Events\+::\+Event\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base_a3aad113c281c3977876e1bd6ee9a85c8}{Event\+Base}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!ChangeType@{ChangeType}}
+\index{ChangeType@{ChangeType}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}
+\doxysubsubsection{\texorpdfstring{ChangeType}{ChangeType}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077} 
+enum class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{Voxel\+Editor\+::\+Events\+::\+Selection\+Changed\+Event\+::\+Change\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ADDED@{ADDED}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!ADDED@{ADDED}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a55771bcb939a8afbf4d119d6e0099317}\label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a55771bcb939a8afbf4d119d6e0099317} 
+ADDED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REMOVED@{REMOVED}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!REMOVED@{REMOVED}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ab3461745d64b12346503b2980e436db5}\label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ab3461745d64b12346503b2980e436db5} 
+REMOVED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REPLACED@{REPLACED}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!REPLACED@{REPLACED}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ad5edacc5c1724ff7055e7db625117c71}\label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ad5edacc5c1724ff7055e7db625117c71} 
+REPLACED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CLEARED@{CLEARED}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!CLEARED@{CLEARED}}}\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a62574ee27e6c5f985a6bc1dc344e7438}\label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a62574ee27e6c5f985a6bc1dc344e7438} 
+CLEARED&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_ae2080c0c283db6384f995d54b832213f}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!SelectionChangedEvent@{SelectionChangedEvent}}
+\index{SelectionChangedEvent@{SelectionChangedEvent}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}
+\doxysubsubsection{\texorpdfstring{SelectionChangedEvent()}{SelectionChangedEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_selection_changed_event_ae2080c0c283db6384f995d54b832213f} 
+Voxel\+Editor\+::\+Events\+::\+Selection\+Changed\+Event\+::\+Selection\+Changed\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{Change\+Type}}}]{change\+Type}{, }\item[{size\+\_\+t}]{selection\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!changeType@{changeType}}
+\index{changeType@{changeType}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}
+\doxysubsubsection{\texorpdfstring{changeType}{changeType}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf} 
+\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{Change\+Type}} Voxel\+Editor\+::\+Events\+::\+Selection\+Changed\+Event\+::change\+Type}
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}\index{VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}!selectionSize@{selectionSize}}
+\index{selectionSize@{selectionSize}!VoxelEditor::Events::SelectionChangedEvent@{VoxelEditor::Events::SelectionChangedEvent}}
+\doxysubsubsection{\texorpdfstring{selectionSize}{selectionSize}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73} 
+size\+\_\+t Voxel\+Editor\+::\+Events\+::\+Selection\+Changed\+Event\+::selection\+Size}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/\mbox{\hyperlink{_common_events_8h}{Common\+Events.\+h}}\end{DoxyCompactItemize}

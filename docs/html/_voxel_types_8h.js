@@ -1,0 +1,24 @@
+var _voxel_types_8h =
+[
+    [ "VoxelEditor::VoxelData::VoxelPosition", "struct_voxel_editor_1_1_voxel_data_1_1_voxel_position.html", "struct_voxel_editor_1_1_voxel_data_1_1_voxel_position" ],
+    [ "VoxelEditor::VoxelData::VoxelPosition::Hash", "struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_1_1_hash.html", "struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_1_1_hash" ],
+    [ "VoxelEditor::VoxelData::WorkspaceConstraints", "struct_voxel_editor_1_1_voxel_data_1_1_workspace_constraints.html", null ],
+    [ "VoxelEditor::VoxelData::VoxelResolution", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8", [
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_1cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8aeb3107023563be5a16dd90314394c80e", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_2cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a1b98375d02731e698132094793ada6c7", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_4cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a4760c53267fc13b78962fe379583ed73", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_8cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a89edd42eddb2e52c1ac16c5b4bbc56b7", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_16cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8ae3ac033f5ce503ed4d798c81afd6a0bc", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_32cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a9c8b2cde7074df3df198a124ecb7c95d", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_64cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a5c3938a2f7b9af6f0c52f45e29e6bf93", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_128cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a3ed34b80d31717f43fedc0a4ffa29c46", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_256cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8abb36185c3447faea14b1bd945b8af16f", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::Size_512cm", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a68044428fd9ade682008ff6672d66777", null ],
+      [ "VoxelEditor::VoxelData::VoxelResolution::COUNT", "namespace_voxel_editor_1_1_voxel_data.html#aa9243b799108088d669663804bddb4b8a4905ac9d6a22bdfc1ae096094ce6248d", null ]
+    ] ],
+    [ "VoxelEditor::VoxelData::calculateMaxGridDimensions", "namespace_voxel_editor_1_1_voxel_data.html#aab5809e885e7973ce4911f46a695385f", null ],
+    [ "VoxelEditor::VoxelData::getVoxelSize", "namespace_voxel_editor_1_1_voxel_data.html#a22a0fd4712c51df4ec07731b4e29239a", null ],
+    [ "VoxelEditor::VoxelData::getVoxelSizeName", "namespace_voxel_editor_1_1_voxel_data.html#a2e034702527bc3ff34077c5dd8dcc90a", null ],
+    [ "VoxelEditor::VoxelData::isPositionInBounds", "namespace_voxel_editor_1_1_voxel_data.html#a722ca8fc559f688ff5f749529a001e42", null ],
+    [ "VoxelEditor::VoxelData::isValidResolution", "namespace_voxel_editor_1_1_voxel_data.html#a82ab4711dcc9bd20bbc818d63b1ced8c", null ]
+];

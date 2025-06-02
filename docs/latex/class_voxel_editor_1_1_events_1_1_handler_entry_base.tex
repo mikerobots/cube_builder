@@ -1,0 +1,74 @@
+\doxysection{Voxel\+Editor\+::Events\+::Handler\+Entry\+Base Class Reference}
+\hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base}{}\label{class_voxel_editor_1_1_events_1_1_handler_entry_base}\index{VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}}
+
+
+{\ttfamily \#include $<$Event\+Handler.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Events\+::Handler\+Entry\+Base\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_events_1_1_handler_entry_base}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_af40f5e073a4361bacd6ef1dacfb66263}{\texorpdfstring{$\sim$}{\string~}\+Handler\+Entry\+Base}} ()=default
+\item 
+virtual void \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_a44991d0c2e593633d8e6b8a6d5deec9e}{handle\+Event}} (const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Event\+Base}} \&event)=0
+\item 
+virtual bool \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_a4726ab5dcfed41ee9a319ad49ad51025}{should\+Handle}} (const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Event\+Base}} \&event) const =0
+\item 
+virtual int \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_ad9f91cfea542e35d2e690a4cac183a8a}{get\+Priority}} () const =0
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base_af40f5e073a4361bacd6ef1dacfb66263}\index{VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}!````~HandlerEntryBase@{\texorpdfstring{$\sim$}{\string~}HandlerEntryBase}}
+\index{````~HandlerEntryBase@{\texorpdfstring{$\sim$}{\string~}HandlerEntryBase}!VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}HandlerEntryBase()}{\string~HandlerEntryBase()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_handler_entry_base_af40f5e073a4361bacd6ef1dacfb66263} 
+virtual Voxel\+Editor\+::\+Events\+::\+Handler\+Entry\+Base\+::\texorpdfstring{$\sim$}{\string~}\+Handler\+Entry\+Base (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base_ad9f91cfea542e35d2e690a4cac183a8a}\index{VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}!getPriority@{getPriority}}
+\index{getPriority@{getPriority}!VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}}
+\doxysubsubsection{\texorpdfstring{getPriority()}{getPriority()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_handler_entry_base_ad9f91cfea542e35d2e690a4cac183a8a} 
+virtual int Voxel\+Editor\+::\+Events\+::\+Handler\+Entry\+Base\+::get\+Priority (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a5919a8a0dc98aff3bc1b3bce0cf8dd46}{Voxel\+Editor\+::\+Events\+::\+Handler\+Entry$<$ Event\+Type $>$}}.
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base_a44991d0c2e593633d8e6b8a6d5deec9e}\index{VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}!handleEvent@{handleEvent}}
+\index{handleEvent@{handleEvent}!VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}}
+\doxysubsubsection{\texorpdfstring{handleEvent()}{handleEvent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_handler_entry_base_a44991d0c2e593633d8e6b8a6d5deec9e} 
+virtual void Voxel\+Editor\+::\+Events\+::\+Handler\+Entry\+Base\+::handle\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Event\+Base}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a66d8733abebb2a2afe4088ded6b4a702}{Voxel\+Editor\+::\+Events\+::\+Handler\+Entry$<$ Event\+Type $>$}}.
+
+\Hypertarget{class_voxel_editor_1_1_events_1_1_handler_entry_base_a4726ab5dcfed41ee9a319ad49ad51025}\index{VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}!shouldHandle@{shouldHandle}}
+\index{shouldHandle@{shouldHandle}!VoxelEditor::Events::HandlerEntryBase@{VoxelEditor::Events::HandlerEntryBase}}
+\doxysubsubsection{\texorpdfstring{shouldHandle()}{shouldHandle()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_events_1_1_handler_entry_base_a4726ab5dcfed41ee9a319ad49ad51025} 
+virtual bool Voxel\+Editor\+::\+Events\+::\+Handler\+Entry\+Base\+::should\+Handle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{Event\+Base}} \&}]{event}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a898426d14269587b32bc6bae73741afc}{Voxel\+Editor\+::\+Events\+::\+Handler\+Entry$<$ Event\+Type $>$}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+foundation/events/\mbox{\hyperlink{_event_handler_8h}{Event\+Handler.\+h}}\end{DoxyCompactItemize}

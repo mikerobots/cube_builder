@@ -1,0 +1,97 @@
+\doxysection{Voxel\+Editor\+::File\+IO\+::Binary\+Format Class Reference}
+\hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format}{}\label{class_voxel_editor_1_1_file_i_o_1_1_binary_format}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+
+
+{\ttfamily \#include $<$Binary\+Format.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a803d5f25ef067c04e09358adb1259f70}{Binary\+Format}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a198693b777dbb591e260a4baea255dcd}{\texorpdfstring{$\sim$}{\string~}\+Binary\+Format}} ()
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a343c5eb0792c5a6fb89379270ab96064}{write\+Project}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{Binary\+Writer}} \&writer, const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}} \&project, const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_save_options}{Save\+Options}} \&options)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a325e0f740a00ccef15ba571dc0c2cf52}{read\+Project}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&reader, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}} \&project, const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_load_options}{Load\+Options}} \&options)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a9e2e1a4dda884c9ac5e0a10fb0932dcf}{validate\+File}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&reader)
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a0a5cf6c25126873b342558c488716a9d}{detect\+Version}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&reader)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{File\+Error}} \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_af77eb47bdef7043ef5ace38974f8d1bc}{get\+Last\+Error}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ad83c28bd151dcf440a8fa6df87924a47}{get\+Last\+Error\+Message}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ae29dde1d5927304e72a8a77048a5e8f9}{read\+Header}} (\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&reader, \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header}{File\+Header}} \&header)
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a803d5f25ef067c04e09358adb1259f70}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!BinaryFormat@{BinaryFormat}}
+\index{BinaryFormat@{BinaryFormat}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{BinaryFormat()}{BinaryFormat()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a803d5f25ef067c04e09358adb1259f70} 
+Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::\+Binary\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a198693b777dbb591e260a4baea255dcd}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!````~BinaryFormat@{\texorpdfstring{$\sim$}{\string~}BinaryFormat}}
+\index{````~BinaryFormat@{\texorpdfstring{$\sim$}{\string~}BinaryFormat}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BinaryFormat()}{\string~BinaryFormat()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a198693b777dbb591e260a4baea255dcd} 
+Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::\texorpdfstring{$\sim$}{\string~}\+Binary\+Format (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a0a5cf6c25126873b342558c488716a9d}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!detectVersion@{detectVersion}}
+\index{detectVersion@{detectVersion}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{detectVersion()}{detectVersion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a0a5cf6c25126873b342558c488716a9d} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{File\+Version}} Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::detect\+Version (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&}]{reader}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_af77eb47bdef7043ef5ace38974f8d1bc}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!getLastError@{getLastError}}
+\index{getLastError@{getLastError}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{getLastError()}{getLastError()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_af77eb47bdef7043ef5ace38974f8d1bc} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{File\+Error}} Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::get\+Last\+Error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ad83c28bd151dcf440a8fa6df87924a47}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!getLastErrorMessage@{getLastErrorMessage}}
+\index{getLastErrorMessage@{getLastErrorMessage}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{getLastErrorMessage()}{getLastErrorMessage()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ad83c28bd151dcf440a8fa6df87924a47} 
+std\+::string Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::get\+Last\+Error\+Message (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ae29dde1d5927304e72a8a77048a5e8f9}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!readHeader@{readHeader}}
+\index{readHeader@{readHeader}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{readHeader()}{readHeader()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ae29dde1d5927304e72a8a77048a5e8f9} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::read\+Header (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&}]{reader}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header}{File\+Header}} \&}]{header}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a325e0f740a00ccef15ba571dc0c2cf52}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!readProject@{readProject}}
+\index{readProject@{readProject}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{readProject()}{readProject()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a325e0f740a00ccef15ba571dc0c2cf52} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::read\+Project (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&}]{reader}{, }\item[{\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}} \&}]{project}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_load_options}{Load\+Options}} \&}]{options}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a9e2e1a4dda884c9ac5e0a10fb0932dcf}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!validateFile@{validateFile}}
+\index{validateFile@{validateFile}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{validateFile()}{validateFile()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a9e2e1a4dda884c9ac5e0a10fb0932dcf} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::validate\+File (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{Binary\+Reader}} \&}]{reader}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a343c5eb0792c5a6fb89379270ab96064}\index{VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}!writeProject@{writeProject}}
+\index{writeProject@{writeProject}!VoxelEditor::FileIO::BinaryFormat@{VoxelEditor::FileIO::BinaryFormat}}
+\doxysubsubsection{\texorpdfstring{writeProject()}{writeProject()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a343c5eb0792c5a6fb89379270ab96064} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Binary\+Format\+::write\+Project (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{Binary\+Writer}} \&}]{writer}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}} \&}]{project}{, }\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_save_options}{Save\+Options}} \&}]{options}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/file\+\_\+io/include/file\+\_\+io/\mbox{\hyperlink{_binary_format_8h}{Binary\+Format.\+h}}\item 
+core/file\+\_\+io/src/\mbox{\hyperlink{_binary_format_8cpp}{Binary\+Format.\+cpp}}\end{DoxyCompactItemize}

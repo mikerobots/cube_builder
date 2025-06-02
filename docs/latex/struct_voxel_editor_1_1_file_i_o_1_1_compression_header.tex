@@ -1,0 +1,95 @@
+\doxysection{Voxel\+Editor\+::File\+IO\+::Compression\+Header Struct Reference}
+\hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header}{}\label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+
+
+{\ttfamily \#include $<$Compression.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af1b34b9e770ab5f4f35deabc531aab56}{write}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer) const
+\item 
+void \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_ad3576d14cbee5295e513c4f7f0cf408b}{read}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer)
+\item 
+bool \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a46b32e180a1d329381c809e8b301efaa}{is\+Valid}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a86b8729bc1e06d817018965a11da4725}{magic}} = 0x4\+C5\+A3443
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a24ceebb48d6d5f0dfcddb852b207969f}{original\+Size}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a2c0b986232bfa6e4d23bd0c06979375a}{compressed\+Size}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a0268e25773c7948e27181d6fe7ebd050}{checksum}} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af0e7e66cddd663c4aaebda74571dffb2}{SIZE}} = 16
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a46b32e180a1d329381c809e8b301efaa}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!isValid@{isValid}}
+\index{isValid@{isValid}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a46b32e180a1d329381c809e8b301efaa} 
+bool Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_ad3576d14cbee5295e513c4f7f0cf408b}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!read@{read}}
+\index{read@{read}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_ad3576d14cbee5295e513c4f7f0cf408b} 
+void Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::read (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af1b34b9e770ab5f4f35deabc531aab56}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!write@{write}}
+\index{write@{write}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af1b34b9e770ab5f4f35deabc531aab56} 
+void Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{}\end{DoxyParamCaption}) const}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a0268e25773c7948e27181d6fe7ebd050}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!checksum@{checksum}}
+\index{checksum@{checksum}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{checksum}{checksum}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a0268e25773c7948e27181d6fe7ebd050} 
+uint32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::checksum = 0}
+
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a2c0b986232bfa6e4d23bd0c06979375a}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!compressedSize@{compressedSize}}
+\index{compressedSize@{compressedSize}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{compressedSize}{compressedSize}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a2c0b986232bfa6e4d23bd0c06979375a} 
+uint32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::compressed\+Size = 0}
+
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a86b8729bc1e06d817018965a11da4725}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!magic@{magic}}
+\index{magic@{magic}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{magic}{magic}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a86b8729bc1e06d817018965a11da4725} 
+uint32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::magic = 0x4\+C5\+A3443}
+
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a24ceebb48d6d5f0dfcddb852b207969f}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!originalSize@{originalSize}}
+\index{originalSize@{originalSize}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{originalSize}{originalSize}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_a24ceebb48d6d5f0dfcddb852b207969f} 
+uint32\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::original\+Size = 0}
+
+\Hypertarget{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af0e7e66cddd663c4aaebda74571dffb2}\index{VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}!SIZE@{SIZE}}
+\index{SIZE@{SIZE}!VoxelEditor::FileIO::CompressionHeader@{VoxelEditor::FileIO::CompressionHeader}}
+\doxysubsubsection{\texorpdfstring{SIZE}{SIZE}}
+{\footnotesize\ttfamily \label{struct_voxel_editor_1_1_file_i_o_1_1_compression_header_af0e7e66cddd663c4aaebda74571dffb2} 
+size\+\_\+t Voxel\+Editor\+::\+File\+IO\+::\+Compression\+Header\+::\+SIZE = 16\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/file\+\_\+io/include/file\+\_\+io/\mbox{\hyperlink{_compression_8h}{Compression.\+h}}\item 
+core/file\+\_\+io/src/\mbox{\hyperlink{_compression_8cpp}{Compression.\+cpp}}\end{DoxyCompactItemize}

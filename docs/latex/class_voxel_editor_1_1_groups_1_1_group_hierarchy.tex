@@ -1,0 +1,230 @@
+\doxysection{Voxel\+Editor\+::Groups\+::Group\+Hierarchy Class Reference}
+\hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy}{}\label{class_voxel_editor_1_1_groups_1_1_group_hierarchy}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+
+
+{\ttfamily \#include $<$Group\+Hierarchy.\+h$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{Hierarchy\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a31bd24ed3431fb50a6d09b511ae6c0ff}{Group\+Hierarchy}} ()=default
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7a99334b683670b9dcaeb4581c38a715}{\texorpdfstring{$\sim$}{\string~}\+Group\+Hierarchy}} ()=default
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a3ff2c55d568903f5234ee283d9047c98}{add\+Child}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9787f2825300c4f2dac1f67df3fb989c}{remove\+Child}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6699e598288c9d204a3736cfd526af85}{set\+Parent}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a95f84b5c027d24f1faad0cef1ebba982}{remove\+From\+Hierarchy}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} group\+Id)
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a88d928d58d4216cfc799de4c641664f5}{get\+Parent}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a67f4293e23e473ba94f49290bec32a42}{get\+Children}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a5ff33624a781308ac1a426a4fc6a2669}{get\+All\+Descendants}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a84d0275598594bbc11f223d7065f38a5}{get\+All\+Ancestors}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae7fbc24c1e78a5bc110c22aa20978003}{get\+Root\+Groups}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a92ac476724d9e1115992bb12737e14b8}{has\+Parent}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a53b8df7dd525ea9aba782fee0f09783b}{has\+Children}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a34535dbbcf607fad120e6e719990ad01}{is\+Ancestor}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} ancestor, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} descendant) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a40b42ea5a68391913869e004e4d1ebc3}{is\+Descendant}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} descendant, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} ancestor) const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6b8185a5f41c2185fc43f42173a5e1a4}{would\+Create\+Cycle}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} parent, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} child) const
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a59176291e451dc94541776aa602c3464}{get\+Depth}} (\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} group\+Id) const
+\item 
+int \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9f06998a10b48c0de343137d6a8e391b}{get\+Max\+Depth}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aa03c274d52e126ecdff4f3a8962370c0}{get\+Total\+Groups}} () const
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7c3c126e2ae61c0ab6c6c5fd6c1750e0}{is\+Valid}} () const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a0e890cde19b719abb084d31a8db2411e}{find\+Orphans}} (const std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \&all\+Groups) const
+\item 
+std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ $>$ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a97005875b40a091b9bda376faebbfbbc}{find\+Cycles}} () const
+\item 
+\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{Hierarchy\+Data}} \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a4e6464fb8db22854d905f7407535a3c0}{export\+Data}} () const
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae085302bf919dd099318998e8677e01a}{import\+Data}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{Hierarchy\+Data}} \&data)
+\item 
+std\+::mutex \& \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aadaf3f65546c3e2ec64c7c2614b94bbc}{get\+Mutex}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a31bd24ed3431fb50a6d09b511ae6c0ff}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!GroupHierarchy@{GroupHierarchy}}
+\index{GroupHierarchy@{GroupHierarchy}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{GroupHierarchy()}{GroupHierarchy()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a31bd24ed3431fb50a6d09b511ae6c0ff} 
+Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::\+Group\+Hierarchy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7a99334b683670b9dcaeb4581c38a715}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!````~GroupHierarchy@{\texorpdfstring{$\sim$}{\string~}GroupHierarchy}}
+\index{````~GroupHierarchy@{\texorpdfstring{$\sim$}{\string~}GroupHierarchy}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GroupHierarchy()}{\string~GroupHierarchy()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7a99334b683670b9dcaeb4581c38a715} 
+Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::\texorpdfstring{$\sim$}{\string~}\+Group\+Hierarchy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a3ff2c55d568903f5234ee283d9047c98}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!addChild@{addChild}}
+\index{addChild@{addChild}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{addChild()}{addChild()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a3ff2c55d568903f5234ee283d9047c98} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::add\+Child (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a4e6464fb8db22854d905f7407535a3c0}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!exportData@{exportData}}
+\index{exportData@{exportData}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{exportData()}{exportData()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a4e6464fb8db22854d905f7407535a3c0} 
+\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{Group\+Hierarchy\+::\+Hierarchy\+Data}} Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::export\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a97005875b40a091b9bda376faebbfbbc}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!findCycles@{findCycles}}
+\index{findCycles@{findCycles}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{findCycles()}{findCycles()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a97005875b40a091b9bda376faebbfbbc} 
+std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ $>$ Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::find\+Cycles (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a0e890cde19b719abb084d31a8db2411e}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!findOrphans@{findOrphans}}
+\index{findOrphans@{findOrphans}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{findOrphans()}{findOrphans()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a0e890cde19b719abb084d31a8db2411e} 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::find\+Orphans (\begin{DoxyParamCaption}\item[{const std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ \&}]{all\+Groups}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a84d0275598594bbc11f223d7065f38a5}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getAllAncestors@{getAllAncestors}}
+\index{getAllAncestors@{getAllAncestors}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getAllAncestors()}{getAllAncestors()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a84d0275598594bbc11f223d7065f38a5} 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+All\+Ancestors (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a5ff33624a781308ac1a426a4fc6a2669}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getAllDescendants@{getAllDescendants}}
+\index{getAllDescendants@{getAllDescendants}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getAllDescendants()}{getAllDescendants()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a5ff33624a781308ac1a426a4fc6a2669} 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+All\+Descendants (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a67f4293e23e473ba94f49290bec32a42}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getChildren@{getChildren}}
+\index{getChildren@{getChildren}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getChildren()}{getChildren()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a67f4293e23e473ba94f49290bec32a42} 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Children (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a59176291e451dc94541776aa602c3464}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getDepth@{getDepth}}
+\index{getDepth@{getDepth}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getDepth()}{getDepth()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a59176291e451dc94541776aa602c3464} 
+int Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Depth (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{group\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9f06998a10b48c0de343137d6a8e391b}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getMaxDepth@{getMaxDepth}}
+\index{getMaxDepth@{getMaxDepth}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getMaxDepth()}{getMaxDepth()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9f06998a10b48c0de343137d6a8e391b} 
+int Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Max\+Depth (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aadaf3f65546c3e2ec64c7c2614b94bbc}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getMutex@{getMutex}}
+\index{getMutex@{getMutex}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getMutex()}{getMutex()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aadaf3f65546c3e2ec64c7c2614b94bbc} 
+std\+::mutex \& Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Mutex (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a88d928d58d4216cfc799de4c641664f5}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getParent@{getParent}}
+\index{getParent@{getParent}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getParent()}{getParent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a88d928d58d4216cfc799de4c641664f5} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae7fbc24c1e78a5bc110c22aa20978003}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getRootGroups@{getRootGroups}}
+\index{getRootGroups@{getRootGroups}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getRootGroups()}{getRootGroups()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae7fbc24c1e78a5bc110c22aa20978003} 
+std\+::vector$<$ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} $>$ Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Root\+Groups (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aa03c274d52e126ecdff4f3a8962370c0}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!getTotalGroups@{getTotalGroups}}
+\index{getTotalGroups@{getTotalGroups}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{getTotalGroups()}{getTotalGroups()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aa03c274d52e126ecdff4f3a8962370c0} 
+size\+\_\+t Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::get\+Total\+Groups (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a53b8df7dd525ea9aba782fee0f09783b}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!hasChildren@{hasChildren}}
+\index{hasChildren@{hasChildren}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{hasChildren()}{hasChildren()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a53b8df7dd525ea9aba782fee0f09783b} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::has\+Children (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a92ac476724d9e1115992bb12737e14b8}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!hasParent@{hasParent}}
+\index{hasParent@{hasParent}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{hasParent()}{hasParent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a92ac476724d9e1115992bb12737e14b8} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::has\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae085302bf919dd099318998e8677e01a}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!importData@{importData}}
+\index{importData@{importData}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{importData()}{importData()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae085302bf919dd099318998e8677e01a} 
+void Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::import\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{Hierarchy\+Data}} \&}]{data}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a34535dbbcf607fad120e6e719990ad01}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!isAncestor@{isAncestor}}
+\index{isAncestor@{isAncestor}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{isAncestor()}{isAncestor()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a34535dbbcf607fad120e6e719990ad01} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::is\+Ancestor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{ancestor}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{descendant}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a40b42ea5a68391913869e004e4d1ebc3}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!isDescendant@{isDescendant}}
+\index{isDescendant@{isDescendant}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{isDescendant()}{isDescendant()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a40b42ea5a68391913869e004e4d1ebc3} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::is\+Descendant (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{descendant}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{ancestor}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7c3c126e2ae61c0ab6c6c5fd6c1750e0}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!isValid@{isValid}}
+\index{isValid@{isValid}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7c3c126e2ae61c0ab6c6c5fd6c1750e0} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9787f2825300c4f2dac1f67df3fb989c}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!removeChild@{removeChild}}
+\index{removeChild@{removeChild}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{removeChild()}{removeChild()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9787f2825300c4f2dac1f67df3fb989c} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::remove\+Child (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a95f84b5c027d24f1faad0cef1ebba982}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!removeFromHierarchy@{removeFromHierarchy}}
+\index{removeFromHierarchy@{removeFromHierarchy}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{removeFromHierarchy()}{removeFromHierarchy()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a95f84b5c027d24f1faad0cef1ebba982} 
+void Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::remove\+From\+Hierarchy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{group\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6699e598288c9d204a3736cfd526af85}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!setParent@{setParent}}
+\index{setParent@{setParent}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{setParent()}{setParent()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6699e598288c9d204a3736cfd526af85} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::set\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6b8185a5f41c2185fc43f42173a5e1a4}\index{VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}!wouldCreateCycle@{wouldCreateCycle}}
+\index{wouldCreateCycle@{wouldCreateCycle}!VoxelEditor::Groups::GroupHierarchy@{VoxelEditor::Groups::GroupHierarchy}}
+\doxysubsubsection{\texorpdfstring{wouldCreateCycle()}{wouldCreateCycle()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6b8185a5f41c2185fc43f42173a5e1a4} 
+bool Voxel\+Editor\+::\+Groups\+::\+Group\+Hierarchy\+::would\+Create\+Cycle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{parent}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{child}{}\end{DoxyParamCaption}) const}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/groups/include/groups/\mbox{\hyperlink{_group_hierarchy_8h}{Group\+Hierarchy.\+h}}\item 
+core/groups/src/\mbox{\hyperlink{_group_hierarchy_8cpp}{Group\+Hierarchy.\+cpp}}\end{DoxyCompactItemize}

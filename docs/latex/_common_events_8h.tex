@@ -1,0 +1,62 @@
+\doxysection{foundation/events/\+Common\+Events.h File Reference}
+\hypertarget{_common_events_8h}{}\label{_common_events_8h}\index{foundation/events/CommonEvents.h@{foundation/events/CommonEvents.h}}
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$typeindex$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$typeinfo$>$}\newline
+{\ttfamily \#include "{}Event\+Base.\+h"{}}\newline
+{\ttfamily \#include "{}../math/\+Vector3f.\+h"{}}\newline
+{\ttfamily \#include "{}../math/\+Vector3i.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event}{Voxel\+Editor\+::\+Events\+::\+Voxel\+Changed\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event}{Voxel\+Editor\+::\+Events\+::\+Resolution\+Changed\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event}{Voxel\+Editor\+::\+Events\+::\+Workspace\+Resized\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event}{Voxel\+Editor\+::\+Events\+::\+Group\+Created\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event}{Voxel\+Editor\+::\+Events\+::\+Group\+Deleted\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event}{Voxel\+Editor\+::\+Events\+::\+Group\+Modified\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event}{Voxel\+Editor\+::\+Events\+::\+Selection\+Changed\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event}{Voxel\+Editor\+::\+Events\+::\+Camera\+Changed\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Voxel\+Editor\+::\+Events\+::\+Memory\+Pressure\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event}{Voxel\+Editor\+::\+Events\+::\+Application\+Exit\+Event}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event}{Voxel\+Editor\+::\+Events\+::\+Configuration\+Changed\+Event}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{Voxel\+Editor\+::\+Voxel\+Data}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_events}{Voxel\+Editor\+::\+Events}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{Voxel\+Editor\+::\+Events\+::\+Group\+Id}} = uint32\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56}{Voxel\+Editor\+::\+Events\+::\+Group\+Modification\+Type}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56a6f2d0bce8e047d9f2eadd436b29c3f6d}{Voxel\+Editor\+::\+Events\+::\+MOVED}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56aa25e78d8d98c26f0fd73aa560f93c828}{Voxel\+Editor\+::\+Events\+::\+RENAMED}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56a49597681edee195a56cf927b8e3fd2b2}{Voxel\+Editor\+::\+Events\+::\+VISIBILITY\+\_\+\+CHANGED}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56a4df5a520fb796421bad732134042c2d3}{Voxel\+Editor\+::\+Events\+::\+LOCKED\+\_\+\+CHANGED}}
+ \}
+\end{DoxyCompactItemize}

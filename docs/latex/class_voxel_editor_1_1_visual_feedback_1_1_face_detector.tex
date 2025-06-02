@@ -1,0 +1,89 @@
+\doxysection{Voxel\+Editor\+::Visual\+Feedback\+::Face\+Detector Class Reference}
+\hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector}{}\label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+
+
+{\ttfamily \#include $<$Face\+Detector.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_acc27d5bdc7e7622a1716fe753e208d2a}{Face\+Detector}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a14e46601ea7453b0076b5c0c5f0796da}{\texorpdfstring{$\sim$}{\string~}\+Face\+Detector}} ()
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a38ad0832fdf873f1ff581dd38743cbcc}{detect\+Face}} (const \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}} \&ray, const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&grid, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} $>$ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a6d63c8881b59f0551d699ab3cb4ec9f8}{detect\+Faces\+In\+Region}} (const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&region, const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&grid, \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}} resolution)
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a3aa6930b4165faad335249eec6ecad9c}{is\+Valid\+Face\+For\+Placement}} (const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&face, const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&grid)
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a0a6c110a7bce897c5deb04b6d57da36d}{calculate\+Placement\+Position}} (const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&face)
+\item 
+void \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a2be0abc204cd8b946fcc51a63a9a1cd3}{set\+Max\+Ray\+Distance}} (float distance)
+\item 
+float \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a73b3729def75daea0b86867d993818b0}{get\+Max\+Ray\+Distance}} () const
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_acc27d5bdc7e7622a1716fe753e208d2a}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!FaceDetector@{FaceDetector}}
+\index{FaceDetector@{FaceDetector}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{FaceDetector()}{FaceDetector()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_acc27d5bdc7e7622a1716fe753e208d2a} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::\+Face\+Detector (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a14e46601ea7453b0076b5c0c5f0796da}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!````~FaceDetector@{\texorpdfstring{$\sim$}{\string~}FaceDetector}}
+\index{````~FaceDetector@{\texorpdfstring{$\sim$}{\string~}FaceDetector}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}FaceDetector()}{\string~FaceDetector()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a14e46601ea7453b0076b5c0c5f0796da} 
+Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::\texorpdfstring{$\sim$}{\string~}\+Face\+Detector (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a0a6c110a7bce897c5deb04b6d57da36d}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!calculatePlacementPosition@{calculatePlacementPosition}}
+\index{calculatePlacementPosition@{calculatePlacementPosition}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{calculatePlacementPosition()}{calculatePlacementPosition()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a0a6c110a7bce897c5deb04b6d57da36d} 
+\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math\+::\+Vector3i}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::calculate\+Placement\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&}]{face}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a38ad0832fdf873f1ff581dd38743cbcc}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!detectFace@{detectFace}}
+\index{detectFace@{detectFace}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{detectFace()}{detectFace()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a38ad0832fdf873f1ff581dd38743cbcc} 
+\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::detect\+Face (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}} \&}]{ray}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&}]{grid}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a6d63c8881b59f0551d699ab3cb4ec9f8}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!detectFacesInRegion@{detectFacesInRegion}}
+\index{detectFacesInRegion@{detectFacesInRegion}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{detectFacesInRegion()}{detectFacesInRegion()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a6d63c8881b59f0551d699ab3cb4ec9f8} 
+std\+::vector$<$ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} $>$ Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::detect\+Faces\+In\+Region (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math\+::\+Bounding\+Box}} \&}]{region}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&}]{grid}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{Voxel\+Data\+::\+Voxel\+Resolution}}}]{resolution}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a73b3729def75daea0b86867d993818b0}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!getMaxRayDistance@{getMaxRayDistance}}
+\index{getMaxRayDistance@{getMaxRayDistance}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{getMaxRayDistance()}{getMaxRayDistance()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a73b3729def75daea0b86867d993818b0} 
+float Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::get\+Max\+Ray\+Distance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a3aa6930b4165faad335249eec6ecad9c}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!isValidFaceForPlacement@{isValidFaceForPlacement}}
+\index{isValidFaceForPlacement@{isValidFaceForPlacement}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{isValidFaceForPlacement()}{isValidFaceForPlacement()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a3aa6930b4165faad335249eec6ecad9c} 
+bool Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::is\+Valid\+Face\+For\+Placement (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}} \&}]{face}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{Voxel\+Data\+::\+Voxel\+Grid}} \&}]{grid}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a2be0abc204cd8b946fcc51a63a9a1cd3}\index{VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}!setMaxRayDistance@{setMaxRayDistance}}
+\index{setMaxRayDistance@{setMaxRayDistance}!VoxelEditor::VisualFeedback::FaceDetector@{VoxelEditor::VisualFeedback::FaceDetector}}
+\doxysubsubsection{\texorpdfstring{setMaxRayDistance()}{setMaxRayDistance()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a2be0abc204cd8b946fcc51a63a9a1cd3} 
+void Voxel\+Editor\+::\+Visual\+Feedback\+::\+Face\+Detector\+::set\+Max\+Ray\+Distance (\begin{DoxyParamCaption}\item[{float}]{distance}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/visual\+\_\+feedback/include/visual\+\_\+feedback/\mbox{\hyperlink{_face_detector_8h}{Face\+Detector.\+h}}\item 
+core/visual\+\_\+feedback/src/\mbox{\hyperlink{_face_detector_8cpp}{Face\+Detector.\+cpp}}\end{DoxyCompactItemize}

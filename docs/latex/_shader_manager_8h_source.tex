@@ -1,0 +1,234 @@
+\doxysection{Shader\+Manager.\+h}
+\hypertarget{_shader_manager_8h_source}{}\label{_shader_manager_8h_source}\index{core/rendering/ShaderManager.h@{core/rendering/ShaderManager.h}}
+\mbox{\hyperlink{_shader_manager_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{RenderTypes.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_open_g_l_renderer_8h}{OpenGLRenderer.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_camera_8h}{../camera/Camera.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Rendering}}\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Shader\ source\ structure}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a5ff7e17dbfc94972f84aefedffc7eec8}{ShaderSource}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_af3c2ad51a1e9e13a7a33d80d5e7cbc52}{vertexSource}};}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a54473598b870ffbffbfb45b9ac4187b9}{fragmentSource}};}
+\DoxyCodeLine{00019\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_ae8f8e5962c61b92cb9d85e0e468c8d7a}{geometrySource}};\ \ \ \ \textcolor{comment}{//\ Optional}}
+\DoxyCodeLine{00020\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a76c52ed385cd99a4c5ba50fdfec0ec7f}{computeSource}};\ \ \ \ \ \textcolor{comment}{//\ Optional}}
+\DoxyCodeLine{00021\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a97e11fcf15541896b673bdce9f21b2f7}{defines}};}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a5ff7e17dbfc94972f84aefedffc7eec8}{ShaderSource}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a91245dee788b1ab47a8b4b266c1ad535}{ShaderSource}}(\textcolor{keyword}{const}\ std::string\&\ vertex,\ \textcolor{keyword}{const}\ std::string\&\ fragment)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_af3c2ad51a1e9e13a7a33d80d5e7cbc52}{vertexSource}}(vertex),\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a54473598b870ffbffbfb45b9ac4187b9}{fragmentSource}}(fragment)\ \{\}}
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a9bf1f74a4294ef7a65eed962d2978ae6}{hasVertex}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_af3c2ad51a1e9e13a7a33d80d5e7cbc52}{vertexSource}}.empty();\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_aa8b74c6312b4d1886adf96762de93b01}{hasFragment}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a54473598b870ffbffbfb45b9ac4187b9}{fragmentSource}}.empty();\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a91eb7c2a4a8962b62218ba404ba9c784}{hasGeometry}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_ae8f8e5962c61b92cb9d85e0e468c8d7a}{geometrySource}}.empty();\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_aa134aae08c1bf209b7c9308f325a48b8}{hasCompute}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a76c52ed385cd99a4c5ba50fdfec0ec7f}{computeSource}}.empty();\ \}}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a3ac2b16520dfbdd31481b1cff95e38c0}{addDefine}}(\textcolor{keyword}{const}\ std::string\&\ define)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a97e11fcf15541896b673bdce9f21b2f7}{defines}}.push\_back(define);}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a5c98e70c1a640a3bcd38d4dd9a91aa9b}{clearDefines}}()\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source_a97e11fcf15541896b673bdce9f21b2f7}{defines}}.clear();}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ Shader\ program\ wrapper}}
+\DoxyCodeLine{00043\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_affd342473379f85d0f478ba6eb81812c}{ShaderProgram}}\ \{}
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_affd342473379f85d0f478ba6eb81812c}{ShaderProgram}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{OpenGLRenderer}}*\ renderer);}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ab9cd161f941538153c3eb3d97e419d94}{\string~ShaderProgram}}();}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Program\ management}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a31e2209ada7f44ee2440c669d75d44b4}{getId}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_id;\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a19b43d69268964b36ad3f67dc5223ec4}{getName}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a2e18d4605956a26701d77bc5e081acc7}{isValid}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_valid;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ab2401003858e3f9c7d7a1848c3f7904d}{getErrorLog}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_errorLog;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Uniform\ management}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a3d167efe5d07f64d87224efa19886731}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{UniformValue}}\&\ value);}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_acd89e7b0e0e949e28022fe586b821d19}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a03dc000bde58c40479c3fcfefa64ad04}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ value);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a8477775a2f7b14d16428e736242293b4}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ value);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a558cb1b9881f6e90fa39230f31c4c13f}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\&\ value);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a860a762fcad92cd333b7be7003162a2b}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_aa45be39392e62f9eb48b5173dc56b8b3}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ value);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a2575bed57b967be3c8e8766f0e98293f}{setUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Uniform\ queries}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a892be3cda9ec2581a8fa8b221506dc6b}{hasUniform}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_abb3d8f6b8c62d395f1be7bff0bb95fa0}{getUniformLocation}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00067\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a76c52dad6d934b521c80c2729a987d4a}{getUniformNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Program\ usage}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a8c35c13f83dcb465e12c68a8d188330e}{use}}();}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ad7f0059e43e8bcc40ff7068ccac3ed2a}{unuse}}();}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ad84c2bf47375d004fb0bbc8ea0447875}{isInUse}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_inUse;\ \}}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Recompilation}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_a2da71b8fdbac3eb0b8a67e5a3dc07ef8}{recompile}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{ShaderSource}}\&\ source);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ac81747760d7b8de314418d9088858e48}{markDirty}}()\ \{\ m\_dirty\ =\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program_ae276e8fc09b04a183fe34bf986b631a5}{isDirty}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_dirty;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_id;}
+\DoxyCodeLine{00081\ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{OpenGLRenderer}}*\ m\_renderer;}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_valid;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_inUse;}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_dirty;}
+\DoxyCodeLine{00086\ \ \ \ \ std::string\ m\_errorLog;}
+\DoxyCodeLine{00087\ \ \ \ \ std::unordered\_map<std::string,\ int>\ m\_uniformLocations;}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ cacheUniformLocations();}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ updateUniformLocation(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a672333aebb08677a3d40c35c2673c749}{ShaderManager}}\ \{}
+\DoxyCodeLine{00094\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a672333aebb08677a3d40c35c2673c749}{ShaderManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{OpenGLRenderer}}*\ renderer);}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_ab90db621bccf86115e0e8c138ef2d741}{\string~ShaderManager}}();}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Shader\ compilation\ and\ loading}}
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a31c4a2412016ed180e1358628ef9b02b}{compileShader}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{ShaderSource}}\&\ source);}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a23753f4c99ae521f633abc4cf0e98081}{loadShaderFromFile}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ vertexPath,\ \textcolor{keyword}{const}\ std::string\&\ fragmentPath);}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a3e6909e0d66476479dfbc8e413dd6f0d}{loadShaderFromFile}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ basePath);\ \textcolor{comment}{//\ Loads\ .vert\ and\ .frag}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_addb40b85b4c8e5e2364081936a2d0906}{reloadShader}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_ad7df0067e7fc487c1368adbd435599e8}{reloadShader}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_aabceb5a7bfbdcf7b145b2ea618a80dc2}{reloadAllShaders}}();}
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ Shader\ access}}
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program}{ShaderProgram}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a84173ee6ff57157f33d7ef44270c65e4}{getShader}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_program}{ShaderProgram}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a9b5b76c838352d7925b4276734eac01d}{getShader}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a542a8f1ec68075c74dd06ad63eb80769}{findShader}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00110\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a6d6b7101ad9f08ce5323ca263da7a102}{getShaderNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00111\ \ \ \ \ std::vector<ShaderId>\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_ab8d8fd829ffa48c1cf714418135ee500}{getShaderIds}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Built-\/in\ shaders}}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a1b879689d67bbf17fdbda7348f83f8e6}{getVoxelShader}}();}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_aa8e4333b1cde1c6729400f8baad547da}{getWireframeShader}}();}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a1139e252970a37888ea8562c72aaf6d7}{getSelectionShader}}();}
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a60c036ec06acdd1e121ff52a06b57ee9}{getGroupOutlineShader}}();}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a795676f29f0bc73652fabd450c988d4e}{getDebugShader}}();}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a5019683dbc1e6c8c9fee8ab7e9edd5c0}{getPostProcessShader}}();}
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Shader\ variants}}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a5930e6bd3f9f9c469fde6d7f610f0249}{getShaderVariant}}(\textcolor{keyword}{const}\ std::string\&\ baseName,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ defines);}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a53892171f5eda5877d796e9d7670778e}{precompileVariants}}(\textcolor{keyword}{const}\ std::string\&\ baseName,\ \textcolor{keyword}{const}\ std::vector<std::vector<std::string>>\&\ variants);}
+\DoxyCodeLine{00124\ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//\ Global\ uniform\ management}}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_aa4e0c57fefaf718547aad2c29602cb8a}{setGlobalUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_uniform_value}{UniformValue}}\&\ value);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a2ffc4844396c749f0e91261a2f507f2b}{setGlobalUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a6716b6ecdf6726156081a82f89388607}{setGlobalUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ value);}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a274404ccc7bd6eeaffccc9bf5ab79bd4}{setGlobalUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\&\ value);}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a66d8949704793da936084ff7f1ad9b6e}{setGlobalUniform}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ value);}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_ade139a43a6f526dc861b963490ff0eb1}{removeGlobalUniform}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_aaeea4a76523858bd3c62b52d84476cce}{clearGlobalUniforms}}();}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//\ Per-\/frame\ updates}}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a1c4e24f5385dcdd18004593d1159ba78}{updatePerFrameUniforms}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera::Camera}}\&\ camera,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_stats}{RenderStats}}\&\ stats);}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a8a1d1a44a44d3b88d443bc8fd95084e1}{updatePerFrameUniforms}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ viewMatrix,\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ projectionMatrix,}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ cameraPosition,}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_stats}{RenderStats}}\&\ stats);}
+\DoxyCodeLine{00140\ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Hot\ reloading}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_af4159314182038f1a1d4d0d080f32ae5}{enableHotReload}}(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a958b3f76903685f487d96073a677ef38}{isHotReloadEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_hotReloadEnabled;\ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_afb3070a25e248f9d27637396257295bd}{checkForChanges}}();}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a5b780f0c60e4707b4c9ad405fb775eb0}{addWatchPath}}(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a1ad3b2f9b4d7ef144e6dbde7766df896}{removeWatchPath}}(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00147\ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ Shader\ deletion}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a0726ec29a59f54d49c2e3549370eae83}{deleteShader}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_af76c3052df3082c6f623b800bc9257cf}{deleteShader}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a892c79094cfad5ddd1180e19e5a71af7}{cleanup}}();}
+\DoxyCodeLine{00152\ \ \ \ \ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ Debug\ and\ utilities}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_ae160121d0a56b0c285152a20bca19c2a}{dumpShaderInfo}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a671312ba2810ab9ad8a67ae31467cd7b}{dumpAllShaderInfo}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00156\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_af8c6c17de6fea033318104171a2d26c8}{getShaderSource}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager_a225976464e318fc6fefd975b7c235139}{validateShader}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ \ \ \ \ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{struct\ }ShaderEntry\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ id;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ std::string\ vertexPath;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ std::string\ fragmentPath;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ std::string\ geometryPath;}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ std::string\ computePath;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ std::unique\_ptr<ShaderProgram>\ program;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_shader_source}{ShaderSource}}\ source;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ std::filesystem::file\_time\_type\ lastModified;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ std::vector<std::string>\ defines;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isBuiltIn;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ ShaderEntry()\ :\ id(0),\ lastModified\{\},\ isBuiltIn(false)\ \{\}}
+\DoxyCodeLine{00174\ \ \ \ \ \};}
+\DoxyCodeLine{00175\ \ \ \ \ }
+\DoxyCodeLine{00176\ \ \ \ \ OpenGLRenderer*\ m\_renderer;}
+\DoxyCodeLine{00177\ \ \ \ \ std::unordered\_map<ShaderId,\ ShaderEntry>\ m\_shaders;}
+\DoxyCodeLine{00178\ \ \ \ \ std::unordered\_map<std::string,\ ShaderId>\ m\_shadersByName;}
+\DoxyCodeLine{00179\ \ \ \ \ std::unordered\_map<std::string,\ UniformValue>\ m\_globalUniforms;}
+\DoxyCodeLine{00180\ \ \ \ \ std::vector<std::string>\ m\_watchPaths;}
+\DoxyCodeLine{00181\ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_nextShaderId;}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_hotReloadEnabled;}
+\DoxyCodeLine{00184\ \ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ Built-\/in\ shader\ IDs}}
+\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_voxelShaderId;}
+\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_wireframeShaderId;}
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_selectionShaderId;}
+\DoxyCodeLine{00189\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_groupOutlineShaderId;}
+\DoxyCodeLine{00190\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_debugShaderId;}
+\DoxyCodeLine{00191\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_postProcessShaderId;}
+\DoxyCodeLine{00192\ \ \ \ \ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordtype}{bool}\ compileShaderProgram(ShaderEntry\&\ entry);}
+\DoxyCodeLine{00195\ \ \ \ \ std::string\ loadShaderFile(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00196\ \ \ \ \ std::string\ preprocessShader(\textcolor{keyword}{const}\ std::string\&\ source,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ defines);}
+\DoxyCodeLine{00197\ \ \ \ \ std::filesystem::file\_time\_type\ getFileModificationTime(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasFileChanged(\textcolor{keyword}{const}\ ShaderEntry\&\ entry);}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{void}\ applyGlobalUniforms(ShaderProgram*\ program);}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{void}\ loadBuiltinShaders();}
+\DoxyCodeLine{00201\ \ \ \ \ std::string\ generateVariantName(\textcolor{keyword}{const}\ std::string\&\ baseName,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ defines);}
+\DoxyCodeLine{00202\ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ Built-\/in\ shader\ sources}}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ getBuiltinVertexShader(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ getBuiltinFragmentShader(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00206\ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{comment}{//\ Common\ shader\ preprocessor\ defines}}
+\DoxyCodeLine{00208\ \ \ \ \ std::vector<std::string>\ getCommonDefines()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00209\ \ \ \ \ std::string\ insertCommonIncludes(\textcolor{keyword}{const}\ std::string\&\ source)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00210\ \};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \textcolor{comment}{//\ Helper\ macros\ for\ shader\ compilation}}
+\DoxyCodeLine{00213\ \textcolor{preprocessor}{\#define\ SHADER\_VERTEX(source)\ \#source}}
+\DoxyCodeLine{00214\ \textcolor{preprocessor}{\#define\ SHADER\_FRAGMENT(source)\ \#source}}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#define\ SHADER\_GEOMETRY(source)\ \#source}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \textcolor{comment}{//\ Built-\/in\ shader\ paths}}
+\DoxyCodeLine{00218\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders}{BuiltinShaders}}\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a9c8da62b6486226bcc7f9910742b0a5b}{VOXEL}}\ =\ \textcolor{stringliteral}{"{}voxel"{}};}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_aaf03785d843820baad0fc95c8d01efc5}{WIREFRAME}}\ =\ \textcolor{stringliteral}{"{}wireframe"{}};}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a11d41f13cea1bc1fc16c37910a807e4c}{SELECTION}}\ =\ \textcolor{stringliteral}{"{}selection"{}};}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a9bbdc5d624bb444e54df985679ab508e}{GROUP\_OUTLINE}}\ =\ \textcolor{stringliteral}{"{}group\_outline"{}};}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_ad110d9f9dcf2d6cd67ad263991dfd125}{DEBUG}}\ =\ \textcolor{stringliteral}{"{}debug"{}};}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_1_1_builtin_shaders_a28d5a51ea521983cbc48c78b2fde93cd}{POST\_PROCESS}}\ =\ \textcolor{stringliteral}{"{}post\_process"{}};}
+\DoxyCodeLine{00225\ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \}}
+\DoxyCodeLine{00228\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,100 @@
+\doxysection{Voxel\+Editor\+::Groups\+::Copy\+Group\+Operation Class Reference}
+\hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation}{}\label{class_voxel_editor_1_1_groups_1_1_copy_group_operation}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+
+
+{\ttfamily \#include $<$Group\+Operations.\+h$>$}
+
+Inheritance diagram for Voxel\+Editor\+::Groups\+::Copy\+Group\+Operation\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_voxel_editor_1_1_groups_1_1_copy_group_operation}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_af474ae5395fb0715b9ba208299ca7e3d}{Copy\+Group\+Operation}} (\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Group\+Manager}} \texorpdfstring{$\ast$}{*}group\+Manager, \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{Voxel\+Data\+::\+Voxel\+Data\+Manager}} \texorpdfstring{$\ast$}{*}voxel\+Manager, \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} source\+Id, const std\+::string \&new\+Name, const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&offset=\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}(0, 0, 0))
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_ab26bdad3949fbec80f74fb0dfa6fc0bb}{execute}} () override
+\item 
+bool \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_aabb32fae11c6b0601518a0c2f3b9158f}{undo}} () override
+\item 
+std\+::string \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_adbf763a336098ba1aee96431e60a7f47}{get\+Description}} () const override
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{Group\+Modification\+Type}} \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_a133b2b0566c8a7b9f631162791ccbea9}{get\+Type}} () const override
+\item 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_abd1cbe653ab0f0eb7b97036d515b2639}{get\+Created\+Group\+Id}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a714b3cc5c88c8924b157217c4b4a2f40}{\texorpdfstring{$\sim$}{\string~}\+Group\+Operation}} ()=default
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_af474ae5395fb0715b9ba208299ca7e3d}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}!CopyGroupOperation@{CopyGroupOperation}}
+\index{CopyGroupOperation@{CopyGroupOperation}!VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+\doxysubsubsection{\texorpdfstring{CopyGroupOperation()}{CopyGroupOperation()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_copy_group_operation_af474ae5395fb0715b9ba208299ca7e3d} 
+Voxel\+Editor\+::\+Groups\+::\+Copy\+Group\+Operation\+::\+Copy\+Group\+Operation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Group\+Manager}} \texorpdfstring{$\ast$}{*}}]{group\+Manager}{, }\item[{\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{Voxel\+Data\+::\+Voxel\+Data\+Manager}} \texorpdfstring{$\ast$}{*}}]{voxel\+Manager}{, }\item[{\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}}}]{source\+Id}{, }\item[{const std\+::string \&}]{new\+Name}{, }\item[{const \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}} \&}]{offset}{ = {\ttfamily \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math\+::\+Vector3f}}(0,~0,~0)}}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_ab26bdad3949fbec80f74fb0dfa6fc0bb}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}!execute@{execute}}
+\index{execute@{execute}!VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_copy_group_operation_ab26bdad3949fbec80f74fb0dfa6fc0bb} 
+bool Voxel\+Editor\+::\+Groups\+::\+Copy\+Group\+Operation\+::execute (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a3ca9eb196854632165b20b3183bfb5f0}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_abd1cbe653ab0f0eb7b97036d515b2639}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}!getCreatedGroupId@{getCreatedGroupId}}
+\index{getCreatedGroupId@{getCreatedGroupId}!VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+\doxysubsubsection{\texorpdfstring{getCreatedGroupId()}{getCreatedGroupId()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_copy_group_operation_abd1cbe653ab0f0eb7b97036d515b2639} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{Group\+Id}} Voxel\+Editor\+::\+Groups\+::\+Copy\+Group\+Operation\+::get\+Created\+Group\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_adbf763a336098ba1aee96431e60a7f47}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_copy_group_operation_adbf763a336098ba1aee96431e60a7f47} 
+std\+::string Voxel\+Editor\+::\+Groups\+::\+Copy\+Group\+Operation\+::get\+Description (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a71ee2c8a2f6f32d6054822867d162795}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_a133b2b0566c8a7b9f631162791ccbea9}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}!getType@{getType}}
+\index{getType@{getType}!VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_copy_group_operation_a133b2b0566c8a7b9f631162791ccbea9} 
+\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{Group\+Modification\+Type}} Voxel\+Editor\+::\+Groups\+::\+Copy\+Group\+Operation\+::get\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_ad40e0a3a849f191187993f4e2ec99b98}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+\Hypertarget{class_voxel_editor_1_1_groups_1_1_copy_group_operation_aabb32fae11c6b0601518a0c2f3b9158f}\index{VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}!undo@{undo}}
+\index{undo@{undo}!VoxelEditor::Groups::CopyGroupOperation@{VoxelEditor::Groups::CopyGroupOperation}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily \label{class_voxel_editor_1_1_groups_1_1_copy_group_operation_aabb32fae11c6b0601518a0c2f3b9158f} 
+bool Voxel\+Editor\+::\+Groups\+::\+Copy\+Group\+Operation\+::undo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_aeb75ac351fecbef742c4a68aa408dbc3}{Voxel\+Editor\+::\+Groups\+::\+Group\+Operation}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+core/groups/include/groups/\mbox{\hyperlink{_group_operations_8h}{Group\+Operations.\+h}}\item 
+core/groups/src/\mbox{\hyperlink{_group_operations_8cpp}{Group\+Operations.\+cpp}}\end{DoxyCompactItemize}

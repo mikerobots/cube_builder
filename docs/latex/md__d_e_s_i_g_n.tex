@@ -1,0 +1,282 @@
+\chapter{Voxel Editor Design Document }
+\hypertarget{md__d_e_s_i_g_n}{}\label{md__d_e_s_i_g_n}\index{Voxel Editor Design Document@{Voxel Editor Design Document}}
+\label{md__d_e_s_i_g_n_autotoc_md465}%
+\Hypertarget{md__d_e_s_i_g_n_autotoc_md465}%
+\hypertarget{md__d_e_s_i_g_n_autotoc_md466}{}\doxysection{\texorpdfstring{Project Overview}{Project Overview}}\label{md__d_e_s_i_g_n_autotoc_md466}
+A multi-\/platform voxel editor for building 3D objects with smooth surface generation capabilities. Supports desktop development/testing and VR deployment on Meta Quest 3.\hypertarget{md__d_e_s_i_g_n_autotoc_md467}{}\doxysection{\texorpdfstring{Core Architecture}{Core Architecture}}\label{md__d_e_s_i_g_n_autotoc_md467}
+\hypertarget{md__d_e_s_i_g_n_autotoc_md468}{}\doxysubsection{\texorpdfstring{Shared Library (Core Engine)}{Shared Library (Core Engine)}}\label{md__d_e_s_i_g_n_autotoc_md468}
+{\bfseries{Purpose}}\+: Contains all voxel manipulation, rendering, and surface generation logic {\bfseries{Responsibilities}}\+:
+\begin{DoxyItemize}
+\item Voxel data structure management
+\item Vertex selection and manipulation
+\item Smooth surface generation algorithms
+\item Open\+GL rendering pipeline
+\item Image buffer rendering (headless mode)
+\item Unit testable business logic
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md469}{}\doxysubsection{\texorpdfstring{Application Layer}{Application Layer}}\label{md__d_e_s_i_g_n_autotoc_md469}
+Three distinct applications sharing the core library\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Command Line Tool}}
+\begin{DoxyItemize}
+\item Simple Open\+GL rendering window
+\item Rapid testing and validation
+\item Headless rendering capabilities
+\item Script-\/friendly interface
+\end{DoxyItemize}
+\item {\bfseries{Desktop Qt Application}}
+\begin{DoxyItemize}
+\item Full GUI with menus, toolbars, file management
+\item Advanced editing features
+\item User-\/friendly voxel manipulation
+\item Real-\/time preview
+\end{DoxyItemize}
+\item {\bfseries{VR Application (Meta Quest 3)}}
+\begin{DoxyItemize}
+\item Hand tracking integration
+\item Immersive 3D editing
+\item Spatial interaction model
+\item Performance optimized for mobile hardware
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{md__d_e_s_i_g_n_autotoc_md470}{}\doxysection{\texorpdfstring{Technical Constraints}{Technical Constraints}}\label{md__d_e_s_i_g_n_autotoc_md470}
+\hypertarget{md__d_e_s_i_g_n_autotoc_md471}{}\doxysubsection{\texorpdfstring{Performance Requirements}{Performance Requirements}}\label{md__d_e_s_i_g_n_autotoc_md471}
+
+\begin{DoxyItemize}
+\item Real-\/time voxel editing across all 10 resolution levels
+\item Smooth VR framerates (90+ FPS)
+\item Memory constraints for Meta Quest 3\+:
+\begin{DoxyItemize}
+\item Total app memory\+: \texorpdfstring{$<$}{<}4GB (system reserves \texorpdfstring{$\sim$}{\string~}4\+GB)
+\item Voxel data\+: \texorpdfstring{$<$}{<}2GB maximum
+\item Rendering buffers\+: \texorpdfstring{$<$}{<}512MB
+\item Application overhead\+: \texorpdfstring{$<$}{<}1GB
+\end{DoxyItemize}
+\item Fast surface generation algorithms with LOD support
+\item Sub-\/100ms resolution switching
+\item Aggressive memory management with sparse data structures
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md472}{}\doxysubsection{\texorpdfstring{Platform Constraints}{Platform Constraints}}\label{md__d_e_s_i_g_n_autotoc_md472}
+
+\begin{DoxyItemize}
+\item Cross-\/platform compatibility (desktop)
+\item Meta Quest 3 VR compatibility
+\item Open\+GL rendering backend
+\item Hand tracking library integration
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md473}{}\doxysubsection{\texorpdfstring{Build System}{Build System}}\label{md__d_e_s_i_g_n_autotoc_md473}
+
+\begin{DoxyItemize}
+\item CMake for cross-\/platform builds
+\item Dependencies\+:
+\begin{DoxyItemize}
+\item Open\+GL (graphics)
+\item Qt6 (desktop GUI)
+\item Open\+XR SDK (VR interface)
+\item Meta Hand Tracking SDK
+\item LZ4 (compression)
+\item Google Test (unit testing)
+\end{DoxyItemize}
+\item Modular library structure for shared core
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md474}{}\doxysubsection{\texorpdfstring{Development Constraints}{Development Constraints}}\label{md__d_e_s_i_g_n_autotoc_md474}
+
+\begin{DoxyItemize}
+\item Single-\/user editing focus (no collaboration features)
+\item Testable architecture with Google Test unit tests
+\item Comprehensive test coverage for core library
+\item Shared codebase across applications
+\item Command line validation workflow
+\item CI/\+CD integration for automated testing
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md475}{}\doxysubsection{\texorpdfstring{Development Priority}{Development Priority}}\label{md__d_e_s_i_g_n_autotoc_md475}
+
+\begin{DoxyEnumerate}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\+Command Line Application\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (primary validation platform)
+\begin{DoxyItemize}
+\item Core library development and testing
+\item Basic Open\+GL rendering window with mouse interaction
+\item Interactive command prompt with auto-\/completion
+\item Built-\/in help system and command documentation
+\item Mouse click-\/to-\/add voxels in render window
+\item All camera/view controls via commands
+\item Voxel editing and surface generation validation
+\item Performance benchmarking
+\end{DoxyItemize}
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\+Desktop Qt Application\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (full-\/featured editor)
+\item \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\+VR Application\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (final deployment target)
+\end{DoxyEnumerate}\hypertarget{md__d_e_s_i_g_n_autotoc_md476}{}\doxysection{\texorpdfstring{Core Components}{Core Components}}\label{md__d_e_s_i_g_n_autotoc_md476}
+\hypertarget{md__d_e_s_i_g_n_autotoc_md477}{}\doxysubsection{\texorpdfstring{1. Voxel Data Management}{1. Voxel Data Management}}\label{md__d_e_s_i_g_n_autotoc_md477}
+
+\begin{DoxyItemize}
+\item Multi-\/resolution voxel system\+: 10 size levels (1cm, 2cm, 4cm, 8cm, 16cm, 32cm, 64cm, 128cm, 256cm, 512cm)
+\item Workspace size limits\+: 2m³ minimum, 8m³ maximum, 5m³ default
+\item Dynamic workspace resizing during editing (within bounds)
+\item Hierarchical sparse octree data structure (memory efficient)
+\item Level-\/of-\/detail (LOD) management with aggressive culling
+\item Memory pooling and object reuse
+\item Streaming for large models with background loading
+\item Limited undo/redo system (5-\/10 operations for VR)
+\item Dynamic resolution switching during editing
+\item Automatic memory pressure detection and cleanup
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md478}{}\doxysubsection{\texorpdfstring{2. Vertex Selection System}{2. Vertex Selection System}}\label{md__d_e_s_i_g_n_autotoc_md478}
+
+\begin{DoxyItemize}
+\item 3D selection tools
+\item Multi-\/vertex operations
+\item Selection persistence
+\item Visual feedback
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md479}{}\doxysubsection{\texorpdfstring{3. Voxel Grouping System}{3. Voxel Grouping System}}\label{md__d_e_s_i_g_n_autotoc_md479}
+
+\begin{DoxyItemize}
+\item Create groups from selected voxels
+\item Group operations\+:
+\begin{DoxyItemize}
+\item Move entire group as unit
+\item Hide/show groups
+\item Lock groups (prevent editing)
+\item Copy/duplicate groups
+\end{DoxyItemize}
+\item Group hierarchy support (nested groups)
+\item Visual group indicators (color coding, outlines)
+\item Group management UI (list, rename, delete)
+\item Group metadata storage in file format
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md480}{}\doxysubsection{\texorpdfstring{4. Surface Generation}{4. Surface Generation}}\label{md__d_e_s_i_g_n_autotoc_md480}
+
+\begin{DoxyItemize}
+\item Dual Contouring algorithm (better feature preservation than Marching Cubes)
+\item Adaptive mesh generation based on voxel resolution
+\item Multi-\/resolution surface generation (LOD)
+\item Real-\/time preview with simplified mesh
+\item High-\/quality export mesh generation
+\item Sharp edge preservation for architectural details
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md481}{}\doxysubsection{\texorpdfstring{5. Rendering Engine}{5. Rendering Engine}}\label{md__d_e_s_i_g_n_autotoc_md481}
+
+\begin{DoxyItemize}
+\item Open\+GL abstraction layer
+\item Multiple render targets (window/buffer)
+\item Solid surface rendering with basic lighting
+\item Multiple rendering modes\+:
+\begin{DoxyItemize}
+\item Solid view (default)
+\item Wireframe view (toggle)
+\item Combined view (solid + transparent wireframe overlay)
+\end{DoxyItemize}
+\item Basic materials and shading
+\item Depth testing and culling
+\item Performance profiling hooks
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md482}{}\doxysubsection{\texorpdfstring{6. Camera System}{6. Camera System}}\label{md__d_e_s_i_g_n_autotoc_md482}
+
+\begin{DoxyItemize}
+\item 3D camera with orbit controls (rotate around center)
+\item Zoom in/out functionality
+\item Predefined view shortcuts\+:
+\begin{DoxyItemize}
+\item Front view
+\item Back view
+\item Top view
+\item Bottom view
+\item Left view
+\item Right view
+\item Isometric view (default)
+\end{DoxyItemize}
+\item Smooth camera transitions between views
+\item Camera state persistence in project files
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md483}{}\doxysubsection{\texorpdfstring{7. Visual Feedback System}{7. Visual Feedback System}}\label{md__d_e_s_i_g_n_autotoc_md483}
+
+\begin{DoxyItemize}
+\item Face highlighting on hover/point
+\item Green outline preview of voxel placement location
+\item Real-\/time visual cues for\+:
+\begin{DoxyItemize}
+\item Selected voxels (highlight color)
+\item Group boundaries (color-\/coded outlines)
+\item Active resolution level indicator
+\item Face normals for placement guidance
+\end{DoxyItemize}
+\item Interactive feedback for all input methods
+\item Performance-\/optimized overlay rendering
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md484}{}\doxysubsection{\texorpdfstring{8. File I/O System}{8. File I/O System}}\label{md__d_e_s_i_g_n_autotoc_md484}
+
+\begin{DoxyItemize}
+\item Custom binary format for native storage includes\+:
+\begin{DoxyItemize}
+\item File header with version and metadata
+\item Workspace dimensions and settings
+\item Multi-\/resolution voxel data (all 10 levels)
+\item Current active resolution level
+\item Camera position and view settings
+\item Limited undo history (last 10-\/20 operations)
+\item Vertex selection state
+\item Group definitions and metadata
+\item Group visibility states
+\item Creation/modification timestamps
+\end{DoxyItemize}
+\item STL export functionality for 3D printing/sharing
+\item Format versioning for backward compatibility
+\item LZ4 compression for efficient storage
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md485}{}\doxysubsection{\texorpdfstring{9. Input Abstraction}{9. Input Abstraction}}\label{md__d_e_s_i_g_n_autotoc_md485}
+
+\begin{DoxyItemize}
+\item Mouse/keyboard (desktop)\+:
+\begin{DoxyItemize}
+\item Click on face to add voxel with green outline preview
+\item Mouse wheel for zoom, middle-\/drag for orbit
+\item Number keys 1-\/7 for view shortcuts (front, back, top, bottom, left, right, iso)
+\item Scroll for resolution switching
+\end{DoxyItemize}
+\item Touch/gesture (Qt)\+:
+\begin{DoxyItemize}
+\item Tap on face to add voxel with green outline preview
+\item Pinch for zoom, two-\/finger drag for orbit
+\item Gesture shortcuts for view changes
+\end{DoxyItemize}
+\item Hand tracking (VR)\+:
+\begin{DoxyItemize}
+\item Point and pinch to place/remove voxels with green outline preview
+\item Hand raycast for face highlighting
+\item Grab gesture to select and move vertex groups
+\item Double grab to create/select groups
+\item Two-\/handed resize for workspace scaling
+\item Palm facing down for resolution switching
+\item Fist gesture for undo
+\item Thumbs up/down for group visibility toggle
+\item Hand gestures for view shortcuts
+\end{DoxyItemize}
+\item Unified input event system across platforms
+\item Real-\/time face detection and highlighting for all input methods
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md486}{}\doxysection{\texorpdfstring{Command Line Tool Interface}{Command Line Tool Interface}}\label{md__d_e_s_i_g_n_autotoc_md486}
+\hypertarget{md__d_e_s_i_g_n_autotoc_md487}{}\doxysubsection{\texorpdfstring{Interactive Commands}{Interactive Commands}}\label{md__d_e_s_i_g_n_autotoc_md487}
+
+\begin{DoxyItemize}
+\item \`{}help\`{} -\/ Show all available commands
+\item \`{}help $<$command$>${\ttfamily  -\/ Show specific command help}
+\item {\ttfamily }zoom $<$factor$>${\ttfamily  -\/ Zoom in/out (e.\+g., zoom 1.\+5, zoom 0.\+8)}
+\item {\ttfamily }view $<$name$>${\ttfamily  -\/ Switch to predefined view (front, back, top, bottom, left, right, iso)}
+\item {\ttfamily }rotate $<$x$>$ $<$y$>$ $<$z$>${\ttfamily  -\/ Rotate camera by degrees}
+\item {\ttfamily }reset{\ttfamily  -\/ Reset camera to default position}
+\item {\ttfamily }resolution $<$size$>${\ttfamily  -\/ Set voxel resolution (1cm, 2cm, 4cm, 8cm, 16cm, 32cm, 64cm, 128cm, 256cm, 512cm)}
+\item {\ttfamily }workspace $<$x$>$ $<$y$>$ $<$z$>${\ttfamily  -\/ Set workspace dimensions}
+\item {\ttfamily }render $<$mode$>${\ttfamily  -\/ Set render mode (solid, wireframe, combined)}
+\item {\ttfamily }save $<$filename$>${\ttfamily  -\/ Save project to file}
+\item {\ttfamily }load $<$filename$>${\ttfamily  -\/ Load project from file}
+\item {\ttfamily }export $<$filename$>${\ttfamily  -\/ Export to STL}
+\item {\ttfamily }group create $<$name$>${\ttfamily  -\/ Create group from selection}
+\item {\ttfamily }group hide $<$name$>${\ttfamily  -\/ Hide group}
+\item {\ttfamily }group show $<$name$>${\ttfamily  -\/ Show group}
+\item {\ttfamily }group list{\ttfamily  -\/ List all groups}
+\item {\ttfamily }undo{\ttfamily  -\/ Undo last operation}
+\item {\ttfamily }redo{\ttfamily  -\/ Redo last undone operation}
+\item {\ttfamily }quit\`{} -\/ Exit application
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md488}{}\doxysubsection{\texorpdfstring{Auto-\/completion}{Auto-\/completion}}\label{md__d_e_s_i_g_n_autotoc_md488}
+
+\begin{DoxyItemize}
+\item Tab completion for command names
+\item Tab completion for filenames
+\item Tab completion for group names
+\item Context-\/sensitive parameter suggestions
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md489}{}\doxysubsection{\texorpdfstring{Mouse Interaction}{Mouse Interaction}}\label{md__d_e_s_i_g_n_autotoc_md489}
+
+\begin{DoxyItemize}
+\item Left click on face\+: Add voxel with green outline preview
+\item Right click on voxel\+: Remove voxel
+\item Mouse hover\+: Show face highlighting
+\item All other interactions via commands
+\end{DoxyItemize}\hypertarget{md__d_e_s_i_g_n_autotoc_md490}{}\doxysection{\texorpdfstring{Design Complete}{Design Complete}}\label{md__d_e_s_i_g_n_autotoc_md490}
+All specifications have been defined. Ready for implementation starting with the command line application. 

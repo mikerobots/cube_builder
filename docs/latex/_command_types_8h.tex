@@ -1,0 +1,126 @@
+\doxysection{apps/cli/include/cli/\+Command\+Types.h File Reference}
+\hypertarget{_command_types_8h}{}\label{_command_types_8h}\index{apps/cli/include/cli/CommandTypes.h@{apps/cli/include/cli/CommandTypes.h}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{Voxel\+Editor\+::\+Command\+Result}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_command_argument}{Voxel\+Editor\+::\+Command\+Argument}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition}{Voxel\+Editor\+::\+Command\+Definition}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_command_context}{Voxel\+Editor\+::\+Command\+Context}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category}{Voxel\+Editor\+::\+Command\+Category}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_commands}{Voxel\+Editor\+::\+Commands}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a0b4ddb35532fa451a0bd08c8537c6bae}{Voxel\+Editor\+::\+Command\+Category\+::\+FILE}} = "{}File Operations"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a9d7ba94b28eeb6d27b6ede0386f5f768}{Voxel\+Editor\+::\+Command\+Category\+::\+EDIT}} = "{}Edit Operations"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a7a6e652425997fa1df3b55db564badd9}{Voxel\+Editor\+::\+Command\+Category\+::\+VIEW}} = "{}View Controls"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_affa5f5ef8324e0e230866b7514e29ee1}{Voxel\+Editor\+::\+Command\+Category\+::\+SELECT}} = "{}Selection"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a1d29ff9930f6b0d9b22e764581459426}{Voxel\+Editor\+::\+Command\+Category\+::\+GROUP}} = "{}Group Management"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a79bd55811b5c9424ae3a20c2de27b82d}{Voxel\+Editor\+::\+Command\+Category\+::\+HELP}} = "{}Help \& Info"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_command_category_a715cd3ecdd1746cc4affd20f41e96955}{Voxel\+Editor\+::\+Command\+Category\+::\+SYSTEM}} = "{}System"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a3b67ec47b269a2f87608e4786c8bb4bc}{Voxel\+Editor\+::\+Commands\+::\+NEW}} = "{}new"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a5504d71d6fdb4122153bd40e9a0a02be}{Voxel\+Editor\+::\+Commands\+::\+OPEN}} = "{}open"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a605bc1cbd70a2bfdd8b2723f3c0b760e}{Voxel\+Editor\+::\+Commands\+::\+SAVE}} = "{}save"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a1f999fcd6bc2bd7be45f6914d24725d0}{Voxel\+Editor\+::\+Commands\+::\+SAVE\+\_\+\+AS}} = "{}saveas"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a5e3066067cedaecf6be6a5c246bc76f8}{Voxel\+Editor\+::\+Commands\+::\+EXPORT}} = "{}export"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aecb0fd0f35e74ca695b13f0db679e858}{Voxel\+Editor\+::\+Commands\+::\+IMPORT}} = "{}import"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a73cf0cbc013bb1890b7b284e94117a4d}{Voxel\+Editor\+::\+Commands\+::\+PLACE}} = "{}place"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ac17b01ca6865e1d301a2415f9f2f65ab}{Voxel\+Editor\+::\+Commands\+::\+DELETE}} = "{}delete"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a7c0776274e33a7df1f4eda7db13cac35}{Voxel\+Editor\+::\+Commands\+::\+FILL}} = "{}fill"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a113a00a7e5e7bd7132ceb017bd035756}{Voxel\+Editor\+::\+Commands\+::\+PAINT}} = "{}paint"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a629b4798c409daa4cfc03cc5fa6d0dcd}{Voxel\+Editor\+::\+Commands\+::\+MOVE}} = "{}move"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a5a40bbb9a5e35f9390ffa95b98ef70c8}{Voxel\+Editor\+::\+Commands\+::\+COPY}} = "{}copy"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a72de7609da2d604eac492f501d778355}{Voxel\+Editor\+::\+Commands\+::\+PASTE}} = "{}paste"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_afdf6cedae8cbb2d441170cda0be9eab1}{Voxel\+Editor\+::\+Commands\+::\+UNDO}} = "{}undo"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a3b6430a70cada978a8716c3744ceaf57}{Voxel\+Editor\+::\+Commands\+::\+REDO}} = "{}redo"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ac7112d0f28820c278c5b2d251e5cb150}{Voxel\+Editor\+::\+Commands\+::\+CAMERA}} = "{}camera"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab396fd8b0e130422e479f07371acfa51}{Voxel\+Editor\+::\+Commands\+::\+ZOOM}} = "{}zoom"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a3031727b92343ab1dbb71f69311c58eb}{Voxel\+Editor\+::\+Commands\+::\+PAN}} = "{}pan"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a780772dc0870364fe934a54c348f75e6}{Voxel\+Editor\+::\+Commands\+::\+ROTATE}} = "{}rotate"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a60d2775567501406583a70045c054ff0}{Voxel\+Editor\+::\+Commands\+::\+RESET\+\_\+\+VIEW}} = "{}resetview"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab3e9be50874167da35577d434cacf885}{Voxel\+Editor\+::\+Commands\+::\+GRID}} = "{}grid"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ae972d025d36d8a3b032218c467989b67}{Voxel\+Editor\+::\+Commands\+::\+AXES}} = "{}axes"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a7d6c143dbbcb6e816f133adcbaae543d}{Voxel\+Editor\+::\+Commands\+::\+SELECT}} = "{}select"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aa4ac4a20b42d48cfc4eb29bf581fd870}{Voxel\+Editor\+::\+Commands\+::\+DESELECT}} = "{}deselect"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a863c9e6e818d47d4838141f23a631912}{Voxel\+Editor\+::\+Commands\+::\+SELECT\+\_\+\+ALL}} = "{}selectall"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ac5c1379a8556e212c9711bf533cbc8ef}{Voxel\+Editor\+::\+Commands\+::\+SELECT\+\_\+\+NONE}} = "{}selectnone"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aec8ab7f035c13f222735b62574ac82c5}{Voxel\+Editor\+::\+Commands\+::\+SELECT\+\_\+\+BOX}} = "{}selectbox"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a4453b5daa7905de811bea730de895069}{Voxel\+Editor\+::\+Commands\+::\+SELECT\+\_\+\+SPHERE}} = "{}selectsphere"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a4a41680bcfa1533544c4a838687ea314}{Voxel\+Editor\+::\+Commands\+::\+GROUP}} = "{}group"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_add6e991ee9876bdc403aeae12ddee736}{Voxel\+Editor\+::\+Commands\+::\+UNGROUP}} = "{}ungroup"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a42f002ddf2e1dd7a7bcf7e3f8c7deb28}{Voxel\+Editor\+::\+Commands\+::\+GROUP\+\_\+\+LIST}} = "{}groups"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a8dcb44694dc84afeedabfc723427af01}{Voxel\+Editor\+::\+Commands\+::\+GROUP\+\_\+\+HIDE}} = "{}hide"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a687baaa0f0296f5ec5e129270d80ae31}{Voxel\+Editor\+::\+Commands\+::\+GROUP\+\_\+\+SHOW}} = "{}show"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab9aeff03d2a2f834b89965eec4729f92}{Voxel\+Editor\+::\+Commands\+::\+GROUP\+\_\+\+LOCK}} = "{}lock"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a7525fee14dba1fc8b0a034bedb2add81}{Voxel\+Editor\+::\+Commands\+::\+GROUP\+\_\+\+UNLOCK}} = "{}unlock"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a8bfa33b0fce9c201f3f7882847e4c524}{Voxel\+Editor\+::\+Commands\+::\+HELP}} = "{}help"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a74c2ef3fbf77e26f788b377cf5a01542}{Voxel\+Editor\+::\+Commands\+::\+QUIT}} = "{}quit"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_a6ddce3bf776997801a63fe7494bc5820}{Voxel\+Editor\+::\+Commands\+::\+EXIT}} = "{}exit"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_ab5a8fcb8976b6aa9cb438db18d478509}{Voxel\+Editor\+::\+Commands\+::\+CLEAR}} = "{}clear"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_aa8644c2b83726f38ad35d1be328874f3}{Voxel\+Editor\+::\+Commands\+::\+STATUS}} = "{}status"{}
+\item 
+constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_voxel_editor_1_1_commands_af9b8bdf86ab5e6390237a16995dc05a6}{Voxel\+Editor\+::\+Commands\+::\+SETTINGS}} = "{}settings"{}
+\end{DoxyCompactItemize}

@@ -1,0 +1,76 @@
+\doxysection{core/surface\+\_\+gen/\+Surface\+Types.h File Reference}
+\hypertarget{_surface_types_8h}{}\label{_surface_types_8h}\index{core/surface\_gen/SurfaceTypes.h@{core/surface\_gen/SurfaceTypes.h}}
+{\ttfamily \#include "{}../../foundation/math/\+Vector3f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector2f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector3i.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Vector4f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Matrix4f.\+h"{}}\newline
+{\ttfamily \#include "{}../../foundation/math/\+Bounding\+Box.\+h"{}}\newline
+{\ttfamily \#include "{}../voxel\+\_\+data/\+Voxel\+Types.\+h"{}}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Surface\+Settings}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_hermite_data}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Hermite\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_edge_data}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Edge\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_quad_face}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Quad\+Face}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_generation_event}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Generation\+Event}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_cache_entry}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Cache\+Entry}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_voxel_grid_hash}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Voxel\+Grid\+Hash}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_vertex_attributes}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Vertex\+Attributes}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Stats}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Simplification\+Settings}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen}{Voxel\+Editor\+::\+Surface\+Gen}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Material\+Id}} = uint32\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Export\+Quality}} \{ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Draft}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Standard}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca655d20c1ca69519ca647684edbb2db35}{Voxel\+Editor\+::\+Surface\+Gen\+::\+High}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Maximum}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LODLevel}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LOD0}} = 0
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LOD1}} = 1
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LOD2}} = 2
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LOD3}} = 3
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86}{Voxel\+Editor\+::\+Surface\+Gen\+::\+LOD4}} = 4
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755ee}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Mesh\+Generation\+Event\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea8428552d86c0d262a542a528af490afa}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Started}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea46b5f8c58b679b4243cbdb5749642c86}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Progress}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eea07ca5050e697392c9ed47e6453f1453f}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Completed}}
+, \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eead7c8c85bf79bbe1b7188497c32c3b0ca}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Failed}}
+, \newline
+\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a7da31b7f2491b7030891f68f56e755eeaa149e85a44aeec9140e92733d9ed694e}{Voxel\+Editor\+::\+Surface\+Gen\+::\+Cancelled}}
+ \}
+\end{DoxyCompactItemize}

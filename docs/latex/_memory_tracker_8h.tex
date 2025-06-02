@@ -1,0 +1,49 @@
+\doxysection{foundation/memory/\+Memory\+Tracker.h File Reference}
+\hypertarget{_memory_tracker_8h}{}\label{_memory_tracker_8h}\index{foundation/memory/MemoryTracker.h@{foundation/memory/MemoryTracker.h}}
+{\ttfamily \#include "{}../events/\+Event\+Dispatcher.\+h"{}}\newline
+{\ttfamily \#include "{}../events/\+Common\+Events.\+h"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info}{Voxel\+Editor\+::\+Memory\+::\+Allocation\+Info}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker}{Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker}}
+\item 
+struct \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}{Voxel\+Editor\+::\+Memory\+::\+Memory\+Tracker\+::\+Memory\+Stats}}
+\item 
+class \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_scoped_allocation_tracker}{Voxel\+Editor\+::\+Memory\+::\+Scoped\+Allocation\+Tracker}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor}{Voxel\+Editor}}
+\item 
+namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_memory}{Voxel\+Editor\+::\+Memory}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_memory_tracker_8h_a05e21c9951bf6b3db98959843edfa574}{TRACK\+\_\+\+MEMORY\+\_\+\+SCOPE}}(category)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{_memory_tracker_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_memory_tracker_8h_a05e21c9951bf6b3db98959843edfa574}\index{MemoryTracker.h@{MemoryTracker.h}!TRACK\_MEMORY\_SCOPE@{TRACK\_MEMORY\_SCOPE}}
+\index{TRACK\_MEMORY\_SCOPE@{TRACK\_MEMORY\_SCOPE}!MemoryTracker.h@{MemoryTracker.h}}
+\doxysubsubsection{\texorpdfstring{TRACK\_MEMORY\_SCOPE}{TRACK\_MEMORY\_SCOPE}}
+{\footnotesize\ttfamily \label{_memory_tracker_8h_a05e21c9951bf6b3db98959843edfa574} 
+\#define TRACK\+\_\+\+MEMORY\+\_\+\+SCOPE(\begin{DoxyParamCaption}\item[{}]{category}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ScopedAllocationTracker\ \_tracker(category)}
+
+\end{DoxyCode}

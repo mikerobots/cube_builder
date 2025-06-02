@@ -1,0 +1,148 @@
+\doxysection{Viewport.\+h}
+\hypertarget{_viewport_8h_source}{}\label{_viewport_8h_source}\index{core/camera/Viewport.h@{core/camera/Viewport.h}}
+\mbox{\hyperlink{_viewport_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector2i_8h}{../../foundation/math/Vector2i.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector2f_8h}{../../foundation/math/Vector2f.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{../../foundation/math/Vector3f.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ray_8h}{../../foundation/math/Ray.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix4f_8h}{../../foundation/math/Matrix4f.h}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_camera}{Camera}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_aa2fb2bb931abbc3b5fd1f30963e8957a}{Viewport}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_aa2fb2bb931abbc3b5fd1f30963e8957a}{Viewport}}(\textcolor{keywordtype}{int}\ x\ =\ 0,\ \textcolor{keywordtype}{int}\ y\ =\ 0,\ \textcolor{keywordtype}{int}\ width\ =\ 800,\ \textcolor{keywordtype}{int}\ height\ =\ 600)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ :\ m\_x(x),\ m\_y(y),\ m\_width(width),\ m\_height(height)\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ updateAspectRatio();}
+\DoxyCodeLine{00017\ \ \ \ \ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Position\ and\ size}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_aeba031f232f2a2ad1c5d78ae62d5da90}{setPosition}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ m\_x\ =\ x;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ m\_y\ =\ y;}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a9bd13d993b9c5bc49e1b453969e9630d}{setSize}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (width\ >\ 0\ \&\&\ height\ >\ 0)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ m\_width\ =\ width;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ m\_height\ =\ height;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ updateAspectRatio();}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a2ca91369cf92e42417dd311af71dd21e}{setBounds}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_aeba031f232f2a2ad1c5d78ae62d5da90}{setPosition}}(x,\ y);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a9bd13d993b9c5bc49e1b453969e9630d}{setSize}}(width,\ height);}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a560334cc2b881f603be9a9d8e2a9c731}{getX}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_x;\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a84043cad2e12555923004870869165f3}{getY}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_y;\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_abc2fb66f7ad353347cf669d8ca86419e}{getWidth}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_width;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a1928cfdf7ead7c3f8753fbe6d76d1b25}{getHeight}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_height;\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a617030c2fe02c66ba42b2f04d1dcb809}{getAspectRatio}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_aspectRatio;\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_af3d7cb73f2c799a66069a92e7fdc1a0a}{getPosition}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}(m\_x,\ m\_y);\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a3b7f6abbdb48a869c022eb0468bc6f85}{getSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}(m\_width,\ m\_height);\ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Coordinate\ transformations}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_ac6a9f0e17bcea34357c69a2829fbebb5}{screenToNormalized}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}(}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ (screenPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_a05e9627c9de00e62f2edf34ed0c2b3fe}{x}}\ -\/\ m\_x)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_width)\ *\ 2.0f\ -\/\ 1.0f,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ 1.0f\ -\/\ (screenPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_ad3433e4becd4ba6ab916a10869f652d2}{y}}\ -\/\ m\_y)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_height)\ *\ 2.0f}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_afe73cf7d865364812ce387fe5f7c9242}{normalizedToScreen}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ normalizedPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}(}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}((normalizedPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_a3c079bfe9ed1b5144eca337b1455acfe}{x}}\ +\ 1.0f)\ *\ 0.5f\ *\ m\_width)\ +\ m\_x,}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}((1.0f\ -\/\ normalizedPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ac812b3ed86dadbae646000ca799e7d5a}{y}})\ *\ 0.5f\ *\ m\_height)\ +\ m\_y}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ screen\ coordinates\ are\ within\ viewport}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_aa93b31e3066015e4e8fb4d0cbdbecfa2}{contains}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ screenPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_a05e9627c9de00e62f2edf34ed0c2b3fe}{x}}\ >=\ m\_x\ \&\&\ screenPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_a05e9627c9de00e62f2edf34ed0c2b3fe}{x}}\ <\ m\_x\ +\ m\_width\ \&\&}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ screenPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_ad3433e4becd4ba6ab916a10869f652d2}{y}}\ >=\ m\_y\ \&\&\ screenPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_ad3433e4becd4ba6ab916a10869f652d2}{y}}\ <\ m\_y\ +\ m\_height;}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a1d05d6a1f9d7c2894ee7b25b6deefb7d}{contains}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_aa93b31e3066015e4e8fb4d0cbdbecfa2}{contains}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}(x,\ y));}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Ray\ casting\ for\ 3D\ interaction}}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a499c7325eada22c2c743756304c00597}{screenToWorldRay}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenPos,\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ viewMatrix,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ projectionMatrix)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Convert\ screen\ coordinates\ to\ normalized\ device\ coordinates}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ ndc\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_ac6a9f0e17bcea34357c69a2829fbebb5}{screenToNormalized}}(screenPos);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ ray\ in\ clip\ space}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ rayClipNear(ndc.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_a3c079bfe9ed1b5144eca337b1455acfe}{x}},\ ndc.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ac812b3ed86dadbae646000ca799e7d5a}{y}},\ -\/1.0f);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ rayClipFar(ndc.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_a3c079bfe9ed1b5144eca337b1455acfe}{x}},\ ndc.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ac812b3ed86dadbae646000ca799e7d5a}{y}},\ 1.0f);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transform\ to\ world\ space}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\ invViewProj\ =\ (projectionMatrix\ *\ viewMatrix).inverse();}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ rayWorldNear\ =\ invViewProj.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a09ded88989eb73e900ba329eba25f251}{transformPoint}}(rayClipNear);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ rayWorldFar\ =\ invViewProj.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a09ded88989eb73e900ba329eba25f251}{transformPoint}}(rayClipFar);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ rayDirection\ =\ (rayWorldFar\ -\/\ rayWorldNear).normalized();}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}(rayWorldNear,\ rayDirection);}
+\DoxyCodeLine{00094\ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ Project\ world\ position\ to\ screen\ coordinates}}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a4947db4b36b61ec10568737f17b264f2}{worldToScreen}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos,}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ viewMatrix,}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ projectionMatrix)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transform\ to\ clip\ space}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\ viewProj\ =\ projectionMatrix\ *\ viewMatrix;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ clipPos\ =\ viewProj.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f_a09ded88989eb73e900ba329eba25f251}{transformPoint}}(worldPos);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Perspective\ divide\ to\ get\ NDC}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_aafb86f5c13f4c51a0b5649ab9a06de6a}{z}}\ !=\ 0.0f)\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a66d8a1ff17b5af1b045a5845fbfba796}{x}}\ /=\ clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_aafb86f5c13f4c51a0b5649ab9a06de6a}{z}};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_abfd53bff586f622968ff4422d0228848}{y}}\ /=\ clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_aafb86f5c13f4c51a0b5649ab9a06de6a}{z}};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Convert\ NDC\ to\ screen\ coordinates}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_afe73cf7d865364812ce387fe5f7c9242}{normalizedToScreen}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}(clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a66d8a1ff17b5af1b045a5845fbfba796}{x}},\ clipPos.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_abfd53bff586f622968ff4422d0228848}{y}}));}
+\DoxyCodeLine{00113\ \ \ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Viewport-\/relative\ mouse\ delta\ for\ camera\ controls}}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_a688eaaf4d0e4aea2ca39764ecbeeba7e}{getMouseDelta}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ currentPos,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ lastPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\ delta\ =\ currentPos\ -\/\ lastPos;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}(}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_a05e9627c9de00e62f2edf34ed0c2b3fe}{x}}\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_width),}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i_ad3433e4becd4ba6ab916a10869f652d2}{y}}\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_height)}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00122\ \ \ \ \ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Calculate\ appropriate\ zoom\ factor\ based\ on\ viewport\ size}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_viewport_ad791ff816362026c81bbe0fa8473c9cc}{getZoomFactor}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::min(m\_width,\ m\_height)\ /\ 800.0f;\ \textcolor{comment}{//\ Normalized\ to\ 800px\ reference}}
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ updateAspectRatio()\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ m\_aspectRatio\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_width)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_height);}
+\DoxyCodeLine{00132\ \ \ \ \ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_x;}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_y;}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_width;}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_height;}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_aspectRatio;}
+\DoxyCodeLine{00139\ \};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \}}
+\DoxyCodeLine{00142\ \}}
+
+\end{DoxyCode}
