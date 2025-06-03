@@ -79,6 +79,12 @@ public:
     bool operator!=(const Vector3f& other) const {
         return !(*this == other);
     }
+    
+    bool operator<(const Vector3f& other) const {
+        if (x != other.x) return x < other.x;
+        if (y != other.y) return y < other.y;
+        return z < other.z;
+    }
 
     float operator[](int index) const {
         return (&x)[index];

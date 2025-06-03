@@ -32,7 +32,7 @@ TEST_F(VoxelGridTest, ConstructionWithValidParameters) {
     
     // Should be able to handle expected grid dimensions
     Vector3i expectedDims = calculateMaxGridDimensions(resolution, workspaceSize);
-    EXPECT_EQ(grid.getMaxGridDimensions(), expectedDims);
+    EXPECT_EQ(grid.getGridDimensions(), expectedDims);
 }
 
 TEST_F(VoxelGridTest, ConstructionWithDifferentResolutions) {
@@ -52,19 +52,19 @@ TEST_F(VoxelGridTest, BasicVoxelOperations) {
     
     // Initially empty
     EXPECT_FALSE(grid.getVoxel(pos));
-    EXPECT_FALSE(grid.hasVoxel(pos));
+    EXPECT_FALSE(grid.getVoxel(pos));
     EXPECT_EQ(grid.getVoxelCount(), 0);
     
     // Set voxel
     EXPECT_TRUE(grid.setVoxel(pos, true));
     EXPECT_TRUE(grid.getVoxel(pos));
-    EXPECT_TRUE(grid.hasVoxel(pos));
+    EXPECT_TRUE(grid.getVoxel(pos));
     EXPECT_EQ(grid.getVoxelCount(), 1);
     
     // Clear voxel
     EXPECT_TRUE(grid.setVoxel(pos, false));
     EXPECT_FALSE(grid.getVoxel(pos));
-    EXPECT_FALSE(grid.hasVoxel(pos));
+    EXPECT_FALSE(grid.getVoxel(pos));
     EXPECT_EQ(grid.getVoxelCount(), 0);
 }
 
@@ -75,33 +75,34 @@ TEST_F(VoxelGridTest, WorldSpaceOperations) {
     // Set voxel at world position
     EXPECT_TRUE(grid.setVoxelAtWorldPos(worldPos, true));
     EXPECT_TRUE(grid.getVoxelAtWorldPos(worldPos));
-    EXPECT_TRUE(grid.hasVoxelAtWorldPos(worldPos));
+    EXPECT_TRUE(grid.getVoxelAtWorldPos(worldPos));
     EXPECT_EQ(grid.getVoxelCount(), 1);
     
     // Clear voxel at world position
     EXPECT_TRUE(grid.setVoxelAtWorldPos(worldPos, false));
     EXPECT_FALSE(grid.getVoxelAtWorldPos(worldPos));
-    EXPECT_FALSE(grid.hasVoxelAtWorldPos(worldPos));
+    EXPECT_FALSE(grid.getVoxelAtWorldPos(worldPos));
     EXPECT_EQ(grid.getVoxelCount(), 0);
 }
 
 TEST_F(VoxelGridTest, GridWorldCoordinateConversion) {
     VoxelGrid grid(resolution, workspaceSize);
     
-    // Test conversion from grid to world
-    Vector3i gridPos(250, 250, 250); // Center of 5x5x5 workspace with 1cm voxels
-    Vector3f worldPos = grid.gridToWorldPos(gridPos);
+    // Test conversion from grid to world (0-based coordinates)
+    Vector3i gridPos(250, 250, 250); // Grid position with 1cm voxels
+    Vector3f worldPos = grid.gridToWorld(gridPos);
     
-    EXPECT_FLOAT_EQ(worldPos.x, 0.0f); // Should be at center
-    EXPECT_FLOAT_EQ(worldPos.y, 0.0f);
-    EXPECT_FLOAT_EQ(worldPos.z, 0.0f);
+    // Grid position 250 with 1cm voxels = 2.5m world position
+    EXPECT_FLOAT_EQ(worldPos.x, 2.5f);
+    EXPECT_FLOAT_EQ(worldPos.y, 2.5f);
+    EXPECT_FLOAT_EQ(worldPos.z, 2.5f);
     
-    // Test conversion from world to grid
-    Vector3f testWorldPos(1.0f, -1.0f, 0.5f);
-    Vector3i convertedGridPos = grid.worldToGridPos(testWorldPos);
+    // Test conversion from world to grid (only positive coordinates)
+    Vector3f testWorldPos(1.0f, 2.0f, 0.5f);
+    Vector3i convertedGridPos = grid.worldToGrid(testWorldPos);
     
     // Verify round-trip conversion
-    Vector3f roundTripWorldPos = grid.gridToWorldPos(convertedGridPos);
+    Vector3f roundTripWorldPos = grid.gridToWorld(convertedGridPos);
     
     // Should be close (within voxel size)
     float voxelSize = getVoxelSize(resolution);
@@ -112,7 +113,7 @@ TEST_F(VoxelGridTest, GridWorldCoordinateConversion) {
 
 TEST_F(VoxelGridTest, PositionValidation) {
     VoxelGrid grid(resolution, workspaceSize);
-    Vector3i maxDims = grid.getMaxGridDimensions();
+    Vector3i maxDims = grid.getGridDimensions();
     
     // Valid positions
     EXPECT_TRUE(grid.isValidGridPosition(Vector3i(0, 0, 0)));
@@ -125,19 +126,21 @@ TEST_F(VoxelGridTest, PositionValidation) {
     EXPECT_FALSE(grid.isValidGridPosition(Vector3i(0, 0, -1)));
     EXPECT_FALSE(grid.isValidGridPosition(Vector3i(maxDims.x, maxDims.y, maxDims.z)));
     
-    // World position validation
-    EXPECT_TRUE(grid.isValidWorldPosition(Vector3f(0.0f, 0.0f, 0.0f)));
-    EXPECT_TRUE(grid.isValidWorldPosition(Vector3f(2.0f, 2.0f, 2.0f)));
-    EXPECT_TRUE(grid.isValidWorldPosition(Vector3f(-2.0f, -2.0f, -2.0f)));
+    // World position validation (0-based coordinates)
+    EXPECT_TRUE(grid.isValidWorldPosition(Vector3f(0.0f, 0.0f, 0.0f))); // Origin
+    EXPECT_TRUE(grid.isValidWorldPosition(Vector3f(2.0f, 2.0f, 2.0f))); // Within bounds
+    EXPECT_TRUE(grid.isValidWorldPosition(Vector3f(5.0f, 5.0f, 5.0f))); // At max bounds
     
-    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(3.0f, 0.0f, 0.0f))); // Outside workspace
-    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(0.0f, 3.0f, 0.0f)));
-    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(0.0f, 0.0f, 3.0f)));
+    // Outside workspace bounds
+    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(-0.1f, 0.0f, 0.0f))); // Negative coordinates
+    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(5.1f, 0.0f, 0.0f))); // Beyond max X
+    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(0.0f, 5.1f, 0.0f))); // Beyond max Y
+    EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(0.0f, 0.0f, 5.1f))); // Beyond max Z
 }
 
 TEST_F(VoxelGridTest, OutOfBoundsOperations) {
     VoxelGrid grid(resolution, workspaceSize);
-    Vector3i maxDims = grid.getMaxGridDimensions();
+    Vector3i maxDims = grid.getGridDimensions();
     
     // Try to set voxels outside bounds
     EXPECT_FALSE(grid.setVoxel(Vector3i(-1, 0, 0), true));
@@ -157,7 +160,7 @@ TEST_F(VoxelGridTest, WorkspaceResizing) {
     VoxelGrid grid(resolution, workspaceSize);
     
     // Add some voxels
-    Vector3i centerPos = grid.getMaxGridDimensions() / 2;
+    Vector3i centerPos = grid.getGridDimensions() / 2;
     EXPECT_TRUE(grid.setVoxel(centerPos, true));
     EXPECT_EQ(grid.getVoxelCount(), 1);
     
@@ -290,9 +293,9 @@ TEST_F(VoxelGridTest, DifferentResolutionBehavior) {
     VoxelGrid grid4cm(VoxelResolution::Size_4cm, testWorkspace);
     VoxelGrid grid16cm(VoxelResolution::Size_16cm, testWorkspace);
     
-    Vector3i dims1cm = grid1cm.getMaxGridDimensions();
-    Vector3i dims4cm = grid4cm.getMaxGridDimensions();
-    Vector3i dims16cm = grid16cm.getMaxGridDimensions();
+    Vector3i dims1cm = grid1cm.getGridDimensions();
+    Vector3i dims4cm = grid4cm.getGridDimensions();
+    Vector3i dims16cm = grid16cm.getGridDimensions();
     
     // Higher resolution = more grid cells
     EXPECT_GT(dims1cm.x, dims4cm.x);
@@ -301,9 +304,9 @@ TEST_F(VoxelGridTest, DifferentResolutionBehavior) {
     // Same world position should map to different grid positions
     Vector3f worldPos(1.0f, 1.0f, 1.0f);
     
-    Vector3i gridPos1cm = grid1cm.worldToGridPos(worldPos);
-    Vector3i gridPos4cm = grid4cm.worldToGridPos(worldPos);
-    Vector3i gridPos16cm = grid16cm.worldToGridPos(worldPos);
+    Vector3i gridPos1cm = grid1cm.worldToGrid(worldPos);
+    Vector3i gridPos4cm = grid4cm.worldToGrid(worldPos);
+    Vector3i gridPos16cm = grid16cm.worldToGrid(worldPos);
     
     EXPECT_NE(gridPos1cm, gridPos4cm);
     EXPECT_NE(gridPos4cm, gridPos16cm);
@@ -313,7 +316,7 @@ TEST_F(VoxelGridTest, StressTestLargeGrid) {
     // Use larger voxels for stress test to reduce memory usage
     VoxelGrid grid(VoxelResolution::Size_4cm, Vector3f(8.0f, 8.0f, 8.0f));
     
-    Vector3i maxDims = grid.getMaxGridDimensions();
+    Vector3i maxDims = grid.getGridDimensions();
     size_t expectedVoxels = 0;
     
     // Fill every 4th voxel in each dimension

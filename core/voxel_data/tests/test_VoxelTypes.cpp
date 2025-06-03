@@ -51,11 +51,10 @@ TEST_F(VoxelTypesTest, WorldSpaceConversion) {
     VoxelPosition voxelPos(Vector3i(10, 10, 10), VoxelResolution::Size_1cm);
     Vector3f worldPos = voxelPos.toWorldSpace(workspaceSize);
     
-    // Grid position (10,10,10) with 1cm voxels = (0.1, 0.1, 0.1) world
-    // Centered around origin: (0.1, 0.1, 0.1) - (2.5, 2.5, 2.5) = (-2.4, -2.4, -2.4)
-    EXPECT_FLOAT_EQ(worldPos.x, -2.4f);
-    EXPECT_FLOAT_EQ(worldPos.y, -2.4f);
-    EXPECT_FLOAT_EQ(worldPos.z, -2.4f);
+    // Grid position (10,10,10) with 1cm voxels = (0.1, 0.1, 0.1) world (0-based)
+    EXPECT_FLOAT_EQ(worldPos.x, 0.1f);
+    EXPECT_FLOAT_EQ(worldPos.y, 0.1f);
+    EXPECT_FLOAT_EQ(worldPos.z, 0.1f);
     
     // Test round-trip conversion
     VoxelPosition convertedBack = VoxelPosition::fromWorldSpace(worldPos, VoxelResolution::Size_1cm, workspaceSize);
@@ -67,11 +66,10 @@ TEST_F(VoxelTypesTest, WorldSpaceConversionLargerVoxels) {
     VoxelPosition voxelPos(Vector3i(5, 5, 5), VoxelResolution::Size_4cm);
     Vector3f worldPos = voxelPos.toWorldSpace(workspaceSize);
     
-    // Grid position (5,5,5) with 4cm voxels = (0.2, 0.2, 0.2) world
-    // Centered: (0.2, 0.2, 0.2) - (2.5, 2.5, 2.5) = (-2.3, -2.3, -2.3)
-    EXPECT_FLOAT_EQ(worldPos.x, -2.3f);
-    EXPECT_FLOAT_EQ(worldPos.y, -2.3f);
-    EXPECT_FLOAT_EQ(worldPos.z, -2.3f);
+    // Grid position (5,5,5) with 4cm voxels = (0.2, 0.2, 0.2) world (0-based)
+    EXPECT_FLOAT_EQ(worldPos.x, 0.2f);
+    EXPECT_FLOAT_EQ(worldPos.y, 0.2f);
+    EXPECT_FLOAT_EQ(worldPos.z, 0.2f);
 }
 
 TEST_F(VoxelTypesTest, VoxelBounds) {
@@ -79,13 +77,13 @@ TEST_F(VoxelTypesTest, VoxelBounds) {
     Vector3f minBounds, maxBounds;
     voxelPos.getWorldBounds(workspaceSize, minBounds, maxBounds);
     
-    // Grid (0,0,0) with 2cm voxels starts at (-2.5, -2.5, -2.5) and extends 0.02m
-    EXPECT_FLOAT_EQ(minBounds.x, -2.5f);
-    EXPECT_FLOAT_EQ(minBounds.y, -2.5f);
-    EXPECT_FLOAT_EQ(minBounds.z, -2.5f);
-    EXPECT_FLOAT_EQ(maxBounds.x, -2.48f);
-    EXPECT_FLOAT_EQ(maxBounds.y, -2.48f);
-    EXPECT_FLOAT_EQ(maxBounds.z, -2.48f);
+    // Grid (0,0,0) with 2cm voxels starts at (0, 0, 0) and extends 0.02m (0-based)
+    EXPECT_FLOAT_EQ(minBounds.x, 0.0f);
+    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);
+    EXPECT_FLOAT_EQ(minBounds.z, 0.0f);
+    EXPECT_FLOAT_EQ(maxBounds.x, 0.02f);
+    EXPECT_FLOAT_EQ(maxBounds.y, 0.02f);
+    EXPECT_FLOAT_EQ(maxBounds.z, 0.02f);
 }
 
 TEST_F(VoxelTypesTest, VoxelPositionEquality) {

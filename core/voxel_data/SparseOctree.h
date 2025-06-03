@@ -149,7 +149,7 @@ public:
     // Clear all voxels
     void clear() {
         if (m_root) {
-            deallocateNode(m_root);
+            deallocateSubtree(m_root);
             m_root = nullptr;
         }
         m_nodeCount = 0;
@@ -199,8 +199,36 @@ private:
     
     static std::unique_ptr<Memory::TypedMemoryPool<OctreeNode>> s_nodePool;
     
+    // Deallocate a subtree iteratively to avoid stack overflow
+    void deallocateSubtree(OctreeNode* root) {
+        if (!root) return;
+        
+        // Use a stack to avoid recursion
+        std::vector<OctreeNode*> nodesToDelete;
+        nodesToDelete.push_back(root);
+        
+        while (!nodesToDelete.empty()) {
+            OctreeNode* node = nodesToDelete.back();
+            nodesToDelete.pop_back();
+            
+            // Add children to the stack if not a leaf
+            if (!node->isLeaf()) {
+                for (int i = 0; i < 8; ++i) {
+                    OctreeNode* child = node->getChild(i);
+                    if (child) {
+                        nodesToDelete.push_back(child);
+                        node->setChild(i, nullptr); // Prevent destructor from deallocating
+                    }
+                }
+            }
+            
+            // Deallocate the node
+            deallocateNode(node);
+            m_nodeCount--;
+        }
+    }
+    
     bool isPositionValid(const Math::Vector3i& pos) const {
-        int halfRoot = m_rootSize / 2;
         return pos.x >= 0 && pos.x < m_rootSize &&
                pos.y >= 0 && pos.y < m_rootSize &&
                pos.z >= 0 && pos.z < m_rootSize;
@@ -213,9 +241,6 @@ private:
             m_nodeCount++;
         }
         
-        std::cout << "SparseOctree::insertVoxel(" << pos.x << "," << pos.y << "," << pos.z 
-                  << ") - rootCenter: " << m_rootCenter.x << "," << m_rootCenter.y << "," << m_rootCenter.z
-                  << ", rootSize: " << m_rootSize << ", maxDepth: " << m_maxDepth << std::endl;
         
         return insertVoxelRecursive(m_root, pos, m_rootCenter, m_rootSize / 2, 0);
     }
@@ -225,17 +250,10 @@ private:
         if (depth >= m_maxDepth) {
             // At leaf level, set the voxel and store its position
             node->setVoxel(true, pos);
-            std::cout << "SparseOctree: Inserted voxel (" << pos.x << "," << pos.y << "," << pos.z 
-                      << ") at leaf with center (" << center.x << "," << center.y << "," << center.z 
-                      << "), halfSize=" << halfSize << ", depth=" << depth << std::endl;
             return true;
         }
         
         int childIndex = OctreeNode::getChildIndex(pos, center);
-        
-        std::cout << "  Depth " << depth << ": pos(" << pos.x << "," << pos.y << "," << pos.z 
-                  << ") center(" << center.x << "," << center.y << "," << center.z 
-                  << ") halfSize=" << halfSize << " -> childIndex=" << childIndex << std::endl;
         
         OctreeNode* child = node->getChild(childIndex);
         
@@ -247,7 +265,6 @@ private:
         }
         
         Math::Vector3i childCenter = OctreeNode::getChildCenter(center, childIndex, halfSize / 2);
-        std::cout << "    -> childCenter(" << childCenter.x << "," << childCenter.y << "," << childCenter.z << ")" << std::endl;
         return insertVoxelRecursive(child, pos, childCenter, halfSize / 2, depth + 1);
     }
     
@@ -281,6 +298,7 @@ private:
         if (removed && canRemoveChild(child)) {
             deallocateNode(child);
             node->setChild(childIndex, nullptr);
+            m_nodeCount--;
         }
         
         return removed;
@@ -310,9 +328,6 @@ private:
                 // Use the stored voxel position
                 Math::Vector3i voxelPos = node->getVoxelPos();
                 voxels.push_back(voxelPos);
-                
-                // Debug output
-                std::cout << "  Octree voxel at (" << voxelPos.x << ", " << voxelPos.y << ", " << voxelPos.z << ")" << std::endl;
             }
             return;
         }

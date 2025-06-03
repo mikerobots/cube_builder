@@ -3,7 +3,6 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-#include <iostream>
 #include "VoxelTypes.h"
 #include "SparseOctree.h"
 #include "../../foundation/math/Vector3i.h"
@@ -45,11 +44,6 @@ public:
             depth++;
         }
         
-        std::cout << "VoxelGrid constructor - workspace: " << workspaceSize.x << "x" << workspaceSize.y << "x" << workspaceSize.z 
-                  << ", voxel size: " << m_voxelSize 
-                  << ", grid dimensions: " << m_gridDimensions.x << "x" << m_gridDimensions.y << "x" << m_gridDimensions.z 
-                  << ", octree depth: " << depth << std::endl;
-        
         // Create sparse octree
         m_octree = std::make_unique<SparseOctree>(depth);
     }
@@ -59,11 +53,6 @@ public:
         if (!isValidGridPosition(pos)) {
             return false;
         }
-        
-        // Debug logging
-        std::cout << "VoxelGrid::setVoxel - Setting voxel at (" 
-                  << pos.x << ", " << pos.y << ", " << pos.z 
-                  << ") to " << (value ? "true" : "false") << std::endl;
         
         m_octree->setVoxel(pos, value);
         return true;
@@ -128,6 +117,10 @@ public:
         return m_octree->getVoxelCount();
     }
     
+    bool isEmpty() const {
+        return getVoxelCount() == 0;
+    }
+    
     size_t getMemoryUsage() const {
         return sizeof(*this) + m_octree->getMemoryUsage();
     }
@@ -143,18 +136,12 @@ public:
         
         // Get all voxel positions from octree
         auto positions = m_octree->getAllVoxels();
-        std::cout << "VoxelGrid::getAllVoxels - Found " << positions.size() << " voxels in octree" << std::endl;
         
         for (const auto& pos : positions) {
             VoxelPosition voxelPos;
             voxelPos.gridPos = pos;
             voxelPos.resolution = m_resolution;
             voxels.push_back(voxelPos);
-            
-            // Debug first few positions
-            if (voxels.size() <= 3) {
-                std::cout << "  Octree voxel at (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
-            }
         }
         
         return voxels;

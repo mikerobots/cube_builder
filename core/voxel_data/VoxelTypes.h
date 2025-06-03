@@ -2,16 +2,7 @@
 
 #include <cstdint>
 #include <cmath>
-#include <vector>
-#include <unordered_map>
-#include <typeindex>
-#include <queue>
-#include <mutex>
 #include <algorithm>
-#include <stack>
-#include <memory>
-#include <typeinfo>
-
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
 
@@ -68,16 +59,12 @@ struct VoxelPosition {
     Math::Vector3f toWorldSpace(const Math::Vector3f& workspaceSize) const {
         float voxelSize = getVoxelSize(resolution);
         
-        // Convert grid position to world position
-        // Grid is centered at origin, so we need to offset by half workspace
+        // Convert grid position to world position using 0-based coordinates
         Math::Vector3f worldPos = Math::Vector3f(
             static_cast<float>(gridPos.x) * voxelSize,
             static_cast<float>(gridPos.y) * voxelSize,
             static_cast<float>(gridPos.z) * voxelSize
         );
-        
-        // Center around origin
-        worldPos = worldPos - workspaceSize * 0.5f;
         
         return worldPos;
     }
@@ -88,13 +75,11 @@ struct VoxelPosition {
                                       const Math::Vector3f& workspaceSize) {
         float voxelSize = getVoxelSize(resolution);
         
-        // Center around origin and convert to grid coordinates
-        Math::Vector3f centeredPos = worldPos + workspaceSize * 0.5f;
-        
+        // Convert world position to grid coordinates using 0-based system
         Math::Vector3i gridPos(
-            static_cast<int>(std::floor(centeredPos.x / voxelSize)),
-            static_cast<int>(std::floor(centeredPos.y / voxelSize)),
-            static_cast<int>(std::floor(centeredPos.z / voxelSize))
+            static_cast<int>(std::floor(worldPos.x / voxelSize)),
+            static_cast<int>(std::floor(worldPos.y / voxelSize)),
+            static_cast<int>(std::floor(worldPos.z / voxelSize))
         );
         
         return VoxelPosition(gridPos, resolution);

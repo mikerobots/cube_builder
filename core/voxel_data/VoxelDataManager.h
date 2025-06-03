@@ -4,18 +4,12 @@
 #include <memory>
 #include <mutex>
 #include <vector>
-#include <unordered_map>
-#include <typeindex>
-#include <queue>
-#include <algorithm>
-#include <stack>
 
 #include "VoxelTypes.h"
 #include "VoxelGrid.h"
 #include "WorkspaceManager.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
-#include "../../foundation/memory/MemoryTracker.h"
 
 namespace VoxelEditor {
 namespace VoxelData {
