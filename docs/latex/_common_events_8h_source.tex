@@ -1,5 +1,5 @@
 \doxysection{Common\+Events.\+h}
-\hypertarget{_common_events_8h_source}{}\label{_common_events_8h_source}\index{foundation/events/CommonEvents.h@{foundation/events/CommonEvents.h}}
+\label{_common_events_8h_source}\index{foundation/events/CommonEvents.h@{foundation/events/CommonEvents.h}}
 \mbox{\hyperlink{_common_events_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -14,124 +14,124 @@
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{EventBase.h}}"{}}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{../math/Vector3f.h}}"{}}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{../math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}EventBase.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}../math/Vector3f.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}../math/Vector3i.h"{}}}
 \DoxyCodeLine{00016\ }
 \DoxyCodeLine{00017\ \textcolor{comment}{//\ Forward\ declaration}}
-\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}\ \{}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ :\ uint8\_t;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }VoxelData\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{enum\ class}\ VoxelResolution\ :\ uint8\_t;}
 \DoxyCodeLine{00021\ \}}
 \DoxyCodeLine{00022\ \}}
 \DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00025\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_events}{Events}}\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{namespace\ }Events\ \{}
 \DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_af5ec41193e00cabcfe94512087c9edd8}{VoxelChangedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<VoxelChangedEvent>\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }VoxelChangedEvent\ :\ \textcolor{keyword}{public}\ Event<VoxelChangedEvent>\ \{}
 \DoxyCodeLine{00028\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_af5ec41193e00cabcfe94512087c9edd8}{VoxelChangedEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}{gridPos}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}{resolution}},\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}{oldValue}},\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}{newValue}})}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}{gridPos}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}{gridPos}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}{resolution}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}{resolution}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}{oldValue}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}{oldValue}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}{newValue}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}{newValue}})\ \{\}}
+\DoxyCodeLine{00029\ \ \ \ \ VoxelChangedEvent(\textcolor{keyword}{const}\ Math::Vector3i\&\ gridPos,\ VoxelData::VoxelResolution\ resolution,\ \textcolor{keywordtype}{bool}\ oldValue,\ \textcolor{keywordtype}{bool}\ newValue)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ :\ gridPos(gridPos),\ resolution(resolution),\ oldValue(oldValue),\ newValue(newValue)\ \{\}}
 \DoxyCodeLine{00031\ \ \ \ \ }
-\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ac66d0fce9168f5e34626678cb61283dc}{gridPos}};}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a395f074ee6e4f84a7496275a42e50946}{resolution}};}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_ab546371f31bb7bca1a72c3be49fe46d8}{oldValue}};}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_voxel_changed_event_a2b766cfcbfaaedd9a12743d1bb97191b}{newValue}};}
+\DoxyCodeLine{00032\ \ \ \ \ Math::Vector3i\ gridPos;}
+\DoxyCodeLine{00033\ \ \ \ \ VoxelData::VoxelResolution\ resolution;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
 \DoxyCodeLine{00036\ \};}
 \DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_ade3d268beb4f0a47293d16a7910ad933}{ResolutionChangedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<ResolutionChangedEvent>\ \{}
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }ResolutionChangedEvent\ :\ \textcolor{keyword}{public}\ Event<ResolutionChangedEvent>\ \{}
 \DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_ade3d268beb4f0a47293d16a7910ad933}{ResolutionChangedEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_ae4288a5f1f7d841b9aa826513b3d1800}{oldResolution}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_a71f871ca0694343415be984c7e3ff7ea}{newResolution}})}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_ae4288a5f1f7d841b9aa826513b3d1800}{oldResolution}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_ae4288a5f1f7d841b9aa826513b3d1800}{oldResolution}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_a71f871ca0694343415be984c7e3ff7ea}{newResolution}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_a71f871ca0694343415be984c7e3ff7ea}{newResolution}})\ \{\}}
+\DoxyCodeLine{00040\ \ \ \ \ ResolutionChangedEvent(VoxelData::VoxelResolution\ oldResolution,\ VoxelData::VoxelResolution\ newResolution)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ :\ oldResolution(oldResolution),\ newResolution(newResolution)\ \{\}}
 \DoxyCodeLine{00042\ \ \ \ \ }
-\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_ae4288a5f1f7d841b9aa826513b3d1800}{oldResolution}};}
-\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event_a71f871ca0694343415be984c7e3ff7ea}{newResolution}};}
+\DoxyCodeLine{00043\ \ \ \ \ VoxelData::VoxelResolution\ oldResolution;}
+\DoxyCodeLine{00044\ \ \ \ \ VoxelData::VoxelResolution\ newResolution;}
 \DoxyCodeLine{00045\ \};}
 \DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_a34a151ad367df1e5647acc6c4c32f8ca}{WorkspaceResizedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<WorkspaceResizedEvent>\ \{}
+\DoxyCodeLine{00047\ \textcolor{keyword}{class\ }WorkspaceResizedEvent\ :\ \textcolor{keyword}{public}\ Event<WorkspaceResizedEvent>\ \{}
 \DoxyCodeLine{00048\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_a34a151ad367df1e5647acc6c4c32f8ca}{WorkspaceResizedEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_ade87b3220c7577d028dd8b94e7187ad7}{oldSize}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_a9450efb25cc4c64c33b3cafbb6ef38c3}{newSize}})}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_ade87b3220c7577d028dd8b94e7187ad7}{oldSize}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_ade87b3220c7577d028dd8b94e7187ad7}{oldSize}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_a9450efb25cc4c64c33b3cafbb6ef38c3}{newSize}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_a9450efb25cc4c64c33b3cafbb6ef38c3}{newSize}})\ \{\}}
+\DoxyCodeLine{00049\ \ \ \ \ WorkspaceResizedEvent(\textcolor{keyword}{const}\ Math::Vector3f\&\ oldSize,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ newSize)}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ :\ oldSize(oldSize),\ newSize(newSize)\ \{\}}
 \DoxyCodeLine{00051\ \ \ \ \ }
-\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_ade87b3220c7577d028dd8b94e7187ad7}{oldSize}};}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_workspace_resized_event_a9450efb25cc4c64c33b3cafbb6ef38c3}{newSize}};}
+\DoxyCodeLine{00052\ \ \ \ \ Math::Vector3f\ oldSize;}
+\DoxyCodeLine{00053\ \ \ \ \ Math::Vector3f\ newSize;}
 \DoxyCodeLine{00054\ \};}
 \DoxyCodeLine{00055\ }
-\DoxyCodeLine{00056\ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ =\ uint32\_t;}
+\DoxyCodeLine{00056\ \textcolor{keyword}{using\ }GroupId\ =\ uint32\_t;}
 \DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a3756246d7523b326185c76533c0d58e1}{GroupCreatedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<GroupCreatedEvent>\ \{}
+\DoxyCodeLine{00058\ \textcolor{keyword}{class\ }GroupCreatedEvent\ :\ \textcolor{keyword}{public}\ Event<GroupCreatedEvent>\ \{}
 \DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a3756246d7523b326185c76533c0d58e1}{GroupCreatedEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a26bb77824c521a8e895620480aa399eb}{groupId}},\ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a20f480db79452d950c9def5a10c01ac5}{name}})}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a26bb77824c521a8e895620480aa399eb}{groupId}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a26bb77824c521a8e895620480aa399eb}{groupId}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a20f480db79452d950c9def5a10c01ac5}{name}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a20f480db79452d950c9def5a10c01ac5}{name}})\ \{\}}
+\DoxyCodeLine{00060\ \ \ \ \ GroupCreatedEvent(GroupId\ groupId,\ \textcolor{keyword}{const}\ std::string\&\ name)}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ :\ groupId(groupId),\ name(name)\ \{\}}
 \DoxyCodeLine{00062\ \ \ \ \ }
-\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a26bb77824c521a8e895620480aa399eb}{groupId}};}
-\DoxyCodeLine{00064\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_created_event_a20f480db79452d950c9def5a10c01ac5}{name}};}
+\DoxyCodeLine{00063\ \ \ \ \ GroupId\ groupId;}
+\DoxyCodeLine{00064\ \ \ \ \ std::string\ name;}
 \DoxyCodeLine{00065\ \};}
 \DoxyCodeLine{00066\ }
-\DoxyCodeLine{00067\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_aaf022732871fd086ccbe1ec1f5f56b11}{GroupDeletedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<GroupDeletedEvent>\ \{}
+\DoxyCodeLine{00067\ \textcolor{keyword}{class\ }GroupDeletedEvent\ :\ \textcolor{keyword}{public}\ Event<GroupDeletedEvent>\ \{}
 \DoxyCodeLine{00068\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_aaf022732871fd086ccbe1ec1f5f56b11}{GroupDeletedEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a5f72502ea91c4782ec8ad1e3938919a0}{groupId}},\ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a2a5ff9c3f813141426740b36f8ecd3e1}{name}})}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a5f72502ea91c4782ec8ad1e3938919a0}{groupId}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a5f72502ea91c4782ec8ad1e3938919a0}{groupId}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a2a5ff9c3f813141426740b36f8ecd3e1}{name}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a2a5ff9c3f813141426740b36f8ecd3e1}{name}})\ \{\}}
+\DoxyCodeLine{00069\ \ \ \ \ GroupDeletedEvent(GroupId\ groupId,\ \textcolor{keyword}{const}\ std::string\&\ name)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ :\ groupId(groupId),\ name(name)\ \{\}}
 \DoxyCodeLine{00071\ \ \ \ \ }
-\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a5f72502ea91c4782ec8ad1e3938919a0}{groupId}};}
-\DoxyCodeLine{00073\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_deleted_event_a2a5ff9c3f813141426740b36f8ecd3e1}{name}};}
+\DoxyCodeLine{00072\ \ \ \ \ GroupId\ groupId;}
+\DoxyCodeLine{00073\ \ \ \ \ std::string\ name;}
 \DoxyCodeLine{00074\ \};}
 \DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56}{GroupModificationType}}\ \{}
-\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56a6f2d0bce8e047d9f2eadd436b29c3f6d}{MOVED}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56aa25e78d8d98c26f0fd73aa560f93c828}{RENAMED}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56a49597681edee195a56cf927b8e3fd2b2}{VISIBILITY\_CHANGED}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56a4df5a520fb796421bad732134042c2d3}{LOCKED\_CHANGED}}}
+\DoxyCodeLine{00076\ \textcolor{keyword}{enum\ class}\ GroupModificationType\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ MOVED,\ RENAMED,\ VISIBILITY\_CHANGED,\ LOCKED\_CHANGED}
 \DoxyCodeLine{00078\ \};}
 \DoxyCodeLine{00079\ }
-\DoxyCodeLine{00080\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_a9b06b28b2df06ce2d24ddbe30db9faf1}{GroupModifiedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<GroupModifiedEvent>\ \{}
+\DoxyCodeLine{00080\ \textcolor{keyword}{class\ }GroupModifiedEvent\ :\ \textcolor{keyword}{public}\ Event<GroupModifiedEvent>\ \{}
 \DoxyCodeLine{00081\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_a9b06b28b2df06ce2d24ddbe30db9faf1}{GroupModifiedEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_afd38ab65008af11421ae563eb5fe86c9}{groupId}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56}{GroupModificationType}}\ type)}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_afd38ab65008af11421ae563eb5fe86c9}{groupId}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_afd38ab65008af11421ae563eb5fe86c9}{groupId}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_a6b1fb196407adecce66990f748aa9ba3}{modificationType}}(type)\ \{\}}
+\DoxyCodeLine{00082\ \ \ \ \ GroupModifiedEvent(GroupId\ groupId,\ GroupModificationType\ type)}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ :\ groupId(groupId),\ modificationType(type)\ \{\}}
 \DoxyCodeLine{00084\ \ \ \ \ }
-\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4e992b83a561ddfebde8b6295c70d1fb}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_afd38ab65008af11421ae563eb5fe86c9}{groupId}};}
-\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_events_a4d7f75d320fd7dd7887972672523fc56}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_group_modified_event_a6b1fb196407adecce66990f748aa9ba3}{modificationType}};}
+\DoxyCodeLine{00085\ \ \ \ \ GroupId\ groupId;}
+\DoxyCodeLine{00086\ \ \ \ \ GroupModificationType\ modificationType;}
 \DoxyCodeLine{00087\ \};}
 \DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_ae2080c0c283db6384f995d54b832213f}{SelectionChangedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<SelectionChangedEvent>\ \{}
+\DoxyCodeLine{00089\ \textcolor{keyword}{class\ }SelectionChangedEvent\ :\ \textcolor{keyword}{public}\ Event<SelectionChangedEvent>\ \{}
 \DoxyCodeLine{00090\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{ChangeType}}\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a55771bcb939a8afbf4d119d6e0099317}{ADDED}},\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ab3461745d64b12346503b2980e436db5}{REMOVED}},\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077ad5edacc5c1724ff7055e7db625117c71}{REPLACED}},\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077a62574ee27e6c5f985a6bc1dc344e7438}{CLEARED}}\ \};}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{enum\ class}\ ChangeType\ \{\ ADDED,\ REMOVED,\ REPLACED,\ CLEARED\ \};}
 \DoxyCodeLine{00092\ \ \ \ \ }
-\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_ae2080c0c283db6384f995d54b832213f}{SelectionChangedEvent}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{ChangeType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}{changeType}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}{selectionSize}})}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}{changeType}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}{changeType}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}{selectionSize}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}{selectionSize}})\ \{\}}
+\DoxyCodeLine{00093\ \ \ \ \ SelectionChangedEvent(ChangeType\ changeType,\ \textcolor{keywordtype}{size\_t}\ selectionSize)}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ :\ changeType(changeType),\ selectionSize(selectionSize)\ \{\}}
 \DoxyCodeLine{00095\ \ \ \ \ }
-\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4c83d1974a7368a4717226e572706077}{ChangeType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a4e543d05d6512a8742196331f3cffebf}{changeType}};}
-\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_selection_changed_event_a2dbb9b119b59d478d863f7300795cb73}{selectionSize}};}
+\DoxyCodeLine{00096\ \ \ \ \ ChangeType\ changeType;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ selectionSize;}
 \DoxyCodeLine{00098\ \};}
 \DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a90083a8f65b1214f4309211808cfc081}{CameraChangedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<CameraChangedEvent>\ \{}
+\DoxyCodeLine{00100\ \textcolor{keyword}{class\ }CameraChangedEvent\ :\ \textcolor{keyword}{public}\ Event<CameraChangedEvent>\ \{}
 \DoxyCodeLine{00101\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{ChangeType}}\ \{\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a90b4ba73224408e82ade8a072a3712c1}{POSITION}},\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2aa27939099e0fe4086159364fcf8d5f73}{ROTATION}},\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2a66f276916d5a97cbb3b0008213bda1c3}{ZOOM}},\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2acdf58dc656ab87fec541b5f278fde32e}{VIEW\_PRESET}}\ \};}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{enum\ class}\ ChangeType\ \{\ POSITION,\ ROTATION,\ ZOOM,\ VIEW\_PRESET\ \};}
 \DoxyCodeLine{00103\ \ \ \ \ }
-\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a90083a8f65b1214f4309211808cfc081}{CameraChangedEvent}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{ChangeType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}{changeType}})}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}{changeType}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}{changeType}})\ \{\}}
+\DoxyCodeLine{00104\ \ \ \ \ CameraChangedEvent(ChangeType\ changeType)}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ :\ changeType(changeType)\ \{\}}
 \DoxyCodeLine{00106\ \ \ \ \ }
-\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2}{ChangeType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a3ae8c628b2f305bd1324370bf9f75660}{changeType}};}
+\DoxyCodeLine{00107\ \ \ \ \ ChangeType\ changeType;}
 \DoxyCodeLine{00108\ \};}
 \DoxyCodeLine{00109\ }
-\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_ae5cad1438a1626734c1aff09b659b70b}{MemoryPressureEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<MemoryPressureEvent>\ \{}
+\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }MemoryPressureEvent\ :\ \textcolor{keyword}{public}\ Event<MemoryPressureEvent>\ \{}
 \DoxyCodeLine{00111\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_ae5cad1438a1626734c1aff09b659b70b}{MemoryPressureEvent}}(\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a62e781b14d0d990c51e56497ee77cb3e}{currentUsage}},\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a1a67c7eabc747566aecb50852d2915ab}{maxUsage}})}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a62e781b14d0d990c51e56497ee77cb3e}{currentUsage}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a62e781b14d0d990c51e56497ee77cb3e}{currentUsage}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a1a67c7eabc747566aecb50852d2915ab}{maxUsage}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a1a67c7eabc747566aecb50852d2915ab}{maxUsage}})\ \{\}}
+\DoxyCodeLine{00112\ \ \ \ \ MemoryPressureEvent(\textcolor{keywordtype}{size\_t}\ currentUsage,\ \textcolor{keywordtype}{size\_t}\ maxUsage)}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ :\ currentUsage(currentUsage),\ maxUsage(maxUsage)\ \{\}}
 \DoxyCodeLine{00114\ \ \ \ \ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a62e781b14d0d990c51e56497ee77cb3e}{currentUsage}};}
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event_a1a67c7eabc747566aecb50852d2915ab}{maxUsage}};}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ currentUsage;}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ maxUsage;}
 \DoxyCodeLine{00117\ \};}
 \DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event_af33fa4e9e0f475ebaea4d787e4bf7ecd}{ApplicationExitEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<ApplicationExitEvent>\ \{}
+\DoxyCodeLine{00119\ \textcolor{keyword}{class\ }ApplicationExitEvent\ :\ \textcolor{keyword}{public}\ Event<ApplicationExitEvent>\ \{}
 \DoxyCodeLine{00120\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event_af33fa4e9e0f475ebaea4d787e4bf7ecd}{ApplicationExitEvent}}(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event_a50ae97cded4e4cde7b4628996a198588}{exitCode}}\ =\ 0)\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event_a50ae97cded4e4cde7b4628996a198588}{exitCode}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event_a50ae97cded4e4cde7b4628996a198588}{exitCode}})\ \{\}}
+\DoxyCodeLine{00121\ \ \ \ \ ApplicationExitEvent(\textcolor{keywordtype}{int}\ exitCode\ =\ 0)\ :\ exitCode(exitCode)\ \{\}}
 \DoxyCodeLine{00122\ \ \ \ \ }
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_application_exit_event_a50ae97cded4e4cde7b4628996a198588}{exitCode}};}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{int}\ exitCode;}
 \DoxyCodeLine{00124\ \};}
 \DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event_a9d026a3f3559487954c2ff8e14fe90d2}{ConfigurationChangedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{Event}}<ConfigurationChangedEvent>\ \{}
+\DoxyCodeLine{00126\ \textcolor{keyword}{class\ }ConfigurationChangedEvent\ :\ \textcolor{keyword}{public}\ Event<ConfigurationChangedEvent>\ \{}
 \DoxyCodeLine{00127\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event_a9d026a3f3559487954c2ff8e14fe90d2}{ConfigurationChangedEvent}}(\textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event_a5704f887c9f4f4e16279199361e564ad}{key}})\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event_a5704f887c9f4f4e16279199361e564ad}{key}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event_a5704f887c9f4f4e16279199361e564ad}{key}})\ \{\}}
+\DoxyCodeLine{00128\ \ \ \ \ ConfigurationChangedEvent(\textcolor{keyword}{const}\ std::string\&\ key)\ :\ key(key)\ \{\}}
 \DoxyCodeLine{00129\ \ \ \ \ }
-\DoxyCodeLine{00130\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event_a5704f887c9f4f4e16279199361e564ad}{key}};}
+\DoxyCodeLine{00130\ \ \ \ \ std::string\ key;}
 \DoxyCodeLine{00131\ \};}
 \DoxyCodeLine{00132\ }
 \DoxyCodeLine{00133\ \}}

@@ -1,106 +1,106 @@
 \doxysection{Binary\+Format.\+h}
-\hypertarget{_binary_format_8h_source}{}\label{_binary_format_8h_source}\index{core/file\_io/include/file\_io/BinaryFormat.h@{core/file\_io/include/file\_io/BinaryFormat.h}}
+\label{_binary_format_8h_source}\index{core/file\_io/include/file\_io/BinaryFormat.h@{core/file\_io/include/file\_io/BinaryFormat.h}}
 \mbox{\hyperlink{_binary_format_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_types_8h}{FileTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_binary_i_o_8h}{BinaryIO.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_project_8h}{Project.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}FileTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}BinaryIO.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Project.h"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o}{FileIO}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }FileIO\ \{}
 \DoxyCodeLine{00011\ }
 \DoxyCodeLine{00012\ \textcolor{comment}{//\ File\ header\ structure}}
-\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header}{FileHeader}}\ \{}
-\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_ad6b0778dd7ed4b8cb14bf033e60e823b}{magic}}[4]\ =\ \{\textcolor{charliteral}{'C'},\ \textcolor{charliteral}{'V'},\ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'F'}\};}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_a42b14ef955023f5c023bc3f1712d4ab5}{version}};}
-\DoxyCodeLine{00016\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_a6164f978285687ae3cc0afe0843bdc48}{fileSize}}\ =\ 0;}
-\DoxyCodeLine{00017\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_a941fb577ae841e6d9f910f24c3669910}{compressionFlags}}\ =\ 0;}
-\DoxyCodeLine{00018\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_ab204fd4cbbbb430bab89e9a4e43a34ec}{checksum}}\ =\ 0;}
-\DoxyCodeLine{00019\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_a08bede06d203e6e55381609c94ea369f}{reserved}}[228]\ =\ \{\};}
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }FileHeader\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{char}\ magic[4]\ =\ \{\textcolor{charliteral}{'C'},\ \textcolor{charliteral}{'V'},\ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'F'}\};}
+\DoxyCodeLine{00015\ \ \ \ \ FileVersion\ version;}
+\DoxyCodeLine{00016\ \ \ \ \ uint64\_t\ fileSize\ =\ 0;}
+\DoxyCodeLine{00017\ \ \ \ \ uint32\_t\ compressionFlags\ =\ 0;}
+\DoxyCodeLine{00018\ \ \ \ \ uint64\_t\ checksum\ =\ 0;}
+\DoxyCodeLine{00019\ \ \ \ \ uint8\_t\ reserved[228]\ =\ \{\};}
 \DoxyCodeLine{00020\ \ \ \ \ }
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_ae5d2fc9c86bbbcd4097247a301251d95}{isValid}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_a70735d86d4b5f14386f1932a23cbbaf2}{updateChecksum}}(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
-\DoxyCodeLine{00023\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header_a7d40e1c7f323da915458df73d38e3ac3}{calculateChecksum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ updateChecksum(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00023\ \ \ \ \ uint64\_t\ calculateChecksum()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00024\ \};}
 \DoxyCodeLine{00025\ }
 \DoxyCodeLine{00026\ \textcolor{comment}{//\ Chunk\ header\ structure}}
-\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header}{ChunkHeader}}\ \{}
-\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970}{ChunkType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header_a3e8422aa3cd75570603f52cd90c86615}{type}};}
-\DoxyCodeLine{00029\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header_a66c6629ff260020958f1e39f59983d52}{size}}\ =\ 0;}
-\DoxyCodeLine{00030\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header_a5cf4baeaba371a04d12147643519e4d2}{uncompressedSize}}\ =\ 0;}
-\DoxyCodeLine{00031\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header_aa5c13bb2184cc8c821cbbbb46206fda2}{checksum}}\ =\ 0;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }ChunkHeader\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ ChunkType\ type;}
+\DoxyCodeLine{00029\ \ \ \ \ uint32\_t\ size\ =\ 0;}
+\DoxyCodeLine{00030\ \ \ \ \ uint32\_t\ uncompressedSize\ =\ 0;}
+\DoxyCodeLine{00031\ \ \ \ \ uint32\_t\ checksum\ =\ 0;}
 \DoxyCodeLine{00032\ \ \ \ \ }
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header_a1f4ad5235e0291558742fbece9c4c597}{isValid}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00034\ \};}
 \DoxyCodeLine{00035\ }
 \DoxyCodeLine{00036\ \textcolor{comment}{//\ Binary\ format\ reader/writer}}
-\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a803d5f25ef067c04e09358adb1259f70}{BinaryFormat}}\ \{}
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }BinaryFormat\ \{}
 \DoxyCodeLine{00038\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a803d5f25ef067c04e09358adb1259f70}{BinaryFormat}}();}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a198693b777dbb591e260a4baea255dcd}{\string~BinaryFormat}}();}
+\DoxyCodeLine{00039\ \ \ \ \ BinaryFormat();}
+\DoxyCodeLine{00040\ \ \ \ \ \string~BinaryFormat();}
 \DoxyCodeLine{00041\ \ \ \ \ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Main\ operations}}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a343c5eb0792c5a6fb89379270ab96064}{writeProject}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_save_options}{SaveOptions}}\&\ options);}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a325e0f740a00ccef15ba571dc0c2cf52}{readProject}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_load_options}{LoadOptions}}\&\ options);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeProject(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ Project\&\ project,\ \textcolor{keyword}{const}\ SaveOptions\&\ options);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ readProject(BinaryReader\&\ reader,\ Project\&\ project,\ \textcolor{keyword}{const}\ LoadOptions\&\ options);}
 \DoxyCodeLine{00045\ \ \ \ \ }
 \DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Validation}}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a9e2e1a4dda884c9ac5e0a10fb0932dcf}{validateFile}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader);}
-\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_version}{FileVersion}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_a0a5cf6c25126873b342558c488716a9d}{detectVersion}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateFile(BinaryReader\&\ reader);}
+\DoxyCodeLine{00048\ \ \ \ \ FileVersion\ detectVersion(BinaryReader\&\ reader);}
 \DoxyCodeLine{00049\ \ \ \ \ }
 \DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Error\ handling}}
-\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_af77eb47bdef7043ef5ace38974f8d1bc}{getLastError}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
-\DoxyCodeLine{00052\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ad83c28bd151dcf440a8fa6df87924a47}{getLastErrorMessage}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastErrorMessage;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ FileError\ getLastError()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ std::string\ getLastErrorMessage()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastErrorMessage;\ \}}
 \DoxyCodeLine{00053\ \ \ \ \ }
 \DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Header\ operations\ (public\ for\ FileManager)}}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_format_ae29dde1d5927304e72a8a77048a5e8f9}{readHeader}}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header}{FileHeader}}\&\ header);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ readHeader(BinaryReader\&\ reader,\ FileHeader\&\ header);}
 \DoxyCodeLine{00056\ \ \ \ \ }
 \DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ m\_lastError\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87a6adf97f83acf6453d4a6a4b1070f3754}{FileError::None}};}
+\DoxyCodeLine{00058\ \ \ \ \ FileError\ m\_lastError\ =\ FileError::None;}
 \DoxyCodeLine{00059\ \ \ \ \ std::string\ m\_lastErrorMessage;}
 \DoxyCodeLine{00060\ \ \ \ \ }
 \DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Header\ operations}}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeHeader(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_file_header}{FileHeader}}\&\ header);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeHeader(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ FileHeader\&\ header);}
 \DoxyCodeLine{00063\ \ \ \ \ }
 \DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Chunk\ operations}}
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970}{ChunkType}}\ type,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ readChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header}{ChunkHeader}}\&\ header,\ std::vector<uint8\_t>\&\ data);}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ skipChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_chunk_header}{ChunkHeader}}\&\ header);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeChunk(BinaryWriter\&\ writer,\ ChunkType\ type,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ readChunk(BinaryReader\&\ reader,\ ChunkHeader\&\ header,\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ skipChunk(BinaryReader\&\ reader,\ \textcolor{keyword}{const}\ ChunkHeader\&\ header);}
 \DoxyCodeLine{00068\ \ \ \ \ }
 \DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Specific\ chunk\ writers}}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeMetadataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_metadata}{ProjectMetadata}}\&\ metadata);}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeVoxelDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}\&\ voxelData,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_save_options}{SaveOptions}}\&\ options);}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeGroupDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Groups::GroupManager}}\&\ groupData);}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeCameraStateChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera}{Camera::OrbitCamera}}\&\ camera);}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeSelectionDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project);}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeSettingsChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings}{WorkspaceSettings}}\&\ settings);}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeCustomDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&\ writer,\ \textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeMetadataChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ ProjectMetadata\&\ metadata);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeVoxelDataChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ VoxelData::VoxelDataManager\&\ voxelData,\ \textcolor{keyword}{const}\ SaveOptions\&\ options);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeGroupDataChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ Groups::GroupManager\&\ groupData);}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeCameraStateChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ Camera::OrbitCamera\&\ camera);}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeSelectionDataChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ Project\&\ project);}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeSettingsChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ WorkspaceSettings\&\ settings);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeCustomDataChunk(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ data);}
 \DoxyCodeLine{00077\ \ \ \ \ }
 \DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Specific\ chunk\ readers}}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ readMetadataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project_metadata}{ProjectMetadata}}\&\ metadata);}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ readVoxelDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}\&\ voxelData,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_load_options}{LoadOptions}}\&\ options);}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ readGroupDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{Groups::GroupManager}}\&\ groupData);}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ readCameraStateChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera}{Camera::OrbitCamera}}\&\ camera);}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ readSelectionDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_project}{Project}}\&\ project);}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ readSettingsChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ \mbox{\hyperlink{struct_voxel_editor_1_1_file_i_o_1_1_workspace_settings}{WorkspaceSettings}}\&\ settings);}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{bool}\ readCustomDataChunk(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&\ reader,\ std::string\&\ key,\ std::vector<uint8\_t>\&\ data);}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ readMetadataChunk(BinaryReader\&\ reader,\ ProjectMetadata\&\ metadata);}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ readVoxelDataChunk(BinaryReader\&\ reader,\ VoxelData::VoxelDataManager\&\ voxelData,\ \textcolor{keyword}{const}\ LoadOptions\&\ options);}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ readGroupDataChunk(BinaryReader\&\ reader,\ Groups::GroupManager\&\ groupData);}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ readCameraStateChunk(BinaryReader\&\ reader,\ Camera::OrbitCamera\&\ camera);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ readSelectionDataChunk(BinaryReader\&\ reader,\ Project\&\ project);}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ readSettingsChunk(BinaryReader\&\ reader,\ WorkspaceSettings\&\ settings);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{bool}\ readCustomDataChunk(BinaryReader\&\ reader,\ std::string\&\ key,\ std::vector<uint8\_t>\&\ data);}
 \DoxyCodeLine{00086\ \ \ \ \ }
 \DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ Utility\ functions}}
-\DoxyCodeLine{00088\ \ \ \ \ std::vector<uint8\_t>\ serializeToBuffer(\textcolor{keyword}{const}\ std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_writer}{BinaryWriter}}\&)>\&\ writeFunc);}
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ deserializeFromBuffer(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ buffer,\ \textcolor{keyword}{const}\ std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_binary_reader}{BinaryReader}}\&)>\&\ readFunc);}
+\DoxyCodeLine{00088\ \ \ \ \ std::vector<uint8\_t>\ serializeToBuffer(\textcolor{keyword}{const}\ std::function<\textcolor{keywordtype}{void}(BinaryWriter\&)>\&\ writeFunc);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ deserializeFromBuffer(\textcolor{keyword}{const}\ std::vector<uint8\_t>\&\ buffer,\ \textcolor{keyword}{const}\ std::function<\textcolor{keywordtype}{void}(BinaryReader\&)>\&\ readFunc);}
 \DoxyCodeLine{00090\ \ \ \ \ }
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ setError(\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a750d1fc3c491dd22fefb7336039f9f87}{FileError}}\ error,\ \textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ setError(FileError\ error,\ \textcolor{keyword}{const}\ std::string\&\ message);}
 \DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ clearError();}
 \DoxyCodeLine{00093\ \};}
 \DoxyCodeLine{00094\ }
 \DoxyCodeLine{00095\ \textcolor{comment}{//\ Checksum\ utilities}}
-\DoxyCodeLine{00096\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_checksum_calculator}{ChecksumCalculator}}\ \{}
+\DoxyCodeLine{00096\ \textcolor{keyword}{class\ }ChecksumCalculator\ \{}
 \DoxyCodeLine{00097\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{static}\ uint64\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_checksum_calculator_a0280a06e1872117e76572646a010ac53}{calculate}}(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_file_i_o_1_1_checksum_calculator_a64b13b7a31a1aba5314b8c1667f15952}{calculateCRC32}}(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{static}\ uint64\_t\ calculate(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ uint32\_t\ calculateCRC32(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keywordtype}{size\_t}\ size);}
 \DoxyCodeLine{00100\ \ \ \ \ }
 \DoxyCodeLine{00101\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ CRC32\_TABLE[256];}

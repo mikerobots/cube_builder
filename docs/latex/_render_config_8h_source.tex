@@ -1,143 +1,143 @@
 \doxysection{Render\+Config.\+h}
-\hypertarget{_render_config_8h_source}{}\label{_render_config_8h_source}\index{core/rendering/RenderConfig.h@{core/rendering/RenderConfig.h}}
+\label{_render_config_8h_source}\index{core/rendering/RenderConfig.h@{core/rendering/RenderConfig.h}}
 \mbox{\hyperlink{_render_config_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{RenderTypes.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}RenderTypes.h"{}}}
 \DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Rendering}}\ \{}
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Rendering\ \{}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{struct\ }RenderConfig\ \{}
 \DoxyCodeLine{00009\ \ \ \ \ \textcolor{comment}{//\ Window\ settings}}
-\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a751705e3e3ac2ff65416444fb20efef9}{windowWidth}}\ =\ 1920;}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a63f768d8f4628d4070ee06425891acf4}{windowHeight}}\ =\ 1080;}
-\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a15e527db607076010fe1bed1d9bb40fc}{fullscreen}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{int}\ windowWidth\ =\ 1920;}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{int}\ windowHeight\ =\ 1080;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{bool}\ fullscreen\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00013\ \ \ \ \ }
 \DoxyCodeLine{00014\ \ \ \ \ \textcolor{comment}{//\ Graphics\ settings}}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae8858d22cc37c98ee4bd6f1b48fe6da5}{samples}}\ =\ 4;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ MSAA\ samples}}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ad58393440d6b2752789c91a7c914c7f1}{vsync}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a793afb761014fd3926c077056dae71fa}{debugContext}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683}{ColorFormat}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_acb0c4c7bbc8fbfd4bd57f184e52a3847}{colorFormat}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683ab4b279046a02077466fa26cabb00c642}{ColorFormat::RGBA8}};}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b}{DepthFormat}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a6a5e24703deca7cd6a2269a9e7bdaef1}{depthFormat}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607ba78181d4f5d4b30baefed6c0da0de894f}{DepthFormat::Depth24Stencil8}};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ samples\ =\ 4;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ MSAA\ samples}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ vsync\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ debugContext\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00018\ \ \ \ \ ColorFormat\ colorFormat\ =\ ColorFormat::RGBA8;}
+\DoxyCodeLine{00019\ \ \ \ \ DepthFormat\ depthFormat\ =\ DepthFormat::Depth24Stencil8;}
 \DoxyCodeLine{00020\ \ \ \ \ }
 \DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Performance\ settings}}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a6a4f5d30969095bc489c472d23d8960d}{frustumCulling}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a501d61a30c192621d37aeaafe510779d}{occlusionCulling}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_acef85efb4a6770de7ad7ebd6649c9e45}{maxLights}}\ =\ 8;}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a0950b70f5e824d3dddcf730e4b7d4def}{shadowMapping}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ frustumCulling\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ occlusionCulling\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ maxLights\ =\ 8;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ shadowMapping\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00026\ \ \ \ \ }
 \DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Quality\ settings}}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a4d9d450ae6070277042334bdcd37409a}{anisotropicFiltering}}\ =\ 16.0f;}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a6229cad80a1ff5734ff3550fcc804560}{mipmapping}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ anisotropicFiltering\ =\ 16.0f;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ mipmapping\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00030\ \ \ \ \ }
 \DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Debug\ settings}}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a55d1875a59decdab05ba3393a0400441}{wireframeOverlay}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ad8eb178f2579c41ba285586c70e5cf6a}{showNormals}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ac191fd8b42c4224a79917d74375c562a}{showBounds}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a7d36e1da5ba69ee70ac8a61f223a0d51}{performanceOverlay}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ wireframeOverlay\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ showNormals\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ showBounds\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ performanceOverlay\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00036\ \ \ \ \ }
-\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00037\ \ \ \ \ RenderConfig()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00038\ \ \ \ \ }
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a71d917e1e16e90dd53b7b59821d6db4f}{Default}}()\ \{}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\{\};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ Default()\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ RenderConfig\{\};}
 \DoxyCodeLine{00041\ \ \ \ \ \}}
 \DoxyCodeLine{00042\ \ \ \ \ }
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a06d98da794deb38d44947c6c002b13c4}{HighQuality}}()\ \{}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ config;}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae8858d22cc37c98ee4bd6f1b48fe6da5}{samples}}\ =\ 8;}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a0950b70f5e824d3dddcf730e4b7d4def}{shadowMapping}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a4d9d450ae6070277042334bdcd37409a}{anisotropicFiltering}}\ =\ 16.0f;}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_acb0c4c7bbc8fbfd4bd57f184e52a3847}{colorFormat}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683aa29d843695056f9c171a9eb702d6910a}{ColorFormat::RGBA16F}};}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ HighQuality()\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ RenderConfig\ config;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ config.samples\ =\ 8;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ config.shadowMapping\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ config.anisotropicFiltering\ =\ 16.0f;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ config.colorFormat\ =\ ColorFormat::RGBA16F;}
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ config;}
 \DoxyCodeLine{00050\ \ \ \ \ \}}
 \DoxyCodeLine{00051\ \ \ \ \ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_af0cb4ac12759a9b31fa28359a66ecfc9}{Performance}}()\ \{}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ config;}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae8858d22cc37c98ee4bd6f1b48fe6da5}{samples}}\ =\ 0;}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a0950b70f5e824d3dddcf730e4b7d4def}{shadowMapping}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a4d9d450ae6070277042334bdcd37409a}{anisotropicFiltering}}\ =\ 4.0f;}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a6229cad80a1ff5734ff3550fcc804560}{mipmapping}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a6a4f5d30969095bc489c472d23d8960d}{frustumCulling}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a501d61a30c192621d37aeaafe510779d}{occlusionCulling}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ Performance()\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ RenderConfig\ config;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ config.samples\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ config.shadowMapping\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ config.anisotropicFiltering\ =\ 4.0f;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ config.mipmapping\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ config.frustumCulling\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ config.occlusionCulling\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ config;}
 \DoxyCodeLine{00061\ \ \ \ \ \}}
 \DoxyCodeLine{00062\ \ \ \ \ }
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a88b56b2a0580d58ada3203b2141f8d6d}{VR}}()\ \{}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ config;}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae8858d22cc37c98ee4bd6f1b48fe6da5}{samples}}\ =\ 2;}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ad58393440d6b2752789c91a7c914c7f1}{vsync}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a0950b70f5e824d3dddcf730e4b7d4def}{shadowMapping}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a4d9d450ae6070277042334bdcd37409a}{anisotropicFiltering}}\ =\ 8.0f;}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a6a4f5d30969095bc489c472d23d8960d}{frustumCulling}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a501d61a30c192621d37aeaafe510779d}{occlusionCulling}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ VR()\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ RenderConfig\ config;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ config.samples\ =\ 2;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ config.vsync\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ config.shadowMapping\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ config.anisotropicFiltering\ =\ 8.0f;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ config.frustumCulling\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ config.occlusionCulling\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ config;}
 \DoxyCodeLine{00072\ \ \ \ \ \}}
 \DoxyCodeLine{00073\ \ \ \ \ }
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae56d3a9d38daa98133ad829096981b4b}{Debug}}()\ \{}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeeea26ef3dc338b3a8340ee7838e1b85}{RenderConfig}}\ config;}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a793afb761014fd3926c077056dae71fa}{debugContext}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a55d1875a59decdab05ba3393a0400441}{wireframeOverlay}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ad8eb178f2579c41ba285586c70e5cf6a}{showNormals}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ac191fd8b42c4224a79917d74375c562a}{showBounds}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ config.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a7d36e1da5ba69ee70ac8a61f223a0d51}{performanceOverlay}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ RenderConfig\ Debug()\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ RenderConfig\ config;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ config.debugContext\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ config.wireframeOverlay\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ config.showNormals\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ config.showBounds\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ config.performanceOverlay\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ config;}
 \DoxyCodeLine{00082\ \ \ \ \ \}}
 \DoxyCodeLine{00083\ \ \ \ \ }
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_aeefcbef628cf6479b68a2e216ba17272}{isValid}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a751705e3e3ac2ff65416444fb20efef9}{windowWidth}}\ >\ 0\ \&\&\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a63f768d8f4628d4070ee06425891acf4}{windowHeight}}\ >\ 0\ \&\&\ }
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae8858d22cc37c98ee4bd6f1b48fe6da5}{samples}}\ >=\ 0\ \&\&\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ae8858d22cc37c98ee4bd6f1b48fe6da5}{samples}}\ <=\ 16\ \&\&}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_acef85efb4a6770de7ad7ebd6649c9e45}{maxLights}}\ >\ 0\ \&\&\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_acef85efb4a6770de7ad7ebd6649c9e45}{maxLights}}\ <=\ 32\ \&\&}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a4d9d450ae6070277042334bdcd37409a}{anisotropicFiltering}}\ >=\ 1.0f;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ windowWidth\ >\ 0\ \&\&\ windowHeight\ >\ 0\ \&\&\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ samples\ >=\ 0\ \&\&\ samples\ <=\ 16\ \&\&}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxLights\ >\ 0\ \&\&\ maxLights\ <=\ 32\ \&\&}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ anisotropicFiltering\ >=\ 1.0f;}
 \DoxyCodeLine{00089\ \ \ \ \ \}}
 \DoxyCodeLine{00090\ \ \ \ \ }
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_ad3f5b5f33ea485df6935b491bab703c0}{getAspectRatio}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a751705e3e3ac2ff65416444fb20efef9}{windowWidth}})\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config_a63f768d8f4628d4070ee06425891acf4}{windowHeight}});}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{float}\ getAspectRatio()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(windowWidth)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(windowHeight);}
 \DoxyCodeLine{00093\ \ \ \ \ \}}
 \DoxyCodeLine{00094\ \};}
 \DoxyCodeLine{00095\ }
-\DoxyCodeLine{00096\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ \{}
-\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_acde3a6262a0cb9d59ab82791ab50fe3f}{renderMode}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}{RenderMode::Solid}};}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a2bd4740494eb365d0e52b08cadc0fc62}{wireframeEnabled}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a6926433fb36c02f957aa8ddc09533a09}{solidEnabled}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a3d09f90d8ec5d01b860845a3560a15b2}{wireframeColor}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}(0.5f,\ 0.5f,\ 0.5f,\ 1.0f);}
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a74b2068d9ab9fffe12c6f63498343129}{wireframeWidth}}\ =\ 1.0f;}
+\DoxyCodeLine{00096\ \textcolor{keyword}{struct\ }RenderSettings\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ RenderMode\ renderMode\ =\ RenderMode::Solid;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ wireframeEnabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ solidEnabled\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00100\ \ \ \ \ Color\ wireframeColor\ =\ Color(0.5f,\ 0.5f,\ 0.5f,\ 1.0f);}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{float}\ wireframeWidth\ =\ 1.0f;}
 \DoxyCodeLine{00102\ \ \ \ \ }
 \DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Lighting\ settings}}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_aa24af79f972b408f9873c1121b8ca994}{lightingEnabled}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a379ee3029f74acab549d044cf75c1df7}{lightDirection}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(-\/0.5f,\ -\/0.7f,\ -\/0.5f).\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_aaca6843328951f469300c7a6f9eb92ac}{normalized}}();}
-\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a2802dc4d5932fc912374d32a7f200058}{lightColor}}\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_ad530021797157aaa737b78d7610993e8}{Color::White}}();}
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_aca71d30b59368d5c695a1195f06b4b0d}{lightIntensity}}\ =\ 1.0f;}
-\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_adeeef5748fc7dff0ca439f7dc73648e8}{ambientColor}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}(0.2f,\ 0.2f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ lightingEnabled\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00105\ \ \ \ \ Math::Vector3f\ lightDirection\ =\ Math::Vector3f(-\/0.5f,\ -\/0.7f,\ -\/0.5f).normalized();}
+\DoxyCodeLine{00106\ \ \ \ \ Color\ lightColor\ =\ Color::White();}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{float}\ lightIntensity\ =\ 1.0f;}
+\DoxyCodeLine{00108\ \ \ \ \ Color\ ambientColor\ =\ Color(0.2f,\ 0.2f,\ 0.2f,\ 1.0f);}
 \DoxyCodeLine{00109\ \ \ \ \ }
 \DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Material\ overrides}}
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a77e89e089206ef9f1a16e9752b378616}{useVertexColors}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a5ad619ad646bc285bbfe5dfcb055ceb6}{defaultMaterial}}\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material_ad676141cbeb5f278cdbaab38ab84c2e5}{Material::createDefault}}();}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ useVertexColors\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00112\ \ \ \ \ Material\ defaultMaterial\ =\ Material::createDefault();}
 \DoxyCodeLine{00113\ \ \ \ \ }
-\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00114\ \ \ \ \ RenderSettings()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00115\ \ \ \ \ }
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a1f05fd05286b3111a62685f8a7691a5a}{Wireframe}}()\ \{}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ settings;}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_acde3a6262a0cb9d59ab82791ab50fe3f}{renderMode}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2}{RenderMode::Wireframe}};}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a2bd4740494eb365d0e52b08cadc0fc62}{wireframeEnabled}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a6926433fb36c02f957aa8ddc09533a09}{solidEnabled}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{static}\ RenderSettings\ Wireframe()\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ RenderSettings\ settings;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ settings.renderMode\ =\ RenderMode::Wireframe;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ settings.wireframeEnabled\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ settings.solidEnabled\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ settings;}
 \DoxyCodeLine{00122\ \ \ \ \ \}}
 \DoxyCodeLine{00123\ \ \ \ \ }
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_aae0f349da19430c249ac9593181d096f}{Solid}}()\ \{}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ settings;}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_acde3a6262a0cb9d59ab82791ab50fe3f}{renderMode}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}{RenderMode::Solid}};}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a2bd4740494eb365d0e52b08cadc0fc62}{wireframeEnabled}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a6926433fb36c02f957aa8ddc09533a09}{solidEnabled}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{static}\ RenderSettings\ Solid()\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ RenderSettings\ settings;}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ settings.renderMode\ =\ RenderMode::Solid;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ settings.wireframeEnabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ settings.solidEnabled\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ settings;}
 \DoxyCodeLine{00130\ \ \ \ \ \}}
 \DoxyCodeLine{00131\ \ \ \ \ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_ac26c3525dd506de2d8d317440f5102b8}{Combined}}()\ \{}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_abc7003cb1857eadd5625ae2f78d205d5}{RenderSettings}}\ settings;}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_acde3a6262a0cb9d59ab82791ab50fe3f}{renderMode}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca55f4b4a94111759e08b3acb1acd12b8c}{RenderMode::Combined}};}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a2bd4740494eb365d0e52b08cadc0fc62}{wireframeEnabled}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings_a6926433fb36c02f957aa8ddc09533a09}{solidEnabled}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{static}\ RenderSettings\ Combined()\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ RenderSettings\ settings;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ settings.renderMode\ =\ RenderMode::Combined;}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ settings.wireframeEnabled\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ settings.solidEnabled\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ settings;}
 \DoxyCodeLine{00138\ \ \ \ \ \}}
 \DoxyCodeLine{00139\ \};}

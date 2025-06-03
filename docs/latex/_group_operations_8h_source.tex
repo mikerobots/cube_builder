@@ -1,158 +1,158 @@
 \doxysection{Group\+Operations.\+h}
-\hypertarget{_group_operations_8h_source}{}\label{_group_operations_8h_source}\index{core/groups/include/groups/GroupOperations.h@{core/groups/include/groups/GroupOperations.h}}
+\label{_group_operations_8h_source}\index{core/groups/include/groups/GroupOperations.h@{core/groups/include/groups/GroupOperations.h}}
 \mbox{\hyperlink{_group_operations_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_group_types_8h}{GroupTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{VoxelDataManager.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}GroupTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}VoxelDataManager.h"{}}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Groups}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Groups\ \{}
 \DoxyCodeLine{00010\ }
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ Forward\ declarations}}
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}};}
-\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_voxel_group}{VoxelGroup}};}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }GroupManager;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }VoxelGroup;}
 \DoxyCodeLine{00014\ }
 \DoxyCodeLine{00015\ \textcolor{comment}{//\ Base\ class\ for\ group\ operations}}
-\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }GroupOperation\ \{}
 \DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a714b3cc5c88c8924b157217c4b4a2f40}{\string~GroupOperation}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a3ca9eb196854632165b20b3183bfb5f0}{execute}}()\ =\ 0;}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_aeb75ac351fecbef742c4a68aa408dbc3}{undo}}()\ =\ 0;}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_a71ee2c8a2f6f32d6054822867d162795}{getDescription}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation_ad40e0a3a849f191187993f4e2ec99b98}{getType}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~GroupOperation()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ execute()\ =\ 0;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ undo()\ =\ 0;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getDescription()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ GroupModificationType\ getType()\ \textcolor{keyword}{const}\ =\ 0;}
 \DoxyCodeLine{00023\ \};}
 \DoxyCodeLine{00024\ }
 \DoxyCodeLine{00025\ \textcolor{comment}{//\ Move\ group\ operation}}
-\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_move_group_operation_ae11b14d8eaaaac078e56e125bfb73538}{MoveGroupOperation}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }MoveGroupOperation\ :\ \textcolor{keyword}{public}\ GroupOperation\ \{}
 \DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_move_group_operation_ae11b14d8eaaaac078e56e125bfb73538}{MoveGroupOperation}}(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ groupManager,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ offset);}
+\DoxyCodeLine{00028\ \ \ \ \ MoveGroupOperation(GroupManager*\ groupManager,\ VoxelData::VoxelDataManager*\ voxelManager,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GroupId\ groupId,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ offset);}
 \DoxyCodeLine{00030\ \ \ \ \ }
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_move_group_operation_a1b33f386336c3ed0c319bf1d3645ceeb}{execute}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_move_group_operation_a225a2ad24967117bbbc72915df9de795}{undo}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00033\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_move_group_operation_a44cdcc131a0f626b918026b0559c2c15}{getDescription}}()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_move_group_operation_a18f50eecc64285c96164264ae6b16d66}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a95bfdefaaf01553cbf21ccd942855c69}{GroupModificationType::Moved}};\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00033\ \ \ \ \ std::string\ getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00034\ \ \ \ \ GroupModificationType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ GroupModificationType::Moved;\ \}}
 \DoxyCodeLine{00035\ \ \ \ \ }
 \DoxyCodeLine{00036\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ m\_groupManager;}
-\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ m\_offset;}
+\DoxyCodeLine{00037\ \ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{00038\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00039\ \ \ \ \ GroupId\ m\_groupId;}
+\DoxyCodeLine{00040\ \ \ \ \ Math::Vector3f\ m\_offset;}
 \DoxyCodeLine{00041\ \ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_voxelMoves;\ \textcolor{comment}{//\ old\ -\/>\ new\ positions}}
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00043\ \};}
 \DoxyCodeLine{00044\ }
 \DoxyCodeLine{00045\ \textcolor{comment}{//\ Copy\ group\ operation}}
-\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_af474ae5395fb0715b9ba208299ca7e3d}{CopyGroupOperation}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }CopyGroupOperation\ :\ \textcolor{keyword}{public}\ GroupOperation\ \{}
 \DoxyCodeLine{00047\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_af474ae5395fb0715b9ba208299ca7e3d}{CopyGroupOperation}}(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ groupManager,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ sourceId,\ \textcolor{keyword}{const}\ std::string\&\ newName,\ }
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ offset\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(0,\ 0,\ 0));}
+\DoxyCodeLine{00048\ \ \ \ \ CopyGroupOperation(GroupManager*\ groupManager,\ VoxelData::VoxelDataManager*\ voxelManager,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GroupId\ sourceId,\ \textcolor{keyword}{const}\ std::string\&\ newName,\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3f\&\ offset\ =\ Math::Vector3f(0,\ 0,\ 0));}
 \DoxyCodeLine{00051\ \ \ \ \ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_ab26bdad3949fbec80f74fb0dfa6fc0bb}{execute}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_aabb32fae11c6b0601518a0c2f3b9158f}{undo}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00054\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_adbf763a336098ba1aee96431e60a7f47}{getDescription}}()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_a133b2b0566c8a7b9f631162791ccbea9}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a0eceeb45861f9585dd7a97a3e36f85c6}{GroupModificationType::Created}};\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00054\ \ \ \ \ std::string\ getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00055\ \ \ \ \ GroupModificationType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ GroupModificationType::Created;\ \}}
 \DoxyCodeLine{00056\ \ \ \ \ }
-\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_copy_group_operation_abd1cbe653ab0f0eb7b97036d515b2639}{getCreatedGroupId}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_createdGroupId;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ GroupId\ getCreatedGroupId()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_createdGroupId;\ \}}
 \DoxyCodeLine{00058\ \ \ \ \ }
 \DoxyCodeLine{00059\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ m\_groupManager;}
-\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_sourceId;}
-\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_createdGroupId\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}};}
+\DoxyCodeLine{00060\ \ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{00061\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00062\ \ \ \ \ GroupId\ m\_sourceId;}
+\DoxyCodeLine{00063\ \ \ \ \ GroupId\ m\_createdGroupId\ =\ INVALID\_GROUP\_ID;}
 \DoxyCodeLine{00064\ \ \ \ \ std::string\ m\_newName;}
-\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ m\_offset;}
+\DoxyCodeLine{00065\ \ \ \ \ Math::Vector3f\ m\_offset;}
 \DoxyCodeLine{00066\ \ \ \ \ std::vector<VoxelId>\ m\_createdVoxels;}
 \DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00068\ \};}
 \DoxyCodeLine{00069\ }
 \DoxyCodeLine{00070\ \textcolor{comment}{//\ Rotate\ group\ operation}}
-\DoxyCodeLine{00071\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_rotate_group_operation_a4f630ccb06399fb79f0089e20d7204ad}{RotateGroupOperation}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00071\ \textcolor{keyword}{class\ }RotateGroupOperation\ :\ \textcolor{keyword}{public}\ GroupOperation\ \{}
 \DoxyCodeLine{00072\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_rotate_group_operation_a4f630ccb06399fb79f0089e20d7204ad}{RotateGroupOperation}}(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ groupManager,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ eulerAngles,\ }
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ pivot);}
+\DoxyCodeLine{00073\ \ \ \ \ RotateGroupOperation(GroupManager*\ groupManager,\ VoxelData::VoxelDataManager*\ voxelManager,}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GroupId\ groupId,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ eulerAngles,\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3f\&\ pivot);}
 \DoxyCodeLine{00076\ \ \ \ \ }
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_rotate_group_operation_afc566185edea541b8b2d41d45f68dd78}{execute}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_rotate_group_operation_a241f97e21bcb666f9cdca8865b6b05f4}{undo}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00079\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_rotate_group_operation_a12ad1d871efe019930ee625d4f7688f4}{getDescription}}()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_rotate_group_operation_a6a7b9f35e5935c0d00b659fa9ae95715}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a4f8d7de5d5a3860f0a27f8848de1ba40}{GroupModificationType::Rotated}};\ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00079\ \ \ \ \ std::string\ getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00080\ \ \ \ \ GroupModificationType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ GroupModificationType::Rotated;\ \}}
 \DoxyCodeLine{00081\ \ \ \ \ }
 \DoxyCodeLine{00082\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ m\_groupManager;}
-\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
-\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ m\_eulerAngles;}
-\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ m\_pivot;}
+\DoxyCodeLine{00083\ \ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{00084\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00085\ \ \ \ \ GroupId\ m\_groupId;}
+\DoxyCodeLine{00086\ \ \ \ \ Math::Vector3f\ m\_eulerAngles;}
+\DoxyCodeLine{00087\ \ \ \ \ Math::Vector3f\ m\_pivot;}
 \DoxyCodeLine{00088\ \ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_voxelMoves;}
 \DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00090\ \};}
 \DoxyCodeLine{00091\ }
 \DoxyCodeLine{00092\ \textcolor{comment}{//\ Scale\ group\ operation}}
-\DoxyCodeLine{00093\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_scale_group_operation_aeee2ad2ef01928f67d08b90622b22c6e}{ScaleGroupOperation}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00093\ \textcolor{keyword}{class\ }ScaleGroupOperation\ :\ \textcolor{keyword}{public}\ GroupOperation\ \{}
 \DoxyCodeLine{00094\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_scale_group_operation_aeee2ad2ef01928f67d08b90622b22c6e}{ScaleGroupOperation}}(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ groupManager,\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager,}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId,\ \textcolor{keywordtype}{float}\ scaleFactor,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ pivot);}
+\DoxyCodeLine{00095\ \ \ \ \ ScaleGroupOperation(GroupManager*\ groupManager,\ VoxelData::VoxelDataManager*\ voxelManager,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GroupId\ groupId,\ \textcolor{keywordtype}{float}\ scaleFactor,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ pivot);}
 \DoxyCodeLine{00097\ \ \ \ \ }
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_scale_group_operation_a6fc5ca17a79d8b560357adaa4da2d7d0}{execute}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_scale_group_operation_ac1fbe8d12e3ec75ed3a7bcfa3bcebc97}{undo}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00100\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_scale_group_operation_a1d6dddb86900de3764271623e436c394}{getDescription}}()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_scale_group_operation_a4e407dbff7b4f9e4b48dda9ad73c3979}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a7380ae6c5e1189eef50cfd0557d74e99}{GroupModificationType::Scaled}};\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00100\ \ \ \ \ std::string\ getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00101\ \ \ \ \ GroupModificationType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ GroupModificationType::Scaled;\ \}}
 \DoxyCodeLine{00102\ \ \ \ \ }
 \DoxyCodeLine{00103\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ m\_groupManager;}
-\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
+\DoxyCodeLine{00104\ \ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{00105\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00106\ \ \ \ \ GroupId\ m\_groupId;}
 \DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_scaleFactor;}
-\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ m\_pivot;}
+\DoxyCodeLine{00108\ \ \ \ \ Math::Vector3f\ m\_pivot;}
 \DoxyCodeLine{00109\ \ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_voxelMoves;}
 \DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00111\ \};}
 \DoxyCodeLine{00112\ }
 \DoxyCodeLine{00113\ \textcolor{comment}{//\ Merge\ groups\ operation}}
-\DoxyCodeLine{00114\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_a29ce03be9037c44b824cc33e3f5e9a3c}{MergeGroupsOperation}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00114\ \textcolor{keyword}{class\ }MergeGroupsOperation\ :\ \textcolor{keyword}{public}\ GroupOperation\ \{}
 \DoxyCodeLine{00115\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_a29ce03be9037c44b824cc33e3f5e9a3c}{MergeGroupsOperation}}(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ groupManager,\ \textcolor{keyword}{const}\ std::vector<GroupId>\&\ sourceIds,}
+\DoxyCodeLine{00116\ \ \ \ \ MergeGroupsOperation(GroupManager*\ groupManager,\ \textcolor{keyword}{const}\ std::vector<GroupId>\&\ sourceIds,}
 \DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ targetName);}
 \DoxyCodeLine{00118\ \ \ \ \ }
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_abeb3a24d7aa4d0892d3bfda2a1cdd227}{execute}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_a88fb2191385786472c20e7ffb0c01dd2}{undo}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00121\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_a1d91c9e31f265dd4631440b44173999b}{getDescription}}()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_ab8ae5c33b52fcf3fa66ed8965ce5c865}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a0eceeb45861f9585dd7a97a3e36f85c6}{GroupModificationType::Created}};\ \}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00121\ \ \ \ \ std::string\ getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00122\ \ \ \ \ GroupModificationType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ GroupModificationType::Created;\ \}}
 \DoxyCodeLine{00123\ \ \ \ \ }
-\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_merge_groups_operation_ab03a6da3dffed7a13ebae5bd1d0faad0}{getTargetGroupId}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_targetGroupId;\ \}}
+\DoxyCodeLine{00124\ \ \ \ \ GroupId\ getTargetGroupId()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_targetGroupId;\ \}}
 \DoxyCodeLine{00125\ \ \ \ \ }
 \DoxyCodeLine{00126\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00127\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ m\_groupManager;}
+\DoxyCodeLine{00127\ \ \ \ \ GroupManager*\ m\_groupManager;}
 \DoxyCodeLine{00128\ \ \ \ \ std::vector<GroupId>\ m\_sourceIds;}
-\DoxyCodeLine{00129\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_targetGroupId\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}};}
+\DoxyCodeLine{00129\ \ \ \ \ GroupId\ m\_targetGroupId\ =\ INVALID\_GROUP\_ID;}
 \DoxyCodeLine{00130\ \ \ \ \ std::string\ m\_targetName;}
 \DoxyCodeLine{00131\ \ \ \ \ std::vector<std::pair<GroupId,\ std::vector<VoxelId>>>\ m\_originalGroups;\ \textcolor{comment}{//\ for\ undo}}
 \DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00133\ \};}
 \DoxyCodeLine{00134\ }
 \DoxyCodeLine{00135\ \textcolor{comment}{//\ Split\ group\ operation}}
-\DoxyCodeLine{00136\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_aca2718565c6e6bb94188bed50de7f680}{SplitGroupOperation}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_operation}{GroupOperation}}\ \{}
+\DoxyCodeLine{00136\ \textcolor{keyword}{class\ }SplitGroupOperation\ :\ \textcolor{keyword}{public}\ GroupOperation\ \{}
 \DoxyCodeLine{00137\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_aca2718565c6e6bb94188bed50de7f680}{SplitGroupOperation}}(\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ groupManager,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ sourceId,}
+\DoxyCodeLine{00138\ \ \ \ \ SplitGroupOperation(GroupManager*\ groupManager,\ GroupId\ sourceId,}
 \DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::vector<VoxelId>>\&\ voxelSets,}
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ newNames);}
 \DoxyCodeLine{00141\ \ \ \ \ }
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_ad0a81d462275a1b588c751f7644ac99e}{execute}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_ab3994e9c458062c82d48f6b7aff8342a}{undo}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00144\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_a13822ebcc3cf6492542e162226bf7367}{getDescription}}()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_aa82f9d53cb9567d1cb0d57ef505b34bf}{getType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3a0eceeb45861f9585dd7a97a3e36f85c6}{GroupModificationType::Created}};\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00144\ \ \ \ \ std::string\ getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00145\ \ \ \ \ GroupModificationType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ GroupModificationType::Created;\ \}}
 \DoxyCodeLine{00146\ \ \ \ \ }
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<GroupId>\&\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_split_group_operation_a2129ce3b918cdf152766293c3d7cb653}{getCreatedGroupIds}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_createdGroupIds;\ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<GroupId>\&\ getCreatedGroupIds()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_createdGroupIds;\ \}}
 \DoxyCodeLine{00148\ \ \ \ \ }
 \DoxyCodeLine{00149\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_manager}{GroupManager}}*\ m\_groupManager;}
-\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_sourceId;}
+\DoxyCodeLine{00150\ \ \ \ \ GroupManager*\ m\_groupManager;}
+\DoxyCodeLine{00151\ \ \ \ \ GroupId\ m\_sourceId;}
 \DoxyCodeLine{00152\ \ \ \ \ std::vector<std::vector<VoxelId>>\ m\_voxelSets;}
 \DoxyCodeLine{00153\ \ \ \ \ std::vector<std::string>\ m\_newNames;}
 \DoxyCodeLine{00154\ \ \ \ \ std::vector<GroupId>\ m\_createdGroupIds;}
@@ -161,22 +161,22 @@
 \DoxyCodeLine{00157\ \};}
 \DoxyCodeLine{00158\ }
 \DoxyCodeLine{00159\ \textcolor{comment}{//\ Utility\ functions\ for\ group\ operations}}
-\DoxyCodeLine{00160\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils}{GroupOperationUtils}}\ \{}
+\DoxyCodeLine{00160\ \textcolor{keyword}{namespace\ }GroupOperationUtils\ \{}
 \DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ Calculate\ new\ voxel\ position\ after\ transformation}}
-\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{VoxelId}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_ae12da07a4dd578fd3321c22b7994a867}{transformVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_transform}{GroupTransform}}\&\ transform);}
+\DoxyCodeLine{00162\ \ \ \ \ VoxelId\ transformVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ GroupTransform\&\ transform);}
 \DoxyCodeLine{00163\ \ \ \ \ }
 \DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ Calculate\ bounding\ box\ for\ a\ set\ of\ voxels}}
-\DoxyCodeLine{00165\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba}{calculateBounds}}(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{00165\ \ \ \ \ Math::BoundingBox\ calculateBounds(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
 \DoxyCodeLine{00166\ \ \ \ \ }
 \DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Find\ optimal\ pivot\ point\ for\ a\ group}}
-\DoxyCodeLine{00168\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a82e0ef532e160476f08ef0dd3b18b00d}{calculateOptimalPivot}}(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{00168\ \ \ \ \ Math::Vector3f\ calculateOptimalPivot(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
 \DoxyCodeLine{00169\ \ \ \ \ }
 \DoxyCodeLine{00170\ \ \ \ \ \textcolor{comment}{//\ Validate\ that\ voxel\ positions\ are\ within\ workspace\ bounds}}
-\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a48e7c7adf7b9020b05a17ac875b4e766}{validateVoxelPositions}}(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels,\ }
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ workspaceBounds);}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{bool}\ validateVoxelPositions(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels,\ }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::BoundingBox\&\ workspaceBounds);}
 \DoxyCodeLine{00173\ \ \ \ \ }
 \DoxyCodeLine{00174\ \ \ \ \ \textcolor{comment}{//\ Generate\ unique\ name\ for\ a\ group}}
-\DoxyCodeLine{00175\ \ \ \ \ std::string\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_aaba64228af763adcdf1a8aa71e8d00ca}{generateUniqueName}}(\textcolor{keyword}{const}\ std::string\&\ baseName,\ }
+\DoxyCodeLine{00175\ \ \ \ \ std::string\ generateUniqueName(\textcolor{keyword}{const}\ std::string\&\ baseName,\ }
 \DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ existingNames);}
 \DoxyCodeLine{00177\ \}}
 \DoxyCodeLine{00178\ }

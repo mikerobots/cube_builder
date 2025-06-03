@@ -1,5 +1,5 @@
 \chapter{File I/O System Subsystem }
-\hypertarget{md_core_2file__io_2_d_e_s_i_g_n}{}\label{md_core_2file__io_2_d_e_s_i_g_n}\index{File I/O System Subsystem@{File I/O System Subsystem}}
+\label{md_core_2file__io_2_d_e_s_i_g_n}\index{File I/O System Subsystem@{File I/O System Subsystem}}
 \label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md152}%
 \Hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md152}%
 \hypertarget{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md153}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2file__io_2_d_e_s_i_g_n_autotoc_md153}
@@ -80,9 +80,9 @@ Handles project save/load operations using custom binary format, STL export func
 \DoxyCodeLine{\ \ \ \ std::unique\_ptr<FileVersioning>\ m\_versioning;}
 \DoxyCodeLine{\ \ \ \ std::unique\_ptr<Compression>\ m\_compression;}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_afc10f59d0bd4c862af3b94ae247dd603}{ProgressCallback}}\ m\_progressCallback;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a479d10236ee78cb58a0f0429f1c3e91c}{SaveCompleteCallback}}\ m\_saveCompleteCallback;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_aa256a07fb67dc8cdd82f0820fdac019c}{LoadCompleteCallback}}\ m\_loadCompleteCallback;}
+\DoxyCodeLine{\ \ \ \ ProgressCallback\ m\_progressCallback;}
+\DoxyCodeLine{\ \ \ \ SaveCompleteCallback\ m\_saveCompleteCallback;}
+\DoxyCodeLine{\ \ \ \ LoadCompleteCallback\ m\_loadCompleteCallback;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ std::vector<std::string>\ m\_recentFiles;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressionEnabled;}
@@ -105,7 +105,7 @@ Handles project save/load operations using custom binary format, STL export func
 \DoxyCodeLine{\ \ \ \ ProjectMetadata\ metadata;}
 \DoxyCodeLine{\ \ \ \ MultiResolutionGrid\ voxelData;}
 \DoxyCodeLine{\ \ \ \ GroupManager\ groupData;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ cameraState;}
+\DoxyCodeLine{\ \ \ \ CameraState\ cameraState;}
 \DoxyCodeLine{\ \ \ \ SelectionSet\ currentSelection;}
 \DoxyCodeLine{\ \ \ \ std::vector<SelectionSet>\ namedSelections;}
 \DoxyCodeLine{\ \ \ \ WorkspaceSettings\ workspace;}
@@ -132,10 +132,10 @@ Handles project save/load operations using custom binary format, STL export func
 \DoxyCodeLine{\textcolor{keyword}{struct\ }WorkspaceSettings\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3f\ size\ =\ Vector3f(5.0f,\ 5.0f,\ 5.0f);}
 \DoxyCodeLine{\ \ \ \ Vector3f\ origin\ =\ Vector3f::Zero();}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ defaultResolution\ =\ VoxelResolution::Size\_1cm;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ defaultResolution\ =\ VoxelResolution::Size\_1cm;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ gridVisible\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ axesVisible\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ backgroundColor\ =\ Color::Gray();}
+\DoxyCodeLine{\ \ \ \ Color\ backgroundColor\ =\ Color::Gray();}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -169,8 +169,8 @@ Handles project save/load operations using custom binary format, STL export func
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }STLExportOptions\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bb}{STLFormat}}\ format\ =\ STLFormat::Binary;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ units\ =\ STLUnits::Millimeters;}
+\DoxyCodeLine{\ \ \ \ STLFormat\ format\ =\ STLFormat::Binary;}
+\DoxyCodeLine{\ \ \ \ STLUnits\ units\ =\ STLUnits::Millimeters;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ scale\ =\ 1.0f;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ mergeMeshes\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ validateWatertight\ =\ \textcolor{keyword}{true};}
@@ -236,20 +236,20 @@ Handles project save/load operations using custom binary format, STL export func
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ChunkHeader\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970}{ChunkType}}\ type;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ChunkType\ type;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ size;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ uncompressedSize;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ checksum;}
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970}{ChunkType}}\ :\ uint32\_t\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970ace21470ab49d1d1976bc3dc72438c183}{Metadata}}\ =\ 0x4D455441,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 'META'}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a8297838d919ddfa3d4d58774e887c36d}{VoxelData}}\ =\ 0x564F5845,\ \ \ \ \ \ \ \textcolor{comment}{//\ 'VOXE'}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a7f1fc2225258096cb6b47b4dc12855a2}{GroupData}}\ =\ 0x47525550,\ \ \ \ \ \ \ \textcolor{comment}{//\ 'GRUP'}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ =\ 0x43414D45,\ \ \ \ \ \textcolor{comment}{//\ 'CAME'}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970aa8e6e777406e3ccbd538095a3cfd1d1b}{SelectionData}}\ =\ 0x53454C45,\ \ \ \textcolor{comment}{//\ 'SELE'}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970af4f70727dc34561dfde1a3c529b6205c}{Settings}}\ =\ 0x53455454,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 'SETT'}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a4e0bb514b87fd684035a3b34a80ddb53}{CustomData}}\ =\ 0x43555354\ \ \ \ \ \ \ \textcolor{comment}{//\ 'CUST'}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ ChunkType\ :\ uint32\_t\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Metadata\ =\ 0x4D455441,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 'META'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ VoxelData\ =\ 0x564F5845,\ \ \ \ \ \ \ \textcolor{comment}{//\ 'VOXE'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ GroupData\ =\ 0x47525550,\ \ \ \ \ \ \ \textcolor{comment}{//\ 'GRUP'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ CameraState\ =\ 0x43414D45,\ \ \ \ \ \textcolor{comment}{//\ 'CAME'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ SelectionData\ =\ 0x53454C45,\ \ \ \textcolor{comment}{//\ 'SELE'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Settings\ =\ 0x53455454,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 'SETT'}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ CustomData\ =\ 0x43555354\ \ \ \ \ \ \ \textcolor{comment}{//\ 'CUST'}}
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ writeHeader(BinaryWriter\&\ writer,\ \textcolor{keyword}{const}\ FileHeader\&\ header);}
@@ -355,16 +355,16 @@ Handles project save/load operations using custom binary format, STL export func
 \DoxyCodeLine{\ \ \ \ std::vector<std::string>\ warnings;}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bb}{STLFormat}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bba6ce976e8f061b2b5cfe4d0c50c3405dd}{Binary}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_a87a48c9fb164987820ff2912a7cc65bbad2cd8253361a9c732d21ca1d336599cc}{ASCII}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ STLFormat\ \{}
+\DoxyCodeLine{\ \ \ \ Binary,}
+\DoxyCodeLine{\ \ \ \ ASCII}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892}{STLUnits}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892a3be6521a73bcafce5b38459ec548bd11}{Millimeters}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892a3040cc6624f5c309963dee141936b299}{Centimeters}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892a80b4a3eed88aed8a1c7d8a4418b7f469}{Meters}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_acaa439e5d5a429c73117f1ba266a9892ad73325cdb1cb4f9a1ed11bdab879321d}{Inches}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ STLUnits\ \{}
+\DoxyCodeLine{\ \ \ \ Millimeters,}
+\DoxyCodeLine{\ \ \ \ Centimeters,}
+\DoxyCodeLine{\ \ \ \ Meters,}
+\DoxyCodeLine{\ \ \ \ Inches}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}

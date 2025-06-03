@@ -237,7 +237,7 @@ size_t SurfaceGenerator::computeGridHash(const VoxelData::VoxelGrid& grid) const
         hash ^= value + 0x9e3779b9 + (hash << 6) + (hash >> 2);
     };
     
-    Math::Vector3i dims = grid.getMaxDimensions();
+    Math::Vector3i dims = grid.getGridDimensions();
     hashCombine(std::hash<int>{}(dims.x));
     hashCombine(std::hash<int>{}(dims.y));
     hashCombine(std::hash<int>{}(dims.z));
@@ -347,7 +347,7 @@ LODLevel LODManager::calculateLOD(float distance, const Math::BoundingBox& bound
 
 std::unique_ptr<VoxelData::VoxelGrid> LODManager::downsampleGrid(const VoxelData::VoxelGrid& grid, 
                                                                  int factor) {
-    Math::Vector3i oldDims = grid.getMaxDimensions();
+    Math::Vector3i oldDims = grid.getGridDimensions();
     Math::Vector3i newDims(
         (oldDims.x + factor - 1) / factor,
         (oldDims.y + factor - 1) / factor,

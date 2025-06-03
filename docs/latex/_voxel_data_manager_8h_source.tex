@@ -1,5 +1,5 @@
 \doxysection{Voxel\+Data\+Manager.\+h}
-\hypertarget{_voxel_data_manager_8h_source}{}\label{_voxel_data_manager_8h_source}\index{core/voxel\_data/VoxelDataManager.h@{core/voxel\_data/VoxelDataManager.h}}
+\label{_voxel_data_manager_8h_source}\index{core/voxel\_data/VoxelDataManager.h@{core/voxel\_data/VoxelDataManager.h}}
 \mbox{\hyperlink{_voxel_data_manager_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -14,28 +14,28 @@
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <algorithm>}}
 \DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <stack>}}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_types_8h}{VoxelTypes.h}}"{}}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_grid_8h}{VoxelGrid.h}}"{}}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_workspace_manager_8h}{WorkspaceManager.h}}"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_dispatcher_8h}{../../foundation/events/EventDispatcher.h}}"{}}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_common_events_8h}{../../foundation/events/CommonEvents.h}}"{}}}
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_memory_tracker_8h}{../../foundation/memory/MemoryTracker.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}VoxelTypes.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}VoxelGrid.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}WorkspaceManager.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/EventDispatcher.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/CommonEvents.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}../../foundation/memory/MemoryTracker.h"{}}}
 \DoxyCodeLine{00019\ }
-\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }VoxelData\ \{}
 \DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }VoxelDataManager\ \{}
 \DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr})}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ :\ m\_activeResolution(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}::\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8aeb3107023563be5a16dd90314394c80e}{Size\_1cm}})}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{explicit}\ VoxelDataManager(Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ :\ m\_activeResolution(VoxelResolution::Size\_1cm)}
 \DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ ,\ m\_eventDispatcher(eventDispatcher)}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ ,\ m\_workspaceManager(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager}{WorkspaceManager}}>(eventDispatcher))\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ ,\ m\_workspaceManager(std::make\_unique<WorkspaceManager>(eventDispatcher))\ \{}
 \DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ octree\ memory\ pool}}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_a5f50bad0a7fcf0b56edcc5bf2334214a}{SparseOctree::initializePool}}(1024);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ SparseOctree::initializePool(1024);}
 \DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ up\ workspace\ change\ callback\ to\ validate\ grid\ compatibility}}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ m\_workspaceManager-\/>setSizeChangeCallback([\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ oldSize,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ newSize)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ m\_workspaceManager-\/>setSizeChangeCallback([\textcolor{keyword}{this}](\textcolor{keyword}{const}\ Math::Vector3f\&\ oldSize,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ newSize)\ \{}
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ validateWorkspaceResize(oldSize,\ newSize);}
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \});}
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
@@ -43,25 +43,25 @@
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ initializeGrids();}
 \DoxyCodeLine{00040\ \ \ \ \ \}}
 \DoxyCodeLine{00041\ \ \ \ \ }
-\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a505153f07d32dae0e9512a5afc5b7e02}{\string~VoxelDataManager}}()\ \{}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_sparse_octree_aae6b43e11c1e4c21edb5fbb11fefca79}{SparseOctree::shutdownPool}}();}
+\DoxyCodeLine{00042\ \ \ \ \ \string~VoxelDataManager()\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ SparseOctree::shutdownPool();}
 \DoxyCodeLine{00044\ \ \ \ \ \}}
 \DoxyCodeLine{00045\ \ \ \ \ }
 \DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Non-\/copyable\ and\ non-\/movable\ (due\ to\ mutex)}}
-\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a5eed623bdd0e17988acc49bf4fc4c925}{VoxelDataManager}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a4346cb8be01f898f262979d200f73d47}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a38ed02aedd7a2909b19341249d6d5b1a}{VoxelDataManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\&\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a8b46c142b65e17d44aae177753d130a3}{operator=}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a51644afff62c90deaa1bedeea19b0c60}{VoxelDataManager}}\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00047\ \ \ \ \ VoxelDataManager(\textcolor{keyword}{const}\ VoxelDataManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00048\ \ \ \ \ VoxelDataManager\&\ operator=(\textcolor{keyword}{const}\ VoxelDataManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00049\ \ \ \ \ VoxelDataManager(VoxelDataManager\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00050\ \ \ \ \ VoxelDataManager\&\ operator=(VoxelDataManager\&\&)\ =\ \textcolor{keyword}{delete};}
 \DoxyCodeLine{00051\ \ \ \ \ }
 \DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Voxel\ operations}}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a1ca7fea7c91b86bcce4313e2575d1991}{setVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ pos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{bool}\ value)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Math::Vector3i\&\ pos,\ VoxelResolution\ resolution,\ \textcolor{keywordtype}{bool}\ value)\ \{}
 \DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue\ =\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_ae6cdd2726dd4c3143013b00076e82edc}{getVoxel}}(pos);}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ success\ =\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a8856acfbb35fc46c3a8e23f7cb735f6f}{setVoxel}}(pos,\ value);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue\ =\ grid-\/>getVoxel(pos);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ success\ =\ grid-\/>setVoxel(pos,\ value);}
 \DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (success\ \&\&\ oldValue\ !=\ value)\ \{}
 \DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ dispatchVoxelChangedEvent(pos,\ resolution,\ oldValue,\ value);}
@@ -70,128 +70,128 @@
 \DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ success;}
 \DoxyCodeLine{00067\ \ \ \ \ \}}
 \DoxyCodeLine{00068\ \ \ \ \ }
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a2aab352b3260d698ce477b95f51c2b21}{setVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position}{VoxelPosition}}\&\ voxelPos,\ \textcolor{keywordtype}{bool}\ value)\ \{}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a1ca7fea7c91b86bcce4313e2575d1991}{setVoxel}}(voxelPos.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_a35399afc597656e60f4403862f341c76}{gridPos}},\ voxelPos.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_a91c2366dece43e6f3ab66667819d5f48}{resolution}},\ value);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ VoxelPosition\&\ voxelPos,\ \textcolor{keywordtype}{bool}\ value)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ setVoxel(voxelPos.gridPos,\ voxelPos.resolution,\ value);}
 \DoxyCodeLine{00071\ \ \ \ \ \}}
 \DoxyCodeLine{00072\ \ \ \ \ }
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a3893cc6d507f840c88b608ffca59a551}{getVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ pos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Math::Vector3i\&\ pos,\ VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_ae6cdd2726dd4c3143013b00076e82edc}{getVoxel}}(pos);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>getVoxel(pos);}
 \DoxyCodeLine{00080\ \ \ \ \ \}}
 \DoxyCodeLine{00081\ \ \ \ \ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ad230bbecdbc96ec5bc874d6b7fcbf8f0}{getVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position}{VoxelPosition}}\&\ voxelPos)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a3893cc6d507f840c88b608ffca59a551}{getVoxel}}(voxelPos.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_a35399afc597656e60f4403862f341c76}{gridPos}},\ voxelPos.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position_a91c2366dece43e6f3ab66667819d5f48}{resolution}});}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ VoxelPosition\&\ voxelPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxel(voxelPos.gridPos,\ voxelPos.resolution);}
 \DoxyCodeLine{00084\ \ \ \ \ \}}
 \DoxyCodeLine{00085\ \ \ \ \ }
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a1e60d04770ebaf613d3ce9ca91bc83d2}{hasVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ pos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a3893cc6d507f840c88b608ffca59a551}{getVoxel}}(pos,\ resolution);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxel(\textcolor{keyword}{const}\ Math::Vector3i\&\ pos,\ VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxel(pos,\ resolution);}
 \DoxyCodeLine{00088\ \ \ \ \ \}}
 \DoxyCodeLine{00089\ \ \ \ \ }
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ad47d509fe85d4f929bced2b43f1db374}{hasVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_position}{VoxelPosition}}\&\ voxelPos)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a3893cc6d507f840c88b608ffca59a551}{getVoxel}}(voxelPos);}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxel(\textcolor{keyword}{const}\ VoxelPosition\&\ voxelPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxel(voxelPos);}
 \DoxyCodeLine{00092\ \ \ \ \ \}}
 \DoxyCodeLine{00093\ \ \ \ \ }
 \DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ World\ space\ operations}}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a3f1b11847747d1861c531fa63d428caa}{setVoxelAtWorldPos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{bool}\ value)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ setVoxelAtWorldPos(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos,\ VoxelResolution\ resolution,\ \textcolor{keywordtype}{bool}\ value)\ \{}
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a2314b3eb7405b4f7b3812b01925330ce}{setVoxelAtWorldPos}}(worldPos,\ value);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>setVoxelAtWorldPos(worldPos,\ value);}
 \DoxyCodeLine{00102\ \ \ \ \ \}}
 \DoxyCodeLine{00103\ \ \ \ \ }
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ab05239cf73e0db6194b3e9f4817a3ffd}{setVoxelAtWorldPos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos,\ \textcolor{keywordtype}{bool}\ value)\ \{}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a3f1b11847747d1861c531fa63d428caa}{setVoxelAtWorldPos}}(worldPos,\ m\_activeResolution,\ value);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ setVoxelAtWorldPos(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos,\ \textcolor{keywordtype}{bool}\ value)\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ setVoxelAtWorldPos(worldPos,\ m\_activeResolution,\ value);}
 \DoxyCodeLine{00106\ \ \ \ \ \}}
 \DoxyCodeLine{00107\ \ \ \ \ }
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_afa580980ecab05f43c9fe74d9139ffdf}{getVoxelAtWorldPos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ getVoxelAtWorldPos(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos,\ VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a431e323e0d97eaae40fc3dccb3f7e987}{getVoxelAtWorldPos}}(worldPos);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>getVoxelAtWorldPos(worldPos);}
 \DoxyCodeLine{00115\ \ \ \ \ \}}
 \DoxyCodeLine{00116\ \ \ \ \ }
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a73cd096eb3e38c6f70f90fda3e76d6e9}{getVoxelAtWorldPos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_afa580980ecab05f43c9fe74d9139ffdf}{getVoxelAtWorldPos}}(worldPos,\ m\_activeResolution);}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ getVoxelAtWorldPos(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxelAtWorldPos(worldPos,\ m\_activeResolution);}
 \DoxyCodeLine{00119\ \ \ \ \ \}}
 \DoxyCodeLine{00120\ \ \ \ \ }
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a2d6370076d2c99a15dd6f28a0a198ff5}{hasVoxelAtWorldPos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_afa580980ecab05f43c9fe74d9139ffdf}{getVoxelAtWorldPos}}(worldPos,\ resolution);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxelAtWorldPos(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos,\ VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxelAtWorldPos(worldPos,\ resolution);}
 \DoxyCodeLine{00123\ \ \ \ \ \}}
 \DoxyCodeLine{00124\ \ \ \ \ }
-\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a290af00b822146103dac8f7e7a8b8f4b}{hasVoxelAtWorldPos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_afa580980ecab05f43c9fe74d9139ffdf}{getVoxelAtWorldPos}}(worldPos,\ m\_activeResolution);}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxelAtWorldPos(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxelAtWorldPos(worldPos,\ m\_activeResolution);}
 \DoxyCodeLine{00127\ \ \ \ \ \}}
 \DoxyCodeLine{00128\ \ \ \ \ }
 \DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Resolution\ management}}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a72e71c3a9a2c72e1e42a600c479fcbd6}{setActiveResolution}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\ \{}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a82ab4711dcc9bd20bbc818d63b1ced8c}{isValidResolution}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(resolution)))\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(VoxelResolution\ resolution)\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isValidResolution(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(resolution)))\ \{}
 \DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ oldResolution\ =\ m\_activeResolution;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ VoxelResolution\ oldResolution\ =\ m\_activeResolution;}
 \DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ m\_activeResolution\ =\ resolution;}
 \DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_eventDispatcher\ \&\&\ oldResolution\ !=\ resolution)\ \{}
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_resolution_changed_event}{Events::ResolutionChangedEvent}}\ event(oldResolution,\ resolution);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ Events::ResolutionChangedEvent\ event(oldResolution,\ resolution);}
 \DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eventDispatcher-\/>dispatch(event);}
 \DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00144\ \ \ \ \ \}}
 \DoxyCodeLine{00145\ \ \ \ \ }
-\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aef0f8cf535be74a39da7136d0b631971}{getActiveResolution}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00146\ \ \ \ \ VoxelResolution\ getActiveResolution()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_activeResolution;}
 \DoxyCodeLine{00149\ \ \ \ \ \}}
 \DoxyCodeLine{00150\ \ \ \ \ }
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a2df3ad0c8509ad2a66df64ba530d664a}{getActiveVoxelSize}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a22a0fd4712c51df4ec07731b4e29239a}{getVoxelSize}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aef0f8cf535be74a39da7136d0b631971}{getActiveResolution}}());}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{float}\ getActiveVoxelSize()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxelSize(getActiveResolution());}
 \DoxyCodeLine{00153\ \ \ \ \ \}}
 \DoxyCodeLine{00154\ \ \ \ \ }
 \DoxyCodeLine{00155\ \ \ \ \ \textcolor{comment}{//\ Workspace\ management}}
-\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_afa917e61f6b5963d79dc14799e6d8489}{resizeWorkspace}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ newSize)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{bool}\ resizeWorkspace(\textcolor{keyword}{const}\ Math::Vector3f\&\ newSize)\ \{}
 \DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_workspaceManager-\/>setSize(newSize);}
 \DoxyCodeLine{00159\ \ \ \ \ \}}
 \DoxyCodeLine{00160\ \ \ \ \ }
-\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a9279e04885514650c9554108be2931c1}{resizeWorkspace}}(\textcolor{keywordtype}{float}\ size)\ \{}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_afa917e61f6b5963d79dc14799e6d8489}{resizeWorkspace}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(size,\ size,\ size));}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{bool}\ resizeWorkspace(\textcolor{keywordtype}{float}\ size)\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ resizeWorkspace(Math::Vector3f(size,\ size,\ size));}
 \DoxyCodeLine{00163\ \ \ \ \ \}}
 \DoxyCodeLine{00164\ \ \ \ \ }
-\DoxyCodeLine{00165\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ab6380ec86b64d49bf6ef59ba09345aba}{getWorkspaceSize}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00165\ \ \ \ \ Math::Vector3f\ getWorkspaceSize()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_workspaceManager-\/>getSize();}
 \DoxyCodeLine{00168\ \ \ \ \ \}}
 \DoxyCodeLine{00169\ \ \ \ \ }
-\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_workspace_manager}{WorkspaceManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aac13b456d95fbd7d4a43c2aaa8e79244}{getWorkspaceManager}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00170\ \ \ \ \ WorkspaceManager*\ getWorkspaceManager()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_workspaceManager.get();}
 \DoxyCodeLine{00172\ \ \ \ \ \}}
 \DoxyCodeLine{00173\ \ \ \ \ }
 \DoxyCodeLine{00174\ \ \ \ \ \textcolor{comment}{//\ Position\ validation}}
-\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a8e4394304a53f4516324f93244d3e7cd}{isValidPosition}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ pos,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidPosition(\textcolor{keyword}{const}\ Math::Vector3i\&\ pos,\ VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a70b427cb556a1441de00baea1b66c7a7}{isValidGridPosition}}(pos);}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>isValidGridPosition(pos);}
 \DoxyCodeLine{00182\ \ \ \ \ \}}
 \DoxyCodeLine{00183\ \ \ \ \ }
-\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aa83ae627a81976b84fce02c2f38171e6}{isValidWorldPosition}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidWorldPosition(\textcolor{keyword}{const}\ Math::Vector3f\&\ worldPos)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_workspaceManager-\/>isPositionValid(worldPos);}
 \DoxyCodeLine{00187\ \ \ \ \ \}}
 \DoxyCodeLine{00188\ \ \ \ \ }
 \DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//\ Bulk\ operations}}
-\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a6fb4740acadeee4d1583117769e7716b}{clearAll}}()\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{void}\ clearAll()\ \{}
 \DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ grid\ :\ m\_grids)\ \{}
@@ -201,34 +201,34 @@
 \DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00198\ \ \ \ \ \}}
 \DoxyCodeLine{00199\ \ \ \ \ }
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a623f02da253310161abacab6da99572d}{clearResolution}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{void}\ clearResolution(VoxelResolution\ resolution)\ \{}
 \DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid)\ \{}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a0c085deb30cd1365bf422998cd8210be}{clear}}();}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ grid-\/>clear();}
 \DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00207\ \ \ \ \ \}}
 \DoxyCodeLine{00208\ \ \ \ \ }
-\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ac1da169761ea7b9d566541727335e714}{clearActiveResolution}}()\ \{}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a623f02da253310161abacab6da99572d}{clearResolution}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aef0f8cf535be74a39da7136d0b631971}{getActiveResolution}}());}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{void}\ clearActiveResolution()\ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ clearResolution(getActiveResolution());}
 \DoxyCodeLine{00211\ \ \ \ \ \}}
 \DoxyCodeLine{00212\ \ \ \ \ }
 \DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a590839b4976caa2fcc8d4f9b4182ae9d}{getVoxelCount}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getVoxelCount(VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_ad2d2d0fabcf7f2fe39c70775bc5c5864}{getVoxelCount}}();}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>getVoxelCount();}
 \DoxyCodeLine{00221\ \ \ \ \ \}}
 \DoxyCodeLine{00222\ \ \ \ \ }
-\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a99f0ccfe746974a43d03d75f0778113e}{getVoxelCount}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a99f0ccfe746974a43d03d75f0778113e}{getVoxelCount}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aef0f8cf535be74a39da7136d0b631971}{getActiveResolution}}());}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getVoxelCount()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getVoxelCount(getActiveResolution());}
 \DoxyCodeLine{00225\ \ \ \ \ \}}
 \DoxyCodeLine{00226\ \ \ \ \ }
-\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aa4013c485e1256089e3080dce2c5499f}{getTotalVoxelCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalVoxelCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\ =\ 0;}
@@ -241,7 +241,7 @@
 \DoxyCodeLine{00237\ \ \ \ \ \}}
 \DoxyCodeLine{00238\ \ \ \ \ }
 \DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ Memory\ management}}
-\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a7855d2257abfcee8b91569b522fa78cc}{getMemoryUsage}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\ =\ \textcolor{keyword}{sizeof}(*this);}
@@ -255,16 +255,16 @@
 \DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ total;}
 \DoxyCodeLine{00252\ \ \ \ \ \}}
 \DoxyCodeLine{00253\ \ \ \ \ }
-\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a83960c8cdc6904164cb05644070fc472}{getMemoryUsage}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage(VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a3a88c98cdc628d15e345bcf2e136e578}{getMemoryUsage}}();}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>getMemoryUsage();}
 \DoxyCodeLine{00261\ \ \ \ \ \}}
 \DoxyCodeLine{00262\ \ \ \ \ }
-\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ae2796a48ea67934f994784cc7fc06ec7}{optimizeMemory}}()\ \{}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keywordtype}{void}\ optimizeMemory()\ \{}
 \DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ grid\ :\ m\_grids)\ \{}
@@ -274,79 +274,79 @@
 \DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00271\ \ \ \ \ \}}
 \DoxyCodeLine{00272\ \ \ \ \ }
-\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a27ed1bc4c6c64baec3f0466a1003d384}{optimizeMemory}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordtype}{void}\ optimizeMemory(VoxelResolution\ resolution)\ \{}
 \DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid)\ \{}
-\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_aa2ba03c840bc92807b6e614c0e7c72b0}{optimizeMemory}}();}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ grid-\/>optimizeMemory();}
 \DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00280\ \ \ \ \ \}}
 \DoxyCodeLine{00281\ \ \ \ \ }
 \DoxyCodeLine{00282\ \ \ \ \ \textcolor{comment}{//\ Grid\ access}}
-\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ getGrid(VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(resolution);}
-\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a82ab4711dcc9bd20bbc818d63b1ced8c}{isValidResolution}}(index))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isValidResolution(index))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_grids[index].get();}
 \DoxyCodeLine{00287\ \ \ \ \ \}}
 \DoxyCodeLine{00288\ \ \ \ \ }
-\DoxyCodeLine{00289\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_adfae1b181a62bdfd8d4ab4d942dbcead}{getGrid}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\ \{}
+\DoxyCodeLine{00289\ \ \ \ \ VoxelGrid*\ getGrid(VoxelResolution\ resolution)\ \{}
 \DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(resolution);}
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a82ab4711dcc9bd20bbc818d63b1ced8c}{isValidResolution}}(index))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isValidResolution(index))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_grids[index].get();}
 \DoxyCodeLine{00293\ \ \ \ \ \}}
 \DoxyCodeLine{00294\ \ \ \ \ }
 \DoxyCodeLine{00295\ \ \ \ \ \textcolor{comment}{//\ Data\ export}}
-\DoxyCodeLine{00296\ \ \ \ \ std::vector<VoxelPosition>\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a800fa867cdc0f27ce9aaaf25a83eeaa9}{getAllVoxels}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00296\ \ \ \ \ std::vector<VoxelPosition>\ getAllVoxels(VoxelResolution\ resolution)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}}*\ grid\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_ade743b2ecb7d0cc9fc392a2c206bc878}{getGrid}}(resolution);}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelGrid*\ grid\ =\ getGrid(resolution);}
 \DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!grid)\ \textcolor{keywordflow}{return}\ \{\};}
 \DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid_a0f1ac19d52fc6667222f5b128ddaca60}{getAllVoxels}}();}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid-\/>getAllVoxels();}
 \DoxyCodeLine{00303\ \ \ \ \ \}}
 \DoxyCodeLine{00304\ \ \ \ \ }
-\DoxyCodeLine{00305\ \ \ \ \ std::vector<VoxelPosition>\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a4fe4a41885ccffb69490e678af084dbe}{getAllVoxels}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a4fe4a41885ccffb69490e678af084dbe}{getAllVoxels}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aef0f8cf535be74a39da7136d0b631971}{getActiveResolution}}());}
+\DoxyCodeLine{00305\ \ \ \ \ std::vector<VoxelPosition>\ getAllVoxels()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getAllVoxels(getActiveResolution());}
 \DoxyCodeLine{00307\ \ \ \ \ \}}
 \DoxyCodeLine{00308\ \ \ \ \ }
 \DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//\ Event\ dispatcher}}
-\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_a025e81ac757ab1b68f04c4f60427e796}{setEventDispatcher}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher)\ \{}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordtype}{void}\ setEventDispatcher(Events::EventDispatcher*\ eventDispatcher)\ \{}
 \DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ m\_eventDispatcher\ =\ eventDispatcher;}
 \DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ m\_workspaceManager-\/>setEventDispatcher(eventDispatcher);}
 \DoxyCodeLine{00314\ \ \ \ \ \}}
 \DoxyCodeLine{00315\ \ \ \ \ }
 \DoxyCodeLine{00316\ \ \ \ \ \textcolor{comment}{//\ Performance\ metrics}}
-\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics}{PerformanceMetrics}}\ \{}
-\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_a31db150e0a4e3beec51a9053a93f8529}{totalVoxels}};}
-\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af6652d24143bf531a2870a8225d00ce2}{totalMemoryUsage}};}
-\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af9fc2fa24ad921f5effdfd8fd7fb1b96}{memoryEfficiency}};}
-\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ std::array<size\_t,\ static\_cast<int>(VoxelResolution::COUNT)>\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_aaec7365619b5a5787d46002ddf2cf0d0}{voxelsByResolution}};}
-\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ std::array<size\_t,\ static\_cast<int>(VoxelResolution::COUNT)>\ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_afb01418f6a7d45b75d4510cec0177d9a}{memoryByResolution}};}
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keyword}{struct\ }PerformanceMetrics\ \{}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalVoxels;}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalMemoryUsage;}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ memoryEfficiency;}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ std::array<size\_t,\ static\_cast<int>(VoxelResolution::COUNT)>\ voxelsByResolution;}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ std::array<size\_t,\ static\_cast<int>(VoxelResolution::COUNT)>\ memoryByResolution;}
 \DoxyCodeLine{00323\ \ \ \ \ \};}
 \DoxyCodeLine{00324\ \ \ \ \ }
-\DoxyCodeLine{00325\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics}{PerformanceMetrics}}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_aa36cd4b63a6f3c1507d9c16f2590aeae}{getPerformanceMetrics}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00325\ \ \ \ \ PerformanceMetrics\ getPerformanceMetrics()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics}{PerformanceMetrics}}\ metrics\ =\ \{\};}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ PerformanceMetrics\ metrics\ =\ \{\};}
 \DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ static\_cast<int>(VoxelResolution::COUNT);\ ++i)\ \{}
 \DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_grids[i])\ \{}
-\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_aaec7365619b5a5787d46002ddf2cf0d0}{voxelsByResolution}}[i]\ =\ m\_grids[i]-\/>getVoxelCount();}
-\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_afb01418f6a7d45b75d4510cec0177d9a}{memoryByResolution}}[i]\ =\ m\_grids[i]-\/>getMemoryUsage();}
-\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_a31db150e0a4e3beec51a9053a93f8529}{totalVoxels}}\ +=\ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_aaec7365619b5a5787d46002ddf2cf0d0}{voxelsByResolution}}[i];}
-\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af6652d24143bf531a2870a8225d00ce2}{totalMemoryUsage}}\ +=\ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_afb01418f6a7d45b75d4510cec0177d9a}{memoryByResolution}}[i];}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.voxelsByResolution[i]\ =\ m\_grids[i]-\/>getVoxelCount();}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.memoryByResolution[i]\ =\ m\_grids[i]-\/>getMemoryUsage();}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.totalVoxels\ +=\ metrics.voxelsByResolution[i];}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ metrics.totalMemoryUsage\ +=\ metrics.memoryByResolution[i];}
 \DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ overall\ memory\ efficiency}}
-\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af6652d24143bf531a2870a8225d00ce2}{totalMemoryUsage}}\ >\ 0)\ \{}
-\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ theoreticalMinMemory\ =\ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_a31db150e0a4e3beec51a9053a93f8529}{totalVoxels}}\ *\ \textcolor{keyword}{sizeof}(bool);}
-\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af9fc2fa24ad921f5effdfd8fd7fb1b96}{memoryEfficiency}}\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(theoreticalMinMemory)\ /\ }
-\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af6652d24143bf531a2870a8225d00ce2}{totalMemoryUsage}});}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (metrics.totalMemoryUsage\ >\ 0)\ \{}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ theoreticalMinMemory\ =\ metrics.totalVoxels\ *\ \textcolor{keyword}{sizeof}(bool);}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ metrics.memoryEfficiency\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(theoreticalMinMemory)\ /\ }
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(metrics.totalMemoryUsage);}
 \DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ metrics.\mbox{\hyperlink{struct_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager_1_1_performance_metrics_af9fc2fa24ad921f5effdfd8fd7fb1b96}{memoryEfficiency}}\ =\ 1.0f;}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ metrics.memoryEfficiency\ =\ 1.0f;}
 \DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ metrics;}
@@ -354,16 +354,16 @@
 \DoxyCodeLine{00350\ \ \ \ \ }
 \DoxyCodeLine{00351\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00352\ \ \ \ \ std::array<std::unique\_ptr<VoxelGrid>,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(VoxelResolution::COUNT)>\ m\_grids;}
-\DoxyCodeLine{00353\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ m\_activeResolution;}
+\DoxyCodeLine{00353\ \ \ \ \ VoxelResolution\ m\_activeResolution;}
 \DoxyCodeLine{00354\ \ \ \ \ std::unique\_ptr<WorkspaceManager>\ m\_workspaceManager;}
-\DoxyCodeLine{00355\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ m\_eventDispatcher;}
+\DoxyCodeLine{00355\ \ \ \ \ Events::EventDispatcher*\ m\_eventDispatcher;}
 \DoxyCodeLine{00356\ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
 \DoxyCodeLine{00357\ \ \ \ \ }
 \DoxyCodeLine{00358\ \ \ \ \ \textcolor{keywordtype}{void}\ initializeGrids()\ \{}
-\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ workspaceSize\ =\ m\_workspaceManager-\/>getSize();}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ Math::Vector3f\ workspaceSize\ =\ m\_workspaceManager-\/>getSize();}
 \DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ static\_cast<int>(VoxelResolution::COUNT);\ ++i)\ \{}
-\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\textcolor{keyword}{>}(i);}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ VoxelResolution\ resolution\ =\ \textcolor{keyword}{static\_cast<}VoxelResolution\textcolor{keyword}{>}(i);}
 \DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ m\_grids[i]\ =\ std::make\_unique<VoxelGrid>(resolution,\ workspaceSize);}
 \DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00365\ \ \ \ \ \}}
@@ -378,7 +378,7 @@
 \DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00375\ \ \ \ \ \}}
 \DoxyCodeLine{00376\ \ \ \ \ }
-\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchVoxelChangedEvent(\textcolor{keyword}{const}\ Math::Vector3i\&\ position,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ resolution,\ }
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchVoxelChangedEvent(\textcolor{keyword}{const}\ Math::Vector3i\&\ position,\ VoxelResolution\ resolution,\ }
 \DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue,\ \textcolor{keywordtype}{bool}\ newValue)\ \{}
 \DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_eventDispatcher)\ \{}
 \DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ Events::VoxelChangedEvent\ event(position,\ resolution,\ oldValue,\ newValue);}

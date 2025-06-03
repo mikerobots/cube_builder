@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "../../../bin/VoxelEditor_VoxelData_Tests"
+  "../../../bin/VoxelEditor_VoxelData_Tests.pdb"
   "CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_SparseOctree.cpp.o"
   "CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_SparseOctree.cpp.o.d"
   "CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_VoxelDataManager.cpp.o"
@@ -9,8 +11,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_VoxelTypes.cpp.o.d"
   "CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_WorkspaceManager.cpp.o"
   "CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_WorkspaceManager.cpp.o.d"
-  "VoxelEditor_VoxelData_Tests"
-  "VoxelEditor_VoxelData_Tests.pdb"
   "VoxelEditor_VoxelData_Tests[1]_tests.cmake"
 )
 

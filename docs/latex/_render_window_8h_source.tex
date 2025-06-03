@@ -1,5 +1,5 @@
 \doxysection{Render\+Window.\+h}
-\hypertarget{_render_window_8h_source}{}\label{_render_window_8h_source}\index{apps/cli/include/cli/RenderWindow.h@{apps/cli/include/cli/RenderWindow.h}}
+\label{_render_window_8h_source}\index{apps/cli/include/cli/RenderWindow.h@{apps/cli/include/cli/RenderWindow.h}}
 \mbox{\hyperlink{_render_window_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -12,77 +12,77 @@
 \DoxyCodeLine{00008\ \textcolor{comment}{//\ Forward\ declarations}}
 \DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }GLFWwindow;}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}};}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }Application;}
 \DoxyCodeLine{00014\ }
 \DoxyCodeLine{00015\ \textcolor{comment}{//\ Mouse\ button\ definitions}}
-\DoxyCodeLine{00016\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287baf}{MouseButton}}\ \{}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa945d5e233cf7d6240f6b783b36a374ff}{Left}}\ =\ 0,}
-\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa92b09c7c48c520c3c55e497875da437c}{Right}}\ =\ 1,}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafab1ca34f82e83c52b010f86955f264e05}{Middle}}\ =\ 2}
+\DoxyCodeLine{00016\ \textcolor{keyword}{enum\ class}\ MouseButton\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ Left\ =\ 0,}
+\DoxyCodeLine{00018\ \ \ \ \ Right\ =\ 1,}
+\DoxyCodeLine{00019\ \ \ \ \ Middle\ =\ 2}
 \DoxyCodeLine{00020\ \};}
 \DoxyCodeLine{00021\ }
 \DoxyCodeLine{00022\ \textcolor{comment}{//\ Mouse\ event\ data}}
-\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event}{MouseEvent}}\ \{}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_a65225803f8986860d87261809a020f9e}{x}};}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_a0aeedc60aea7a96022c07f02b08f8a74}{y}};}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_af40dbdfded67bf2b1aa77ba20667237c}{deltaX}};}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_a0c8d189f012742dba8f327f94c35d3c7}{deltaY}};}
-\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287baf}{MouseButton}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_a04992a74558018c04b29590ee8f59b16}{button}};}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_ae4e451dc140fb2ecf5bfcd69586266a8}{pressed}};}
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_ac33c89d2ea6d3874276b14e9ad219f5a}{shift}};}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_a94f387c607fc292a20278219da9881a5}{ctrl}};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event_a0dfe512a80db65f1817b799ef6370d48}{alt}};}
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }MouseEvent\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ x;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ y;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ deltaX;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ deltaY;}
+\DoxyCodeLine{00028\ \ \ \ \ MouseButton\ button;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ pressed;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ shift;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ ctrl;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ alt;}
 \DoxyCodeLine{00033\ \};}
 \DoxyCodeLine{00034\ }
 \DoxyCodeLine{00035\ \textcolor{comment}{//\ Key\ event\ data}}
-\DoxyCodeLine{00036\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_key_event}{KeyEvent}}\ \{}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_a8c67f129c013e3cb8f9c37ed4b156444}{key}};}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_a83bd8dbb94827432df5797c8b089f7bc}{scancode}};}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_a880aa8efb73550164b4ba77ba45c6c02}{pressed}};}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_abcb2867d1d40cfda1729b9602f20e823}{repeat}};}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_a163ffaa72846fe32d945b944fd5af773}{shift}};}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_a64e0d77a8a44d1a2398cb405dbcaee48}{ctrl}};}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event_a06cb214e66276a017cca934946371582}{alt}};}
+\DoxyCodeLine{00036\ \textcolor{keyword}{struct\ }KeyEvent\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ key;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ scancode;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ pressed;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ repeat;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ shift;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ ctrl;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ alt;}
 \DoxyCodeLine{00044\ \};}
 \DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_render_window_a6a744de8485c71f2e31ca553336756c8}{RenderWindow}}\ \{}
+\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }RenderWindow\ \{}
 \DoxyCodeLine{00047\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a6a744de8485c71f2e31ca553336756c8}{RenderWindow}}(\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ app);}
-\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_aac19dbd09b9023ce1029b66b34722b95}{\string~RenderWindow}}();}
+\DoxyCodeLine{00048\ \ \ \ \ RenderWindow(Application*\ app);}
+\DoxyCodeLine{00049\ \ \ \ \ \string~RenderWindow();}
 \DoxyCodeLine{00050\ \ \ \ \ }
 \DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Window\ management}}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_adb0d0d15e0a5e8611a4ef4e09f4cf6e8}{create}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keyword}{const}\ std::string\&\ title);}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a99d54b80a74dac2d84d67b8a171a3ff6}{destroy}}();}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a08f593cfa477314a1519016130803d63}{isOpen}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_aa72ca1408891f57ff7b0f636e6a7d640}{pollEvents}}();}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_aa4e2e5f6770abace8c73f3fbd6d69a37}{swapBuffers}}();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ create(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keyword}{const}\ std::string\&\ title);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ destroy();}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ isOpen()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ pollEvents();}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ swapBuffers();}
 \DoxyCodeLine{00057\ \ \ \ \ }
 \DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Window\ properties}}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_afa691cf8b5e79b4b5b3ab401fae70099}{getWidth}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_width;\ \}}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_aa048e36ae2d2a46b223fc3e8413e4c02}{getHeight}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_height;\ \}}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_ada3c57952b0cc560bc2dce401fda3373}{getAspectRatio}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_width)\ /\ m\_height;\ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{int}\ getWidth()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_width;\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ getHeight()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_height;\ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{float}\ getAspectRatio()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_width)\ /\ m\_height;\ \}}
 \DoxyCodeLine{00062\ \ \ \ \ }
 \DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Coordinate\ conversion}}
-\DoxyCodeLine{00064\ \ \ \ \ glm::vec2\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a265f4d6210d9ef8fda3f4d11e645d917}{getMousePosition}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00065\ \ \ \ \ glm::vec2\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a268a3de854f510b2b57c1b57cc8a4ab8}{getNormalizedMousePosition}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00066\ \ \ \ \ glm::vec3\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a6b064cfe4b17ac928ef43cf177825e61}{getMouseRay}}(\textcolor{keyword}{const}\ glm::mat4\&\ viewMatrix,\ \textcolor{keyword}{const}\ glm::mat4\&\ projMatrix)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ \ \ \ \ glm::vec2\ getMousePosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ \ \ \ \ glm::vec2\ getNormalizedMousePosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00066\ \ \ \ \ glm::vec3\ getMouseRay(\textcolor{keyword}{const}\ glm::mat4\&\ viewMatrix,\ \textcolor{keyword}{const}\ glm::mat4\&\ projMatrix)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00067\ \ \ \ \ }
 \DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ OpenGL\ context}}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_ab36f7d568032ea6214b3d5e5cc5f9512}{makeContextCurrent}}();}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ makeContextCurrent();}
 \DoxyCodeLine{00070\ \ \ \ \ }
 \DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Event\ callbacks}}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_render_window_ac6423e963fec43e51cde8bdfc83f7029}{MouseCallback}}\ =\ std::function<void(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_mouse_event}{MouseEvent}}\&)>;}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_render_window_a43d1e839358b0ed9c720640bf01b0377}{KeyCallback}}\ =\ std::function<void(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_key_event}{KeyEvent}}\&)>;}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_render_window_ac5f901e68363b926a212ba13f02dda13}{ResizeCallback}}\ =\ std::function<void(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)>;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{using\ }MouseCallback\ =\ std::function<void(\textcolor{keyword}{const}\ MouseEvent\&)>;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{using\ }KeyCallback\ =\ std::function<void(\textcolor{keyword}{const}\ KeyEvent\&)>;}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{using\ }ResizeCallback\ =\ std::function<void(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height)>;}
 \DoxyCodeLine{00075\ \ \ \ \ }
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a9e5dc5dd07ed2b4d1f12fe8fa127ba52}{setMouseCallback}}(\mbox{\hyperlink{class_voxel_editor_1_1_render_window_ac6423e963fec43e51cde8bdfc83f7029}{MouseCallback}}\ callback)\ \{\ m\_mouseCallback\ =\ callback;\ \}}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a08acbbcfc223c5d79c82f4cfe3d4bc27}{setKeyCallback}}(\mbox{\hyperlink{class_voxel_editor_1_1_render_window_a43d1e839358b0ed9c720640bf01b0377}{KeyCallback}}\ callback)\ \{\ m\_keyCallback\ =\ callback;\ \}}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a5a29cb29aaf0c32a83151cf4d90d71d0}{setResizeCallback}}(\mbox{\hyperlink{class_voxel_editor_1_1_render_window_ac5f901e68363b926a212ba13f02dda13}{ResizeCallback}}\ callback)\ \{\ m\_resizeCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ setMouseCallback(MouseCallback\ callback)\ \{\ m\_mouseCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ setKeyCallback(KeyCallback\ callback)\ \{\ m\_keyCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ setResizeCallback(ResizeCallback\ callback)\ \{\ m\_resizeCallback\ =\ callback;\ \}}
 \DoxyCodeLine{00079\ \ \ \ \ }
 \DoxyCodeLine{00080\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ m\_app;}
+\DoxyCodeLine{00081\ \ \ \ \ Application*\ m\_app;}
 \DoxyCodeLine{00082\ \ \ \ \ GLFWwindow*\ m\_window\ =\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_width\ =\ 1280;}
 \DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_height\ =\ 720;}
@@ -94,9 +94,9 @@
 \DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{double}\ m\_lastMouseY\ =\ 0.0;}
 \DoxyCodeLine{00091\ \ \ \ \ }
 \DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ Event\ callbacks}}
-\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_ac6423e963fec43e51cde8bdfc83f7029}{MouseCallback}}\ m\_mouseCallback;}
-\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_a43d1e839358b0ed9c720640bf01b0377}{KeyCallback}}\ m\_keyCallback;}
-\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_render_window_ac5f901e68363b926a212ba13f02dda13}{ResizeCallback}}\ m\_resizeCallback;}
+\DoxyCodeLine{00093\ \ \ \ \ MouseCallback\ m\_mouseCallback;}
+\DoxyCodeLine{00094\ \ \ \ \ KeyCallback\ m\_keyCallback;}
+\DoxyCodeLine{00095\ \ \ \ \ ResizeCallback\ m\_resizeCallback;}
 \DoxyCodeLine{00096\ \ \ \ \ }
 \DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ GLFW\ callbacks\ (static)}}
 \DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ onMouseButton(GLFWwindow*\ window,\ \textcolor{keywordtype}{int}\ button,\ \textcolor{keywordtype}{int}\ action,\ \textcolor{keywordtype}{int}\ mods);}

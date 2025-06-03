@@ -1,52 +1,52 @@
 \doxysection{Event\+Handler.\+h}
-\hypertarget{_event_handler_8h_source}{}\label{_event_handler_8h_source}\index{foundation/events/EventHandler.h@{foundation/events/EventHandler.h}}
+\label{_event_handler_8h_source}\index{foundation/events/EventHandler.h@{foundation/events/EventHandler.h}}
 \mbox{\hyperlink{_event_handler_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{EventBase.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}EventBase.h"{}}}
 \DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_events}{Events}}\ \{}
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Events\ \{}
 \DoxyCodeLine{00007\ }
 \DoxyCodeLine{00008\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{EventHandler}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }EventHandler\ \{}
 \DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a101124b1461dcfd2a7926b694d99631c}{\string~EventHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~EventHandler()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00012\ \ \ \ \ }
-\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a57c2e7e77e162d607c8a12970e579a96}{handleEvent}}(\textcolor{keyword}{const}\ EventType\&\ event)\ =\ 0;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ handleEvent(\textcolor{keyword}{const}\ EventType\&\ event)\ =\ 0;}
 \DoxyCodeLine{00014\ \ \ \ \ }
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_a104c3ddac92f34b78aac3c14a17d0de8}{shouldHandle}}(\textcolor{keyword}{const}\ EventType\&\ event)\textcolor{keyword}{\ const\ }\{\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ shouldHandle(\textcolor{keyword}{const}\ EventType\&\ event)\textcolor{keyword}{\ const\ }\{\ }
 \DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ }
 \DoxyCodeLine{00017\ \ \ \ \ \}}
 \DoxyCodeLine{00018\ \ \ \ \ }
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler_ae91aaf86381ac62e6af710432291d092}{getPriority}}()\textcolor{keyword}{\ const\ }\{\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ getPriority()\textcolor{keyword}{\ const\ }\{\ }
 \DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;\ }
 \DoxyCodeLine{00021\ \ \ \ \ \}}
 \DoxyCodeLine{00022\ \};}
 \DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base}{HandlerEntryBase}}\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }HandlerEntryBase\ \{}
 \DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_af40f5e073a4361bacd6ef1dacfb66263}{\string~HandlerEntryBase}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_a44991d0c2e593633d8e6b8a6d5deec9e}{handleEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{EventBase}}\&\ event)\ =\ 0;}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_a4726ab5dcfed41ee9a319ad49ad51025}{shouldHandle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{EventBase}}\&\ event)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base_ad9f91cfea542e35d2e690a4cac183a8a}{getPriority}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~HandlerEntryBase()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ handleEvent(\textcolor{keyword}{const}\ EventBase\&\ event)\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ shouldHandle(\textcolor{keyword}{const}\ EventBase\&\ event)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ getPriority()\ \textcolor{keyword}{const}\ =\ 0;}
 \DoxyCodeLine{00030\ \};}
 \DoxyCodeLine{00031\ }
 \DoxyCodeLine{00032\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a34461a6f7c6323699d364812c6864daf}{HandlerEntry}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_base}{HandlerEntryBase}}\ \{}
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }HandlerEntry\ :\ \textcolor{keyword}{public}\ HandlerEntryBase\ \{}
 \DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a34461a6f7c6323699d364812c6864daf}{HandlerEntry}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{EventHandler<EventType>}}*\ handler,\ \textcolor{keywordtype}{int}\ priority)}
+\DoxyCodeLine{00035\ \ \ \ \ HandlerEntry(EventHandler<EventType>*\ handler,\ \textcolor{keywordtype}{int}\ priority)}
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ :\ m\_handler(handler),\ m\_priority(priority)\ \{\}}
 \DoxyCodeLine{00037\ \ \ \ \ }
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a66d8733abebb2a2afe4088ded6b4a702}{handleEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{EventBase}}\&\ event)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ handleEvent(\textcolor{keyword}{const}\ EventBase\&\ event)\textcolor{keyword}{\ override\ }\{}
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ EventType*\ typedEvent\ =\ \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const\ }EventType*\textcolor{keyword}{>}(\&event);}
 \DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (typedEvent\ \&\&\ m\_handler)\ \{}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ m\_handler-\/>handleEvent(*typedEvent);}
 \DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00043\ \ \ \ \ \}}
 \DoxyCodeLine{00044\ \ \ \ \ }
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a898426d14269587b32bc6bae73741afc}{shouldHandle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{EventBase}}\&\ event)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ shouldHandle(\textcolor{keyword}{const}\ EventBase\&\ event)\textcolor{keyword}{\ const\ override\ }\{}
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ EventType*\ typedEvent\ =\ \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const\ }EventType*\textcolor{keyword}{>}(\&event);}
 \DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (typedEvent\ \&\&\ m\_handler)\ \{}
 \DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_handler-\/>shouldHandle(*typedEvent);}
@@ -54,16 +54,16 @@
 \DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00051\ \ \ \ \ \}}
 \DoxyCodeLine{00052\ \ \ \ \ }
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a5919a8a0dc98aff3bc1b3bce0cf8dd46}{getPriority}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ getPriority()\textcolor{keyword}{\ const\ override\ }\{}
 \DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_priority;}
 \DoxyCodeLine{00055\ \ \ \ \ \}}
 \DoxyCodeLine{00056\ \ \ \ \ }
-\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{EventHandler<EventType>}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_handler_entry_a05bbb26262ce106b7683fa2d9359a8d7}{getHandler}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00057\ \ \ \ \ EventHandler<EventType>*\ getHandler()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_handler;}
 \DoxyCodeLine{00059\ \ \ \ \ \}}
 \DoxyCodeLine{00060\ \ \ \ \ }
 \DoxyCodeLine{00061\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{EventHandler<EventType>}}*\ m\_handler;}
+\DoxyCodeLine{00062\ \ \ \ \ EventHandler<EventType>*\ m\_handler;}
 \DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_priority;}
 \DoxyCodeLine{00064\ \};}
 \DoxyCodeLine{00065\ }

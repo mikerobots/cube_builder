@@ -715,83 +715,92 @@ var NAVTREE =
       ] ]
     ] ],
     [ "INTENT", "md__i_n_t_e_n_t.html", null ],
+    [ "Interactive Voxel Editor CLI Session", "md_interactive__session.html", [
+      [ "Starting the CLI", "md_interactive__session.html#autotoc_md550", null ],
+      [ "Session 1: Create a Simple Cube", "md_interactive__session.html#autotoc_md551", null ],
+      [ "Session 2: Using Fill Command", "md_interactive__session.html#autotoc_md552", null ],
+      [ "Session 3: Working with Groups", "md_interactive__session.html#autotoc_md553", null ],
+      [ "Session 4: Camera Controls", "md_interactive__session.html#autotoc_md554", null ],
+      [ "Session 5: Undo/Redo Operations", "md_interactive__session.html#autotoc_md555", null ],
+      [ "Tips:", "md_interactive__session.html#autotoc_md556", null ]
+    ] ],
     [ "Voxel Editor Project Summary", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html", [
-      [ "Project Overview", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md550", null ],
-      [ "Implementation Status", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md551", [
-        [ "✅ Foundation Layer (5 systems, 142+ tests)", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md552", null ],
-        [ "✅ Core Systems (12 systems, 400+ tests)", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md553", null ],
-        [ "✅ CLI Application", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md554", null ]
+      [ "Project Overview", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md558", null ],
+      [ "Implementation Status", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md559", [
+        [ "✅ Foundation Layer (5 systems, 142+ tests)", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md560", null ],
+        [ "✅ Core Systems (12 systems, 400+ tests)", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md561", null ],
+        [ "✅ CLI Application", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md562", null ]
       ] ],
-      [ "File Statistics", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md555", null ],
-      [ "Key Features", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md556", [
-        [ "Multi-Resolution System", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md557", null ],
-        [ "Advanced Editing", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md558", null ],
-        [ "File Support", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md559", null ],
-        [ "Performance", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md560", null ]
+      [ "File Statistics", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md563", null ],
+      [ "Key Features", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md564", [
+        [ "Multi-Resolution System", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md565", null ],
+        [ "Advanced Editing", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md566", null ],
+        [ "File Support", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md567", null ],
+        [ "Performance", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md568", null ]
       ] ],
-      [ "Testing Infrastructure", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md561", [
-        [ "Unit Tests", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md562", null ],
-        [ "Integration Tests", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md563", null ]
+      [ "Testing Infrastructure", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md569", [
+        [ "Unit Tests", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md570", null ],
+        [ "Integration Tests", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md571", null ]
       ] ],
-      [ "Build System", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md564", null ],
-      [ "Documentation", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md565", null ],
-      [ "Next Steps", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md566", [
-        [ "Immediate", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md567", null ],
-        [ "Future Development", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md568", null ]
+      [ "Build System", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md572", null ],
+      [ "Documentation", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md573", null ],
+      [ "Next Steps", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md574", [
+        [ "Immediate", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md575", null ],
+        [ "Future Development", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md576", null ]
       ] ],
-      [ "Command Quick Reference", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md569", null ],
-      [ "Architecture Highlights", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md570", [
-        [ "Modular Design", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md571", null ],
-        [ "Performance Optimized", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md572", null ],
-        [ "Future-Proof", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md573", null ]
+      [ "Command Quick Reference", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md577", null ],
+      [ "Architecture Highlights", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md578", [
+        [ "Modular Design", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md579", null ],
+        [ "Performance Optimized", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md580", null ],
+        [ "Future-Proof", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md581", null ]
       ] ],
-      [ "Conclusion", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md574", null ]
+      [ "Conclusion", "md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md582", null ]
     ] ],
     [ "Voxel Editor", "md__r_e_a_d_m_e.html", [
-      [ "Features", "md__r_e_a_d_m_e.html#autotoc_md576", null ],
-      [ "Project Structure", "md__r_e_a_d_m_e.html#autotoc_md577", null ],
-      [ "Building", "md__r_e_a_d_m_e.html#autotoc_md578", [
-        [ "Prerequisites", "md__r_e_a_d_m_e.html#autotoc_md579", null ],
-        [ "Quick Build", "md__r_e_a_d_m_e.html#autotoc_md580", null ],
-        [ "Build Options", "md__r_e_a_d_m_e.html#autotoc_md581", null ]
+      [ "Features", "md__r_e_a_d_m_e.html#autotoc_md584", null ],
+      [ "Project Structure", "md__r_e_a_d_m_e.html#autotoc_md585", null ],
+      [ "Building", "md__r_e_a_d_m_e.html#autotoc_md586", [
+        [ "Prerequisites", "md__r_e_a_d_m_e.html#autotoc_md587", null ],
+        [ "Quick Build", "md__r_e_a_d_m_e.html#autotoc_md588", null ],
+        [ "Build Options", "md__r_e_a_d_m_e.html#autotoc_md589", null ]
       ] ],
-      [ "Running the CLI Application", "md__r_e_a_d_m_e.html#autotoc_md582", null ],
-      [ "CLI Commands", "md__r_e_a_d_m_e.html#autotoc_md583", [
-        [ "File Operations", "md__r_e_a_d_m_e.html#autotoc_md584", null ],
-        [ "Edit Operations", "md__r_e_a_d_m_e.html#autotoc_md585", null ],
-        [ "View Controls", "md__r_e_a_d_m_e.html#autotoc_md586", null ],
-        [ "Selection", "md__r_e_a_d_m_e.html#autotoc_md587", null ],
-        [ "Groups", "md__r_e_a_d_m_e.html#autotoc_md588", null ],
-        [ "System", "md__r_e_a_d_m_e.html#autotoc_md589", null ]
+      [ "Running the CLI Application", "md__r_e_a_d_m_e.html#autotoc_md590", null ],
+      [ "CLI Commands", "md__r_e_a_d_m_e.html#autotoc_md591", [
+        [ "File Operations", "md__r_e_a_d_m_e.html#autotoc_md592", null ],
+        [ "Edit Operations", "md__r_e_a_d_m_e.html#autotoc_md593", null ],
+        [ "View Controls", "md__r_e_a_d_m_e.html#autotoc_md594", null ],
+        [ "Selection", "md__r_e_a_d_m_e.html#autotoc_md595", null ],
+        [ "Groups", "md__r_e_a_d_m_e.html#autotoc_md596", null ],
+        [ "System", "md__r_e_a_d_m_e.html#autotoc_md597", null ]
       ] ],
-      [ "Mouse Controls", "md__r_e_a_d_m_e.html#autotoc_md590", null ],
-      [ "Keyboard Shortcuts", "md__r_e_a_d_m_e.html#autotoc_md591", null ],
-      [ "Architecture", "md__r_e_a_d_m_e.html#autotoc_md592", [
-        [ "Foundation Layer", "md__r_e_a_d_m_e.html#autotoc_md593", null ],
-        [ "Core Systems", "md__r_e_a_d_m_e.html#autotoc_md594", null ]
+      [ "Mouse Controls", "md__r_e_a_d_m_e.html#autotoc_md598", null ],
+      [ "Keyboard Shortcuts", "md__r_e_a_d_m_e.html#autotoc_md599", null ],
+      [ "Architecture", "md__r_e_a_d_m_e.html#autotoc_md600", [
+        [ "Foundation Layer", "md__r_e_a_d_m_e.html#autotoc_md601", null ],
+        [ "Core Systems", "md__r_e_a_d_m_e.html#autotoc_md602", null ]
       ] ],
-      [ "Testing", "md__r_e_a_d_m_e.html#autotoc_md595", null ],
-      [ "Performance", "md__r_e_a_d_m_e.html#autotoc_md596", null ],
-      [ "Future Development", "md__r_e_a_d_m_e.html#autotoc_md597", null ],
-      [ "License", "md__r_e_a_d_m_e.html#autotoc_md598", null ],
-      [ "Contributing", "md__r_e_a_d_m_e.html#autotoc_md599", null ]
+      [ "Testing", "md__r_e_a_d_m_e.html#autotoc_md603", null ],
+      [ "Performance", "md__r_e_a_d_m_e.html#autotoc_md604", null ],
+      [ "Future Development", "md__r_e_a_d_m_e.html#autotoc_md605", null ],
+      [ "License", "md__r_e_a_d_m_e.html#autotoc_md606", null ],
+      [ "Contributing", "md__r_e_a_d_m_e.html#autotoc_md607", null ]
     ] ],
     [ "Voxel Editor Development TODO", "md__t_o_d_o.html", [
-      [ "Project Status: Core/VoxelData Complete! 🎉", "md__t_o_d_o.html#autotoc_md601", [
-        [ "✅ Completed", "md__t_o_d_o.html#autotoc_md602", null ],
-        [ "🎉 Current Phase: Build System Integration", "md__t_o_d_o.html#autotoc_md603", null ],
-        [ "✅ Apps/CLI Complete Implementation", "md__t_o_d_o.html#autotoc_md604", null ],
-        [ "🔨 CLI Feature Summary", "md__t_o_d_o.html#autotoc_md605", null ],
-        [ "✅ Final Steps Complete", "md__t_o_d_o.html#autotoc_md606", null ],
-        [ "🔧 Current Build Status", "md__t_o_d_o.html#autotoc_md607", null ],
-        [ "📋 TODO - Future Phases", "md__t_o_d_o.html#autotoc_md608", null ]
+      [ "Project Status: Core/VoxelData Complete! 🎉", "md__t_o_d_o.html#autotoc_md609", [
+        [ "✅ Completed", "md__t_o_d_o.html#autotoc_md610", null ],
+        [ "🎉 Current Phase: Build System Integration", "md__t_o_d_o.html#autotoc_md611", null ],
+        [ "✅ Apps/CLI Complete Implementation", "md__t_o_d_o.html#autotoc_md612", null ],
+        [ "🔨 CLI Feature Summary", "md__t_o_d_o.html#autotoc_md613", null ],
+        [ "✅ Final Steps Complete", "md__t_o_d_o.html#autotoc_md614", null ],
+        [ "🔧 Current Build Status", "md__t_o_d_o.html#autotoc_md615", null ],
+        [ "📋 TODO - Future Phases", "md__t_o_d_o.html#autotoc_md616", null ]
       ] ],
-      [ "Development Guidelines", "md__t_o_d_o.html#autotoc_md609", null ],
-      [ "Current Focus", "md__t_o_d_o.html#autotoc_md610", [
-        [ "🔧 Current Build Status", "md__t_o_d_o.html#autotoc_md611", null ]
+      [ "Development Guidelines", "md__t_o_d_o.html#autotoc_md617", null ],
+      [ "Current Focus", "md__t_o_d_o.html#autotoc_md618", [
+        [ "🔧 Current Build Status", "md__t_o_d_o.html#autotoc_md619", null ]
       ] ],
-      [ "Quick Start Commands", "md__t_o_d_o.html#autotoc_md612", null ],
-      [ "Build Status", "md__t_o_d_o.html#autotoc_md613", null ]
+      [ "Quick Start Commands", "md__t_o_d_o.html#autotoc_md620", null ],
+      [ "Build Status", "md__t_o_d_o.html#autotoc_md621", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -857,18 +866,18 @@ var NAVTREEINDEX =
 "md__d_e_s_i_g_n.html#autotoc_md490",
 "md_core_2rendering_2_d_e_s_i_g_n.html#autotoc_md269",
 "md_foundation_2memory_2_t_o_d_o.html#autotoc_md545",
-"namespace_voxel_editor_1_1_input.html#a8b2a9d37fd35de3bfe892807b743a530a9b869c510c75c5827ac82e49d4340927",
-"namespace_voxel_editor_1_1_rendering.html#af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2",
-"struct_voxel_editor_1_1_events_1_1_v_r_grab_event.html#aed5faa114bcb5d490aa78b47c9817dc7",
-"struct_voxel_editor_1_1_file_i_o_1_1_project_metadata.html#aeac54c8a1c7b19557489bef3c72db7de",
-"struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event.html",
-"struct_voxel_editor_1_1_input_1_1_input_mapping.html#aa6ee1056700a3bfcf21b1330becb7500",
-"struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_profile_data.html#a336ad411d818eac341d095e1ab280636",
-"struct_voxel_editor_1_1_rendering_1_1_render_stats.html#a2a9ebe8e661bb6781aef17622b128227",
-"struct_voxel_editor_1_1_rendering_1_1_vertex_layout_1_1_attribute.html#a901be7bacd9c639f5802c3c77d06b28c",
-"struct_voxel_editor_1_1_surface_gen_1_1_surface_settings.html#aa766712eb75025cd7355b5b3a3cdaa2b",
-"test___camera_controller_8cpp.html#a57473406ef8e4e6269eda8583cb25960",
-"test___render_stats_8cpp.html#ab34d00bb78c30f758e72d58b917745f6"
+"namespace_voxel_editor_1_1_input.html#a8b2a9d37fd35de3bfe892807b743a530a88183b946cc5f0e8c96b2e66e1c74a7e",
+"namespace_voxel_editor_1_1_rendering.html#ae7396e93f4d60e03702133999cb032faae3e73a4b6e7cfd12008a35f6a051b319",
+"struct_voxel_editor_1_1_events_1_1_v_r_grab_event.html",
+"struct_voxel_editor_1_1_file_i_o_1_1_project_metadata.html#a85cdeddb553178c23e40f110d2606dab",
+"struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event.html#a398474022f274d3270b8e69b98e0201e",
+"struct_voxel_editor_1_1_input_1_1_input_mapping.html#a87f6af2fa0c16f552be81d3bad00d65c",
+"struct_voxel_editor_1_1_logging_1_1_performance_profiler_1_1_memory_stats.html#af89bcd6fc5df6a7f6092760fd2d8494b",
+"struct_voxel_editor_1_1_rendering_1_1_render_stats.html#a21e8fcdd538d4362315f2fbb1127d26e",
+"struct_voxel_editor_1_1_rendering_1_1_vertex_layout_1_1_attribute.html#a106cd07d3e33dfc69171cfbbeba66122",
+"struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings.html#ae6e078fc2c36b3dadbd8dfb67038e541",
+"test___camera_8cpp.html#add65e4f11b4d1a4e06c06143f53fc45b",
+"test___render_stats_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

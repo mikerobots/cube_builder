@@ -2,6 +2,7 @@
 
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Matrix4f.h"
+#include "../../foundation/math/MathUtils.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
 
@@ -140,7 +141,7 @@ protected:
     }
 
     void updateProjectionMatrix() const {
-        m_projectionMatrix = Math::Matrix4f::perspective(m_fov, m_aspectRatio, m_nearPlane, m_farPlane);
+        m_projectionMatrix = Math::Matrix4f::perspective(Math::toRadians(m_fov), m_aspectRatio, m_nearPlane, m_farPlane);
     }
 
     void dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType changeType) {

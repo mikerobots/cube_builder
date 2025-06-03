@@ -1,5 +1,5 @@
 \chapter{Visual Feedback Subsystem }
-\hypertarget{md_core_2visual__feedback_2_d_e_s_i_g_n}{}\label{md_core_2visual__feedback_2_d_e_s_i_g_n}\index{Visual Feedback Subsystem@{Visual Feedback Subsystem}}
+\label{md_core_2visual__feedback_2_d_e_s_i_g_n}\index{Visual Feedback Subsystem@{Visual Feedback Subsystem}}
 \label{md_core_2visual__feedback_2_d_e_s_i_g_n_autotoc_md402}%
 \Hypertarget{md_core_2visual__feedback_2_d_e_s_i_g_n_autotoc_md402}%
 \hypertarget{md_core_2visual__feedback_2_d_e_s_i_g_n_autotoc_md403}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2visual__feedback_2_d_e_s_i_g_n_autotoc_md403}
@@ -43,7 +43,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setFaceHighlightEnabled(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Voxel\ preview}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelPreview(\textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ Color\&\ color\ =\ Color::Green());}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelPreview(\textcolor{keyword}{const}\ Vector3i\&\ position,\ VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ Color\&\ color\ =\ Color::Green());}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearVoxelPreview();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setVoxelPreviewEnabled(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{\ \ \ \ }
@@ -59,7 +59,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Workspace\ visualization}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderWorkspaceBounds(\textcolor{keyword}{const}\ BoundingBox\&\ workspace,\ \textcolor{keyword}{const}\ Color\&\ color\ =\ Color::Gray());}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGridLines(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{float}\ opacity\ =\ 0.1f);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGridLines(VoxelResolution\ resolution,\ \textcolor{keywordtype}{float}\ opacity\ =\ 0.1f);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setWorkspaceVisualizationEnabled(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Performance\ overlays}}
@@ -92,13 +92,13 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }Face\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3i\ voxelPosition;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{FaceDirection}}\ direction;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ resolution;}
+\DoxyCodeLine{\ \ \ \ FaceDirection\ direction;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ worldPosition;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ normal;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Face\ identification}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a313e18f70837de4dbc4b51d19577d1fd}{FaceId}}\ getId()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ FaceId\ getId()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Geometric\ properties}}
@@ -107,10 +107,10 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getArea()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042}{FaceDirection}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042a9f082d04c481aab268b9f614d2ffd129}{PositiveX}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042a963a8a64a09d54efc81b136ca6be21b2}{NegativeX}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042ac53c385ced96bd629c0f45a902aceba3}{PositiveY}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042ae4d5f02ceecd15caf66e9f0b2393c86b}{NegativeY}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042a1921c16ffdafaf04e378ca1b6774c0ce}{PositiveZ}},\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a44d09044625c340a6b651b55e261d042ada76df034cd139bd515761c8bb8e3090}{NegativeZ}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ FaceDirection\ \{}
+\DoxyCodeLine{\ \ \ \ PositiveX,\ NegativeX,}
+\DoxyCodeLine{\ \ \ \ PositiveY,\ NegativeY,}
+\DoxyCodeLine{\ \ \ \ PositiveZ,\ NegativeZ}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -118,17 +118,17 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }HighlightStyle\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color\ =\ Color::Yellow();}
+\DoxyCodeLine{\ \ \ \ Color\ color\ =\ Color::Yellow();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ intensity\ =\ 1.0f;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ pulseSpeed\ =\ 2.0f;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ animated\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ wireframe\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ lineWidth\ =\ 2.0f;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ blendMode\ =\ BlendMode::Alpha;}
+\DoxyCodeLine{\ \ \ \ BlendMode\ blendMode\ =\ BlendMode::Alpha;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ HighlightStyle\ Face();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ HighlightStyle\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{Selection}}();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ HighlightStyle\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03937134cedab9078be39a77ee3a48a0}{Group}}();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ HighlightStyle\ Selection();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ HighlightStyle\ Group();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ HighlightStyle\ Preview();}
 \DoxyCodeLine{\};}
 
@@ -137,9 +137,9 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }OutlineStyle\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color\ =\ Color::Green();}
+\DoxyCodeLine{\ \ \ \ Color\ color\ =\ Color::Green();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ lineWidth\ =\ 3.0f;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75f}{LinePattern}}\ pattern\ =\ LinePattern::Solid;}
+\DoxyCodeLine{\ \ \ \ LinePattern\ pattern\ =\ LinePattern::Solid;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ depthTest\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ opacity\ =\ 0.8f;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ animated\ =\ \textcolor{keyword}{false};}
@@ -151,11 +151,11 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ OutlineStyle\ WorkspaceBounds();}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75f}{LinePattern}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}{Solid}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75faeb656e41b6da91494775ecf47a51da91}{Dashed}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75fa90c09393a4c0970bc9a6703ad527781c}{Dotted}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75faef1c598821948808c4dbd57821281a31}{DashDot}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ LinePattern\ \{}
+\DoxyCodeLine{\ \ \ \ Solid,}
+\DoxyCodeLine{\ \ \ \ Dashed,}
+\DoxyCodeLine{\ \ \ \ Dotted,}
+\DoxyCodeLine{\ \ \ \ DashDot}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -166,7 +166,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\textcolor{keyword}{class\ }HighlightRenderer\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderFaceHighlight(\textcolor{keyword}{const}\ Face\&\ face,\ \textcolor{keyword}{const}\ HighlightStyle\&\ style);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelHighlight(\textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ HighlightStyle\&\ style);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelHighlight(\textcolor{keyword}{const}\ Vector3i\&\ position,\ VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ HighlightStyle\&\ style);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderMultiSelection(\textcolor{keyword}{const}\ SelectionSet\&\ selection,\ \textcolor{keyword}{const}\ HighlightStyle\&\ style);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Animation}}
@@ -179,8 +179,8 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }HighlightInstance\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebfa2ff4148554480a37f85efd299df04850}{Transform}}\ transform;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Transform\ transform;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Color\ color;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ animationPhase;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ HighlightStyle\ style;}
 \DoxyCodeLine{\ \ \ \ \};}
@@ -188,12 +188,12 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ std::vector<HighlightInstance>\ m\_highlights;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ m\_highlightMesh;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ m\_instanceBuffer;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_highlightShader;}
+\DoxyCodeLine{\ \ \ \ ShaderId\ m\_highlightShader;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_globalTime;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ updateInstanceBuffer();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderInstanced(\textcolor{keyword}{const}\ Camera\&\ camera);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ calculateAnimatedColor(\textcolor{keyword}{const}\ Color\&\ baseColor,\ \textcolor{keywordtype}{float}\ phase,\ \textcolor{keywordtype}{float}\ time)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Color\ calculateAnimatedColor(\textcolor{keyword}{const}\ Color\&\ baseColor,\ \textcolor{keywordtype}{float}\ phase,\ \textcolor{keywordtype}{float}\ time)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -202,8 +202,8 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }FaceDetector\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ Face\ detectFace(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
-\DoxyCodeLine{\ \ \ \ std::vector<Face>\ detectFacesInRegion(\textcolor{keyword}{const}\ BoundingBox\&\ region,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ Face\ detectFace(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ VoxelResolution\ resolution);}
+\DoxyCodeLine{\ \ \ \ std::vector<Face>\ detectFacesInRegion(\textcolor{keyword}{const}\ BoundingBox\&\ region,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ VoxelResolution\ resolution);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValidFaceForPlacement(\textcolor{keyword}{const}\ Face\&\ face,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid);}
 \DoxyCodeLine{\ \ \ \ Vector3i\ calculatePlacementPosition(\textcolor{keyword}{const}\ Face\&\ face);}
@@ -217,8 +217,8 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance;}
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ RaycastHit\ raycastVoxelGrid(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
-\DoxyCodeLine{\ \ \ \ Face\ createFaceFromHit(\textcolor{keyword}{const}\ RaycastHit\&\ hit,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ RaycastHit\ raycastVoxelGrid(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ VoxelResolution\ resolution);}
+\DoxyCodeLine{\ \ \ \ Face\ createFaceFromHit(\textcolor{keyword}{const}\ RaycastHit\&\ hit,\ VoxelResolution\ resolution);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValidFace(\textcolor{keyword}{const}\ Face\&\ face,\ \textcolor{keyword}{const}\ VoxelGrid\&\ grid);}
 \DoxyCodeLine{\};}
 
@@ -229,7 +229,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }OutlineRenderer\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelOutline(\textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelOutline(\textcolor{keyword}{const}\ Vector3i\&\ position,\ VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderBoxOutline(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGroupOutline(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderCustomOutline(\textcolor{keyword}{const}\ std::vector<Vector3f>\&\ points,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
@@ -246,7 +246,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }OutlineVertex\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3f\ position;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Color\ color;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ patternCoord;}
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
@@ -254,7 +254,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ std::vector<uint32\_t>\ m\_indices;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ m\_vertexBuffer;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ m\_indexBuffer;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_outlineShader;}
+\DoxyCodeLine{\ \ \ \ ShaderId\ m\_outlineShader;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_batchMode;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addLineSegment(\textcolor{keyword}{const}\ Vector3f\&\ start,\ \textcolor{keyword}{const}\ Vector3f\&\ end,\ \textcolor{keyword}{const}\ Color\&\ color,\ \textcolor{keywordtype}{float}\ patternStart\ =\ 0.0f);}
@@ -270,7 +270,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }VoxelOutlineGenerator\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ generateVoxelEdges(\textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ generateVoxelEdges(\textcolor{keyword}{const}\ Vector3i\&\ position,\ VoxelResolution\ resolution);}
 \DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ generateGroupOutline(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
 \DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ generateSelectionOutline(\textcolor{keyword}{const}\ SelectionSet\&\ selection);}
 \DoxyCodeLine{\ \ \ \ }
@@ -285,7 +285,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ removeSharedEdges(std::vector<Edge>\&\ edges);}
 \DoxyCodeLine{\ \ \ \ std::vector<Vector3f>\ edgesToVertices(\textcolor{keyword}{const}\ std::vector<Edge>\&\ edges);}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_a22a0fd4712c51df4ec07731b4e29239a}{getVoxelSize}}(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ getVoxelSize(VoxelResolution\ resolution)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ BoundingBox\ getVoxelBounds(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
 
@@ -306,12 +306,12 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelCount(\textcolor{keyword}{const}\ std::unordered\_map<VoxelResolution,\ size\_t>\&\ counts,\ \textcolor{keyword}{const}\ Vector2f\&\ position);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Indicator\ overlays}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderResolutionIndicator(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ current,\ \textcolor{keyword}{const}\ Vector2f\&\ position);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderResolutionIndicator(VoxelResolution\ current,\ \textcolor{keyword}{const}\ Vector2f\&\ position);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderWorkspaceIndicator(\textcolor{keyword}{const}\ Vector3f\&\ size,\ \textcolor{keyword}{const}\ Vector2f\&\ position);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderCameraInfo(\textcolor{keyword}{const}\ Camera\&\ camera,\ \textcolor{keyword}{const}\ Vector2f\&\ position);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Grid\ overlays}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGrid(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ extent);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGrid(VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ extent);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderAxes(\textcolor{keyword}{const}\ Vector3f\&\ origin,\ \textcolor{keywordtype}{float}\ length);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderCompass(\textcolor{keyword}{const}\ Camera\&\ camera,\ \textcolor{keyword}{const}\ Vector2f\&\ position,\ \textcolor{keywordtype}{float}\ size);}
 \DoxyCodeLine{\ \ \ \ }
@@ -323,7 +323,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }TextRenderer\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ fontTexture;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ textShader;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ShaderId\ textShader;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ vertexBuffer;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ indexBuffer;}
 \DoxyCodeLine{\ \ \ \ \}\ m\_textRenderer;}
@@ -332,7 +332,7 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<Vector3f>\ vertices;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::vector<Color>\ colors;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ uint32\_t\ vertexBuffer;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ lineShader;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ShaderId\ lineShader;}
 \DoxyCodeLine{\ \ \ \ \}\ m\_lineRenderer;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ initializeTextRenderer();}
@@ -346,24 +346,24 @@ Provides real-\/time visual cues and overlays including face highlighting, voxel
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }TextStyle\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color\ =\ Color::White();}
+\DoxyCodeLine{\ \ \ \ Color\ color\ =\ Color::White();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ size\ =\ 16.0f;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18ab}{TextAlignment}}\ alignment\ =\ TextAlignment::Left;}
+\DoxyCodeLine{\ \ \ \ TextAlignment\ alignment\ =\ TextAlignment::Left;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ background\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ backgroundColor\ =\ Color::Black();}
+\DoxyCodeLine{\ \ \ \ Color\ backgroundColor\ =\ Color::Black();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ backgroundOpacity\ =\ 0.5f;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ Default();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ Header();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047aa603905470e2a5b8c13e96b579ef0dba}{Debug}}();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047a0eaadb4fcb48a0a0ed7bc9868be9fbaa}{Warning}}();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047a902b0d55fddef6f8d651fe1035b7d4bd}{Error}}();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ Debug();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ Warning();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ TextStyle\ Error();}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18ab}{TextAlignment}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa945d5e233cf7d6240f6b783b36a374ff}{Left}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_ab27c82d7b016d1510b291f6ebcaf18aba4f1f6016fc9f3f2353c0cc7c67b292bd}{Center}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa92b09c7c48c520c3c55e497875da437c}{Right}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ TextAlignment\ \{}
+\DoxyCodeLine{\ \ \ \ Left,}
+\DoxyCodeLine{\ \ \ \ Center,}
+\DoxyCodeLine{\ \ \ \ Right}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}

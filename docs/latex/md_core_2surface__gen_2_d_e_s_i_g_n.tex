@@ -1,5 +1,5 @@
 \chapter{Surface Generation Subsystem }
-\hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n}{}\label{md_core_2surface__gen_2_d_e_s_i_g_n}\index{Surface Generation Subsystem@{Surface Generation Subsystem}}
+\label{md_core_2surface__gen_2_d_e_s_i_g_n}\index{Surface Generation Subsystem@{Surface Generation Subsystem}}
 \label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md327}%
 \Hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md327}%
 \hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md328}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md328}
@@ -50,7 +50,7 @@ Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with m
 \DoxyCodeLine{\ \ \ \ Mesh\ generateExportMesh(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ ExportQuality\ quality\ =\ ExportQuality::High);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Multi-\/resolution\ support}}
-\DoxyCodeLine{\ \ \ \ Mesh\ generateMultiResMesh(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grids,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ targetRes);}
+\DoxyCodeLine{\ \ \ \ Mesh\ generateMultiResMesh(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grids,\ VoxelResolution\ targetRes);}
 \DoxyCodeLine{\ \ \ \ std::vector<Mesh>\ generateAllResolutions(\textcolor{keyword}{const}\ MultiResolutionGrid\&\ grids);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Quality\ settings}}
@@ -89,11 +89,11 @@ Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with m
 \DoxyCodeLine{\ \ \ \ std::vector<Vector2f>\ uvCoords;}
 \DoxyCodeLine{\ \ \ \ std::vector<uint32\_t>\ indices;}
 \DoxyCodeLine{\ \ \ \ BoundingBox\ bounds;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ materialId;}
+\DoxyCodeLine{\ \ \ \ MaterialId\ materialId;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Utility\ functions}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ calculateNormals();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_1_1_group_operation_utils_a7f4eb48a50549124521e81ac4bcb9fba}{calculateBounds}}();}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ calculateBounds();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
@@ -119,11 +119,11 @@ Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with m
 \hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md339}{}\doxysubsection{\texorpdfstring{Export\+Quality}{Export\+Quality}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md339}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{ExportQuality}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaf03ab16cd58372c77ba45a3d9a5a1cb9}{Draft}},\ \ \ \ \ \ \textcolor{comment}{//\ Fast\ generation,\ lower\ quality}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadcaeb6d8ae6f20283755b339c0dc273988b}{Standard}},\ \ \ \textcolor{comment}{//\ Balanced\ quality/performance}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a1da2c0afc1d37c38786d394b267e7c4ea655d20c1ca69519ca647684edbb2db35}{High}},\ \ \ \ \ \ \ \textcolor{comment}{//\ High\ quality,\ slower\ generation}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca8321e79c278ec510f63675c040594892}{Maximum}}\ \ \ \ \ \textcolor{comment}{//\ Best\ possible\ quality}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ ExportQuality\ \{}
+\DoxyCodeLine{\ \ \ \ Draft,\ \ \ \ \ \ \textcolor{comment}{//\ Fast\ generation,\ lower\ quality}}
+\DoxyCodeLine{\ \ \ \ Standard,\ \ \ \textcolor{comment}{//\ Balanced\ quality/performance}}
+\DoxyCodeLine{\ \ \ \ High,\ \ \ \ \ \ \ \textcolor{comment}{//\ High\ quality,\ slower\ generation}}
+\DoxyCodeLine{\ \ \ \ Maximum\ \ \ \ \ \textcolor{comment}{//\ Best\ possible\ quality}}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -178,12 +178,12 @@ Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with m
 \hypertarget{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md345}{}\doxysubsection{\texorpdfstring{LOD Levels}{LOD Levels}}\label{md_core_2surface__gen_2_d_e_s_i_g_n_autotoc_md345}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{LOD0}}\ =\ 0,\ \ \textcolor{comment}{//\ Full\ resolution\ (100\%)}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaf11d11a2c43c48919cb1232a40f4ed3c}{LOD1}}\ =\ 1,\ \ \textcolor{comment}{//\ Half\ resolution\ (50\%)}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaef29f33be104de46a467e837d46afeca}{LOD2}}\ =\ 2,\ \ \textcolor{comment}{//\ Quarter\ resolution\ (25\%)}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aaed3476cc0c3b0f2b17f66c90558c0f83}{LOD3}}\ =\ 3,\ \ \textcolor{comment}{//\ Eighth\ resolution\ (12.5\%)}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa21351772455fa8aed4133f4b93ff0a86}{LOD4}}\ =\ 4\ \ \ \textcolor{comment}{//\ Sixteenth\ resolution\ (6.25\%)}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ LODLevel\ \{}
+\DoxyCodeLine{\ \ \ \ LOD0\ =\ 0,\ \ \textcolor{comment}{//\ Full\ resolution\ (100\%)}}
+\DoxyCodeLine{\ \ \ \ LOD1\ =\ 1,\ \ \textcolor{comment}{//\ Half\ resolution\ (50\%)}}
+\DoxyCodeLine{\ \ \ \ LOD2\ =\ 2,\ \ \textcolor{comment}{//\ Quarter\ resolution\ (25\%)}}
+\DoxyCodeLine{\ \ \ \ LOD3\ =\ 3,\ \ \textcolor{comment}{//\ Eighth\ resolution\ (12.5\%)}}
+\DoxyCodeLine{\ \ \ \ LOD4\ =\ 4\ \ \ \textcolor{comment}{//\ Sixteenth\ resolution\ (6.25\%)}}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -193,7 +193,7 @@ Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with m
 \DoxyCodeLine{\textcolor{keyword}{class\ }LODManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ Mesh\ generateLOD(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ LODLevel\ level,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ calculateLOD(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ LODLevel\ calculateLOD(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setLODDistances(\textcolor{keyword}{const}\ std::vector<float>\&\ distances);}
 \DoxyCodeLine{\ \ \ \ std::vector<float>\ getLODDistances()\ \textcolor{keyword}{const};}

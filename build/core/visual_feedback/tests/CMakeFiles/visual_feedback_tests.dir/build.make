@@ -177,6 +177,7 @@ core/visual_feedback/tests/visual_feedback_tests: core/voxel_data/libVoxelEditor
 core/visual_feedback/tests/visual_feedback_tests: core/selection/libVoxelEditor_Selection.a
 core/visual_feedback/tests/visual_feedback_tests: core/rendering/libVoxelEditor_Rendering.a
 core/visual_feedback/tests/visual_feedback_tests: core/voxel_data/libVoxelEditor_VoxelData.a
+core/visual_feedback/tests/visual_feedback_tests: external/glad/libglad.a
 core/visual_feedback/tests/visual_feedback_tests: /opt/homebrew/lib/libgtest_main.a
 core/visual_feedback/tests/visual_feedback_tests: /opt/homebrew/lib/libgtest.a
 core/visual_feedback/tests/visual_feedback_tests: core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/link.txt

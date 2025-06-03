@@ -1,81 +1,81 @@
 \doxysection{Sphere\+Selector.\+h}
-\hypertarget{_sphere_selector_8h_source}{}\label{_sphere_selector_8h_source}\index{core/selection/SphereSelector.h@{core/selection/SphereSelector.h}}
+\label{_sphere_selector_8h_source}\index{core/selection/SphereSelector.h@{core/selection/SphereSelector.h}}
 \mbox{\hyperlink{_sphere_selector_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_types_8h}{SelectionTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_set_8h}{SelectionSet.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ray_8h}{../../foundation/math/Ray.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_quaternion_8h}{../../foundation/math/Quaternion.h}}"{}}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{../voxel\_data/VoxelDataManager.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}SelectionTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}SelectionSet.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Ray.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Quaternion.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}../voxel\_data/VoxelDataManager.h"{}}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_selection}{Selection}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Selection\ \{}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a34d9c1561e65c6b99f63bac4b052564a}{SphereSelector}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }SphereSelector\ \{}
 \DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a34d9c1561e65c6b99f63bac4b052564a}{SphereSelector}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a3ae39cfd2d299ee53dc32d76ced77f2e}{\string~SphereSelector}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{explicit}\ SphereSelector(VoxelData::VoxelDataManager*\ voxelManager\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00015\ \ \ \ \ \string~SphereSelector()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00016\ \ \ \ \ }
 \DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ voxel\ manager}}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_aa84d208f4c89cdaee3f575f9b46f8753}{setVoxelManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ manager)\ \{\ m\_voxelManager\ =\ manager;\ \}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ setVoxelManager(VoxelData::VoxelDataManager*\ manager)\ \{\ m\_voxelManager\ =\ manager;\ \}}
 \DoxyCodeLine{00019\ \ \ \ \ }
 \DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ Sphere\ selection\ from\ center\ and\ radius}}
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a45e7c117597217b8d05a1c8901081d05}{selectFromSphere}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,}
+\DoxyCodeLine{00021\ \ \ \ \ SelectionSet\ selectFromSphere(\textcolor{keyword}{const}\ Math::Vector3f\&\ center,}
 \DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,}
 \DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ checkExistence\ =\ \textcolor{keyword}{true});}
 \DoxyCodeLine{00025\ \ \ \ \ }
 \DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Sphere\ selection\ from\ ray\ (select\ sphere\ at\ intersection\ point)}}
-\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a1e092f5c96c213095ae14fbf86832773}{selectFromRay}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}\&\ ray,}
+\DoxyCodeLine{00027\ \ \ \ \ SelectionSet\ selectFromRay(\textcolor{keyword}{const}\ Math::Ray\&\ ray,}
 \DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,}
 \DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxDistance,}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00031\ \ \ \ \ }
 \DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Ellipsoid\ selection}}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a43f41e2d14889d7c353c1ebfcb26aea6}{selectEllipsoid}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ radii,}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_quaternion}{Math::Quaternion}}\&\ rotation,}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00033\ \ \ \ \ SelectionSet\ selectEllipsoid(\textcolor{keyword}{const}\ Math::Vector3f\&\ center,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3f\&\ radii,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Quaternion\&\ rotation,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,}
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ checkExistence\ =\ \textcolor{keyword}{true});}
 \DoxyCodeLine{00038\ \ \ \ \ }
 \DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Hemisphere\ selection}}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a557bc192975298d7b24533a31f8af2f4}{selectHemisphere}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,}
+\DoxyCodeLine{00040\ \ \ \ \ SelectionSet\ selectHemisphere(\textcolor{keyword}{const}\ Math::Vector3f\&\ center,}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal,}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3f\&\ normal,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,}
 \DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ checkExistence\ =\ \textcolor{keyword}{true});}
 \DoxyCodeLine{00045\ \ \ \ \ }
 \DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a05be606675c6c9d2370de02a7c26a638}{setSelectionMode}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ mode)\ \{\ m\_selectionMode\ =\ mode;\ \}}
-\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a9f8a9faba5a019dbcdf70010463b4ab2}{getSelectionMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionMode;\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ setSelectionMode(SelectionMode\ mode)\ \{\ m\_selectionMode\ =\ mode;\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ SelectionMode\ getSelectionMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionMode;\ \}}
 \DoxyCodeLine{00049\ \ \ \ \ }
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a8eeef875602f69ce886408144aaebb1b}{setIncludePartial}}(\textcolor{keywordtype}{bool}\ include)\ \{\ m\_includePartial\ =\ include;\ \}}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a06f2b82154418ac76f42886d6074e7bc}{getIncludePartial}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_includePartial;\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ setIncludePartial(\textcolor{keywordtype}{bool}\ include)\ \{\ m\_includePartial\ =\ include;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ getIncludePartial()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_includePartial;\ \}}
 \DoxyCodeLine{00052\ \ \ \ \ }
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a1601abaeeeda35d1b92761e52f1db5fd}{setFalloff}}(\textcolor{keywordtype}{bool}\ enabled,\ \textcolor{keywordtype}{float}\ start\ =\ 0.8f)\ \{\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ setFalloff(\textcolor{keywordtype}{bool}\ enabled,\ \textcolor{keywordtype}{float}\ start\ =\ 0.8f)\ \{\ }
 \DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ m\_useFalloff\ =\ enabled;\ }
 \DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ m\_falloffStart\ =\ start;}
 \DoxyCodeLine{00056\ \ \ \ \ \}}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_a7779a22b06273e2cf5f15482a1a6fbb3}{getFalloff}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_useFalloff;\ \}}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_sphere_selector_afb48d2d4f0dda223028b31a215a3bed9}{getFalloffStart}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_falloffStart;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ getFalloff()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_useFalloff;\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{float}\ getFalloffStart()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_falloffStart;\ \}}
 \DoxyCodeLine{00059\ \ \ \ \ }
 \DoxyCodeLine{00060\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ m\_selectionMode;}
+\DoxyCodeLine{00061\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00062\ \ \ \ \ SelectionMode\ m\_selectionMode;}
 \DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_includePartial;}
 \DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_useFalloff;}
 \DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_falloffStart;}
 \DoxyCodeLine{00066\ \ \ \ \ }
 \DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInSphere(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInEllipsoid(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,\ }
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ radii,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_quaternion}{Math::Quaternion}}\&\ rotation)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInHemisphere(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,\ }
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{float}\ getVoxelWeight(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ voxelExists(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInSphere(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInEllipsoid(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ center,\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3f\&\ radii,\ \textcolor{keyword}{const}\ Math::Quaternion\&\ rotation)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInHemisphere(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ center,\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ normal)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{float}\ getVoxelWeight(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ voxelExists(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00075\ \};}
 \DoxyCodeLine{00076\ }
 \DoxyCodeLine{00077\ \}}

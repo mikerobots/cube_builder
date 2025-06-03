@@ -1,5 +1,5 @@
 \doxysection{Event\+Dispatcher.\+h}
-\hypertarget{_event_dispatcher_8h_source}{}\label{_event_dispatcher_8h_source}\index{foundation/events/EventDispatcher.h@{foundation/events/EventDispatcher.h}}
+\label{_event_dispatcher_8h_source}\index{foundation/events/EventDispatcher.h@{foundation/events/EventDispatcher.h}}
 \mbox{\hyperlink{_event_dispatcher_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -13,18 +13,18 @@
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <algorithm>}}
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{EventBase.h}}"{}}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_handler_8h}{EventHandler.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}EventBase.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}EventHandler.h"{}}}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_events}{Events}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }Events\ \{}
 \DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a673ef0fb93ec40a11c506d3131f908a8}{EventDispatcher}}\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }EventDispatcher\ \{}
 \DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a673ef0fb93ec40a11c506d3131f908a8}{EventDispatcher}}()\ :\ m\_maxQueueSize(1000)\ \{\}}
+\DoxyCodeLine{00020\ \ \ \ \ EventDispatcher()\ :\ m\_maxQueueSize(1000)\ \{\}}
 \DoxyCodeLine{00021\ \ \ \ \ }
 \DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_acad55493bbb9e1d888c689a668d14704}{subscribe}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{EventHandler<EventType>}}*\ handler,\ \textcolor{keywordtype}{int}\ priority\ =\ 0)\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ subscribe(EventHandler<EventType>*\ handler,\ \textcolor{keywordtype}{int}\ priority\ =\ 0)\ \{}
 \DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!handler)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
@@ -43,7 +43,7 @@
 \DoxyCodeLine{00039\ \ \ \ \ \}}
 \DoxyCodeLine{00040\ \ \ \ \ }
 \DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0e079de8f523b71434de3ff51c925ed7}{unsubscribe}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_handler}{EventHandler<EventType>}}*\ handler)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ unsubscribe(EventHandler<EventType>*\ handler)\ \{}
 \DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!handler)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
@@ -67,7 +67,7 @@
 \DoxyCodeLine{00063\ \ \ \ \ \}}
 \DoxyCodeLine{00064\ \ \ \ \ }
 \DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a000cb34aa8b03a892fcaed967a53a1fd}{dispatch}}(\textcolor{keyword}{const}\ EventType\&\ event)\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatch(\textcolor{keyword}{const}\ EventType\&\ event)\ \{}
 \DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ std::type\_index\ typeIndex(\textcolor{keyword}{typeid}(EventType));}
@@ -82,7 +82,7 @@
 \DoxyCodeLine{00078\ \ \ \ \ \}}
 \DoxyCodeLine{00079\ \ \ \ \ }
 \DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_afd22afd096842a033897139f2cf68b84}{dispatchAsync}}(\textcolor{keyword}{const}\ EventType\&\ event)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchAsync(\textcolor{keyword}{const}\ EventType\&\ event)\ \{}
 \DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_eventQueue.size()\ >=\ m\_maxQueueSize)\ \{}
@@ -92,7 +92,7 @@
 \DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ m\_eventQueue.push(std::make\_unique<EventType>(event));}
 \DoxyCodeLine{00089\ \ \ \ \ \}}
 \DoxyCodeLine{00090\ \ \ \ \ }
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a4a39aaa79dbbf0f0f37a0f61ad6118dc}{processQueuedEvents}}()\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ processQueuedEvents()\ \{}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ std::queue<std::unique\_ptr<EventBase>>\ tempQueue;}
 \DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \{}
@@ -108,30 +108,30 @@
 \DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00105\ \ \ \ \ \}}
 \DoxyCodeLine{00106\ \ \ \ \ }
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6e8ee80826d0185b56b622a0b192cc8f}{clearQueue}}()\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ clearQueue()\ \{}
 \DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!m\_eventQueue.empty())\ \{}
 \DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eventQueue.pop();}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00112\ \ \ \ \ \}}
 \DoxyCodeLine{00113\ \ \ \ \ }
-\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a6f20492526b607c336d2611f3674ac3e}{getQueueSize}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getQueueSize()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_eventQueue.size();}
 \DoxyCodeLine{00117\ \ \ \ \ \}}
 \DoxyCodeLine{00118\ \ \ \ \ }
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a0d64cea967ce7e1c1223b274441313cf}{setMaxQueueSize}}(\textcolor{keywordtype}{size\_t}\ maxSize)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ setMaxQueueSize(\textcolor{keywordtype}{size\_t}\ maxSize)\ \{}
 \DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ m\_maxQueueSize\ =\ maxSize;}
 \DoxyCodeLine{00122\ \ \ \ \ \}}
 \DoxyCodeLine{00123\ \ \ \ \ }
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab6d0a9ce4ea1313a35807e51c3c0ce87}{getMaxQueueSize}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMaxQueueSize()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_maxQueueSize;}
 \DoxyCodeLine{00127\ \ \ \ \ \}}
 \DoxyCodeLine{00128\ \ \ \ \ }
 \DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ EventType>}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_ab799ffa2a94ae7d14c672205d9242858}{getHandlerCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getHandlerCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ std::type\_index\ typeIndex(\textcolor{keyword}{typeid}(EventType));}
@@ -139,7 +139,7 @@
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it\ !=\ m\_handlers.end()\ ?\ it-\/>second.size()\ :\ 0;}
 \DoxyCodeLine{00136\ \ \ \ \ \}}
 \DoxyCodeLine{00137\ \ \ \ \ }
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_aeec248b12e79ed361fd1690bc99e7fb1}{getTotalHandlerCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalHandlerCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\ =\ 0;}
@@ -150,7 +150,7 @@
 \DoxyCodeLine{00146\ \ \ \ \ \}}
 \DoxyCodeLine{00147\ \ \ \ \ }
 \DoxyCodeLine{00148\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchEvent(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_base}{EventBase}}\&\ event)\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchEvent(\textcolor{keyword}{const}\ EventBase\&\ event)\ \{}
 \DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ std::type\_index\ typeIndex(\textcolor{keyword}{typeid}(event));}
 \DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ m\_handlers.find(typeIndex);}
 \DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ m\_handlers.end())\ \textcolor{keywordflow}{return};}

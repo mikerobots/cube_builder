@@ -18,6 +18,31 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#ifdef __APPLE__
+#include <OpenGL/glext.h>
+#endif
+
+// OpenGL function pointers for VAO (needed because our GLAD is a stub)
+#ifndef APIENTRY
+#define APIENTRY
+#endif
+#ifndef APIENTRYP
+#define APIENTRYP APIENTRY *
+#endif
+
+typedef void (APIENTRYP PFNGLGENVERTEXARRAYSPROC) (GLsizei n, GLuint *arrays);
+typedef void (APIENTRYP PFNGLBINDVERTEXARRAYPROC) (GLuint array);
+typedef void (APIENTRYP PFNGLDELETEVERTEXARRAYSPROC) (GLsizei n, const GLuint *arrays);
+
+static PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
+static PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
+static PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays = nullptr;
+
+// Define missing GL constants
+#ifndef GL_VERTEX_ARRAY_BINDING
+#define GL_VERTEX_ARRAY_BINDING 0x85B5
+#endif
+
 // Application headers
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
@@ -51,6 +76,7 @@
 #include "math/Matrix4f.h"
 #include "math/Vector2f.h"
 #include "math/Vector3f.h"
+#include "math/Vector4f.h"
 
 namespace VoxelEditor {
 
@@ -63,6 +89,15 @@ Application::~Application() {
 bool Application::initialize(int argc, char* argv[]) {
     std::cout << "Initializing Voxel Editor..." << std::endl;
     
+    // Parse command line arguments
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--headless" || arg == "-h") {
+            m_headless = true;
+            std::cout << "Running in headless mode (no rendering)" << std::endl;
+        }
+    }
+    
     if (!initializeFoundation()) {
         return false;
     }
@@ -71,8 +106,10 @@ bool Application::initialize(int argc, char* argv[]) {
         return false;
     }
     
-    if (!initializeRendering()) {
-        return false;
+    if (!m_headless) {
+        if (!initializeRendering()) {
+            return false;
+        }
     }
     
     if (!initializeCLI()) {
@@ -91,25 +128,33 @@ bool Application::initialize(int argc, char* argv[]) {
 
 int Application::run() {
     // Main loop
-    while (m_running && m_renderWindow->isOpen()) {
-        // Poll window events
-        m_renderWindow->pollEvents();
-        
-        // Process command input (non-blocking)
-        processInput();
-        
-        // Update systems
-        m_inputManager->update(0.016f); // 60 FPS target
-        m_mouseInteraction->update();
-        
-        // Render
-        render();
-        
-        // Swap buffers
-        m_renderWindow->swapBuffers();
-        
-        // Small sleep to prevent CPU spinning
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    if (m_headless) {
+        // Headless mode - just process commands
+        while (m_running) {
+            processInput();
+        }
+    } else {
+        // Normal mode with rendering
+        while (m_running && m_renderWindow->isOpen()) {
+            // Poll window events
+            m_renderWindow->pollEvents();
+            
+            // Process command input (non-blocking)
+            processInput();
+            
+            // Update systems
+            m_inputManager->update(0.016f); // 60 FPS target
+            m_mouseInteraction->update();
+            
+            // Render
+            render();
+            
+            // Swap buffers
+            m_renderWindow->swapBuffers();
+            
+            // Small sleep to prevent CPU spinning
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
     }
     
     shutdown();
@@ -172,7 +217,15 @@ bool Application::initializeCoreSystem() {
         
         // Camera controller
         m_cameraController = std::make_unique<Camera::CameraController>(m_eventDispatcher.get());
+        
+        // Set camera to look at center of 5x5x5 voxel grid
         m_cameraController->setViewPreset(Camera::ViewPreset::ISOMETRIC);
+        // Center of 5x5x5 grid at 8cm voxels is at (0.2, 0.2, 0.2)
+        m_cameraController->getCamera()->setTarget(Math::Vector3f(0.20f, 0.20f, 0.20f));
+        m_cameraController->getCamera()->setDistance(1.3f);  // Optimal distance for 5x5x5 grid
+        
+        // Debug: Camera setup for 5x5x5 voxel grid
+        std::cout << "DEBUG: Setting up camera to view center of 5x5x5 grid at (0.2, 0.2, 0.2)" << std::endl;
         
         // Input manager
         m_inputManager = std::make_unique<Input::InputManager>(m_eventDispatcher.get());
@@ -274,18 +327,69 @@ bool Application::initializeRendering() {
 bool Application::initializeCLI() {
     try {
         m_commandProcessor = std::make_unique<CommandProcessor>(this);
-        m_mouseInteraction = std::make_unique<MouseInteraction>(this);
-        m_mouseInteraction->initialize();
-        m_meshGenerator = std::make_unique<VoxelMeshGenerator>();
         
-        // Create shader program for voxel rendering
-        if (!createShaderProgram()) {
-            std::cerr << "Failed to create shader program" << std::endl;
-            return false;
+        if (!m_headless) {
+            m_mouseInteraction = std::make_unique<MouseInteraction>(this);
+            m_mouseInteraction->initialize();
+            m_meshGenerator = std::make_unique<VoxelMeshGenerator>();
+            
+            // Check OpenGL version
+            const GLubyte* version = glGetString(GL_VERSION);
+            const GLubyte* glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+            std::cout << "OpenGL Version: " << version << std::endl;
+            std::cout << "GLSL Version: " << glslVersion << std::endl;
+        
+        // Check for VAO extensions
+        const GLubyte* extensions = glGetString(GL_EXTENSIONS);
+        std::string extStr(reinterpret_cast<const char*>(extensions));
+        bool hasVAO = extStr.find("GL_ARB_vertex_array_object") != std::string::npos;
+        bool hasVAOApple = extStr.find("GL_APPLE_vertex_array_object") != std::string::npos;
+        std::cout << "VAO extensions: ARB=" << hasVAO << " APPLE=" << hasVAOApple << std::endl;
+        
+        // Load VAO functions (needed because our GLAD is a stub)
+        // Try ARB extension first for OpenGL 2.1
+        glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glfwGetProcAddress("glGenVertexArraysARB");
+        glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) glfwGetProcAddress("glBindVertexArrayARB");
+        glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glfwGetProcAddress("glDeleteVertexArraysARB");
+        
+        // Fall back to core functions if ARB not available
+        if (!glGenVertexArrays) {
+            glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glfwGetProcAddress("glGenVertexArrays");
+        }
+        if (!glBindVertexArray) {
+            glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) glfwGetProcAddress("glBindVertexArray");
+        }
+        if (!glDeleteVertexArrays) {
+            glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glfwGetProcAddress("glDeleteVertexArrays");
         }
         
-        // Create initial mesh (empty)
-        updateVoxelMesh();
+        // Check for Apple extension as last resort
+        if (!glGenVertexArrays) {
+            glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glfwGetProcAddress("glGenVertexArraysAPPLE");
+        }
+        if (!glBindVertexArray) {
+            glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) glfwGetProcAddress("glBindVertexArrayAPPLE");
+        }
+        if (!glDeleteVertexArrays) {
+            glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glfwGetProcAddress("glDeleteVertexArraysAPPLE");
+        }
+        
+            if (!glGenVertexArrays || !glBindVertexArray || !glDeleteVertexArrays) {
+                std::cerr << "Warning: VAO functions not available, will use client-side vertex arrays" << std::endl;
+                // Don't fail - we can work without VAOs in OpenGL 2.1
+            } else {
+                std::cout << "VAO functions loaded successfully" << std::endl;
+            }
+            
+            // Create shader program for voxel rendering
+            if (!createShaderProgram()) {
+                std::cerr << "Failed to create shader program" << std::endl;
+                return false;
+            }
+            
+            // Create initial mesh (empty)
+            updateVoxelMesh();
+        }
         
         // Subscribe to voxel change events
         // TODO: Implement proper event handlers when EventHandler supports lambdas
@@ -332,19 +436,36 @@ void Application::processInput() {
 }
 
 void Application::render() {
-    if (!m_renderWindow || !m_openGLRenderer) {
+    if (m_headless || !m_renderWindow || !m_openGLRenderer) {
         return;
     }
     
     // Make sure we're rendering to the window
     m_renderWindow->makeContextCurrent();
     
-    // Clear the screen with a dark gray background
-    Rendering::Color clearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    m_openGLRenderer->clear(Rendering::ClearFlags::COLOR | Rendering::ClearFlags::DEPTH, clearColor);
+    // Double check we have the right context
+    GLint currentFBO = 0;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &currentFBO);
+    // Debug: framebuffer check - commented out to reduce spam
+    // std::cout << "Current framebuffer: " << currentFBO << std::endl;
+    
+    // Make absolutely sure we're drawing to the default framebuffer
+    if (currentFBO != 0) {
+        std::cerr << "WARNING: Not drawing to default framebuffer!" << std::endl;
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+    
+    // Clear the screen
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);  // Dark gray background
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Set viewport to window size
-    m_openGLRenderer->setViewport(0, 0, m_renderWindow->getWidth(), m_renderWindow->getHeight());
+    glViewport(0, 0, m_renderWindow->getWidth(), m_renderWindow->getHeight());
+    
+    // TEST RENDERING DISABLED - immediate mode rendering confirmed working
+    // Continue to voxel rendering below
+    
+    // TEST TRIANGLE REMOVED - proceeding to voxel rendering
     
     // Render voxels if we have any
     if (m_voxelShaderProgram && m_voxelIndexCount > 0) {
@@ -355,45 +476,214 @@ void Application::render() {
         auto viewMatrix = camera->getViewMatrix();
         auto projMatrix = camera->getProjectionMatrix();
         
+        // Debug: Print matrices on first few frames
+        static int frameCount = 0;
+        if (frameCount < 3) {
+            std::cout << "\n=== Frame " << frameCount << " Debug Info ===" << std::endl;
+            std::cout << "Camera position: " << camera->getPosition().x << ", " 
+                      << camera->getPosition().y << ", " << camera->getPosition().z << std::endl;
+            std::cout << "View Matrix:" << std::endl;
+            for (int i = 0; i < 4; i++) {
+                std::cout << "  [";
+                for (int j = 0; j < 4; j++) {
+                    std::cout << viewMatrix.m[i * 4 + j] << " ";
+                }
+                std::cout << "]" << std::endl;
+            }
+            std::cout << "Projection Matrix:" << std::endl;
+            for (int i = 0; i < 4; i++) {
+                std::cout << "  [";
+                for (int j = 0; j < 4; j++) {
+                    std::cout << projMatrix.m[i * 4 + j] << " ";
+                }
+                std::cout << "]" << std::endl;
+            }
+            std::cout << "Rendering " << m_voxelIndexCount << " indices" << std::endl;
+            frameCount++;
+        }
+        
         // Set matrices
         GLint modelLoc = glGetUniformLocation(m_voxelShaderProgram, "model");
         GLint viewLoc = glGetUniformLocation(m_voxelShaderProgram, "view");
         GLint projLoc = glGetUniformLocation(m_voxelShaderProgram, "projection");
+        
+        // Debug: print camera info
+        auto camPos = camera->getPosition();
+        if (frameCount % 60 == 0) { // Print every 60 frames
+            std::cout << "Camera pos: (" << camPos.x << ", " << camPos.y << ", " << camPos.z << ")" << std::endl;
+            std::cout << "View matrix: " << viewMatrix.m[12] << ", " << viewMatrix.m[13] << ", " << viewMatrix.m[14] << std::endl;
+        }
         
         Math::Matrix4f identity;
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, identity.m);
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, viewMatrix.m);
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, projMatrix.m);
         
-        // Set light properties
-        GLint lightPosLoc = glGetUniformLocation(m_voxelShaderProgram, "lightPos");
-        GLint lightColorLoc = glGetUniformLocation(m_voxelShaderProgram, "lightColor");
-        GLint viewPosLoc = glGetUniformLocation(m_voxelShaderProgram, "viewPos");
+        // Don't set light uniforms since we're not using them in the simplified shader
         
-        Math::Vector3f lightPos(5.0f, 10.0f, 5.0f);
-        Math::Vector3f lightColor(1.0f, 1.0f, 1.0f);
-        auto viewPos = camera->getPosition();
+        // Clear any previous errors
+        while (glGetError() != GL_NO_ERROR) {}
         
-        glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
-        glUniform3f(lightColorLoc, lightColor.x, lightColor.y, lightColor.z);
-        glUniform3f(viewPosLoc, viewPos.x, viewPos.y, viewPos.z);
+        // Check if shader program is active
+        GLint currentProgram = 0;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+        std::cout << "Current shader program: " << currentProgram << " (expected " << m_voxelShaderProgram << ")" << std::endl;
+        
+        // Check viewport
+        GLint viewport[4];
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        std::cout << "Viewport: " << viewport[0] << ", " << viewport[1] << ", " << viewport[2] << ", " << viewport[3] << std::endl;
         
         // Draw voxels
-        #ifdef __APPLE__
-        glBindVertexArrayAPPLE(m_voxelVAO);
-        #else
-        glBindVertexArray(m_voxelVAO);
-        #endif
+        if (m_voxelVAO != 0 && glBindVertexArray) {
+            glBindVertexArray(m_voxelVAO);
+        } else {
+            // Manual vertex setup for OpenGL 2.1 without VAOs
+            std::cout << "Using manual vertex setup (no VAO)" << std::endl;
+            glBindBuffer(GL_ARRAY_BUFFER, m_voxelVBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_voxelEBO);
+            
+            // Get attribute locations
+            GLint posLoc = glGetAttribLocation(m_voxelShaderProgram, "aPos");
+            GLint normalLoc = glGetAttribLocation(m_voxelShaderProgram, "aNormal");
+            GLint colorLoc = glGetAttribLocation(m_voxelShaderProgram, "aColor");
+            
+            std::cout << "Attribute locations: pos=" << posLoc << " normal=" << normalLoc << " color=" << colorLoc << std::endl;
+            std::cout << "VBO=" << m_voxelVBO << " EBO=" << m_voxelEBO << std::endl;
+            
+            // Setup vertex attributes
+            if (posLoc >= 0) {
+                glEnableVertexAttribArray(posLoc);
+                glVertexAttribPointer(posLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex), (void*)offsetof(Rendering::Vertex, position));
+            }
+            if (normalLoc >= 0) {
+                glEnableVertexAttribArray(normalLoc);
+                glVertexAttribPointer(normalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex), (void*)offsetof(Rendering::Vertex, normal));
+            }
+            if (colorLoc >= 0) {
+                glEnableVertexAttribArray(colorLoc);
+                glVertexAttribPointer(colorLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex), (void*)offsetof(Rendering::Vertex, color));
+            }
+        }
+        
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after binding VAO: " << err << std::endl;
+        }
+        
+        // Disable depth testing and culling for debugging
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
+        
+        // Draw all triangles
+        std::cout << "Drawing " << m_voxelIndexCount << " indices with glDrawElements" << std::endl;
+        
+        // Additional state checks before drawing
+        GLint currentVBO = 0, currentEBO = 0;
+        glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &currentVBO);
+        glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &currentEBO);
+        std::cout << "  Current VBO: " << currentVBO << " (expected " << m_voxelVBO << ")" << std::endl;
+        std::cout << "  Current EBO: " << currentEBO << " (expected " << m_voxelEBO << ")" << std::endl;
+        
+        // Check if attributes are enabled
+        GLint posLoc = glGetAttribLocation(m_voxelShaderProgram, "aPos");
+        GLint posEnabled = 0;
+        glGetVertexAttribiv(posLoc, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &posEnabled);
+        std::cout << "  Position attribute enabled: " << posEnabled << std::endl;
         
         glDrawElements(GL_TRIANGLES, m_voxelIndexCount, GL_UNSIGNED_INT, 0);
         
-        #ifdef __APPLE__
-        glBindVertexArrayAPPLE(0);
-        #else
-        glBindVertexArray(0);
-        #endif
+        // Check for OpenGL errors
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "OpenGL error after draw: " << err << std::endl;
+            
+            // Additional debugging
+            GLint vao = 0;
+            glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao);
+            std::cerr << "  Current VAO: " << vao << " (expected " << m_voxelVAO << ")" << std::endl;
+            
+            GLint elementBuffer = 0;
+            glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &elementBuffer);
+            std::cerr << "  Current element buffer: " << elementBuffer << std::endl;
+        }
+        
+        if (m_voxelVAO != 0 && glBindVertexArray) {
+            glBindVertexArray(0);
+        } else {
+            // Disable vertex attributes if not using VAO
+            GLint posLoc = glGetAttribLocation(m_voxelShaderProgram, "aPos");
+            GLint normalLoc = glGetAttribLocation(m_voxelShaderProgram, "aNormal");
+            GLint colorLoc = glGetAttribLocation(m_voxelShaderProgram, "aColor");
+            
+            if (posLoc >= 0) glDisableVertexAttribArray(posLoc);
+            if (normalLoc >= 0) glDisableVertexAttribArray(normalLoc);
+            if (colorLoc >= 0) glDisableVertexAttribArray(colorLoc);
+        }
         
         glUseProgram(0);
+    }
+    
+    // DEBUG: Test if ANY rendering works
+    static bool debugRender = true;
+    if (debugRender) {
+        // Save current state
+        GLint currentProgram;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+        
+        glUseProgram(0);  // No shader
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glLoadIdentity();
+        glOrtho(-1, 1, -1, 1, -1, 1);  // Simple orthographic projection
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        glLoadIdentity();
+        
+        // Draw a colored pattern to verify rendering
+        glBegin(GL_QUADS);
+        // Red square top-left
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex2f(-0.8f, 0.8f);
+        glVertex2f(-0.4f, 0.8f);
+        glVertex2f(-0.4f, 0.4f);
+        glVertex2f(-0.8f, 0.4f);
+        
+        // Green square top-right
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex2f(0.4f, 0.8f);
+        glVertex2f(0.8f, 0.8f);
+        glVertex2f(0.8f, 0.4f);
+        glVertex2f(0.4f, 0.4f);
+        
+        // Blue square bottom-left
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex2f(-0.8f, -0.4f);
+        glVertex2f(-0.4f, -0.4f);
+        glVertex2f(-0.4f, -0.8f);
+        glVertex2f(-0.8f, -0.8f);
+        
+        // Yellow square bottom-right
+        glColor3f(1.0f, 1.0f, 0.0f);
+        glVertex2f(0.4f, -0.4f);
+        glVertex2f(0.8f, -0.4f);
+        glVertex2f(0.8f, -0.8f);
+        glVertex2f(0.4f, -0.8f);
+        glEnd();
+        
+        // Restore state
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+        glUseProgram(currentProgram);
+        
+        // Print message once
+        static bool printed = false;
+        if (!printed) {
+            std::cout << "DEBUG: Drawing colored squares pattern" << std::endl;
+            printed = true;
+        }
     }
     
     // TODO: Render visual feedback (selection highlights, etc)
@@ -401,16 +691,18 @@ void Application::render() {
 }
 
 bool Application::createShaderProgram() {
-    // Vertex shader source
+    std::cout << "Creating shader program..." << std::endl;
+    
+    // Vertex shader source - GLSL 120 for OpenGL 2.1
     const char* vertexShaderSource = R"(
-#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;
-layout (location = 2) in vec3 aColor;
+#version 120
+attribute vec3 aPos;
+attribute vec3 aNormal;
+attribute vec3 aColor;
 
-out vec3 FragPos;
-out vec3 Normal;
-out vec3 Color;
+varying vec3 FragPos;
+varying vec3 Normal;
+varying vec3 Color;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -418,47 +710,23 @@ uniform mat4 projection;
 
 void main() {
     FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = mat3(transpose(inverse(model))) * aNormal;
+    Normal = mat3(model) * aNormal;
     Color = aColor;
     
     gl_Position = projection * view * vec4(FragPos, 1.0);
 }
 )";
 
-    // Fragment shader source
+    // Fragment shader source - GLSL 120 for OpenGL 2.1
     const char* fragmentShaderSource = R"(
-#version 330 core
-in vec3 FragPos;
-in vec3 Normal;
-in vec3 Color;
-
-out vec4 FragColor;
-
-uniform vec3 lightPos;
-uniform vec3 lightColor;
-uniform vec3 viewPos;
+#version 120
+varying vec3 FragPos;
+varying vec3 Normal;
+varying vec3 Color;
 
 void main() {
-    // Ambient lighting
-    float ambientStrength = 0.3;
-    vec3 ambient = ambientStrength * lightColor;
-    
-    // Diffuse lighting
-    vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(lightPos - FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * lightColor;
-    
-    // Specular lighting
-    float specularStrength = 0.5;
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * lightColor;
-    
-    // Combine results
-    vec3 result = (ambient + diffuse + specular) * Color;
-    FragColor = vec4(result, 1.0);
+    // Use the vertex color passed from vertex shader
+    gl_FragColor = vec4(Color, 1.0);
 }
 )";
 
@@ -469,12 +737,14 @@ void main() {
     
     // Check vertex shader compilation
     GLint success;
-    GLchar infoLog[512];
+    GLchar infoLog[1024];
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    glGetShaderInfoLog(vertexShader, 1024, nullptr, infoLog);
     if (!success) {
-        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::cerr << "Vertex shader compilation failed: " << infoLog << std::endl;
         return false;
+    } else if (strlen(infoLog) > 0) {
+        std::cout << "Vertex shader info: " << infoLog << std::endl;
     }
     
     // Compile fragment shader
@@ -484,11 +754,15 @@ void main() {
     
     // Check fragment shader compilation
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    glGetShaderInfoLog(fragmentShader, 1024, nullptr, infoLog);
     if (!success) {
-        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::cerr << "Fragment shader compilation failed: " << infoLog << std::endl;
         glDeleteShader(vertexShader);
         return false;
+    } else if (strlen(infoLog) > 0) {
+        std::cout << "Fragment shader compilation warnings: " << infoLog << std::endl;
+    } else {
+        std::cout << "Fragment shader compiled successfully" << std::endl;
     }
     
     // Create shader program
@@ -499,103 +773,264 @@ void main() {
     
     // Check linking
     glGetProgramiv(m_voxelShaderProgram, GL_LINK_STATUS, &success);
+    glGetProgramInfoLog(m_voxelShaderProgram, 1024, nullptr, infoLog);
     if (!success) {
-        glGetProgramInfoLog(m_voxelShaderProgram, 512, nullptr, infoLog);
         std::cerr << "Shader program linking failed: " << infoLog << std::endl;
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
         return false;
+    } else if (strlen(infoLog) > 0) {
+        std::cout << "Shader program linking warnings: " << infoLog << std::endl;
+    } else {
+        std::cout << "Shader program linked successfully" << std::endl;
     }
     
     // Clean up shaders
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
+    // Validate all uniform locations
+    std::cout << "Validating uniform locations..." << std::endl;
+    GLint modelLoc = glGetUniformLocation(m_voxelShaderProgram, "model");
+    GLint viewLoc = glGetUniformLocation(m_voxelShaderProgram, "view");
+    GLint projLoc = glGetUniformLocation(m_voxelShaderProgram, "projection");
+    GLint lightPosLoc = glGetUniformLocation(m_voxelShaderProgram, "lightPos");
+    GLint lightColorLoc = glGetUniformLocation(m_voxelShaderProgram, "lightColor");
+    GLint viewPosLoc = glGetUniformLocation(m_voxelShaderProgram, "viewPos");
+    
+    std::cout << "Uniform locations: " << std::endl;
+    std::cout << "  model: " << modelLoc << std::endl;
+    std::cout << "  view: " << viewLoc << std::endl;
+    std::cout << "  projection: " << projLoc << std::endl;
+    std::cout << "  lightPos: " << lightPosLoc << std::endl;
+    std::cout << "  lightColor: " << lightColorLoc << std::endl;
+    std::cout << "  viewPos: " << viewPosLoc << std::endl;
+    
+    if (modelLoc == -1 || viewLoc == -1 || projLoc == -1) {
+        std::cerr << "ERROR: Critical uniform locations not found!" << std::endl;
+        return false;
+    }
+    
+    std::cout << "Shader program created successfully!" << std::endl;
     return true;
 }
 
 void Application::updateVoxelMesh() {
-    if (!m_meshGenerator || !m_voxelManager) {
+    if (m_headless || !m_meshGenerator || !m_voxelManager) {
         return;
     }
     
     // Generate mesh from voxel data
     auto mesh = m_meshGenerator->generateCubeMesh(*m_voxelManager);
     
+    // Debug: Print mesh statistics
+    std::cout << "Mesh update: " << mesh.vertices.size() << " vertices, " 
+              << mesh.indices.size() << " indices" << std::endl;
+    
     // Clean up old buffers
-    if (m_voxelVAO) {
-        #ifdef __APPLE__
-        glDeleteVertexArraysAPPLE(1, &m_voxelVAO);
-        #else
+    if (m_voxelVAO && glDeleteVertexArrays) {
         glDeleteVertexArrays(1, &m_voxelVAO);
-        #endif
+    }
+    if (m_voxelVBO) {
         glDeleteBuffers(1, &m_voxelVBO);
+    }
+    if (m_voxelEBO) {
         glDeleteBuffers(1, &m_voxelEBO);
     }
+    m_voxelVAO = 0;
+    m_voxelVBO = 0;
+    m_voxelEBO = 0;
     
     m_voxelIndexCount = mesh.indices.size();
     
     if (!mesh.vertices.empty()) {
-        // Create vertex array object
-        #ifdef __APPLE__
-        glGenVertexArraysAPPLE(1, &m_voxelVAO);
-        glBindVertexArrayAPPLE(m_voxelVAO);
-        #else
-        glGenVertexArrays(1, &m_voxelVAO);
-        glBindVertexArray(m_voxelVAO);
-        #endif
+        // Create vertex array object if supported
+        if (glGenVertexArrays) {
+            // Clear any previous errors
+            while (glGetError() != GL_NO_ERROR) {}
+            
+            glGenVertexArrays(1, &m_voxelVAO);
+            GLenum err = glGetError();
+            if (err != GL_NO_ERROR) {
+                std::cerr << "Error creating VAO: " << err << std::endl;
+            }
+            
+            if (m_voxelVAO != 0) {
+                glBindVertexArray(m_voxelVAO);
+                err = glGetError();
+                if (err != GL_NO_ERROR) {
+                    std::cerr << "Error binding VAO: " << err << std::endl;
+                }
+            }
+            
+            std::cout << "Created VAO: " << m_voxelVAO << std::endl;
+        } else {
+            std::cout << "VAOs not supported, using VBOs only" << std::endl;
+            m_voxelVAO = 0;
+        }
         
         glGenBuffers(1, &m_voxelVBO);
         glGenBuffers(1, &m_voxelEBO);
         
+        // Clear any previous errors
+        while (glGetError() != GL_NO_ERROR) {}
+        
         // Upload vertex data
         glBindBuffer(GL_ARRAY_BUFFER, m_voxelVBO);
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after glBindBuffer(VBO): " << err << std::endl;
+        }
+        
         glBufferData(GL_ARRAY_BUFFER, 
                      sizeof(Rendering::Vertex) * mesh.vertices.size(),
                      mesh.vertices.data(), 
                      GL_STATIC_DRAW);
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after glBufferData(VBO): " << err << std::endl;
+        }
+        
+        // Debug: Print some vertex data
+        static int meshUpdateCount = 0;
+        if (mesh.vertices.size() > 0 && meshUpdateCount++ < 5) {
+            std::cout << "Uploading " << mesh.vertices.size() << " vertices to GPU:" << std::endl;
+            for (size_t i = 0; i < std::min(size_t(3), mesh.vertices.size()); ++i) {
+                const auto& v = mesh.vertices[i];
+                std::cout << "  Vertex " << i << ": pos(" << v.position.x << ", " 
+                         << v.position.y << ", " << v.position.z << ") color(" 
+                         << v.color.r << ", " << v.color.g << ", " 
+                         << v.color.b << ", " << v.color.a << ")" << std::endl;
+            }
+        }
         
         // Upload index data
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_voxelEBO);
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after glBindBuffer(EBO): " << err << std::endl;
+        }
+        
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                      sizeof(uint32_t) * mesh.indices.size(),
                      mesh.indices.data(),
                      GL_STATIC_DRAW);
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after glBufferData(EBO): " << err << std::endl;
+        }
+        
+        // Get attribute locations
+        GLint posLoc = glGetAttribLocation(m_voxelShaderProgram, "aPos");
+        GLint normalLoc = glGetAttribLocation(m_voxelShaderProgram, "aNormal");
+        GLint colorLoc = glGetAttribLocation(m_voxelShaderProgram, "aColor");
         
         // Set vertex attributes
         // Position
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
-                             (void*)offsetof(Rendering::Vertex, position));
-        glEnableVertexAttribArray(0);
+        if (posLoc >= 0) {
+            glVertexAttribPointer(posLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
+                                 (void*)offsetof(Rendering::Vertex, position));
+            glEnableVertexAttribArray(posLoc);
+        }
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after position attribute: " << err << std::endl;
+        }
         
         // Normal
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
-                             (void*)offsetof(Rendering::Vertex, normal));
-        glEnableVertexAttribArray(1);
+        if (normalLoc >= 0) {
+            glVertexAttribPointer(normalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
+                                 (void*)offsetof(Rendering::Vertex, normal));
+            glEnableVertexAttribArray(normalLoc);
+        }
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after normal attribute: " << err << std::endl;
+        }
         
-        // Color
-        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
-                             (void*)offsetof(Rendering::Vertex, color));
-        glEnableVertexAttribArray(2);
+        // Color (vertex has vec4, shader expects vec3)
+        if (colorLoc >= 0) {
+            glVertexAttribPointer(colorLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Vertex),
+                                 (void*)offsetof(Rendering::Vertex, color));
+            glEnableVertexAttribArray(colorLoc);
+        }
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            std::cerr << "Error after color attribute: " << err << std::endl;
+        }
         
-        #ifdef __APPLE__
-        glBindVertexArrayAPPLE(0);
-        #else
+        // Debug: print vertex attribute offsets
+        if (meshUpdateCount == 1) {
+            std::cout << "Vertex attribute offsets:" << std::endl;
+            std::cout << "  sizeof(Vertex): " << sizeof(Rendering::Vertex) << std::endl;
+            std::cout << "  position offset: " << offsetof(Rendering::Vertex, position) << std::endl;
+            std::cout << "  normal offset: " << offsetof(Rendering::Vertex, normal) << std::endl;
+            std::cout << "  texCoords offset: " << offsetof(Rendering::Vertex, texCoords) << std::endl;
+            std::cout << "  color offset: " << offsetof(Rendering::Vertex, color) << std::endl;
+            
+            // Check a transformed vertex position
+            auto camera = m_cameraController->getCamera();
+            auto viewMatrix = camera->getViewMatrix();
+            auto projMatrix = camera->getProjectionMatrix();
+            Math::Matrix4f mvp = projMatrix * viewMatrix;
+            
+            // Debug camera parameters
+            std::cout << "\nCamera Debug Info:" << std::endl;
+            auto pos = camera->getPosition();
+            auto target = camera->getTarget();
+            std::cout << "  Camera Position: (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
+            std::cout << "  Camera Target: (" << target.x << ", " << target.y << ", " << target.z << ")" << std::endl;
+            // Note: FOV getter not available in base class, using default 45°
+            std::cout << "  Camera Near: " << camera->getNearPlane() << std::endl;
+            std::cout << "  Camera Far: " << camera->getFarPlane() << std::endl;
+            std::cout << "  Camera Aspect: " << camera->getAspectRatio() << std::endl;
+            
+            // Transform all vertices and check if they're in frustum
+            int inFrustum = 0;
+            for (size_t i = 0; i < mesh.vertices.size(); i++) {
+                Math::Vector4f v(mesh.vertices[i].position.x, mesh.vertices[i].position.y, mesh.vertices[i].position.z, 1.0f);
+                Math::Vector4f transformed = mvp * v;
+                Math::Vector4f ndc = transformed / transformed.w;
+                
+                if (i == 0) {
+                    std::cout << "\nFirst vertex transformation:" << std::endl;
+                    std::cout << "  World: (" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
+                    std::cout << "  Clip: (" << transformed.x << ", " << transformed.y << ", " << transformed.z << ", " << transformed.w << ")" << std::endl;
+                    std::cout << "  NDC: (" << ndc.x << ", " << ndc.y << ", " << ndc.z << ")" << std::endl;
+                }
+                
+                // Check if in frustum (-1 to 1 in NDC)
+                if (ndc.x >= -1.0f && ndc.x <= 1.0f &&
+                    ndc.y >= -1.0f && ndc.y <= 1.0f &&
+                    ndc.z >= -1.0f && ndc.z <= 1.0f) {
+                    inFrustum++;
+                }
+            }
+            
+            std::cout << "Vertices in frustum: " << inFrustum << "/" << mesh.vertices.size() << std::endl;
+        }
+        
         glBindVertexArray(0);
-        #endif
     }
 }
 
 void Application::cleanupGL() {
-    if (m_voxelVAO) {
-        #ifdef __APPLE__
-        glDeleteVertexArraysAPPLE(1, &m_voxelVAO);
-        #else
+    if (m_headless) {
+        return;
+    }
+    
+    if (m_voxelVAO && glDeleteVertexArrays) {
         glDeleteVertexArrays(1, &m_voxelVAO);
-        #endif
+    }
+    if (m_voxelVBO) {
         glDeleteBuffers(1, &m_voxelVBO);
+    }
+    if (m_voxelEBO) {
         glDeleteBuffers(1, &m_voxelEBO);
     }
+    m_voxelVAO = 0;
+    m_voxelVBO = 0;
+    m_voxelEBO = 0;
     
     if (m_voxelShaderProgram) {
         glDeleteProgram(m_voxelShaderProgram);

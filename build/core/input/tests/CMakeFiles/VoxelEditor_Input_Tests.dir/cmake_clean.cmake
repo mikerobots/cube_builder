@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "../../../bin/VoxelEditor_Input_Tests"
+  "../../../bin/VoxelEditor_Input_Tests.pdb"
   "CMakeFiles/VoxelEditor_Input_Tests.dir/test_InputMapping.cpp.o"
   "CMakeFiles/VoxelEditor_Input_Tests.dir/test_InputMapping.cpp.o.d"
   "CMakeFiles/VoxelEditor_Input_Tests.dir/test_InputTypes.cpp.o"
@@ -11,8 +13,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/VoxelEditor_Input_Tests.dir/test_TouchHandler.cpp.o.d"
   "CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o"
   "CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o.d"
-  "VoxelEditor_Input_Tests"
-  "VoxelEditor_Input_Tests.pdb"
   "VoxelEditor_Input_Tests[1]_tests.cmake"
 )
 

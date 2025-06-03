@@ -1,5 +1,5 @@
 \chapter{Camera System Subsystem }
-\hypertarget{md_core_2camera_2_d_e_s_i_g_n}{}\label{md_core_2camera_2_d_e_s_i_g_n}\index{Camera System Subsystem@{Camera System Subsystem}}
+\label{md_core_2camera_2_d_e_s_i_g_n}\index{Camera System Subsystem@{Camera System Subsystem}}
 \label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md111}%
 \Hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md111}%
 \hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md112}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md112}
@@ -73,7 +73,7 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ State\ management}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset();}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getState()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ getState()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setState(\textcolor{keyword}{const}\ CameraState\&\ state);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Constraints}}
@@ -95,10 +95,10 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{enum\ class}\ ViewType\ \{}
 \DoxyCodeLine{\ \ \ \ Custom,}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda5835bab1ade0060909e31a06af2e2cde}{Front}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{Back}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa945d5e233cf7d6240f6b783b36a374ff}{Left}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_aa6c1593f8dc1f6f00b282d005f287bafa92b09c7c48c520c3c55e497875da437c}{Right}},}
+\DoxyCodeLine{\ \ \ \ Front,}
+\DoxyCodeLine{\ \ \ \ Back,}
+\DoxyCodeLine{\ \ \ \ Left,}
+\DoxyCodeLine{\ \ \ \ Right,}
 \DoxyCodeLine{\ \ \ \ Top,}
 \DoxyCodeLine{\ \ \ \ Bottom,}
 \DoxyCodeLine{\ \ \ \ Isometric,}
@@ -118,7 +118,7 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \hypertarget{md_core_2camera_2_d_e_s_i_g_n_autotoc_md122}{}\doxysubsection{\texorpdfstring{Camera\+State}{Camera\+State}}\label{md_core_2camera_2_d_e_s_i_g_n_autotoc_md122}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ \{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }CameraState\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3f\ position;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ target;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ up;}
@@ -172,7 +172,7 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ State\ access}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setState(\textcolor{keyword}{const}\ CameraState\&\ state);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getState()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ getState()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Constraints}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setConstraints(\textcolor{keyword}{const}\ CameraConstraints\&\ constraints);}
@@ -204,24 +204,24 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }ViewPresets\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getPreset(ViewType\ view)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ getPreset(ViewType\ view)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setCustomPreset(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ CameraState\&\ state);}
 \DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getCustomPresetNames()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Calculate\ view\ transformations}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateFrontView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateBackView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateTopView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateBottomView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateLeftView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateRightView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ calculateIsometricView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateFrontView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateBackView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateTopView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateBottomView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateLeftView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateRightView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ calculateIsometricView(\textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ CameraState>\ m\_customPresets;}
 \DoxyCodeLine{\ \ \ \ BoundingBox\ m\_sceneBounds;}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ createOrthographicView(\textcolor{keyword}{const}\ Vector3f\&\ direction,\ \textcolor{keyword}{const}\ Vector3f\&\ up,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ createOrthographicView(\textcolor{keyword}{const}\ Vector3f\&\ direction,\ \textcolor{keyword}{const}\ Vector3f\&\ up,\ \textcolor{keyword}{const}\ BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ calculateOptimalDistance(\textcolor{keyword}{const}\ BoundingBox\&\ bounds,\ \textcolor{keywordtype}{float}\ fieldOfView)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
 
@@ -240,12 +240,12 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ stop();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime);}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ getCurrentState()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ getCurrentState()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }Animation\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ startState;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ targetState;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ CameraState\ startState;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ CameraState\ targetState;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ duration;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ elapsedTime;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ EasingFunction\ easing;}
@@ -254,7 +254,7 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ Animation\ m\_currentAnimation;}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ interpolateStates(\textcolor{keyword}{const}\ CameraState\&\ start,\ \textcolor{keyword}{const}\ CameraState\&\ end,\ \textcolor{keywordtype}{float}\ t,\ EasingFunction\ easing)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ CameraState\ interpolateStates(\textcolor{keyword}{const}\ CameraState\&\ start,\ \textcolor{keyword}{const}\ CameraState\&\ end,\ \textcolor{keywordtype}{float}\ t,\ EasingFunction\ easing)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ applyEasing(\textcolor{keywordtype}{float}\ t,\ EasingFunction\ easing)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
 
@@ -342,8 +342,8 @@ Manages 3D camera controls, view presets, smooth transitions, and camera state p
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }CameraChangedEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ oldState;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ newState;}
+\DoxyCodeLine{\ \ \ \ CameraState\ oldState;}
+\DoxyCodeLine{\ \ \ \ CameraState\ newState;}
 \DoxyCodeLine{\ \ \ \ ChangeType\ changeType;\ \textcolor{comment}{//\ POSITION,\ ROTATION,\ ZOOM,\ VIEW\_PRESET}}
 \DoxyCodeLine{\};}
 

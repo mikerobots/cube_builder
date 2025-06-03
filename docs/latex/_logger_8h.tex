@@ -1,5 +1,5 @@
 \doxysection{foundation/logging/\+Logger.h File Reference}
-\hypertarget{_logger_8h}{}\label{_logger_8h}\index{foundation/logging/Logger.h@{foundation/logging/Logger.h}}
+\label{_logger_8h}\index{foundation/logging/Logger.h@{foundation/logging/Logger.h}}
 {\ttfamily \#include "{}Log\+Output.\+h"{}}\newline
 {\ttfamily \#include $<$vector$>$}\newline
 {\ttfamily \#include $<$memory$>$}\newline
@@ -42,9 +42,8 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 
 \label{doc-define-members}
-\Hypertarget{_logger_8h_doc-define-members}
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{_logger_8h_a2332264037abe02c8041a498b2fa1627}\index{Logger.h@{Logger.h}!LOG\_DEBUG@{LOG\_DEBUG}}
+\index{Logger.h@{Logger.h}!LOG\_DEBUG@{LOG\_DEBUG}}
 \index{LOG\_DEBUG@{LOG\_DEBUG}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_DEBUG}{LOG\_DEBUG}}
 {\footnotesize\ttfamily \label{_logger_8h_a2332264037abe02c8041a498b2fa1627} 
@@ -52,10 +51,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_acc2784b9b75badb25cb41dc083d00b58}{debug}}(msg)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().debug(msg)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_ae06cbc3f4e82c9e42864680d702d2bca}\index{Logger.h@{Logger.h}!LOG\_DEBUG\_C@{LOG\_DEBUG\_C}}
+\index{Logger.h@{Logger.h}!LOG\_DEBUG\_C@{LOG\_DEBUG\_C}}
 \index{LOG\_DEBUG\_C@{LOG\_DEBUG\_C}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_DEBUG\_C}{LOG\_DEBUG\_C}}
 {\footnotesize\ttfamily \label{_logger_8h_ae06cbc3f4e82c9e42864680d702d2bca} 
@@ -63,10 +62,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_acc2784b9b75badb25cb41dc083d00b58}{debug}}(msg,\ component)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().debug(msg,\ component)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_a7ebf4c3b4fb05d6f9094089ded75cbdd}\index{Logger.h@{Logger.h}!LOG\_ERROR@{LOG\_ERROR}}
+\index{Logger.h@{Logger.h}!LOG\_ERROR@{LOG\_ERROR}}
 \index{LOG\_ERROR@{LOG\_ERROR}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_ERROR}{LOG\_ERROR}}
 {\footnotesize\ttfamily \label{_logger_8h_a7ebf4c3b4fb05d6f9094089ded75cbdd} 
@@ -74,10 +73,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a0a19aacfe107fd2b00eaa1c0b053d46e}{error}}(msg)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().error(msg)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_af0a7e1e5aec7483e3527b014fe2c928d}\index{Logger.h@{Logger.h}!LOG\_ERROR\_C@{LOG\_ERROR\_C}}
+\index{Logger.h@{Logger.h}!LOG\_ERROR\_C@{LOG\_ERROR\_C}}
 \index{LOG\_ERROR\_C@{LOG\_ERROR\_C}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_ERROR\_C}{LOG\_ERROR\_C}}
 {\footnotesize\ttfamily \label{_logger_8h_af0a7e1e5aec7483e3527b014fe2c928d} 
@@ -85,10 +84,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a0a19aacfe107fd2b00eaa1c0b053d46e}{error}}(msg,\ component)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().error(msg,\ component)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_ac8e803773221119947b55f6ae85a9c63}\index{Logger.h@{Logger.h}!LOG\_INFO@{LOG\_INFO}}
+\index{Logger.h@{Logger.h}!LOG\_INFO@{LOG\_INFO}}
 \index{LOG\_INFO@{LOG\_INFO}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_INFO}{LOG\_INFO}}
 {\footnotesize\ttfamily \label{_logger_8h_ac8e803773221119947b55f6ae85a9c63} 
@@ -96,10 +95,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a1cb310abc7092bc6b32ad87aca9ead5a}{info}}(msg)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().info(msg)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_a03e976a0328dda3ce6c4126a3b1ba78e}\index{Logger.h@{Logger.h}!LOG\_INFO\_C@{LOG\_INFO\_C}}
+\index{Logger.h@{Logger.h}!LOG\_INFO\_C@{LOG\_INFO\_C}}
 \index{LOG\_INFO\_C@{LOG\_INFO\_C}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_INFO\_C}{LOG\_INFO\_C}}
 {\footnotesize\ttfamily \label{_logger_8h_a03e976a0328dda3ce6c4126a3b1ba78e} 
@@ -107,10 +106,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a1cb310abc7092bc6b32ad87aca9ead5a}{info}}(msg,\ component)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().info(msg,\ component)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_a0c53e5566a3b790db039421523dd4637}\index{Logger.h@{Logger.h}!LOG\_WARNING@{LOG\_WARNING}}
+\index{Logger.h@{Logger.h}!LOG\_WARNING@{LOG\_WARNING}}
 \index{LOG\_WARNING@{LOG\_WARNING}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_WARNING}{LOG\_WARNING}}
 {\footnotesize\ttfamily \label{_logger_8h_a0c53e5566a3b790db039421523dd4637} 
@@ -118,10 +117,10 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_ad830197e2e7a5e0159dff9a98feb92e7}{warning}}(msg)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().warning(msg)}
 
 \end{DoxyCode}
-\Hypertarget{_logger_8h_a59b425546c002420691655436f272bab}\index{Logger.h@{Logger.h}!LOG\_WARNING\_C@{LOG\_WARNING\_C}}
+\index{Logger.h@{Logger.h}!LOG\_WARNING\_C@{LOG\_WARNING\_C}}
 \index{LOG\_WARNING\_C@{LOG\_WARNING\_C}!Logger.h@{Logger.h}}
 \doxysubsubsection{\texorpdfstring{LOG\_WARNING\_C}{LOG\_WARNING\_C}}
 {\footnotesize\ttfamily \label{_logger_8h_a59b425546c002420691655436f272bab} 
@@ -129,6 +128,6 @@ namespace \mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Voxel\+Editor\+::
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{VoxelEditor::Logging::Logger::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_ad830197e2e7a5e0159dff9a98feb92e7}{warning}}(msg,\ component)}
+\DoxyCodeLine{VoxelEditor::Logging::Logger::getInstance().warning(msg,\ component)}
 
 \end{DoxyCode}

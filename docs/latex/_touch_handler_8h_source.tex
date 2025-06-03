@@ -1,5 +1,5 @@
 \doxysection{Touch\+Handler.\+h}
-\hypertarget{_touch_handler_8h_source}{}\label{_touch_handler_8h_source}\index{core/input/TouchHandler.h@{core/input/TouchHandler.h}}
+\label{_touch_handler_8h_source}\index{core/input/TouchHandler.h@{core/input/TouchHandler.h}}
 \mbox{\hyperlink{_touch_handler_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -10,72 +10,72 @@
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <chrono>}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_input_handler_8h}{InputHandler.h}}"{}}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_input_types_8h}{InputTypes.h}}"{}}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{../../foundation/events/EventBase.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}InputHandler.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}InputTypes.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/EventBase.h"{}}}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input}{Input}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }Input\ \{}
 \DoxyCodeLine{00015\ }
 \DoxyCodeLine{00016\ \textcolor{comment}{//\ Forward\ declaration\ for\ gesture\ recognizer}}
-\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer}{GestureRecognizer}};}
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }GestureRecognizer;}
 \DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_aa68982242ee130fe2fd59c62e01df219}{TouchHandler}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be}{InputHandler}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }TouchHandler\ :\ \textcolor{keyword}{public}\ InputHandler\ \{}
 \DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_aa68982242ee130fe2fd59c62e01df219}{TouchHandler}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{VoxelEditor::Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_ad78bfa530bb44eefa73cec5633d0e0ef}{\string~TouchHandler}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{explicit}\ TouchHandler(VoxelEditor::Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00022\ \ \ \ \ \string~TouchHandler();}
 \DoxyCodeLine{00023\ \ \ \ \ }
 \DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ InputHandler\ interface}}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_af29e08e3c9f5d5bc46e62f92c8ac2d5d}{processTouchEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_event}{TouchEvent}}\&\ event)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a88174308f867bd4c8c814dae6844ddca}{update}}(\textcolor{keywordtype}{float}\ deltaTime)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ processTouchEvent(\textcolor{keyword}{const}\ TouchEvent\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime)\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00027\ \ \ \ \ }
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Touch\ state\ queries}}
-\DoxyCodeLine{00029\ \ \ \ \ std::vector<TouchPoint>\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a385ece03edc3d2d29e8456795d674fa0}{getActiveTouches}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_point}{TouchPoint}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_adb1b96ae1eecdc809024d5630e1d9120}{getPrimaryTouch}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a5856569f4fc2d0bbf064f1e1bd7ef8ba}{hasTouches}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a5d789f1815b9f69188156f0931f9991d}{getTouchCount}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_touch_point}{TouchPoint}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a59ada98583e42a1f4ce5c3930c04fc27}{getTouchById}}(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_aafb193f9ee13282de2c00fca2e3f8c33}{isGestureDetected}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ std::vector<TouchPoint>\ getActiveTouches()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \ \ TouchPoint\ getPrimaryTouch()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasTouches()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getTouchCount()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ \ \ \ \ TouchPoint\ getTouchById(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ isGestureDetected(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00035\ \ \ \ \ }
 \DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Gesture\ data\ queries}}
-\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a93479d91014243343de87e488845440f}{getPanDelta}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a1b96195d52b96c44374b9cef79c6a9a5}{getPinchScale}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_af0431a9befce5b5f45520b842cf3ec99}{getRotationAngle}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a44474a7b7200f9580c10b53eb3ad5fbc}{getGestureCenter}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ \ \ \ \ Math::Vector2f\ getPanDelta()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ getPinchScale()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ getRotationAngle()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ Math::Vector2f\ getGestureCenter()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00041\ \ \ \ \ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Gesture\ recognition}}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a3cbd118f8bc095338e390b36610d92b6}{enableGesture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture,\ \textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a27d6346f74a582301211772a60a9394d}{isGestureEnabled}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a5fcbf6c490e111d5d4aa0b942c8e507f}{isGestureActive}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a44474a7b7200f9580c10b53eb3ad5fbc}{getGestureCenter}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_aea771799306bd190466148195bfb66cf}{getGestureScale}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a4d5c4e6dafab51ae1f83c0b0d6941c3e}{getGestureRotation}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a226840f05c718051e755af20099bb3b2}{getGestureVelocity}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ enableGesture(TouchGesture\ gesture,\ \textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ isGestureEnabled(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ isGestureActive(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ Math::Vector2f\ getGestureCenter(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{float}\ getGestureScale(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ getGestureRotation(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ \ \ \ \ Math::Vector2f\ getGestureVelocity(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00050\ \ \ \ \ }
 \DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Gesture\ configuration}}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_aeedccf46b4cdc0e882287b751d4d2ca2}{setTapTimeout}}(\textcolor{keywordtype}{float}\ seconds)\ \{\ m\_tapTimeout\ =\ seconds;\ \}}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a9ad9a6391cabb108d14dacce18ebaf3c}{setTapRadius}}(\textcolor{keywordtype}{float}\ pixels)\ \{\ m\_tapRadius\ =\ pixels;\ \}}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a5770174c79cafdc58d3db88fbd8a7c6b}{setPinchThreshold}}(\textcolor{keywordtype}{float}\ pixels)\ \{\ m\_pinchThreshold\ =\ pixels;\ \}}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a483b5845c818af340fba8ceb7d2ce432}{setSwipeThreshold}}(\textcolor{keywordtype}{float}\ pixels)\ \{\ m\_swipeThreshold\ =\ pixels;\ \}}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_accbbb59b59b4625f552a8f24cee3cc0c}{setRotationThreshold}}(\textcolor{keywordtype}{float}\ degrees)\ \{\ m\_rotationThreshold\ =\ degrees;\ \}}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a4c366d430fa84d50f98c661a021c63e8}{setLongPressTimeout}}(\textcolor{keywordtype}{float}\ seconds)\ \{\ m\_longPressTimeout\ =\ seconds;\ \}}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a134514ffa8f4a51dd9fa5a0ebe5f1357}{setSensitivity}}(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_sensitivity\ =\ sensitivity;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ setTapTimeout(\textcolor{keywordtype}{float}\ seconds)\ \{\ m\_tapTimeout\ =\ seconds;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ setTapRadius(\textcolor{keywordtype}{float}\ pixels)\ \{\ m\_tapRadius\ =\ pixels;\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ setPinchThreshold(\textcolor{keywordtype}{float}\ pixels)\ \{\ m\_pinchThreshold\ =\ pixels;\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ setSwipeThreshold(\textcolor{keywordtype}{float}\ pixels)\ \{\ m\_swipeThreshold\ =\ pixels;\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ setRotationThreshold(\textcolor{keywordtype}{float}\ degrees)\ \{\ m\_rotationThreshold\ =\ degrees;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ setLongPressTimeout(\textcolor{keywordtype}{float}\ seconds)\ \{\ m\_longPressTimeout\ =\ seconds;\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ setSensitivity(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_sensitivity\ =\ sensitivity;\ \}}
 \DoxyCodeLine{00059\ \ \ \ \ }
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a2220a51cf2b92fa817adfaba22077fe6}{getTapTimeout}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_tapTimeout;\ \}}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_ada5c0118c68ca3243bf3191a6fa3edc7}{getTapRadius}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_tapRadius;\ \}}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a3126bed4df0fadf5ba3b7279290429fe}{getPinchThreshold}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pinchThreshold;\ \}}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a60c383928bb1dfe01937e37f089ee718}{getSwipeThreshold}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_swipeThreshold;\ \}}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a9f32e4310926ff954a82c4254561ef97}{getRotationThreshold}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_rotationThreshold;\ \}}
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_aaa87d50af92c13bc5a2b8c0963cbf653}{getLongPressTimeout}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_longPressTimeout;\ \}}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a299af1b22a33467171607ad8102d76f0}{getSensitivity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_sensitivity;\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{float}\ getTapTimeout()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_tapTimeout;\ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{float}\ getTapRadius()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_tapRadius;\ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{float}\ getPinchThreshold()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pinchThreshold;\ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{float}\ getSwipeThreshold()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_swipeThreshold;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{float}\ getRotationThreshold()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_rotationThreshold;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{float}\ getLongPressTimeout()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_longPressTimeout;\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{float}\ getSensitivity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_sensitivity;\ \}}
 \DoxyCodeLine{00067\ \ \ \ \ }
 \DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Touch\ utilities}}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a834e4a44d98750211b452454658ca39b}{touchGestureToString}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture);}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_ad7760427998ef09585d752bec13ffe2a}{touchGestureFromString}}(\textcolor{keyword}{const}\ std::string\&\ str);}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_touch_handler_a0ae51f34c7fabd589b994ec7330720a1}{isValidTouchGesture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ touchGestureToString(TouchGesture\ gesture);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{static}\ TouchGesture\ touchGestureFromString(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValidTouchGesture(TouchGesture\ gesture);}
 \DoxyCodeLine{00072\ \ \ \ \ }
 \DoxyCodeLine{00073\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{TouchState}}\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{struct\ }TouchState\ \{}
 \DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Active\ touches}}
 \DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ std::unordered\_map<int,\ TouchPoint>\ activeTouches;}
 \DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ }
@@ -84,14 +84,14 @@
 \DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ std::unordered\_map<TouchGesture,\ bool>\ enabledGestures;}
 \DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gesture\ data}}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ pinchCenter\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ Math::Vector2f\ pinchCenter\ =\ Math::Vector2f::zero();}
 \DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pinchScale\ =\ 1.0f;}
 \DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ initialPinchDistance\ =\ 0.0f;}
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ panDelta\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ panVelocity\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ Math::Vector2f\ panDelta\ =\ Math::Vector2f::zero();}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ Math::Vector2f\ panVelocity\ =\ Math::Vector2f::zero();}
 \DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ rotationCenter\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ Math::Vector2f\ rotationCenter\ =\ Math::Vector2f::zero();}
 \DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rotationAngle\ =\ 0.0f;}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ initialRotationAngle\ =\ 0.0f;}
 \DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ }
@@ -102,24 +102,24 @@
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Long\ press\ detection}}
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ longPressStarted\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ longPressStartTime;}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ longPressPosition\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ TimePoint\ longPressStartTime;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ Math::Vector2f\ longPressPosition\ =\ Math::Vector2f::zero();}
 \DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Swipe\ detection}}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ swipeStart\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ swipeEnd\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ swipeStartTime;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ Math::Vector2f\ swipeStart\ =\ Math::Vector2f::zero();}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ Math::Vector2f\ swipeEnd\ =\ Math::Vector2f::zero();}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ TimePoint\ swipeStartTime;}
 \DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ swipeInProgress\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \{}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ activeTouches.clear();}
 \DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ activeGestures.clear();}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ pinchCenter\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ pinchCenter\ =\ Math::Vector2f::zero();}
 \DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ pinchScale\ =\ 1.0f;}
 \DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ initialPinchDistance\ =\ 0.0f;}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ panDelta\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ panVelocity\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ rotationCenter\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f_ae6924ae2b3e6c96f8de30035e55d13ea}{Math::Vector2f::zero}}();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ panDelta\ =\ Math::Vector2f::zero();}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ panVelocity\ =\ Math::Vector2f::zero();}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ rotationCenter\ =\ Math::Vector2f::zero();}
 \DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ rotationAngle\ =\ 0.0f;}
 \DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ initialRotationAngle\ =\ 0.0f;}
 \DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ tapPositions.clear();}
@@ -130,7 +130,7 @@
 \DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00127\ \ \ \ \ \};}
 \DoxyCodeLine{00128\ \ \ \ \ }
-\DoxyCodeLine{00129\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a02c0129d8a46425412adb8c7a0c774d5}{TouchState}}\ m\_state;}
+\DoxyCodeLine{00129\ \ \ \ \ TouchState\ m\_state;}
 \DoxyCodeLine{00130\ \ \ \ \ std::unique\_ptr<GestureRecognizer>\ m\_gestureRecognizer;}
 \DoxyCodeLine{00131\ \ \ \ \ }
 \DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
@@ -162,7 +162,7 @@
 \DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_rotationAngle;}
 \DoxyCodeLine{00159\ \ \ \ \ }
 \DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//\ Tap\ detection}}
-\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ m\_lastTapTime;}
+\DoxyCodeLine{00161\ \ \ \ \ TimePoint\ m\_lastTapTime;}
 \DoxyCodeLine{00162\ \ \ \ \ Math::Vector2f\ m\_lastTapPosition;}
 \DoxyCodeLine{00163\ \ \ \ \ }
 \DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ Event\ processing\ methods}}
@@ -188,10 +188,10 @@
 \DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{void}\ checkRotationGesture();}
 \DoxyCodeLine{00185\ \ \ \ \ }
 \DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ Gesture\ state\ management}}
-\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ startGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture);}
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ updateGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture);}
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ endGesture(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture);}
-\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{bool}\ isGestureInProgress(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ startGesture(TouchGesture\ gesture);}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ updateGesture(TouchGesture\ gesture);}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ endGesture(TouchGesture\ gesture);}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{bool}\ isGestureInProgress(TouchGesture\ gesture)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00191\ \ \ \ \ }
 \DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
 \DoxyCodeLine{00193\ \ \ \ \ Math::Vector2f\ calculateCentroid()\ \textcolor{keyword}{const};}
@@ -199,11 +199,11 @@
 \DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateAngle(\textcolor{keyword}{const}\ Math::Vector2f\&\ p1,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ p2)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{float}\ calculateAverageDistance()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWithinTapRadius(\textcolor{keyword}{const}\ Math::Vector2f\&\ pos1,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ pos2)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWithinTimeLimit(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\&\ start,\ \textcolor{keywordtype}{float}\ timeout)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWithinTimeLimit(\textcolor{keyword}{const}\ TimePoint\&\ start,\ \textcolor{keywordtype}{float}\ timeout)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00199\ \ \ \ \ }
 \DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ Event\ dispatching}}
 \DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchTouchEvent(\textcolor{keyword}{const}\ TouchEvent\&\ event);}
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchGestureEvent(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ gesture,\ \textcolor{keywordtype}{bool}\ started,\ \textcolor{keywordtype}{bool}\ ended\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchGestureEvent(TouchGesture\ gesture,\ \textcolor{keywordtype}{bool}\ started,\ \textcolor{keywordtype}{bool}\ ended\ =\ \textcolor{keyword}{false});}
 \DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchTapEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ position,\ \textcolor{keywordtype}{int}\ tapCount);}
 \DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchSwipeEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ start,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ end,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ velocity);}
 \DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchPinchEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ center,\ \textcolor{keywordtype}{float}\ scale,\ \textcolor{keywordtype}{float}\ velocity);}
@@ -223,18 +223,18 @@
 \DoxyCodeLine{00219\ \};}
 \DoxyCodeLine{00220\ }
 \DoxyCodeLine{00221\ \textcolor{comment}{//\ Simple\ gesture\ recognizer}}
-\DoxyCodeLine{00222\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_ab128b6eaccddc7c1bbcdab5912e5a7f2}{GestureRecognizer}}\ \{}
+\DoxyCodeLine{00222\ \textcolor{keyword}{class\ }GestureRecognizer\ \{}
 \DoxyCodeLine{00223\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00224\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_ab128b6eaccddc7c1bbcdab5912e5a7f2}{GestureRecognizer}}();}
-\DoxyCodeLine{00225\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_a3546508ebb4cb448663805c077bd0b70}{\string~GestureRecognizer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00224\ \ \ \ \ GestureRecognizer();}
+\DoxyCodeLine{00225\ \ \ \ \ \string~GestureRecognizer()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00226\ \ \ \ \ }
-\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_a64d336ab5f1be7bf491ace43f534e36d}{updateTouches}}(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ touches);}
-\DoxyCodeLine{00228\ \ \ \ \ std::vector<TouchGesture>\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_a20dac7130f1622810278d6d58261fb68}{recognizeGestures}}();}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{void}\ updateTouches(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ touches);}
+\DoxyCodeLine{00228\ \ \ \ \ std::vector<TouchGesture>\ recognizeGestures();}
 \DoxyCodeLine{00229\ \ \ \ \ }
 \DoxyCodeLine{00230\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_a64ba813cf432e101597b18924e24b467}{setTapRadius}}(\textcolor{keywordtype}{float}\ radius)\ \{\ m\_tapRadius\ =\ radius;\ \}}
-\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_a15e4beb3cefed8682a4e1b794945591f}{setSwipeThreshold}}(\textcolor{keywordtype}{float}\ threshold)\ \{\ m\_swipeThreshold\ =\ threshold;\ \}}
-\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_gesture_recognizer_a3110fd48d831777dd40af2b423ac6d47}{setPinchThreshold}}(\textcolor{keywordtype}{float}\ threshold)\ \{\ m\_pinchThreshold\ =\ threshold;\ \}}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{void}\ setTapRadius(\textcolor{keywordtype}{float}\ radius)\ \{\ m\_tapRadius\ =\ radius;\ \}}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordtype}{void}\ setSwipeThreshold(\textcolor{keywordtype}{float}\ threshold)\ \{\ m\_swipeThreshold\ =\ threshold;\ \}}
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordtype}{void}\ setPinchThreshold(\textcolor{keywordtype}{float}\ threshold)\ \{\ m\_pinchThreshold\ =\ threshold;\ \}}
 \DoxyCodeLine{00234\ \ \ \ \ }
 \DoxyCodeLine{00235\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00236\ \ \ \ \ std::vector<TouchPoint>\ m\_touches;}
@@ -252,76 +252,76 @@
 \DoxyCodeLine{00248\ \};}
 \DoxyCodeLine{00249\ }
 \DoxyCodeLine{00250\ \textcolor{comment}{//\ Touch\ event\ types\ for\ the\ event\ system}}
-\DoxyCodeLine{00251\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_events}{Events}}\ \{}
+\DoxyCodeLine{00251\ \textcolor{keyword}{namespace\ }Events\ \{}
 \DoxyCodeLine{00252\ \ \ \ \ }
-\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_begin_event_ab755a62a7aa7f0c6f0decde40bee2616}{TouchBeginEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchBeginEvent>\ \{}
-\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ std::vector<TouchPoint>\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_begin_event_a8ef3bc3f9f855399035a08b920338f60}{touches}};}
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keyword}{struct\ }TouchBeginEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchBeginEvent>\ \{}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ std::vector<TouchPoint>\ touches;}
 \DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_begin_event_ab755a62a7aa7f0c6f0decde40bee2616}{TouchBeginEvent}}(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ t)}
-\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_begin_event_a8ef3bc3f9f855399035a08b920338f60}{touches}}(t)\ \{\}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ TouchBeginEvent(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ t)}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ :\ touches(t)\ \{\}}
 \DoxyCodeLine{00258\ \ \ \ \ \};}
 \DoxyCodeLine{00259\ \ \ \ \ }
-\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_end_event_af13340737f1c4215f091bd67bfeb84f8}{TouchEndEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchEndEvent>\ \{}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ std::vector<TouchPoint>\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_end_event_a921416f5b4cbce9757419179b687a5a4}{touches}};}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keyword}{struct\ }TouchEndEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchEndEvent>\ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ std::vector<TouchPoint>\ touches;}
 \DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_end_event_af13340737f1c4215f091bd67bfeb84f8}{TouchEndEvent}}(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ t)}
-\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_end_event_a921416f5b4cbce9757419179b687a5a4}{touches}}(t)\ \{\}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ TouchEndEvent(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ t)}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ :\ touches(t)\ \{\}}
 \DoxyCodeLine{00265\ \ \ \ \ \};}
 \DoxyCodeLine{00266\ \ \ \ \ }
-\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_aa64949d16ce8503d94058ffa492aee30}{TouchGestureEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchGestureEvent>\ \{}
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_a1caf8445fb30b75153a623b9528ef8f7}{gesture}};}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_a79dec3099cdcd30c9442d99ee4b03819}{position}};}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_ae8b8dd1d31dcc6c963b826fb2a6da904}{data}};\ \textcolor{comment}{//\ Scale/rotation/velocity\ depending\ on\ gesture}}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_aa6f7eb8cf8e1dd8358e17989712ed170}{started}};}
-\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_a4000b7a6511eae28cb33490f26f99a91}{ended}};}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{struct\ }TouchGestureEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchGestureEvent>\ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ TouchGesture\ gesture;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ Math::Vector2f\ position;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ Math::Vector2f\ data;\ \textcolor{comment}{//\ Scale/rotation/velocity\ depending\ on\ gesture}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ started;}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ ended;}
 \DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_aa64949d16ce8503d94058ffa492aee30}{TouchGestureEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_ad94563a651df33391f21e1bb78184fb9}{TouchGesture}}\ g,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ pos,\ \textcolor{keywordtype}{bool}\ s,\ \textcolor{keywordtype}{bool}\ e)}
-\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_a1caf8445fb30b75153a623b9528ef8f7}{gesture}}(g),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_a79dec3099cdcd30c9442d99ee4b03819}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_ae8b8dd1d31dcc6c963b826fb2a6da904}{data}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Math}}::Vector2f::zero()),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_aa6f7eb8cf8e1dd8358e17989712ed170}{started}}(s),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_gesture_event_a4000b7a6511eae28cb33490f26f99a91}{ended}}(e)\ \{\}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ TouchGestureEvent(TouchGesture\ g,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ pos,\ \textcolor{keywordtype}{bool}\ s,\ \textcolor{keywordtype}{bool}\ e)}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ :\ gesture(g),\ position(pos),\ data(Math::Vector2f::zero()),\ started(s),\ ended(e)\ \{\}}
 \DoxyCodeLine{00276\ \ \ \ \ \};}
 \DoxyCodeLine{00277\ \ \ \ \ }
-\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_tap_event_a61e3ff281fa395bcae23f7b0db1d258d}{TouchTapEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchTapEvent>\ \{}
-\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_tap_event_a866929e809b306d65d82f8296a48e367}{position}};}
-\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_tap_event_aad4d6d008746da48b637162954120f2e}{tapCount}};}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keyword}{struct\ }TouchTapEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchTapEvent>\ \{}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ Math::Vector2f\ position;}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tapCount;}
 \DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_tap_event_a61e3ff281fa395bcae23f7b0db1d258d}{TouchTapEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ pos,\ \textcolor{keywordtype}{int}\ count)}
-\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_tap_event_a866929e809b306d65d82f8296a48e367}{position}}(pos),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_tap_event_aad4d6d008746da48b637162954120f2e}{tapCount}}(count)\ \{\}}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ TouchTapEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ pos,\ \textcolor{keywordtype}{int}\ count)}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ :\ position(pos),\ tapCount(count)\ \{\}}
 \DoxyCodeLine{00284\ \ \ \ \ \};}
 \DoxyCodeLine{00285\ \ \ \ \ }
-\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_a54f1508839d4ceff0e940a0d7040749b}{TouchSwipeEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchSwipeEvent>\ \{}
-\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_a09d1a9a44469a98835ffb6826bda7a67}{startPosition}};}
-\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_a91506489a2710aff2c6d813962e7e690}{endPosition}};}
-\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_ad1e5bf89d71d74eb6352640f8d5c0268}{velocity}};}
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keyword}{struct\ }TouchSwipeEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchSwipeEvent>\ \{}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ Math::Vector2f\ startPosition;}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ Math::Vector2f\ endPosition;}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ Math::Vector2f\ velocity;}
 \DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_a54f1508839d4ceff0e940a0d7040749b}{TouchSwipeEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ start,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ end,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ vel)}
-\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_a09d1a9a44469a98835ffb6826bda7a67}{startPosition}}(start),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_a91506489a2710aff2c6d813962e7e690}{endPosition}}(end),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_swipe_event_ad1e5bf89d71d74eb6352640f8d5c0268}{velocity}}(vel)\ \{\}}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ TouchSwipeEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ start,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ end,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ vel)}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ :\ startPosition(start),\ endPosition(end),\ velocity(vel)\ \{\}}
 \DoxyCodeLine{00293\ \ \ \ \ \};}
 \DoxyCodeLine{00294\ \ \ \ \ }
-\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a2048c8a905384a951bb2fe18749f45a0}{TouchPinchEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchPinchEvent>\ \{}
-\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a8d5fd965684223326fba65f9ed725fb1}{center}};}
-\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_aeb849b9748aa18161da1bc25a0f21afc}{scale}};}
-\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a38f861022bbe6ceb5a864048d76d7c87}{velocity}};}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{struct\ }TouchPinchEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchPinchEvent>\ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ Math::Vector2f\ center;}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scale;}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ velocity;}
 \DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a2048c8a905384a951bb2fe18749f45a0}{TouchPinchEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ c,\ \textcolor{keywordtype}{float}\ s,\ \textcolor{keywordtype}{float}\ v)}
-\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a8d5fd965684223326fba65f9ed725fb1}{center}}(c),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_aeb849b9748aa18161da1bc25a0f21afc}{scale}}(s),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pinch_event_a38f861022bbe6ceb5a864048d76d7c87}{velocity}}(v)\ \{\}}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ TouchPinchEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ c,\ \textcolor{keywordtype}{float}\ s,\ \textcolor{keywordtype}{float}\ v)}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ :\ center(c),\ scale(s),\ velocity(v)\ \{\}}
 \DoxyCodeLine{00302\ \ \ \ \ \};}
 \DoxyCodeLine{00303\ \ \ \ \ }
-\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pan_event_ab8656fd627f24f3afa705602152c5e0b}{TouchPanEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchPanEvent>\ \{}
-\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pan_event_a7027dc3c94e3887df90d29701bb00e25}{delta}};}
-\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pan_event_ad86e4da4f2a9f52525b1094b8ee68465}{velocity}};}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keyword}{struct\ }TouchPanEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchPanEvent>\ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ Math::Vector2f\ delta;}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ Math::Vector2f\ velocity;}
 \DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pan_event_ab8656fd627f24f3afa705602152c5e0b}{TouchPanEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ d,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ v)}
-\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pan_event_a7027dc3c94e3887df90d29701bb00e25}{delta}}(d),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_pan_event_ad86e4da4f2a9f52525b1094b8ee68465}{velocity}}(v)\ \{\}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ TouchPanEvent(\textcolor{keyword}{const}\ Math::Vector2f\&\ d,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ v)}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ :\ delta(d),\ velocity(v)\ \{\}}
 \DoxyCodeLine{00310\ \ \ \ \ \};}
 \DoxyCodeLine{00311\ \ \ \ \ }
-\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_update_event_a3939396fd6a9232bb37551c844b22494}{TouchUpdateEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchUpdateEvent>\ \{}
-\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ std::vector<TouchPoint>\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_update_event_a290eb3611d6b33aa04779b2c7b84eb97}{touches}};}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{struct\ }TouchUpdateEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchUpdateEvent>\ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ std::vector<TouchPoint>\ touches;}
 \DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_update_event_a3939396fd6a9232bb37551c844b22494}{TouchUpdateEvent}}(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ t)}
-\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_update_event_a290eb3611d6b33aa04779b2c7b84eb97}{touches}}(t)\ \{\}}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ TouchUpdateEvent(\textcolor{keyword}{const}\ std::vector<TouchPoint>\&\ t)}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ :\ touches(t)\ \{\}}
 \DoxyCodeLine{00317\ \ \ \ \ \};}
 \DoxyCodeLine{00318\ \ \ \ \ }
-\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_cancel_event_a7e79420d121b81d86f5476f86b4f045a}{TouchCancelEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TouchCancelEvent>\ \{}
-\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_touch_cancel_event_a7e79420d121b81d86f5476f86b4f045a}{TouchCancelEvent}}()\ \{\}}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keyword}{struct\ }TouchCancelEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TouchCancelEvent>\ \{}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ TouchCancelEvent()\ \{\}}
 \DoxyCodeLine{00321\ \ \ \ \ \};}
 \DoxyCodeLine{00322\ \ \ \ \ }
 \DoxyCodeLine{00323\ \ \ \ \ }

@@ -1,45 +1,26 @@
-cmake_minimum_required(VERSION 3.16)
-project(VoxelEditor VERSION 1.0.0)
+cmake_minimum_required(VERSION 3.14)
+project(VoxelEditor VERSION 0.1.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Options
-option(BUILD_TESTS "Build tests" ON)
-option(BUILD_CLI "Build command line application" ON)
-option(BUILD_QT_DESKTOP "Build Qt desktop application" OFF)
-option(BUILD_VR "Build VR application" OFF)
+# Set output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Enable testing
+enable_testing()
+include(CTest)
 
 # Find packages
 find_package(OpenGL REQUIRED)
+find_package(Threads REQUIRED)
 
-if(BUILD_TESTS)
-    find_package(GTest REQUIRED)
-    enable_testing()
-endif()
-
-# Set up Homebrew paths for macOS
-if(APPLE)
-    set(CMAKE_PREFIX_PATH "/opt/homebrew;${CMAKE_PREFIX_PATH}")
-    list(APPEND CMAKE_LIBRARY_PATH "/opt/homebrew/lib")
-    list(APPEND CMAKE_INCLUDE_PATH "/opt/homebrew/include")
-endif()
-
-# External dependencies
+# Add GLM
 include(FetchContent)
-
-# GLFW
-FetchContent_Declare(
-    glfw
-    GIT_REPOSITORY https://github.com/glfw/glfw.git
-    GIT_TAG 3.3.8
-)
-FetchContent_MakeAvailable(glfw)
-
-# GLAD
-add_subdirectory(external/glad)
-
-# GLM
 FetchContent_Declare(
     glm
     GIT_REPOSITORY https://github.com/g-truc/glm.git
@@ -47,19 +28,49 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+# Set up GLFW
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+# Add GLFW
+include(FetchContent)
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG 3.3.8
+)
+FetchContent_MakeAvailable(glfw)
+
+# Include directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/foundation
+    ${CMAKE_SOURCE_DIR}/core
+    ${CMAKE_SOURCE_DIR}/apps
+    ${CMAKE_SOURCE_DIR}/external/glad/include
+)
+
 # Add subdirectories
+add_subdirectory(external/glad)
 add_subdirectory(foundation)
 add_subdirectory(core)
+add_subdirectory(apps/cli)
 
-# Add applications
-if(BUILD_CLI)
-    add_subdirectory(apps/cli)
-endif()
-
-if(BUILD_QT_DESKTOP)
-    add_subdirectory(apps/desktop)
-endif()
-
-if(BUILD_VR)
-    add_subdirectory(apps/vr)
+# Optional: Build documentation
+option(BUILD_DOCUMENTATION "Build documentation" OFF)
+if(BUILD_DOCUMENTATION)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+        set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+        set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+        
+        configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+        
+        add_custom_target(doc
+            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+            VERBATIM)
+    endif()
 endif()

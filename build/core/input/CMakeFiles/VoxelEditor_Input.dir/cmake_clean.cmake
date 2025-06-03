@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "../../lib/libVoxelEditor_Input.a"
+  "../../lib/libVoxelEditor_Input.pdb"
   "CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o"
   "CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o.d"
   "CMakeFiles/VoxelEditor_Input.dir/InputMapping.cpp.o"
@@ -13,8 +15,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/VoxelEditor_Input.dir/TouchHandler.cpp.o.d"
   "CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o"
   "CMakeFiles/VoxelEditor_Input.dir/VRInputHandler.cpp.o.d"
-  "libVoxelEditor_Input.a"
-  "libVoxelEditor_Input.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

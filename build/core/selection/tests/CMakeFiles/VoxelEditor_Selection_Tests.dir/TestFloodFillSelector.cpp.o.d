@@ -354,8 +354,6 @@ core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSel
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cstring \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/string.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/string.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rsize_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ssize_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/strings.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iosfwd \
@@ -810,6 +808,8 @@ core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSel
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_nlink_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_useconds_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_suseconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rsize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_def.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_setsize.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_set.h \
@@ -926,31 +926,34 @@ core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSel
   /opt/homebrew/include/gtest/gtest-typed-test.h \
   /opt/homebrew/include/gtest/gtest_pred_impl.h \
   /opt/homebrew/include/gtest/gtest_prod.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/FloodFillSelector.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/SelectionTypes.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/../../foundation/math/Vector3i.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/../../foundation/math/Vector3f.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/../../foundation/math/BoundingBox.h \
+  /Users/michaelhalloran/cube_edit/core/selection/FloodFillSelector.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/unordered_set \
+  /Users/michaelhalloran/cube_edit/core/selection/SelectionTypes.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Vector3i.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Vector3f.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/BoundingBox.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Ray.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/MathUtils.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/../voxel_data/VoxelTypes.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../voxel_data/VoxelTypes.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/../rendering/RenderTypes.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../rendering/RenderTypes.h \
   /Users/michaelhalloran/cube_edit/core/rendering/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/rendering/../../foundation/math/Vector2f.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/SelectionSet.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/unordered_set \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/selection/../voxel_data/VoxelDataManager.h \
+  /Users/michaelhalloran/cube_edit/core/selection/SelectionSet.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../voxel_data/VoxelDataManager.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/VoxelTypes.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/VoxelGrid.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/SparseOctree.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/memory/MemoryPool.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
+  /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/BoundingBox.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/WorkspaceManager.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
@@ -992,8 +995,6 @@ core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSel
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__charconv/from_chars_result.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__charconv/to_chars.h \
   /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \

@@ -172,6 +172,370 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named Experimental
+
+# Build rule for target.
+Experimental: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Experimental
+.PHONY : Experimental
+
+# fast build rule for target.
+Experimental/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Experimental.dir/build.make CMakeFiles/Experimental.dir/build
+.PHONY : Experimental/fast
+
+#=============================================================================
+# Target rules for targets named Nightly
+
+# Build rule for target.
+Nightly: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Nightly
+.PHONY : Nightly
+
+# fast build rule for target.
+Nightly/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Nightly.dir/build.make CMakeFiles/Nightly.dir/build
+.PHONY : Nightly/fast
+
+#=============================================================================
+# Target rules for targets named Continuous
+
+# Build rule for target.
+Continuous: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Continuous
+.PHONY : Continuous
+
+# fast build rule for target.
+Continuous/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Continuous.dir/build.make CMakeFiles/Continuous.dir/build
+.PHONY : Continuous/fast
+
+#=============================================================================
+# Target rules for targets named NightlyMemoryCheck
+
+# Build rule for target.
+NightlyMemoryCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemoryCheck
+.PHONY : NightlyMemoryCheck
+
+# fast build rule for target.
+NightlyMemoryCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemoryCheck.dir/build.make CMakeFiles/NightlyMemoryCheck.dir/build
+.PHONY : NightlyMemoryCheck/fast
+
+#=============================================================================
+# Target rules for targets named NightlyStart
+
+# Build rule for target.
+NightlyStart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyStart
+.PHONY : NightlyStart
+
+# fast build rule for target.
+NightlyStart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyStart.dir/build.make CMakeFiles/NightlyStart.dir/build
+.PHONY : NightlyStart/fast
+
+#=============================================================================
+# Target rules for targets named NightlyUpdate
+
+# Build rule for target.
+NightlyUpdate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyUpdate
+.PHONY : NightlyUpdate
+
+# fast build rule for target.
+NightlyUpdate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyUpdate.dir/build.make CMakeFiles/NightlyUpdate.dir/build
+.PHONY : NightlyUpdate/fast
+
+#=============================================================================
+# Target rules for targets named NightlyConfigure
+
+# Build rule for target.
+NightlyConfigure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyConfigure
+.PHONY : NightlyConfigure
+
+# fast build rule for target.
+NightlyConfigure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyConfigure.dir/build.make CMakeFiles/NightlyConfigure.dir/build
+.PHONY : NightlyConfigure/fast
+
+#=============================================================================
+# Target rules for targets named NightlyBuild
+
+# Build rule for target.
+NightlyBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyBuild
+.PHONY : NightlyBuild
+
+# fast build rule for target.
+NightlyBuild/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyBuild.dir/build.make CMakeFiles/NightlyBuild.dir/build
+.PHONY : NightlyBuild/fast
+
+#=============================================================================
+# Target rules for targets named NightlyTest
+
+# Build rule for target.
+NightlyTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyTest
+.PHONY : NightlyTest
+
+# fast build rule for target.
+NightlyTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyTest.dir/build.make CMakeFiles/NightlyTest.dir/build
+.PHONY : NightlyTest/fast
+
+#=============================================================================
+# Target rules for targets named NightlyCoverage
+
+# Build rule for target.
+NightlyCoverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyCoverage
+.PHONY : NightlyCoverage
+
+# fast build rule for target.
+NightlyCoverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyCoverage.dir/build.make CMakeFiles/NightlyCoverage.dir/build
+.PHONY : NightlyCoverage/fast
+
+#=============================================================================
+# Target rules for targets named NightlyMemCheck
+
+# Build rule for target.
+NightlyMemCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemCheck
+.PHONY : NightlyMemCheck
+
+# fast build rule for target.
+NightlyMemCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemCheck.dir/build.make CMakeFiles/NightlyMemCheck.dir/build
+.PHONY : NightlyMemCheck/fast
+
+#=============================================================================
+# Target rules for targets named NightlySubmit
+
+# Build rule for target.
+NightlySubmit: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlySubmit
+.PHONY : NightlySubmit
+
+# fast build rule for target.
+NightlySubmit/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlySubmit.dir/build.make CMakeFiles/NightlySubmit.dir/build
+.PHONY : NightlySubmit/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalStart
+
+# Build rule for target.
+ExperimentalStart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalStart
+.PHONY : ExperimentalStart
+
+# fast build rule for target.
+ExperimentalStart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalStart.dir/build.make CMakeFiles/ExperimentalStart.dir/build
+.PHONY : ExperimentalStart/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalUpdate
+
+# Build rule for target.
+ExperimentalUpdate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalUpdate
+.PHONY : ExperimentalUpdate
+
+# fast build rule for target.
+ExperimentalUpdate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalUpdate.dir/build.make CMakeFiles/ExperimentalUpdate.dir/build
+.PHONY : ExperimentalUpdate/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalConfigure
+
+# Build rule for target.
+ExperimentalConfigure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalConfigure
+.PHONY : ExperimentalConfigure
+
+# fast build rule for target.
+ExperimentalConfigure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalConfigure.dir/build.make CMakeFiles/ExperimentalConfigure.dir/build
+.PHONY : ExperimentalConfigure/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalBuild
+
+# Build rule for target.
+ExperimentalBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalBuild
+.PHONY : ExperimentalBuild
+
+# fast build rule for target.
+ExperimentalBuild/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalBuild.dir/build.make CMakeFiles/ExperimentalBuild.dir/build
+.PHONY : ExperimentalBuild/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalTest
+
+# Build rule for target.
+ExperimentalTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalTest
+.PHONY : ExperimentalTest
+
+# fast build rule for target.
+ExperimentalTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalTest.dir/build.make CMakeFiles/ExperimentalTest.dir/build
+.PHONY : ExperimentalTest/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalCoverage
+
+# Build rule for target.
+ExperimentalCoverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalCoverage
+.PHONY : ExperimentalCoverage
+
+# fast build rule for target.
+ExperimentalCoverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalCoverage.dir/build.make CMakeFiles/ExperimentalCoverage.dir/build
+.PHONY : ExperimentalCoverage/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalMemCheck
+
+# Build rule for target.
+ExperimentalMemCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalMemCheck
+.PHONY : ExperimentalMemCheck
+
+# fast build rule for target.
+ExperimentalMemCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalMemCheck.dir/build.make CMakeFiles/ExperimentalMemCheck.dir/build
+.PHONY : ExperimentalMemCheck/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalSubmit
+
+# Build rule for target.
+ExperimentalSubmit: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalSubmit
+.PHONY : ExperimentalSubmit
+
+# fast build rule for target.
+ExperimentalSubmit/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalSubmit.dir/build.make CMakeFiles/ExperimentalSubmit.dir/build
+.PHONY : ExperimentalSubmit/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousStart
+
+# Build rule for target.
+ContinuousStart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousStart
+.PHONY : ContinuousStart
+
+# fast build rule for target.
+ContinuousStart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousStart.dir/build.make CMakeFiles/ContinuousStart.dir/build
+.PHONY : ContinuousStart/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousUpdate
+
+# Build rule for target.
+ContinuousUpdate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousUpdate
+.PHONY : ContinuousUpdate
+
+# fast build rule for target.
+ContinuousUpdate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousUpdate.dir/build.make CMakeFiles/ContinuousUpdate.dir/build
+.PHONY : ContinuousUpdate/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousConfigure
+
+# Build rule for target.
+ContinuousConfigure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousConfigure
+.PHONY : ContinuousConfigure
+
+# fast build rule for target.
+ContinuousConfigure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousConfigure.dir/build.make CMakeFiles/ContinuousConfigure.dir/build
+.PHONY : ContinuousConfigure/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousBuild
+
+# Build rule for target.
+ContinuousBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousBuild
+.PHONY : ContinuousBuild
+
+# fast build rule for target.
+ContinuousBuild/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousBuild.dir/build.make CMakeFiles/ContinuousBuild.dir/build
+.PHONY : ContinuousBuild/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousTest
+
+# Build rule for target.
+ContinuousTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousTest
+.PHONY : ContinuousTest
+
+# fast build rule for target.
+ContinuousTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousTest.dir/build.make CMakeFiles/ContinuousTest.dir/build
+.PHONY : ContinuousTest/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousCoverage
+
+# Build rule for target.
+ContinuousCoverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousCoverage
+.PHONY : ContinuousCoverage
+
+# fast build rule for target.
+ContinuousCoverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousCoverage.dir/build.make CMakeFiles/ContinuousCoverage.dir/build
+.PHONY : ContinuousCoverage/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousMemCheck
+
+# Build rule for target.
+ContinuousMemCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousMemCheck
+.PHONY : ContinuousMemCheck
+
+# fast build rule for target.
+ContinuousMemCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousMemCheck.dir/build.make CMakeFiles/ContinuousMemCheck.dir/build
+.PHONY : ContinuousMemCheck/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousSubmit
+
+# Build rule for target.
+ContinuousSubmit: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousSubmit
+.PHONY : ContinuousSubmit
+
+# fast build rule for target.
+ContinuousSubmit/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousSubmit.dir/build.make CMakeFiles/ContinuousSubmit.dir/build
+.PHONY : ContinuousSubmit/fast
+
+#=============================================================================
 # Target rules for targets named uninstall
 
 # Build rule for target.
@@ -211,383 +575,6 @@ glfw/fast:
 .PHONY : glfw/fast
 
 #=============================================================================
-# Target rules for targets named boing
-
-# Build rule for target.
-boing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 boing
-.PHONY : boing
-
-# fast build rule for target.
-boing/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/boing.dir/build.make _deps/glfw-build/examples/CMakeFiles/boing.dir/build
-.PHONY : boing/fast
-
-#=============================================================================
-# Target rules for targets named gears
-
-# Build rule for target.
-gears: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gears
-.PHONY : gears
-
-# fast build rule for target.
-gears/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/gears.dir/build.make _deps/glfw-build/examples/CMakeFiles/gears.dir/build
-.PHONY : gears/fast
-
-#=============================================================================
-# Target rules for targets named heightmap
-
-# Build rule for target.
-heightmap: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 heightmap
-.PHONY : heightmap
-
-# fast build rule for target.
-heightmap/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/heightmap.dir/build.make _deps/glfw-build/examples/CMakeFiles/heightmap.dir/build
-.PHONY : heightmap/fast
-
-#=============================================================================
-# Target rules for targets named offscreen
-
-# Build rule for target.
-offscreen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 offscreen
-.PHONY : offscreen
-
-# fast build rule for target.
-offscreen/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/offscreen.dir/build.make _deps/glfw-build/examples/CMakeFiles/offscreen.dir/build
-.PHONY : offscreen/fast
-
-#=============================================================================
-# Target rules for targets named particles
-
-# Build rule for target.
-particles: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 particles
-.PHONY : particles
-
-# fast build rule for target.
-particles/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/particles.dir/build.make _deps/glfw-build/examples/CMakeFiles/particles.dir/build
-.PHONY : particles/fast
-
-#=============================================================================
-# Target rules for targets named sharing
-
-# Build rule for target.
-sharing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sharing
-.PHONY : sharing
-
-# fast build rule for target.
-sharing/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/sharing.dir/build.make _deps/glfw-build/examples/CMakeFiles/sharing.dir/build
-.PHONY : sharing/fast
-
-#=============================================================================
-# Target rules for targets named simple
-
-# Build rule for target.
-simple: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 simple
-.PHONY : simple
-
-# fast build rule for target.
-simple/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/simple.dir/build.make _deps/glfw-build/examples/CMakeFiles/simple.dir/build
-.PHONY : simple/fast
-
-#=============================================================================
-# Target rules for targets named splitview
-
-# Build rule for target.
-splitview: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 splitview
-.PHONY : splitview
-
-# fast build rule for target.
-splitview/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/splitview.dir/build.make _deps/glfw-build/examples/CMakeFiles/splitview.dir/build
-.PHONY : splitview/fast
-
-#=============================================================================
-# Target rules for targets named wave
-
-# Build rule for target.
-wave: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wave
-.PHONY : wave
-
-# fast build rule for target.
-wave/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/examples/CMakeFiles/wave.dir/build.make _deps/glfw-build/examples/CMakeFiles/wave.dir/build
-.PHONY : wave/fast
-
-#=============================================================================
-# Target rules for targets named clipboard
-
-# Build rule for target.
-clipboard: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clipboard
-.PHONY : clipboard
-
-# fast build rule for target.
-clipboard/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/clipboard.dir/build.make _deps/glfw-build/tests/CMakeFiles/clipboard.dir/build
-.PHONY : clipboard/fast
-
-#=============================================================================
-# Target rules for targets named events
-
-# Build rule for target.
-events: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 events
-.PHONY : events
-
-# fast build rule for target.
-events/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/events.dir/build.make _deps/glfw-build/tests/CMakeFiles/events.dir/build
-.PHONY : events/fast
-
-#=============================================================================
-# Target rules for targets named msaa
-
-# Build rule for target.
-msaa: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 msaa
-.PHONY : msaa
-
-# fast build rule for target.
-msaa/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/msaa.dir/build.make _deps/glfw-build/tests/CMakeFiles/msaa.dir/build
-.PHONY : msaa/fast
-
-#=============================================================================
-# Target rules for targets named glfwinfo
-
-# Build rule for target.
-glfwinfo: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glfwinfo
-.PHONY : glfwinfo
-
-# fast build rule for target.
-glfwinfo/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/glfwinfo.dir/build.make _deps/glfw-build/tests/CMakeFiles/glfwinfo.dir/build
-.PHONY : glfwinfo/fast
-
-#=============================================================================
-# Target rules for targets named iconify
-
-# Build rule for target.
-iconify: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 iconify
-.PHONY : iconify
-
-# fast build rule for target.
-iconify/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/iconify.dir/build.make _deps/glfw-build/tests/CMakeFiles/iconify.dir/build
-.PHONY : iconify/fast
-
-#=============================================================================
-# Target rules for targets named monitors
-
-# Build rule for target.
-monitors: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 monitors
-.PHONY : monitors
-
-# fast build rule for target.
-monitors/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/monitors.dir/build.make _deps/glfw-build/tests/CMakeFiles/monitors.dir/build
-.PHONY : monitors/fast
-
-#=============================================================================
-# Target rules for targets named reopen
-
-# Build rule for target.
-reopen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 reopen
-.PHONY : reopen
-
-# fast build rule for target.
-reopen/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/reopen.dir/build.make _deps/glfw-build/tests/CMakeFiles/reopen.dir/build
-.PHONY : reopen/fast
-
-#=============================================================================
-# Target rules for targets named cursor
-
-# Build rule for target.
-cursor: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cursor
-.PHONY : cursor
-
-# fast build rule for target.
-cursor/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/cursor.dir/build.make _deps/glfw-build/tests/CMakeFiles/cursor.dir/build
-.PHONY : cursor/fast
-
-#=============================================================================
-# Target rules for targets named empty
-
-# Build rule for target.
-empty: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 empty
-.PHONY : empty
-
-# fast build rule for target.
-empty/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/empty.dir/build.make _deps/glfw-build/tests/CMakeFiles/empty.dir/build
-.PHONY : empty/fast
-
-#=============================================================================
-# Target rules for targets named gamma
-
-# Build rule for target.
-gamma: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gamma
-.PHONY : gamma
-
-# fast build rule for target.
-gamma/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/gamma.dir/build.make _deps/glfw-build/tests/CMakeFiles/gamma.dir/build
-.PHONY : gamma/fast
-
-#=============================================================================
-# Target rules for targets named icon
-
-# Build rule for target.
-icon: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 icon
-.PHONY : icon
-
-# fast build rule for target.
-icon/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/icon.dir/build.make _deps/glfw-build/tests/CMakeFiles/icon.dir/build
-.PHONY : icon/fast
-
-#=============================================================================
-# Target rules for targets named inputlag
-
-# Build rule for target.
-inputlag: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 inputlag
-.PHONY : inputlag
-
-# fast build rule for target.
-inputlag/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/inputlag.dir/build.make _deps/glfw-build/tests/CMakeFiles/inputlag.dir/build
-.PHONY : inputlag/fast
-
-#=============================================================================
-# Target rules for targets named joysticks
-
-# Build rule for target.
-joysticks: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 joysticks
-.PHONY : joysticks
-
-# fast build rule for target.
-joysticks/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/joysticks.dir/build.make _deps/glfw-build/tests/CMakeFiles/joysticks.dir/build
-.PHONY : joysticks/fast
-
-#=============================================================================
-# Target rules for targets named opacity
-
-# Build rule for target.
-opacity: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 opacity
-.PHONY : opacity
-
-# fast build rule for target.
-opacity/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/opacity.dir/build.make _deps/glfw-build/tests/CMakeFiles/opacity.dir/build
-.PHONY : opacity/fast
-
-#=============================================================================
-# Target rules for targets named tearing
-
-# Build rule for target.
-tearing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tearing
-.PHONY : tearing
-
-# fast build rule for target.
-tearing/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/tearing.dir/build.make _deps/glfw-build/tests/CMakeFiles/tearing.dir/build
-.PHONY : tearing/fast
-
-#=============================================================================
-# Target rules for targets named threads
-
-# Build rule for target.
-threads: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 threads
-.PHONY : threads
-
-# fast build rule for target.
-threads/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/threads.dir/build.make _deps/glfw-build/tests/CMakeFiles/threads.dir/build
-.PHONY : threads/fast
-
-#=============================================================================
-# Target rules for targets named timeout
-
-# Build rule for target.
-timeout: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 timeout
-.PHONY : timeout
-
-# fast build rule for target.
-timeout/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/timeout.dir/build.make _deps/glfw-build/tests/CMakeFiles/timeout.dir/build
-.PHONY : timeout/fast
-
-#=============================================================================
-# Target rules for targets named title
-
-# Build rule for target.
-title: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 title
-.PHONY : title
-
-# fast build rule for target.
-title/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/title.dir/build.make _deps/glfw-build/tests/CMakeFiles/title.dir/build
-.PHONY : title/fast
-
-#=============================================================================
-# Target rules for targets named triangle-vulkan
-
-# Build rule for target.
-triangle-vulkan: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 triangle-vulkan
-.PHONY : triangle-vulkan
-
-# fast build rule for target.
-triangle-vulkan/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/triangle-vulkan.dir/build.make _deps/glfw-build/tests/CMakeFiles/triangle-vulkan.dir/build
-.PHONY : triangle-vulkan/fast
-
-#=============================================================================
-# Target rules for targets named windows
-
-# Build rule for target.
-windows: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 windows
-.PHONY : windows
-
-# fast build rule for target.
-windows/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/glfw-build/tests/CMakeFiles/windows.dir/build.make _deps/glfw-build/tests/CMakeFiles/windows.dir/build
-.PHONY : windows/fast
-
-#=============================================================================
 # Target rules for targets named glad
 
 # Build rule for target.
@@ -599,45 +586,6 @@ glad: cmake_check_build_system
 glad/fast:
 	$(MAKE) $(MAKESILENT) -f external/glad/CMakeFiles/glad.dir/build.make external/glad/CMakeFiles/glad.dir/build
 .PHONY : glad/fast
-
-#=============================================================================
-# Target rules for targets named VoxelEditor_Math_Tests
-
-# Build rule for target.
-VoxelEditor_Math_Tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Math_Tests
-.PHONY : VoxelEditor_Math_Tests
-
-# fast build rule for target.
-VoxelEditor_Math_Tests/fast:
-	$(MAKE) $(MAKESILENT) -f foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build.make foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build
-.PHONY : VoxelEditor_Math_Tests/fast
-
-#=============================================================================
-# Target rules for targets named VoxelEditor_Events_Tests
-
-# Build rule for target.
-VoxelEditor_Events_Tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Events_Tests
-.PHONY : VoxelEditor_Events_Tests
-
-# fast build rule for target.
-VoxelEditor_Events_Tests/fast:
-	$(MAKE) $(MAKESILENT) -f foundation/events/tests/CMakeFiles/VoxelEditor_Events_Tests.dir/build.make foundation/events/tests/CMakeFiles/VoxelEditor_Events_Tests.dir/build
-.PHONY : VoxelEditor_Events_Tests/fast
-
-#=============================================================================
-# Target rules for targets named VoxelEditor_Memory_Tests
-
-# Build rule for target.
-VoxelEditor_Memory_Tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Memory_Tests
-.PHONY : VoxelEditor_Memory_Tests
-
-# fast build rule for target.
-VoxelEditor_Memory_Tests/fast:
-	$(MAKE) $(MAKESILENT) -f foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build.make foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build
-.PHONY : VoxelEditor_Memory_Tests/fast
 
 #=============================================================================
 # Target rules for targets named VoxelEditor_Logging_Tests
@@ -690,19 +638,6 @@ VoxelEditor_VoxelData_Tests: cmake_check_build_system
 VoxelEditor_VoxelData_Tests/fast:
 	$(MAKE) $(MAKESILENT) -f core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build.make core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build
 .PHONY : VoxelEditor_VoxelData_Tests/fast
-
-#=============================================================================
-# Target rules for targets named VoxelEditor_Camera_Tests
-
-# Build rule for target.
-VoxelEditor_Camera_Tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Camera_Tests
-.PHONY : VoxelEditor_Camera_Tests
-
-# fast build rule for target.
-VoxelEditor_Camera_Tests/fast:
-	$(MAKE) $(MAKESILENT) -f core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build
-.PHONY : VoxelEditor_Camera_Tests/fast
 
 #=============================================================================
 # Target rules for targets named VoxelEditor_Rendering
@@ -796,45 +731,6 @@ VoxelEditor_UndoRedo/fast:
 .PHONY : VoxelEditor_UndoRedo/fast
 
 #=============================================================================
-# Target rules for targets named test_undo_redo
-
-# Build rule for target.
-test_undo_redo: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_undo_redo
-.PHONY : test_undo_redo
-
-# fast build rule for target.
-test_undo_redo/fast:
-	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build.make core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build
-.PHONY : test_undo_redo/fast
-
-#=============================================================================
-# Target rules for targets named test_simple_command
-
-# Build rule for target.
-test_simple_command: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_simple_command
-.PHONY : test_simple_command
-
-# fast build rule for target.
-test_simple_command/fast:
-	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build
-.PHONY : test_simple_command/fast
-
-#=============================================================================
-# Target rules for targets named test_history_manager
-
-# Build rule for target.
-test_history_manager: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_history_manager
-.PHONY : test_history_manager
-
-# fast build rule for target.
-test_history_manager/fast:
-	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build
-.PHONY : test_history_manager/fast
-
-#=============================================================================
 # Target rules for targets named VoxelEditor_SurfaceGen
 
 # Build rule for target.
@@ -846,19 +742,6 @@ VoxelEditor_SurfaceGen: cmake_check_build_system
 VoxelEditor_SurfaceGen/fast:
 	$(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build
 .PHONY : VoxelEditor_SurfaceGen/fast
-
-#=============================================================================
-# Target rules for targets named test_surface_gen
-
-# Build rule for target.
-test_surface_gen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_surface_gen
-.PHONY : test_surface_gen
-
-# fast build rule for target.
-test_surface_gen/fast:
-	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build
-.PHONY : test_surface_gen/fast
 
 #=============================================================================
 # Target rules for targets named VoxelEditor_VisualFeedback
@@ -874,19 +757,6 @@ VoxelEditor_VisualFeedback/fast:
 .PHONY : VoxelEditor_VisualFeedback/fast
 
 #=============================================================================
-# Target rules for targets named visual_feedback_tests
-
-# Build rule for target.
-visual_feedback_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 visual_feedback_tests
-.PHONY : visual_feedback_tests
-
-# fast build rule for target.
-visual_feedback_tests/fast:
-	$(MAKE) $(MAKESILENT) -f core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/build.make core/visual_feedback/tests/CMakeFiles/visual_feedback_tests.dir/build
-.PHONY : visual_feedback_tests/fast
-
-#=============================================================================
 # Target rules for targets named VoxelEditor_Groups
 
 # Build rule for target.
@@ -900,19 +770,6 @@ VoxelEditor_Groups/fast:
 .PHONY : VoxelEditor_Groups/fast
 
 #=============================================================================
-# Target rules for targets named groups_tests
-
-# Build rule for target.
-groups_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 groups_tests
-.PHONY : groups_tests
-
-# fast build rule for target.
-groups_tests/fast:
-	$(MAKE) $(MAKESILENT) -f core/groups/tests/CMakeFiles/groups_tests.dir/build.make core/groups/tests/CMakeFiles/groups_tests.dir/build
-.PHONY : groups_tests/fast
-
-#=============================================================================
 # Target rules for targets named VoxelEditor_FileIO
 
 # Build rule for target.
@@ -924,6 +781,19 @@ VoxelEditor_FileIO: cmake_check_build_system
 VoxelEditor_FileIO/fast:
 	$(MAKE) $(MAKESILENT) -f core/file_io/CMakeFiles/VoxelEditor_FileIO.dir/build.make core/file_io/CMakeFiles/VoxelEditor_FileIO.dir/build
 .PHONY : VoxelEditor_FileIO/fast
+
+#=============================================================================
+# Target rules for targets named VoxelEditor_CLI_Lib
+
+# Build rule for target.
+VoxelEditor_CLI_Lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_CLI_Lib
+.PHONY : VoxelEditor_CLI_Lib
+
+# fast build rule for target.
+VoxelEditor_CLI_Lib/fast:
+	$(MAKE) $(MAKESILENT) -f apps/cli/CMakeFiles/VoxelEditor_CLI_Lib.dir/build.make apps/cli/CMakeFiles/VoxelEditor_CLI_Lib.dir/build
+.PHONY : VoxelEditor_CLI_Lib/fast
 
 #=============================================================================
 # Target rules for targets named VoxelEditor_CLI
@@ -951,6 +821,19 @@ VoxelEditor_CLI_Tests/fast:
 	$(MAKE) $(MAKESILENT) -f apps/cli/tests/CMakeFiles/VoxelEditor_CLI_Tests.dir/build.make apps/cli/tests/CMakeFiles/VoxelEditor_CLI_Tests.dir/build
 .PHONY : VoxelEditor_CLI_Tests/fast
 
+#=============================================================================
+# Target rules for targets named VoxelEditor_VoxelMeshGenerator_Tests
+
+# Build rule for target.
+VoxelEditor_VoxelMeshGenerator_Tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_VoxelMeshGenerator_Tests
+.PHONY : VoxelEditor_VoxelMeshGenerator_Tests
+
+# fast build rule for target.
+VoxelEditor_VoxelMeshGenerator_Tests/fast:
+	$(MAKE) $(MAKESILENT) -f apps/cli/tests/CMakeFiles/VoxelEditor_VoxelMeshGenerator_Tests.dir/build.make apps/cli/tests/CMakeFiles/VoxelEditor_VoxelMeshGenerator_Tests.dir/build
+.PHONY : VoxelEditor_VoxelMeshGenerator_Tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -964,20 +847,45 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... Continuous"
+	@echo "... ContinuousBuild"
+	@echo "... ContinuousConfigure"
+	@echo "... ContinuousCoverage"
+	@echo "... ContinuousMemCheck"
+	@echo "... ContinuousStart"
+	@echo "... ContinuousSubmit"
+	@echo "... ContinuousTest"
+	@echo "... ContinuousUpdate"
+	@echo "... Experimental"
+	@echo "... ExperimentalBuild"
+	@echo "... ExperimentalConfigure"
+	@echo "... ExperimentalCoverage"
+	@echo "... ExperimentalMemCheck"
+	@echo "... ExperimentalStart"
+	@echo "... ExperimentalSubmit"
+	@echo "... ExperimentalTest"
+	@echo "... ExperimentalUpdate"
+	@echo "... Nightly"
+	@echo "... NightlyBuild"
+	@echo "... NightlyConfigure"
+	@echo "... NightlyCoverage"
+	@echo "... NightlyMemCheck"
+	@echo "... NightlyMemoryCheck"
+	@echo "... NightlyStart"
+	@echo "... NightlySubmit"
+	@echo "... NightlyTest"
+	@echo "... NightlyUpdate"
 	@echo "... uninstall"
 	@echo "... update_mappings"
 	@echo "... VoxelEditor_CLI"
+	@echo "... VoxelEditor_CLI_Lib"
 	@echo "... VoxelEditor_CLI_Tests"
-	@echo "... VoxelEditor_Camera_Tests"
 	@echo "... VoxelEditor_Config_Tests"
-	@echo "... VoxelEditor_Events_Tests"
 	@echo "... VoxelEditor_FileIO"
 	@echo "... VoxelEditor_Groups"
 	@echo "... VoxelEditor_Input"
 	@echo "... VoxelEditor_Input_Tests"
 	@echo "... VoxelEditor_Logging_Tests"
-	@echo "... VoxelEditor_Math_Tests"
-	@echo "... VoxelEditor_Memory_Tests"
 	@echo "... VoxelEditor_Rendering"
 	@echo "... VoxelEditor_Rendering_Tests"
 	@echo "... VoxelEditor_Selection"
@@ -987,43 +895,9 @@ help:
 	@echo "... VoxelEditor_VisualFeedback"
 	@echo "... VoxelEditor_VoxelData"
 	@echo "... VoxelEditor_VoxelData_Tests"
-	@echo "... boing"
-	@echo "... clipboard"
-	@echo "... cursor"
-	@echo "... empty"
-	@echo "... events"
-	@echo "... gamma"
-	@echo "... gears"
+	@echo "... VoxelEditor_VoxelMeshGenerator_Tests"
 	@echo "... glad"
 	@echo "... glfw"
-	@echo "... glfwinfo"
-	@echo "... groups_tests"
-	@echo "... heightmap"
-	@echo "... icon"
-	@echo "... iconify"
-	@echo "... inputlag"
-	@echo "... joysticks"
-	@echo "... monitors"
-	@echo "... msaa"
-	@echo "... offscreen"
-	@echo "... opacity"
-	@echo "... particles"
-	@echo "... reopen"
-	@echo "... sharing"
-	@echo "... simple"
-	@echo "... splitview"
-	@echo "... tearing"
-	@echo "... test_history_manager"
-	@echo "... test_simple_command"
-	@echo "... test_surface_gen"
-	@echo "... test_undo_redo"
-	@echo "... threads"
-	@echo "... timeout"
-	@echo "... title"
-	@echo "... triangle-vulkan"
-	@echo "... visual_feedback_tests"
-	@echo "... wave"
-	@echo "... windows"
 .PHONY : help
 
 

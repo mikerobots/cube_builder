@@ -1,5 +1,5 @@
 \chapter{Configuration Management Foundation }
-\hypertarget{md_foundation_2config_2_d_e_s_i_g_n}{}\label{md_foundation_2config_2_d_e_s_i_g_n}\index{Configuration Management Foundation@{Configuration Management Foundation}}
+\label{md_foundation_2config_2_d_e_s_i_g_n}\index{Configuration Management Foundation@{Configuration Management Foundation}}
 \label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md491}%
 \Hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md491}%
 \hypertarget{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md492}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2config_2_d_e_s_i_g_n_autotoc_md492}
@@ -39,7 +39,7 @@ Manages application settings, user preferences, platform-\/specific configuratio
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Value\ access}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ getValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ T\ getValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ value);}
@@ -72,7 +72,7 @@ Manages application settings, user preferences, platform-\/specific configuratio
 \DoxyCodeLine{\ \ \ \ ConfigValue(\textcolor{keyword}{const}\ T\&\ value);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ get()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ T\ get()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ set(\textcolor{keyword}{const}\ T\&\ value);}

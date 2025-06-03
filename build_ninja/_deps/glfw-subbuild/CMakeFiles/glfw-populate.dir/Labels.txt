@@ -1,0 +1,14 @@
+# Target labels
+ glfw-populate
+# Source files and their labels
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/CMakeFiles/glfw-populate
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/CMakeFiles/glfw-populate.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/CMakeFiles/glfw-populate-complete.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-build.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-configure.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-download.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-install.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-mkdir.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-patch.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-test.rule
+/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-update.rule

@@ -16,6 +16,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   "/Users/michaelhalloran/cube_edit/build/core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/DependInfo.cmake"
+  "/Users/michaelhalloran/cube_edit/build/external/glad/CMakeFiles/glad.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

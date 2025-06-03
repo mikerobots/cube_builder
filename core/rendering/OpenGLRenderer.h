@@ -256,8 +256,8 @@ private:
     size_t calculateTextureMemory(int width, int height, TextureFormat format);
     void cleanupDeletedResources();
     
-    // Debug callback
-    static void debugCallback(uint32_t source, uint32_t type, uint32_t id, 
+    // Debug callback (GLAPIENTRY is defined by OpenGL headers)
+    static void GLAPIENTRY debugCallback(uint32_t source, uint32_t type, uint32_t id, 
                              uint32_t severity, int length, 
                              const char* message, const void* userParam);
 };

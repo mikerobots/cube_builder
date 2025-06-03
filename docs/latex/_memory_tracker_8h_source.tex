@@ -1,11 +1,11 @@
 \doxysection{Memory\+Tracker.\+h}
-\hypertarget{_memory_tracker_8h_source}{}\label{_memory_tracker_8h_source}\index{foundation/memory/MemoryTracker.h@{foundation/memory/MemoryTracker.h}}
+\label{_memory_tracker_8h_source}\index{foundation/memory/MemoryTracker.h@{foundation/memory/MemoryTracker.h}}
 \mbox{\hyperlink{_memory_tracker_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_dispatcher_8h}{../events/EventDispatcher.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_common_events_8h}{../events/CommonEvents.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../events/EventDispatcher.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../events/CommonEvents.h"{}}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <atomic>}}
@@ -13,33 +13,33 @@
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <chrono>}}
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_memory}{Memory}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }Memory\ \{}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_aa9d2d25f06c999b6d934a2469496d5c3}{AllocationInfo}}\ \{}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_a2f1b69a699c735afaa798111be3bb83d}{ptr}};}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_a45947861645090de35c35bfb44ef087c}{size}};}
-\DoxyCodeLine{00018\ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_a3dc71af4852d73e9f15136d86b8d52ad}{category}};}
-\DoxyCodeLine{00019\ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_afd38b9400b99dc2dd390147b79204e7a}{timestamp}};}
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }AllocationInfo\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}*\ ptr;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size;}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ category;}
+\DoxyCodeLine{00019\ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ timestamp;}
 \DoxyCodeLine{00020\ \ \ \ \ }
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_aa9d2d25f06c999b6d934a2469496d5c3}{AllocationInfo}}(\textcolor{keywordtype}{void}*\ p,\ \textcolor{keywordtype}{size\_t}\ s,\ \textcolor{keyword}{const}\ std::string\&\ cat)}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_a2f1b69a699c735afaa798111be3bb83d}{ptr}}(p),\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_a45947861645090de35c35bfb44ef087c}{size}}(s),\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_a3dc71af4852d73e9f15136d86b8d52ad}{category}}(cat)}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info_afd38b9400b99dc2dd390147b79204e7a}{timestamp}}(\mbox{\hyperlink{namespacestd}{std}}::chrono::high\_resolution\_clock::now())\ \{\}}
+\DoxyCodeLine{00021\ \ \ \ \ AllocationInfo(\textcolor{keywordtype}{void}*\ p,\ \textcolor{keywordtype}{size\_t}\ s,\ \textcolor{keyword}{const}\ std::string\&\ cat)}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ :\ ptr(p),\ size(s),\ category(cat)}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ ,\ timestamp(std::chrono::high\_resolution\_clock::now())\ \{\}}
 \DoxyCodeLine{00024\ \};}
 \DoxyCodeLine{00025\ }
 \DoxyCodeLine{00026\ \textcolor{keyword}{class\ }MemoryTracker\ \{}
 \DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ MemoryTracker\&\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a114f6860e742485d0c7c77d2cdf6bd7a}{getInstance}}()\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ MemoryTracker\&\ getInstance()\ \{}
 \DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ MemoryTracker\ instance;}
 \DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
 \DoxyCodeLine{00031\ \ \ \ \ \}}
 \DoxyCodeLine{00032\ \ \ \ \ }
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a51a4ca6671b260c9c3e4c1e43b7aa237}{recordAllocation}}(\textcolor{keywordtype}{void}*\ ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ category\ =\ \textcolor{stringliteral}{"{}Unknown"{}})\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ recordAllocation(\textcolor{keywordtype}{void}*\ ptr,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ category\ =\ \textcolor{stringliteral}{"{}Unknown"{}})\ \{}
 \DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr\ ||\ size\ ==\ 0)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ m\_allocations.emplace(ptr,\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_allocation_info}{AllocationInfo}}(ptr,\ size,\ category));}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ m\_allocations.emplace(ptr,\ AllocationInfo(ptr,\ size,\ category));}
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ m\_totalAllocated.fetch\_add(size,\ std::memory\_order\_relaxed);}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ currentUsage\ =\ m\_currentUsage.fetch\_add(size,\ std::memory\_order\_relaxed)\ +\ size;}
@@ -53,7 +53,7 @@
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ checkMemoryPressure(currentUsage);}
 \DoxyCodeLine{00050\ \ \ \ \ \}}
 \DoxyCodeLine{00051\ \ \ \ \ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a20e0cbf7ab47f6c3a3e6007ee22c1ba2}{recordDeallocation}}(\textcolor{keywordtype}{void}*\ ptr)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ recordDeallocation(\textcolor{keywordtype}{void}*\ ptr)\ \{}
 \DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
@@ -75,28 +75,28 @@
 \DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00072\ \ \ \ \ \}}
 \DoxyCodeLine{00073\ \ \ \ \ }
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_afe2fb01dab5428a4441c23b217e5b863}{getTotalAllocated}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalAllocated()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_totalAllocated.load(std::memory\_order\_relaxed);}
 \DoxyCodeLine{00076\ \ \ \ \ \}}
 \DoxyCodeLine{00077\ \ \ \ \ }
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a9e91c71a5ab995173c6b0c3af49827cf}{getTotalDeallocated}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalDeallocated()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_totalDeallocated.load(std::memory\_order\_relaxed);}
 \DoxyCodeLine{00080\ \ \ \ \ \}}
 \DoxyCodeLine{00081\ \ \ \ \ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a25a1fdf04f1e9ccdd294e638c0992a25}{getCurrentUsage}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCurrentUsage()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_currentUsage.load(std::memory\_order\_relaxed);}
 \DoxyCodeLine{00084\ \ \ \ \ \}}
 \DoxyCodeLine{00085\ \ \ \ \ }
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_acb63ce0eafe8ef98cb5baddd53663dfe}{getPeakUsage}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getPeakUsage()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_peakUsage.load(std::memory\_order\_relaxed);}
 \DoxyCodeLine{00088\ \ \ \ \ \}}
 \DoxyCodeLine{00089\ \ \ \ \ }
-\DoxyCodeLine{00090\ \ \ \ \ std::unordered\_map<std::string,\ size\_t>\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_ab4e8d6a9119c10d753668cdaf5482fc3}{getUsageByCategory}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00090\ \ \ \ \ std::unordered\_map<std::string,\ size\_t>\ getUsageByCategory()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_categoryUsage;}
 \DoxyCodeLine{00093\ \ \ \ \ \}}
 \DoxyCodeLine{00094\ \ \ \ \ }
-\DoxyCodeLine{00095\ \ \ \ \ std::vector<AllocationInfo>\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a6c531ad9a0155e73b2e2090495e7b603}{getActiveAllocations}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00095\ \ \ \ \ std::vector<AllocationInfo>\ getActiveAllocations()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ std::vector<AllocationInfo>\ result;}
@@ -109,37 +109,37 @@
 \DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
 \DoxyCodeLine{00106\ \ \ \ \ \}}
 \DoxyCodeLine{00107\ \ \ \ \ }
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a3a787c8ae4777c9dac3adb1405374851}{getActiveAllocationCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getActiveAllocationCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_allocations.size();}
 \DoxyCodeLine{00111\ \ \ \ \ \}}
 \DoxyCodeLine{00112\ \ \ \ \ }
-\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_ad6bb1a32775c7fbb909c6cd1ebc7dca0}{setMemoryLimit}}(\textcolor{keywordtype}{size\_t}\ limit)\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ setMemoryLimit(\textcolor{keywordtype}{size\_t}\ limit)\ \{}
 \DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ m\_memoryLimit.store(limit,\ std::memory\_order\_relaxed);}
 \DoxyCodeLine{00115\ \ \ \ \ \}}
 \DoxyCodeLine{00116\ \ \ \ \ }
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a26fd2b7dc6b72873e98cf5794eab1c9c}{getMemoryLimit}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryLimit()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_memoryLimit.load(std::memory\_order\_relaxed);}
 \DoxyCodeLine{00119\ \ \ \ \ \}}
 \DoxyCodeLine{00120\ \ \ \ \ }
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a9b3fa6cdcb0525c5f6c9b191d0f815fa}{isMemoryPressure}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ current\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a25a1fdf04f1e9ccdd294e638c0992a25}{getCurrentUsage}}();}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ limit\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a26fd2b7dc6b72873e98cf5794eab1c9c}{getMemoryLimit}}();}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMemoryPressure()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ current\ =\ getCurrentUsage();}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ limit\ =\ getMemoryLimit();}
 \DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ limit\ >\ 0\ \&\&\ current\ >\ (limit\ *\ 90\ /\ 100);\ \textcolor{comment}{//\ 90\%\ threshold}}
 \DoxyCodeLine{00125\ \ \ \ \ \}}
 \DoxyCodeLine{00126\ \ \ \ \ }
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_af74c4d5803165d304d0d055132cc0889}{getMemoryPressureRatio}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ current\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a25a1fdf04f1e9ccdd294e638c0992a25}{getCurrentUsage}}();}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ limit\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a26fd2b7dc6b72873e98cf5794eab1c9c}{getMemoryLimit}}();}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{float}\ getMemoryPressureRatio()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ current\ =\ getCurrentUsage();}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ limit\ =\ getMemoryLimit();}
 \DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ limit\ >\ 0\ ?\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(current)\ /\ limit\ :\ 0.0f;}
 \DoxyCodeLine{00131\ \ \ \ \ \}}
 \DoxyCodeLine{00132\ \ \ \ \ }
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_ad0a69a453f27bab387d3b244afb9b657}{setEventDispatcher}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ dispatcher)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ setEventDispatcher(Events::EventDispatcher*\ dispatcher)\ \{}
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ m\_eventDispatcher\ =\ dispatcher;}
 \DoxyCodeLine{00136\ \ \ \ \ \}}
 \DoxyCodeLine{00137\ \ \ \ \ }
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_aed2740523e3d69676c97c3ab7858d34c}{reset}}()\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \{}
 \DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ m\_allocations.clear();}
@@ -151,36 +151,36 @@
 \DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ m\_peakUsage.store(0,\ std::memory\_order\_relaxed);}
 \DoxyCodeLine{00148\ \ \ \ \ \}}
 \DoxyCodeLine{00149\ \ \ \ \ }
-\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}{MemoryStats}}\ \{}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a38b83c266e615b4d5c485ee846595b69}{totalAllocated}};}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_affc1fb61b7d76604bfb38e53c20ce22b}{totalDeallocated}};}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a9fee4f4df173615f6f7efd166e96f0c7}{currentUsage}};}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a0c9740b9913d2fab851842a4105afba4}{peakUsage}};}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_ae8d6d9449266987825ad12351a264ac2}{activeAllocations}};}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a492e2f22ce9614b71866d729f8d7d4fe}{pressureRatio}};}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ size\_t>\ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a8483f9fa41a6b87d18cef8ff81efa691}{categoryUsage}};}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{struct\ }MemoryStats\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalAllocated;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalDeallocated;}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ currentUsage;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ peakUsage;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ activeAllocations;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pressureRatio;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ size\_t>\ categoryUsage;}
 \DoxyCodeLine{00158\ \ \ \ \ \};}
 \DoxyCodeLine{00159\ \ \ \ \ }
-\DoxyCodeLine{00160\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}{MemoryStats}}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a9aabf7f7f841f4103c15728f0fb63381}{getStats}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats}{MemoryStats}}\ stats;}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a38b83c266e615b4d5c485ee846595b69}{totalAllocated}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_afe2fb01dab5428a4441c23b217e5b863}{getTotalAllocated}}();}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_affc1fb61b7d76604bfb38e53c20ce22b}{totalDeallocated}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a9e91c71a5ab995173c6b0c3af49827cf}{getTotalDeallocated}}();}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a9fee4f4df173615f6f7efd166e96f0c7}{currentUsage}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a25a1fdf04f1e9ccdd294e638c0992a25}{getCurrentUsage}}();}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a0c9740b9913d2fab851842a4105afba4}{peakUsage}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_acb63ce0eafe8ef98cb5baddd53663dfe}{getPeakUsage}}();}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_ae8d6d9449266987825ad12351a264ac2}{activeAllocations}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a3a787c8ae4777c9dac3adb1405374851}{getActiveAllocationCount}}();}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a492e2f22ce9614b71866d729f8d7d4fe}{pressureRatio}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_af74c4d5803165d304d0d055132cc0889}{getMemoryPressureRatio}}();}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_voxel_editor_1_1_memory_1_1_memory_tracker_1_1_memory_stats_a8483f9fa41a6b87d18cef8ff81efa691}{categoryUsage}}\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_ab4e8d6a9119c10d753668cdaf5482fc3}{getUsageByCategory}}();}
+\DoxyCodeLine{00160\ \ \ \ \ MemoryStats\ getStats()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ MemoryStats\ stats;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ stats.totalAllocated\ =\ getTotalAllocated();}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ stats.totalDeallocated\ =\ getTotalDeallocated();}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ stats.currentUsage\ =\ getCurrentUsage();}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ stats.peakUsage\ =\ getPeakUsage();}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ stats.activeAllocations\ =\ getActiveAllocationCount();}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ stats.pressureRatio\ =\ getMemoryPressureRatio();}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ stats.categoryUsage\ =\ getUsageByCategory();}
 \DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ stats;}
 \DoxyCodeLine{00170\ \ \ \ \ \}}
 \DoxyCodeLine{00171\ \ \ \ \ }
 \DoxyCodeLine{00172\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00173\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker}{MemoryTracker}}()\ :\ m\_memoryLimit(0),\ m\_eventDispatcher(nullptr)\ \{\}}
+\DoxyCodeLine{00173\ \ \ \ \ MemoryTracker()\ :\ m\_memoryLimit(0),\ m\_eventDispatcher(nullptr)\ \{\}}
 \DoxyCodeLine{00174\ \ \ \ \ }
 \DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{void}\ checkMemoryPressure(\textcolor{keywordtype}{size\_t}\ currentUsage)\ \{}
 \DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ limit\ =\ m\_memoryLimit.load(std::memory\_order\_relaxed);}
 \DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (limit\ >\ 0\ \&\&\ m\_eventDispatcher\ \&\&\ currentUsage\ >\ (limit\ *\ 90\ /\ 100))\ \{}
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_memory_pressure_event}{Events::MemoryPressureEvent}}\ event(currentUsage,\ limit);}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eventDispatcher-\/>\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher_a000cb34aa8b03a892fcaed967a53a1fd}{dispatch}}(event);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ Events::MemoryPressureEvent\ event(currentUsage,\ limit);}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eventDispatcher-\/>dispatch(event);}
 \DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00181\ \ \ \ \ \}}
 \DoxyCodeLine{00182\ \ \ \ \ }
@@ -197,13 +197,13 @@
 \DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
 \DoxyCodeLine{00194\ \};}
 \DoxyCodeLine{00195\ }
-\DoxyCodeLine{00196\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_scoped_allocation_tracker_ac7a9b7ef40ac4d7ba99b9b7c499fa2c1}{ScopedAllocationTracker}}\ \{}
+\DoxyCodeLine{00196\ \textcolor{keyword}{class\ }ScopedAllocationTracker\ \{}
 \DoxyCodeLine{00197\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00198\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_scoped_allocation_tracker_ac7a9b7ef40ac4d7ba99b9b7c499fa2c1}{ScopedAllocationTracker}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ category)\ }
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ :\ m\_category(category),\ m\_startUsage(\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker}{MemoryTracker}}::getInstance().getCurrentUsage())\ \{\}}
+\DoxyCodeLine{00198\ \ \ \ \ ScopedAllocationTracker(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ category)\ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ :\ m\_category(category),\ m\_startUsage(MemoryTracker::getInstance().getCurrentUsage())\ \{\}}
 \DoxyCodeLine{00200\ \ \ \ \ }
-\DoxyCodeLine{00201\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_scoped_allocation_tracker_a7dc4a2955fb9405d3de36c31b55d58e9}{\string~ScopedAllocationTracker}}()\ \{}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ endUsage\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a114f6860e742485d0c7c77d2cdf6bd7a}{MemoryTracker::getInstance}}().\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_tracker_a25a1fdf04f1e9ccdd294e638c0992a25}{getCurrentUsage}}();}
+\DoxyCodeLine{00201\ \ \ \ \ \string~ScopedAllocationTracker()\ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ endUsage\ =\ MemoryTracker::getInstance().getCurrentUsage();}
 \DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ allocated\ =\ endUsage\ >\ m\_startUsage\ ?\ endUsage\ -\/\ m\_startUsage\ :\ 0;}
 \DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Could\ log\ or\ track\ scope-\/specific\ allocations\ here}}
 \DoxyCodeLine{00205\ \ \ \ \ \}}

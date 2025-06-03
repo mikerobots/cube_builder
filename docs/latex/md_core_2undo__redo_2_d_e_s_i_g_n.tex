@@ -1,5 +1,5 @@
 \chapter{Undo/\+Redo System Subsystem }
-\hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n}{}\label{md_core_2undo__redo_2_d_e_s_i_g_n}\index{Undo/Redo System Subsystem@{Undo/Redo System Subsystem}}
+\label{md_core_2undo__redo_2_d_e_s_i_g_n}\index{Undo/Redo System Subsystem@{Undo/Redo System Subsystem}}
 \label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md364}%
 \Hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md364}%
 \hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md365}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md365}
@@ -39,7 +39,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Command\ execution}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ executeCommand(std::unique\_ptr<Command>\ command);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ executeCommand(Args\&\&...\ args);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Undo/Redo\ operations}}
@@ -86,8 +86,8 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ m\_snapshotInterval;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_compressionEnabled;}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{UndoRedoCallback}}\ m\_undoRedoCallback;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{MemoryPressureCallback}}\ m\_memoryPressureCallback;}
+\DoxyCodeLine{\ \ \ \ UndoRedoCallback\ m\_undoRedoCallback;}
+\DoxyCodeLine{\ \ \ \ MemoryPressureCallback\ m\_memoryPressureCallback;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ std::unique\_ptr<StateSnapshot>\ m\_baseSnapshot;}
 \DoxyCodeLine{\ \ \ \ std::vector<std::unique\_ptr<StateSnapshot>>\ m\_snapshots;}
@@ -116,7 +116,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Command\ information}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getName()\ \textcolor{keyword}{const}\ =\ 0;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getDescription()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getName();\ \}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ CommandType\ getType()\ \textcolor{keyword}{const}\ =\ 0;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ management}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const}\ =\ 0;}
@@ -136,14 +136,14 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{VoxelEdit}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{Selection}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03937134cedab9078be39a77ee3a48a0}{Group}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a967d35e40f3f95b1f538bd248640bf3b}{Camera}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03a21915504df93cf5dba0636080f62e}{Workspace}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a72d6d7a1885885bb55a565fd1070581a}{Import}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a141a5b46e2087dc7a80a43710c2dacfb}{Composite}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ CommandType\ \{}
+\DoxyCodeLine{\ \ \ \ VoxelEdit,}
+\DoxyCodeLine{\ \ \ \ Selection,}
+\DoxyCodeLine{\ \ \ \ Group,}
+\DoxyCodeLine{\ \ \ \ Camera,}
+\DoxyCodeLine{\ \ \ \ Workspace,}
+\DoxyCodeLine{\ \ \ \ Import,}
+\DoxyCodeLine{\ \ \ \ Composite}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }ValidationResult\ \{}
@@ -158,12 +158,12 @@ Manages operation history, command pattern implementation, and state restoration
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }VoxelEditCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ VoxelEditCommand(VoxelDataManager*\ voxelManager,\ \textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{bool}\ newValue);}
+\DoxyCodeLine{\ \ \ \ VoxelEditCommand(VoxelDataManager*\ voxelManager,\ \textcolor{keyword}{const}\ Vector3i\&\ position,\ VoxelResolution\ resolution,\ \textcolor{keywordtype}{bool}\ newValue);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Edit\ Voxel"{}};\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canMergeWith(\textcolor{keyword}{const}\ Command\&\ other)\ \textcolor{keyword}{const\ override};}
@@ -172,7 +172,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
 \DoxyCodeLine{\ \ \ \ Vector3i\ m\_position;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ m\_resolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ m\_resolution;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_oldValue;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_newValue;}
 \DoxyCodeLine{\};}
@@ -184,7 +184,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ compress()\ \textcolor{keyword}{override};}
@@ -193,7 +193,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VoxelChange\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3i\ position;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ VoxelResolution\ resolution;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
 \DoxyCodeLine{\ \ \ \ \};}
@@ -215,7 +215,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Change\ Selection"{}};\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Selection;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Selection;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
@@ -232,7 +232,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Move\ Selection"{}};\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::VoxelEdit;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
@@ -254,14 +254,14 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Create\ Group"{}};\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Group;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Group;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ GroupManager*\ m\_groupManager;}
 \DoxyCodeLine{\ \ \ \ std::string\ m\_groupName;}
 \DoxyCodeLine{\ \ \ \ SelectionSet\ m\_voxels;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_createdGroupId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ m\_createdGroupId;}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{keyword}{class\ }MoveGroupCommand\ :\ \textcolor{keyword}{public}\ Command\ \{}
@@ -272,13 +272,13 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Move\ Group"{}};\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Group;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Group;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ GroupManager*\ m\_groupManager;}
 \DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ m\_groupId;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
 \DoxyCodeLine{\ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_moves;}
 \DoxyCodeLine{\};}
@@ -294,7 +294,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Camera\ Change"{}};\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Camera;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Camera;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canMergeWith(\textcolor{keyword}{const}\ Command\&\ other)\ \textcolor{keyword}{const\ override};}
@@ -302,8 +302,8 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ CameraManager*\ m\_cameraManager;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ m\_oldState;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_file_i_o_ac4a753aec4547a1d45a29bd68a9f0970a5767debca0b70ab557300d85ea5a9492}{CameraState}}\ m\_newState;}
+\DoxyCodeLine{\ \ \ \ CameraState\ m\_oldState;}
+\DoxyCodeLine{\ \ \ \ CameraState\ m\_newState;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isSmallChange(\textcolor{keyword}{const}\ CameraState\&\ from,\ \textcolor{keyword}{const}\ CameraState\&\ to)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
@@ -323,7 +323,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ execute()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ undo()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{\ \ \ \ std::string\ getName()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ m\_name;\ \}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Composite;\ \}}
+\DoxyCodeLine{\ \ \ \ CommandType\ getType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ CommandType::Composite;\ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const\ override};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Composite-\/specific}}
@@ -403,7 +403,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VoxelSnapshot\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<std::vector<uint8\_t>,\ 10>\ grids;\ \textcolor{comment}{//\ One\ per\ resolution}}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3f\ workspaceSize;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ activeResolution;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ VoxelResolution\ activeResolution;}
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }GroupSnapshot\ \{}
@@ -436,7 +436,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ IncrementalSnapshot(\textcolor{keyword}{const}\ StateSnapshot\&\ baseSnapshot);}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addVoxelChange(\textcolor{keyword}{const}\ Vector3i\&\ position,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keywordtype}{bool}\ oldValue,\ \textcolor{keywordtype}{bool}\ newValue);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addVoxelChange(\textcolor{keyword}{const}\ Vector3i\&\ position,\ VoxelResolution\ resolution,\ \textcolor{keywordtype}{bool}\ oldValue,\ \textcolor{keywordtype}{bool}\ newValue);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addGroupChange(\textcolor{keyword}{const}\ GroupChangeRecord\&\ change);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ addSelectionChange(\textcolor{keyword}{const}\ SelectionSet\&\ oldSelection,\ \textcolor{keyword}{const}\ SelectionSet\&\ newSelection);}
 \DoxyCodeLine{\ \ \ \ }
@@ -449,7 +449,7 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }VoxelChange\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ Vector3i\ position;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ VoxelResolution\ resolution;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
 \DoxyCodeLine{\ \ \ \ \};}
@@ -534,19 +534,19 @@ Manages operation history, command pattern implementation, and state restoration
 \hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md392}{}\doxysubsection{\texorpdfstring{Event Types}{Event Types}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md392}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1}{UndoRedoEventType}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a9ee4e041d9d1f5d3483c6b6ae9b38576}{CommandExecuted}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1aef41557e92a599b2432d54f6cb25f6ca}{CommandUndone}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a9baaf3ba77f4e6e092bfdf1ef57d8812}{CommandRedone}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a83ce0d0e4ebd7d8e4ab4820481a7577a}{HistoryCleared}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a79049c3d0a0b0602b576407a8fd40e3f}{TransactionStarted}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1af302f58cc298c396752c1a5f87ccbe9c}{TransactionCommitted}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a107c6cb0a79fcc2eb3249c69c95bdf6e}{TransactionRolledBack}},}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1a1b3a89c10c25b2a230e1f1fe112a2825}{MemoryPressure}}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ UndoRedoEventType\ \{}
+\DoxyCodeLine{\ \ \ \ CommandExecuted,}
+\DoxyCodeLine{\ \ \ \ CommandUndone,}
+\DoxyCodeLine{\ \ \ \ CommandRedone,}
+\DoxyCodeLine{\ \ \ \ HistoryCleared,}
+\DoxyCodeLine{\ \ \ \ TransactionStarted,}
+\DoxyCodeLine{\ \ \ \ TransactionCommitted,}
+\DoxyCodeLine{\ \ \ \ TransactionRolledBack,}
+\DoxyCodeLine{\ \ \ \ MemoryPressure}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }UndoRedoEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a0bcfe43b9a0d672261417b29927704b1}{UndoRedoEventType}}\ type;}
+\DoxyCodeLine{\ \ \ \ UndoRedoEventType\ type;}
 \DoxyCodeLine{\ \ \ \ std::string\ commandName;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ historySize;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ memoryUsage;}
@@ -554,8 +554,8 @@ Manages operation history, command pattern implementation, and state restoration
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ canRedo;}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a910a33278b905ebb61af91a4d9f54941}{UndoRedoCallback}}\ =\ std::function<void(\textcolor{keyword}{const}\ UndoRedoEvent\&)>;}
-\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a96da3416b15b7e8019ccd228bde4fcf7}{MemoryPressureCallback}}\ =\ std::function<void(\textcolor{keywordtype}{size\_t}\ currentUsage,\ \textcolor{keywordtype}{size\_t}\ maxUsage)>;}
+\DoxyCodeLine{\textcolor{keyword}{using\ }UndoRedoCallback\ =\ std::function<void(\textcolor{keyword}{const}\ UndoRedoEvent\&)>;}
+\DoxyCodeLine{\textcolor{keyword}{using\ }MemoryPressureCallback\ =\ std::function<void(\textcolor{keywordtype}{size\_t}\ currentUsage,\ \textcolor{keywordtype}{size\_t}\ maxUsage)>;}
 
 \end{DoxyCode}
 \hypertarget{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md393}{}\doxysection{\texorpdfstring{Testing Strategy}{Testing Strategy}}\label{md_core_2undo__redo_2_d_e_s_i_g_n_autotoc_md393}

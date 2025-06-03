@@ -1,6 +1,7 @@
 #include "cli/VoxelMeshGenerator.h"
 #include "voxel_data/VoxelDataManager.h"
 #include <algorithm>
+#include <iostream>
 
 namespace VoxelEditor {
 
@@ -50,10 +51,16 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
     auto resolution = voxelData.getActiveResolution();
     float voxelSize = VoxelData::getVoxelSize(resolution);
     
+    std::cout << "Generating mesh for resolution: " << static_cast<int>(resolution) 
+              << ", voxel size: " << voxelSize << std::endl;
+    
     // Get all voxels at current resolution
     auto voxelPositions = voxelData.getAllVoxels(resolution);
     
+    std::cout << "Found " << voxelPositions.size() << " voxels to render" << std::endl;
+    
     // Generate cube for each voxel
+    int voxelCount = 0;
     for (const auto& voxelPos : voxelPositions) {
         // Convert voxel coordinates to world position
         Math::Vector3f worldPos(
@@ -62,11 +69,18 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
             voxelPos.gridPos.z * voxelSize + voxelSize * 0.5f
         );
         
-        // Color based on height for now
-        float colorIntensity = 0.3f + (voxelPos.gridPos.y / 10.0f) * 0.7f;
-        Math::Vector3f color(colorIntensity, colorIntensity * 0.8f, colorIntensity * 0.6f);
+        if (voxelCount < 3) {
+            std::cout << "  Voxel " << voxelCount << " at grid pos (" 
+                      << voxelPos.gridPos.x << ", " << voxelPos.gridPos.y << ", " 
+                      << voxelPos.gridPos.z << ") -> world pos (" 
+                      << worldPos.x << ", " << worldPos.y << ", " << worldPos.z << ")" << std::endl;
+        }
+        
+        // Use bright colors for easy identification 
+        Math::Vector3f color(1.0f, 0.0f, 0.0f);  // Bright red for debugging
         
         addCube(vertices, indices, worldPos, voxelSize * 0.95f, color); // Slight gap between cubes
+        voxelCount++;
     }
     
     // Create mesh
@@ -87,6 +101,19 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
         }
         
         mesh.indices = std::move(indices);
+        
+        std::cout << "Generated mesh with " << mesh.vertices.size() << " vertices and " 
+                  << mesh.indices.size() << " indices" << std::endl;
+        
+        // Print first few vertices for debugging
+        for (size_t i = 0; i < std::min(size_t(3), mesh.vertices.size()); ++i) {
+            std::cout << "  Vertex " << i << ": pos(" 
+                      << mesh.vertices[i].position.x << ", "
+                      << mesh.vertices[i].position.y << ", "
+                      << mesh.vertices[i].position.z << ")" << std::endl;
+        }
+    } else {
+        std::cout << "No vertices generated (empty mesh)" << std::endl;
     }
     
     return mesh;

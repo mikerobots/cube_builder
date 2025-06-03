@@ -1,21 +1,21 @@
 \doxysection{Orbit\+Camera.\+h}
-\hypertarget{_orbit_camera_8h_source}{}\label{_orbit_camera_8h_source}\index{core/camera/OrbitCamera.h@{core/camera/OrbitCamera.h}}
+\label{_orbit_camera_8h_source}\index{core/camera/OrbitCamera.h@{core/camera/OrbitCamera.h}}
 \mbox{\hyperlink{_orbit_camera_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <algorithm>}}
 \DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_camera_8h}{Camera.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_math_utils_8h}{../../foundation/math/MathUtils.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/MathUtils.h"{}}}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_camera}{Camera}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Camera\ \{}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a197553e001442bd4ec111e04f607d47d}{OrbitCamera}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aed60a29dd31168f301a615943783c322}{Camera}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }OrbitCamera\ :\ \textcolor{keyword}{public}\ Camera\ \{}
 \DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a197553e001442bd4ec111e04f607d47d}{OrbitCamera}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr})}
-\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aed60a29dd31168f301a615943783c322}{Camera}}(eventDispatcher)}
+\DoxyCodeLine{00013\ \ \ \ \ OrbitCamera(Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ :\ Camera(eventDispatcher)}
 \DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ ,\ m\_distance(5.0f)}
 \DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ ,\ m\_yaw(0.0f)}
 \DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ ,\ m\_pitch(0.0f)}
@@ -36,12 +36,12 @@
 \DoxyCodeLine{00032\ \ \ \ \ \}}
 \DoxyCodeLine{00033\ }
 \DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Orbit\ controls}}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a7bc75cbcb03c942c0721e7a20b2db2e6}{orbit}}(\textcolor{keywordtype}{float}\ deltaYaw,\ \textcolor{keywordtype}{float}\ deltaPitch)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ orbit(\textcolor{keywordtype}{float}\ deltaYaw,\ \textcolor{keywordtype}{float}\ deltaPitch)\ \{}
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ newYaw\ =\ m\_yaw\ +\ deltaYaw\ *\ m\_rotateSensitivity;}
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ newPitch\ =\ m\_pitch\ +\ deltaPitch\ *\ m\_rotateSensitivity;}
 \DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clamp\ pitch\ to\ prevent\ gimbal\ lock}}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ newPitch\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(newPitch,\ m\_minPitch,\ m\_maxPitch);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ newPitch\ =\ Math::clamp(newPitch,\ m\_minPitch,\ m\_maxPitch);}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_smoothing)\ \{}
 \DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetYaw\ =\ newYaw;}
@@ -53,9 +53,9 @@
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00050\ \ \ \ \ \}}
 \DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_aafb7c77e8d4abd3156aa4b39f8e9a53d}{zoom}}(\textcolor{keywordtype}{float}\ delta)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ zoom(\textcolor{keywordtype}{float}\ delta)\ \{}
 \DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ newDistance\ =\ m\_distance\ -\/\ delta\ *\ m\_zoomSensitivity;}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ newDistance\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(newDistance,\ m\_minDistance,\ m\_maxDistance);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ newDistance\ =\ Math::clamp(newDistance,\ m\_minDistance,\ m\_maxDistance);}
 \DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_smoothing)\ \{}
 \DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetDistance\ =\ newDistance;}
@@ -65,45 +65,45 @@
 \DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00062\ \ \ \ \ \}}
 \DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ab54c06eda3002920b7545cb58cba49ae}{pan}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ delta)\ \{}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ right\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a4de920cbef2cb6a11991cdeb98959a39}{getRight}}();}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ up\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a6375ad87966eb927d48e1c8f1ef6559f}{getActualUp}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ pan(\textcolor{keyword}{const}\ Math::Vector3f\&\ delta)\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ Math::Vector3f\ right\ =\ getRight();}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ Math::Vector3f\ up\ =\ getActualUp();}
 \DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ panOffset\ =\ (right\ *\ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a66d8a1ff17b5af1b045a5845fbfba796}{x}}\ +\ up\ *\ delta.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_abfd53bff586f622968ff4422d0228848}{y}})\ *\ m\_panSensitivity;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ Math::Vector3f\ panOffset\ =\ (right\ *\ delta.x\ +\ up\ *\ delta.y)\ *\ m\_panSensitivity;}
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_smoothing)\ \{}
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetTarget\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}{m\_target}}\ +\ panOffset;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetTarget\ =\ m\_target\ +\ panOffset;}
 \DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ae6ea87e3574d48d6a5cc4fce8739a565}{setTarget}}(\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}{m\_target}}\ +\ panOffset);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ setTarget(m\_target\ +\ panOffset);}
 \DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00075\ \ \ \ \ \}}
 \DoxyCodeLine{00076\ }
 \DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Direct\ positioning}}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ab77acf738d5b8283d0459addac3c7bbd}{setDistance}}(\textcolor{keywordtype}{float}\ distance)\ \{}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ distance\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(distance,\ m\_minDistance,\ m\_maxDistance);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ setDistance(\textcolor{keywordtype}{float}\ distance)\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ distance\ =\ Math::clamp(distance,\ m\_minDistance,\ m\_maxDistance);}
 \DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_distance\ !=\ distance)\ \{}
 \DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ m\_distance\ =\ distance;}
 \DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ updateCameraPosition();}
 \DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00084\ \ \ \ \ \}}
 \DoxyCodeLine{00085\ }
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_af2da50fb684e3591ccc9dc2e6c018a78}{setYaw}}(\textcolor{keywordtype}{float}\ yaw)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ setYaw(\textcolor{keywordtype}{float}\ yaw)\ \{}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_yaw\ !=\ yaw)\ \{}
 \DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ m\_yaw\ =\ yaw;}
 \DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ updateCameraPosition();}
 \DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00091\ \ \ \ \ \}}
 \DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a888cd19d4e39e545d3ecaf14989946aa}{setPitch}}(\textcolor{keywordtype}{float}\ pitch)\ \{}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ pitch\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(pitch,\ m\_minPitch,\ m\_maxPitch);}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ setPitch(\textcolor{keywordtype}{float}\ pitch)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ pitch\ =\ Math::clamp(pitch,\ m\_minPitch,\ m\_maxPitch);}
 \DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_pitch\ !=\ pitch)\ \{}
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ m\_pitch\ =\ pitch;}
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ updateCameraPosition();}
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00099\ \ \ \ \ \}}
 \DoxyCodeLine{00100\ }
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a445326c192779cb2daddac94e5284f3b}{setOrbitAngles}}(\textcolor{keywordtype}{float}\ yaw,\ \textcolor{keywordtype}{float}\ pitch)\ \{}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ pitch\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(pitch,\ m\_minPitch,\ m\_maxPitch);}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ setOrbitAngles(\textcolor{keywordtype}{float}\ yaw,\ \textcolor{keywordtype}{float}\ pitch)\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ pitch\ =\ Math::clamp(pitch,\ m\_minPitch,\ m\_maxPitch);}
 \DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_yaw\ !=\ yaw\ ||\ m\_pitch\ !=\ pitch)\ \{}
 \DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ m\_yaw\ =\ yaw;}
 \DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ m\_pitch\ =\ pitch;}
@@ -112,35 +112,35 @@
 \DoxyCodeLine{00108\ \ \ \ \ \}}
 \DoxyCodeLine{00109\ }
 \DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Constraint\ settings}}
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a9d20e35346406024b7ca4732b64ef71e}{setDistanceConstraints}}(\textcolor{keywordtype}{float}\ minDistance,\ \textcolor{keywordtype}{float}\ maxDistance)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ setDistanceConstraints(\textcolor{keywordtype}{float}\ minDistance,\ \textcolor{keywordtype}{float}\ maxDistance)\ \{}
 \DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ m\_minDistance\ =\ minDistance;}
 \DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ m\_maxDistance\ =\ maxDistance;}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ m\_distance\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(m\_distance,\ m\_minDistance,\ m\_maxDistance);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ m\_distance\ =\ Math::clamp(m\_distance,\ m\_minDistance,\ m\_maxDistance);}
 \DoxyCodeLine{00115\ \ \ \ \ \}}
 \DoxyCodeLine{00116\ }
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a1c3b77159417ef1fbd371e601e08dc98}{setPitchConstraints}}(\textcolor{keywordtype}{float}\ minPitch,\ \textcolor{keywordtype}{float}\ maxPitch)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ setPitchConstraints(\textcolor{keywordtype}{float}\ minPitch,\ \textcolor{keywordtype}{float}\ maxPitch)\ \{}
 \DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ m\_minPitch\ =\ minPitch;}
 \DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ m\_maxPitch\ =\ maxPitch;}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ m\_pitch\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(m\_pitch,\ m\_minPitch,\ m\_maxPitch);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ m\_pitch\ =\ Math::clamp(m\_pitch,\ m\_minPitch,\ m\_maxPitch);}
 \DoxyCodeLine{00121\ \ \ \ \ \}}
 \DoxyCodeLine{00122\ }
 \DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Sensitivity\ settings}}
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a966dd80243138b8376140a70e9414292}{setPanSensitivity}}(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_panSensitivity\ =\ sensitivity;\ \}}
-\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a601dc29406aaf48d0b8f3429666b456b}{setRotateSensitivity}}(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_rotateSensitivity\ =\ sensitivity;\ \}}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a673a15d29ccbd5e352cf203aa7e8b98d}{setZoomSensitivity}}(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_zoomSensitivity\ =\ sensitivity;\ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{void}\ setPanSensitivity(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_panSensitivity\ =\ sensitivity;\ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ setRotateSensitivity(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_rotateSensitivity\ =\ sensitivity;\ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ setZoomSensitivity(\textcolor{keywordtype}{float}\ sensitivity)\ \{\ m\_zoomSensitivity\ =\ sensitivity;\ \}}
 \DoxyCodeLine{00127\ }
 \DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ Smoothing}}
-\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a95298601d88d6eda6fd11591843f23cc}{setSmoothing}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_smoothing\ =\ enabled;\ \}}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ac7e7909eaedc06ed8c660e5801213d0c}{setSmoothFactor}}(\textcolor{keywordtype}{float}\ factor)\ \{\ m\_smoothFactor\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(factor,\ 0.01f,\ 1.0f);\ \}}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ setSmoothing(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_smoothing\ =\ enabled;\ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ setSmoothFactor(\textcolor{keywordtype}{float}\ factor)\ \{\ m\_smoothFactor\ =\ Math::clamp(factor,\ 0.01f,\ 1.0f);\ \}}
 \DoxyCodeLine{00131\ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ab1abcee8446620062be46c3535b8eefc}{update}}(\textcolor{keywordtype}{float}\ deltaTime)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime)\ \{}
 \DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_smoothing)\ \{}
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ updateSmoothing(deltaTime);}
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00136\ \ \ \ \ \}}
 \DoxyCodeLine{00137\ }
 \DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ View\ presets\ implementation}}
-\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a74b96139841ce7a35497d09af0a8e5b4}{setViewPreset}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_camera_adcedcbfd3424e09f682f14eec069c964}{ViewPreset}}\ preset)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ setViewPreset(ViewPreset\ preset)\textcolor{keyword}{\ override\ }\{}
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }PresetData\ \{}
 \DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yaw,\ pitch,\ distance;}
 \DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \};}
@@ -164,18 +164,18 @@
 \DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetPitch\ =\ data.pitch;}
 \DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetDistance\ =\ data.distance;}
 \DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a445326c192779cb2daddac94e5284f3b}{setOrbitAngles}}(data.yaw,\ data.pitch);}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ab77acf738d5b8283d0459addac3c7bbd}{setDistance}}(data.distance);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setOrbitAngles(data.yaw,\ data.pitch);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setDistance(data.distance);}
 \DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a8fce8e4f1b9578ecdc932465623cd0a6}{dispatchCameraChangedEvent}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_camera_changed_event_a753de8108a8a226fcae8047be82a21e2acdf58dc656ab87fec541b5f278fde32e}{Events::CameraChangedEvent::ChangeType::VIEW\_PRESET}});}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::VIEW\_PRESET);}
 \DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00169\ \ \ \ \ \}}
 \DoxyCodeLine{00170\ }
 \DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Focus\ on\ a\ point}}
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_af372b382fd4969861ac6d4628f3a8f26}{focusOn}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ point,\ \textcolor{keywordtype}{float}\ optimalDistance\ =\ -\/1.0f)\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ focusOn(\textcolor{keyword}{const}\ Math::Vector3f\&\ point,\ \textcolor{keywordtype}{float}\ optimalDistance\ =\ -\/1.0f)\ \{}
 \DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (optimalDistance\ >\ 0.0f)\ \{}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ optimalDistance\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(optimalDistance,\ m\_minDistance,\ m\_maxDistance);}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ optimalDistance\ =\ Math::clamp(optimalDistance,\ m\_minDistance,\ m\_maxDistance);}
 \DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ optimalDistance\ =\ m\_distance;}
 \DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \}}
@@ -184,65 +184,65 @@
 \DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetTarget\ =\ point;}
 \DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ m\_targetDistance\ =\ optimalDistance;}
 \DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ae6ea87e3574d48d6a5cc4fce8739a565}{setTarget}}(point);}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ab77acf738d5b8283d0459addac3c7bbd}{setDistance}}(optimalDistance);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ setTarget(point);}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ setDistance(optimalDistance);}
 \DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00186\ \ \ \ \ \}}
 \DoxyCodeLine{00187\ }
 \DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ Frame\ a\ bounding\ box}}
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a34354fee557c09028b73ec0d3cb5efe4}{frameBox}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ minBounds,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ maxBounds)\ \{}
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ center\ =\ (minBounds\ +\ maxBounds)\ *\ 0.5f;}
-\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ size\ =\ maxBounds\ -\/\ minBounds;}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxDimension\ =\ std::max(\{size.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a66d8a1ff17b5af1b045a5845fbfba796}{x}},\ size.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_abfd53bff586f622968ff4422d0228848}{y}},\ size.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_aafb86f5c13f4c51a0b5649ab9a06de6a}{z}}\});}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ frameBox(\textcolor{keyword}{const}\ Math::Vector3f\&\ minBounds,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ maxBounds)\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ Math::Vector3f\ center\ =\ (minBounds\ +\ maxBounds)\ *\ 0.5f;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ Math::Vector3f\ size\ =\ maxBounds\ -\/\ minBounds;}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxDimension\ =\ std::max(\{size.x,\ size.y,\ size.z\});}
 \DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ distance\ to\ frame\ the\ entire\ box}}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ maxDimension\ /\ (2.0f\ *\ std::tan(\mbox{\hyperlink{namespace_voxel_editor_1_1_math_a8f0518eaf8cacc711204defa1dbfdf94}{Math::toRadians}}(\mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_abebb656118ae099fbcb47a2c4e000673}{m\_fov}})\ *\ 0.5f));}
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ distance\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9726781c2202d93e60cbcb7a7a151d40}{Math::clamp}}(distance\ *\ 1.2f,\ m\_minDistance,\ m\_maxDistance);\ \textcolor{comment}{//\ Add\ 20\%\ padding}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ maxDimension\ /\ (2.0f\ *\ std::tan(Math::toRadians(m\_fov)\ *\ 0.5f));}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ distance\ =\ Math::clamp(distance\ *\ 1.2f,\ m\_minDistance,\ m\_maxDistance);\ \textcolor{comment}{//\ Add\ 20\%\ padding}}
 \DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_af372b382fd4969861ac6d4628f3a8f26}{focusOn}}(center,\ distance);}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ focusOn(center,\ distance);}
 \DoxyCodeLine{00199\ \ \ \ \ \}}
 \DoxyCodeLine{00200\ }
 \DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ Getters}}
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a32f73d8153d9ca6cbd97a1b545f77281}{getDistance}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_distance;\ \}}
-\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a79415a094cc49f53b30b183f01421a0c}{getYaw}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_yaw;\ \}}
-\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a79038700fa137da0eeb1e7d3a23d4317}{getPitch}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pitch;\ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{float}\ getDistance()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_distance;\ \}}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{float}\ getYaw()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_yaw;\ \}}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{float}\ getPitch()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pitch;\ \}}
 \DoxyCodeLine{00205\ \ \ \ \ }
-\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a7548fd4703cf643f5a6b6dbf08692ff7}{getMinDistance}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_minDistance;\ \}}
-\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a0acc07075a82a94f7245f1ae35081fc8}{getMaxDistance}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxDistance;\ \}}
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_acd43ef6cc40daab8251897a172227536}{getMinPitch}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_minPitch;\ \}}
-\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a655fdcf5aecf53c3f10d80f21ef1d526}{getMaxPitch}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxPitch;\ \}}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{float}\ getMinDistance()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_minDistance;\ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordtype}{float}\ getMaxDistance()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxDistance;\ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{float}\ getMinPitch()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_minPitch;\ \}}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{float}\ getMaxPitch()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxPitch;\ \}}
 \DoxyCodeLine{00210\ \ \ \ \ }
-\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a5f3d532d32118b336d9fff7ea8d7ea45}{getPanSensitivity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_panSensitivity;\ \}}
-\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a93efbd1c13df9f7a4e9dc58a4aa8cb69}{getRotateSensitivity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_rotateSensitivity;\ \}}
-\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a63fbff26ec413903a883d8eae7191d0f}{getZoomSensitivity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_zoomSensitivity;\ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{float}\ getPanSensitivity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_panSensitivity;\ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{float}\ getRotateSensitivity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_rotateSensitivity;\ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{float}\ getZoomSensitivity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_zoomSensitivity;\ \}}
 \DoxyCodeLine{00214\ \ \ \ \ }
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_a089a159284fb877019ddccfb40176a87}{isSmoothing}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_smoothing;\ \}}
-\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ab93e29ad248627e04691cf42c455126c}{getSmoothFactor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_smoothFactor;\ \}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSmoothing()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_smoothing;\ \}}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{float}\ getSmoothFactor()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_smoothFactor;\ \}}
 \DoxyCodeLine{00217\ }
 \DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//\ Override\ setTarget\ to\ update\ internal\ state}}
-\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_orbit_camera_ae6ea87e3574d48d6a5cc4fce8739a565}{setTarget}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ target)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aef8dd556770d18cb78d43ad5c25a3e94}{Camera::setTarget}}(target);}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ setTarget(\textcolor{keyword}{const}\ Math::Vector3f\&\ target)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ Camera::setTarget(target);}
 \DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ updateCameraPosition();}
 \DoxyCodeLine{00222\ \ \ \ \ \}}
 \DoxyCodeLine{00223\ }
 \DoxyCodeLine{00224\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{void}\ updateCameraPosition()\ \{}
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yawRad\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a8f0518eaf8cacc711204defa1dbfdf94}{Math::toRadians}}(m\_yaw);}
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pitchRad\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a8f0518eaf8cacc711204defa1dbfdf94}{Math::toRadians}}(m\_pitch);}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yawRad\ =\ Math::toRadians(m\_yaw);}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pitchRad\ =\ Math::toRadians(m\_pitch);}
 \DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cosYaw\ =\ std::cos(yawRad);}
 \DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sinYaw\ =\ std::sin(yawRad);}
 \DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cosPitch\ =\ std::cos(pitchRad);}
 \DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sinPitch\ =\ std::sin(pitchRad);}
 \DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ offset(}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ Math::Vector3f\ offset(}
 \DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ sinYaw\ *\ cosPitch,}
 \DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ sinPitch,}
 \DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ cosYaw\ *\ cosPitch}
 \DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ newPosition\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}{m\_target}}\ +\ offset\ *\ m\_distance;}
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_af6ad2b3114e21b2ab5baf938ba357735}{Camera::setPosition}}(newPosition);}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ Math::Vector3f\ newPosition\ =\ m\_target\ +\ offset\ *\ m\_distance;}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ Camera::setPosition(newPosition);}
 \DoxyCodeLine{00242\ \ \ \ \ \}}
 \DoxyCodeLine{00243\ }
 \DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordtype}{void}\ updateSmoothing(\textcolor{keywordtype}{float}\ deltaTime)\ \{}
@@ -251,26 +251,26 @@
 \DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Smooth\ distance}}
 \DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(m\_distance\ -\/\ m\_targetDistance)\ >\ 0.001f)\ \{}
-\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ m\_distance\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{Math::lerp}}(m\_distance,\ m\_targetDistance,\ lerpFactor);}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ m\_distance\ =\ Math::lerp(m\_distance,\ m\_targetDistance,\ lerpFactor);}
 \DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ changed\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Smooth\ angles}}
 \DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(m\_yaw\ -\/\ m\_targetYaw)\ >\ 0.01f)\ \{}
-\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ m\_yaw\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{Math::lerp}}(m\_yaw,\ m\_targetYaw,\ lerpFactor);}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ m\_yaw\ =\ Math::lerp(m\_yaw,\ m\_targetYaw,\ lerpFactor);}
 \DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ changed\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(m\_pitch\ -\/\ m\_targetPitch)\ >\ 0.01f)\ \{}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ m\_pitch\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{Math::lerp}}(m\_pitch,\ m\_targetPitch,\ lerpFactor);}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ m\_pitch\ =\ Math::lerp(m\_pitch,\ m\_targetPitch,\ lerpFactor);}
 \DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ changed\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Smooth\ target\ position}}
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ Math::Vector3f\ targetDelta\ =\ m\_targetTarget\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}{m\_target}};}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ Math::Vector3f\ targetDelta\ =\ m\_targetTarget\ -\/\ m\_target;}
 \DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (targetDelta.length()\ >\ 0.001f)\ \{}
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ newTarget\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_a79b895a571ec4c0b754b6b66e6689b46}{m\_target}}\ +\ targetDelta\ *\ lerpFactor;}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera_aef8dd556770d18cb78d43ad5c25a3e94}{Camera::setTarget}}(newTarget);}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ Math::Vector3f\ newTarget\ =\ m\_target\ +\ targetDelta\ *\ lerpFactor;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ Camera::setTarget(newTarget);}
 \DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ changed\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ }

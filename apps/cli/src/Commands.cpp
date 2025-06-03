@@ -7,10 +7,13 @@
 #include <mutex>
 #include <memory>
 #include <algorithm>
+#include <thread>
+#include <chrono>
 
 // Application headers
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
+#include "cli/RenderWindow.h"
 
 // Core includes
 #include "voxel_data/VoxelDataManager.h"
@@ -29,6 +32,9 @@
 #include "math/BoundingBox.h"
 
 namespace VoxelEditor {
+
+// Forward declaration for simple validation command
+CommandResult executeSimpleValidateCommand(const CommandContext& ctx);
 
 void Application::registerCommands() {
     // File Operations
@@ -194,6 +200,10 @@ void Application::registerCommands() {
             );
             
             m_historyManager->executeCommand(std::move(cmd));
+            
+            // Update the voxel mesh for rendering
+            requestMeshUpdate();
+            
             return CommandResult::Success("Voxel placed at (" + 
                 std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")");
         }
@@ -222,6 +232,10 @@ void Application::registerCommands() {
             );
             
             m_historyManager->executeCommand(std::move(cmd));
+            
+            // Update the voxel mesh for rendering
+            requestMeshUpdate();
+            
             return CommandResult::Success("Voxel deleted at (" + 
                 std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")");
         }
@@ -258,6 +272,9 @@ void Application::registerCommands() {
             
             m_historyManager->executeCommand(std::move(cmd));
             
+            // Update the voxel mesh for rendering
+            requestMeshUpdate();
+            
             // Calculate volume filled
             int width = std::abs(end.x - start.x) + 1;
             int height = std::abs(end.y - start.y) + 1;
@@ -276,6 +293,8 @@ void Application::registerCommands() {
         {},
         [this](const CommandContext& ctx) {
             if (m_historyManager->undo()) {
+                // Update the voxel mesh after undo
+                requestMeshUpdate();
                 return CommandResult::Success("Undone");
             }
             return CommandResult::Error("Nothing to undo");
@@ -290,6 +309,8 @@ void Application::registerCommands() {
         {},
         [this](const CommandContext& ctx) {
             if (m_historyManager->redo()) {
+                // Update the voxel mesh after redo
+                requestMeshUpdate();
                 return CommandResult::Success("Redone");
             }
             return CommandResult::Error("Nothing to redo");
@@ -320,6 +341,12 @@ void Application::registerCommands() {
             }
             
             m_cameraController->setViewPreset(viewPreset);
+            
+            // After setting preset, ensure camera stays at reasonable distance
+            if (viewPreset == Camera::ViewPreset::ISOMETRIC) {
+                m_cameraController->getCamera()->setDistance(3.0f);
+            }
+            
             return CommandResult::Success("Camera set to " + preset + " view");
         }
     });
@@ -616,6 +643,55 @@ void Application::registerCommands() {
         }
     });
     
+    // Screenshot command
+    m_commandProcessor->registerCommand({
+        "screenshot",
+        "Take a screenshot of the current view",
+        CommandCategory::VIEW,
+        {"ss", "capture"},
+        {{"filename", "Output filename (.png)", "string", true, ""}},
+        [this](const CommandContext& ctx) {
+            std::string filename = ctx.getArg(0);
+            if (filename.empty()) {
+                return CommandResult::Error("Filename required");
+            }
+            
+            // Add .png extension if not present
+            if (filename.find(".png") == std::string::npos) {
+                filename += ".png";
+            }
+            
+            // Render the scene before taking screenshot
+            render();
+            
+            // Don't swap before screenshot - read from back buffer
+            // m_renderWindow->swapBuffers();
+            
+            if (m_renderWindow->saveScreenshot(filename)) {
+                return CommandResult::Success("Screenshot saved: " + filename);
+            }
+            return CommandResult::Error("Failed to save screenshot");
+        }
+    });
+    
+    // Sleep command for testing
+    m_commandProcessor->registerCommand({
+        "sleep",
+        "Pause execution for specified seconds",
+        CommandCategory::SYSTEM,
+        {"wait", "pause"},
+        {{"seconds", "Number of seconds to sleep", "float", true, ""}},
+        [this](const CommandContext& ctx) {
+            float seconds = ctx.getFloatArg(0, 1.0f);
+            if (seconds < 0 || seconds > 10) {
+                return CommandResult::Error("Sleep time must be between 0 and 10 seconds");
+            }
+            
+            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(seconds * 1000)));
+            return CommandResult::Success("Slept for " + std::to_string(seconds) + " seconds");
+        }
+    });
+    
     // Status command
     m_commandProcessor->registerCommand({
         Commands::STATUS,
@@ -661,6 +737,16 @@ void Application::registerCommands() {
             
             return CommandResult::Success(ss.str());
         }
+    });
+    
+    // Validate command
+    m_commandProcessor->registerCommand({
+        Commands::VALIDATE,
+        "Validate the rendering pipeline and diagnose issues",
+        CommandCategory::SYSTEM,
+        {"check", "diag"},
+        {},
+        executeSimpleValidateCommand
     });
 }
 

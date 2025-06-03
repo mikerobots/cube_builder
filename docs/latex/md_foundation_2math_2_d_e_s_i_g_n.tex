@@ -1,5 +1,5 @@
 \chapter{Math Utilities Foundation }
-\hypertarget{md_foundation_2math_2_d_e_s_i_g_n}{}\label{md_foundation_2math_2_d_e_s_i_g_n}\index{Math Utilities Foundation@{Math Utilities Foundation}}
+\label{md_foundation_2math_2_d_e_s_i_g_n}\index{Math Utilities Foundation@{Math Utilities Foundation}}
 \label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md520}%
 \Hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md520}%
 \hypertarget{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md521}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_foundation_2math_2_d_e_s_i_g_n_autotoc_md521}
@@ -45,7 +45,7 @@ Provides fundamental mathematical operations, vector/matrix mathematics, geometr
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Arithmetic\ operations}}
 \DoxyCodeLine{\ \ \ \ Vector3f\ operator+(\textcolor{keyword}{const}\ Vector3f\&\ other)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ Vector3f\ operator-\/(\textcolor{keyword}{const}\ Vector3f\&\ other)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ Vector3f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keywordtype}{float}\ scalar)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ operator*(\textcolor{keywordtype}{float}\ scalar)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ Vector3f\ operator/(\textcolor{keywordtype}{float}\ scalar)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Vector\ operations}}
@@ -63,7 +63,7 @@ Provides fundamental mathematical operations, vector/matrix mathematics, geometr
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ UnitY();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ UnitZ();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ distance(\textcolor{keyword}{const}\ Vector3f\&\ a,\ \textcolor{keyword}{const}\ Vector3f\&\ b);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_a9b16c8ca8b9b350f0c10e1f23474ed15}{lerp}}(\textcolor{keyword}{const}\ Vector3f\&\ a,\ \textcolor{keyword}{const}\ Vector3f\&\ b,\ \textcolor{keywordtype}{float}\ t);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ Vector3f\ lerp(\textcolor{keyword}{const}\ Vector3f\&\ a,\ \textcolor{keyword}{const}\ Vector3f\&\ b,\ \textcolor{keywordtype}{float}\ t);}
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{comment}{//\ Matrix\ Classes}}
@@ -75,8 +75,8 @@ Provides fundamental mathematical operations, vector/matrix mathematics, geometr
 \DoxyCodeLine{\ \ \ \ Matrix4f(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ data);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Matrix\ operations}}
-\DoxyCodeLine{\ \ \ \ Matrix4f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keyword}{const}\ Matrix4f\&\ other)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ Vector3f\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keyword}{const}\ Vector3f\&\ vec)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Matrix4f\ operator*(\textcolor{keyword}{const}\ Matrix4f\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ Vector3f\ operator*(\textcolor{keyword}{const}\ Vector3f\&\ vec)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ Matrix4f\ transposed()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ Matrix4f\ inverted()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ determinant()\ \textcolor{keyword}{const};}

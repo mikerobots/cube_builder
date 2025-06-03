@@ -1,63 +1,63 @@
 \doxysection{Ray.\+h}
-\hypertarget{_ray_8h_source}{}\label{_ray_8h_source}\index{foundation/math/Ray.h@{foundation/math/Ray.h}}
+\label{_ray_8h_source}\index{foundation/math/Ray.h@{foundation/math/Ray.h}}
 \mbox{\hyperlink{_ray_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{Vector3f.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector2f_8h}{Vector2f.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector2i_8h}{Vector2i.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Vector3f.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Vector2f.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Vector2i.h"{}}}
 \DoxyCodeLine{00006\ }
 \DoxyCodeLine{00007\ \textcolor{comment}{//\ Forward\ declaration\ to\ avoid\ circular\ dependencies}}
-\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Math}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}};\ \}\}}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{\ \textcolor{keyword}{namespace\ }Math\ \{\ \textcolor{keyword}{class\ }Matrix4f;\ \}\}}
 \DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Math}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Math\ \{}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71859f396b155f3015cc663384931594}{Ray}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }Ray\ \{}
 \DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}};}
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}};}
+\DoxyCodeLine{00015\ \ \ \ \ Vector3f\ origin;}
+\DoxyCodeLine{00016\ \ \ \ \ Vector3f\ direction;}
 \DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71859f396b155f3015cc663384931594}{Ray}}()\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}::Zero()),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}::UnitZ())\ \{\}}
+\DoxyCodeLine{00018\ \ \ \ \ Ray()\ :\ origin(Vector3f::Zero()),\ direction(Vector3f::UnitZ())\ \{\}}
 \DoxyCodeLine{00019\ \ \ \ \ }
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_aa5ef71c4b4cb0004fc913545123b007d}{Ray}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}})\ }
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}.normalized())\ \{\}}
+\DoxyCodeLine{00020\ \ \ \ \ Ray(\textcolor{keyword}{const}\ Vector3f\&\ origin,\ \textcolor{keyword}{const}\ Vector3f\&\ direction)\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ :\ origin(origin),\ direction(direction.normalized())\ \{\}}
 \DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a2e5fc09243ec41fbe244118dddf5499e}{getPoint}}(\textcolor{keywordtype}{float}\ t)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}\ *\ t;}
+\DoxyCodeLine{00023\ \ \ \ \ Vector3f\ getPoint(\textcolor{keywordtype}{float}\ t)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ origin\ +\ direction\ *\ t;}
 \DoxyCodeLine{00025\ \ \ \ \ \}}
 \DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_aa4476ee4ec8c8d755fbc552f651f5a63}{closestPoint}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ point)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ toPoint\ =\ point\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}};}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ toPoint.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}});}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a2e5fc09243ec41fbe244118dddf5499e}{getPoint}}(std::max(0.0f,\ t));}
+\DoxyCodeLine{00027\ \ \ \ \ Vector3f\ closestPoint(\textcolor{keyword}{const}\ Vector3f\&\ point)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ Vector3f\ toPoint\ =\ point\ -\/\ origin;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ toPoint.dot(direction);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getPoint(std::max(0.0f,\ t));}
 \DoxyCodeLine{00031\ \ \ \ \ \}}
 \DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a7e662d55422ecaa9d1adc3b15fc831ba}{distanceToPoint}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ point)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ closest\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_aa4476ee4ec8c8d755fbc552f651f5a63}{closestPoint}}(point);}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0193d13ee99f4e599514eeb8dcfcac15}{Vector3f::distance}}(point,\ closest);}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ distanceToPoint(\textcolor{keyword}{const}\ Vector3f\&\ point)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ Vector3f\ closest\ =\ closestPoint(point);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3f::distance(point,\ closest);}
 \DoxyCodeLine{00036\ \ \ \ \ \}}
 \DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a967a8bb193d37db5930a9b02e47ba3d9}{intersectPlane}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ planePoint,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ planeNormal,\ \textcolor{keywordtype}{float}\&\ t)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denominator\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}.dot(planeNormal);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{bool}\ intersectPlane(\textcolor{keyword}{const}\ Vector3f\&\ planePoint,\ \textcolor{keyword}{const}\ Vector3f\&\ planeNormal,\ \textcolor{keywordtype}{float}\&\ t)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ denominator\ =\ direction.dot(planeNormal);}
 \DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(denominator)\ <\ 1e-\/6f)\ \{}
 \DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ toPlane\ =\ planePoint\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}};}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ t\ =\ toPlane.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(planeNormal)\ /\ denominator;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ Vector3f\ toPlane\ =\ planePoint\ -\/\ origin;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ t\ =\ toPlane.dot(planeNormal)\ /\ denominator;}
 \DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ >=\ 0.0f;}
 \DoxyCodeLine{00049\ \ \ \ \ \}}
 \DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a9a6a8d3625e6e23c22163b8aedc52741}{intersectSphere}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keywordtype}{float}\&\ t1,\ \textcolor{keywordtype}{float}\&\ t2)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ toCenter\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}\ -\/\ center;}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ intersectSphere(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keywordtype}{float}\&\ t1,\ \textcolor{keywordtype}{float}\&\ t2)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ Vector3f\ toCenter\ =\ origin\ -\/\ center;}
 \DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}.dot(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}});}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ b\ =\ 2.0f\ *\ toCenter.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}});}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ c\ =\ toCenter.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(toCenter)\ -\/\ radius\ *\ radius;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ direction.dot(direction);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ b\ =\ 2.0f\ *\ toCenter.dot(direction);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ c\ =\ toCenter.dot(toCenter)\ -\/\ radius\ *\ radius;}
 \DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ discriminant\ =\ b\ *\ b\ -\/\ 4.0f\ *\ a\ *\ c;}
 \DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ }
@@ -76,48 +76,48 @@
 \DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t2\ >=\ 0.0f;}
 \DoxyCodeLine{00073\ \ \ \ \ \}}
 \DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_aeaab9c29159b295d66a947844ae9f0ae}{intersectTriangle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ v0,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ v1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ v2,\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ intersectTriangle(\textcolor{keyword}{const}\ Vector3f\&\ v0,\ \textcolor{keyword}{const}\ Vector3f\&\ v1,\ \textcolor{keyword}{const}\ Vector3f\&\ v2,\ }
 \DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ t,\ \textcolor{keywordtype}{float}\&\ u,\ \textcolor{keywordtype}{float}\&\ v)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ edge1\ =\ v1\ -\/\ v0;}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ edge2\ =\ v2\ -\/\ v0;}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ h\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}.cross(edge2);}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ edge1.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(h);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ Vector3f\ edge1\ =\ v1\ -\/\ v0;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ Vector3f\ edge2\ =\ v2\ -\/\ v0;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ Vector3f\ h\ =\ direction.cross(edge2);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ edge1.dot(h);}
 \DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(a)\ <\ 1e-\/6f)\ \{}
 \DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ f\ =\ 1.0f\ /\ a;}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ s\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}\ -\/\ v0;}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ u\ =\ f\ *\ s.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(h);}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ Vector3f\ s\ =\ origin\ -\/\ v0;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ u\ =\ f\ *\ s.dot(h);}
 \DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (u\ <\ 0.0f\ ||\ u\ >\ 1.0f)\ \{}
 \DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\ q\ =\ s.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a7acd6c93b3505cd45551bbefed66be88}{cross}}(edge1);}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ v\ =\ f\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}.dot(q);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ Vector3f\ q\ =\ s.cross(edge1);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ v\ =\ f\ *\ direction.dot(q);}
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ <\ 0.0f\ ||\ u\ +\ v\ >\ 1.0f)\ \{}
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ t\ =\ f\ *\ edge2.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f_a0f8e918a22ab978f94302da025122a16}{dot}}(q);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ t\ =\ f\ *\ edge2.dot(q);}
 \DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ >\ 1e-\/6f;}
 \DoxyCodeLine{00104\ \ \ \ \ \}}
 \DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71859f396b155f3015cc663384931594}{Ray}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_abe82d5eb774209a3c137d1a9d569e39c}{transformed}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}}\&\ transform)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00106\ \ \ \ \ Ray\ transformed(\textcolor{keyword}{const}\ Matrix4f\&\ transform)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71859f396b155f3015cc663384931594}{Ray}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71d07c140b7dcdb5a8da895b9407d704}{fromTwoPoints}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ start,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Vector3f}}\&\ end)\ \{}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71859f396b155f3015cc663384931594}{Ray}}(start,\ (end\ -\/\ start).normalized());}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{static}\ Ray\ fromTwoPoints(\textcolor{keyword}{const}\ Vector3f\&\ start,\ \textcolor{keyword}{const}\ Vector3f\&\ end)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Ray(start,\ (end\ -\/\ start).normalized());}
 \DoxyCodeLine{00110\ \ \ \ \ \}}
 \DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a71859f396b155f3015cc663384931594}{Ray}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a67c4f63603dfd79e8f2e9a1348243f22}{screenToWorld}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Vector2f}}\&\ screenPos,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Vector2i}}\&\ screenSize,\ }
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}}\&\ viewMatrix,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Matrix4f}}\&\ projectionMatrix);}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{static}\ Ray\ screenToWorld(\textcolor{keyword}{const}\ Vector2f\&\ screenPos,\ \textcolor{keyword}{const}\ Vector2i\&\ screenSize,\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Matrix4f\&\ viewMatrix,\ \textcolor{keyword}{const}\ Matrix4f\&\ projectionMatrix);}
 \DoxyCodeLine{00114\ }
-\DoxyCodeLine{00115\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_a7bae9c69b55ff5b20c842b337dd250ea}{toString}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Ray(origin:\ "{}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_ab13306ef1b15512b946a8b23a8064c3b}{origin}}.toString()\ +\ \textcolor{stringliteral}{"{},\ direction:\ "{}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray_acae3ec81df048cbdd630cfffa60e9f99}{direction}}.toString()\ +\ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00115\ \ \ \ \ std::string\ toString()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Ray(origin:\ "{}}\ +\ origin.toString()\ +\ \textcolor{stringliteral}{"{},\ direction:\ "{}}\ +\ direction.toString()\ +\ \textcolor{stringliteral}{"{})"{}};}
 \DoxyCodeLine{00117\ \ \ \ \ \}}
 \DoxyCodeLine{00118\ \};}
 \DoxyCodeLine{00119\ }

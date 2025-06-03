@@ -152,6 +152,7 @@ namespace Commands {
     constexpr const char* CLEAR = "clear";
     constexpr const char* STATUS = "status";
     constexpr const char* SETTINGS = "settings";
+    constexpr const char* VALIDATE = "validate";
 }
 
 } // namespace VoxelEditor

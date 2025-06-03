@@ -8,5 +8,6 @@ var searchData=
   ['inputtypes_2ecpp_5',['InputTypes.cpp',['../_input_types_8cpp.html',1,'']]],
   ['inputtypes_2eh_6',['InputTypes.h',['../_input_types_8h.html',1,'']]],
   ['integration_5ftest_2ecpp_7',['integration_test.cpp',['../integration__test_8cpp.html',1,'']]],
-  ['intent_2emd_8',['INTENT.md',['../_i_n_t_e_n_t_8md.html',1,'']]]
+  ['intent_2emd_8',['INTENT.md',['../_i_n_t_e_n_t_8md.html',1,'']]],
+  ['interactive_5fsession_2emd_9',['interactive_session.md',['../interactive__session_8md.html',1,'']]]
 ];

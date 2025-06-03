@@ -1,63 +1,63 @@
 \doxysection{Mesh\+Builder.\+h}
-\hypertarget{_mesh_builder_8h_source}{}\label{_mesh_builder_8h_source}\index{core/surface\_gen/MeshBuilder.h@{core/surface\_gen/MeshBuilder.h}}
+\label{_mesh_builder_8h_source}\index{core/surface\_gen/MeshBuilder.h@{core/surface\_gen/MeshBuilder.h}}
 \mbox{\hyperlink{_mesh_builder_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_surface_types_8h}{SurfaceTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{../../foundation/math/Vector3f.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{../../foundation/math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}SurfaceTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Vector3f.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Vector3i.h"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen}{SurfaceGen}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }SurfaceGen\ \{}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a079b57ad502db77a7677649c8466a4f5}{MeshBuilder}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }MeshBuilder\ \{}
 \DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a079b57ad502db77a7677649c8466a4f5}{MeshBuilder}}();}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a9779d61e8bd9be919ea86fc7969682f7}{\string~MeshBuilder}}();}
+\DoxyCodeLine{00014\ \ \ \ \ MeshBuilder();}
+\DoxyCodeLine{00015\ \ \ \ \ \string~MeshBuilder();}
 \DoxyCodeLine{00016\ \ \ \ \ }
 \DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Start\ building\ a\ new\ mesh}}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_ab4b5245644521d3f1a0f272ade026f6a}{beginMesh}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ beginMesh();}
 \DoxyCodeLine{00019\ \ \ \ \ }
 \DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ Add\ geometry}}
-\DoxyCodeLine{00021\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a3ad8a3240bd448db5b9ab893874fd9e3}{addVertex}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ position);}
-\DoxyCodeLine{00022\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a3ad8a3240bd448db5b9ab893874fd9e3}{addVertex}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ position,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal);}
-\DoxyCodeLine{00023\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a3ad8a3240bd448db5b9ab893874fd9e3}{addVertex}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ position,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\&\ uv);}
+\DoxyCodeLine{00021\ \ \ \ \ uint32\_t\ addVertex(\textcolor{keyword}{const}\ Math::Vector3f\&\ position);}
+\DoxyCodeLine{00022\ \ \ \ \ uint32\_t\ addVertex(\textcolor{keyword}{const}\ Math::Vector3f\&\ position,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ normal);}
+\DoxyCodeLine{00023\ \ \ \ \ uint32\_t\ addVertex(\textcolor{keyword}{const}\ Math::Vector3f\&\ position,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ normal,\ \textcolor{keyword}{const}\ Math::Vector2f\&\ uv);}
 \DoxyCodeLine{00024\ \ \ \ \ }
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_aa775b432fc5604da26d2d69e73c03934}{addTriangle}}(uint32\_t\ v0,\ uint32\_t\ v1,\ uint32\_t\ v2);}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a98743fa31b915663e6ab2bb4d5b94d7d}{addQuad}}(uint32\_t\ v0,\ uint32\_t\ v1,\ uint32\_t\ v2,\ uint32\_t\ v3);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ addTriangle(uint32\_t\ v0,\ uint32\_t\ v1,\ uint32\_t\ v2);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ addQuad(uint32\_t\ v0,\ uint32\_t\ v1,\ uint32\_t\ v2,\ uint32\_t\ v3);}
 \DoxyCodeLine{00027\ \ \ \ \ }
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Set\ current\ material}}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a599c31b06ef16ee89f3a966abdecf37d}{setMaterial}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ material)\ \{\ m\_currentMaterial\ =\ material;\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ setMaterial(MaterialId\ material)\ \{\ m\_currentMaterial\ =\ material;\ \}}
 \DoxyCodeLine{00030\ \ \ \ \ }
 \DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Finalize\ and\ get\ mesh}}
-\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_aaa977e52311b0a1c87314a7375bbb465}{endMesh}}();}
+\DoxyCodeLine{00032\ \ \ \ \ Mesh\ endMesh();}
 \DoxyCodeLine{00033\ \ \ \ \ }
 \DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Mesh\ optimization}}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_ac9bd111bcb0085cc5d01476a3959f13c}{removeDuplicateVertices}}(\textcolor{keywordtype}{float}\ epsilon\ =\ 0.0001f);}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a8c35db5cbdd3fa9ab140b00d0bc1a046}{optimizeVertexCache}}();}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_aa8dbade4f0459505c042bb906d0bedbc}{generateSmoothNormals}}();}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_ad10559609deef5d8203fb22006b5d488}{generateFlatNormals}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ removeDuplicateVertices(\textcolor{keywordtype}{float}\ epsilon\ =\ 0.0001f);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ optimizeVertexCache();}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ generateSmoothNormals();}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ generateFlatNormals();}
 \DoxyCodeLine{00039\ \ \ \ \ }
 \DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//\ UV\ generation}}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a3b7772c58ce0cede3534dd6d70a74d10}{generateBoxUVs}}(\textcolor{keywordtype}{float}\ scale\ =\ 1.0f);}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a44b5ddf94352a64e12c8522c0e719eb0}{generateSphericalUVs}}();}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_acdaf2038f4147a7325e9b5c29dff4129}{generateCylindricalUVs}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ axis\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}(0,\ 1,\ 0));}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ generateBoxUVs(\textcolor{keywordtype}{float}\ scale\ =\ 1.0f);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ generateSphericalUVs();}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ generateCylindricalUVs(\textcolor{keyword}{const}\ Math::Vector3f\&\ axis\ =\ Math::Vector3f(0,\ 1,\ 0));}
 \DoxyCodeLine{00044\ \ \ \ \ }
 \DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Mesh\ operations}}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a05698a5107028be1a44bb9d2bdf4afff}{combineMeshes}}(\textcolor{keyword}{const}\ std::vector<Mesh>\&\ meshes);}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_ac74d5d350c1b059a8a169bb2dc0e854f}{transformMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ transform);}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a984f3a7aa7b1ba6de2cf13398645262e}{smoothMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{int}\ iterations,\ \textcolor{keywordtype}{float}\ factor\ =\ 0.5f);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ combineMeshes(\textcolor{keyword}{const}\ std::vector<Mesh>\&\ meshes);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ transformMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Math::Matrix4f\&\ transform);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ smoothMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{int}\ iterations,\ \textcolor{keywordtype}{float}\ factor\ =\ 0.5f);}
 \DoxyCodeLine{00049\ \ \ \ \ }
 \DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Mesh\ validation}}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh_stats}{MeshStats}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_ac2b1d9f10df980da8744dd78d6f1a01b}{analyzeMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a96bb1bad55f3dacec1bad760333fb5ed}{repairMesh}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ MeshStats\ analyzeMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ repairMesh(Mesh\&\ mesh);}
 \DoxyCodeLine{00053\ \ \ \ \ }
 \DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Get\ current\ state}}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a1226671816172991308b3a2b6cfa872b}{getCurrentVertexCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_vertices.size();\ \}}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_builder_a7a3074c3338b31c94eda643e7a5a3702}{getCurrentTriangleCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_indices.size()\ /\ 3;\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCurrentVertexCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_vertices.size();\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCurrentTriangleCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_indices.size()\ /\ 3;\ \}}
 \DoxyCodeLine{00057\ \ \ \ \ }
 \DoxyCodeLine{00058\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Current\ mesh\ data}}
@@ -65,13 +65,13 @@
 \DoxyCodeLine{00061\ \ \ \ \ std::vector<Math::Vector3f>\ m\_normals;}
 \DoxyCodeLine{00062\ \ \ \ \ std::vector<Math::Vector2f>\ m\_uvCoords;}
 \DoxyCodeLine{00063\ \ \ \ \ std::vector<uint32\_t>\ m\_indices;}
-\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a5890348f6fa1fb7dee73864ea21b6298}{MaterialId}}\ m\_currentMaterial;}
+\DoxyCodeLine{00064\ \ \ \ \ MaterialId\ m\_currentMaterial;}
 \DoxyCodeLine{00065\ \ \ \ \ }
 \DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Vertex\ deduplication}}
 \DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{struct\ }VertexKey\ \{}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ position;}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ normal;}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2f}{Math::Vector2f}}\ uv;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ Math::Vector3f\ position;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ Math::Vector3f\ normal;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ Math::Vector2f\ uv;}
 \DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasNormal;}
 \DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasUV;}
 \DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ }
@@ -83,24 +83,24 @@
 \DoxyCodeLine{00079\ \ \ \ \ }
 \DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
 \DoxyCodeLine{00081\ \ \ \ \ uint32\_t\ findOrAddVertex(\textcolor{keyword}{const}\ VertexKey\&\ key,\ \textcolor{keywordtype}{float}\ epsilon);}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ calculateFaceNormal(uint32\_t\ i0,\ uint32\_t\ i1,\ uint32\_t\ i2,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ normal);}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ calculateFaceNormal(uint32\_t\ i0,\ uint32\_t\ i1,\ uint32\_t\ i2,\ Math::Vector3f\&\ normal);}
 \DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ laplacianSmooth(std::vector<Math::Vector3f>\&\ vertices,\ \textcolor{keyword}{const}\ std::vector<uint32\_t>\&\ indices,\ \textcolor{keywordtype}{float}\ factor);}
 \DoxyCodeLine{00084\ \};}
 \DoxyCodeLine{00085\ }
 \DoxyCodeLine{00086\ \textcolor{comment}{//\ Mesh\ simplification}}
-\DoxyCodeLine{00087\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a9a1568ce3716a2ea3059e551ae64e4c2}{MeshSimplifier}}\ \{}
+\DoxyCodeLine{00087\ \textcolor{keyword}{class\ }MeshSimplifier\ \{}
 \DoxyCodeLine{00088\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a9a1568ce3716a2ea3059e551ae64e4c2}{MeshSimplifier}}();}
-\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a016bbca2e31eff4a189164157024c039}{\string~MeshSimplifier}}();}
+\DoxyCodeLine{00089\ \ \ \ \ MeshSimplifier();}
+\DoxyCodeLine{00090\ \ \ \ \ \string~MeshSimplifier();}
 \DoxyCodeLine{00091\ \ \ \ \ }
 \DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ Simplify\ mesh}}
-\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a308c4990123527e031178f51600a1439}{simplify}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_simplification_settings}{SimplificationSettings}}\&\ settings);}
-\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a22fe91b16cdea7a4e112e47769f403ae}{simplifyToTargetCount}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{size\_t}\ targetTriangles);}
-\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a60af0768d5143264b91c4f060efa1ebe}{simplifyByError}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ maxError);}
+\DoxyCodeLine{00093\ \ \ \ \ Mesh\ simplify(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ SimplificationSettings\&\ settings);}
+\DoxyCodeLine{00094\ \ \ \ \ Mesh\ simplifyToTargetCount(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{size\_t}\ targetTriangles);}
+\DoxyCodeLine{00095\ \ \ \ \ Mesh\ simplifyByError(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ maxError);}
 \DoxyCodeLine{00096\ \ \ \ \ }
 \DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Get\ simplification\ metrics}}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_a85e513904d155c07ab7308f7f45fcb09}{getLastError}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_simplifier_ad7893b2ea451c0fd556506044467ae61}{getCollapsedEdges}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_collapsedEdges;\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{float}\ getLastError()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lastError;\ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCollapsedEdges()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_collapsedEdges;\ \}}
 \DoxyCodeLine{00100\ \ \ \ \ }
 \DoxyCodeLine{00101\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{struct\ }Vertex;}
@@ -113,8 +113,8 @@
 \DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ Quadric();}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ Quadric\ operator+(\textcolor{keyword}{const}\ Quadric\&\ q)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ evaluate(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ v)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ minimize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ evaluate(\textcolor{keyword}{const}\ Math::Vector3f\&\ v)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ Math::Vector3f\ minimize()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00114\ \ \ \ \ \};}
 \DoxyCodeLine{00115\ \ \ \ \ }
 \DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ Internal\ data\ structures}}
@@ -140,33 +140,33 @@
 \DoxyCodeLine{00136\ \};}
 \DoxyCodeLine{00137\ }
 \DoxyCodeLine{00138\ \textcolor{comment}{//\ Mesh\ utilities}}
-\DoxyCodeLine{00139\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils}{MeshUtils}}\ \{}
+\DoxyCodeLine{00139\ \textcolor{keyword}{class\ }MeshUtils\ \{}
 \DoxyCodeLine{00140\ \textcolor{keyword}{public}:}
 \DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Mesh\ analysis}}
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a59088c2359424a71c5b32537ab0e7373}{isManifold}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a0991c0dca668b574f5dd1a98bd10a8a1}{isWatertight}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a4dd47ce92b3315ac27526b5c29bd21b5}{calculateVolume}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a8b105041ed1337e0e4ee1a5c8e385ac5}{calculateSurfaceArea}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isManifold(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isWatertight(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ calculateVolume(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ calculateSurfaceArea(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
 \DoxyCodeLine{00146\ \ \ \ \ }
 \DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Mesh\ repair}}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_af4af786805ec978f7f836460585d193f}{flipNormals}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a3294b77d2ec276b4983e4c9de4c1503e}{removeDegenerateTriangles}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ epsilon\ =\ 0.0001f);}
-\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a85fdb0d0f01c3b89276fb6bd934b91d5}{fillHoles}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a54e58568130ca0b931ed819a8fecc6e3}{makeWatertight}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ flipNormals(Mesh\&\ mesh);}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ removeDegenerateTriangles(Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ epsilon\ =\ 0.0001f);}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ fillHoles(Mesh\&\ mesh);}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ makeWatertight(Mesh\&\ mesh);}
 \DoxyCodeLine{00152\ \ \ \ \ }
 \DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ Mesh\ conversion}}
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_adb0011542bf68bbe8d6d5a2c5bf6ee24}{quadToTriangleMesh}}(\textcolor{keyword}{const}\ std::vector<QuadFace>\&\ quads,\ \textcolor{keyword}{const}\ std::vector<Math::Vector3f>\&\ vertices);}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<QuadFace>\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a6f22226c66cc7e97c1126db8d6a9507b}{triangleToQuadMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ quadToTriangleMesh(\textcolor{keyword}{const}\ std::vector<QuadFace>\&\ quads,\ \textcolor{keyword}{const}\ std::vector<Math::Vector3f>\&\ vertices);}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<QuadFace>\ triangleToQuadMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
 \DoxyCodeLine{00156\ \ \ \ \ }
 \DoxyCodeLine{00157\ \ \ \ \ \textcolor{comment}{//\ Mesh\ operations}}
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a97f413019fc1320f553d55de1e207a20}{subdivide}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{int}\ levels\ =\ 1);}
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ab687a2af603d162007c0182bd58e21fc}{decimate}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ ratio);}
-\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a75499cfdb4bccbfb78ffc9fc88e6af5c}{remesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ targetEdgeLength);}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ subdivide(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{int}\ levels\ =\ 1);}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ decimate(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ ratio);}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{static}\ Mesh\ remesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ targetEdgeLength);}
 \DoxyCodeLine{00161\ \ \ \ \ }
 \DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ Export\ helpers}}
-\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_a51887826f28f92fc6d9b5ae5faf9dba5}{centerMesh}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae45c800f17ed28c148a23dd98c76b876}{scaleMesh}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ scale);}
-\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_utils_ae82b4091c1c768dde7b39a049bce73d9}{translateMesh}}(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ translation);}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ centerMesh(Mesh\&\ mesh);}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ scaleMesh(Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ scale);}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ translateMesh(Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ translation);}
 \DoxyCodeLine{00166\ \};}
 \DoxyCodeLine{00167\ }
 \DoxyCodeLine{00168\ \}}

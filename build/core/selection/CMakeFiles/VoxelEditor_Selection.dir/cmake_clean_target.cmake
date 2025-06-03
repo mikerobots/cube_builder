@@ -1,3 +1,3 @@
 file(REMOVE_RECURSE
-  "libVoxelEditor_Selection.a"
+  "../../lib/libVoxelEditor_Selection.a"
 )

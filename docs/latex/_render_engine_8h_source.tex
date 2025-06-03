@@ -1,130 +1,130 @@
 \doxysection{Render\+Engine.\+h}
-\hypertarget{_render_engine_8h_source}{}\label{_render_engine_8h_source}\index{core/rendering/RenderEngine.h@{core/rendering/RenderEngine.h}}
+\label{_render_engine_8h_source}\index{core/rendering/RenderEngine.h@{core/rendering/RenderEngine.h}}
 \mbox{\hyperlink{_render_engine_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{RenderTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_config_8h}{RenderConfig.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_stats_8h}{RenderStats.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_dispatcher_8h}{../../foundation/events/EventDispatcher.h}}"{}}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_camera_8h}{../camera/Camera.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}RenderTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}RenderConfig.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}RenderStats.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/EventDispatcher.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}../camera/Camera.h"{}}}
 \DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{comment}{//\ Forward\ declarations}}
-\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data}{VoxelData}}\ \{}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelGrid}};}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelResolution}}\ :\ uint8\_t;}
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }VoxelData\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }VoxelGrid;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{enum\ class}\ VoxelResolution\ :\ uint8\_t;}
 \DoxyCodeLine{00017\ \}}
 \DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Rendering}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }Rendering\ \{}
 \DoxyCodeLine{00020\ }
 \DoxyCodeLine{00021\ \textcolor{comment}{//\ Forward\ declarations}}
-\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_open_g_l_renderer}{OpenGLRenderer}};}
-\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_shader_manager}{ShaderManager}};}
-\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state}{RenderState}};}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }OpenGLRenderer;}
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }ShaderManager;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }RenderState;}
 \DoxyCodeLine{00025\ \textcolor{keyword}{class\ }FrameBuffer;}
 \DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }RenderEngine\ \{}
 \DoxyCodeLine{00028\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a81946c17071d1f372a36efb578220f9b}{\string~RenderEngine}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ RenderEngine(Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00030\ \ \ \ \ \string~RenderEngine();}
 \DoxyCodeLine{00031\ \ \ \ \ }
 \DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Disable\ copy/move\ for\ singleton-\/like\ behavior}}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a1afea9d712ffc846888dfc0b042a74e6}{RenderEngine}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aa4180fafae932b7a6017b3fe982ce739}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a1dabd3c9c90f1982c88a295c5d956182}{RenderEngine}}(\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\&\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aa2cc1b6db39b1b3f9d601d4a4a5d6309}{operator=}}(\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb579addc5c89aca0736cb87a8cbcd92}{RenderEngine}}\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00033\ \ \ \ \ RenderEngine(\textcolor{keyword}{const}\ RenderEngine\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00034\ \ \ \ \ RenderEngine\&\ operator=(\textcolor{keyword}{const}\ RenderEngine\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00035\ \ \ \ \ RenderEngine(RenderEngine\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00036\ \ \ \ \ RenderEngine\&\ operator=(RenderEngine\&\&)\ =\ \textcolor{keyword}{delete};}
 \DoxyCodeLine{00037\ \ \ \ \ }
 \DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Initialization\ and\ lifecycle}}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_ad3b7086a974fceeee103eb30dcabdc4c}{initialize}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{RenderConfig}}\&\ config);}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a4e3a9a435642fc75e73a3bf3c05a6940}{shutdown}}();}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a26f3793cdb778505b283ca0bb2a3e1b1}{isInitialized}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_initialized;\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ initialize(\textcolor{keyword}{const}\ RenderConfig\&\ config);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ shutdown();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ isInitialized()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_initialized;\ \}}
 \DoxyCodeLine{00042\ \ \ \ \ }
 \DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{RenderConfig}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aa6b0ddd1f47ee836efd63a6667f7698e}{getConfig}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_config;\ \}}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_abbeacdc44bf91d7afdbfd50aa1fdc877}{updateConfig}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{RenderConfig}}\&\ config);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ RenderConfig\&\ getConfig()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_config;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ updateConfig(\textcolor{keyword}{const}\ RenderConfig\&\ config);}
 \DoxyCodeLine{00046\ \ \ \ \ }
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Frame\ rendering}}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a155f60577232c0046ea22fbc1689059f}{beginFrame}}();}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a580b80edc66c6f4bd6d39771a9669aa7}{endFrame}}();}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a68cc30f6497ad542e47c4913b7a688f3}{present}}();}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a318f68f2beda4c2802224d294f6906c1}{clear}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23}{ClearFlags}}\ flags\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a860e109fb82da83db12ecf227bf03e23ab1c94ca2fbc3e78fc30069c8d0f01680}{ClearFlags::All}},\ }
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\&\ color\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_a38ef9e5913032f706487901808153507}{Color::Black}}(),\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ beginFrame();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ endFrame();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ present();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ clear(ClearFlags\ flags\ =\ ClearFlags::All,\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Color\&\ color\ =\ Color::Black(),\ }
 \DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ depth\ =\ 1.0f,\ }
 \DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ stencil\ =\ 0);}
 \DoxyCodeLine{00055\ \ \ \ \ }
 \DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Basic\ rendering}}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aca05831e227bcea0b3d520def28d2b53}{renderMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_transform}{Transform}}\&\ transform,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\&\ material);}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a27479fb1e0f4a0651b84b209a4e19c61}{renderMeshInstanced}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ std::vector<Transform>\&\ transforms,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\&\ material);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ renderMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform,\ \textcolor{keyword}{const}\ Material\&\ material);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ renderMeshInstanced(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ std::vector<Transform>\&\ transforms,\ \textcolor{keyword}{const}\ Material\&\ material);}
 \DoxyCodeLine{00059\ \ \ \ \ }
 \DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Voxel\ rendering}}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_ae1f883ff453d5497fecbf33df9ea523a}{renderVoxels}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,\ }
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}}\&\ settings);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ renderVoxels(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ RenderSettings\&\ settings);}
 \DoxyCodeLine{00064\ \ \ \ \ }
 \DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Render\ modes\ and\ settings}}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_abe3d4f6e8fc09b70a0a1b431bbd7c032}{setRenderMode}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ mode);}
-\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a861f55fcaa242d35488641889cf0406b}{getRenderMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSettings.renderMode;\ \}}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_ae2afe66d19cf885c8a84891d834f39a0}{setRenderSettings}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}}\&\ settings);}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a94e21e48508c3f5b7c062875d1e4b36a}{getRenderSettings}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSettings;\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ setRenderMode(RenderMode\ mode);}
+\DoxyCodeLine{00067\ \ \ \ \ RenderMode\ getRenderMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSettings.renderMode;\ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ setRenderSettings(\textcolor{keyword}{const}\ RenderSettings\&\ settings);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{const}\ RenderSettings\&\ getRenderSettings()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSettings;\ \}}
 \DoxyCodeLine{00070\ \ \ \ \ }
 \DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Viewport\ and\ camera}}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a0c01c1799497416491c2fb6c039b48d3}{setViewport}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_abb894c068c9441f790d7f5a540b58ff3}{setCamera}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera::Camera}}\&\ camera);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ setViewport(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ setCamera(\textcolor{keyword}{const}\ Camera::Camera\&\ camera);}
 \DoxyCodeLine{00074\ \ \ \ \ }
 \DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Render\ targets\ and\ framebuffers}}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a7f6b5a50e966de4c7e598afc245b8cc1}{setRenderTarget}}(FrameBuffer*\ target);}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a879b0096ea0a4ab6e5e7a641bf85aa88}{setDefaultRenderTarget}}();}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ setRenderTarget(FrameBuffer*\ target);}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ setDefaultRenderTarget();}
 \DoxyCodeLine{00078\ \ \ \ \ }
 \DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Resource\ management}}
-\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aca1c32ba322416339fbbdbf28e24fc38}{createVertexBuffer}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{BufferUsage}}\ usage\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{BufferUsage::Static}});}
-\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aeb957f746ced823e672effd0123fd495}{createIndexBuffer}}(\textcolor{keyword}{const}\ uint32\_t*\ indices,\ \textcolor{keywordtype}{size\_t}\ count,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869ee}{BufferUsage}}\ usage\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ab1326f76d8f047a99484481bdc4869eea84a8921b25f505d0d2077aeb5db4bc16}{BufferUsage::Static}});}
-\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{VertexArrayId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a79622bfaa884251269ea78b37965c1dc}{createVertexArray}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_vertex_layout}{VertexLayout}}\&\ layout);}
-\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{TextureId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a914dc0632af66aeced1e04f55a07b75b}{createTexture}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_aac037363687e867ac5d3886a7f7bd7b2}{TextureFormat}}\ format,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aa38b7728a0e117773a6c5dc6164d5ae8}{updateBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a86689d6a693adafcf60b715bf594cbad}{updateVertexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633}{VertexBufferId}}\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a3a14144b043b1dfbdd2c58f50d807df0}{updateIndexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0}{IndexBufferId}}\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a9b1220e9ac0b598767afe4375036af3a}{updateTexture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{TextureId}}\ textureId,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data);}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a2da0af8fe3236695ce61a0db393c1f7d}{deleteBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ bufferId);}
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acb69c5492cede04b871ad03d93e4a364}{deleteVertexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633}{VertexBufferId}}\ bufferId);}
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a327a9470360b82e44c18617bfaa3bcd2}{deleteIndexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0}{IndexBufferId}}\ bufferId);}
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_ac370b03a93c613e7a72794aa4402f3e4}{deleteVertexArray}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{VertexArrayId}}\ vaoId);}
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_acd1e381673356e9441e9fbe39329a382}{deleteTexture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{TextureId}}\ textureId);}
+\DoxyCodeLine{00080\ \ \ \ \ BufferId\ createVertexBuffer(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ BufferUsage\ usage\ =\ BufferUsage::Static);}
+\DoxyCodeLine{00081\ \ \ \ \ BufferId\ createIndexBuffer(\textcolor{keyword}{const}\ uint32\_t*\ indices,\ \textcolor{keywordtype}{size\_t}\ count,\ BufferUsage\ usage\ =\ BufferUsage::Static);}
+\DoxyCodeLine{00082\ \ \ \ \ VertexArrayId\ createVertexArray(\textcolor{keyword}{const}\ VertexLayout\&\ layout);}
+\DoxyCodeLine{00083\ \ \ \ \ TextureId\ createTexture(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ TextureFormat\ format,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ updateBuffer(BufferId\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ updateVertexBuffer(VertexBufferId\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ updateIndexBuffer(IndexBufferId\ bufferId,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ updateTexture(TextureId\ textureId,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data);}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteBuffer(BufferId\ bufferId);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteVertexBuffer(VertexBufferId\ bufferId);}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteIndexBuffer(IndexBufferId\ bufferId);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteVertexArray(VertexArrayId\ vaoId);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteTexture(TextureId\ textureId);}
 \DoxyCodeLine{00093\ \ \ \ \ }
 \DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Binding\ operations}}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a32248a67e3371f4617896d0602b6ac05}{bindVertexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{VertexArrayId}}\ vaoId,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0109dc4e1f68b25a2375791fb715a633}{VertexBufferId}}\ vboId,\ \textcolor{keywordtype}{int}\ bindingIndex);}
-\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a0b13a19970447b568b1bd4af4e7b303e}{bindIndexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{VertexArrayId}}\ vaoId,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a0b988c6bd5b7b4ba20efae3b07716bb0}{IndexBufferId}}\ iboId);}
-\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_af6f41f4958f7e1104e294a81ffb8bf48}{setVertexArray}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6140e3793c71f93df21d17d0d5d492af}{VertexArrayId}}\ vaoId);}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ bindVertexBuffer(VertexArrayId\ vaoId,\ VertexBufferId\ vboId,\ \textcolor{keywordtype}{int}\ bindingIndex);}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ bindIndexBuffer(VertexArrayId\ vaoId,\ IndexBufferId\ iboId);}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ setVertexArray(VertexArrayId\ vaoId);}
 \DoxyCodeLine{00098\ \ \ \ \ }
 \DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Drawing\ operations}}
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a780f189e327ec566db28ef93529e353c}{drawIndexed}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{PrimitiveType}}\ primitive,\ \textcolor{keywordtype}{size\_t}\ indexCount,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a809ef71dcccaf570c68a43dbebd57317}{IndexType}}\ indexType,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a346209763e2d120f8d34c2f42e3bef6f}{drawArrays}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ac354139c5d35f830b7050fcc3f600299}{PrimitiveType}}\ primitive,\ \textcolor{keywordtype}{size\_t}\ vertexCount,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ drawIndexed(PrimitiveType\ primitive,\ \textcolor{keywordtype}{size\_t}\ indexCount,\ IndexType\ indexType,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ drawArrays(PrimitiveType\ primitive,\ \textcolor{keywordtype}{size\_t}\ vertexCount,\ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0);}
 \DoxyCodeLine{00102\ \ \ \ \ }
 \DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ State\ management}}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_afa206ab9f4d789f737826dcb40794afc}{setBlendMode}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ mode);}
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a76e99edb6fbd09443f6869893e248c65}{setDepthWrite}}(\textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_ace8a01ab3fd7403babbf710a21bc65a0}{setCullMode}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ mode);}
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a79664eb301699e9873cff5e12241389a}{setDepthTest}}(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ setBlendMode(BlendMode\ mode);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ setDepthWrite(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ setCullMode(CullMode\ mode);}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ setDepthTest(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{00108\ \ \ \ \ }
 \DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Shader\ management}}
-\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a26de1cda0ba16b3142a8fe44407a62df}{getBuiltinShader}}(\textcolor{keyword}{const}\ std::string\&\ name);}
-\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a78174f38051d592a607e6148c469cb6e}{loadShader}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ vertexPath,\ \textcolor{keyword}{const}\ std::string\&\ fragmentPath);}
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a1c2a88a5649e0c79b258d615be0afe5a}{reloadShaders}}();}
+\DoxyCodeLine{00110\ \ \ \ \ ShaderId\ getBuiltinShader(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00111\ \ \ \ \ ShaderId\ loadShader(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ vertexPath,\ \textcolor{keyword}{const}\ std::string\&\ fragmentPath);}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ reloadShaders();}
 \DoxyCodeLine{00113\ \ \ \ \ }
 \DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Debug\ and\ profiling}}
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a4c83c24ada35bda62093b64d5e954f2f}{setDebugMode}}(\textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a42913bd1ea214b9fd90c76b4b01e96b5}{isDebugMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_debugMode;\ \}}
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_stats}{RenderStats}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_aef71d58bbb28eaea43be5bef3938a1d7}{getRenderStats}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stats;\ \}}
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a09ccc9161c9641a1ef6f1dcdee9327e9}{captureFrame}}(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ setDebugMode(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDebugMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_debugMode;\ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{const}\ RenderStats\&\ getRenderStats()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stats;\ \}}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ captureFrame(\textcolor{keyword}{const}\ std::string\&\ filename);}
 \DoxyCodeLine{00119\ \ \ \ \ }
 \DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ Utility\ functions}}
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a91511ddda576af7889150952798c77de}{setupMeshBuffers}}(\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_a2118f358265b55018e9494be693d4cc9}{uploadMeshData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh);}
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_engine_abe37133b5570729978e02854101c0e71}{cleanupMeshBuffers}}(\mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ setupMeshBuffers(Mesh\&\ mesh);}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{void}\ uploadMeshData(\textcolor{keyword}{const}\ Mesh\&\ mesh);}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ cleanupMeshBuffers(Mesh\&\ mesh);}
 \DoxyCodeLine{00124\ \ \ \ \ }
 \DoxyCodeLine{00125\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Core\ components}}
@@ -135,31 +135,31 @@
 \DoxyCodeLine{00131\ \ \ \ \ FrameBuffer*\ m\_currentRenderTarget;}
 \DoxyCodeLine{00132\ \ \ \ \ }
 \DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//\ Configuration\ and\ state}}
-\DoxyCodeLine{00134\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_config}{RenderConfig}}\ m\_config;}
-\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}}\ m\_currentSettings;}
-\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_stats}{RenderStats}}\ m\_stats;}
-\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_timer}{RenderTimer}}\ m\_frameTimer;}
+\DoxyCodeLine{00134\ \ \ \ \ RenderConfig\ m\_config;}
+\DoxyCodeLine{00135\ \ \ \ \ RenderSettings\ m\_currentSettings;}
+\DoxyCodeLine{00136\ \ \ \ \ RenderStats\ m\_stats;}
+\DoxyCodeLine{00137\ \ \ \ \ RenderTimer\ m\_frameTimer;}
 \DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_initialized;}
 \DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_debugMode;}
 \DoxyCodeLine{00140\ \ \ \ \ }
 \DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Camera\ state}}
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera::Camera}}*\ m\_currentCamera;}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{const}\ Camera::Camera*\ m\_currentCamera;}
 \DoxyCodeLine{00143\ \ \ \ \ }
 \DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ Event\ system}}
-\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ m\_eventDispatcher;}
+\DoxyCodeLine{00145\ \ \ \ \ Events::EventDispatcher*\ m\_eventDispatcher;}
 \DoxyCodeLine{00146\ \ \ \ \ }
 \DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Internal\ rendering\ methods}}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ renderMeshInternal(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_transform}{Transform}}\&\ transform,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\&\ material);}
-\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ setupRenderState(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\&\ material);}
-\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{void}\ bindMaterial(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\&\ material);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ renderMeshInternal(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform,\ \textcolor{keyword}{const}\ Material\&\ material);}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{void}\ setupRenderState(\textcolor{keyword}{const}\ Material\&\ material);}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{void}\ bindMaterial(\textcolor{keyword}{const}\ Material\&\ material);}
 \DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePerFrameUniforms();}
 \DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ updateStats();}
 \DoxyCodeLine{00153\ \ \ \ \ }
 \DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Voxel\ rendering\ helpers}}
-\DoxyCodeLine{00155\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\ generateVoxelMesh(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}}\&\ settings);}
-\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_material}{Material}}\ createVoxelMaterial(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_render_settings}{RenderSettings}}\&\ settings);}
+\DoxyCodeLine{00155\ \ \ \ \ Mesh\ generateVoxelMesh(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ RenderSettings\&\ settings);}
+\DoxyCodeLine{00158\ \ \ \ \ Material\ createVoxelMaterial(VoxelData::VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings);}
 \DoxyCodeLine{00159\ \ \ \ \ }
 \DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//\ Built-\/in\ shader\ loading}}
 \DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{void}\ loadBuiltinShaders();}
@@ -170,9 +170,9 @@
 \DoxyCodeLine{00166\ \ \ \ \ }
 \DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Debug\ rendering}}
 \DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{void}\ renderDebugInfo();}
-\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{void}\ renderWireframeOverlay(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_transform}{Transform}}\&\ transform);}
-\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{void}\ renderNormals(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_transform}{Transform}}\&\ transform);}
-\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{void}\ renderBounds(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_transform}{Transform}}\&\ transform);}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{void}\ renderWireframeOverlay(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform);}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{void}\ renderNormals(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform);}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{void}\ renderBounds(\textcolor{keyword}{const}\ Transform\&\ transform);}
 \DoxyCodeLine{00172\ \};}
 \DoxyCodeLine{00173\ }
 \DoxyCodeLine{00174\ \}}

@@ -1,61 +1,61 @@
 \doxysection{Render\+State.\+h}
-\hypertarget{_render_state_8h_source}{}\label{_render_state_8h_source}\index{core/rendering/RenderState.h@{core/rendering/RenderState.h}}
+\label{_render_state_8h_source}\index{core/rendering/RenderState.h@{core/rendering/RenderState.h}}
 \mbox{\hyperlink{_render_state_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{RenderTypes.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}RenderTypes.h"{}}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <array>}}
 \DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering}{Rendering}}\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Rendering\ \{}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a9c31141dc656481626e6c02929a170a8}{RenderState}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }RenderState\ \{}
 \DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a9c31141dc656481626e6c02929a170a8}{RenderState}}();}
-\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a05f9cb94346ece783523b808d151becf}{\string~RenderState}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00011\ \ \ \ \ RenderState();}
+\DoxyCodeLine{00012\ \ \ \ \ \string~RenderState()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00013\ \ \ \ \ }
 \DoxyCodeLine{00014\ \ \ \ \ \textcolor{comment}{//\ State\ management}}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a849905ce7544f6a456def6a53b7c653c}{setDepthTest}}(\textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a28f29f1662cc749138b7c53997605258}{setDepthWrite}}(\textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_abf90d6457eebe4c40a02715b578c3af0}{setBlending}}(\textcolor{keywordtype}{bool}\ enabled,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ mode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceea6132295fcf5570fb8b0a944ef322a598}{BlendMode::Alpha}});}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_abff77fcd7a16008f40ccdc6ddeabbc32}{setCulling}}(\textcolor{keywordtype}{bool}\ enabled,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ mode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{CullMode::Back}});}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_ae862e37ca513eff28c50982aeb3cacbf}{setPolygonMode}}(\textcolor{keywordtype}{bool}\ wireframe);}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_aa268d7c7dbeb77b466fdac16b69237fa}{setLineWidth}}(\textcolor{keywordtype}{float}\ width);}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_acd490bac927ff9fb5b684d85b47bed1e}{setPointSize}}(\textcolor{keywordtype}{float}\ size);}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ setDepthTest(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ setDepthWrite(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ setBlending(\textcolor{keywordtype}{bool}\ enabled,\ BlendMode\ mode\ =\ BlendMode::Alpha);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ setCulling(\textcolor{keywordtype}{bool}\ enabled,\ CullMode\ mode\ =\ CullMode::Back);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ setPolygonMode(\textcolor{keywordtype}{bool}\ wireframe);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ setLineWidth(\textcolor{keywordtype}{float}\ width);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ setPointSize(\textcolor{keywordtype}{float}\ size);}
 \DoxyCodeLine{00022\ \ \ \ \ }
 \DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Texture\ and\ shader\ binding}}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a3a6c057451b0d695b318a31e484e48f7}{bindShader}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id});}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a726311a5cd7538beca8a727b85f0f3a8}{bindTexture}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{TextureId}}\ textureId,\ \textcolor{keywordtype}{int}\ slot);}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_aaea801f5f534421677d7596c63f1a83c}{bindVertexArray}}(uint32\_t\ vaoId);}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a9db0d22b2e0594f97e9a3c4552064d45}{bindVertexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ bufferId);}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a86165c9de071459918f05bdfa213466c}{bindIndexBuffer}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ bufferId);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ bindShader(ShaderId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ bindTexture(TextureId\ textureId,\ \textcolor{keywordtype}{int}\ slot);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ bindVertexArray(uint32\_t\ vaoId);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ bindVertexBuffer(BufferId\ bufferId);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ bindIndexBuffer(BufferId\ bufferId);}
 \DoxyCodeLine{00029\ \ \ \ \ }
 \DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Viewport\ state}}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a96cd757f88703f17a00bd5a60be9b660}{setViewport}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ setViewport(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
 \DoxyCodeLine{00032\ \ \ \ \ }
 \DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Clear\ state}}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a8c2c56f7dc8ecc4675d092e6c1f8c354}{setClearColor}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Color}}\&\ color);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ setClearColor(\textcolor{keyword}{const}\ Color\&\ color);}
 \DoxyCodeLine{00035\ \ \ \ \ }
 \DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ State\ forcing\ and\ flushing}}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a6c5d6158343ac1f73f8f6b47fb04c005}{forceStateChange}}();\ \textcolor{comment}{//\ Forces\ next\ state\ change\ to\ apply}}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a22dd2cc1914426bd6fcb3524ceb614d9}{flush}}();\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ all\ pending\ state\ changes}}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_ac49daa23d9e50cd3c688db1abb58afcd}{reset}}();\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reset\ to\ default\ state}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ forceStateChange();\ \textcolor{comment}{//\ Forces\ next\ state\ change\ to\ apply}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ flush();\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ all\ pending\ state\ changes}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ reset();\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reset\ to\ default\ state}}
 \DoxyCodeLine{00040\ \ \ \ \ }
 \DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
-\DoxyCodeLine{00042\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a23228f37fa166ce65f93ef2ece8fc37d}{getStateChanges}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stateChanges;\ \}}
-\DoxyCodeLine{00043\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_aa777e596660ddc7529403763057bb91d}{getShaderSwitches}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_shaderSwitches;\ \}}
-\DoxyCodeLine{00044\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a60a65dd623f8fd9d584df7e3d8c398cc}{getTextureBinds}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_textureBinds;\ \}}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_ae8bd472c5b8420d91a02dbdf377e82ce}{resetStatistics}}();}
+\DoxyCodeLine{00042\ \ \ \ \ uint32\_t\ getStateChanges()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_stateChanges;\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ uint32\_t\ getShaderSwitches()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_shaderSwitches;\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ uint32\_t\ getTextureBinds()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_textureBinds;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ resetStatistics();}
 \DoxyCodeLine{00046\ \ \ \ \ }
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ State\ queries}}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a83fbcfcc0c248adba9553ea08c8cb0d5}{isDepthTestEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.depthTest;\ \}}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a2d436b6321ddce0612f2e3ebd2c96c2c}{isDepthWriteEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.depthWrite;\ \}}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a7b694b2bbb9d38a4533800a4fbf31ace}{isBlendingEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.blending;\ \}}
-\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a2a8ca9f060be283b811577fbf9191a1b}{getBlendMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.blendMode;\ \}}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a0f73f4998bc2288633ec741b435d657e}{isCullingEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.culling;\ \}}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a29cb598fee756e6248f479a3e8c355e1}{getCullMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.cullMode;\ \}}
-\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a24cfcdcd308eb197fb7306c329e92807}{getBoundShader}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.boundShader;\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDepthTestEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.depthTest;\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDepthWriteEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.depthWrite;\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ isBlendingEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.blending;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ BlendMode\ getBlendMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.blendMode;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCullingEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.culling;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ CullMode\ getCullMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.cullMode;\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ ShaderId\ getBoundShader()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_current.boundShader;\ \}}
 \DoxyCodeLine{00055\ \ \ \ \ }
 \DoxyCodeLine{00056\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{struct\ }StateBlock\ \{}
@@ -65,11 +65,11 @@
 \DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Blending\ state}}
 \DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ blending\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ blendMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187ceeafaa90538de35640e4b1e31ccf35b6eb5}{BlendMode::Opaque}};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ BlendMode\ blendMode\ =\ BlendMode::Opaque;}
 \DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Culling\ state}}
 \DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ culling\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ cullMode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dda0557fa923dcee4d0f86b1409f5c2167f}{CullMode::Back}};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ CullMode\ cullMode\ =\ CullMode::Back;}
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Polygon\ state}}
 \DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wireframe\ =\ \textcolor{keyword}{false};}
@@ -77,11 +77,11 @@
 \DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pointSize\ =\ 1.0f;}
 \DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bound\ resources}}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ boundShader\ =\ 0;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ ShaderId\ boundShader\ =\ 0;}
 \DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ std::array<TextureId,\ 16>\ boundTextures\ =\ \{\};\ \textcolor{comment}{//\ Support\ up\ to\ 16\ texture\ units}}
 \DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ uint32\_t\ boundVertexArray\ =\ 0;}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ boundVertexBuffer\ =\ 0;}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ boundIndexBuffer\ =\ 0;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ BufferId\ boundVertexBuffer\ =\ 0;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ BufferId\ boundIndexBuffer\ =\ 0;}
 \DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Viewport\ state}}
 \DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ viewportX\ =\ 0;}
@@ -90,7 +90,7 @@
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ viewportHeight\ =\ 0;}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ state}}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ clearColor\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color_a38ef9e5913032f706487901808153507}{Color::Black}}();}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ Color\ clearColor\ =\ Color::Black();}
 \DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ StateBlock\&\ other)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ depthTest\ ==\ other.depthTest\ \&\&}
@@ -158,35 +158,35 @@
 \DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ OpenGL\ state\ application}}
 \DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ applyDepthTestGL(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{void}\ applyDepthWriteGL(\textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ applyBlendingGL(\textcolor{keywordtype}{bool}\ enabled,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ mode);}
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ applyCullingGL(\textcolor{keywordtype}{bool}\ enabled,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ mode);}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ applyBlendingGL(\textcolor{keywordtype}{bool}\ enabled,\ BlendMode\ mode);}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ applyCullingGL(\textcolor{keywordtype}{bool}\ enabled,\ CullMode\ mode);}
 \DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ applyPolygonModeGL(\textcolor{keywordtype}{bool}\ wireframe);}
 \DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{void}\ applyLineWidthGL(\textcolor{keywordtype}{float}\ width);}
 \DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{void}\ applyPointSizeGL(\textcolor{keywordtype}{float}\ size);}
-\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ applyShaderGL(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ \textcolor{keywordtype}{id});}
-\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{void}\ applyTextureGL(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4016fe1028f0ef1927236c70eb64361a}{TextureId}}\ textureId,\ \textcolor{keywordtype}{int}\ slot);}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ applyShaderGL(ShaderId\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{void}\ applyTextureGL(TextureId\ textureId,\ \textcolor{keywordtype}{int}\ slot);}
 \DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{void}\ applyVertexArrayGL(uint32\_t\ vaoId);}
-\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ applyVertexBufferGL(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ bufferId);}
-\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{void}\ applyIndexBufferGL(\mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a698dc2e784d52f98c4d254fa2f79dadf}{BufferId}}\ bufferId);}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ applyVertexBufferGL(BufferId\ bufferId);}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{void}\ applyIndexBufferGL(BufferId\ bufferId);}
 \DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{void}\ applyViewportGL(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
-\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{void}\ applyClearColorGL(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\&\ color);}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{void}\ applyClearColorGL(\textcolor{keyword}{const}\ Color\&\ color);}
 \DoxyCodeLine{00169\ \};}
 \DoxyCodeLine{00170\ }
 \DoxyCodeLine{00171\ \textcolor{comment}{//\ RAII\ helper\ for\ temporary\ state\ changes}}
-\DoxyCodeLine{00172\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_scoped_render_state_acd12240f067e02ec21f64859f4a83981}{ScopedRenderState}}\ \{}
+\DoxyCodeLine{00172\ \textcolor{keyword}{class\ }ScopedRenderState\ \{}
 \DoxyCodeLine{00173\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_scoped_render_state_acd12240f067e02ec21f64859f4a83981}{ScopedRenderState}}(\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state}{RenderState}}\&\ state)\ :\ m\_state(state)\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{explicit}\ ScopedRenderState(RenderState\&\ state)\ :\ m\_state(state)\ \{}
 \DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Save\ current\ state}}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ m\_savedDepthTest\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a83fbcfcc0c248adba9553ea08c8cb0d5}{isDepthTestEnabled}}();}
-\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ m\_savedDepthWrite\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a2d436b6321ddce0612f2e3ebd2c96c2c}{isDepthWriteEnabled}}();}
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ m\_savedBlending\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a7b694b2bbb9d38a4533800a4fbf31ace}{isBlendingEnabled}}();}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ m\_savedBlendMode\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a2a8ca9f060be283b811577fbf9191a1b}{getBlendMode}}();}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ m\_savedCulling\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a0f73f4998bc2288633ec741b435d657e}{isCullingEnabled}}();}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ m\_savedCullMode\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a29cb598fee756e6248f479a3e8c355e1}{getCullMode}}();}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ m\_savedShader\ =\ state.\mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state_a24cfcdcd308eb197fb7306c329e92807}{getBoundShader}}();}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ m\_savedDepthTest\ =\ state.isDepthTestEnabled();}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ m\_savedDepthWrite\ =\ state.isDepthWriteEnabled();}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ m\_savedBlending\ =\ state.isBlendingEnabled();}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ m\_savedBlendMode\ =\ state.getBlendMode();}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ m\_savedCulling\ =\ state.isCullingEnabled();}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ m\_savedCullMode\ =\ state.getCullMode();}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ m\_savedShader\ =\ state.getBoundShader();}
 \DoxyCodeLine{00183\ \ \ \ \ \}}
 \DoxyCodeLine{00184\ \ \ \ \ }
-\DoxyCodeLine{00185\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_scoped_render_state_a1c2a45dfec629ffaec3b016eb87b3962}{\string~ScopedRenderState}}()\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \string~ScopedRenderState()\ \{}
 \DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Restore\ saved\ state}}
 \DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ m\_state.setDepthTest(m\_savedDepthTest);}
 \DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ m\_state.setDepthWrite(m\_savedDepthWrite);}
@@ -197,14 +197,14 @@
 \DoxyCodeLine{00193\ \ \ \ \ \}}
 \DoxyCodeLine{00194\ \ \ \ \ }
 \DoxyCodeLine{00195\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00196\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_rendering_1_1_render_state}{RenderState}}\&\ m\_state;}
+\DoxyCodeLine{00196\ \ \ \ \ RenderState\&\ m\_state;}
 \DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_savedDepthTest;}
 \DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_savedDepthWrite;}
 \DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_savedBlending;}
-\DoxyCodeLine{00200\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ m\_savedBlendMode;}
+\DoxyCodeLine{00200\ \ \ \ \ BlendMode\ m\_savedBlendMode;}
 \DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_savedCulling;}
-\DoxyCodeLine{00202\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ m\_savedCullMode;}
-\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_savedShader;}
+\DoxyCodeLine{00202\ \ \ \ \ CullMode\ m\_savedCullMode;}
+\DoxyCodeLine{00203\ \ \ \ \ ShaderId\ m\_savedShader;}
 \DoxyCodeLine{00204\ \};}
 \DoxyCodeLine{00205\ }
 \DoxyCodeLine{00206\ \}}

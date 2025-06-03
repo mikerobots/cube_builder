@@ -1,5 +1,5 @@
 \chapter{Selection System Subsystem }
-\hypertarget{md_core_2selection_2_d_e_s_i_g_n}{}\label{md_core_2selection_2_d_e_s_i_g_n}\index{Selection System Subsystem@{Selection System Subsystem}}
+\label{md_core_2selection_2_d_e_s_i_g_n}\index{Selection System Subsystem@{Selection System Subsystem}}
 \label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md290}%
 \Hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md290}%
 \hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md291}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md291}
@@ -46,11 +46,11 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectAll();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectNone();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectInverse();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectByResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectByResolution(VoxelResolution\ resolution);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Region\ selection}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectBox(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectSphere(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectBox(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ VoxelResolution\ resolution);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectSphere(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ VoxelResolution\ resolution);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectFloodFill(\textcolor{keyword}{const}\ VoxelId\&\ seed);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Selection\ queries}}
@@ -93,9 +93,9 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md299}{}\doxysubsection{\texorpdfstring{Voxel\+Id}{Voxel\+Id}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md299}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}\ \{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }VoxelId\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3i\ position;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ resolution;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ VoxelId\&\ other)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ VoxelId\&\ other)\ \textcolor{keyword}{const};}
@@ -103,9 +103,9 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \DoxyCodeLine{\};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{comment}{//\ Hash\ specialization\ for\ unordered\ containers}}
-\DoxyCodeLine{\textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacestd}{std}}\ \{}
+\DoxyCodeLine{\textcolor{keyword}{namespace\ }std\ \{}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }hash<\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}>\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }hash<VoxelId>\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ VoxelId\&\ \textcolor{keywordtype}{id})\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}.hash();}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
@@ -156,11 +156,11 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \hypertarget{md_core_2selection_2_d_e_s_i_g_n_autotoc_md301}{}\doxysubsection{\texorpdfstring{Selection\+Mode}{Selection\+Mode}}\label{md_core_2selection_2_d_e_s_i_g_n_autotoc_md301}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a0ebe6df8a3ac338e0512acc741823fdb}{Replace}},\ \ \ \ \textcolor{comment}{//\ Replace\ current\ selection}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6aec211f7c20af43e742bf2570c3cb84f9}{Add}},\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ to\ current\ selection}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a1d9baf077ee87921f57a8fe42d510b65}{Subtract}},\ \ \ \textcolor{comment}{//\ Remove\ from\ current\ selection}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a6faa907d79c8bb46a12bea5c8de76654}{Intersect}}\ \ \ \textcolor{comment}{//\ Intersect\ with\ current\ selection}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ SelectionMode\ \{}
+\DoxyCodeLine{\ \ \ \ Replace,\ \ \ \ \textcolor{comment}{//\ Replace\ current\ selection}}
+\DoxyCodeLine{\ \ \ \ Add,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ to\ current\ selection}}
+\DoxyCodeLine{\ \ \ \ Subtract,\ \ \ \textcolor{comment}{//\ Remove\ from\ current\ selection}}
+\DoxyCodeLine{\ \ \ \ Intersect\ \ \ \textcolor{comment}{//\ Intersect\ with\ current\ selection}}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -173,10 +173,10 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ VoxelId\&\ seed,\ VoxelDataManager\&\ voxelManager,\ FloodFillCriteria\ criteria);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93}{FloodFillCriteria}}\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a2ec0d16e4ca169baedb9b2d50ec5c6d7}{Connected}},\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Connected\ voxels\ only}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93afbdd183d8a47f52c4f272bb5e7094da2}{SameResolution}},\ \ \ \ \ \textcolor{comment}{//\ Same\ resolution\ level}}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a216bf0b2e5bfa7c42536550aa838afa8}{ConnectedSameRes}}\ \ \ \ \textcolor{comment}{//\ Connected\ +\ same\ resolution}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{enum\ class}\ FloodFillCriteria\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Connected,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Connected\ voxels\ only}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ SameResolution,\ \ \ \ \ \textcolor{comment}{//\ Same\ resolution\ level}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ConnectedSameRes\ \ \ \ \textcolor{comment}{//\ Connected\ +\ same\ resolution}}
 \DoxyCodeLine{\ \ \ \ \};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ shouldInclude(\textcolor{keyword}{const}\ VoxelId\&\ current,\ \textcolor{keyword}{const}\ VoxelId\&\ neighbor,\ FloodFillCriteria\ criteria);}
@@ -189,11 +189,11 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }BoxSelector\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ VoxelResolution\ resolution,\ VoxelDataManager\&\ voxelManager);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInBox(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ BoundingBox\&\ box);}
-\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getVoxelsInRegion(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution);}
+\DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getVoxelsInRegion(\textcolor{keyword}{const}\ BoundingBox\&\ box,\ VoxelResolution\ resolution);}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -202,7 +202,7 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }SphereSelector\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ SelectionSet\ select(\textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ VoxelResolution\ resolution,\ VoxelDataManager\&\ voxelManager);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInSphere(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius);}
@@ -229,8 +229,8 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelHighlight(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Color\&\ color,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderWireframeBounds(\textcolor{keyword}{const}\ BoundingBox\&\ bounds,\ \textcolor{keyword}{const}\ Color\&\ color,\ \textcolor{keyword}{const}\ RenderContext\&\ context);}
 \DoxyCodeLine{\ \ \ \ }
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ m\_selectionColor;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ m\_previewColor;}
+\DoxyCodeLine{\ \ \ \ Color\ m\_selectionColor;}
+\DoxyCodeLine{\ \ \ \ Color\ m\_previewColor;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ m\_opacity;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_animationEnabled;}
 \DoxyCodeLine{\ \ \ \ std::unique\_ptr<Mesh>\ m\_highlightMesh;}
@@ -322,7 +322,7 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 \DoxyCodeLine{\textcolor{keyword}{struct\ }SelectionChangedEvent\ \{}
 \DoxyCodeLine{\ \ \ \ SelectionSet\ oldSelection;}
 \DoxyCodeLine{\ \ \ \ SelectionSet\ newSelection;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{SelectionChangeType}}\ changeType;\ \textcolor{comment}{//\ ADDED,\ REMOVED,\ REPLACED,\ CLEARED}}
+\DoxyCodeLine{\ \ \ \ SelectionChangeType\ changeType;\ \textcolor{comment}{//\ ADDED,\ REMOVED,\ REPLACED,\ CLEARED}}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -330,7 +330,7 @@ Manages voxel selection operations, multi-\/selection handling, selection persis
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }SelectionOperationEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{SelectionOperationType}}\ operationType;\ \textcolor{comment}{//\ MOVE,\ COPY,\ DELETE}}
+\DoxyCodeLine{\ \ \ \ SelectionOperationType\ operationType;\ \textcolor{comment}{//\ MOVE,\ COPY,\ DELETE}}
 \DoxyCodeLine{\ \ \ \ SelectionSet\ affectedVoxels;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ success;}
 \DoxyCodeLine{\};}

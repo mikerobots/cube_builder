@@ -1,35 +1,35 @@
 \doxysection{Dual\+Contouring.\+h}
-\hypertarget{_dual_contouring_8h_source}{}\label{_dual_contouring_8h_source}\index{core/surface\_gen/DualContouring.h@{core/surface\_gen/DualContouring.h}}
+\label{_dual_contouring_8h_source}\index{core/surface\_gen/DualContouring.h@{core/surface\_gen/DualContouring.h}}
 \mbox{\hyperlink{_dual_contouring_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_surface_types_8h}{SurfaceTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_grid_8h}{../voxel\_data/VoxelGrid.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3f_8h}{../../foundation/math/Vector3f.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector3i_8h}{../../foundation/math/Vector3i.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}SurfaceTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../voxel\_data/VoxelGrid.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Vector3f.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Vector3i.h"{}}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <array>}}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen}{SurfaceGen}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }SurfaceGen\ \{}
 \DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a31cc57cba9e12fe5ceb0924f9a68481e}{DualContouring}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }DualContouring\ \{}
 \DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a31cc57cba9e12fe5ceb0924f9a68481e}{DualContouring}}();}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a4f6bd75dddc70c34c4b0e4e923e5a3a3}{\string~DualContouring}}();}
+\DoxyCodeLine{00016\ \ \ \ \ DualContouring();}
+\DoxyCodeLine{00017\ \ \ \ \ \string~DualContouring();}
 \DoxyCodeLine{00018\ \ \ \ \ }
 \DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Generate\ mesh\ from\ voxel\ grid}}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a552b9c3eb4e3621abe7a5feec0120b60}{generateMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings);}
+\DoxyCodeLine{00020\ \ \ \ \ Mesh\ generateMesh(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
 \DoxyCodeLine{00021\ \ \ \ \ }
 \DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Set\ callbacks\ for\ progress\ reporting}}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{ProgressCallback}}\ =\ std::function<void(\textcolor{keywordtype}{float}\ progress)>;}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a06cadf2ac47754a6d985046efe49c082}{setProgressCallback}}(\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{ProgressCallback}}\ callback)\ \{\ m\_progressCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{using\ }ProgressCallback\ =\ std::function<void(\textcolor{keywordtype}{float}\ progress)>;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ setProgressCallback(ProgressCallback\ callback)\ \{\ m\_progressCallback\ =\ callback;\ \}}
 \DoxyCodeLine{00025\ \ \ \ \ }
 \DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Control\ generation}}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_afee0296a381291650c2a381014879c26}{cancel}}()\ \{\ m\_cancelled\ =\ \textcolor{keyword}{true};\ \}}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_a5d0cf37291571cea023e0f1da4ff26f9}{isCancelled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cancelled;\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ cancel()\ \{\ m\_cancelled\ =\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCancelled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cancelled;\ \}}
 \DoxyCodeLine{00029\ \ \ \ \ }
 \DoxyCodeLine{00030\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Edge\ directions}}
@@ -46,9 +46,9 @@
 \DoxyCodeLine{00042\ \ \ \ \ }
 \DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Internal\ structures}}
 \DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }CellData\ \{}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ position;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ Math::Vector3i\ position;}
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::array<HermiteData,\ EDGE\_COUNT>\ edges;}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ vertex;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ Math::Vector3f\ vertex;}
 \DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ uint32\_t\ vertexIndex;}
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasVertex;}
 \DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ }
@@ -82,7 +82,7 @@
 \DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Member\ variables}}
 \DoxyCodeLine{00079\ \ \ \ \ GridSampler\ m\_sampler;}
 \DoxyCodeLine{00080\ \ \ \ \ SurfaceSettings\ m\_settings;}
-\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_ab888e3f205e7058eacec961d4f19dca8}{ProgressCallback}}\ m\_progressCallback;}
+\DoxyCodeLine{00081\ \ \ \ \ ProgressCallback\ m\_progressCallback;}
 \DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_cancelled;}
 \DoxyCodeLine{00083\ \ \ \ \ }
 \DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Working\ data}}
@@ -125,22 +125,22 @@
 \DoxyCodeLine{00121\ \};}
 \DoxyCodeLine{00122\ }
 \DoxyCodeLine{00123\ \textcolor{comment}{//\ Dual\ contouring\ tables}}
-\DoxyCodeLine{00124\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables}{DualContouringTables}}\ \{}
+\DoxyCodeLine{00124\ \textcolor{keyword}{class\ }DualContouringTables\ \{}
 \DoxyCodeLine{00125\ \textcolor{keyword}{public}:}
 \DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Edge\ table\ for\ marching\ cubes-\/like\ edge\ enumeration}}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables_ad33b996920e6aadb32469786dac1df01}{edgeTable}}[256];}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ edgeTable[256];}
 \DoxyCodeLine{00128\ \ \ \ \ }
 \DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Vertex\ offsets\ for\ cube\ corners}}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables_a6ef78bd835b4fe59bdc37314f816f686}{vertexOffsets}}[8][3];}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ vertexOffsets[8][3];}
 \DoxyCodeLine{00131\ \ \ \ \ }
 \DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ Edge\ connections}}
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables_a90d1585ce3806ed9ddbcacf02ad48576}{edgeConnections}}[12][2];}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ edgeConnections[12][2];}
 \DoxyCodeLine{00134\ \ \ \ \ }
 \DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Face\ edges}}
-\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables_ab57f75a4b90f1a7f863fb31160f7ac2f}{faceEdges}}[6][4];}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ faceEdges[6][4];}
 \DoxyCodeLine{00137\ \ \ \ \ }
 \DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Initialize\ tables\ (called\ once)}}
-\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring_tables_a7ee7460123a3f8e3f30c3122c9fb0840}{initialize}}();}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize();}
 \DoxyCodeLine{00140\ \ \ \ \ }
 \DoxyCodeLine{00141\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_initialized;}

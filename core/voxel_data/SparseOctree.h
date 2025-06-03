@@ -6,6 +6,7 @@
 #include <memory>
 #include <array>
 #include <vector>
+#include <iostream>
 
 namespace VoxelEditor {
 namespace VoxelData {
@@ -16,7 +17,7 @@ class SparseOctree;
 // Octree node representing an 8-child spatial subdivision
 class OctreeNode {
 public:
-    OctreeNode() : m_isLeaf(true), m_hasVoxel(false) {
+    OctreeNode() : m_isLeaf(true), m_hasVoxel(false), m_voxelPos(-1, -1, -1) {
         m_children.fill(nullptr);
     }
     
@@ -25,9 +26,12 @@ public:
     bool isLeaf() const { return m_isLeaf; }
     bool hasVoxel() const { return m_hasVoxel; }
     
-    void setVoxel(bool value) {
+    void setVoxel(bool value, const Math::Vector3i& pos = Math::Vector3i(-1, -1, -1)) {
         m_hasVoxel = value;
+        m_voxelPos = pos;
     }
+    
+    Math::Vector3i getVoxelPos() const { return m_voxelPos; }
     
     // Get child index for a position within this node's bounds
     static int getChildIndex(const Math::Vector3i& pos, const Math::Vector3i& center) {
@@ -86,6 +90,7 @@ public:
 private:
     bool m_isLeaf;
     bool m_hasVoxel;
+    Math::Vector3i m_voxelPos;  // Position of the voxel (only valid if m_hasVoxel is true)
     std::array<OctreeNode*, 8> m_children;
     
     friend class SparseOctree;
@@ -96,6 +101,8 @@ public:
     SparseOctree(int maxDepth = 10) : m_root(nullptr), m_maxDepth(maxDepth), m_nodeCount(0) {
         // Calculate root bounds based on max depth
         int rootSize = 1 << maxDepth;  // 2^maxDepth
+        // Root center should be at the middle of the space
+        // For an 8x8x8 octree (depth=3), center is at (4,4,4)
         m_rootCenter = Math::Vector3i(rootSize / 2, rootSize / 2, rootSize / 2);
         m_rootSize = rootSize;
     }
@@ -203,7 +210,12 @@ private:
         if (!m_root) {
             m_root = allocateNode();
             if (!m_root) return false;
+            m_nodeCount++;
         }
+        
+        std::cout << "SparseOctree::insertVoxel(" << pos.x << "," << pos.y << "," << pos.z 
+                  << ") - rootCenter: " << m_rootCenter.x << "," << m_rootCenter.y << "," << m_rootCenter.z
+                  << ", rootSize: " << m_rootSize << ", maxDepth: " << m_maxDepth << std::endl;
         
         return insertVoxelRecursive(m_root, pos, m_rootCenter, m_rootSize / 2, 0);
     }
@@ -211,21 +223,31 @@ private:
     bool insertVoxelRecursive(OctreeNode* node, const Math::Vector3i& pos, 
                             const Math::Vector3i& center, int halfSize, int depth) {
         if (depth >= m_maxDepth) {
-            // At leaf level, set the voxel
-            node->setVoxel(true);
+            // At leaf level, set the voxel and store its position
+            node->setVoxel(true, pos);
+            std::cout << "SparseOctree: Inserted voxel (" << pos.x << "," << pos.y << "," << pos.z 
+                      << ") at leaf with center (" << center.x << "," << center.y << "," << center.z 
+                      << "), halfSize=" << halfSize << ", depth=" << depth << std::endl;
             return true;
         }
         
         int childIndex = OctreeNode::getChildIndex(pos, center);
+        
+        std::cout << "  Depth " << depth << ": pos(" << pos.x << "," << pos.y << "," << pos.z 
+                  << ") center(" << center.x << "," << center.y << "," << center.z 
+                  << ") halfSize=" << halfSize << " -> childIndex=" << childIndex << std::endl;
+        
         OctreeNode* child = node->getChild(childIndex);
         
         if (!child) {
             child = allocateNode();
             if (!child) return false;
+            m_nodeCount++;
             node->setChild(childIndex, child);
         }
         
         Math::Vector3i childCenter = OctreeNode::getChildCenter(center, childIndex, halfSize / 2);
+        std::cout << "    -> childCenter(" << childCenter.x << "," << childCenter.y << "," << childCenter.z << ")" << std::endl;
         return insertVoxelRecursive(child, pos, childCenter, halfSize / 2, depth + 1);
     }
     
@@ -285,7 +307,12 @@ private:
                       std::vector<Math::Vector3i>& voxels) const {
         if (depth >= m_maxDepth) {
             if (node->hasVoxel()) {
-                voxels.push_back(center);
+                // Use the stored voxel position
+                Math::Vector3i voxelPos = node->getVoxelPos();
+                voxels.push_back(voxelPos);
+                
+                // Debug output
+                std::cout << "  Octree voxel at (" << voxelPos.x << ", " << voxelPos.y << ", " << voxelPos.z << ")" << std::endl;
             }
             return;
         }

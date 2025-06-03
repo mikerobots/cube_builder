@@ -68,6 +68,9 @@ public:
     // OpenGL context
     void makeContextCurrent();
     
+    // Screenshot functionality
+    bool saveScreenshot(const std::string& filename);
+    
     // Event callbacks
     using MouseCallback = std::function<void(const MouseEvent&)>;
     using KeyCallback = std::function<void(const KeyEvent&)>;

@@ -97,6 +97,7 @@ core/undo_redo/tests/test_simple_command: /opt/homebrew/lib/libgtest_main.a
 core/undo_redo/tests/test_simple_command: core/selection/libVoxelEditor_Selection.a
 core/undo_redo/tests/test_simple_command: core/voxel_data/libVoxelEditor_VoxelData.a
 core/undo_redo/tests/test_simple_command: core/rendering/libVoxelEditor_Rendering.a
+core/undo_redo/tests/test_simple_command: external/glad/libglad.a
 core/undo_redo/tests/test_simple_command: /opt/homebrew/lib/libgtest.a
 core/undo_redo/tests/test_simple_command: core/undo_redo/tests/CMakeFiles/test_simple_command.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_simple_command"

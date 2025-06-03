@@ -1,5 +1,5 @@
 \doxysection{Keyboard\+Handler.\+h}
-\hypertarget{_keyboard_handler_8h_source}{}\label{_keyboard_handler_8h_source}\index{core/input/KeyboardHandler.h@{core/input/KeyboardHandler.h}}
+\label{_keyboard_handler_8h_source}\index{core/input/KeyboardHandler.h@{core/input/KeyboardHandler.h}}
 \mbox{\hyperlink{_keyboard_handler_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -8,69 +8,69 @@
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_input_handler_8h}{InputHandler.h}}"{}}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_input_types_8h}{InputTypes.h}}"{}}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_base_8h}{../../foundation/events/EventBase.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}InputHandler.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}InputTypes.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/EventBase.h"{}}}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input}{Input}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }Input\ \{}
 \DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4fb620e609186bf9ba79045df0bb2df8}{KeyboardHandler}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_input_handler_a85b7c2e1b9d9b998d4df887d1b0106be}{InputHandler}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }KeyboardHandler\ :\ \textcolor{keyword}{public}\ InputHandler\ \{}
 \DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4fb620e609186bf9ba79045df0bb2df8}{KeyboardHandler}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{VoxelEditor::Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9294e05de7c264ee3f30e98b51f73be5}{\string~KeyboardHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{explicit}\ KeyboardHandler(VoxelEditor::Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00017\ \ \ \ \ \string~KeyboardHandler()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00018\ \ \ \ \ }
 \DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ InputHandler\ interface}}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_adc4012e89049b8e45c395d2638a1a0bc}{processKeyboardEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_event}{KeyEvent}}\&\ event)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_adb9e41e67514744edb9867ababbef3f4}{update}}(\textcolor{keywordtype}{float}\ deltaTime)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ processKeyboardEvent(\textcolor{keyword}{const}\ KeyEvent\&\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime)\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00022\ \ \ \ \ }
 \DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Key\ state\ queries}}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_af376b48b05e5db8e5c25234569c079d5}{isKeyPressed}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a0e00a4f27ae2e1ab569ec31acc6c7a9e}{isKeyJustPressed}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ada5da9034e8d9cfde614938a9cc168cc}{isKeyJustReleased}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ isKeyPressed(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ isKeyJustPressed(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ isKeyJustReleased(KeyCode\ key)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00027\ \ \ \ \ }
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Modifier\ queries}}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_acec4278d20bfdcff0e1de579004465b2}{isShiftPressed}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a545a5b57270bf2575a7d0de98e02f8ab}{isCtrlPressed}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ae51e4a2d16088b23acde4b0db73a518c}{isAltPressed}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_aca3fe54668018bccfc3542da2ee3ad50}{isSuperPressed}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8eefe9094adc4f703c8176e2f9e7a267}{getCurrentModifiers}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ isShiftPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCtrlPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAltPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSuperPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ \ \ \ \ ModifierFlags\ getCurrentModifiers()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00034\ \ \ \ \ }
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Text\ input}}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a9982677088d111763982c470842caa89}{getTextInput}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_textInput;\ \}}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a6cacf8d4446157b68ba8c182d563cce0}{clearTextInput}}();}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a4effa40a1fe71f57a9ade1a285a16331}{setTextInputEnabled}}(\textcolor{keywordtype}{bool}\ enabled);}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7ae3da6e9c382e7259dfe05ae636d054}{isTextInputEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_textInputEnabled;\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ getTextInput()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_textInput;\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ clearTextInput();}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ setTextInputEnabled(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ isTextInputEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_textInputEnabled;\ \}}
 \DoxyCodeLine{00040\ \ \ \ \ }
 \DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Key\ bindings}}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_aff8e75b99a0afcc95c80a787d0bbd57d}{bindKey}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key,\ \textcolor{keyword}{const}\ std::string\&\ action,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{ModifierFlags::None}});}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_aa4e20c6cff50aafc15019bba437e9a32}{bindKeyCombination}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{KeyCombination}}\&\ combo,\ \textcolor{keyword}{const}\ std::string\&\ action);}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7cfd64130faebb578b19383ae0063bdc}{unbindKey}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{ModifierFlags::None}});}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_af9278f6f4ec4845db9b4e374f8be1f84}{unbindKeyCombination}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{KeyCombination}}\&\ combo);}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8f00d18ac5ade3a6052f2dab72d5bca2}{clearAllBindings}}();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ bindKey(KeyCode\ key,\ \textcolor{keyword}{const}\ std::string\&\ action,\ ModifierFlags\ modifiers\ =\ ModifierFlags::None);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ bindKeyCombination(\textcolor{keyword}{const}\ KeyCombination\&\ combo,\ \textcolor{keyword}{const}\ std::string\&\ action);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ unbindKey(KeyCode\ key,\ ModifierFlags\ modifiers\ =\ ModifierFlags::None);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ unbindKeyCombination(\textcolor{keyword}{const}\ KeyCombination\&\ combo);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ clearAllBindings();}
 \DoxyCodeLine{00047\ \ \ \ \ }
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Key\ binding\ queries}}
-\DoxyCodeLine{00049\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a5e703103d4036a6ecf3cfa204f05e772}{getKeyAction}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{ModifierFlags::None}})\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00050\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a79f9bf27f150eec27a8935bca23f8da3}{getKeyCombinationAction}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{KeyCombination}}\&\ combo)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00051\ \ \ \ \ std::vector<KeyCombination>\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a95de6fd8a2dbdca3ace4c8f38e9fa2e3}{getActionsForKey}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00052\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a89ee61a0a87e92e2fa3006bdcc357086}{getAllBoundActions}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ \ \ \ \ std::string\ getKeyAction(KeyCode\ key,\ ModifierFlags\ modifiers\ =\ ModifierFlags::None)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ std::string\ getKeyCombinationAction(\textcolor{keyword}{const}\ KeyCombination\&\ combo)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00051\ \ \ \ \ std::vector<KeyCombination>\ getActionsForKey(KeyCode\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ \ \ \ \ std::vector<std::string>\ getAllBoundActions()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00053\ \ \ \ \ }
 \DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3c98ceca71d344282505ff0066fab3be}{setRepeatEnabled}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_repeatEnabled\ =\ enabled;\ \}}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_abbdb4d80125f5e887e70d3d325d64f84}{setRepeatDelay}}(\textcolor{keywordtype}{float}\ seconds)\ \{\ m\_repeatDelay\ =\ seconds;\ \}}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_abf2675a980f9421df3199abb8d1d9123}{setRepeatRate}}(\textcolor{keywordtype}{float}\ rate)\ \{\ m\_repeatRate\ =\ rate;\ \}}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8d071fede77359a06206ad9f6fd80219}{isRepeatEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_repeatEnabled;\ \}}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a773e5f3240e813a7d85ac4980af0f230}{getRepeatDelay}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_repeatDelay;\ \}}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a1fff1e8a3770192e14db2abf0866cd48}{getRepeatRate}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_repeatRate;\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ setRepeatEnabled(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_repeatEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ setRepeatDelay(\textcolor{keywordtype}{float}\ seconds)\ \{\ m\_repeatDelay\ =\ seconds;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ setRepeatRate(\textcolor{keywordtype}{float}\ rate)\ \{\ m\_repeatRate\ =\ rate;\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ isRepeatEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_repeatEnabled;\ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{float}\ getRepeatDelay()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_repeatDelay;\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{float}\ getRepeatRate()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_repeatRate;\ \}}
 \DoxyCodeLine{00061\ \ \ \ \ }
 \DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Key\ utilities}}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ad3bfde6b0bef129aca3d29c42e774415}{keyCodeToString}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key);}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_abc22c4f9ad5a22f3fe127c7da4576c4a}{keyCodeFromString}}(\textcolor{keyword}{const}\ std::string\&\ str);}
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_ab4490ba79037220fd04800470634563f}{modifierFlagsToString}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers);}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a3bbf533cebd87e8179ab5b1c5db89945}{modifierFlagsFromString}}(\textcolor{keyword}{const}\ std::string\&\ str);}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a8359a71d420adff7e72199a57881e369}{isValidKeyCode}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key);}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_a7a7f12ee7e3c1654c8c79d91eb9725d7}{isPrintableKey}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key);}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_input_1_1_keyboard_handler_af1711b3dc99b49da39298e94caac4f02}{isModifierKey}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ keyCodeToString(KeyCode\ key);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ KeyCode\ keyCodeFromString(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ modifierFlagsToString(ModifierFlags\ modifiers);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ ModifierFlags\ modifierFlagsFromString(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValidKeyCode(KeyCode\ key);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isPrintableKey(KeyCode\ key);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isModifierKey(KeyCode\ key);}
 \DoxyCodeLine{00070\ \ \ \ \ }
 \DoxyCodeLine{00071\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{struct\ }KeyState\ \{}
@@ -118,64 +118,64 @@
 \DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ updateKeyRepeat(\textcolor{keywordtype}{float}\ deltaTime);}
 \DoxyCodeLine{00115\ \ \ \ \ }
 \DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ Key\ index\ conversion}}
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ getKeyIndex(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key);}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ getKeyIndex(KeyCode\ key);}
 \DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValidKeyIndex(\textcolor{keywordtype}{size\_t}\ index);}
 \DoxyCodeLine{00119\ \ \ \ \ }
 \DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ Event\ dispatching}}
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchKeyActionEvent(\textcolor{keyword}{const}\ std::string\&\ action,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ key,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ modifiers);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ dispatchKeyActionEvent(\textcolor{keyword}{const}\ std::string\&\ action,\ KeyCode\ key,\ ModifierFlags\ modifiers);}
 \DoxyCodeLine{00122\ \};}
 \DoxyCodeLine{00123\ }
 \DoxyCodeLine{00124\ \textcolor{comment}{//\ Keyboard\ event\ types\ for\ the\ event\ system}}
-\DoxyCodeLine{00125\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_input_1_1_events}{Events}}\ \{}
+\DoxyCodeLine{00125\ \textcolor{keyword}{namespace\ }Events\ \{}
 \DoxyCodeLine{00126\ \ \ \ \ }
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a967ee558f3a33543e190dd49bec200d9}{KeyPressEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<KeyPressEvent>\ \{}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a581c6acc0c9038285e341f0fc6373485}{key}};}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_ad4cbb51f2d14b4086141891ce8ca00c8}{modifiers}};}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a09878c32485cba5dfb284cc744a95976}{repeat}};}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a0a613605a9b4eda2631f23792ea85134}{timestamp}};}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{struct\ }KeyPressEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<KeyPressEvent>\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ KeyCode\ key;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ ModifierFlags\ modifiers;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ repeat;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ TimePoint\ timestamp;}
 \DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a967ee558f3a33543e190dd49bec200d9}{KeyPressEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ k,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ mods\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{ModifierFlags::None}},\ \textcolor{keywordtype}{bool}\ rep\ =\ \textcolor{keyword}{false})}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a581c6acc0c9038285e341f0fc6373485}{key}}(k),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_ad4cbb51f2d14b4086141891ce8ca00c8}{modifiers}}(mods),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a09878c32485cba5dfb284cc744a95976}{repeat}}(rep)}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_press_event_a0a613605a9b4eda2631f23792ea85134}{timestamp}}(\mbox{\hyperlink{namespacestd}{std}}::chrono::high\_resolution\_clock::now())\ \{\}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ KeyPressEvent(KeyCode\ k,\ ModifierFlags\ mods\ =\ ModifierFlags::None,\ \textcolor{keywordtype}{bool}\ rep\ =\ \textcolor{keyword}{false})}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ :\ key(k),\ modifiers(mods),\ repeat(rep)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ timestamp(std::chrono::high\_resolution\_clock::now())\ \{\}}
 \DoxyCodeLine{00136\ \ \ \ \ \};}
 \DoxyCodeLine{00137\ \ \ \ \ }
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a4688915570230184c3234b65c3ae9f9f}{KeyReleaseEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<KeyReleaseEvent>\ \{}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a04bf153c5e24a2fa41a8c43e10b98b91}{key}};}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a55e9b9f4e8a24bd99cc2b7739dc5aa4c}{modifiers}};}
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a7458f8127f2150cb17f9229b90ac5ca3}{timestamp}};}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{struct\ }KeyReleaseEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<KeyReleaseEvent>\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ KeyCode\ key;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ ModifierFlags\ modifiers;}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ TimePoint\ timestamp;}
 \DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a4688915570230184c3234b65c3ae9f9f}{KeyReleaseEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ k,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ mods\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{ModifierFlags::None}})}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a04bf153c5e24a2fa41a8c43e10b98b91}{key}}(k),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a55e9b9f4e8a24bd99cc2b7739dc5aa4c}{modifiers}}(mods)}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_release_event_a7458f8127f2150cb17f9229b90ac5ca3}{timestamp}}(\mbox{\hyperlink{namespacestd}{std}}::chrono::high\_resolution\_clock::now())\ \{\}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ KeyReleaseEvent(KeyCode\ k,\ ModifierFlags\ mods\ =\ ModifierFlags::None)}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ :\ key(k),\ modifiers(mods)}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ timestamp(std::chrono::high\_resolution\_clock::now())\ \{\}}
 \DoxyCodeLine{00146\ \ \ \ \ \};}
 \DoxyCodeLine{00147\ \ \ \ \ }
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_a9d699e5d0deb14a3a04e7073d6b62a23}{KeyCombinationEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<KeyCombinationEvent>\ \{}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{KeyCombination}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_a685462926cd785f39384c43817891200}{combination}};}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_ad92af4eb0e91cf567a5dcb4f7cf7187e}{pressed}};}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_a5820a45021e7af2837762b3647c88a0b}{timestamp}};}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{struct\ }KeyCombinationEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<KeyCombinationEvent>\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ KeyCombination\ combination;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pressed;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ TimePoint\ timestamp;}
 \DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_a9d699e5d0deb14a3a04e7073d6b62a23}{KeyCombinationEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_key_combination}{KeyCombination}}\&\ combo,\ \textcolor{keywordtype}{bool}\ p)}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_a685462926cd785f39384c43817891200}{combination}}(combo),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_ad92af4eb0e91cf567a5dcb4f7cf7187e}{pressed}}(p)}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_combination_event_a5820a45021e7af2837762b3647c88a0b}{timestamp}}(\mbox{\hyperlink{namespacestd}{std}}::chrono::high\_resolution\_clock::now())\ \{\}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ KeyCombinationEvent(\textcolor{keyword}{const}\ KeyCombination\&\ combo,\ \textcolor{keywordtype}{bool}\ p)}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ :\ combination(combo),\ pressed(p)}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ timestamp(std::chrono::high\_resolution\_clock::now())\ \{\}}
 \DoxyCodeLine{00156\ \ \ \ \ \};}
 \DoxyCodeLine{00157\ \ \ \ \ }
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_text_input_event_adcb5c3753a731f376369400c87f5def0}{TextInputEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<TextInputEvent>\ \{}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_text_input_event_a7c4c5dbb6b829bff9b5e89f45775d7b9}{text}};}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_text_input_event_a354a054aa22902a631bdeb88b81bbc65}{timestamp}};}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{struct\ }TextInputEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<TextInputEvent>\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ std::string\ text;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ TimePoint\ timestamp;}
 \DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_text_input_event_adcb5c3753a731f376369400c87f5def0}{TextInputEvent}}(\textcolor{keyword}{const}\ std::string\&\ t)}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_text_input_event_a7c4c5dbb6b829bff9b5e89f45775d7b9}{text}}(t),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_text_input_event_a354a054aa22902a631bdeb88b81bbc65}{timestamp}}(\mbox{\hyperlink{namespacestd}{std}}::chrono::high\_resolution\_clock::now())\ \{\}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ TextInputEvent(\textcolor{keyword}{const}\ std::string\&\ t)}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ :\ text(t),\ timestamp(std::chrono::high\_resolution\_clock::now())\ \{\}}
 \DoxyCodeLine{00164\ \ \ \ \ \};}
 \DoxyCodeLine{00165\ \ \ \ \ }
-\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_ad670ac523c619a2c44fdb1b51192e3e8}{KeyActionEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{VoxelEditor::Events::Event}}<KeyActionEvent>\ \{}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_a0ee2e0bad1358e5e8965f619f0903f63}{action}};}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_ad051bf5521ebc082bba8db5dd6ccb6c9}{key}};}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_a398474022f274d3270b8e69b98e0201e}{modifiers}};}
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a3b09cd1a33c3b80a2cfd14cff8fb7b5d}{TimePoint}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_ad8787bfc8ec635871820de84d07dd041}{timestamp}};}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{struct\ }KeyActionEvent\ :\ \textcolor{keyword}{public}\ VoxelEditor::Events::Event<KeyActionEvent>\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ std::string\ action;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ KeyCode\ key;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ ModifierFlags\ modifiers;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ TimePoint\ timestamp;}
 \DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_ad670ac523c619a2c44fdb1b51192e3e8}{KeyActionEvent}}(\textcolor{keyword}{const}\ std::string\&\ a,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a8b2a9d37fd35de3bfe892807b743a530}{KeyCode}}\ k,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7}{ModifierFlags}}\ mods\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_input_a06bd04c768e67f1dfc25c6169290b2b7a6adf97f83acf6453d4a6a4b1070f3754}{ModifierFlags::None}})}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_a0ee2e0bad1358e5e8965f619f0903f63}{action}}(a),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_ad051bf5521ebc082bba8db5dd6ccb6c9}{key}}(k),\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_a398474022f274d3270b8e69b98e0201e}{modifiers}}(mods)}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_voxel_editor_1_1_input_1_1_events_1_1_key_action_event_ad8787bfc8ec635871820de84d07dd041}{timestamp}}(\mbox{\hyperlink{namespacestd}{std}}::chrono::high\_resolution\_clock::now())\ \{\}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ KeyActionEvent(\textcolor{keyword}{const}\ std::string\&\ a,\ KeyCode\ k,\ ModifierFlags\ mods\ =\ ModifierFlags::None)}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ :\ action(a),\ key(k),\ modifiers(mods)}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ timestamp(std::chrono::high\_resolution\_clock::now())\ \{\}}
 \DoxyCodeLine{00175\ \ \ \ \ \};}
 \DoxyCodeLine{00176\ \ \ \ \ }
 \DoxyCodeLine{00177\ \}}

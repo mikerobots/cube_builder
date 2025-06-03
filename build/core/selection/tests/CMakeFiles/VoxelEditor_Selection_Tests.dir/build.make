@@ -165,26 +165,27 @@ VoxelEditor_Selection_Tests_OBJECTS = \
 # External object files for target VoxelEditor_Selection_Tests
 VoxelEditor_Selection_Tests_EXTERNAL_OBJECTS =
 
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionTypes.cpp.o
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionSet.cpp.o
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionManager.cpp.o
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestBoxSelector.cpp.o
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSphereSelector.cpp.o
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSelector.cpp.o
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/libVoxelEditor_Selection.a
-core/selection/tests/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
-core/selection/tests/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest_main.a
-core/selection/tests/VoxelEditor_Selection_Tests: core/voxel_data/libVoxelEditor_VoxelData.a
-core/selection/tests/VoxelEditor_Selection_Tests: core/rendering/libVoxelEditor_Rendering.a
-core/selection/tests/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
-core/selection/tests/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable VoxelEditor_Selection_Tests"
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionTypes.cpp.o
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionSet.cpp.o
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionManager.cpp.o
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestBoxSelector.cpp.o
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSphereSelector.cpp.o
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSelector.cpp.o
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Selection.a
+bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
+bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest_main.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_VoxelData.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Rendering.a
+bin/VoxelEditor_Selection_Tests: lib/libglad.a
+bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
+bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../../../bin/VoxelEditor_Selection_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/core/selection/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Selection_Tests.dir/link.txt --verbose=$(VERBOSE)
-	cd /Users/michaelhalloran/cube_edit/build/core/selection/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Selection_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build/core/selection/tests/VoxelEditor_Selection_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build/core/selection/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Selection_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build/core/selection/tests/VoxelEditor_Selection_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
+	cd /Users/michaelhalloran/cube_edit/build/core/selection/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Selection_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_Selection_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build/core/selection/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Selection_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build/core/selection/tests/VoxelEditor_Selection_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
 
 # Rule to build all files generated by this target.
-core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build: core/selection/tests/VoxelEditor_Selection_Tests
+core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build: bin/VoxelEditor_Selection_Tests
 .PHONY : core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build
 
 core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/clean:

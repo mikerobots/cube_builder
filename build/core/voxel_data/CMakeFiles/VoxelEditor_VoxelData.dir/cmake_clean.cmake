@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "../../lib/libVoxelEditor_VoxelData.a"
+  "../../lib/libVoxelEditor_VoxelData.pdb"
   "CMakeFiles/VoxelEditor_VoxelData.dir/SparseOctree.cpp.o"
   "CMakeFiles/VoxelEditor_VoxelData.dir/SparseOctree.cpp.o.d"
-  "libVoxelEditor_VoxelData.a"
-  "libVoxelEditor_VoxelData.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

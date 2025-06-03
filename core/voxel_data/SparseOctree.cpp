@@ -48,12 +48,14 @@ OctreeNode* SparseOctree::allocateNode() {
     }
     
     OctreeNode* node = s_nodePool->construct();
+    // Note: node count tracking should be done by the SparseOctree instance, not here
     return node;
 }
 
 void SparseOctree::deallocateNode(OctreeNode* node) {
     if (node && s_nodePool) {
         s_nodePool->destroy(node);
+        // Note: node count tracking should be done by the SparseOctree instance, not here
     }
 }
 

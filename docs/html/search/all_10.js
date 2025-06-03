@@ -71,7 +71,7 @@ var searchData=
   ['highlightrenderer_2ecpp_68',['HighlightRenderer.cpp',['../_highlight_renderer_8cpp.html',1,'']]],
   ['highlightrenderer_2eh_69',['HighlightRenderer.h',['../_highlight_renderer_8h.html',1,'']]],
   ['highlightrenderertest_70',['HighlightRendererTest',['../class_highlight_renderer_test.html',1,'']]],
-  ['highlights_71',['Architecture Highlights',['../md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md570',1,'']]],
+  ['highlights_71',['Architecture Highlights',['../md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md578',1,'']]],
   ['highlightstyle_72',['HighlightStyle',['../class_voxel_editor_1_1_visual_feedback_1_1_highlight_style.html',1,'VoxelEditor::VisualFeedback::HighlightStyle'],['../md_core_2visual__feedback_2_d_e_s_i_g_n.html#autotoc_md412',1,'HighlightStyle']]],
   ['highquality_73',['HighQuality',['../struct_voxel_editor_1_1_rendering_1_1_render_config.html#a06d98da794deb38d44947c6c002b13c4',1,'VoxelEditor::Rendering::RenderConfig']]],
   ['historycleared_74',['HistoryCleared',['../namespace_voxel_editor_1_1_undo_redo.html#a0bcfe43b9a0d672261417b29927704b1a83ce0d0e4ebd7d8e4ab4820481a7577a',1,'VoxelEditor::UndoRedo']]],

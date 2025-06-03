@@ -1,5 +1,5 @@
 \chapter{Rendering Engine Subsystem }
-\hypertarget{md_core_2rendering_2_d_e_s_i_g_n}{}\label{md_core_2rendering_2_d_e_s_i_g_n}\index{Rendering Engine Subsystem@{Rendering Engine Subsystem}}
+\label{md_core_2rendering_2_d_e_s_i_g_n}\index{Rendering Engine Subsystem@{Rendering Engine Subsystem}}
 \label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md256}%
 \Hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md256}%
 \hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md257}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md257}
@@ -50,11 +50,11 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Scene\ rendering}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderScene(\textcolor{keyword}{const}\ Scene\&\ scene,\ \textcolor{keyword}{const}\ Camera\&\ camera);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderMesh(\textcolor{keyword}{const}\ Mesh\&\ mesh,\ \textcolor{keyword}{const}\ Transform\&\ transform,\ \textcolor{keyword}{const}\ Material\&\ material);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxels(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxels(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Render\ modes}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setRenderMode(RenderMode\ mode);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ getRenderMode()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ RenderMode\ getRenderMode()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setWireframeEnabled(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setSolidEnabled(\textcolor{keywordtype}{bool}\ enabled);}
 \DoxyCodeLine{\ \ \ \ }
@@ -90,11 +90,11 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md265}{}\doxysubsection{\texorpdfstring{Render\+Mode}{Render\+Mode}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md265}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceac}{RenderMode}}\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceacae41480b6bbfbf7407974a88d3d34f4fa}{Solid}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solid\ surfaces\ only}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca33e42d0f3b166a4c405127e4412fbef2}{Wireframe}},\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wireframe\ only}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca55f4b4a94111759e08b3acb1acd12b8c}{Combined}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solid\ +\ wireframe\ overlay}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_af5531475cf3fbbac0d517becb24bceaca75dd5f1160a3f02b6fae89c54361a1b3}{Points}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Point\ cloud\ rendering}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ RenderMode\ \{}
+\DoxyCodeLine{\ \ \ \ Solid,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solid\ surfaces\ only}}
+\DoxyCodeLine{\ \ \ \ Wireframe,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wireframe\ only}}
+\DoxyCodeLine{\ \ \ \ Combined,\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Solid\ +\ wireframe\ overlay}}
+\DoxyCodeLine{\ \ \ \ Points\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Point\ cloud\ rendering}}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -108,8 +108,8 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ samples\ =\ 4;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ MSAA\ samples}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ vsync\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ debugContext\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a4dcbd77a7ab9be7fbbc1239dff45e683}{ColorFormat}}\ colorFormat\ =\ ColorFormat::RGBA8;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a76f0969ced5acaa52f07968cf9e2607b}{DepthFormat}}\ depthFormat\ =\ DepthFormat::Depth24Stencil8;}
+\DoxyCodeLine{\ \ \ \ ColorFormat\ colorFormat\ =\ ColorFormat::RGBA8;}
+\DoxyCodeLine{\ \ \ \ DepthFormat\ depthFormat\ =\ DepthFormat::Depth24Stencil8;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Performance\ settings}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ frustumCulling\ =\ \textcolor{keyword}{true};}
@@ -128,19 +128,19 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }Material\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ albedo\ =\ Color::White();}
+\DoxyCodeLine{\ \ \ \ Color\ albedo\ =\ Color::White();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ metallic\ =\ 0.0f;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ roughness\ =\ 0.5f;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ emission\ =\ 0.0f;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ albedoTexture\ =\ 0;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ normalTexture\ =\ 0;}
 \DoxyCodeLine{\ \ \ \ uint32\_t\ metallicRoughnessTexture\ =\ 0;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ shader\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ ShaderId\ shader\ =\ 0;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Rendering\ properties}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ doubleSided\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ blendMode\ =\ BlendMode::Opaque;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a7f5cf9809f9f37b63e8f1d05a3ab06dd}{CullMode}}\ cullMode\ =\ CullMode::Back;}
+\DoxyCodeLine{\ \ \ \ BlendMode\ blendMode\ =\ BlendMode::Opaque;}
+\DoxyCodeLine{\ \ \ \ CullMode\ cullMode\ =\ CullMode::Back;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ bind(RenderEngine\&\ engine)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\};}
@@ -233,20 +233,20 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \DoxyCodeLine{\textcolor{keyword}{class\ }ShaderManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Shader\ compilation}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ compileShader(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ ShaderSource\&\ source);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ loadShaderFromFile(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{\ \ \ \ ShaderId\ compileShader(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ ShaderSource\&\ source);}
+\DoxyCodeLine{\ \ \ \ ShaderId\ loadShaderFromFile(\textcolor{keyword}{const}\ std::string\&\ path);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ reloadShader(ShaderId\ \textcolor{keywordtype}{id});}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Shader\ access}}
 \DoxyCodeLine{\ \ \ \ ShaderProgram*\ getShader(ShaderId\ \textcolor{keywordtype}{id});}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ findShader(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{\ \ \ \ ShaderId\ findShader(\textcolor{keyword}{const}\ std::string\&\ name);}
 \DoxyCodeLine{\ \ \ \ std::vector<std::string>\ getShaderNames()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Built-\/in\ shaders}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getVoxelShader();}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getWireframeShader();}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getSelectionShader();}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ getGroupOutlineShader();}
+\DoxyCodeLine{\ \ \ \ ShaderId\ getVoxelShader();}
+\DoxyCodeLine{\ \ \ \ ShaderId\ getWireframeShader();}
+\DoxyCodeLine{\ \ \ \ ShaderId\ getSelectionShader();}
+\DoxyCodeLine{\ \ \ \ ShaderId\ getGroupOutlineShader();}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Uniform\ management}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setGlobalUniform(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ UniformValue\&\ value);}
@@ -258,7 +258,7 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }ShaderEntry\ \{}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ id;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ShaderId\ id;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ name;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::string\ path;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::unique\_ptr<ShaderProgram>\ program;}
@@ -267,7 +267,7 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ std::unordered\_map<ShaderId,\ ShaderEntry>\ m\_shaders;}
 \DoxyCodeLine{\ \ \ \ std::unordered\_map<std::string,\ UniformValue>\ m\_globalUniforms;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ m\_nextShaderId;}
+\DoxyCodeLine{\ \ \ \ ShaderId\ m\_nextShaderId;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ m\_hotReloadEnabled;}
 \DoxyCodeLine{\ \ \ \ OpenGLRenderer*\ m\_glRenderer;}
 \DoxyCodeLine{\ \ \ \ }
@@ -315,7 +315,7 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \hypertarget{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md274}{}\doxysubsection{\texorpdfstring{Voxel Rendering}{Voxel Rendering}}\label{md_core_2rendering_2_d_e_s_i_g_n_autotoc_md274}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordtype}{void}\ VoxelRenderer::renderVoxels(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings)\ \{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ VoxelRenderer::renderVoxels(\textcolor{keyword}{const}\ VoxelGrid\&\ grid,\ VoxelResolution\ resolution,\ \textcolor{keyword}{const}\ RenderSettings\&\ settings)\ \{}
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Generate\ or\ retrieve\ cached\ mesh}}
 \DoxyCodeLine{\ \ \ \ Mesh\ mesh\ =\ m\_surfaceGenerator-\/>generateSurface(grid,\ settings.surfaceSettings);}
 \DoxyCodeLine{\ \ \ \ }
@@ -368,8 +368,8 @@ Provides Open\+GL abstraction layer, manages rendering pipeline, handles multipl
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }CurrentState\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ depthTest\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ blending\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a6d999a9f579add6fa35139793e187cee}{BlendMode}}\ blendMode\ =\ BlendMode::Opaque;}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_a09f08ff90f33559c5853335965eeb74d}{ShaderId}}\ boundShader\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ BlendMode\ blendMode\ =\ BlendMode::Opaque;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ShaderId\ boundShader\ =\ 0;}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::array<uint32\_t,\ 16>\ boundTextures\ =\ \{\};}
 \DoxyCodeLine{\ \ \ \ \}\ m\_current,\ m\_pending;}
 \DoxyCodeLine{\ \ \ \ }

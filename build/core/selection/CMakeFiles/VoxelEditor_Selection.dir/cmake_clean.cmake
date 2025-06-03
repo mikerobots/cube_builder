@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "../../lib/libVoxelEditor_Selection.a"
+  "../../lib/libVoxelEditor_Selection.pdb"
   "CMakeFiles/VoxelEditor_Selection.dir/BoxSelector.cpp.o"
   "CMakeFiles/VoxelEditor_Selection.dir/BoxSelector.cpp.o.d"
   "CMakeFiles/VoxelEditor_Selection.dir/FloodFillSelector.cpp.o"
@@ -13,8 +15,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/VoxelEditor_Selection.dir/SelectionTypes.cpp.o.d"
   "CMakeFiles/VoxelEditor_Selection.dir/SphereSelector.cpp.o"
   "CMakeFiles/VoxelEditor_Selection.dir/SphereSelector.cpp.o.d"
-  "libVoxelEditor_Selection.a"
-  "libVoxelEditor_Selection.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -8,7 +8,7 @@ var searchData=
   ['hierarchy_20operations_5',['Hierarchy Operations',['../md_core_2groups_2_d_e_s_i_g_n.html#autotoc_md208',1,'']]],
   ['highlight_20rendering_6',['Highlight Rendering',['../md_core_2visual__feedback_2_d_e_s_i_g_n.html#autotoc_md414',1,'']]],
   ['highlightrenderer_7',['HighlightRenderer',['../md_core_2visual__feedback_2_d_e_s_i_g_n.html#autotoc_md406',1,'HighlightRenderer'],['../md_core_2visual__feedback_2_d_e_s_i_g_n.html#autotoc_md415',1,'HighlightRenderer']]],
-  ['highlights_8',['Architecture Highlights',['../md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md570',1,'']]],
+  ['highlights_8',['Architecture Highlights',['../md__p_r_o_j_e_c_t___s_u_m_m_a_r_y.html#autotoc_md578',1,'']]],
   ['highlightstyle_9',['HighlightStyle',['../md_core_2visual__feedback_2_d_e_s_i_g_n.html#autotoc_md412',1,'']]],
   ['historymanager_10',['HistoryManager',['../md__a_r_c_h_i_t_e_c_t_u_r_e.html#autotoc_md65',1,'10. Undo/Redo System (<span class="tt">HistoryManager</span>)'],['../md_core_2undo__redo_2_d_e_s_i_g_n.html#autotoc_md367',1,'HistoryManager']]],
   ['house_11',['Simple House',['../md_apps_2cli_2_c_l_i___g_u_i_d_e.html#autotoc_md23',1,'']]]

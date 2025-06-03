@@ -1,5 +1,5 @@
 \doxysection{Vector3i.\+h}
-\hypertarget{_vector3i_8h_source}{}\label{_vector3i_8h_source}\index{foundation/math/Vector3i.h@{foundation/math/Vector3i.h}}
+\label{_vector3i_8h_source}\index{foundation/math/Vector3i.h@{foundation/math/Vector3i.h}}
 \mbox{\hyperlink{_vector3i_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -7,195 +7,195 @@
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cmath>}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
 \DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_math}{Math}}\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Math\ \{}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }Vector3i\ \{}
 \DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{int}\ x,\ y,\ z;}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}()\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}(0),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}(0),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}(0)\ \{\}}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ad1e119235b8ce44633f4d977e4a31a91}{Vector3i}}(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}})\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}})\ \{\}}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a94acb36298867553e1057a384bd74c79}{Vector3i}}(\textcolor{keywordtype}{int}\ value)\ :\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}(value),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}(value),\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}(value)\ \{\}}
+\DoxyCodeLine{00013\ \ \ \ \ Vector3i()\ :\ x(0),\ y(0),\ z(0)\ \{\}}
+\DoxyCodeLine{00014\ \ \ \ \ Vector3i(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ z)\ :\ x(x),\ y(y),\ z(z)\ \{\}}
+\DoxyCodeLine{00015\ \ \ \ \ Vector3i(\textcolor{keywordtype}{int}\ value)\ :\ x(value),\ y(value),\ z(value)\ \{\}}
 \DoxyCodeLine{00016\ }
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a40fa50bb20936be3456cde6bf573f4ff}{operator+}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ +\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}});}
+\DoxyCodeLine{00017\ \ \ \ \ Vector3i\ operator+(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(x\ +\ other.x,\ y\ +\ other.y,\ z\ +\ other.z);}
 \DoxyCodeLine{00019\ \ \ \ \ \}}
 \DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a10ba19ecfb6ef790d4a6bb122b66d440}{operator-\/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ -\/\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}});}
+\DoxyCodeLine{00021\ \ \ \ \ Vector3i\ operator-\/(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(x\ -\/\ other.x,\ y\ -\/\ other.y,\ z\ -\/\ other.z);}
 \DoxyCodeLine{00023\ \ \ \ \ \}}
 \DoxyCodeLine{00024\ }
-\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a90d0449b64247a04c81024a7c3db98ce}{operator*}}(\textcolor{keywordtype}{int}\ scalar)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *\ scalar);}
+\DoxyCodeLine{00025\ \ \ \ \ Vector3i\ operator*(\textcolor{keywordtype}{int}\ scalar)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(x\ *\ scalar,\ y\ *\ scalar,\ z\ *\ scalar);}
 \DoxyCodeLine{00027\ \ \ \ \ \}}
 \DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a1fd19c9e9accb4bc0db5db37a0743e20}{operator/}}(\textcolor{keywordtype}{int}\ scalar)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ /\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ /\ scalar,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ /\ scalar);}
+\DoxyCodeLine{00029\ \ \ \ \ Vector3i\ operator/(\textcolor{keywordtype}{int}\ scalar)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(x\ /\ scalar,\ y\ /\ scalar,\ z\ /\ scalar);}
 \DoxyCodeLine{00031\ \ \ \ \ \}}
 \DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ad8be2936bd9fb9023c7c35e42ba0bc13}{operator-\/}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(-\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ -\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ -\/\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}});}
+\DoxyCodeLine{00033\ \ \ \ \ Vector3i\ operator-\/()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(-\/x,\ -\/y,\ -\/z);}
 \DoxyCodeLine{00035\ \ \ \ \ \}}
 \DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a69f8b424bdfedf10f47ac2bc14ef578f}{operator+=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\ \{}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}};}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}};}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ +=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00037\ \ \ \ \ Vector3i\&\ operator+=(\textcolor{keyword}{const}\ Vector3i\&\ other)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ x\ +=\ other.x;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ y\ +=\ other.y;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ z\ +=\ other.z;}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
 \DoxyCodeLine{00042\ \ \ \ \ \}}
 \DoxyCodeLine{00043\ }
-\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a05fc0785c669452c161fcaa0740bba48}{operator-\/=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\ \{}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}};}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}};}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ -\/=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00044\ \ \ \ \ Vector3i\&\ operator-\/=(\textcolor{keyword}{const}\ Vector3i\&\ other)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ x\ -\/=\ other.x;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ y\ -\/=\ other.y;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ z\ -\/=\ other.z;}
 \DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
 \DoxyCodeLine{00049\ \ \ \ \ \}}
 \DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a4efc306cece6433ac2ec0e25eb7fc31a}{operator*=}}(\textcolor{keywordtype}{int}\ scalar)\ \{}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *=\ scalar;}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *=\ scalar;}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *=\ scalar;}
+\DoxyCodeLine{00051\ \ \ \ \ Vector3i\&\ operator*=(\textcolor{keywordtype}{int}\ scalar)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ x\ *=\ scalar;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ y\ *=\ scalar;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ z\ *=\ scalar;}
 \DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
 \DoxyCodeLine{00056\ \ \ \ \ \}}
 \DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ad826840ff7e4dba9d711501fb4fd81d3}{operator/=}}(\textcolor{keywordtype}{int}\ scalar)\ \{}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ /=\ scalar;}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ /=\ scalar;}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ /=\ scalar;}
+\DoxyCodeLine{00058\ \ \ \ \ Vector3i\&\ operator/=(\textcolor{keywordtype}{int}\ scalar)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ x\ /=\ scalar;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ y\ /=\ scalar;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ z\ /=\ scalar;}
 \DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
 \DoxyCodeLine{00063\ \ \ \ \ \}}
 \DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ab7335cf551616820384d38cb850bd3ae}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ \&\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ \&\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ ==\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\ ==\ other.x\ \&\&\ y\ ==\ other.y\ \&\&\ z\ ==\ other.z;}
 \DoxyCodeLine{00067\ \ \ \ \ \}}
 \DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_aa40c887f46e56df96c4b295be21669d6}{operator!=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ other);}
 \DoxyCodeLine{00071\ \ \ \ \ \}}
 \DoxyCodeLine{00072\ }
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac7ed6a9239ef88c466979b4ef119547e}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ !=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ <\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}};}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ !=\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ <\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}};}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ <\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ !=\ other.x)\ \textcolor{keywordflow}{return}\ x\ <\ other.x;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ !=\ other.y)\ \textcolor{keywordflow}{return}\ y\ <\ other.y;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ z\ <\ other.z;}
 \DoxyCodeLine{00077\ \ \ \ \ \}}
 \DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a3c5e870e23e0e555eac5f6af9380bbd7}{operator[]}}(\textcolor{keywordtype}{int}\ index)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\&\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}})[index];}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ operator[](\textcolor{keywordtype}{int}\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\&x)[index];}
 \DoxyCodeLine{00081\ \ \ \ \ \}}
 \DoxyCodeLine{00082\ }
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{int}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a5d131749efe045699137af911f9e5bb7}{operator[]}}(\textcolor{keywordtype}{int}\ index)\ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\&\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}})[index];}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{int}\&\ operator[](\textcolor{keywordtype}{int}\ index)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\&x)[index];}
 \DoxyCodeLine{00085\ \ \ \ \ \}}
 \DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9f123f61770ebd1278da7913e74b1f0f}{dot}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{int}\ dot(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\ *\ other.x\ +\ y\ *\ other.y\ +\ z\ *\ other.z;}
 \DoxyCodeLine{00089\ \ \ \ \ \}}
 \DoxyCodeLine{00090\ }
-\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a884a33b5cb0621213500637c43ff3a17}{cross}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ other)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}},}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ -\/\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *\ other.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}}
+\DoxyCodeLine{00091\ \ \ \ \ Vector3i\ cross(\textcolor{keyword}{const}\ Vector3i\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ y\ *\ other.z\ -\/\ z\ *\ other.y,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ z\ *\ other.x\ -\/\ x\ *\ other.z,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ x\ *\ other.y\ -\/\ y\ *\ other.x}
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00097\ \ \ \ \ \}}
 \DoxyCodeLine{00098\ }
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ad5bd132f70c6c6cdfb01b427df432cca}{length}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::sqrt(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}));}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{float}\ length()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::sqrt(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(x\ *\ x\ +\ y\ *\ y\ +\ z\ *\ z));}
 \DoxyCodeLine{00101\ \ \ \ \ \}}
 \DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_aba47e6bea61d0320369b94e60803331e}{lengthSquared}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}\ +\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}}\ *\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}};}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{int}\ lengthSquared()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\ *\ x\ +\ y\ *\ y\ +\ z\ *\ z;}
 \DoxyCodeLine{00105\ \ \ \ \ \}}
 \DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a3830083b72ae8f8644ab283c006ae504}{manhattanLength}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}})\ +\ std::abs(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}})\ +\ std::abs(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}});}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{int}\ manhattanLength()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs(x)\ +\ std::abs(y)\ +\ std::abs(z);}
 \DoxyCodeLine{00109\ \ \ \ \ \}}
 \DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ad2b888582da127f05ce10389f99f01a0}{maxComponent}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::max(\{std::abs(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}),\ std::abs(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}),\ std::abs(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}})\});}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{int}\ maxComponent()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::max(\{std::abs(x),\ std::abs(y),\ std::abs(z)\});}
 \DoxyCodeLine{00113\ \ \ \ \ \}}
 \DoxyCodeLine{00114\ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a5e1ac45a2e205f2f71176c6eefef18ad}{Zero}}()\ \{}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(0,\ 0,\ 0);}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ Zero()\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(0,\ 0,\ 0);}
 \DoxyCodeLine{00117\ \ \ \ \ \}}
 \DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_aaabc0cd4da219aab8e859aa27adc089f}{One}}()\ \{}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(1,\ 1,\ 1);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ One()\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(1,\ 1,\ 1);}
 \DoxyCodeLine{00121\ \ \ \ \ \}}
 \DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a73896f29e8054616865d687e7d53e8aa}{UnitX}}()\ \{}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(1,\ 0,\ 0);}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ UnitX()\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(1,\ 0,\ 0);}
 \DoxyCodeLine{00125\ \ \ \ \ \}}
 \DoxyCodeLine{00126\ }
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a52307510ef2269c9eb9abb1835335978}{UnitY}}()\ \{}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(0,\ 1,\ 0);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ UnitY()\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(0,\ 1,\ 0);}
 \DoxyCodeLine{00129\ \ \ \ \ \}}
 \DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac6b066a3c1267bcb9136842c7aa59e89}{UnitZ}}()\ \{}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(0,\ 0,\ 1);}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ UnitZ()\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(0,\ 0,\ 1);}
 \DoxyCodeLine{00133\ \ \ \ \ \}}
 \DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a4a3227330ccea04e1f0948b51cb58e08}{distance}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ b)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ distance(\textcolor{keyword}{const}\ Vector3i\&\ a,\ \textcolor{keyword}{const}\ Vector3i\&\ b)\ \{}
 \DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (b\ -\/\ a).length();}
 \DoxyCodeLine{00137\ \ \ \ \ \}}
 \DoxyCodeLine{00138\ }
-\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ae44b0c18d65a35e74e365cd3c473786a}{distanceSquared}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ b)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ distanceSquared(\textcolor{keyword}{const}\ Vector3i\&\ a,\ \textcolor{keyword}{const}\ Vector3i\&\ b)\ \{}
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (b\ -\/\ a).lengthSquared();}
 \DoxyCodeLine{00141\ \ \ \ \ \}}
 \DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a3cd49d62eb275e9fb8cdb47c8fa3e2ec}{manhattanDistance}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ b)\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ manhattanDistance(\textcolor{keyword}{const}\ Vector3i\&\ a,\ \textcolor{keyword}{const}\ Vector3i\&\ b)\ \{}
 \DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (b\ -\/\ a).manhattanLength();}
 \DoxyCodeLine{00145\ \ \ \ \ \}}
 \DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9c1e40b8cd964139c51b8230c5c0a35d}{min}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ b)\ \{}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::min(a.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ b.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}),}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::min(a.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ b.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}),}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::min(a.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}},\ b.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}})}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ min(\textcolor{keyword}{const}\ Vector3i\&\ a,\ \textcolor{keyword}{const}\ Vector3i\&\ b)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::min(a.x,\ b.x),}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::min(a.y,\ b.y),}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::min(a.z,\ b.z)}
 \DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00153\ \ \ \ \ \}}
 \DoxyCodeLine{00154\ }
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a8cead7c56792a73e4cfa39c9bdec7409}{max}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ b)\ \{}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::max(a.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ b.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}}),}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::max(a.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ b.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}}),}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::max(a.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}},\ b.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}})}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ max(\textcolor{keyword}{const}\ Vector3i\&\ a,\ \textcolor{keyword}{const}\ Vector3i\&\ b)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::max(a.x,\ b.x),}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::max(a.y,\ b.y),}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::max(a.z,\ b.z)}
 \DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00161\ \ \ \ \ \}}
 \DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a0faef1fe8b7ea95720703a0fe24abe22}{clamp}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ value,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9c1e40b8cd964139c51b8230c5c0a35d}{min}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a8cead7c56792a73e4cfa39c9bdec7409}{max}})\ \{}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9412fa9734b3cd886dc1d7d7ba9c34bb}{Vector3i}}(}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::clamp(value.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9c1e40b8cd964139c51b8230c5c0a35d}{min}}.x,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a8cead7c56792a73e4cfa39c9bdec7409}{max}}.x),}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::clamp(value.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9c1e40b8cd964139c51b8230c5c0a35d}{min}}.y,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a8cead7c56792a73e4cfa39c9bdec7409}{max}}.y),}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::clamp(value.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}},\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a9c1e40b8cd964139c51b8230c5c0a35d}{min}}.z,\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a8cead7c56792a73e4cfa39c9bdec7409}{max}}.z)}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{static}\ Vector3i\ clamp(\textcolor{keyword}{const}\ Vector3i\&\ value,\ \textcolor{keyword}{const}\ Vector3i\&\ min,\ \textcolor{keyword}{const}\ Vector3i\&\ max)\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3i(}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::clamp(value.x,\ min.x,\ max.x),}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::clamp(value.y,\ min.y,\ max.y),}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ ::std::clamp(value.z,\ min.z,\ max.z)}
 \DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00169\ \ \ \ \ \}}
 \DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_aa2143342dd08d501788244f9cb3f5a07}{hash}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h1\ =\ ::std::hash<int>\{\}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}});}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h2\ =\ ::std::hash<int>\{\}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}});}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h3\ =\ ::std::hash<int>\{\}(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}});}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ hash()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h1\ =\ ::std::hash<int>\{\}(x);}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h2\ =\ ::std::hash<int>\{\}(y);}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h3\ =\ ::std::hash<int>\{\}(z);}
 \DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h1\ \string^\ (h2\ <<\ 1)\ \string^\ (h3\ <<\ 2);}
 \DoxyCodeLine{00176\ \ \ \ \ \}}
 \DoxyCodeLine{00177\ }
-\DoxyCodeLine{00178\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a6683dff216af3809e5361f8809ec88c7}{toString}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}("{}}\ +\ ::std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_af25b7d3bef09341950ba8938e775b8b3}{x}})\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ ::std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_ac446c11b1797f6603defe1d257dfbae3}{y}})\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ ::std::to\_string(\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_a18fedff57197145bfec6c66a7c8612cb}{z}})\ +\ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00178\ \ \ \ \ std::string\ toString()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}("{}}\ +\ ::std::to\_string(x)\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ ::std::to\_string(y)\ +\ \textcolor{stringliteral}{"{},\ "{}}\ +\ ::std::to\_string(z)\ +\ \textcolor{stringliteral}{"{})"{}};}
 \DoxyCodeLine{00180\ \ \ \ \ \}}
 \DoxyCodeLine{00181\ \};}
 \DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Vector3i}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_math_ab97457717b139e5206193a2e76ce0493}{operator*}}(\textcolor{keywordtype}{int}\ scalar,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Vector3i}}\&\ vec)\ \{}
+\DoxyCodeLine{00183\ \textcolor{keyword}{inline}\ Vector3i\ operator*(\textcolor{keywordtype}{int}\ scalar,\ \textcolor{keyword}{const}\ Vector3i\&\ vec)\ \{}
 \DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{return}\ vec\ *\ scalar;}
 \DoxyCodeLine{00185\ \}}
 \DoxyCodeLine{00186\ }
 \DoxyCodeLine{00187\ \}}
 \DoxyCodeLine{00188\ \}}
 \DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacestd}{std}}\ \{}
+\DoxyCodeLine{00190\ \textcolor{keyword}{namespace\ }std\ \{}
 \DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{struct\ }hash<\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}::Math::Vector3i>\ \{}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structstd_1_1hash_3_01_voxel_editor_1_1_math_1_1_vector3i_01_4_a9fcf8a1404691a89568da8022fa6843c}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{VoxelEditor::Math::Vector3i}}\&\ v)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v.\mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i_aa2143342dd08d501788244f9cb3f5a07}{hash}}();}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{struct\ }hash<VoxelEditor::Math::Vector3i>\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ VoxelEditor::Math::Vector3i\&\ v)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v.hash();}
 \DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00196\ \ \ \ \ \};}
 \DoxyCodeLine{00197\ \}}

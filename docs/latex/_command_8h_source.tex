@@ -1,5 +1,5 @@
 \doxysection{Command.\+h}
-\hypertarget{_command_8h_source}{}\label{_command_8h_source}\index{core/undo\_redo/Command.h@{core/undo\_redo/Command.h}}
+\label{_command_8h_source}\index{core/undo\_redo/Command.h@{core/undo\_redo/Command.h}}
 \mbox{\hyperlink{_command_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -9,77 +9,77 @@
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <chrono>}}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo}{UndoRedo}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }UndoRedo\ \{}
 \DoxyCodeLine{00010\ }
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ Forward\ declarations}}
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}};}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }Command;}
 \DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \{}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a8d0f48dacad4dcf230ccb8a1a14df1ac}{VoxelEdit}},}
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a6ff9dd0d34f65181173c1e4bc39939de}{Selection}},}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03937134cedab9078be39a77ee3a48a0}{Group}},}
-\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a967d35e40f3f95b1f538bd248640bf3b}{Camera}},}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a03a21915504df93cf5dba0636080f62e}{Workspace}},}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a72d6d7a1885885bb55a565fd1070581a}{Import}},}
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52a141a5b46e2087dc7a80a43710c2dacfb}{Composite}}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{enum\ class}\ CommandType\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ VoxelEdit,}
+\DoxyCodeLine{00016\ \ \ \ \ Selection,}
+\DoxyCodeLine{00017\ \ \ \ \ Group,}
+\DoxyCodeLine{00018\ \ \ \ \ Camera,}
+\DoxyCodeLine{00019\ \ \ \ \ Workspace,}
+\DoxyCodeLine{00020\ \ \ \ \ Import,}
+\DoxyCodeLine{00021\ \ \ \ \ Composite}
 \DoxyCodeLine{00022\ \};}
 \DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result}{ValidationResult}}\ \{}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_a0389d6fce3e17d2ecd9d7302d3940c61}{valid}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00026\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_a59336b28d56bffc01a325e2d47e99e30}{errors}};}
-\DoxyCodeLine{00027\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_aa535397266a9b3afb38cac9cf062d456}{warnings}};}
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }ValidationResult\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ valid\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<std::string>\ errors;}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<std::string>\ warnings;}
 \DoxyCodeLine{00028\ \ \ \ \ }
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_ae862d9a1adf706af97ef091eefcb4b6c}{addError}}(\textcolor{keyword}{const}\ std::string\&\ error)\ \{}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_a59336b28d56bffc01a325e2d47e99e30}{errors}}.push\_back(error);}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_a0389d6fce3e17d2ecd9d7302d3940c61}{valid}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ addError(\textcolor{keyword}{const}\ std::string\&\ error)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ errors.push\_back(error);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ valid\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00032\ \ \ \ \ \}}
 \DoxyCodeLine{00033\ \ \ \ \ }
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_a2b7407a5c4123310c17408ba4b7692e7}{addWarning}}(\textcolor{keyword}{const}\ std::string\&\ warning)\ \{}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_aa535397266a9b3afb38cac9cf062d456}{warnings}}.push\_back(warning);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ addWarning(\textcolor{keyword}{const}\ std::string\&\ warning)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ warnings.push\_back(warning);}
 \DoxyCodeLine{00036\ \ \ \ \ \}}
 \DoxyCodeLine{00037\ \};}
 \DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\ \{}
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }Command\ \{}
 \DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a8fe1ab00c6ace635e16810b1865c0cd9}{\string~Command}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~Command()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00042\ \ \ \ \ }
 \DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Core\ operations}}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a30722ec4f6777b2d80088f6990343848}{execute}}()\ =\ 0;}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_afd4c2e7460816931d09ddd414e213ad7}{undo}}()\ =\ 0;}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3cc9f3bf60abf3252cab94a6cd63eb25}{canUndo}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ execute()\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ undo()\ =\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ canUndo()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
 \DoxyCodeLine{00047\ \ \ \ \ }
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Command\ information}}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a4f281b72b5069097d93bbb3316028fad}{getName}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_ae3ac3a01733af389a4d289ddbc182075}{getDescription}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a4f281b72b5069097d93bbb3316028fad}{getName}}();\ \}}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_undo_redo_a8ec1ccbb9e9262a466ea8f9825a10a52}{CommandType}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_aa07b99ca98eca64ad8fef3165bf66ab7}{getType}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getName()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ getDescription()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getName();\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ CommandType\ getType()\ \textcolor{keyword}{const}\ =\ 0;}
 \DoxyCodeLine{00052\ \ \ \ \ }
 \DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Memory\ management}}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a621d5a5e80b04980ad7c287216ff9e4d}{getMemoryUsage}}()\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_af531550f86b128c224d3d47bea51a0ae}{compress}}()\ \{\}}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6770e00f50a677871e9ff447568e836d}{decompress}}()\ \{\}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ compress()\ \{\}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ decompress()\ \{\}}
 \DoxyCodeLine{00057\ \ \ \ \ }
 \DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Merging\ capability}}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a1cd5003c687acdd268531e8be2c7b7b0}{canMergeWith}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command}{Command}}\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{virtual}\ std::unique\_ptr<Command>\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_afa5a02f73fbccc60b7723aed270adbce}{mergeWith}}(std::unique\_ptr<Command>\ other)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ canMergeWith(\textcolor{keyword}{const}\ Command\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{virtual}\ std::unique\_ptr<Command>\ mergeWith(std::unique\_ptr<Command>\ other)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
 \DoxyCodeLine{00061\ \ \ \ \ }
 \DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Validation}}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_acd22d97b2c12b46c02ad4f6cce2940d3}{isValid}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result}{ValidationResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a9ee9b6fac042f95e79198b9e0632e94e}{validate}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result}{ValidationResult}}\ result;}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_acd22d97b2c12b46c02ad4f6cce2940d3}{isValid}}())\ \{}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ result.\mbox{\hyperlink{struct_voxel_editor_1_1_undo_redo_1_1_validation_result_ae862d9a1adf706af97ef091eefcb4b6c}{addError}}(\textcolor{stringliteral}{"{}Command\ is\ not\ valid"{}});}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isValid()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{virtual}\ ValidationResult\ validate()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ ValidationResult\ result;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isValid())\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ result.addError(\textcolor{stringliteral}{"{}Command\ is\ not\ valid"{}});}
 \DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
 \DoxyCodeLine{00070\ \ \ \ \ \}}
 \DoxyCodeLine{00071\ \ \ \ \ }
 \DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Timing\ information}}
-\DoxyCodeLine{00073\ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a690769c483756d9a657943a8b984d581}{getTimestamp}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6cf7d7d58bb50802e7cb335cd9b6c461}{m\_timestamp}};\ \}}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a04febc95d1a5331c865dbd64866b3502}{hasExecuted}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3ca44d16ecff16b618eb4ab12f5f33f0}{m\_executed}};\ \}}
+\DoxyCodeLine{00073\ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ getTimestamp()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_timestamp;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasExecuted()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_executed;\ \}}
 \DoxyCodeLine{00075\ \ \ \ \ }
 \DoxyCodeLine{00076\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00077\ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a6cf7d7d58bb50802e7cb335cd9b6c461}{m\_timestamp}}\ =\ std::chrono::high\_resolution\_clock::now();}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_undo_redo_1_1_command_a3ca44d16ecff16b618eb4ab12f5f33f0}{m\_executed}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00077\ \ \ \ \ std::chrono::high\_resolution\_clock::time\_point\ m\_timestamp\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_executed\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00079\ \};}
 \DoxyCodeLine{00080\ }
 \DoxyCodeLine{00081\ \}}

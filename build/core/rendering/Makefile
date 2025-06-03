@@ -185,6 +185,30 @@ VoxelEditor_Rendering/fast:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build
 .PHONY : VoxelEditor_Rendering/fast
 
+OpenGLRenderer.o: OpenGLRenderer.cpp.o
+.PHONY : OpenGLRenderer.o
+
+# target to build an object file
+OpenGLRenderer.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.o
+.PHONY : OpenGLRenderer.cpp.o
+
+OpenGLRenderer.i: OpenGLRenderer.cpp.i
+.PHONY : OpenGLRenderer.i
+
+# target to preprocess a source file
+OpenGLRenderer.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.i
+.PHONY : OpenGLRenderer.cpp.i
+
+OpenGLRenderer.s: OpenGLRenderer.cpp.s
+.PHONY : OpenGLRenderer.s
+
+# target to generate assembly for a file
+OpenGLRenderer.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.s
+.PHONY : OpenGLRenderer.cpp.s
+
 RenderTypes.o: RenderTypes.cpp.o
 .PHONY : RenderTypes.o
 
@@ -223,6 +247,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... VoxelEditor_Rendering"
+	@echo "... OpenGLRenderer.o"
+	@echo "... OpenGLRenderer.i"
+	@echo "... OpenGLRenderer.s"
 	@echo "... RenderTypes.o"
 	@echo "... RenderTypes.i"
 	@echo "... RenderTypes.s"

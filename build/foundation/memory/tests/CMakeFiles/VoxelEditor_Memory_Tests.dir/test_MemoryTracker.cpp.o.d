@@ -928,6 +928,9 @@ foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/test_MemoryTrack
   /opt/homebrew/include/gtest/gtest_prod.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/tests/../MemoryTracker.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/../events/EventDispatcher.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
   /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/chrono \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/calendar.h \
@@ -967,16 +970,13 @@ foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/test_MemoryTrack
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__charconv/from_chars_result.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__charconv/to_chars.h \
   /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
   /Users/michaelhalloran/cube_edit/foundation/memory/../events/CommonEvents.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/tests/../MemoryOptimizer.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/MemoryTracker.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/MemoryPool.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/foundation/memory/../events/EventHandler.h \
   /Users/michaelhalloran/cube_edit/foundation/memory/tests/../../events/EventDispatcher.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/thread \

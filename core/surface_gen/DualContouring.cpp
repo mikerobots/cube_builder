@@ -45,9 +45,9 @@ float DualContouring::GridSampler::sample(const Math::Vector3i& pos) const {
     
     // Check if position is in bounds
     if (pos.x < 0 || pos.y < 0 || pos.z < 0 ||
-        pos.x >= grid->getMaxDimensions().x ||
-        pos.y >= grid->getMaxDimensions().y ||
-        pos.z >= grid->getMaxDimensions().z) {
+        pos.x >= grid->getGridDimensions().x ||
+        pos.y >= grid->getGridDimensions().y ||
+        pos.z >= grid->getGridDimensions().z) {
         return 0.0f;
     }
     
@@ -240,7 +240,7 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
 
 void DualContouring::extractEdgeIntersections(const VoxelData::VoxelGrid& grid) {
     m_currentGrid = &grid;
-    Math::Vector3i dims = grid.getMaxDimensions();
+    Math::Vector3i dims = grid.getGridDimensions();
     
     // Process all cells
     for (int z = 0; z < dims.z - 1; ++z) {
@@ -398,7 +398,7 @@ float DualContouring::computeFeatureAngle(const Math::Vector3f& n1, const Math::
 }
 
 void DualContouring::generateQuads() {
-    Math::Vector3i dims = m_sampler.grid->getMaxDimensions();
+    Math::Vector3i dims = m_sampler.grid->getGridDimensions();
     
     // Generate quads for each face direction
     for (int z = 0; z < dims.z - 1; ++z) {

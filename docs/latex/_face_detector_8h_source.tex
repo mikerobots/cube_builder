@@ -1,62 +1,62 @@
 \doxysection{Face\+Detector.\+h}
-\hypertarget{_face_detector_8h_source}{}\label{_face_detector_8h_source}\index{core/visual\_feedback/include/visual\_feedback/FaceDetector.h@{core/visual\_feedback/include/visual\_feedback/FaceDetector.h}}
+\label{_face_detector_8h_source}\index{core/visual\_feedback/include/visual\_feedback/FaceDetector.h@{core/visual\_feedback/include/visual\_feedback/FaceDetector.h}}
 \mbox{\hyperlink{_face_detector_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_feedback_types_8h}{FeedbackTypes.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_grid_8h}{VoxelGrid.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}FeedbackTypes.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}VoxelGrid.h"{}}}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback}{VisualFeedback}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VisualFeedback\ \{}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_acc27d5bdc7e7622a1716fe753e208d2a}{FaceDetector}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }FaceDetector\ \{}
 \DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_acc27d5bdc7e7622a1716fe753e208d2a}{FaceDetector}}();}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a14e46601ea7453b0076b5c0c5f0796da}{\string~FaceDetector}}();}
+\DoxyCodeLine{00013\ \ \ \ \ FaceDetector();}
+\DoxyCodeLine{00014\ \ \ \ \ \string~FaceDetector();}
 \DoxyCodeLine{00015\ \ \ \ \ }
 \DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Face\ detection}}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a38ad0832fdf873f1ff581dd38743cbcc}{detectFace}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}}\&\ ray,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00017\ \ \ \ \ Face\ detectFace(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00019\ \ \ \ \ }
-\DoxyCodeLine{00020\ \ \ \ \ std::vector<Face>\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a6d63c8881b59f0551d699ab3cb4ec9f8}{detectFacesInRegion}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ region,\ }
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00020\ \ \ \ \ std::vector<Face>\ detectFacesInRegion(\textcolor{keyword}{const}\ Math::BoundingBox\&\ region,\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00023\ \ \ \ \ }
 \DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Placement\ validation}}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a3aa6930b4165faad335249eec6ecad9c}{isValidFaceForPlacement}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}}\&\ face,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid);}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a0a6c110a7bce897c5deb04b6d57da36d}{calculatePlacementPosition}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}}\&\ face);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidFaceForPlacement(\textcolor{keyword}{const}\ Face\&\ face,\ \textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid);}
+\DoxyCodeLine{00026\ \ \ \ \ Math::Vector3i\ calculatePlacementPosition(\textcolor{keyword}{const}\ Face\&\ face);}
 \DoxyCodeLine{00027\ \ \ \ \ }
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a2be0abc204cd8b946fcc51a63a9a1cd3}{setMaxRayDistance}}(\textcolor{keywordtype}{float}\ distance)\ \{\ m\_maxRayDistance\ =\ distance;\ \}}
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face_detector_a73b3729def75daea0b86867d993818b0}{getMaxRayDistance}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxRayDistance;\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ setMaxRayDistance(\textcolor{keywordtype}{float}\ distance)\ \{\ m\_maxRayDistance\ =\ distance;\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{float}\ getMaxRayDistance()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxRayDistance;\ \}}
 \DoxyCodeLine{00031\ \ \ \ \ }
 \DoxyCodeLine{00032\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_maxRayDistance;}
 \DoxyCodeLine{00034\ \ \ \ \ }
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Ray-\/voxel\ intersection}}
-\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_raycast_hit}{RaycastHit}}\ raycastVoxelGrid(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}}\&\ ray,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00036\ \ \ \ \ RaycastHit\ raycastVoxelGrid(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00038\ \ \ \ \ }
 \DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Face\ creation}}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}}\ createFaceFromHit(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_raycast_hit}{RaycastHit}}\&\ hit,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidFace(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_face}{Face}}\&\ face,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid);}
+\DoxyCodeLine{00040\ \ \ \ \ Face\ createFaceFromHit(\textcolor{keyword}{const}\ RaycastHit\&\ hit,\ VoxelData::VoxelResolution\ resolution);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidFace(\textcolor{keyword}{const}\ Face\&\ face,\ \textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid);}
 \DoxyCodeLine{00042\ \ \ \ \ }
 \DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Ray-\/box\ intersection}}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ rayIntersectsBox(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_visual_feedback_1_1_ray}{Ray}}\&\ ray,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ box,\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ rayIntersectsBox(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ Math::BoundingBox\&\ box,\ }
 \DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ tMin,\ \textcolor{keywordtype}{float}\&\ tMax)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00046\ \ \ \ \ }
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Grid\ traversal}}
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{struct\ }GridTraversal\ \{}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ current;}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\ step;}
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ tMax;}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ tDelta;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ Math::Vector3i\ current;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ Math::Vector3i\ step;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ Math::Vector3f\ tMax;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ Math::Vector3f\ tDelta;}
 \DoxyCodeLine{00053\ \ \ \ \ \};}
 \DoxyCodeLine{00054\ \ \ \ \ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ initializeTraversal(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ gridMin,\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ initializeTraversal(\textcolor{keyword}{const}\ Ray\&\ ray,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ gridMin,\ }
 \DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ voxelSize,\ GridTraversal\&\ traversal)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ stepTraversal(GridTraversal\&\ traversal)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00058\ \};}

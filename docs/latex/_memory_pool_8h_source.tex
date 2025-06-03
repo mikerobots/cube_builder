@@ -1,5 +1,5 @@
 \doxysection{Memory\+Pool.\+h}
-\hypertarget{_memory_pool_8h_source}{}\label{_memory_pool_8h_source}\index{foundation/memory/MemoryPool.h@{foundation/memory/MemoryPool.h}}
+\label{_memory_pool_8h_source}\index{foundation/memory/MemoryPool.h@{foundation/memory/MemoryPool.h}}
 \mbox{\hyperlink{_memory_pool_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -13,12 +13,12 @@
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <algorithm>}}
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <new>}}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_memory}{Memory}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }Memory\ \{}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}{MemoryPool}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }MemoryPool\ \{}
 \DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}{MemoryPool}}(\textcolor{keywordtype}{size\_t}\ objectSize,\ \textcolor{keywordtype}{size\_t}\ initialCapacity\ =\ 64)}
+\DoxyCodeLine{00017\ \ \ \ \ MemoryPool(\textcolor{keywordtype}{size\_t}\ objectSize,\ \textcolor{keywordtype}{size\_t}\ initialCapacity\ =\ 64)}
 \DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ :\ m\_objectSize(objectSize)}
 \DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ ,\ m\_initialBlockSize(initialCapacity)}
 \DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ ,\ m\_blockSize(initialCapacity)}
@@ -29,14 +29,14 @@
 \DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ allocateNewBlock();}
 \DoxyCodeLine{00026\ \ \ \ \ \}}
 \DoxyCodeLine{00027\ \ \ \ \ }
-\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_ad45507b003bb9f50e495c20a71e9f478}{\string~MemoryPool}}()\ \{}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a5cb8b477aebafb8084fdcefbff05c033}{clear}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \string~MemoryPool()\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ clear();}
 \DoxyCodeLine{00030\ \ \ \ \ \}}
 \DoxyCodeLine{00031\ \ \ \ \ }
-\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a6671a94f5e52d4456a038e03c387dd23}{MemoryPool}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}{MemoryPool}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}{MemoryPool}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_aed7d7e4c52aed430f45e177c1047ebdb}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a42003c484f44329415559469862835fb}{MemoryPool}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00032\ \ \ \ \ MemoryPool(\textcolor{keyword}{const}\ MemoryPool\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00033\ \ \ \ \ MemoryPool\&\ operator=(\textcolor{keyword}{const}\ MemoryPool\&)\ =\ \textcolor{keyword}{delete};}
 \DoxyCodeLine{00034\ \ \ \ \ }
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a4be58a12388757fa31eac677d06f39a8}{allocate}}()\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}*\ allocate()\ \{}
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_freeList.empty())\ \{}
@@ -50,7 +50,7 @@
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
 \DoxyCodeLine{00047\ \ \ \ \ \}}
 \DoxyCodeLine{00048\ \ \ \ \ }
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a6adfb8f9ea9751945757ba77948c501e}{deallocate}}(\textcolor{keywordtype}{void}*\ ptr)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ deallocate(\textcolor{keywordtype}{void}*\ ptr)\ \{}
 \DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
@@ -64,59 +64,59 @@
 \DoxyCodeLine{00060\ \ \ \ \ \}}
 \DoxyCodeLine{00061\ \ \ \ \ }
 \DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00063\ \ \ \ \ T*\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a84d59651ba2df959999a81c2cadd864b}{construct}}(Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ T*\ construct(Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\textcolor{keyword}{sizeof}(T)\ <=\ \textcolor{keyword}{sizeof}(typename\ ::std::aligned\_storage<\textcolor{keyword}{sizeof}(T),\ \textcolor{keyword}{alignof}(T)>::type));}
 \DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ ptr\ =\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a4be58a12388757fa31eac677d06f39a8}{allocate}}();}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ ptr\ =\ allocate();}
 \DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
 \DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}(ptr)\ T(::std::forward<Args>(args)...);}
 \DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (...)\ \{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a6adfb8f9ea9751945757ba77948c501e}{deallocate}}(ptr);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ deallocate(ptr);}
 \DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
 \DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00075\ \ \ \ \ \}}
 \DoxyCodeLine{00076\ \ \ \ \ }
 \DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_ad0451e30806c5bbc0bb82e5d609db016}{destroy}}(T*\ ptr)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ destroy(T*\ ptr)\ \{}
 \DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ptr)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ ptr-\/>\string~T();}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a6adfb8f9ea9751945757ba77948c501e}{deallocate}}(ptr);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ deallocate(ptr);}
 \DoxyCodeLine{00083\ \ \ \ \ \}}
 \DoxyCodeLine{00084\ \ \ \ \ }
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a262bb0a74cafafb9399c9e08a96d32ba}{getObjectSize}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getObjectSize()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_objectSize;}
 \DoxyCodeLine{00088\ \ \ \ \ \}}
 \DoxyCodeLine{00089\ \ \ \ \ }
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a51071fc8466074242b69225675ad28e7}{getCapacity}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCapacity()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_totalCapacity;}
 \DoxyCodeLine{00093\ \ \ \ \ \}}
 \DoxyCodeLine{00094\ \ \ \ \ }
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_acdab2dac6dba3708e13fc197cef3130c}{getUsedCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getUsedCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_usedCount;}
 \DoxyCodeLine{00098\ \ \ \ \ \}}
 \DoxyCodeLine{00099\ \ \ \ \ }
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a9febc5099703e7ccb9c29eabefca2b50}{getFreeCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getFreeCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_totalCapacity\ -\/\ m\_usedCount;}
 \DoxyCodeLine{00103\ \ \ \ \ \}}
 \DoxyCodeLine{00104\ \ \ \ \ }
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a32247afba7656be6a8708f808a4083f9}{getMemoryUsage}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_blocks.size()\ *\ m\_blockSize\ *\ m\_objectSize;}
 \DoxyCodeLine{00108\ \ \ \ \ \}}
 \DoxyCodeLine{00109\ \ \ \ \ }
-\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a3cf2b702140642f56aaf027d7a0e20a5}{getUtilization}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{float}\ getUtilization()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_totalCapacity\ >\ 0\ ?\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(m\_usedCount)\ /\ m\_totalCapacity\ :\ 0.0f;}
 \DoxyCodeLine{00113\ \ \ \ \ \}}
 \DoxyCodeLine{00114\ \ \ \ \ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a5cb8b477aebafb8084fdcefbff05c033}{clear}}()\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ clear()\ \{}
 \DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ block\ :\ m\_blocks)\ \{}
@@ -132,7 +132,7 @@
 \DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ m\_usedCount\ =\ 0;}
 \DoxyCodeLine{00129\ \ \ \ \ \}}
 \DoxyCodeLine{00130\ \ \ \ \ }
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a3c2f0c523743b5d5e07fd784fb586f29}{shrink}}()\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ shrink()\ \{}
 \DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Only\ shrink\ if\ no\ objects\ are\ currently\ used}}
@@ -142,7 +142,7 @@
 \DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00139\ \ \ \ \ \}}
 \DoxyCodeLine{00140\ \ \ \ \ }
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool_a16e0de60833997a0c520e676f727c039}{reserve}}(\textcolor{keywordtype}{size\_t}\ capacity)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ reserve(\textcolor{keywordtype}{size\_t}\ capacity)\ \{}
 \DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ ::std::lock\_guard<::std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (m\_totalCapacity\ <\ capacity)\ \{}
@@ -213,32 +213,32 @@
 \DoxyCodeLine{00209\ \};}
 \DoxyCodeLine{00210\ }
 \DoxyCodeLine{00211\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{00212\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a7442c6d5188a3b090e0adf267ef915c9}{TypedMemoryPool}}\ \{}
+\DoxyCodeLine{00212\ \textcolor{keyword}{class\ }TypedMemoryPool\ \{}
 \DoxyCodeLine{00213\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00214\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a7442c6d5188a3b090e0adf267ef915c9}{TypedMemoryPool}}(\textcolor{keywordtype}{size\_t}\ initialCapacity\ =\ 64)}
+\DoxyCodeLine{00214\ \ \ \ \ TypedMemoryPool(\textcolor{keywordtype}{size\_t}\ initialCapacity\ =\ 64)}
 \DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ :\ m\_pool(sizeof(T),\ initialCapacity)\ \{\}}
 \DoxyCodeLine{00216\ \ \ \ \ }
 \DoxyCodeLine{00217\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00218\ \ \ \ \ T*\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a88021b13c7d025598464f28b6918a052}{construct}}(Args\&\&...\ args)\ \{}
-\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_pool.template\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a88021b13c7d025598464f28b6918a052}{construct<T>}}(::std::forward<Args>(args)...);}
+\DoxyCodeLine{00218\ \ \ \ \ T*\ construct(Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_pool.template\ construct<T>(::std::forward<Args>(args)...);}
 \DoxyCodeLine{00220\ \ \ \ \ \}}
 \DoxyCodeLine{00221\ \ \ \ \ }
-\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a63622d7463e6cbd611e20609f7914dd4}{destroy}}(T*\ ptr)\ \{}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ m\_pool.template\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a63622d7463e6cbd611e20609f7914dd4}{destroy<T>}}(ptr);}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ destroy(T*\ ptr)\ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ m\_pool.template\ destroy<T>(ptr);}
 \DoxyCodeLine{00224\ \ \ \ \ \}}
 \DoxyCodeLine{00225\ \ \ \ \ }
-\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a169c2b2180f1fc1eea04a42bf1eb2bae}{getCapacity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getCapacity();\ \}}
-\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_aa4fa60cf586c51b9a4c2b7eb8f20c746}{getUsedCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getUsedCount();\ \}}
-\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_ac5d78793fb332060185c70c154502725}{getFreeCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getFreeCount();\ \}}
-\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_abd37157900979af78d8ecc7ad69e13aa}{getMemoryUsage}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getMemoryUsage();\ \}}
-\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_a76cd801bb0088e0fc89109fb4591db10}{getUtilization}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getUtilization();\ \}}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCapacity()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getCapacity();\ \}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getUsedCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getUsedCount();\ \}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getFreeCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getFreeCount();\ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getMemoryUsage();\ \}}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordtype}{float}\ getUtilization()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pool.getUtilization();\ \}}
 \DoxyCodeLine{00231\ \ \ \ \ }
-\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_afce4b91999a6cb48df36d3e0c1ffe2bb}{clear}}()\ \{\ m\_pool.clear();\ \}}
-\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_ab3a5ccf7ea5dad3104640e82f723f3ac}{shrink}}()\ \{\ m\_pool.shrink();\ \}}
-\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_typed_memory_pool_aaf14e994f01f38f1387b4fb0e83845bc}{reserve}}(\textcolor{keywordtype}{size\_t}\ capacity)\ \{\ m\_pool.reserve(capacity);\ \}}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordtype}{void}\ clear()\ \{\ m\_pool.clear();\ \}}
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordtype}{void}\ shrink()\ \{\ m\_pool.shrink();\ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{void}\ reserve(\textcolor{keywordtype}{size\_t}\ capacity)\ \{\ m\_pool.reserve(capacity);\ \}}
 \DoxyCodeLine{00235\ \ \ \ \ }
 \DoxyCodeLine{00236\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00237\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_memory_1_1_memory_pool}{MemoryPool}}\ m\_pool;}
+\DoxyCodeLine{00237\ \ \ \ \ MemoryPool\ m\_pool;}
 \DoxyCodeLine{00238\ \};}
 \DoxyCodeLine{00239\ }
 \DoxyCodeLine{00240\ \}}

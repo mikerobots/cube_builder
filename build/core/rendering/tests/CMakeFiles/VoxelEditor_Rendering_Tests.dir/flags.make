@@ -4,9 +4,9 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/michaelhalloran/cube_edit/core/rendering -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/core/camera -isystem /opt/homebrew/include
+CXX_INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/rendering -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/core/camera -isystem /opt/homebrew/include
 
-CXX_FLAGSarm64 = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wall -Wextra -pedantic -std=gnu++20
+CXX_FLAGSarm64 =  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wall -Wextra -pedantic -std=c++20
 
-CXX_FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wall -Wextra -pedantic -std=gnu++20
+CXX_FLAGS =  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wall -Wextra -pedantic -std=c++20
 

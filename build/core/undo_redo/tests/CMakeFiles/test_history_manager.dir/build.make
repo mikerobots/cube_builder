@@ -97,6 +97,7 @@ core/undo_redo/tests/test_history_manager: /opt/homebrew/lib/libgtest_main.a
 core/undo_redo/tests/test_history_manager: core/selection/libVoxelEditor_Selection.a
 core/undo_redo/tests/test_history_manager: core/voxel_data/libVoxelEditor_VoxelData.a
 core/undo_redo/tests/test_history_manager: core/rendering/libVoxelEditor_Rendering.a
+core/undo_redo/tests/test_history_manager: external/glad/libglad.a
 core/undo_redo/tests/test_history_manager: /opt/homebrew/lib/libgtest.a
 core/undo_redo/tests/test_history_manager: core/undo_redo/tests/CMakeFiles/test_history_manager.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_history_manager"

@@ -72,6 +72,10 @@ public:
     // Rendering updates
     void requestMeshUpdate() { updateVoxelMesh(); }
     
+    // Headless mode
+    bool isHeadless() const { return m_headless; }
+    void setHeadless(bool headless) { m_headless = headless; }
+    
 private:
     // Core systems
     std::unique_ptr<VoxelData::VoxelDataManager> m_voxelManager;
@@ -98,6 +102,7 @@ private:
     
     // Application state
     bool m_running = false;
+    bool m_headless = false;
     std::string m_currentProject;
     
     // Rendering data

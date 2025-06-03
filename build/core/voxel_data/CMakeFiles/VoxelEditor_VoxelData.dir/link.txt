@@ -1,2 +1,2 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libVoxelEditor_VoxelData.a CMakeFiles/VoxelEditor_VoxelData.dir/SparseOctree.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libVoxelEditor_VoxelData.a
+/Library/Developer/CommandLineTools/usr/bin/ar qc ../../lib/libVoxelEditor_VoxelData.a CMakeFiles/VoxelEditor_VoxelData.dir/SparseOctree.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib ../../lib/libVoxelEditor_VoxelData.a

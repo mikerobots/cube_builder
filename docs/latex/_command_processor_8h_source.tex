@@ -1,5 +1,5 @@
 \doxysection{Command\+Processor.\+h}
-\hypertarget{_command_processor_8h_source}{}\label{_command_processor_8h_source}\index{apps/cli/include/cli/CommandProcessor.h@{apps/cli/include/cli/CommandProcessor.h}}
+\label{_command_processor_8h_source}\index{apps/cli/include/cli/CommandProcessor.h@{apps/cli/include/cli/CommandProcessor.h}}
 \mbox{\hyperlink{_command_processor_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -10,54 +10,54 @@
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <deque>}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_command_types_8h}{cli/CommandTypes.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}cli/CommandTypes.h"{}}}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
 \DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}};}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }Application;}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a963b562027a6b14a1e6f5a58ccf41808}{CommandProcessor}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }CommandProcessor\ \{}
 \DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a963b562027a6b14a1e6f5a58ccf41808}{CommandProcessor}}(\mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ app);}
-\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a573eaaf1e9d4a50c045b0bfd0a4e60d5}{\string~CommandProcessor}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00017\ \ \ \ \ CommandProcessor(Application*\ app);}
+\DoxyCodeLine{00018\ \ \ \ \ \string~CommandProcessor()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00019\ \ \ \ \ }
 \DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ Command\ registration}}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a2d64b740a93fadb35f0c38043f672fec}{registerCommand}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition}{CommandDefinition}}\&\ command);}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a5d977e82fe47a8da7adb405c25a35553}{registerAlias}}(\textcolor{keyword}{const}\ std::string\&\ alias,\ \textcolor{keyword}{const}\ std::string\&\ command);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ registerCommand(\textcolor{keyword}{const}\ CommandDefinition\&\ command);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ registerAlias(\textcolor{keyword}{const}\ std::string\&\ alias,\ \textcolor{keyword}{const}\ std::string\&\ command);}
 \DoxyCodeLine{00023\ \ \ \ \ }
 \DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Command\ execution}}
-\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a30cc82325f94779e002da5ba37d09d72}{execute}}(\textcolor{keyword}{const}\ std::string\&\ input);}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_command_result}{CommandResult}}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a20ebf4d89d835f145c217b5e571c4b0b}{executeCommand}}(\textcolor{keyword}{const}\ std::string\&\ command,\ }
+\DoxyCodeLine{00025\ \ \ \ \ CommandResult\ execute(\textcolor{keyword}{const}\ std::string\&\ input);}
+\DoxyCodeLine{00026\ \ \ \ \ CommandResult\ executeCommand(\textcolor{keyword}{const}\ std::string\&\ command,\ }
 \DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ args);}
 \DoxyCodeLine{00028\ \ \ \ \ }
 \DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Command\ discovery}}
-\DoxyCodeLine{00030\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_af6a230e3a4e08ffe659f5f7da3d8a69d}{getCommands}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00031\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a59cc02cb4390442d0c35c863f9b96f87}{getCommandsInCategory}}(\textcolor{keyword}{const}\ std::string\&\ category)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_command_definition}{CommandDefinition}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a97748b92c9231de5be8d0126dc4a4d11}{getCommand}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \ \ std::vector<std::string>\ getCommands()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ std::vector<std::string>\ getCommandsInCategory(\textcolor{keyword}{const}\ std::string\&\ category)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{const}\ CommandDefinition*\ getCommand(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00033\ \ \ \ \ }
 \DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Auto-\/completion}}
-\DoxyCodeLine{00035\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a8ef5fd2c9021af4fb7c11ed6c0f74d77}{getCompletions}}(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00036\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a94eb14c8c14577cbb407131a9a92e52a}{getCommandCompletions}}(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00037\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a01e3df73ea2f69e166a3dd3c69749199}{getArgumentCompletions}}(\textcolor{keyword}{const}\ std::string\&\ command,\ }
+\DoxyCodeLine{00035\ \ \ \ \ std::vector<std::string>\ getCompletions(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00036\ \ \ \ \ std::vector<std::string>\ getCommandCompletions(\textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ \ \ \ \ std::vector<std::string>\ getArgumentCompletions(\textcolor{keyword}{const}\ std::string\&\ command,\ }
 \DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ argIndex,}
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ partial)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00040\ \ \ \ \ }
 \DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ History}}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a64b978daeab641d1183bb917a721d1df}{addToHistory}}(\textcolor{keyword}{const}\ std::string\&\ command);}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{const}\ std::deque<std::string>\&\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a23d2f6f853f9b50550f495caf3e7ed38}{getHistory}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_history;\ \}}
-\DoxyCodeLine{00044\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_ae73bdda91414c44d520e8609445e7250}{getPreviousCommand}}(\textcolor{keywordtype}{int}\ offset\ =\ 1)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00045\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_ac1b53dece033b6d0d42785bb26197a0a}{getNextCommand}}(\textcolor{keywordtype}{int}\ offset\ =\ 1)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ addToHistory(\textcolor{keyword}{const}\ std::string\&\ command);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{const}\ std::deque<std::string>\&\ getHistory()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_history;\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ std::string\ getPreviousCommand(\textcolor{keywordtype}{int}\ offset\ =\ 1)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ std::string\ getNextCommand(\textcolor{keywordtype}{int}\ offset\ =\ 1)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00046\ \ \ \ \ }
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Help}}
-\DoxyCodeLine{00048\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a713b7ca78669a48e366a1a4de7b78d51}{getHelp}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00049\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a713b7ca78669a48e366a1a4de7b78d51}{getHelp}}(\textcolor{keyword}{const}\ std::string\&\ command)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00050\ \ \ \ \ std::string\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_ad788f1f6c0d5d1aae77f0279485d36a7}{getCategoryHelp}}(\textcolor{keyword}{const}\ std::string\&\ category)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ \ \ \ \ std::string\ getHelp()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ \ \ \ \ std::string\ getHelp(\textcolor{keyword}{const}\ std::string\&\ command)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ std::string\ getCategoryHelp(\textcolor{keyword}{const}\ std::string\&\ category)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00051\ \ \ \ \ }
 \DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Input\ parsing\ (public\ for\ AutoComplete)}}
-\DoxyCodeLine{00053\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_command_processor_a51579bf8abe89bb02ece46cf65a1bc38}{parseInput}}(\textcolor{keyword}{const}\ std::string\&\ input)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ std::vector<std::string>\ parseInput(\textcolor{keyword}{const}\ std::string\&\ input)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00054\ \ \ \ \ }
 \DoxyCodeLine{00055\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_application}{Application}}*\ m\_app;}
+\DoxyCodeLine{00056\ \ \ \ \ Application*\ m\_app;}
 \DoxyCodeLine{00057\ \ \ \ \ std::unordered\_map<std::string,\ CommandDefinition>\ m\_commands;}
 \DoxyCodeLine{00058\ \ \ \ \ std::unordered\_map<std::string,\ std::string>\ m\_aliases;}
 \DoxyCodeLine{00059\ \ \ \ \ std::deque<std::string>\ m\_history;}

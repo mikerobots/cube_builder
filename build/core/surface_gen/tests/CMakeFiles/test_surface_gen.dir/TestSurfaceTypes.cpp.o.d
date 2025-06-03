@@ -940,6 +940,10 @@ core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/TestSurfaceTypes.cpp.o: \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/surface_gen/tests/../../voxel_data/VoxelTypes.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/chrono \

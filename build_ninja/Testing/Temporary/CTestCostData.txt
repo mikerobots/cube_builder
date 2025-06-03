@@ -1,0 +1,13 @@
+VoxelEditor_Logging_Tests_NOT_BUILT 0 0
+VoxelEditor_Config_Tests_NOT_BUILT 0 0
+VoxelEditor_VoxelData_Tests_NOT_BUILT 0 0
+VoxelEditor_Rendering_Tests_NOT_BUILT 0 0
+VoxelEditor_Input_Tests_NOT_BUILT 0 0
+VoxelEditor_Selection_Tests_NOT_BUILT 0 0
+---
+VoxelEditor_Logging_Tests_NOT_BUILT
+VoxelEditor_Config_Tests_NOT_BUILT
+VoxelEditor_VoxelData_Tests_NOT_BUILT
+VoxelEditor_Rendering_Tests_NOT_BUILT
+VoxelEditor_Input_Tests_NOT_BUILT
+VoxelEditor_Selection_Tests_NOT_BUILT

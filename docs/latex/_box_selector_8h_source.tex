@@ -1,71 +1,71 @@
 \doxysection{Box\+Selector.\+h}
-\hypertarget{_box_selector_8h_source}{}\label{_box_selector_8h_source}\index{core/selection/BoxSelector.h@{core/selection/BoxSelector.h}}
+\label{_box_selector_8h_source}\index{core/selection/BoxSelector.h@{core/selection/BoxSelector.h}}
 \mbox{\hyperlink{_box_selector_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_types_8h}{SelectionTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_set_8h}{SelectionSet.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ray_8h}{../../foundation/math/Ray.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{../voxel\_data/VoxelDataManager.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}SelectionTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}SelectionSet.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../../foundation/math/Ray.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../voxel\_data/VoxelDataManager.h"{}}}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_selection}{Selection}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Selection\ \{}
 \DoxyCodeLine{00010\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_a156e3923cd8c8567f4be73ddbb68b1f2}{BoxSelector}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }BoxSelector\ \{}
 \DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_a156e3923cd8c8567f4be73ddbb68b1f2}{BoxSelector}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_aafa6e07e3e7e79d4382e1c716d0d6e01}{\string~BoxSelector}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{explicit}\ BoxSelector(VoxelData::VoxelDataManager*\ voxelManager\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00014\ \ \ \ \ \string~BoxSelector()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00015\ \ \ \ \ }
 \DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ voxel\ manager}}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_ab3d81e9c37af9bf9b140a45d130bcf04}{setVoxelManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ manager)\ \{\ m\_voxelManager\ =\ manager;\ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ setVoxelManager(VoxelData::VoxelDataManager*\ manager)\ \{\ m\_voxelManager\ =\ manager;\ \}}
 \DoxyCodeLine{00018\ \ \ \ \ }
 \DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Box\ selection\ from\ screen\ coordinates}}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_a9f86b5ca7f7bea158dc11863247e5d60}{selectFromScreen}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenStart,\ }
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenEnd,}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ viewMatrix,}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ projMatrix,}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ viewportSize,}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00020\ \ \ \ \ SelectionSet\ selectFromScreen(\textcolor{keyword}{const}\ Math::Vector2i\&\ screenStart,\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector2i\&\ screenEnd,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Matrix4f\&\ viewMatrix,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Matrix4f\&\ projMatrix,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector2i\&\ viewportSize,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00026\ \ \ \ \ }
 \DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Box\ selection\ from\ world\ coordinates}}
-\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_a734977f85a777182e6852f7f33d96fc2}{selectFromWorld}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ worldBox,}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00028\ \ \ \ \ SelectionSet\ selectFromWorld(\textcolor{keyword}{const}\ Math::BoundingBox\&\ worldBox,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,}
 \DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ checkExistence\ =\ \textcolor{keyword}{true});}
 \DoxyCodeLine{00031\ \ \ \ \ }
 \DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Box\ selection\ from\ two\ rays\ (corner\ to\ corner)}}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_aefeb767355b5ba1d88b170d7289cbb0a}{selectFromRays}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}\&\ startRay,}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_ray}{Math::Ray}}\&\ endRay,}
+\DoxyCodeLine{00033\ \ \ \ \ SelectionSet\ selectFromRays(\textcolor{keyword}{const}\ Math::Ray\&\ startRay,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Ray\&\ endRay,}
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxDistance,}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00037\ \ \ \ \ }
 \DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Box\ selection\ from\ grid\ coordinates}}
-\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_aceb65b2908418dd7acbe056056a1a58f}{selectFromGrid}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ minGrid,}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ maxGrid,}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,}
+\DoxyCodeLine{00039\ \ \ \ \ SelectionSet\ selectFromGrid(\textcolor{keyword}{const}\ Math::Vector3i\&\ minGrid,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3i\&\ maxGrid,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,}
 \DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ checkExistence\ =\ \textcolor{keyword}{true});}
 \DoxyCodeLine{00043\ \ \ \ \ }
 \DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_acc26e31618f712e8d680beca570c9905}{setSelectionMode}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ mode)\ \{\ m\_selectionMode\ =\ mode;\ \}}
-\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_a19b4f8263c66075de4951284e10181b2}{getSelectionMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionMode;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ setSelectionMode(SelectionMode\ mode)\ \{\ m\_selectionMode\ =\ mode;\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ SelectionMode\ getSelectionMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionMode;\ \}}
 \DoxyCodeLine{00047\ \ \ \ \ }
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_a1ccf6ab806b09170ded11b36a2f54b5e}{setIncludePartial}}(\textcolor{keywordtype}{bool}\ include)\ \{\ m\_includePartial\ =\ include;\ \}}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_box_selector_ad92624bfc83aa6631f986dba2e5d514e}{getIncludePartial}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_includePartial;\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ setIncludePartial(\textcolor{keywordtype}{bool}\ include)\ \{\ m\_includePartial\ =\ include;\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ getIncludePartial()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_includePartial;\ \}}
 \DoxyCodeLine{00050\ \ \ \ \ }
 \DoxyCodeLine{00051\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ m\_selectionMode;}
+\DoxyCodeLine{00052\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00053\ \ \ \ \ SelectionMode\ m\_selectionMode;}
 \DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_includePartial;\ \textcolor{comment}{//\ Include\ voxels\ partially\ inside\ box}}
 \DoxyCodeLine{00055\ \ \ \ \ }
 \DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
-\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ computeScreenBox(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenStart,}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ screenEnd,}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ viewMatrix,}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_matrix4f}{Math::Matrix4f}}\&\ projMatrix,}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector2i}{Math::Vector2i}}\&\ viewportSize);}
+\DoxyCodeLine{00057\ \ \ \ \ Math::BoundingBox\ computeScreenBox(\textcolor{keyword}{const}\ Math::Vector2i\&\ screenStart,}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector2i\&\ screenEnd,}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Matrix4f\&\ viewMatrix,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Matrix4f\&\ projMatrix,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector2i\&\ viewportSize);}
 \DoxyCodeLine{00062\ \ \ \ \ }
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInBox(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ box)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ voxelExists(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVoxelInBox(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ \textcolor{keyword}{const}\ Math::BoundingBox\&\ box)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ voxelExists(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00065\ \};}
 \DoxyCodeLine{00066\ }
 \DoxyCodeLine{00067\ \}}

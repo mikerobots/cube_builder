@@ -1,5 +1,5 @@
 \chapter{Voxel Editor Architecture }
-\hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e}{}\label{md__a_r_c_h_i_t_e_c_t_u_r_e}\index{Voxel Editor Architecture@{Voxel Editor Architecture}}
+\label{md__a_r_c_h_i_t_e_c_t_u_r_e}\index{Voxel Editor Architecture@{Voxel Editor Architecture}}
 \label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md25}%
 \Hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md25}%
 \hypertarget{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md26}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{md__a_r_c_h_i_t_e_c_t_u_r_e_autotoc_md26}
@@ -43,14 +43,14 @@ The voxel editor is built with a modular architecture centered around a shared c
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }VoxelDataManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res,\ \textcolor{keywordtype}{bool}\ value);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res,\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(VoxelResolution\ res);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ resizeWorkspace(\textcolor{keyword}{const}\ Vector3f\&\ size);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ std::array<std::unique\_ptr<VoxelGrid>,\ 10>\ m\_grids;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ m\_activeResolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ m\_activeResolution;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ m\_workspaceSize;}
 \DoxyCodeLine{\};}
 
@@ -75,7 +75,7 @@ The voxel editor is built with a modular architecture centered around a shared c
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }GroupManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ createGroup(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ GroupId\ createGroup(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ hideGroup(GroupId\ \textcolor{keywordtype}{id});}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ showGroup(GroupId\ \textcolor{keywordtype}{id});}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ moveGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
@@ -138,8 +138,8 @@ The voxel editor is built with a modular architecture centered around a shared c
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{class\ }SelectionManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deselectVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ deselectVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ selectAll();}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearSelection();}
 \DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ getSelection()\ \textcolor{keyword}{const};}
@@ -237,7 +237,7 @@ The voxel editor is built with a modular architecture centered around a shared c
 \DoxyCodeLine{\textcolor{keyword}{class\ }FeedbackRenderer\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderFaceHighlight(\textcolor{keyword}{const}\ Face\&\ face);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelPreview(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelPreview(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ renderGroupOutlines(\textcolor{keyword}{const}\ std::vector<GroupId>\&\ groups);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}

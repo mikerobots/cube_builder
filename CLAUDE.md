@@ -1,7 +1,5 @@
 At the beginning of each session, read: DESIGN.md, ARCHITECTURE.md
 
-
-
 You will keep track of what you are working on with the TODO.md file
 in the root folder.  The TODO.md files will have a list of
 everything you have accomplished, and the next thing to do. Keep
@@ -86,6 +84,9 @@ The documentation includes:
 - Architecture diagrams
 - Design documents
 
+## CLI Commands
+Commands can be found apps/cli/CLI_GUIDE.md
+
 ## Testing
 
 ### Automated CLI Test Scripts
@@ -129,4 +130,13 @@ This project has a remote repository. After committing changes, remember to push
 ```
 git push -u origin master
 ```
+
+## Command Execution
+
+When debugging or testing, run commands directly without asking for permission. This includes:
+- Building the project
+- Running test scripts
+- Opening files to view results
+- Running debugging commands
+- Any other commands needed to solve the problem at hand
 

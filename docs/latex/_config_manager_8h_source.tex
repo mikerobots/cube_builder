@@ -1,28 +1,28 @@
 \doxysection{Config\+Manager.\+h}
-\hypertarget{_config_manager_8h_source}{}\label{_config_manager_8h_source}\index{foundation/config/ConfigManager.h@{foundation/config/ConfigManager.h}}
+\label{_config_manager_8h_source}\index{foundation/config/ConfigManager.h@{foundation/config/ConfigManager.h}}
 \mbox{\hyperlink{_config_manager_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_config_section_8h}{ConfigSection.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_dispatcher_8h}{../events/EventDispatcher.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_common_events_8h}{../events/CommonEvents.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}ConfigSection.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../events/EventDispatcher.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../events/CommonEvents.h"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <fstream>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <sstream>}}
 \DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <mutex>}}
 \DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_config}{Config}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Config\ \{}
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{keyword}{class\ }ConfigManager\ \{}
 \DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{static}\ ConfigManager\&\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a235ae8efbb74f182ab1b084ffd25ab8e}{getInstance}}()\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{static}\ ConfigManager\&\ getInstance()\ \{}
 \DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ConfigManager\ instance;}
 \DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
 \DoxyCodeLine{00018\ \ \ \ \ \}}
 \DoxyCodeLine{00019\ \ \ \ \ }
 \DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ Configuration\ loading/saving}}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a60bc56ba03c8c9fed60628b7ad18a3cc}{loadFromFile}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadFromFile(\textcolor{keyword}{const}\ std::string\&\ filename)\ \{}
 \DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ std::ifstream\ file(filename);}
@@ -30,10 +30,10 @@
 \DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a9225235b0e6d477da494514c8e8637d5}{loadFromStream}}(file);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ loadFromStream(file);}
 \DoxyCodeLine{00030\ \ \ \ \ \}}
 \DoxyCodeLine{00031\ \ \ \ \ }
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_abfbf61b4f263b8aa9993ee497a6dfb90}{saveToFile}}(\textcolor{keyword}{const}\ std::string\&\ filename)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ saveToFile(\textcolor{keyword}{const}\ std::string\&\ filename)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::ofstream\ file(filename);}
@@ -41,10 +41,10 @@
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_af1f3c4ec2230a71dcef2a182127032df}{saveToStream}}(file);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ saveToStream(file);}
 \DoxyCodeLine{00041\ \ \ \ \ \}}
 \DoxyCodeLine{00042\ \ \ \ \ }
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ada70697c3d589dd484fd428f7f0d6ccf}{loadDefaults}}()\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadDefaults()\ \{}
 \DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ m\_rootSection.clear();}
@@ -87,13 +87,13 @@
 \DoxyCodeLine{00083\ \ \ \ \ }
 \DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Value\ access}}
 \DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{00086\ \ \ \ \ T\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a741b7291be849d95c97791e333af5fda}{getValue}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const}\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ T\ getValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ defaultValue\ =\ T\{\})\ \textcolor{keyword}{const}\ \{}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_rootSection.\mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section_a9801b738e259ae91990d9ac8f2d09f1e}{getValueByPath}}(key,\ defaultValue);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_rootSection.getValueByPath(key,\ defaultValue);}
 \DoxyCodeLine{00089\ \ \ \ \ \}}
 \DoxyCodeLine{00090\ \ \ \ \ }
 \DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a13644a079641b9b8b8c40ab55d2d9b42}{setValue}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ setValue(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
 \DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ m\_rootSection.setValueByPath(key,\ value);}
@@ -101,17 +101,17 @@
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Notify\ about\ configuration\ change}}
 \DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_eventDispatcher)\ \{}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event}{Events::ConfigurationChangedEvent}}\ event(key);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ Events::ConfigurationChangedEvent\ event(key);}
 \DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eventDispatcher-\/>dispatch(event);}
 \DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00103\ \ \ \ \ \}}
 \DoxyCodeLine{00104\ \ \ \ \ }
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_aa05e8fd8f821597b445b04fd268a1536}{hasValue}}(\textcolor{keyword}{const}\ std::string\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasValue(\textcolor{keyword}{const}\ std::string\&\ key)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_rootSection.hasValueByPath(key);}
 \DoxyCodeLine{00108\ \ \ \ \ \}}
 \DoxyCodeLine{00109\ \ \ \ \ }
-\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a99d680021a7f78c8d01535387e1b8420}{removeValue}}(\textcolor{keyword}{const}\ std::string\&\ key)\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ removeValue(\textcolor{keyword}{const}\ std::string\&\ key)\ \{}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Split\ path\ to\ find\ the\ section\ and\ key}}
@@ -130,13 +130,13 @@
 \DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_eventDispatcher)\ \{}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_configuration_changed_event}{Events::ConfigurationChangedEvent}}\ event(key);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ Events::ConfigurationChangedEvent\ event(key);}
 \DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eventDispatcher-\/>dispatch(event);}
 \DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00132\ \ \ \ \ \}}
 \DoxyCodeLine{00133\ \ \ \ \ }
 \DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//\ Section\ access}}
-\DoxyCodeLine{00135\ \ \ \ \ std::shared\_ptr<ConfigSection>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ab63eadecc0668dc0c8076e4c6cf1329a}{getSection}}(\textcolor{keyword}{const}\ std::string\&\ path)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ std::shared\_ptr<ConfigSection>\ getSection(\textcolor{keyword}{const}\ std::string\&\ path)\ \{}
 \DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (path.empty())\ \{}
 \DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
@@ -144,7 +144,7 @@
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getSectionByPath(path);}
 \DoxyCodeLine{00141\ \ \ \ \ \}}
 \DoxyCodeLine{00142\ \ \ \ \ }
-\DoxyCodeLine{00143\ \ \ \ \ std::shared\_ptr<const\ ConfigSection>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a521ddb298b4cbfc3671c1a4bd85c8165}{getSection}}(\textcolor{keyword}{const}\ std::string\&\ path)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00143\ \ \ \ \ std::shared\_ptr<const\ ConfigSection>\ getSection(\textcolor{keyword}{const}\ std::string\&\ path)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (path.empty())\ \{}
 \DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
@@ -152,7 +152,7 @@
 \DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ getSectionByPath(path);}
 \DoxyCodeLine{00149\ \ \ \ \ \}}
 \DoxyCodeLine{00150\ \ \ \ \ }
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a01295081442fa8102bdfb322608174dc}{createSection}}(\textcolor{keyword}{const}\ std::string\&\ path)\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ createSection(\textcolor{keyword}{const}\ std::string\&\ path)\ \{}
 \DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!path.empty())\ \{}
 \DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ m\_rootSection.getSection(path);\ \textcolor{comment}{//\ Creates\ if\ doesn't\ exist}}
@@ -160,18 +160,18 @@
 \DoxyCodeLine{00156\ \ \ \ \ \}}
 \DoxyCodeLine{00157\ \ \ \ \ }
 \DoxyCodeLine{00158\ \ \ \ \ \textcolor{comment}{//\ Event\ integration}}
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_aab736eb0186f3348f179318c31ec63df}{setEventDispatcher}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ dispatcher)\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ setEventDispatcher(Events::EventDispatcher*\ dispatcher)\ \{}
 \DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ m\_eventDispatcher\ =\ dispatcher;}
 \DoxyCodeLine{00162\ \ \ \ \ \}}
 \DoxyCodeLine{00163\ \ \ \ \ }
 \DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ Utility}}
-\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ae5472736f70c8943ddefbf75cb862639}{clear}}()\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ clear()\ \{}
 \DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ m\_rootSection.clear();}
 \DoxyCodeLine{00168\ \ \ \ \ \}}
 \DoxyCodeLine{00169\ \ \ \ \ }
-\DoxyCodeLine{00170\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a3aba910ed6c2680e744a84d1c50cb030}{getAllKeys}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00170\ \ \ \ \ std::vector<std::string>\ getAllKeys()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ std::vector<std::string>\ allKeys;}
 \DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ collectAllKeys(m\_rootSection,\ \textcolor{stringliteral}{"{}"{}},\ allKeys);}
@@ -179,7 +179,7 @@
 \DoxyCodeLine{00175\ \ \ \ \ \}}
 \DoxyCodeLine{00176\ \ \ \ \ }
 \DoxyCodeLine{00177\ \ \ \ \ \textcolor{comment}{//\ Simple\ file\ format\ support\ (key=value\ format)}}
-\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_a9225235b0e6d477da494514c8e8637d5}{loadFromStream}}(std::istream\&\ stream)\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadFromStream(std::istream\&\ stream)\ \{}
 \DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ std::string\ line;}
 \DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(stream,\ line))\ \{}
 \DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ empty\ lines\ and\ comments}}
@@ -209,7 +209,7 @@
 \DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00206\ \ \ \ \ \}}
 \DoxyCodeLine{00207\ \ \ \ \ }
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_af1f3c4ec2230a71dcef2a182127032df}{saveToStream}}(std::ostream\&\ stream)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{bool}\ saveToStream(std::ostream\&\ stream)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ stream\ <<\ \textcolor{stringliteral}{"{}\#\ VoxelEditor\ Configuration\ File\(\backslash\)n"{}};}
 \DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ stream\ <<\ \textcolor{stringliteral}{"{}\#\ Generated\ automatically\(\backslash\)n\(\backslash\)n"{}};}
 \DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ }
@@ -219,12 +219,12 @@
 \DoxyCodeLine{00215\ \ \ \ \ \}}
 \DoxyCodeLine{00216\ \ \ \ \ }
 \DoxyCodeLine{00217\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00218\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_section}{ConfigSection}}\ m\_rootSection;}
-\DoxyCodeLine{00219\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ m\_eventDispatcher\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00218\ \ \ \ \ ConfigSection\ m\_rootSection;}
+\DoxyCodeLine{00219\ \ \ \ \ Events::EventDispatcher*\ m\_eventDispatcher\ =\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{00220\ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
 \DoxyCodeLine{00221\ \ \ \ \ }
-\DoxyCodeLine{00222\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager}{ConfigManager}}()\ \{}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_config_1_1_config_manager_ada70697c3d589dd484fd428f7f0d6ccf}{loadDefaults}}();}
+\DoxyCodeLine{00222\ \ \ \ \ ConfigManager()\ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ loadDefaults();}
 \DoxyCodeLine{00224\ \ \ \ \ \}}
 \DoxyCodeLine{00225\ \ \ \ \ }
 \DoxyCodeLine{00226\ \ \ \ \ std::shared\_ptr<ConfigSection>\ getSectionByPath(\textcolor{keyword}{const}\ std::string\&\ path)\ \{}

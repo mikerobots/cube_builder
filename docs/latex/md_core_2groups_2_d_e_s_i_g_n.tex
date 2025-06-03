@@ -1,5 +1,5 @@
 \chapter{Group Management Subsystem }
-\hypertarget{md_core_2groups_2_d_e_s_i_g_n}{}\label{md_core_2groups_2_d_e_s_i_g_n}\index{Group Management Subsystem@{Group Management Subsystem}}
+\label{md_core_2groups_2_d_e_s_i_g_n}\index{Group Management Subsystem@{Group Management Subsystem}}
 \label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md187}%
 \Hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md187}%
 \hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md188}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md188}
@@ -38,7 +38,7 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \DoxyCodeLine{\textcolor{keyword}{class\ }GroupManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ lifecycle}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ createGroup(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
+\DoxyCodeLine{\ \ \ \ GroupId\ createGroup(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ deleteGroup(GroupId\ \textcolor{keywordtype}{id});}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ renameGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ std::string\&\ newName);}
 \DoxyCodeLine{\ \ \ \ }
@@ -55,19 +55,19 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ operations}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ moveGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Vector3f\&\ offset);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ copyGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ std::string\&\ newName\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\ \ \ \ GroupId\ copyGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ std::string\&\ newName\ =\ \textcolor{stringliteral}{"{}"{}});}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ rotateGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ Quaternion\&\ rotation);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ scaleGroup(GroupId\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{float}\ scale);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Hierarchy\ management}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setParentGroup(GroupId\ child,\ GroupId\ parent);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ getParentGroup(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ GroupId\ getParentGroup(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ getChildGroups(GroupId\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ queries}}
 \DoxyCodeLine{\ \ \ \ std::vector<GroupInfo>\ listGroups()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ findGroupsByName(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ findGroupContaining(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ GroupId\ findGroupContaining(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Group\ locking}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ lockGroup(GroupId\ \textcolor{keywordtype}{id});}
@@ -77,7 +77,7 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ std::unordered\_map<GroupId,\ std::unique\_ptr<VoxelGroup>>\ m\_groups;}
 \DoxyCodeLine{\ \ \ \ std::unique\_ptr<GroupHierarchy>\ m\_hierarchy;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_nextGroupId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ m\_nextGroupId;}
 \DoxyCodeLine{\ \ \ \ VoxelDataManager*\ m\_voxelManager;}
 \DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
 \DoxyCodeLine{\};}
@@ -87,16 +87,16 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md196}{}\doxysubsection{\texorpdfstring{Group\+Id}{Group\+Id}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md196}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ =\ uint32\_t;}
-\DoxyCodeLine{\textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a477d021729ff0ffe5d34d276a2f8a821}{INVALID\_GROUP\_ID}}\ =\ 0;}
+\DoxyCodeLine{\textcolor{keyword}{using\ }GroupId\ =\ uint32\_t;}
+\DoxyCodeLine{\textcolor{keyword}{constexpr}\ GroupId\ INVALID\_GROUP\_ID\ =\ 0;}
 
 \end{DoxyCode}
 \hypertarget{md_core_2groups_2_d_e_s_i_g_n_autotoc_md197}{}\doxysubsection{\texorpdfstring{Voxel\+Id}{Voxel\+Id}}\label{md_core_2groups_2_d_e_s_i_g_n_autotoc_md197}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}\ \{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }VoxelId\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3i\ position;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ resolution;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ VoxelId\&\ other)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ hash()\ \textcolor{keyword}{const};}
@@ -107,14 +107,14 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }GroupInfo\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ id;}
+\DoxyCodeLine{\ \ \ \ GroupId\ id;}
 \DoxyCodeLine{\ \ \ \ std::string\ name;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color;}
+\DoxyCodeLine{\ \ \ \ Color\ color;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ visible;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ locked;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ opacity;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ voxelCount;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parentId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ parentId;}
 \DoxyCodeLine{\ \ \ \ std::vector<GroupId>\ childIds;}
 \DoxyCodeLine{\ \ \ \ BoundingBox\ bounds;}
 \DoxyCodeLine{\};}
@@ -125,7 +125,7 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }GroupMetadata\ \{}
 \DoxyCodeLine{\ \ \ \ std::string\ name;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Color}}\ color;}
+\DoxyCodeLine{\ \ \ \ Color\ color;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ visible;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ locked;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ opacity;}
@@ -147,7 +147,7 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ undo(VoxelDataManager\&\ voxelManager);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_groupId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ m\_groupId;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
 \DoxyCodeLine{\ \ \ \ std::vector<std::pair<VoxelId,\ VoxelId>>\ m\_moves;\ \textcolor{comment}{//\ old\ -\/>\ new\ positions}}
 \DoxyCodeLine{\};}
@@ -159,12 +159,12 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 \DoxyCodeLine{\textcolor{keyword}{class\ }CopyGroupOperation\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ CopyGroupOperation(GroupId\ sourceId,\ \textcolor{keyword}{const}\ std::string\&\ newName,\ \textcolor{keyword}{const}\ Vector3f\&\ offset\ =\ Vector3f::Zero());}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ execute(GroupManager\&\ groupManager,\ VoxelDataManager\&\ voxelManager);}
+\DoxyCodeLine{\ \ \ \ GroupId\ execute(GroupManager\&\ groupManager,\ VoxelDataManager\&\ voxelManager);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ undo(GroupManager\&\ groupManager,\ VoxelDataManager\&\ voxelManager);}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_sourceId;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ m\_createdId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ m\_sourceId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ m\_createdId;}
 \DoxyCodeLine{\ \ \ \ std::string\ m\_newName;}
 \DoxyCodeLine{\ \ \ \ Vector3f\ m\_offset;}
 \DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ m\_createdVoxels;}
@@ -216,7 +216,7 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }GroupCreatedEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ groupId;}
 \DoxyCodeLine{\ \ \ \ std::string\ name;}
 \DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ voxels;}
 \DoxyCodeLine{\};}
@@ -226,8 +226,8 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }GroupModifiedEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_aece763661b33684cdfc1a1cb95f438a3}{GroupModificationType}}\ type;\ \textcolor{comment}{//\ MOVED,\ RENAMED,\ VISIBILITY\_CHANGED,\ etc.}}
+\DoxyCodeLine{\ \ \ \ GroupId\ groupId;}
+\DoxyCodeLine{\ \ \ \ GroupModificationType\ type;\ \textcolor{comment}{//\ MOVED,\ RENAMED,\ VISIBILITY\_CHANGED,\ etc.}}
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Type-\/specific\ data}}
 \DoxyCodeLine{\};}
 
@@ -236,7 +236,7 @@ Manages voxel grouping, group operations (move, hide, copy), hierarchical organi
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }GroupDeletedEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId;}
+\DoxyCodeLine{\ \ \ \ GroupId\ groupId;}
 \DoxyCodeLine{\ \ \ \ std::string\ name;}
 \DoxyCodeLine{\ \ \ \ std::vector<VoxelId>\ releasedVoxels;}
 \DoxyCodeLine{\};}

@@ -1,5 +1,5 @@
 \doxysection{Outline\+Renderer.\+h}
-\hypertarget{_outline_renderer_8h_source}{}\label{_outline_renderer_8h_source}\index{core/visual\_feedback/include/visual\_feedback/OutlineRenderer.h@{core/visual\_feedback/include/visual\_feedback/OutlineRenderer.h}}
+\label{_outline_renderer_8h_source}\index{core/visual\_feedback/include/visual\_feedback/OutlineRenderer.h@{core/visual\_feedback/include/visual\_feedback/OutlineRenderer.h}}
 \mbox{\hyperlink{_outline_renderer_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -7,49 +7,49 @@
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_feedback_types_8h}{FeedbackTypes.h}}"{}}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_camera_8h}{Camera.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}FeedbackTypes.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Camera.h"{}}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback}{VisualFeedback}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }VisualFeedback\ \{}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a02f3b2b336cf6bd79385b77cfe5d0131}{OutlineRenderer}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }OutlineRenderer\ \{}
 \DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a02f3b2b336cf6bd79385b77cfe5d0131}{OutlineRenderer}}();}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a946d9592b06d4220fc70e7c6e8223211}{\string~OutlineRenderer}}();}
+\DoxyCodeLine{00014\ \ \ \ \ OutlineRenderer();}
+\DoxyCodeLine{00015\ \ \ \ \ \string~OutlineRenderer();}
 \DoxyCodeLine{00016\ \ \ \ \ }
 \DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Voxel\ outlines}}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a90d1d0a13735962242c27e52120ba9f4}{renderVoxelOutline}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ position,\ }
-\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,\ }
-\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_style}{OutlineStyle}}\&\ style);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ renderVoxelOutline(\textcolor{keyword}{const}\ Math::Vector3i\&\ position,\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
 \DoxyCodeLine{00021\ \ \ \ \ }
 \DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Box\ outlines}}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a34b28e7caf25b4da7f2d4d727bbfb43f}{renderBoxOutline}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ box,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_style}{OutlineStyle}}\&\ style);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ renderBoxOutline(\textcolor{keyword}{const}\ Math::BoundingBox\&\ box,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
 \DoxyCodeLine{00024\ \ \ \ \ }
 \DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Group\ outlines}}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a51ffcfab4d5c2c4c7ab648cc6af3929c}{renderGroupOutline}}(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_style}{OutlineStyle}}\&\ style);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ renderGroupOutline(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels,\ \textcolor{keyword}{const}\ OutlineStyle\&\ style);}
 \DoxyCodeLine{00027\ \ \ \ \ }
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Custom\ outlines}}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_ac35f061cb00a061b35aa5f14af242faa}{renderCustomOutline}}(\textcolor{keyword}{const}\ std::vector<Math::Vector3f>\&\ points,\ }
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_style}{OutlineStyle}}\&\ style,\ \textcolor{keywordtype}{bool}\ closed\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ renderCustomOutline(\textcolor{keyword}{const}\ std::vector<Math::Vector3f>\&\ points,\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ OutlineStyle\&\ style,\ \textcolor{keywordtype}{bool}\ closed\ =\ \textcolor{keyword}{true});}
 \DoxyCodeLine{00031\ \ \ \ \ }
 \DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Batch\ rendering}}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_ad22491a0f5ed9eec6123bdfbec458a1b}{beginBatch}}();}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a2411e3e61b5fe223ced01d470a5ae81e}{endBatch}}();}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_ab3b40e9a8070edb153e7a0707d230ee6}{renderBatch}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_camera_1_1_camera}{Camera::Camera}}\&\ camera);}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a8f099553ab8edaa6ac06d8e5480ae56a}{clearBatch}}();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ beginBatch();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ endBatch();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ renderBatch(\textcolor{keyword}{const}\ Camera::Camera\&\ camera);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ clearBatch();}
 \DoxyCodeLine{00037\ \ \ \ \ }
 \DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Line\ patterns}}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a077a3ef45ea0945e8810048f0440832f}{setPatternScale}}(\textcolor{keywordtype}{float}\ scale)\ \{\ m\_patternScale\ =\ scale;\ \}}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_ac64a60cdd53e0c041ce49c694d3068e1}{setPatternOffset}}(\textcolor{keywordtype}{float}\ offset)\ \{\ m\_patternOffset\ =\ offset;\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ setPatternScale(\textcolor{keywordtype}{float}\ scale)\ \{\ m\_patternScale\ =\ scale;\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ setPatternOffset(\textcolor{keywordtype}{float}\ offset)\ \{\ m\_patternOffset\ =\ offset;\ \}}
 \DoxyCodeLine{00041\ \ \ \ \ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Animation}}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_outline_renderer_a16bd0a720f7064f723d314f09cd04f41}{update}}(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ update(\textcolor{keywordtype}{float}\ deltaTime);}
 \DoxyCodeLine{00044\ \ \ \ \ }
 \DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{struct\ }OutlineVertex\ \{}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ position;}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_rendering_1_1_color}{Rendering::Color}}\ color;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ Math::Vector3f\ position;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ Rendering::Color\ color;}
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ patternCoord;}
 \DoxyCodeLine{00050\ \ \ \ \ \};}
 \DoxyCodeLine{00051\ \ \ \ \ }
@@ -73,13 +73,13 @@
 \DoxyCodeLine{00069\ \ \ \ \ }
 \DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Line\ generation}}
 \DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ addLineSegment(\textcolor{keyword}{const}\ Math::Vector3f\&\ start,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ end,\ }
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}\&\ color,\ \textcolor{keywordtype}{float}\ patternStart\ =\ 0.0f);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Rendering::Color\&\ color,\ \textcolor{keywordtype}{float}\ patternStart\ =\ 0.0f);}
 \DoxyCodeLine{00073\ \ \ \ \ }
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ addBox(\textcolor{keyword}{const}\ Math::BoundingBox\&\ box,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}\&\ color);}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ addBox(\textcolor{keyword}{const}\ Math::BoundingBox\&\ box,\ \textcolor{keyword}{const}\ Rendering::Color\&\ color);}
 \DoxyCodeLine{00075\ \ \ \ \ }
 \DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ addVoxelEdges(\textcolor{keyword}{const}\ Math::Vector3i\&\ position,\ }
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,\ }
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_rendering_ae7396e93f4d60e03702133999cb032faacb5feb1b7314637725a2e73bdc9f7295}{Rendering::Color}}\&\ color);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution,\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Rendering::Color\&\ color);}
 \DoxyCodeLine{00079\ \ \ \ \ }
 \DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Group\ outline\ generation}}
 \DoxyCodeLine{00081\ \ \ \ \ std::vector<Math::Vector3f>\ generateGroupOutline(\textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
@@ -89,7 +89,7 @@
 \DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ updateBuffers(\textcolor{keyword}{const}\ OutlineBatch\&\ batch);}
 \DoxyCodeLine{00086\ \ \ \ \ }
 \DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ Pattern\ calculation}}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{float}\ calculatePatternCoordinate(\textcolor{keywordtype}{float}\ distance,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_a64f3e5b74dce053b04e82dd6f1b7f75f}{LinePattern}}\ pattern,\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{float}\ calculatePatternCoordinate(\textcolor{keywordtype}{float}\ distance,\ LinePattern\ pattern,\ }
 \DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scale)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00090\ \ \ \ \ }
 \DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Edge\ detection\ for\ groups}}
@@ -105,25 +105,25 @@
 \DoxyCodeLine{00101\ \};}
 \DoxyCodeLine{00102\ }
 \DoxyCodeLine{00103\ \textcolor{comment}{//\ Utility\ class\ for\ generating\ voxel\ outlines}}
-\DoxyCodeLine{00104\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_voxel_outline_generator}{VoxelOutlineGenerator}}\ \{}
+\DoxyCodeLine{00104\ \textcolor{keyword}{class\ }VoxelOutlineGenerator\ \{}
 \DoxyCodeLine{00105\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Math::Vector3f>\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_voxel_outline_generator_a3424040fed0a2c7537a54bc4d94c5434}{generateVoxelEdges}}(}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3i}{Math::Vector3i}}\&\ position,\ }
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Math::Vector3f>\ generateVoxelEdges(}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Math::Vector3i\&\ position,\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00109\ \ \ \ \ }
-\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Math::Vector3f>\ \mbox{\hyperlink{class_voxel_editor_1_1_visual_feedback_1_1_voxel_outline_generator_aee6c03c7d00a68b6d4375491830cf78f}{generateGroupOutline}}(}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Math::Vector3f>\ generateGroupOutline(}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<VoxelId>\&\ voxels);}
 \DoxyCodeLine{00112\ \ \ \ \ }
 \DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ static\ std::vector<Math::Vector3f>\ generateSelectionOutline(}}
 \DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ const\ Selection::SelectionSet\&\ selection);}}
 \DoxyCodeLine{00115\ \ \ \ \ }
 \DoxyCodeLine{00116\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ getVoxelSize(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ getVoxelBounds(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_visual_feedback_af029efcf246156b51db813e99b393ee0}{VoxelId}}\&\ voxel);}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ getVoxelSize(VoxelData::VoxelResolution\ resolution);}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{static}\ Math::BoundingBox\ getVoxelBounds(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
 \DoxyCodeLine{00119\ \ \ \ \ }
 \DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{struct\ }EdgeKey\ \{}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ start;}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\ end;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ Math::Vector3f\ start;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ Math::Vector3f\ end;}
 \DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ EdgeKey\&\ other)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00125\ \ \ \ \ \};}

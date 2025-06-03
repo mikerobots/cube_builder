@@ -354,8 +354,6 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cstring \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/string.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/string.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rsize_t.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ssize_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/strings.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iosfwd \
@@ -810,6 +808,8 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_nlink_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_useconds_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_suseconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rsize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_def.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_setsize.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_fd_set.h \
@@ -929,12 +929,6 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp
   /Users/michaelhalloran/cube_edit/core/input/tests/../KeyboardHandler.h \
   /Users/michaelhalloran/cube_edit/core/input/InputHandler.h \
   /Users/michaelhalloran/cube_edit/core/input/InputTypes.h \
-  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Vector2f.h \
-  /Users/michaelhalloran/cube_edit/foundation/math/MathUtils.h \
-  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Vector2i.h \
-  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Vector3f.h \
-  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Quaternion.h \
-  /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/chrono \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/calendar.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/convert_to_tm.h \
@@ -973,11 +967,17 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_KeyboardHandler.cpp
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__charconv/from_chars_result.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__charconv/to_chars.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
+  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Vector2f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/MathUtils.h \
+  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Vector2i.h \
+  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Vector3f.h \
+  /Users/michaelhalloran/cube_edit/core/input/../../foundation/math/Quaternion.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventDispatcher.h \
-  /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
-  /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
+  /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
+  /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
   /Users/michaelhalloran/cube_edit/core/input/../../foundation/events/EventBase.h \
   /Users/michaelhalloran/cube_edit/core/input/tests/../../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/core/input/tests/../../../foundation/events/EventBase.h

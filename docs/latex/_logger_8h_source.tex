@@ -1,10 +1,10 @@
 \doxysection{Logger.\+h}
-\hypertarget{_logger_8h_source}{}\label{_logger_8h_source}\index{foundation/logging/Logger.h@{foundation/logging/Logger.h}}
+\label{_logger_8h_source}\index{foundation/logging/Logger.h@{foundation/logging/Logger.h}}
 \mbox{\hyperlink{_logger_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_log_output_8h}{LogOutput.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LogOutput.h"{}}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <mutex>}}
@@ -13,34 +13,34 @@
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <chrono>}}
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <thread>}}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_logging}{Logging}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }Logging\ \{}
 \DoxyCodeLine{00014\ }
 \DoxyCodeLine{00015\ \textcolor{keyword}{class\ }Logger\ \{}
 \DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047}{LogLevel}};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{using\ }Level\ =\ LogLevel;}
 \DoxyCodeLine{00018\ \ \ \ \ }
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ Logger\&\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa87799f1a399959de8493fdfeedf9bd2}{getInstance}}()\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ Logger\&\ getInstance()\ \{}
 \DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Logger\ instance;}
 \DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
 \DoxyCodeLine{00022\ \ \ \ \ \}}
 \DoxyCodeLine{00023\ \ \ \ \ }
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aff65b4bbf3f0e493fa3d497ef23eeb41}{setLevel}}(\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}\ level)\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ setLevel(Level\ level)\ \{}
 \DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ m\_level\ =\ level;}
 \DoxyCodeLine{00027\ \ \ \ \ \}}
 \DoxyCodeLine{00028\ \ \ \ \ }
-\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_ad5eaf4762cd1fa3b3401f7cece2eab82}{getLevel}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00029\ \ \ \ \ Level\ getLevel()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_level;}
 \DoxyCodeLine{00032\ \ \ \ \ \}}
 \DoxyCodeLine{00033\ \ \ \ \ }
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a3db047cd01506fa6155ad934af290dd0}{addOutput}}(std::unique\_ptr<LogOutput>\ output)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ addOutput(std::unique\_ptr<LogOutput>\ output)\ \{}
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ m\_outputs.push\_back(std::move(output));}
 \DoxyCodeLine{00037\ \ \ \ \ \}}
 \DoxyCodeLine{00038\ \ \ \ \ }
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_ab8e5dcb8c813d4c8d0e53dfbb50b9959}{removeOutput}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ removeOutput(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
 \DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ m\_outputs.erase(}
 \DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ std::remove\_if(m\_outputs.begin(),\ m\_outputs.end(),}
@@ -51,111 +51,111 @@
 \DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00048\ \ \ \ \ \}}
 \DoxyCodeLine{00049\ \ \ \ \ }
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_abf76a865cc5986337e633484d2c9d22b}{clearOutputs}}()\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ clearOutputs()\ \{}
 \DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ m\_outputs.clear();}
 \DoxyCodeLine{00053\ \ \ \ \ \}}
 \DoxyCodeLine{00054\ \ \ \ \ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_abda878e7cb39c43ceaacc4c5aa9ea8a0}{getOutputCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getOutputCount()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_outputs.size();}
 \DoxyCodeLine{00058\ \ \ \ \ \}}
 \DoxyCodeLine{00059\ \ \ \ \ }
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a0433a0ac2525429648b8111fbe83bd5f}{flush}}()\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ flush()\ \{}
 \DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ output\ :\ m\_outputs)\ \{}
 \DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ output-\/>flush();}
 \DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00065\ \ \ \ \ \}}
 \DoxyCodeLine{00066\ \ \ \ \ }
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_acc2784b9b75badb25cb41dc083d00b58}{debug}}(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ debug(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
 \DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ log(Level::Debug,\ message,\ component);}
 \DoxyCodeLine{00069\ \ \ \ \ \}}
 \DoxyCodeLine{00070\ \ \ \ \ }
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a1cb310abc7092bc6b32ad87aca9ead5a}{info}}(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ info(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
 \DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ log(Level::Info,\ message,\ component);}
 \DoxyCodeLine{00073\ \ \ \ \ \}}
 \DoxyCodeLine{00074\ \ \ \ \ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_ad830197e2e7a5e0159dff9a98feb92e7}{warning}}(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ warning(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
 \DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ log(Level::Warning,\ message,\ component);}
 \DoxyCodeLine{00077\ \ \ \ \ \}}
 \DoxyCodeLine{00078\ \ \ \ \ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a0a19aacfe107fd2b00eaa1c0b053d46e}{error}}(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ error(\textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component\ =\ \textcolor{stringliteral}{"{}"{}})\ \{}
 \DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ log(Level::Error,\ message,\ component);}
 \DoxyCodeLine{00081\ \ \ \ \ \}}
 \DoxyCodeLine{00082\ \ \ \ \ }
 \DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_aa3f3b373448bf90e5c905f6ef2992067}{debugf}}(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ debugf(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Debug))\ \{}
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Debug,\ formatString(format,\ std::forward<T>(arg),\ std::forward<Args>(args)...),\ \textcolor{stringliteral}{"{}"{}});}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00088\ \ \ \ \ \}}
 \DoxyCodeLine{00089\ \ \ \ \ }
 \DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a97f81b2180f9cb78a76a8971fe9cc349}{infof}}(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ infof(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Info))\ \{}
 \DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Info,\ formatString(format,\ std::forward<T>(arg),\ std::forward<Args>(args)...),\ \textcolor{stringliteral}{"{}"{}});}
 \DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00095\ \ \ \ \ \}}
 \DoxyCodeLine{00096\ \ \ \ \ }
 \DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a862b8b926f325b189e417d15c21602c6}{warningf}}(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ warningf(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Warning))\ \{}
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Warning,\ formatString(format,\ std::forward<T>(arg),\ std::forward<Args>(args)...),\ \textcolor{stringliteral}{"{}"{}});}
 \DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00102\ \ \ \ \ \}}
 \DoxyCodeLine{00103\ \ \ \ \ }
 \DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a6ae77d8ea175228b985209df83845039}{errorf}}(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ errorf(\textcolor{keyword}{const}\ std::string\&\ format,\ T\&\&\ arg,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Error))\ \{}
 \DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Error,\ formatString(format,\ std::forward<T>(arg),\ std::forward<Args>(args)...),\ \textcolor{stringliteral}{"{}"{}});}
 \DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00109\ \ \ \ \ \}}
 \DoxyCodeLine{00110\ \ \ \ \ }
 \DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a91ba44244177401fa6a156999ab7cefd}{debugfc}}(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ debugfc(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Debug))\ \{}
 \DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Debug,\ formatString(format,\ std::forward<Args>(args)...),\ component);}
 \DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00116\ \ \ \ \ \}}
 \DoxyCodeLine{00117\ \ \ \ \ }
 \DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_affe0176294ee21b8c0f531d438f6d04a}{infofc}}(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ infofc(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Info))\ \{}
 \DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Info,\ formatString(format,\ std::forward<Args>(args)...),\ component);}
 \DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00123\ \ \ \ \ \}}
 \DoxyCodeLine{00124\ \ \ \ \ }
 \DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a61a3f28b58da4af6726c343cf5c29ce0}{warningfc}}(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ warningfc(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Warning))\ \{}
 \DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Warning,\ formatString(format,\ std::forward<Args>(args)...),\ component);}
 \DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00130\ \ \ \ \ \}}
 \DoxyCodeLine{00131\ \ \ \ \ }
 \DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a7684b9da55f4c1dfdbd183c6aaf0f42a}{errorfc}}(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ errorfc(\textcolor{keyword}{const}\ std::string\&\ component,\ \textcolor{keyword}{const}\ std::string\&\ format,\ Args\&\&...\ args)\ \{}
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shouldLog(Level::Error))\ \{}
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ log(Level::Error,\ formatString(format,\ std::forward<Args>(args)...),\ component);}
 \DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00137\ \ \ \ \ \}}
 \DoxyCodeLine{00138\ \ \ \ \ }
 \DoxyCodeLine{00139\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger}{Logger}}()\ :\ m\_level(\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}::\mbox{\hyperlink{namespace_voxel_editor_1_1_logging_ada2cd0bcc193b6b24ac7799928dcf047a4059b0251f66a18cb56f544728796875}{Info}})\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ Logger()\ :\ m\_level(Level::Info)\ \{}
 \DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ default\ console\ output}}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a3db047cd01506fa6155ad934af290dd0}{addOutput}}(std::make\_unique<ConsoleOutput>());}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ addOutput(std::make\_unique<ConsoleOutput>());}
 \DoxyCodeLine{00143\ \ \ \ \ \}}
 \DoxyCodeLine{00144\ \ \ \ \ }
-\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}\ m\_level;}
+\DoxyCodeLine{00145\ \ \ \ \ Level\ m\_level;}
 \DoxyCodeLine{00146\ \ \ \ \ std::vector<std::unique\_ptr<LogOutput>>\ m\_outputs;}
 \DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
 \DoxyCodeLine{00148\ \ \ \ \ }
-\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{bool}\ shouldLog(\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}\ level)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{bool}\ shouldLog(Level\ level)\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(m\_mutex);}
 \DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ level\ >=\ m\_level;}
 \DoxyCodeLine{00152\ \ \ \ \ \}}
 \DoxyCodeLine{00153\ \ \ \ \ }
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ log(\mbox{\hyperlink{class_voxel_editor_1_1_logging_1_1_logger_a2cb1d3ebe5cf636f9dc88bda3ac9386a}{Level}}\ level,\ \textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component)\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ log(Level\ level,\ \textcolor{keyword}{const}\ std::string\&\ message,\ \textcolor{keyword}{const}\ std::string\&\ component)\ \{}
 \DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!shouldLog(level))\ \{}
 \DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}

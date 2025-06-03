@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+find_package(GTest REQUIRED)
 
 # CLI Integration Tests
 set(TEST_SOURCES
@@ -49,3 +49,36 @@ add_test(NAME VoxelEditor_CLI_Tests COMMAND VoxelEditor_CLI_Tests)
 
 # Enable C++20
 target_compile_features(VoxelEditor_CLI_Tests PRIVATE cxx_std_20)
+
+# VoxelMeshGenerator Tests
+set(MESH_GENERATOR_TEST_SOURCES
+    test_VoxelMeshGenerator.cpp
+)
+
+add_executable(VoxelEditor_VoxelMeshGenerator_Tests ${MESH_GENERATOR_TEST_SOURCES})
+
+target_include_directories(VoxelEditor_VoxelMeshGenerator_Tests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include
+    ${CMAKE_SOURCE_DIR}/core
+    ${CMAKE_SOURCE_DIR}/foundation
+)
+
+target_link_libraries(VoxelEditor_VoxelMeshGenerator_Tests PRIVATE
+    # Use the CLI library which includes VoxelMeshGenerator
+    VoxelEditor_CLI_Lib
+    
+    # Test framework
+    GTest::gtest
+    GTest::gtest_main
+)
+
+# Add mesh generator test
+add_test(NAME VoxelEditor_VoxelMeshGenerator_Tests COMMAND VoxelEditor_VoxelMeshGenerator_Tests)
+
+# Enable C++20
+target_compile_features(VoxelEditor_VoxelMeshGenerator_Tests PRIVATE cxx_std_20)
+
+# Discover tests
+include(GoogleTest)
+gtest_discover_tests(VoxelEditor_CLI_Tests)
+gtest_discover_tests(VoxelEditor_VoxelMeshGenerator_Tests)

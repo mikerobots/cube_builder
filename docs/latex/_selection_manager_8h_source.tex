@@ -1,5 +1,5 @@
 \doxysection{Selection\+Manager.\+h}
-\hypertarget{_selection_manager_8h_source}{}\label{_selection_manager_8h_source}\index{core/selection/SelectionManager.h@{core/selection/SelectionManager.h}}
+\label{_selection_manager_8h_source}\index{core/selection/SelectionManager.h@{core/selection/SelectionManager.h}}
 \mbox{\hyperlink{_selection_manager_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -8,107 +8,107 @@
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_types_8h}{SelectionTypes.h}}"{}}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_selection_set_8h}{SelectionSet.h}}"{}}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{../voxel\_data/VoxelDataManager.h}}"{}}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_dispatcher_8h}{../../foundation/events/EventDispatcher.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}SelectionTypes.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}SelectionSet.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}../voxel\_data/VoxelDataManager.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/EventDispatcher.h"{}}}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_selection}{Selection}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }Selection\ \{}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a07c23cceaf77dc1ba340d6c7e7b28466}{SelectionManager}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }SelectionManager\ \{}
 \DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a07c23cceaf77dc1ba340d6c7e7b28466}{SelectionManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ voxelManager\ =\ \textcolor{keyword}{nullptr},}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{::VoxelEditor::Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a14c13f442426b13d044f6ba587d14058}{\string~SelectionManager}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{explicit}\ SelectionManager(VoxelData::VoxelDataManager*\ voxelManager\ =\ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::VoxelEditor::Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00019\ \ \ \ \ \string~SelectionManager()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00020\ \ \ \ \ }
 \DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Disable\ copy}}
-\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_ac5fe9b3365239d0ff8614a64587ccab3}{SelectionManager}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a07c23cceaf77dc1ba340d6c7e7b28466}{SelectionManager}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a07c23cceaf77dc1ba340d6c7e7b28466}{SelectionManager}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a73510afa99b78574ad3fe270587a544a}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a07c23cceaf77dc1ba340d6c7e7b28466}{SelectionManager}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00022\ \ \ \ \ SelectionManager(\textcolor{keyword}{const}\ SelectionManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00023\ \ \ \ \ SelectionManager\&\ operator=(\textcolor{keyword}{const}\ SelectionManager\&)\ =\ \textcolor{keyword}{delete};}
 \DoxyCodeLine{00024\ \ \ \ \ }
 \DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Basic\ selection\ operations}}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a27bb06ad1a9fdd9f842b12d8dd379f51}{selectVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel);}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a5ee58c036e1f72ff9bae73dd31f7f671}{deselectVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel);}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a20cb1937a5f2cbd6d626c66d86b0ad5e}{toggleVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ selectVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ deselectVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ toggleVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel);}
 \DoxyCodeLine{00029\ \ \ \ \ }
 \DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Multi-\/selection\ operations}}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a3542d3c5df866f6c2773f66f895d718f}{selectAll}}();}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_aca0e3c44539b14a2aa561015a511726c}{selectNone}}();}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a614e8684bfa61fba03a03b2ea7f64936}{selectInverse}}();}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a7ed6267e4f1d54cb0184180a2dd37012}{selectByResolution}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ selectAll();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ selectNone();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ selectInverse();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ selectByResolution(VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00035\ \ \ \ \ }
 \DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Region\ selection}}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a247d7607b2be8f35367c0440ae618176}{selectBox}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ box,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a1b97547fb4440b1ec1f0c5bec3b09842}{selectSphere}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a42cbcebca2985449056c3fefeb59c712}{selectCylinder}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ base,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_vector3f}{Math::Vector3f}}\&\ direction,\ }
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keywordtype}{float}\ height,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_abf49b330098ce4bdb39be0e2eae02baf}{selectFloodFill}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ seed,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93}{FloodFillCriteria}}\ criteria\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a05a52388abdda47b31224d3bbdde5e93a2ec0d16e4ca169baedb9b2d50ec5c6d7}{FloodFillCriteria::Connected}});}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ selectBox(\textcolor{keyword}{const}\ Math::BoundingBox\&\ box,\ VoxelData::VoxelResolution\ resolution);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ selectSphere(\textcolor{keyword}{const}\ Math::Vector3f\&\ center,\ \textcolor{keywordtype}{float}\ radius,\ VoxelData::VoxelResolution\ resolution);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ selectCylinder(\textcolor{keyword}{const}\ Math::Vector3f\&\ base,\ \textcolor{keyword}{const}\ Math::Vector3f\&\ direction,\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ radius,\ \textcolor{keywordtype}{float}\ height,\ VoxelData::VoxelResolution\ resolution);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ selectFloodFill(\textcolor{keyword}{const}\ VoxelId\&\ seed,\ FloodFillCriteria\ criteria\ =\ FloodFillCriteria::Connected);}
 \DoxyCodeLine{00042\ \ \ \ \ }
 \DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Selection\ with\ mode}}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a5f858700a32ee8d34b160ea0c90a9d04}{select}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ selection,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ mode\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6a0ebe6df8a3ac338e0512acc741823fdb}{SelectionMode::Replace}});}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a27bb06ad1a9fdd9f842b12d8dd379f51}{selectVoxel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ mode);}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a9cd6712a465b08b1219fcc5245d756e1}{selectRegion}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_region}{SelectionRegion}}\&\ region,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ mode);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ select(\textcolor{keyword}{const}\ SelectionSet\&\ selection,\ SelectionMode\ mode\ =\ SelectionMode::Replace);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ selectVoxel(\textcolor{keyword}{const}\ VoxelId\&\ voxel,\ SelectionMode\ mode);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ selectRegion(\textcolor{keyword}{const}\ SelectionRegion\&\ region,\ VoxelData::VoxelResolution\ resolution,\ SelectionMode\ mode);}
 \DoxyCodeLine{00047\ \ \ \ \ }
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Selection\ queries}}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a89a38c507e2e42b25c46acd46e4193b7}{isSelected}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a2c9879637c5468c9b2249c57a6512718}{getSelection}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection;\ \}}
-\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a68090255bcf7bf51d611094984e50f0e}{getSelectionCopy}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection;\ \}}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a1715f87646ecbae1c8e8a040dc4c29eb}{getSelectionSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection.size();\ \}}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_aa3445a0acd3de03ea2fe574f701fab89}{hasSelection}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !m\_currentSelection.empty();\ \}}
-\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_ab3a8b4cbb81edd26119e05ab252b3380}{getSelectionBounds}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection.getBounds();\ \}}
-\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_stats}{SelectionStats}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a6ef09936f2074490f00b85a6749aafa3}{getSelectionStats}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection.getStats();\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSelected(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ SelectionSet\&\ getSelection()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection;\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ SelectionSet\ getSelectionCopy()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getSelectionSize()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection.size();\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasSelection()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !m\_currentSelection.empty();\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ Math::BoundingBox\ getSelectionBounds()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection.getBounds();\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ SelectionStats\ getSelectionStats()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentSelection.getStats();\ \}}
 \DoxyCodeLine{00056\ \ \ \ \ }
 \DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Selection\ history}}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a52a2811832784f24a44e8337540d09cb}{pushSelectionToHistory}}();}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_aeb1720ee03580f713c6607eb3b54fe87}{canUndo}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !m\_undoStack.empty();\ \}}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a7888dfa62d0a399e9d206c163043217a}{canRedo}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !m\_redoStack.empty();\ \}}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_ac76c5ac6573a1cdbede7dde21a4ca8af}{undoSelection}}();}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_afe0d3a01b0d4681ea19858a22e0ef96a}{redoSelection}}();}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_af785eb6f2baf0e88b44bcddd73ada4cd}{clearHistory}}();}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a07bab68eeccc682753a080ad7dcb0871}{setMaxHistorySize}}(\textcolor{keywordtype}{size\_t}\ size)\ \{\ m\_maxHistorySize\ =\ size;\ \}}
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a81e089824b6175726b0e2aa67bacc00e}{getMaxHistorySize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxHistorySize;\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ pushSelectionToHistory();}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ canUndo()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !m\_undoStack.empty();\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{bool}\ canRedo()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !m\_redoStack.empty();\ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ undoSelection();}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ redoSelection();}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ clearHistory();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ setMaxHistorySize(\textcolor{keywordtype}{size\_t}\ size)\ \{\ m\_maxHistorySize\ =\ size;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMaxHistorySize()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxHistorySize;\ \}}
 \DoxyCodeLine{00066\ \ \ \ \ }
 \DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Selection\ sets\ (named\ selections)}}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a8cb74fe8b62da586e1037035981ab996}{saveSelectionSet}}(\textcolor{keyword}{const}\ std::string\&\ name);}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_abc2eed1c67e50081bae5707996bda46a}{loadSelectionSet}}(\textcolor{keyword}{const}\ std::string\&\ name);}
-\DoxyCodeLine{00070\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a5c15a82cb7480a554890f49434516802}{getSelectionSetNames}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a74ae7912dda0764e11c93ef0f9fe9112}{deleteSelectionSet}}(\textcolor{keyword}{const}\ std::string\&\ name);}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a277126d252fa5e95109b549956900543}{hasSelectionSet}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a39d83e54f6e66cf2b2dce803d9e4bf4b}{clearSelectionSets}}();}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ saveSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00070\ \ \ \ \ std::vector<std::string>\ getSelectionSetNames()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasSelectionSet(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ clearSelectionSets();}
 \DoxyCodeLine{00074\ \ \ \ \ }
 \DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Set\ operations}}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a06809d11c2725321016a44ca367a8b93}{unionWith}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ other);}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_aa71b207cfc690ca5009c7ecec70baa88}{intersectWith}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ other);}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a6396a1f266eb0243d3f3e154a5cdd93f}{subtractFrom}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ other);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ unionWith(\textcolor{keyword}{const}\ SelectionSet\&\ other);}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ intersectWith(\textcolor{keyword}{const}\ SelectionSet\&\ other);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ subtractFrom(\textcolor{keyword}{const}\ SelectionSet\&\ other);}
 \DoxyCodeLine{00079\ \ \ \ \ }
 \DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Filtering}}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a5091a38576602c616359269c3ec62e23}{filterSelection}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_af589e01f5f77676ab3972297de9b0251}{SelectionPredicate}}\&\ predicate);}
-\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_af5053e81c71c0b4d6476e05ba243a80b}{getFilteredSelection}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_af589e01f5f77676ab3972297de9b0251}{SelectionPredicate}}\&\ predicate)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ filterSelection(\textcolor{keyword}{const}\ SelectionPredicate\&\ predicate);}
+\DoxyCodeLine{00082\ \ \ \ \ SelectionSet\ getFilteredSelection(\textcolor{keyword}{const}\ SelectionPredicate\&\ predicate)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00083\ \ \ \ \ }
 \DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Validation}}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_aa98eba579a4cae2262f729e228ecaf70}{validateSelection}}();\ \ \textcolor{comment}{//\ Remove\ non-\/existent\ voxels}}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a56808cd8e91418a72a3492d9be3b983e}{isValidSelection}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ validateSelection();\ \ \textcolor{comment}{//\ Remove\ non-\/existent\ voxels}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidSelection()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00087\ \ \ \ \ }
 \DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a62d62b37a8551ab74a2173165b516559}{setVoxelManager}}(\mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ manager)\ \{\ m\_voxelManager\ =\ manager;\ \}}
-\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a0bbd66a5bbf3f90224242d3252dc4cc3}{getVoxelManager}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_voxelManager;\ \}}
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_adc35a4372b4dbff09ed3fb9f2692ffc4}{setEventDispatcher}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ dispatcher)\ \{\ m\_eventDispatcher\ =\ dispatcher;\ \}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ setVoxelManager(VoxelData::VoxelDataManager*\ manager)\ \{\ m\_voxelManager\ =\ manager;\ \}}
+\DoxyCodeLine{00090\ \ \ \ \ VoxelData::VoxelDataManager*\ getVoxelManager()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_voxelManager;\ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ setEventDispatcher(Events::EventDispatcher*\ dispatcher)\ \{\ m\_eventDispatcher\ =\ dispatcher;\ \}}
 \DoxyCodeLine{00092\ \ \ \ \ }
 \DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Selection\ style}}
-\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a891ca422834af87cbdb21db2e4fff37a}{setSelectionStyle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_style}{SelectionStyle}}\&\ style)\ \{\ m\_selectionStyle\ =\ style;\ \}}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_style}{SelectionStyle}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a1f4d50363cb5873a7f4ade2fb145c175}{getSelectionStyle}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionStyle;\ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ setSelectionStyle(\textcolor{keyword}{const}\ SelectionStyle\&\ style)\ \{\ m\_selectionStyle\ =\ style;\ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{const}\ SelectionStyle\&\ getSelectionStyle()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_selectionStyle;\ \}}
 \DoxyCodeLine{00096\ \ \ \ \ }
 \DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Preview\ mode}}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_af8164adcdb60857726cd5038f5cb882e}{setPreviewMode}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_previewMode\ =\ enabled;\ \}}
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_aec43077a1e95e3f1b0af4a9a36b49696}{isPreviewMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_previewMode;\ \}}
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a1f8cd5f530471a46f0957b9a70233f75}{applyPreview}}();}
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a8d2d7f294a167b3737b7002740e85ae1}{cancelPreview}}();}
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_manager_a7007438f6f885064c2524a904c8a667a}{getPreviewSelection}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_previewSelection;\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ setPreviewMode(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_previewMode\ =\ enabled;\ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPreviewMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_previewMode;\ \}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ applyPreview();}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ cancelPreview();}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{const}\ SelectionSet\&\ getPreviewSelection()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_previewSelection;\ \}}
 \DoxyCodeLine{00103\ \ \ \ \ }
 \DoxyCodeLine{00104\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Core\ data}}
-\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ m\_currentSelection;}
-\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ m\_previewSelection;}
+\DoxyCodeLine{00106\ \ \ \ \ SelectionSet\ m\_currentSelection;}
+\DoxyCodeLine{00107\ \ \ \ \ SelectionSet\ m\_previewSelection;}
 \DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_previewMode;}
 \DoxyCodeLine{00109\ \ \ \ \ }
 \DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ History}}
@@ -120,43 +120,43 @@
 \DoxyCodeLine{00116\ \ \ \ \ std::unordered\_map<std::string,\ SelectionSet>\ m\_namedSets;}
 \DoxyCodeLine{00117\ \ \ \ \ }
 \DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Dependencies}}
-\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}*\ m\_voxelManager;}
-\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{::VoxelEditor::Events::EventDispatcher}}*\ m\_eventDispatcher;}
+\DoxyCodeLine{00119\ \ \ \ \ VoxelData::VoxelDataManager*\ m\_voxelManager;}
+\DoxyCodeLine{00120\ \ \ \ \ ::VoxelEditor::Events::EventDispatcher*\ m\_eventDispatcher;}
 \DoxyCodeLine{00121\ \ \ \ \ }
 \DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Configuration}}
-\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_selection_style}{SelectionStyle}}\ m\_selectionStyle;}
+\DoxyCodeLine{00123\ \ \ \ \ SelectionStyle\ m\_selectionStyle;}
 \DoxyCodeLine{00124\ \ \ \ \ }
 \DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ applySelectionMode(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ newSelection,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a88be1d9659a141a60b2d64607e3c22c6}{SelectionMode}}\ mode);}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ notifySelectionChanged(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ oldSelection,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{SelectionChangeType}}\ changeType);}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ applySelectionMode(\textcolor{keyword}{const}\ SelectionSet\&\ newSelection,\ SelectionMode\ mode);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ notifySelectionChanged(\textcolor{keyword}{const}\ SelectionSet\&\ oldSelection,\ SelectionChangeType\ changeType);}
 \DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ trimHistory();}
-\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{bool}\ voxelExists(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_voxel_id}{VoxelId}}\&\ voxel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{bool}\ voxelExists(\textcolor{keyword}{const}\ VoxelId\&\ voxel)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00130\ \ \ \ \ std::vector<VoxelId>\ getAllVoxels()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00131\ \};}
 \DoxyCodeLine{00132\ }
 \DoxyCodeLine{00133\ \textcolor{comment}{//\ Selection\ events}}
-\DoxyCodeLine{00134\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_1_1_events}{Events}}\ \{}
+\DoxyCodeLine{00134\ \textcolor{keyword}{namespace\ }Events\ \{}
 \DoxyCodeLine{00135\ }
-\DoxyCodeLine{00136\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a9f8c2b8f3b95c9cfbfc64a8748922cee}{SelectionChangedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{::VoxelEditor::Events::Event}}<SelectionChangedEvent>\ \{}
-\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a3bbc45a93298b37cd14ce49fb795cdb3}{oldSelection}};}
-\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a321e0ce96bcc4d372605ee4244c0a26b}{newSelection}};}
-\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{SelectionChangeType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_aa4bb4feaf41e7443b293dcbf75077fab}{changeType}};}
+\DoxyCodeLine{00136\ \textcolor{keyword}{struct\ }SelectionChangedEvent\ :\ \textcolor{keyword}{public}\ ::VoxelEditor::Events::Event<SelectionChangedEvent>\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ SelectionSet\ oldSelection;}
+\DoxyCodeLine{00138\ \ \ \ \ SelectionSet\ newSelection;}
+\DoxyCodeLine{00139\ \ \ \ \ SelectionChangeType\ changeType;}
 \DoxyCodeLine{00140\ \ \ \ \ }
-\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a9f8c2b8f3b95c9cfbfc64a8748922cee}{SelectionChangedEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ oldSel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ newSel,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_ad20b6e81ced2d9545bf9066e53337d59}{SelectionChangeType}}\ type)}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a3bbc45a93298b37cd14ce49fb795cdb3}{oldSelection}}(oldSel),\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a321e0ce96bcc4d372605ee4244c0a26b}{newSelection}}(newSel),\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_aa4bb4feaf41e7443b293dcbf75077fab}{changeType}}(type)\ \{\}}
+\DoxyCodeLine{00141\ \ \ \ \ SelectionChangedEvent(\textcolor{keyword}{const}\ SelectionSet\&\ oldSel,\ \textcolor{keyword}{const}\ SelectionSet\&\ newSel,\ SelectionChangeType\ type)}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ :\ oldSelection(oldSel),\ newSelection(newSel),\ changeType(type)\ \{\}}
 \DoxyCodeLine{00143\ \ \ \ \ }
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_changed_event_a9d9d8aa3d8017ead9a7c2731e0ea8f74}{getEventType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SelectionChangedEvent"{}};\ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ getEventType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SelectionChangedEvent"{}};\ \}}
 \DoxyCodeLine{00145\ \};}
 \DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6681b477edb76a967696b06be7dff2db}{SelectionOperationEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event}{::VoxelEditor::Events::Event}}<SelectionOperationEvent>\ \{}
-\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{SelectionOperationType}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a8a2e9ad8d4a65c0567507693deb0a083}{operationType}};}
-\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6194620194f87ea6c87b7d3f0b6fb968}{affectedVoxels}};}
-\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a71a5170a426c0322ba34a8afea3da35f}{success}};}
+\DoxyCodeLine{00147\ \textcolor{keyword}{struct\ }SelectionOperationEvent\ :\ \textcolor{keyword}{public}\ ::VoxelEditor::Events::Event<SelectionOperationEvent>\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ SelectionOperationType\ operationType;}
+\DoxyCodeLine{00149\ \ \ \ \ SelectionSet\ affectedVoxels;}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{bool}\ success;}
 \DoxyCodeLine{00151\ \ \ \ \ }
-\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6681b477edb76a967696b06be7dff2db}{SelectionOperationEvent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_selection_a9befda82ba661b00440e704a88e4cebf}{SelectionOperationType}}\ type,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_selection_1_1_selection_set}{SelectionSet}}\&\ voxels,\ \textcolor{keywordtype}{bool}\ result)}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a8a2e9ad8d4a65c0567507693deb0a083}{operationType}}(type),\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a6194620194f87ea6c87b7d3f0b6fb968}{affectedVoxels}}(voxels),\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_a71a5170a426c0322ba34a8afea3da35f}{success}}(result)\ \{\}}
+\DoxyCodeLine{00152\ \ \ \ \ SelectionOperationEvent(SelectionOperationType\ type,\ \textcolor{keyword}{const}\ SelectionSet\&\ voxels,\ \textcolor{keywordtype}{bool}\ result)}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ :\ operationType(type),\ affectedVoxels(voxels),\ success(result)\ \{\}}
 \DoxyCodeLine{00154\ \ \ \ \ }
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_voxel_editor_1_1_selection_1_1_events_1_1_selection_operation_event_af7a9814f5d5fc9e3e1d55d8d74a36c48}{getEventType}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SelectionOperationEvent"{}};\ \}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ getEventType()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SelectionOperationEvent"{}};\ \}}
 \DoxyCodeLine{00156\ \};}
 \DoxyCodeLine{00157\ }
 \DoxyCodeLine{00158\ \}}

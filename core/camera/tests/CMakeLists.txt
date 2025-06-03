@@ -3,6 +3,7 @@ find_package(GTest REQUIRED)
 set(CAMERA_TEST_SOURCES
     test_Camera.cpp
     test_OrbitCamera.cpp
+    test_OrbitCamera_transformations.cpp
     test_Viewport.cpp
     test_CameraController.cpp
 )

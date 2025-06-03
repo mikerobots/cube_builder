@@ -1,5 +1,5 @@
 \chapter{Voxel Data Management Subsystem }
-\hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n}{}\label{md_core_2voxel__data_2_d_e_s_i_g_n}\index{Voxel Data Management Subsystem@{Voxel Data Management Subsystem}}
+\label{md_core_2voxel__data_2_d_e_s_i_g_n}\index{Voxel Data Management Subsystem@{Voxel Data Management Subsystem}}
 \label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md439}%
 \Hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md439}%
 \hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md440}{}\doxysection{\texorpdfstring{Purpose}{Purpose}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md440}
@@ -44,23 +44,23 @@ Manages multi-\/resolution voxel storage, workspace bounds, and provides efficie
 \DoxyCodeLine{\textcolor{keyword}{class\ }VoxelDataManager\ \{}
 \DoxyCodeLine{\textcolor{keyword}{public}:}
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Voxel\ operations}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res,\ \textcolor{keywordtype}{bool}\ value);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ setVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res,\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ getVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasVoxel(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Resolution\ management}}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ getActiveResolution()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ setActiveResolution(VoxelResolution\ res);}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ getActiveResolution()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Workspace\ management}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ resizeWorkspace(\textcolor{keyword}{const}\ Vector3f\&\ newSize);}
 \DoxyCodeLine{\ \ \ \ Vector3f\ getWorkspaceSize()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValidPosition(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ isValidPosition(\textcolor{keyword}{const}\ Vector3i\&\ pos,\ VoxelResolution\ res)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Bulk\ operations}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearAll();}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearResolution(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res);}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getVoxelCount(\mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ clearResolution(VoxelResolution\ res);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getVoxelCount(VoxelResolution\ res)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Memory\ management}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\ \textcolor{keyword}{const};}
@@ -68,7 +68,7 @@ Manages multi-\/resolution voxel storage, workspace bounds, and provides efficie
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\textcolor{keyword}{private}:}
 \DoxyCodeLine{\ \ \ \ std::array<std::unique\_ptr<VoxelGrid>,\ 10>\ m\_grids;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ m\_activeResolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ m\_activeResolution;}
 \DoxyCodeLine{\ \ \ \ std::unique\_ptr<WorkspaceManager>\ m\_workspace;}
 \DoxyCodeLine{\ \ \ \ EventDispatcher*\ m\_eventDispatcher;}
 \DoxyCodeLine{\};}
@@ -78,17 +78,17 @@ Manages multi-\/resolution voxel storage, workspace bounds, and provides efficie
 \hypertarget{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md449}{}\doxysubsection{\texorpdfstring{Voxel Resolution Enum}{Voxel Resolution Enum}}\label{md_core_2voxel__data_2_d_e_s_i_g_n_autotoc_md449}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ :\ uint8\_t\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8aeb3107023563be5a16dd90314394c80e}{Size\_1cm}}\ =\ 0,\ \ \ \textcolor{comment}{//\ 1cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a1b98375d02731e698132094793ada6c7}{Size\_2cm}}\ =\ 1,\ \ \ \textcolor{comment}{//\ 2cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a4760c53267fc13b78962fe379583ed73}{Size\_4cm}}\ =\ 2,\ \ \ \textcolor{comment}{//\ 4cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a89edd42eddb2e52c1ac16c5b4bbc56b7}{Size\_8cm}}\ =\ 3,\ \ \ \textcolor{comment}{//\ 8cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8ae3ac033f5ce503ed4d798c81afd6a0bc}{Size\_16cm}}\ =\ 4,\ \ \textcolor{comment}{//\ 16cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a9c8b2cde7074df3df198a124ecb7c95d}{Size\_32cm}}\ =\ 5,\ \ \textcolor{comment}{//\ 32cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a5c3938a2f7b9af6f0c52f45e29e6bf93}{Size\_64cm}}\ =\ 6,\ \ \textcolor{comment}{//\ 64cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a3ed34b80d31717f43fedc0a4ffa29c46}{Size\_128cm}}\ =\ 7,\ \textcolor{comment}{//\ 128cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8abb36185c3447faea14b1bd945b8af16f}{Size\_256cm}}\ =\ 8,\ \textcolor{comment}{//\ 256cm\ voxels}}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8a68044428fd9ade682008ff6672d66777}{Size\_512cm}}\ =\ 9\ \ \textcolor{comment}{//\ 512cm\ voxels}}
+\DoxyCodeLine{\textcolor{keyword}{enum\ class}\ VoxelResolution\ :\ uint8\_t\ \{}
+\DoxyCodeLine{\ \ \ \ Size\_1cm\ =\ 0,\ \ \ \textcolor{comment}{//\ 1cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_2cm\ =\ 1,\ \ \ \textcolor{comment}{//\ 2cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_4cm\ =\ 2,\ \ \ \textcolor{comment}{//\ 4cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_8cm\ =\ 3,\ \ \ \textcolor{comment}{//\ 8cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_16cm\ =\ 4,\ \ \textcolor{comment}{//\ 16cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_32cm\ =\ 5,\ \ \textcolor{comment}{//\ 32cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_64cm\ =\ 6,\ \ \textcolor{comment}{//\ 64cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_128cm\ =\ 7,\ \textcolor{comment}{//\ 128cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_256cm\ =\ 8,\ \textcolor{comment}{//\ 256cm\ voxels}}
+\DoxyCodeLine{\ \ \ \ Size\_512cm\ =\ 9\ \ \textcolor{comment}{//\ 512cm\ voxels}}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}
@@ -97,12 +97,12 @@ Manages multi-\/resolution voxel storage, workspace bounds, and provides efficie
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }VoxelPosition\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3i\ gridPos;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ resolution;}
 \DoxyCodeLine{\ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Conversion\ utilities}}
 \DoxyCodeLine{\ \ \ \ Vector3f\ toWorldSpace(\textcolor{keyword}{const}\ Vector3f\&\ workspaceSize)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ VoxelPosition\ fromWorldSpace(\textcolor{keyword}{const}\ Vector3f\&\ worldPos,\ }
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ res,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelResolution\ res,}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vector3f\&\ workspaceSize);}
 \DoxyCodeLine{\};}
 
@@ -135,7 +135,7 @@ Manages multi-\/resolution voxel storage, workspace bounds, and provides efficie
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }VoxelChangedEvent\ \{}
 \DoxyCodeLine{\ \ \ \ Vector3i\ position;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ resolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ resolution;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ oldValue;}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ newValue;}
 \DoxyCodeLine{\};}
@@ -145,8 +145,8 @@ Manages multi-\/resolution voxel storage, workspace bounds, and provides efficie
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }ResolutionChangedEvent\ \{}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ oldResolution;}
-\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{test___event_dispatcher_8cpp_a809cb57e6c71414ebeedcdbcf7631be9}{VoxelResolution}}\ newResolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ oldResolution;}
+\DoxyCodeLine{\ \ \ \ VoxelResolution\ newResolution;}
 \DoxyCodeLine{\};}
 
 \end{DoxyCode}

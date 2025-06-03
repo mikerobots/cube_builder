@@ -1,75 +1,75 @@
 \doxysection{Group\+Hierarchy.\+h}
-\hypertarget{_group_hierarchy_8h_source}{}\label{_group_hierarchy_8h_source}\index{core/groups/include/groups/GroupHierarchy.h@{core/groups/include/groups/GroupHierarchy.h}}
+\label{_group_hierarchy_8h_source}\index{core/groups/include/groups/GroupHierarchy.h@{core/groups/include/groups/GroupHierarchy.h}}
 \mbox{\hyperlink{_group_hierarchy_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_group_types_8h}{GroupTypes.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}GroupTypes.h"{}}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <mutex>}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_groups}{Groups}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Groups\ \{}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a31bd24ed3431fb50a6d09b511ae6c0ff}{GroupHierarchy}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }GroupHierarchy\ \{}
 \DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a31bd24ed3431fb50a6d09b511ae6c0ff}{GroupHierarchy}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7a99334b683670b9dcaeb4581c38a715}{\string~GroupHierarchy}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00014\ \ \ \ \ GroupHierarchy()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00015\ \ \ \ \ \string~GroupHierarchy()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00016\ \ \ \ \ }
 \DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Hierarchy\ management}}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a3ff2c55d568903f5234ee283d9047c98}{addChild}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child);}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9787f2825300c4f2dac1f67df3fb989c}{removeChild}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child);}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6699e598288c9d204a3736cfd526af85}{setParent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent);}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a95f84b5c027d24f1faad0cef1ebba982}{removeFromHierarchy}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ addChild(GroupId\ parent,\ GroupId\ child);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{bool}\ removeChild(GroupId\ parent,\ GroupId\ child);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ setParent(GroupId\ child,\ GroupId\ parent);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ removeFromHierarchy(GroupId\ groupId);}
 \DoxyCodeLine{00022\ \ \ \ \ }
 \DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Hierarchy\ queries}}
-\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a88d928d58d4216cfc799de4c641664f5}{getParent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00025\ \ \ \ \ std::vector<GroupId>\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a67f4293e23e473ba94f49290bec32a42}{getChildren}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00026\ \ \ \ \ std::vector<GroupId>\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a5ff33624a781308ac1a426a4fc6a2669}{getAllDescendants}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00027\ \ \ \ \ std::vector<GroupId>\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a84d0275598594bbc11f223d7065f38a5}{getAllAncestors}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00028\ \ \ \ \ std::vector<GroupId>\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae7fbc24c1e78a5bc110c22aa20978003}{getRootGroups}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00024\ \ \ \ \ GroupId\ getParent(GroupId\ child)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ \ \ \ \ std::vector<GroupId>\ getChildren(GroupId\ parent)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<GroupId>\ getAllDescendants(GroupId\ parent)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<GroupId>\ getAllAncestors(GroupId\ child)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \ \ \ \ std::vector<GroupId>\ getRootGroups()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00029\ \ \ \ \ }
 \DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Relationship\ checks}}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a92ac476724d9e1115992bb12737e14b8}{hasParent}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a53b8df7dd525ea9aba782fee0f09783b}{hasChildren}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a34535dbbcf607fad120e6e719990ad01}{isAncestor}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ ancestor,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ descendant)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a40b42ea5a68391913869e004e4d1ebc3}{isDescendant}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ descendant,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ ancestor)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a6b8185a5f41c2185fc43f42173a5e1a4}{wouldCreateCycle}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasParent(GroupId\ child)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasChildren(GroupId\ parent)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAncestor(GroupId\ ancestor,\ GroupId\ descendant)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDescendant(GroupId\ descendant,\ GroupId\ ancestor)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ wouldCreateCycle(GroupId\ parent,\ GroupId\ child)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00036\ \ \ \ \ }
 \DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Hierarchy\ information}}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a59176291e451dc94541776aa602c3464}{getDepth}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ groupId)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a9f06998a10b48c0de343137d6a8e391b}{getMaxDepth}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aa03c274d52e126ecdff4f3a8962370c0}{getTotalGroups}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ getDepth(GroupId\ groupId)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ getMaxDepth()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getTotalGroups()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00041\ \ \ \ \ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Validation}}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a7c3c126e2ae61c0ab6c6c5fd6c1750e0}{isValid}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00044\ \ \ \ \ std::vector<GroupId>\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a0e890cde19b719abb084d31a8db2411e}{findOrphans}}(\textcolor{keyword}{const}\ std::unordered\_set<GroupId>\&\ allGroups)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00045\ \ \ \ \ std::vector<std::pair<GroupId,\ GroupId>>\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a97005875b40a091b9bda376faebbfbbc}{findCycles}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ \ \ \ \ std::vector<GroupId>\ findOrphans(\textcolor{keyword}{const}\ std::unordered\_set<GroupId>\&\ allGroups)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ std::vector<std::pair<GroupId,\ GroupId>>\ findCycles()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00046\ \ \ \ \ }
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Serialization\ support}}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{HierarchyData}}\ \{}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ std::unordered\_map<GroupId,\ GroupId>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data_a2b46dc74648e0e960e512880264146c6}{parentMap}};}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ std::unordered\_map<GroupId,\ std::vector<GroupId>>\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data_a6df5f83fe6e42efda5270ffe0012f56d}{childrenMap}};}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{struct\ }HierarchyData\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ std::unordered\_map<GroupId,\ GroupId>\ parentMap;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ std::unordered\_map<GroupId,\ std::vector<GroupId>>\ childrenMap;}
 \DoxyCodeLine{00051\ \ \ \ \ \};}
 \DoxyCodeLine{00052\ \ \ \ \ }
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{HierarchyData}}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_a4e6464fb8db22854d905f7407535a3c0}{exportData}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_ae085302bf919dd099318998e8677e01a}{importData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_groups_1_1_group_hierarchy_1_1_hierarchy_data}{HierarchyData}}\&\ data);}
+\DoxyCodeLine{00053\ \ \ \ \ HierarchyData\ exportData()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ importData(\textcolor{keyword}{const}\ HierarchyData\&\ data);}
 \DoxyCodeLine{00055\ \ \ \ \ }
 \DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Thread\ safety}}
-\DoxyCodeLine{00057\ \ \ \ \ std::mutex\&\ \mbox{\hyperlink{class_voxel_editor_1_1_groups_1_1_group_hierarchy_aadaf3f65546c3e2ec64c7c2614b94bbc}{getMutex}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_mutex;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ std::mutex\&\ getMutex()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_mutex;\ \}}
 \DoxyCodeLine{00058\ \ \ \ \ }
 \DoxyCodeLine{00059\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00060\ \ \ \ \ std::unordered\_map<GroupId,\ GroupId>\ m\_parentMap;}
 \DoxyCodeLine{00061\ \ \ \ \ std::unordered\_map<GroupId,\ std::vector<GroupId>>\ m\_childrenMap;}
 \DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_mutex;}
 \DoxyCodeLine{00063\ \ \ \ \ }
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ getAllDescendantsRecursive(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ parent,\ std::unordered\_set<GroupId>\&\ visited,\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ getAllDescendantsRecursive(GroupId\ parent,\ std::unordered\_set<GroupId>\&\ visited,\ }
 \DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<GroupId>\&\ result)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ getAllAncestorsRecursive(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ child,\ std::unordered\_set<GroupId>\&\ visited,}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ getAllAncestorsRecursive(GroupId\ child,\ std::unordered\_set<GroupId>\&\ visited,}
 \DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<GroupId>\&\ result)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasCycleRecursive(\mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ start,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_groups_a2b4a825e76c367f8e8190958acd5f940}{GroupId}}\ current,\ std::unordered\_set<GroupId>\&\ visited,}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasCycleRecursive(GroupId\ start,\ GroupId\ current,\ std::unordered\_set<GroupId>\&\ visited,}
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_set<GroupId>\&\ recursionStack)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00070\ \};}
 \DoxyCodeLine{00071\ }

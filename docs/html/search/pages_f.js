@@ -24,7 +24,7 @@ var searchData=
   ['groupmetadata_21',['GroupMetadata',['../md_core_2groups_2_d_e_s_i_g_n.html#autotoc_md199',1,'']]],
   ['groupmodified_20event_22',['GroupModified Event',['../md_core_2groups_2_d_e_s_i_g_n.html#autotoc_md211',1,'']]],
   ['groupoperations_23',['GroupOperations',['../md_core_2groups_2_d_e_s_i_g_n.html#autotoc_md193',1,'']]],
-  ['groups_24',['Groups',['../md__r_e_a_d_m_e.html#autotoc_md588',1,'Groups'],['../md_apps_2cli_2_c_l_i___g_u_i_d_e.html#autotoc_md6',1,'Working with Groups']]],
+  ['groups_24',['Groups',['../md__r_e_a_d_m_e.html#autotoc_md596',1,'Groups'],['../md_interactive__session.html#autotoc_md553',1,'Session 3: Working with Groups'],['../md_apps_2cli_2_c_l_i___g_u_i_d_e.html#autotoc_md6',1,'Working with Groups']]],
   ['guide_25',['Voxel Editor CLI Guide',['../md_apps_2cli_2_c_l_i___g_u_i_d_e.html',1,'']]],
-  ['guidelines_26',['Development Guidelines',['../md__t_o_d_o.html#autotoc_md609',1,'']]]
+  ['guidelines_26',['Development Guidelines',['../md__t_o_d_o.html#autotoc_md617',1,'']]]
 ];

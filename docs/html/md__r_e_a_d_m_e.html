@@ -91,9 +91,9 @@ $(function(){initNavTree('md__r_e_a_d_m_e.html','',''); });
   <div class="headertitle"><div class="title">Voxel Editor </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md575"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md583"></a></p>
 <p>A multi-platform voxel editor with smooth surface generation, supporting desktop and VR (Meta Quest 3).</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md576"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md584"></a>
 Features</h1>
 <ul>
 <li><b>Multi-resolution voxel system</b>: 10 size levels (1cm to 512cm)</li>
@@ -105,7 +105,7 @@ Features</h1>
 <li><b>Mouse interaction</b>: Click-to-place voxels with visual feedback</li>
 <li><b>File formats</b>: Custom binary format (.cvef) and STL export</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md577"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md585"></a>
 Project Structure</h1>
 <div class="fragment"><div class="line">cube_edit/</div>
 <div class="line">├── foundation/          # Core utilities (math, events, memory, logging, config)</div>
@@ -116,9 +116,9 @@ Project Structure</h1>
 <div class="line">│   └── vr/           # Meta Quest 3 app (future)</div>
 <div class="line">├── external/          # Third-party dependencies</div>
 <div class="line">└── build/            # Build output directory</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md578"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md586"></a>
 Building</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md579"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md587"></a>
 Prerequisites</h2>
 <ul>
 <li>CMake 3.16+</li>
@@ -126,7 +126,7 @@ Prerequisites</h2>
 <li>OpenGL 3.3+</li>
 <li>Git</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md580"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md588"></a>
 Quick Build</h2>
 <div class="fragment"><div class="line"># Clone the repository</div>
 <div class="line">git clone &lt;repository-url&gt;</div>
@@ -139,7 +139,7 @@ Quick Build</h2>
 <div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Release</div>
 <div class="line">cmake --build . --parallel</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md581"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md589"></a>
 Build Options</h2>
 <ul>
 <li><span class="tt">BUILD_TESTS</span> - Build unit tests (default: ON)</li>
@@ -147,12 +147,12 @@ Build Options</h2>
 <li><span class="tt">BUILD_QT_DESKTOP</span> - Build Qt desktop app (default: OFF)</li>
 <li><span class="tt">BUILD_VR</span> - Build VR application (default: OFF)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md582"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md590"></a>
 Running the CLI Application</h1>
 <div class="fragment"><div class="line">./build/bin/VoxelEditor_CLI</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md583"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md591"></a>
 CLI Commands</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md584"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md592"></a>
 File Operations</h2>
 <ul>
 <li><span class="tt">new</span> - Create a new project</li>
@@ -161,7 +161,7 @@ File Operations</h2>
 <li><span class="tt">saveas &lt;filename&gt;</span> - Save with a new name</li>
 <li><span class="tt">export &lt;filename&gt;</span> - Export to STL format</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md585"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md593"></a>
 Edit Operations</h2>
 <ul>
 <li><span class="tt">place &lt;x&gt; &lt;y&gt; &lt;z&gt;</span> - Place a voxel at position</li>
@@ -172,7 +172,7 @@ Edit Operations</h2>
 <li><span class="tt">resolution &lt;size&gt;</span> - Set voxel size (1cm, 2cm, 4cm, etc.)</li>
 <li><span class="tt">workspace &lt;width&gt; &lt;height&gt; &lt;depth&gt;</span> - Set workspace dimensions</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md586"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md594"></a>
 View Controls</h2>
 <ul>
 <li><span class="tt">camera &lt;preset&gt;</span> - Set camera view (front/back/left/right/top/bottom/iso/default)</li>
@@ -180,7 +180,7 @@ View Controls</h2>
 <li><span class="tt">rotate &lt;x&gt; &lt;y&gt;</span> - Rotate camera by degrees</li>
 <li><span class="tt">resetview</span> - Reset camera to default</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md587"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md595"></a>
 Selection</h2>
 <ul>
 <li><span class="tt">select &lt;x&gt; &lt;y&gt; &lt;z&gt;</span> - Select a voxel</li>
@@ -188,7 +188,7 @@ Selection</h2>
 <li><span class="tt">selectall</span> - Select all voxels</li>
 <li><span class="tt">selectnone</span> - Clear selection</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md588"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md596"></a>
 Groups</h2>
 <ul>
 <li><span class="tt">group &lt;name&gt;</span> - Create group from selection</li>
@@ -196,7 +196,7 @@ Groups</h2>
 <li><span class="tt">hide &lt;name&gt;</span> - Hide a group</li>
 <li><span class="tt">show &lt;name&gt;</span> - Show a group</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md589"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md597"></a>
 System</h2>
 <ul>
 <li><span class="tt">help [command]</span> - Show help</li>
@@ -204,7 +204,7 @@ System</h2>
 <li><span class="tt">clear</span> - Clear screen</li>
 <li><span class="tt">quit</span> - Exit application</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md590"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md598"></a>
 Mouse Controls</h1>
 <ul>
 <li><b>Left Click</b>: Place voxel at cursor</li>
@@ -213,7 +213,7 @@ Mouse Controls</h1>
 <li><b>Scroll Wheel</b>: Zoom in/out</li>
 <li><b>Hover</b>: Preview placement with green outline</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md591"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md599"></a>
 Keyboard Shortcuts</h1>
 <ul>
 <li><b>Tab</b>: Auto-complete commands</li>
@@ -221,10 +221,10 @@ Keyboard Shortcuts</h1>
 <li><b>Ctrl+C</b>: Cancel current command</li>
 <li><b>1-7</b>: Quick camera views (when in render window)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md592"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md600"></a>
 Architecture</h1>
 <p>The project follows a modular architecture:</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md593"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md601"></a>
 Foundation Layer</h2>
 <ul>
 <li><b>Math</b>: Vector/matrix operations, rays, intersections</li>
@@ -233,7 +233,7 @@ Foundation Layer</h2>
 <li><b>Logging</b>: Multi-level logging with profiling</li>
 <li><b>Config</b>: Hierarchical configuration management</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md594"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md602"></a>
 Core Systems</h2>
 <ol type="1">
 <li><b>VoxelData</b>: Multi-resolution sparse voxel storage</li>
@@ -247,13 +247,13 @@ Core Systems</h2>
 <li><b>Groups</b>: Hierarchical voxel grouping</li>
 <li><b>FileIO</b>: Project save/load and STL export</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md595"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md603"></a>
 Testing</h1>
 <p>Run all tests: </p><div class="fragment"><div class="line">cd build</div>
 <div class="line">ctest --verbose</div>
 </div><!-- fragment --><p>Run specific test suite: </p><div class="fragment"><div class="line">./build/foundation/math/tests/VoxelEditor_Math_Tests</div>
 <div class="line">./build/core/voxel_data/tests/VoxelEditor_VoxelData_Tests</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md596"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md604"></a>
 Performance</h1>
 <ul>
 <li>Supports up to millions of voxels</li>
@@ -261,7 +261,7 @@ Performance</h1>
 <li>Memory-efficient sparse storage</li>
 <li>Optimized for Meta Quest 3 constraints (&lt;4GB memory)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md597"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md605"></a>
 Future Development</h1>
 <ul>
 <li><b>Qt Desktop Application</b>: Full GUI with advanced editing tools</li>
@@ -274,10 +274,10 @@ Future Development</h1>
 </ul>
 </li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md598"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md606"></a>
 License</h1>
 <p>[License information here]</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md599"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md607"></a>
 Contributing</h1>
 <p>[Contributing guidelines here] </p>
 </div></div><!-- contents -->

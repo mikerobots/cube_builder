@@ -1,15 +1,15 @@
 \doxysection{Surface\+Generator.\+h}
-\hypertarget{_surface_generator_8h_source}{}\label{_surface_generator_8h_source}\index{core/surface\_gen/SurfaceGenerator.h@{core/surface\_gen/SurfaceGenerator.h}}
+\label{_surface_generator_8h_source}\index{core/surface\_gen/SurfaceGenerator.h@{core/surface\_gen/SurfaceGenerator.h}}
 \mbox{\hyperlink{_surface_generator_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_surface_types_8h}{SurfaceTypes.h}}"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_dual_contouring_8h}{DualContouring.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_mesh_builder_8h}{MeshBuilder.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_grid_8h}{../voxel\_data/VoxelGrid.h}}"{}}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_voxel_data_manager_8h}{../voxel\_data/VoxelDataManager.h}}"{}}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_event_dispatcher_8h}{../../foundation/events/EventDispatcher.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}SurfaceTypes.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}DualContouring.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}MeshBuilder.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../voxel\_data/VoxelGrid.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}../voxel\_data/VoxelDataManager.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}../../foundation/events/EventDispatcher.h"{}}}
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <future>}}
 \DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
@@ -18,60 +18,60 @@
 \DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <atomic>}}
 \DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <functional>}}
 \DoxyCodeLine{00016\ }
-\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor}{VoxelEditor}}\ \{}
-\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen}{SurfaceGen}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }VoxelEditor\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }SurfaceGen\ \{}
 \DoxyCodeLine{00019\ }
 \DoxyCodeLine{00020\ \textcolor{comment}{//\ Forward\ declarations}}
-\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager}{LODManager}};}
-\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache}{MeshCache}};}
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }LODManager;}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }MeshCache;}
 \DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_aea12da9480fab9fec629a13ca418a614}{SurfaceGenerator}}\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }SurfaceGenerator\ \{}
 \DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_aea12da9480fab9fec629a13ca418a614}{SurfaceGenerator}}(\mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a6399282062fe66e318248a95d04dadca}{\string~SurfaceGenerator}}();}
+\DoxyCodeLine{00026\ \ \ \ \ SurfaceGenerator(Events::EventDispatcher*\ eventDispatcher\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00027\ \ \ \ \ \string~SurfaceGenerator();}
 \DoxyCodeLine{00028\ \ \ \ \ }
 \DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Main\ generation\ functions}}
-\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a121abec9614b81f2991ddffc9cec344f}{generateSurface}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings\ =\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings_a16d5367ee51b2d896163fafb47db5cc0}{SurfaceSettings::Default}}());}
-\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_acb26e154cb2dcdc87ff8e0bc2c4a32ed}{generatePreviewMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ \textcolor{keywordtype}{int}\ lodLevel\ =\ 1);}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a6e19d67523f247490000ae829bfe655c}{generateExportMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadc}{ExportQuality}}\ quality\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a29c58b192501c6824417fe5cc5b7fadca655d20c1ca69519ca647684edbb2db35}{ExportQuality::High}});}
+\DoxyCodeLine{00030\ \ \ \ \ Mesh\ generateSurface(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings\ =\ SurfaceSettings::Default());}
+\DoxyCodeLine{00032\ \ \ \ \ Mesh\ generatePreviewMesh(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ \textcolor{keywordtype}{int}\ lodLevel\ =\ 1);}
+\DoxyCodeLine{00033\ \ \ \ \ Mesh\ generateExportMesh(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ExportQuality\ quality\ =\ ExportQuality::High);}
 \DoxyCodeLine{00035\ \ \ \ \ }
 \DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Multi-\/resolution\ support}}
-\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a0d4b5ca3fb152ec649018ea1cc0b9bec}{generateMultiResMesh}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}\&\ voxelManager,}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ targetRes);}
-\DoxyCodeLine{00039\ \ \ \ \ std::vector<Mesh>\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_ac54fca8a7d60e092ce4b49eb37479c19}{generateAllResolutions}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_data_manager}{VoxelData::VoxelDataManager}}\&\ voxelManager);}
+\DoxyCodeLine{00037\ \ \ \ \ Mesh\ generateMultiResMesh(\textcolor{keyword}{const}\ VoxelData::VoxelDataManager\&\ voxelManager,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VoxelData::VoxelResolution\ targetRes);}
+\DoxyCodeLine{00039\ \ \ \ \ std::vector<Mesh>\ generateAllResolutions(\textcolor{keyword}{const}\ VoxelData::VoxelDataManager\&\ voxelManager);}
 \DoxyCodeLine{00040\ \ \ \ \ }
 \DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Quality\ settings}}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a4bb49379638fdbad2b5e3be7069235b4}{setSurfaceSettings}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings)\ \{\ m\_settings\ =\ settings;\ \}}
-\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a329ff2f619d1ac084839b9903cea10ea}{getSurfaceSettings}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_settings;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ setSurfaceSettings(\textcolor{keyword}{const}\ SurfaceSettings\&\ settings)\ \{\ m\_settings\ =\ settings;\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ SurfaceSettings\ getSurfaceSettings()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_settings;\ \}}
 \DoxyCodeLine{00044\ \ \ \ \ }
 \DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ LOD\ management}}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_ad9cf716d633f243803a80137fc3e9006}{setLODEnabled}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_lodEnabled\ =\ enabled;\ \}}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_ab05ff43906b5913edb8ce7d59e14d04b}{isLODEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lodEnabled;\ \}}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a96163364c9a793a17bb02c64628a9182}{calculateLOD}}(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ setLODEnabled(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_lodEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ isLODEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lodEnabled;\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ calculateLOD(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ Math::BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00049\ \ \ \ \ }
 \DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Cache\ management}}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a8f7f0617ad22d368d71f1884b3bfc5be}{enableCaching}}(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_cacheEnabled\ =\ enabled;\ \}}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_abb07e065565cd9ce48c2ae18eec413ed}{isCachingEnabled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cacheEnabled;\ \}}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_ac93f4a0870ae6205921e00b1d73b3cfe}{clearCache}}();}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a507a4ef4b60d1860f0131bdd098ddb4a}{getCacheMemoryUsage}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a4258e5edbf16f8330dda964a26ac2c89}{setCacheMaxMemory}}(\textcolor{keywordtype}{size\_t}\ maxBytes);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ enableCaching(\textcolor{keywordtype}{bool}\ enabled)\ \{\ m\_cacheEnabled\ =\ enabled;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCachingEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cacheEnabled;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ clearCache();}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getCacheMemoryUsage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ setCacheMaxMemory(\textcolor{keywordtype}{size\_t}\ maxBytes);}
 \DoxyCodeLine{00056\ \ \ \ \ }
 \DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Async\ generation}}
-\DoxyCodeLine{00058\ \ \ \ \ std::future<Mesh>\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a7f47016cce2637c4cd31fb9fdd34c64f}{generateSurfaceAsync}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings);}
+\DoxyCodeLine{00058\ \ \ \ \ std::future<Mesh>\ generateSurfaceAsync(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
 \DoxyCodeLine{00060\ \ \ \ \ }
 \DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Progress\ callback}}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a2a1b5a654d989828796ed276bcb137f9}{ProgressCallback}}\ =\ std::function<void(\textcolor{keywordtype}{float}\ progress,\ \textcolor{keyword}{const}\ std::string\&\ status)>;}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a54dd78c3ae6aa78f9a5d18e47dbe0894}{setProgressCallback}}(\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a2a1b5a654d989828796ed276bcb137f9}{ProgressCallback}}\ callback)\ \{\ m\_progressCallback\ =\ callback;\ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{using\ }ProgressCallback\ =\ std::function<void(\textcolor{keywordtype}{float}\ progress,\ \textcolor{keyword}{const}\ std::string\&\ status)>;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ setProgressCallback(ProgressCallback\ callback)\ \{\ m\_progressCallback\ =\ callback;\ \}}
 \DoxyCodeLine{00064\ \ \ \ \ }
 \DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Cancellation}}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a4d3a4861cca6aa91323dc76c4a7e015c}{cancelGeneration}}()\ \{\ m\_cancelRequested\ =\ \textcolor{keyword}{true};\ \}}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_ac4ec42d0f2d0ea96548a449b99c2c84e}{isCancelled}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cancelRequested;\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ cancelGeneration()\ \{\ m\_cancelRequested\ =\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCancelled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_cancelRequested;\ \}}
 \DoxyCodeLine{00068\ \ \ \ \ }
 \DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Event\ handling}}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_acccf641b149d5783ff5e6c6b08681fd2}{onVoxelDataChanged}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ region,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_voxel_data_aa9243b799108088d669663804bddb4b8}{VoxelData::VoxelResolution}}\ resolution);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ onVoxelDataChanged(\textcolor{keyword}{const}\ Math::BoundingBox\&\ region,\ VoxelData::VoxelResolution\ resolution);}
 \DoxyCodeLine{00071\ \ \ \ \ }
 \DoxyCodeLine{00072\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Core\ components}}
@@ -81,26 +81,26 @@
 \DoxyCodeLine{00077\ \ \ \ \ std::unique\_ptr<MeshCache>\ m\_meshCache;}
 \DoxyCodeLine{00078\ \ \ \ \ }
 \DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Settings}}
-\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\ m\_settings;}
+\DoxyCodeLine{00080\ \ \ \ \ SurfaceSettings\ m\_settings;}
 \DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_lodEnabled;}
 \DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_cacheEnabled;}
 \DoxyCodeLine{00083\ \ \ \ \ std::atomic<bool>\ m\_cancelRequested;}
 \DoxyCodeLine{00084\ \ \ \ \ }
 \DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Event\ handling}}
-\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_events_1_1_event_dispatcher}{Events::EventDispatcher}}*\ m\_eventDispatcher;}
-\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_surface_generator_a2a1b5a654d989828796ed276bcb137f9}{ProgressCallback}}\ m\_progressCallback;}
+\DoxyCodeLine{00086\ \ \ \ \ Events::EventDispatcher*\ m\_eventDispatcher;}
+\DoxyCodeLine{00087\ \ \ \ \ ProgressCallback\ m\_progressCallback;}
 \DoxyCodeLine{00088\ \ \ \ \ }
 \DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Internal\ methods}}
-\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ generateInternal(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings,}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ lod\ =\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445aa929b0387b1c54c05c74c036308dabba0}{LODLevel::LOD0}});}
+\DoxyCodeLine{00090\ \ \ \ \ Mesh\ generateInternal(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LODLevel\ lod\ =\ LODLevel::LOD0);}
 \DoxyCodeLine{00093\ \ \ \ \ }
-\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ applyPostProcessing(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings);}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ optimizeMesh(\mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh,\ \textcolor{keywordtype}{float}\ targetRatio);}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ applyPostProcessing(Mesh\&\ mesh,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings);}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ optimizeMesh(Mesh\&\ mesh,\ \textcolor{keywordtype}{float}\ targetRatio);}
 \DoxyCodeLine{00096\ \ \ \ \ }
 \DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Cache\ helpers}}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ computeGridHash(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00099\ \ \ \ \ std::string\ getCacheKey(\textcolor{keywordtype}{size\_t}\ gridHash,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ lod)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ computeGridHash(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00099\ \ \ \ \ std::string\ getCacheKey(\textcolor{keywordtype}{size\_t}\ gridHash,\ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings,\ LODLevel\ lod)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00100\ \ \ \ \ }
 \DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Progress\ reporting}}
 \DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ reportProgress(\textcolor{keywordtype}{float}\ progress,\ \textcolor{keyword}{const}\ std::string\&\ status);}
@@ -111,63 +111,63 @@
 \DoxyCodeLine{00107\ \};}
 \DoxyCodeLine{00108\ }
 \DoxyCodeLine{00109\ \textcolor{comment}{//\ LOD\ Manager}}
-\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_a5545376a2643f84e1d7d80131fc87eca}{LODManager}}\ \{}
+\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }LODManager\ \{}
 \DoxyCodeLine{00111\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_a5545376a2643f84e1d7d80131fc87eca}{LODManager}}();}
-\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_adbf5c3edfdd6f9a3fa68810f5cdf3050}{\string~LODManager}}();}
+\DoxyCodeLine{00112\ \ \ \ \ LODManager();}
+\DoxyCodeLine{00113\ \ \ \ \ \string~LODManager();}
 \DoxyCodeLine{00114\ \ \ \ \ }
 \DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Generate\ LOD\ mesh}}
-\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_a01e39b7141c6785d1d7afcc5dde22426}{generateLOD}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ level,\ }
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_surface_settings}{SurfaceSettings}}\&\ settings,\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_dual_contouring}{DualContouring}}*\ algorithm);}
+\DoxyCodeLine{00116\ \ \ \ \ Mesh\ generateLOD(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ LODLevel\ level,\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SurfaceSettings\&\ settings,\ DualContouring*\ algorithm);}
 \DoxyCodeLine{00118\ \ \ \ \ }
 \DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ LOD\ calculation}}
-\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_a8adb9619631155710dcc2e7625a02688}{calculateLOD}}(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ bounds)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00120\ \ \ \ \ LODLevel\ calculateLOD(\textcolor{keywordtype}{float}\ distance,\ \textcolor{keyword}{const}\ Math::BoundingBox\&\ bounds)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00121\ \ \ \ \ }
 \DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ LOD\ distances}}
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_ae2d041379cb250b8556c3057ad353836}{setLODDistances}}(\textcolor{keyword}{const}\ std::vector<float>\&\ distances);}
-\DoxyCodeLine{00124\ \ \ \ \ std::vector<float>\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_af1d8fa1874274a5c2bfdf50cf17a60b7}{getLODDistances}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lodDistances;\ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ setLODDistances(\textcolor{keyword}{const}\ std::vector<float>\&\ distances);}
+\DoxyCodeLine{00124\ \ \ \ \ std::vector<float>\ getLODDistances()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_lodDistances;\ \}}
 \DoxyCodeLine{00125\ \ \ \ \ }
 \DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Simplification\ ratios}}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_a02571097f6d98aecccd2153dbee040fe}{setSimplificationRatio}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ level,\ \textcolor{keywordtype}{float}\ ratio);}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_l_o_d_manager_a759fdf5fa9083ab3969a295c782a3a2c}{getSimplificationRatio}}(\mbox{\hyperlink{namespace_voxel_editor_1_1_surface_gen_a0f0508828aa5c90ab6c93554b9e8445a}{LODLevel}}\ level)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ setSimplificationRatio(LODLevel\ level,\ \textcolor{keywordtype}{float}\ ratio);}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{float}\ getSimplificationRatio(LODLevel\ level)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00129\ \ \ \ \ }
 \DoxyCodeLine{00130\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00131\ \ \ \ \ std::vector<float>\ m\_lodDistances;}
 \DoxyCodeLine{00132\ \ \ \ \ std::unordered\_map<LODLevel,\ float>\ m\_simplificationRatios;}
 \DoxyCodeLine{00133\ \ \ \ \ }
 \DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//\ Grid\ downsampling}}
-\DoxyCodeLine{00135\ \ \ \ \ std::unique\_ptr<VoxelData::VoxelGrid>\ downsampleGrid(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_voxel_data_1_1_voxel_grid}{VoxelData::VoxelGrid}}\&\ grid,\ }
+\DoxyCodeLine{00135\ \ \ \ \ std::unique\_ptr<VoxelData::VoxelGrid>\ downsampleGrid(\textcolor{keyword}{const}\ VoxelData::VoxelGrid\&\ grid,\ }
 \DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ factor);}
 \DoxyCodeLine{00137\ \};}
 \DoxyCodeLine{00138\ }
 \DoxyCodeLine{00139\ \textcolor{comment}{//\ Mesh\ Cache}}
-\DoxyCodeLine{00140\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a40b0354c5d1b6ff2894fa0bd83a93595}{MeshCache}}\ \{}
+\DoxyCodeLine{00140\ \textcolor{keyword}{class\ }MeshCache\ \{}
 \DoxyCodeLine{00141\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a40b0354c5d1b6ff2894fa0bd83a93595}{MeshCache}}();}
-\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_abeeb37f72c3cb7cb3ef6e56497568ce6}{\string~MeshCache}}();}
+\DoxyCodeLine{00142\ \ \ \ \ MeshCache();}
+\DoxyCodeLine{00143\ \ \ \ \ \string~MeshCache();}
 \DoxyCodeLine{00144\ \ \ \ \ }
 \DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ Cache\ operations}}
-\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_ae2603954daea13456da2fa48d6ecb864}{hasCachedMesh}}(\textcolor{keyword}{const}\ std::string\&\ key)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a23b7b82312667e1132cc46402b74361f}{getCachedMesh}}(\textcolor{keyword}{const}\ std::string\&\ key);}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6475d2fd9b95f7a9e667524d041c739b}{cacheMesh}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\&\ mesh);}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasCachedMesh(\textcolor{keyword}{const}\ std::string\&\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00147\ \ \ \ \ Mesh\ getCachedMesh(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ cacheMesh(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keyword}{const}\ Mesh\&\ mesh);}
 \DoxyCodeLine{00149\ \ \ \ \ }
 \DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ Cache\ management}}
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a4a937b7b9393a211fcee8e309b03e27d}{invalidateRegion}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\&\ region);}
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a418a84623518e9ad73214ab847dbe376}{clear}}();}
-\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_aff3cc6b7842c4be80c7b73acebd1beec}{getMemoryUsage}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentMemoryUsage;\ \}}
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_af49cb74c54035bbbd8002b82400e2f63}{setMaxMemoryUsage}}(\textcolor{keywordtype}{size\_t}\ maxBytes)\ \{\ m\_maxMemoryUsage\ =\ maxBytes;\ \}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ invalidateRegion(\textcolor{keyword}{const}\ Math::BoundingBox\&\ region);}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMemoryUsage()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentMemoryUsage;\ \}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ setMaxMemoryUsage(\textcolor{keywordtype}{size\_t}\ maxBytes)\ \{\ m\_maxMemoryUsage\ =\ maxBytes;\ \}}
 \DoxyCodeLine{00155\ \ \ \ \ }
 \DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
-\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a6f55383fbb9e754b1e4ca6785e9afaf8}{getHitCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_hitCount;\ \}}
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_a159a07ae6465b096c56a4cc1cbc361fa}{getMissCount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_missCount;\ \}}
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_voxel_editor_1_1_surface_gen_1_1_mesh_cache_afb7b6f25e266a6e940248b8e4b76250d}{getHitRate}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getHitCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_hitCount;\ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ getMissCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_missCount;\ \}}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{float}\ getHitRate()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00160\ \ \ \ \ }
 \DoxyCodeLine{00161\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{struct\ }CacheEntry\ \{}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_voxel_editor_1_1_surface_gen_1_1_mesh}{Mesh}}\ mesh;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ Mesh\ mesh;}
 \DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ std::chrono::steady\_clock::time\_point\ lastAccess;}
 \DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ memoryUsage;}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_voxel_editor_1_1_math_1_1_bounding_box}{Math::BoundingBox}}\ bounds;}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ Math::BoundingBox\ bounds;}
 \DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ updateAccess();}
 \DoxyCodeLine{00169\ \ \ \ \ \};}
