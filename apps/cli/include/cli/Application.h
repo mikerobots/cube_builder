@@ -7,6 +7,9 @@
 #include "../../foundation/logging/Logger.h"
 #include "../../foundation/config/ConfigManager.h"
 
+// Include core types we need
+#include "../../core/rendering/RenderTypes.h"
+
 // Forward declarations of core systems
 namespace VoxelEditor {
     namespace VoxelData { class VoxelDataManager; }
@@ -45,7 +48,7 @@ public:
     // System access
     VoxelData::VoxelDataManager* getVoxelManager() const { return m_voxelManager.get(); }
     Camera::CameraController* getCameraController() const { return m_cameraController.get(); }
-    // Rendering::RenderEngine* getRenderEngine() const { return m_renderEngine.get(); }
+    Rendering::RenderEngine* getRenderEngine() const { return m_renderEngine.get(); }
     Rendering::OpenGLRenderer* getOpenGLRenderer() const { return m_openGLRenderer.get(); }
     Input::InputManager* getInputManager() const { return m_inputManager.get(); }
     Selection::SelectionManager* getSelectionManager() const { return m_selectionManager.get(); }
@@ -81,7 +84,7 @@ private:
     std::unique_ptr<VoxelData::VoxelDataManager> m_voxelManager;
     std::unique_ptr<Camera::CameraController> m_cameraController;
     std::unique_ptr<Rendering::OpenGLRenderer> m_openGLRenderer;
-    // std::unique_ptr<Rendering::RenderEngine> m_renderEngine; // TODO: Fix RenderEngine abstract class
+    std::unique_ptr<Rendering::RenderEngine> m_renderEngine;
     std::unique_ptr<Input::InputManager> m_inputManager;
     std::unique_ptr<Selection::SelectionManager> m_selectionManager;
     std::unique_ptr<UndoRedo::HistoryManager> m_historyManager;
@@ -105,12 +108,8 @@ private:
     bool m_headless = false;
     std::string m_currentProject;
     
-    // Rendering data
-    uint32_t m_voxelVAO = 0;
-    uint32_t m_voxelVBO = 0;
-    uint32_t m_voxelEBO = 0;
-    uint32_t m_voxelShaderProgram = 0;
-    size_t m_voxelIndexCount = 0;
+    // Current scene data for rendering
+    std::vector<Rendering::Mesh> m_voxelMeshes;
     
     // Private methods
     bool initializeFoundation();
@@ -121,10 +120,9 @@ private:
     void processInput();
     void render();
     
-    // Rendering helpers
-    bool createShaderProgram();
+    // Rendering helpers  
     void updateVoxelMesh();
-    void cleanupGL();
+    void createScene();
 };
 
 } // namespace VoxelEditor
