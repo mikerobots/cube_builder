@@ -108,6 +108,15 @@ public:
     const float& operator[](int index) const {
         return m[index];
     }
+    
+    // Get raw data pointer for OpenGL
+    const float* data() const {
+        return m;
+    }
+    
+    float* data() {
+        return m;
+    }
 
     Matrix4f transposed() const {
         return Matrix4f(

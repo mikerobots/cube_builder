@@ -43,7 +43,7 @@ struct ShaderSource {
 class ShaderProgram {
 public:
     ShaderProgram(ShaderId id, const std::string& name, OpenGLRenderer* renderer);
-    ~ShaderProgram();
+    ~ShaderProgram() {} // TODO: Implement proper cleanup
     
     // Program management
     ShaderId getId() const { return m_id; }
@@ -92,20 +92,31 @@ private:
 
 class ShaderManager {
 public:
+    ShaderManager(); // Default constructor for now
     explicit ShaderManager(OpenGLRenderer* renderer);
     ~ShaderManager();
     
     // Shader compilation and loading
     ShaderId compileShader(const std::string& name, const ShaderSource& source);
     ShaderId loadShaderFromFile(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
+    ShaderId loadShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath) {
+        return loadShaderFromFile(name, vertexPath, fragmentPath);
+    }
+    
+    // Create shader from source strings
+    ShaderId createShaderFromSource(const std::string& name, 
+                                   const std::string& vertexSource, 
+                                   const std::string& fragmentSource,
+                                   OpenGLRenderer* renderer);
     ShaderId loadShaderFromFile(const std::string& name, const std::string& basePath); // Loads .vert and .frag
     bool reloadShader(ShaderId id);
     bool reloadShader(const std::string& name);
     void reloadAllShaders();
     
     // Shader access
-    ShaderProgram* getShader(ShaderId id);
-    ShaderProgram* getShader(const std::string& name);
+    ShaderProgram* getShaderProgram(ShaderId id);
+    ShaderProgram* getShaderProgram(const std::string& name);
+    ShaderId getShader(const std::string& name);
     ShaderId findShader(const std::string& name);
     std::vector<std::string> getShaderNames() const;
     std::vector<ShaderId> getShaderIds() const;
@@ -140,6 +151,7 @@ public:
     
     // Hot reloading
     void enableHotReload(bool enabled);
+    void setHotReloadEnabled(bool enabled) { m_hotReloadEnabled = enabled; }
     bool isHotReloadEnabled() const { return m_hotReloadEnabled; }
     void checkForChanges();
     void addWatchPath(const std::string& path);

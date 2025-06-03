@@ -3,6 +3,7 @@
 #include "SelectionTypes.h"
 #include "SelectionSet.h"
 #include "../../foundation/math/Ray.h"
+#include "../../foundation/math/Vector4f.h"
 #include "../voxel_data/VoxelDataManager.h"
 
 namespace VoxelEditor {

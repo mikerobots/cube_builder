@@ -927,16 +927,14 @@ core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_VoxelDataM
   /opt/homebrew/include/gtest/gtest_pred_impl.h \
   /opt/homebrew/include/gtest/gtest_prod.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/tests/../VoxelDataManager.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/core/voxel_data/VoxelTypes.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/VoxelGrid.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/SparseOctree.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/memory/MemoryPool.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/BoundingBox.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Ray.h \
@@ -945,6 +943,8 @@ core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_VoxelDataM
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/WorkspaceManager.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/events/EventDispatcher.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/chrono \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/calendar.h \
@@ -986,7 +986,4 @@ core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_VoxelDataM
   /Users/michaelhalloran/cube_edit/foundation/events/EventHandler.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
-  /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \
-  /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/memory/MemoryTracker.h \
-  /Users/michaelhalloran/cube_edit/foundation/memory/../events/EventDispatcher.h \
-  /Users/michaelhalloran/cube_edit/foundation/memory/../events/CommonEvents.h
+  /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h

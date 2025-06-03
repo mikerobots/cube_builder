@@ -20,7 +20,7 @@ public:
     
     // Basic flood fill from seed voxel
     SelectionSet selectFloodFill(const VoxelId& seed, 
-                               FloodFillCriteria criteria = FloodFillCriteria::Connected);
+                               FloodFillCriteria criteria = FloodFillCriteria::Connected6);
     
     // Flood fill with custom predicate
     SelectionSet selectFloodFillCustom(const VoxelId& seed,

@@ -39,6 +39,8 @@ struct UndoRedoEvent {
 // Callbacks
 using UndoRedoCallback = std::function<void(const UndoRedoEvent&)>;
 using MemoryPressureCallback = std::function<void(size_t currentUsage, size_t maxUsage)>;
+using SnapshotCallback = std::function<std::unique_ptr<StateSnapshot>()>;
+using RestoreCallback = std::function<void(const StateSnapshot&)>;
 
 class HistoryManager {
 public:
@@ -86,6 +88,8 @@ public:
     // Events
     void setUndoRedoCallback(UndoRedoCallback callback);
     void setMemoryPressureCallback(MemoryPressureCallback callback);
+    void setSnapshotCallback(SnapshotCallback callback);
+    void setRestoreCallback(RestoreCallback callback);
     
 private:
     // Core data structures
@@ -103,10 +107,13 @@ private:
     // Callbacks
     UndoRedoCallback m_undoRedoCallback;
     MemoryPressureCallback m_memoryPressureCallback;
+    SnapshotCallback m_snapshotCallback;
+    RestoreCallback m_restoreCallback;
     
     // Snapshots
     std::unique_ptr<StateSnapshot> m_baseSnapshot;
     std::vector<std::unique_ptr<StateSnapshot>> m_snapshots;
+    size_t m_maxSnapshots = 5;
     
     // Thread safety
     mutable std::mutex m_mutex;

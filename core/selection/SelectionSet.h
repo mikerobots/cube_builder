@@ -5,6 +5,14 @@
 #include <vector>
 #include <algorithm>
 
+// Forward declarations
+namespace VoxelEditor {
+namespace FileIO {
+    class BinaryWriter;
+    class BinaryReader;
+}
+}
+
 namespace VoxelEditor {
 namespace Selection {
 
@@ -68,9 +76,9 @@ public:
     bool operator==(const SelectionSet& other) const;
     bool operator!=(const SelectionSet& other) const;
     
-    // Serialization (to be implemented with file I/O)
-    // void serialize(BinaryWriter& writer) const;
-    // void deserialize(BinaryReader& reader);
+    // Serialization
+    void serialize(FileIO::BinaryWriter& writer) const;
+    void deserialize(FileIO::BinaryReader& reader);
     
 private:
     std::unordered_set<VoxelId> m_voxels;

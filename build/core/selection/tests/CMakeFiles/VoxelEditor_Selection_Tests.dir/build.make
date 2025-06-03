@@ -175,8 +175,12 @@ bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Sel
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Selection.a
 bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
 bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest_main.a
-bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_VoxelData.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_FileIO.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Selection.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_FileIO.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Groups.a
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Rendering.a
+bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_VoxelData.a
 bin/VoxelEditor_Selection_Tests: lib/libglad.a
 bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
 bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/link.txt

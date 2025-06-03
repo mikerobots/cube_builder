@@ -90,5 +90,20 @@ void Transaction::rollback() {
     m_commands.clear();
 }
 
+size_t Transaction::getMemoryUsage() const {
+    size_t usage = sizeof(*this);
+    usage += m_name.capacity();
+    
+    for (const auto& command : m_commands) {
+        usage += command->getMemoryUsage();
+    }
+    
+    for (const auto& command : m_executedCommands) {
+        usage += command->getMemoryUsage();
+    }
+    
+    return usage;
+}
+
 }
 }

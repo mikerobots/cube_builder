@@ -388,6 +388,9 @@ SITE:STRING=michaels-MacBook-Air.local
 //Value Computed by CMake
 VoxelEditor_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja
 
+//Dependencies for the target
+VoxelEditor_CLI_Lib_LIB_DEPENDS:STATIC=general;VoxelEditor_VoxelData;general;VoxelEditor_Rendering;general;VoxelEditor_Input;general;VoxelEditor_Selection;general;VoxelEditor_UndoRedo;general;VoxelEditor_SurfaceGen;general;VoxelEditor_VisualFeedback;general;VoxelEditor_Groups;general;VoxelEditor_FileIO;general;glfw;general;glad;general;-framework OpenGL;general;-framework Cocoa;general;-framework IOKit;general;-framework CoreVideo;
+
 //Value Computed by CMake
 VoxelEditor_IS_TOP_LEVEL:STATIC=ON
 
@@ -575,7 +578,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=30
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=31
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

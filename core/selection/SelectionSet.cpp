@@ -1,5 +1,7 @@
 #include "SelectionSet.h"
+#include "../../core/file_io/include/file_io/BinaryIO.h"
 #include <numeric>
+#include <stdexcept>
 
 namespace VoxelEditor {
 namespace Selection {
@@ -362,6 +364,58 @@ SelectionSet makeCylinderSelection(const Math::Vector3f& base, const Math::Vecto
     }
     
     return result;
+}
+
+void SelectionSet::serialize(FileIO::BinaryWriter& writer) const {
+    // Write version number for future compatibility
+    writer.writeUInt32(1); // Version 1
+    
+    // Write number of voxels
+    writer.writeUInt32(static_cast<uint32_t>(m_voxels.size()));
+    
+    // Write each voxel
+    for (const auto& voxel : m_voxels) {
+        // Write position
+        writer.writeInt32(voxel.position.x);
+        writer.writeInt32(voxel.position.y);
+        writer.writeInt32(voxel.position.z);
+        
+        // Write resolution
+        writer.writeUInt8(static_cast<uint8_t>(voxel.resolution));
+    }
+}
+
+void SelectionSet::deserialize(FileIO::BinaryReader& reader) {
+    // Clear existing selection
+    clear();
+    
+    // Read version number
+    uint32_t version = reader.readUInt32();
+    if (version != 1) {
+        throw std::runtime_error("Unsupported SelectionSet version: " + std::to_string(version));
+    }
+    
+    // Read number of voxels
+    uint32_t voxelCount = reader.readUInt32();
+    
+    // Read each voxel
+    for (uint32_t i = 0; i < voxelCount; ++i) {
+        // Read position
+        int32_t x = reader.readInt32();
+        int32_t y = reader.readInt32();
+        int32_t z = reader.readInt32();
+        Math::Vector3i position(x, y, z);
+        
+        // Read resolution
+        uint8_t resolutionValue = reader.readUInt8();
+        if (resolutionValue >= static_cast<uint8_t>(VoxelData::VoxelResolution::COUNT)) {
+            throw std::runtime_error("Invalid voxel resolution value: " + std::to_string(resolutionValue));
+        }
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(resolutionValue);
+        
+        // Add voxel to set
+        add(VoxelId(position, resolution));
+    }
 }
 
 }

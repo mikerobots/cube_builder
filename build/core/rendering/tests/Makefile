@@ -185,6 +185,30 @@ VoxelEditor_Rendering_Tests/fast:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build
 .PHONY : VoxelEditor_Rendering_Tests/fast
 
+test_OpenGLRenderer.o: test_OpenGLRenderer.cpp.o
+.PHONY : test_OpenGLRenderer.o
+
+# target to build an object file
+test_OpenGLRenderer.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_OpenGLRenderer.cpp.o
+.PHONY : test_OpenGLRenderer.cpp.o
+
+test_OpenGLRenderer.i: test_OpenGLRenderer.cpp.i
+.PHONY : test_OpenGLRenderer.i
+
+# target to preprocess a source file
+test_OpenGLRenderer.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_OpenGLRenderer.cpp.i
+.PHONY : test_OpenGLRenderer.cpp.i
+
+test_OpenGLRenderer.s: test_OpenGLRenderer.cpp.s
+.PHONY : test_OpenGLRenderer.s
+
+# target to generate assembly for a file
+test_OpenGLRenderer.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_OpenGLRenderer.cpp.s
+.PHONY : test_OpenGLRenderer.cpp.s
+
 test_RenderConfig.o: test_RenderConfig.cpp.o
 .PHONY : test_RenderConfig.o
 
@@ -208,6 +232,30 @@ test_RenderConfig.s: test_RenderConfig.cpp.s
 test_RenderConfig.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderConfig.cpp.s
 .PHONY : test_RenderConfig.cpp.s
+
+test_RenderEngine.o: test_RenderEngine.cpp.o
+.PHONY : test_RenderEngine.o
+
+# target to build an object file
+test_RenderEngine.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderEngine.cpp.o
+.PHONY : test_RenderEngine.cpp.o
+
+test_RenderEngine.i: test_RenderEngine.cpp.i
+.PHONY : test_RenderEngine.i
+
+# target to preprocess a source file
+test_RenderEngine.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderEngine.cpp.i
+.PHONY : test_RenderEngine.cpp.i
+
+test_RenderEngine.s: test_RenderEngine.cpp.s
+.PHONY : test_RenderEngine.s
+
+# target to generate assembly for a file
+test_RenderEngine.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderEngine.cpp.s
+.PHONY : test_RenderEngine.cpp.s
 
 test_RenderStats.o: test_RenderStats.cpp.o
 .PHONY : test_RenderStats.o
@@ -257,6 +305,30 @@ test_RenderTypes.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderTypes.cpp.s
 .PHONY : test_RenderTypes.cpp.s
 
+test_ShaderManager.o: test_ShaderManager.cpp.o
+.PHONY : test_ShaderManager.o
+
+# target to build an object file
+test_ShaderManager.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.o
+.PHONY : test_ShaderManager.cpp.o
+
+test_ShaderManager.i: test_ShaderManager.cpp.i
+.PHONY : test_ShaderManager.i
+
+# target to preprocess a source file
+test_ShaderManager.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.i
+.PHONY : test_ShaderManager.cpp.i
+
+test_ShaderManager.s: test_ShaderManager.cpp.s
+.PHONY : test_ShaderManager.s
+
+# target to generate assembly for a file
+test_ShaderManager.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.s
+.PHONY : test_ShaderManager.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -271,15 +343,24 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... VoxelEditor_Rendering_Tests"
+	@echo "... test_OpenGLRenderer.o"
+	@echo "... test_OpenGLRenderer.i"
+	@echo "... test_OpenGLRenderer.s"
 	@echo "... test_RenderConfig.o"
 	@echo "... test_RenderConfig.i"
 	@echo "... test_RenderConfig.s"
+	@echo "... test_RenderEngine.o"
+	@echo "... test_RenderEngine.i"
+	@echo "... test_RenderEngine.s"
 	@echo "... test_RenderStats.o"
 	@echo "... test_RenderStats.i"
 	@echo "... test_RenderStats.s"
 	@echo "... test_RenderTypes.o"
 	@echo "... test_RenderTypes.i"
 	@echo "... test_RenderTypes.s"
+	@echo "... test_ShaderManager.o"
+	@echo "... test_ShaderManager.i"
+	@echo "... test_ShaderManager.s"
 .PHONY : help
 
 

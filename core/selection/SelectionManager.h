@@ -38,7 +38,7 @@ public:
     void selectSphere(const Math::Vector3f& center, float radius, VoxelData::VoxelResolution resolution);
     void selectCylinder(const Math::Vector3f& base, const Math::Vector3f& direction, 
                        float radius, float height, VoxelData::VoxelResolution resolution);
-    void selectFloodFill(const VoxelId& seed, FloodFillCriteria criteria = FloodFillCriteria::Connected);
+    void selectFloodFill(const VoxelId& seed, FloodFillCriteria criteria = FloodFillCriteria::Connected6);
     
     // Selection with mode
     void select(const SelectionSet& selection, SelectionMode mode = SelectionMode::Replace);
@@ -128,6 +128,12 @@ private:
     void trimHistory();
     bool voxelExists(const VoxelId& voxel) const;
     std::vector<VoxelId> getAllVoxels() const;
+    
+    // Selection factory methods
+    SelectionSet makeBoxSelection(const Math::BoundingBox& box, VoxelData::VoxelResolution resolution);
+    SelectionSet makeSphereSelection(const Math::Vector3f& center, float radius, VoxelData::VoxelResolution resolution);
+    SelectionSet makeCylinderSelection(const Math::Vector3f& base, const Math::Vector3f& direction, 
+                                     float radius, float height, VoxelData::VoxelResolution resolution);
 };
 
 // Selection events

@@ -181,7 +181,7 @@ TEST_F(RenderSettingsTest, DefaultSettings) {
     EXPECT_FLOAT_EQ(settings.wireframeWidth, 1.0f);
     
     // Lighting settings
-    EXPECT_TRUE(settings.lightingEnabled);
+    EXPECT_TRUE(settings.enableLighting);
     Vector3f expectedLightDir = Vector3f(-0.5f, -0.7f, -0.5f).normalized();
     EXPECT_NEAR(settings.lightDirection.x, expectedLightDir.x, 0.001f);
     EXPECT_NEAR(settings.lightDirection.y, expectedLightDir.y, 0.001f);
@@ -190,9 +190,9 @@ TEST_F(RenderSettingsTest, DefaultSettings) {
     EXPECT_FLOAT_EQ(settings.lightColor.g, 1.0f);
     EXPECT_FLOAT_EQ(settings.lightColor.b, 1.0f);
     EXPECT_FLOAT_EQ(settings.lightIntensity, 1.0f);
-    EXPECT_FLOAT_EQ(settings.ambientColor.r, 0.2f);
-    EXPECT_FLOAT_EQ(settings.ambientColor.g, 0.2f);
-    EXPECT_FLOAT_EQ(settings.ambientColor.b, 0.2f);
+    EXPECT_FLOAT_EQ(settings.ambientLight.r, 0.2f);
+    EXPECT_FLOAT_EQ(settings.ambientLight.g, 0.2f);
+    EXPECT_FLOAT_EQ(settings.ambientLight.b, 0.2f);
     
     // Material settings
     EXPECT_FALSE(settings.useVertexColors);

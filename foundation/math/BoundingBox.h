@@ -62,6 +62,11 @@ public:
     float getDiagonalLength() const {
         return getSize().length();
     }
+    
+    // Alias for backward compatibility
+    float getDiagonal() const {
+        return getDiagonalLength();
+    }
 
     void expandToInclude(const Vector3f& point) {
         if (!isValid()) {

@@ -51,9 +51,83 @@ Mesh SurfaceGenerator::generatePreviewMesh(const VoxelData::VoxelGrid& grid, int
 
 Mesh SurfaceGenerator::generateMultiResMesh(const VoxelData::VoxelDataManager& voxelManager,
                                            VoxelData::VoxelResolution targetRes) {
-    // TODO: Implement multi-resolution mesh generation
-    // For now, return an empty mesh
-    return Mesh();
+    // Get grid at target resolution
+    const VoxelData::VoxelGrid* targetGrid = voxelManager.getGrid(targetRes);
+    if (!targetGrid) {
+        return Mesh();
+    }
+    
+    // Generate base mesh for target resolution
+    Mesh baseMesh = generateSurface(*targetGrid, m_settings);
+    
+    // Check if we need to incorporate details from higher resolutions
+    if (targetRes == VoxelData::VoxelResolution::Size_1cm) {
+        // Already at highest resolution
+        return baseMesh;
+    }
+    
+    // Find all resolutions with data
+    std::vector<VoxelData::VoxelResolution> activeResolutions;
+    for (int res = static_cast<int>(VoxelData::VoxelResolution::Size_1cm); 
+         res <= static_cast<int>(targetRes); ++res) {
+        auto resolution = static_cast<VoxelData::VoxelResolution>(res);
+        const VoxelData::VoxelGrid* grid = voxelManager.getGrid(resolution);
+        if (grid && !grid->isEmpty()) {
+            activeResolutions.push_back(resolution);
+        }
+    }
+    
+    if (activeResolutions.empty()) {
+        return baseMesh;
+    }
+    
+    // Generate meshes for each active resolution
+    std::vector<Mesh> meshes;
+    for (auto resolution : activeResolutions) {
+        const VoxelData::VoxelGrid* grid = voxelManager.getGrid(resolution);
+        if (grid) {
+            Mesh mesh = generateSurface(*grid, m_settings);
+            if (mesh.isValid()) {
+                meshes.push_back(mesh);
+            }
+        }
+    }
+    
+    // Combine meshes
+    if (meshes.size() > 1) {
+        return MeshBuilder::combineMeshes(meshes);
+    } else if (!meshes.empty()) {
+        return meshes[0];
+    }
+    
+    return baseMesh;
+}
+
+std::vector<Mesh> SurfaceGenerator::generateAllResolutions(const VoxelData::VoxelDataManager& voxelManager) {
+    std::vector<Mesh> meshes;
+    
+    // Generate meshes for all 10 resolution levels
+    for (int res = static_cast<int>(VoxelData::VoxelResolution::Size_1cm); 
+         res <= static_cast<int>(VoxelData::VoxelResolution::Size_512cm); ++res) {
+        auto resolution = static_cast<VoxelData::VoxelResolution>(res);
+        const VoxelData::VoxelGrid* grid = voxelManager.getGrid(resolution);
+        
+        if (grid && !grid->isEmpty()) {
+            reportProgress(static_cast<float>(res) / 10.0f, 
+                         "Generating resolution " + std::to_string(1 << res) + "cm");
+            
+            Mesh mesh = generateSurface(*grid, m_settings);
+            if (mesh.isValid()) {
+                meshes.push_back(mesh);
+            }
+            
+            if (m_cancelRequested) {
+                break;
+            }
+        }
+    }
+    
+    return meshes;
 }
 
 Mesh SurfaceGenerator::generateExportMesh(const VoxelData::VoxelGrid& grid, 
@@ -181,12 +255,10 @@ void SurfaceGenerator::applyPostProcessing(Mesh& mesh, const SurfaceSettings& se
 void SurfaceGenerator::optimizeMesh(Mesh& mesh, float targetRatio) {
     if (targetRatio >= 1.0f) return;
     
-    // TODO: Implement mesh simplification
-    // For now, just return the mesh as-is
-    // MeshSimplifier simplifier;
-    // SimplificationSettings simplifySettings = SimplificationSettings::Balanced();
-    // simplifySettings.targetRatio = targetRatio;
-    // mesh = simplifier.simplify(mesh, simplifySettings);
+    MeshSimplifier simplifier;
+    SimplificationSettings simplifySettings = SimplificationSettings::Balanced();
+    simplifySettings.targetRatio = targetRatio;
+    mesh = simplifier.simplify(mesh, simplifySettings);
 }
 
 int SurfaceGenerator::calculateLOD(float distance, const Math::BoundingBox& bounds) const {
@@ -320,11 +392,10 @@ Mesh LODManager::generateLOD(const VoxelData::VoxelGrid& grid, LODLevel level,
     // Apply additional simplification if needed
     float ratio = getSimplificationRatio(level);
     if (ratio < 1.0f) {
-        // TODO: Implement mesh simplification
-        // MeshSimplifier simplifier;
-        // SimplificationSettings simplifySettings = SimplificationSettings::Balanced();
-        // simplifySettings.targetRatio = ratio;
-        // mesh = simplifier.simplify(mesh, simplifySettings);
+        MeshSimplifier simplifier;
+        SimplificationSettings simplifySettings = SimplificationSettings::Balanced();
+        simplifySettings.targetRatio = ratio;
+        mesh = simplifier.simplify(mesh, simplifySettings);
     }
     
     return mesh;

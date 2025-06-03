@@ -4,6 +4,7 @@
 #include "logging/Logger.h"
 #include <cstring>
 #include <sstream>
+#include <unordered_map>
 
 namespace VoxelEditor {
 namespace FileIO {
@@ -315,45 +316,386 @@ bool BinaryFormat::readMetadataChunk(BinaryReader& reader, ProjectMetadata& meta
     return reader.isValid();
 }
 
-// Stub implementations for other chunk types - to be implemented
+// Voxel data serialization
 bool BinaryFormat::writeVoxelDataChunk(BinaryWriter& writer, const ::VoxelEditor::VoxelData::VoxelDataManager& voxelData, const SaveOptions& options) {
-    // TODO: Implement
-    return true;
+    auto buffer = serializeToBuffer([&](BinaryWriter& w) {
+        // Write active resolution
+        w.writeUInt8(static_cast<uint8_t>(voxelData.getActiveResolution()));
+        
+        // Write voxel data for each resolution level
+        for (int i = 0; i < static_cast<int>(::VoxelEditor::VoxelData::VoxelResolution::COUNT); ++i) {
+            ::VoxelEditor::VoxelData::VoxelResolution resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(i);
+            const ::VoxelEditor::VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
+            
+            if (grid) {
+                // Get all voxels for this resolution
+                auto voxels = grid->getAllVoxels();
+                
+                // Write resolution level and voxel count
+                w.writeUInt8(static_cast<uint8_t>(resolution));
+                w.writeUInt32(static_cast<uint32_t>(voxels.size()));
+                
+                // Write each voxel position
+                for (const auto& voxelPos : voxels) {
+                    w.writeInt32(voxelPos.gridPos.x);
+                    w.writeInt32(voxelPos.gridPos.y);
+                    w.writeInt32(voxelPos.gridPos.z);
+                }
+            } else {
+                // Write resolution level with 0 voxels
+                w.writeUInt8(static_cast<uint8_t>(resolution));
+                w.writeUInt32(0);
+            }
+        }
+    });
+    
+    // Optionally compress the data
+    if (options.compress) {
+        Compression compressor;
+        std::vector<uint8_t> compressedBuffer;
+        if (compressor.compress(buffer.data(), buffer.size(), compressedBuffer)) {
+            return writeChunk(writer, ChunkType::VoxelData, compressedBuffer);
+        }
+    }
+    return writeChunk(writer, ChunkType::VoxelData, buffer);
 }
 
 bool BinaryFormat::readVoxelDataChunk(BinaryReader& reader, ::VoxelEditor::VoxelData::VoxelDataManager& voxelData, const LoadOptions& options) {
-    // TODO: Implement
-    return true;
+    // Clear existing data
+    voxelData.clearAll();
+    
+    // Read active resolution
+    ::VoxelEditor::VoxelData::VoxelResolution activeResolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
+    voxelData.setActiveResolution(activeResolution);
+    
+    // Read voxel data for each resolution level
+    for (int i = 0; i < static_cast<int>(::VoxelEditor::VoxelData::VoxelResolution::COUNT); ++i) {
+        // Read resolution level
+        ::VoxelEditor::VoxelData::VoxelResolution resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
+        uint32_t voxelCount = reader.readUInt32();
+        
+        // Read voxel positions and set them
+        for (uint32_t j = 0; j < voxelCount; ++j) {
+            Math::Vector3i pos;
+            pos.x = reader.readInt32();
+            pos.y = reader.readInt32();
+            pos.z = reader.readInt32();
+            
+            voxelData.setVoxel(pos, resolution, true);
+        }
+    }
+    
+    return reader.isValid();
 }
 
 bool BinaryFormat::writeGroupDataChunk(BinaryWriter& writer, const Groups::GroupManager& groupData) {
-    // TODO: Implement
-    return true;
+    auto buffer = serializeToBuffer([&](BinaryWriter& w) {
+        // Get all groups
+        auto allGroupIds = groupData.getAllGroupIds();
+        w.writeUInt32(static_cast<uint32_t>(allGroupIds.size()));
+        
+        // Write each group
+        for (const auto& groupId : allGroupIds) {
+            const Groups::VoxelGroup* group = groupData.getGroup(groupId);
+            if (!group) continue;
+            
+            // Write group ID and basic info
+            w.writeUInt32(groupId);
+            w.writeString(group->getName());
+            w.writeBool(group->isVisible());
+            w.writeBool(group->isLocked());
+            w.writeFloat(group->getOpacity());
+            
+            // Write color
+            auto color = group->getColor();
+            w.writeFloat(color.r);
+            w.writeFloat(color.g);
+            w.writeFloat(color.b);
+            w.writeFloat(color.a);
+            
+            // Write pivot point (simplified transform)
+            auto pivot = group->getPivot();
+            w.writeFloat(pivot.x);
+            w.writeFloat(pivot.y);
+            w.writeFloat(pivot.z);
+            
+            // Write voxel IDs
+            auto voxels = group->getVoxels();
+            w.writeUInt32(static_cast<uint32_t>(voxels.size()));
+            for (const auto& voxelId : voxels) {
+                w.writeInt32(voxelId.position.x);
+                w.writeInt32(voxelId.position.y);
+                w.writeInt32(voxelId.position.z);
+                w.writeUInt8(static_cast<uint8_t>(voxelId.resolution));
+            }
+            
+            // Write parent ID for hierarchy
+            auto parentId = groupData.getParentGroup(groupId);
+            w.writeUInt32(parentId);
+        }
+    });
+    
+    return writeChunk(writer, ChunkType::GroupData, buffer);
 }
 
 bool BinaryFormat::readGroupDataChunk(BinaryReader& reader, Groups::GroupManager& groupData) {
-    // TODO: Implement
-    return true;
+    uint32_t groupCount = reader.readUInt32();
+    
+    // First pass: create all groups
+    std::unordered_map<uint32_t, uint32_t> oldToNewIdMap;
+    std::unordered_map<uint32_t, uint32_t> parentMap;
+    
+    for (uint32_t i = 0; i < groupCount; ++i) {
+        // Read group ID and basic info
+        uint32_t oldGroupId = reader.readUInt32();
+        std::string name = reader.readString();
+        bool isVisible = reader.readBool();
+        bool isLocked = reader.readBool();
+        float opacity = reader.readFloat();
+        
+        // Read color
+        Rendering::Color color;
+        color.r = reader.readFloat();
+        color.g = reader.readFloat();
+        color.b = reader.readFloat();
+        color.a = reader.readFloat();
+        
+        // Read pivot point (simplified transform)
+        Math::Vector3f pivot;
+        pivot.x = reader.readFloat();
+        pivot.y = reader.readFloat();
+        pivot.z = reader.readFloat();
+        
+        // Read voxel IDs
+        uint32_t voxelCount = reader.readUInt32();
+        std::vector<Groups::VoxelId> voxels;
+        for (uint32_t j = 0; j < voxelCount; ++j) {
+            Groups::VoxelId voxelId;
+            voxelId.position.x = reader.readInt32();
+            voxelId.position.y = reader.readInt32();
+            voxelId.position.z = reader.readInt32();
+            voxelId.resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
+            voxels.push_back(voxelId);
+        }
+        
+        // Read parent ID
+        uint32_t parentId = reader.readUInt32();
+        
+        // Create the group
+        Groups::GroupId newGroupId = groupData.createGroup(name, voxels);
+        oldToNewIdMap[oldGroupId] = newGroupId;
+        
+        // Apply properties
+        if (!isVisible) groupData.hideGroup(newGroupId);
+        if (isLocked) groupData.lockGroup(newGroupId);
+        groupData.setGroupOpacity(newGroupId, opacity);
+        groupData.setGroupColor(newGroupId, color);
+        
+        // Set pivot point
+        Groups::VoxelGroup* newGroup = groupData.getGroup(newGroupId);
+        if (newGroup) {
+            newGroup->setPivot(pivot);
+        }
+        
+        // Store parent mapping for second pass
+        if (parentId != 0) {
+            parentMap[newGroupId] = parentId;
+        }
+    }
+    
+    // Second pass: establish hierarchy
+    for (const auto& [childId, oldParentId] : parentMap) {
+        auto it = oldToNewIdMap.find(oldParentId);
+        if (it != oldToNewIdMap.end()) {
+            groupData.setParentGroup(childId, it->second);
+        }
+    }
+    
+    return reader.isValid();
 }
 
 bool BinaryFormat::writeCameraStateChunk(BinaryWriter& writer, const Camera::OrbitCamera& camera) {
-    // TODO: Implement
-    return true;
+    auto buffer = serializeToBuffer([&](BinaryWriter& w) {
+        // Write camera type identifier
+        w.writeUInt8(1); // 1 = OrbitCamera
+        
+        // Write position
+        auto position = camera.getPosition();
+        w.writeFloat(position.x);
+        w.writeFloat(position.y);
+        w.writeFloat(position.z);
+        
+        // Write target
+        auto target = camera.getTarget();
+        w.writeFloat(target.x);
+        w.writeFloat(target.y);
+        w.writeFloat(target.z);
+        
+        // Write up vector
+        auto up = camera.getUp();
+        w.writeFloat(up.x);
+        w.writeFloat(up.y);
+        w.writeFloat(up.z);
+        
+        // Write projection parameters
+        w.writeFloat(camera.getFieldOfView());
+        w.writeFloat(camera.getNearPlane());
+        w.writeFloat(camera.getFarPlane());
+        
+        // Write orbit-specific parameters
+        w.writeFloat(camera.getDistance());
+        w.writeFloat(camera.getYaw());
+        w.writeFloat(camera.getPitch());
+        
+        // Write sensitivity settings
+        w.writeFloat(camera.getPanSensitivity());
+        w.writeFloat(camera.getRotateSensitivity());
+        w.writeFloat(camera.getZoomSensitivity());
+        
+        // Write limits
+        w.writeFloat(camera.getMinDistance());
+        w.writeFloat(camera.getMaxDistance());
+        w.writeFloat(camera.getMinPitch());
+        w.writeFloat(camera.getMaxPitch());
+        
+        // Write smoothing settings
+        w.writeBool(camera.isSmoothing());
+        w.writeFloat(camera.getSmoothFactor());
+    });
+    
+    return writeChunk(writer, ChunkType::CameraState, buffer);
 }
 
 bool BinaryFormat::readCameraStateChunk(BinaryReader& reader, Camera::OrbitCamera& camera) {
-    // TODO: Implement
-    return true;
+    // Read camera type identifier
+    uint8_t cameraType = reader.readUInt8();
+    if (cameraType != 1) {
+        // Unknown camera type
+        return false;
+    }
+    
+    // Read position
+    Math::Vector3f position;
+    position.x = reader.readFloat();
+    position.y = reader.readFloat();
+    position.z = reader.readFloat();
+    
+    // Read target
+    Math::Vector3f target;
+    target.x = reader.readFloat();
+    target.y = reader.readFloat();
+    target.z = reader.readFloat();
+    
+    // Read up vector
+    Math::Vector3f up;
+    up.x = reader.readFloat();
+    up.y = reader.readFloat();
+    up.z = reader.readFloat();
+    
+    // Read projection parameters
+    float fov = reader.readFloat();
+    float nearPlane = reader.readFloat();
+    float farPlane = reader.readFloat();
+    
+    // Read orbit-specific parameters
+    float distance = reader.readFloat();
+    float yaw = reader.readFloat();
+    float pitch = reader.readFloat();
+    
+    // Read sensitivity settings
+    float panSensitivity = reader.readFloat();
+    float rotateSensitivity = reader.readFloat();
+    float zoomSensitivity = reader.readFloat();
+    
+    // Read limits
+    float minDistance = reader.readFloat();
+    float maxDistance = reader.readFloat();
+    float minPitch = reader.readFloat();
+    float maxPitch = reader.readFloat();
+    
+    // Read smoothing settings
+    bool smoothing = reader.readBool();
+    float smoothFactor = reader.readFloat();
+    
+    // Apply settings to camera
+    camera.setTarget(target);
+    camera.setUp(up);
+    camera.setFieldOfView(fov);
+    camera.setNearFarPlanes(nearPlane, farPlane);
+    
+    camera.setDistance(distance);
+    camera.setYaw(yaw);
+    camera.setPitch(pitch);
+    
+    camera.setPanSensitivity(panSensitivity);
+    camera.setRotateSensitivity(rotateSensitivity);
+    camera.setZoomSensitivity(zoomSensitivity);
+    
+    camera.setDistanceConstraints(minDistance, maxDistance);
+    camera.setPitchConstraints(minPitch, maxPitch);
+    
+    camera.setSmoothing(smoothing);
+    camera.setSmoothFactor(smoothFactor);
+    
+    return reader.isValid();
 }
 
 bool BinaryFormat::writeSelectionDataChunk(BinaryWriter& writer, const Project& project) {
-    // TODO: Implement
-    return true;
+    auto buffer = serializeToBuffer([&](BinaryWriter& w) {
+        // Check if we have selection data
+        if (project.currentSelection) {
+            w.writeBool(true); // Has selection data
+            
+            // Get all selected voxels
+            auto selectedVoxels = project.currentSelection->toVector();
+            w.writeUInt32(static_cast<uint32_t>(selectedVoxels.size()));
+            
+            // Write each selected voxel
+            for (const auto& voxelId : selectedVoxels) {
+                w.writeInt32(voxelId.position.x);
+                w.writeInt32(voxelId.position.y);
+                w.writeInt32(voxelId.position.z);
+                w.writeUInt8(static_cast<uint8_t>(voxelId.resolution));
+            }
+            
+            // Write selection mode (default)
+            w.writeUInt8(0); // Default mode
+        } else {
+            w.writeBool(false); // No selection data
+        }
+    });
+    
+    return writeChunk(writer, ChunkType::SelectionData, buffer);
 }
 
 bool BinaryFormat::readSelectionDataChunk(BinaryReader& reader, Project& project) {
-    // TODO: Implement
-    return true;
+    bool hasSelectionData = reader.readBool();
+    
+    if (hasSelectionData && project.currentSelection) {
+        // Clear existing selection
+        project.currentSelection->clear();
+        
+        // Read selected voxels
+        uint32_t voxelCount = reader.readUInt32();
+        std::vector<Selection::VoxelId> selectedVoxels;
+        
+        for (uint32_t i = 0; i < voxelCount; ++i) {
+            Selection::VoxelId voxelId;
+            voxelId.position.x = reader.readInt32();
+            voxelId.position.y = reader.readInt32();
+            voxelId.position.z = reader.readInt32();
+            voxelId.resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
+            selectedVoxels.push_back(voxelId);
+        }
+        
+        // Add all voxels to selection
+        project.currentSelection->addRange(selectedVoxels);
+        
+        // Read selection mode (ignore for now)
+        uint8_t selectionMode = reader.readUInt8();
+    }
+    
+    return reader.isValid();
 }
 
 bool BinaryFormat::writeSettingsChunk(BinaryWriter& writer, const WorkspaceSettings& settings) {

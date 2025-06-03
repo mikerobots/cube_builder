@@ -1,6 +1,13 @@
 #include "../include/visual_feedback/OutlineRenderer.h"
 #include <algorithm>
 #include <map>
+#include <cstddef>
+
+#ifdef __APPLE__
+    #include <OpenGL/gl3.h>
+#else
+    #include <GL/gl.h>
+#endif
 
 namespace VoxelEditor {
 namespace VisualFeedback {
@@ -18,7 +25,16 @@ OutlineRenderer::OutlineRenderer()
 }
 
 OutlineRenderer::~OutlineRenderer() {
-    // TODO: Clean up GPU resources
+    // Clean up GPU resources
+    if (m_vertexBuffer) {
+        glDeleteBuffers(1, &m_vertexBuffer);
+    }
+    if (m_indexBuffer) {
+        glDeleteBuffers(1, &m_indexBuffer);
+    }
+    if (m_outlineShader) {
+        glDeleteProgram(m_outlineShader);
+    }
 }
 
 void OutlineRenderer::renderVoxelOutline(const Math::Vector3i& position, 
@@ -101,17 +117,76 @@ void OutlineRenderer::endBatch() {
 }
 
 void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
+    if (m_batches.empty()) return;
+    
+    // Enable line rendering settings
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_LINE_SMOOTH);
+    
+    // Use outline shader
+    glUseProgram(m_outlineShader);
+    
+    // Get uniform locations
+    GLint mvpLoc = glGetUniformLocation(m_outlineShader, "mvpMatrix");
+    GLint patternScaleLoc = glGetUniformLocation(m_outlineShader, "patternScale");
+    GLint patternOffsetLoc = glGetUniformLocation(m_outlineShader, "patternOffset");
+    GLint linePatternLoc = glGetUniformLocation(m_outlineShader, "linePattern");
+    GLint animationTimeLoc = glGetUniformLocation(m_outlineShader, "animationTime");
+    
+    // Calculate MVP matrix
+    Math::Matrix4f mvpMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
+    
+    // Set common uniforms
+    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
+    glUniform1f(animationTimeLoc, m_animationTime);
+    
+    // Setup vertex attributes
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+    
+    glEnableVertexAttribArray(0); // position
+    glEnableVertexAttribArray(1); // color
+    glEnableVertexAttribArray(2); // patternCoord
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
+                          (void*)offsetof(OutlineVertex, position));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
+                          (void*)offsetof(OutlineVertex, color));
+    glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
+                          (void*)offsetof(OutlineVertex, patternCoord));
+    
+    // Render each batch
     for (const auto& batch : m_batches) {
+        if (batch.vertices.empty()) continue;
+        
         updateBuffers(batch);
         
-        // TODO: Set shader uniforms based on batch.style
-        // - Line width
-        // - Pattern settings
-        // - Color
-        // - Animation parameters
+        // Set line width
+        glLineWidth(batch.style.lineWidth);
         
-        // TODO: Render the batch
+        // Set pattern uniforms
+        glUniform1f(patternScaleLoc, m_patternScale);
+        glUniform1f(patternOffsetLoc, batch.style.animated ? m_patternOffset : 0.0f);
+        glUniform1i(linePatternLoc, static_cast<int>(batch.style.pattern));
+        
+        // Draw lines
+        glDrawElements(GL_LINES, static_cast<GLsizei>(batch.indices.size()),
+                       GL_UNSIGNED_INT, nullptr);
     }
+    
+    // Cleanup
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glUseProgram(0);
+    
+    // Reset line width
+    glLineWidth(1.0f);
+    glDisable(GL_LINE_SMOOTH);
 }
 
 void OutlineRenderer::clearBatch() {
@@ -207,11 +282,129 @@ std::vector<Math::Vector3f> OutlineRenderer::generateGroupOutline(const std::vec
 }
 
 void OutlineRenderer::createBuffers() {
-    // TODO: Create GPU buffers for vertices and indices
+    // Create vertex buffer
+    glGenBuffers(1, &m_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+    // Allocate initial buffer size (will be resized as needed)
+    glBufferData(GL_ARRAY_BUFFER, sizeof(OutlineVertex) * 1024, nullptr, GL_DYNAMIC_DRAW);
+    
+    // Create index buffer
+    glGenBuffers(1, &m_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+    // Allocate initial buffer size (will be resized as needed)
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * 2048, nullptr, GL_DYNAMIC_DRAW);
+    
+    // Create shader program for outline rendering
+    const char* vertexShaderSource = R"(
+        #version 330 core
+        layout(location = 0) in vec3 position;
+        layout(location = 1) in vec4 color;
+        layout(location = 2) in float patternCoord;
+        
+        uniform mat4 mvpMatrix;
+        
+        out vec4 fragColor;
+        out float fragPatternCoord;
+        
+        void main() {
+            gl_Position = mvpMatrix * vec4(position, 1.0);
+            fragColor = color;
+            fragPatternCoord = patternCoord;
+        }
+    )";
+    
+    const char* fragmentShaderSource = R"(
+        #version 330 core
+        in vec4 fragColor;
+        in float fragPatternCoord;
+        
+        uniform float patternScale;
+        uniform float patternOffset;
+        uniform int linePattern; // 0=solid, 1=dashed, 2=dotted, 3=dashdot
+        uniform float animationTime;
+        
+        out vec4 color;
+        
+        void main() {
+            // Calculate pattern value based on pattern type
+            float coord = (fragPatternCoord + patternOffset) * patternScale;
+            float alpha = 1.0;
+            
+            if (linePattern == 1) { // Dashed
+                alpha = step(0.5, fract(coord));
+            } else if (linePattern == 2) { // Dotted
+                alpha = step(0.7, fract(coord * 3.0));
+            } else if (linePattern == 3) { // DashDot
+                float phase = fract(coord * 0.5);
+                alpha = (phase < 0.4) ? 1.0 : (phase < 0.5 || phase > 0.8) ? 0.0 : 1.0;
+            }
+            
+            color = vec4(fragColor.rgb, fragColor.a * alpha);
+        }
+    )";
+    
+    // Compile vertex shader
+    uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glCompileShader(vertexShader);
+    
+    // Compile fragment shader
+    uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+    glCompileShader(fragmentShader);
+    
+    // Create and link shader program
+    m_outlineShader = glCreateProgram();
+    glAttachShader(m_outlineShader, vertexShader);
+    glAttachShader(m_outlineShader, fragmentShader);
+    glLinkProgram(m_outlineShader);
+    
+    // Clean up shader objects
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+    
+    // Unbind buffers
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void OutlineRenderer::updateBuffers(const OutlineBatch& batch) {
-    // TODO: Update GPU buffers with batch data
+    if (batch.vertices.empty()) return;
+    
+    // Update vertex buffer
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+    
+    // Check if we need to resize the buffer
+    GLint bufferSize = 0;
+    glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    size_t requiredSize = batch.vertices.size() * sizeof(OutlineVertex);
+    
+    if (requiredSize > static_cast<size_t>(bufferSize)) {
+        // Resize buffer with some extra space
+        glBufferData(GL_ARRAY_BUFFER, requiredSize * 2, nullptr, GL_DYNAMIC_DRAW);
+    }
+    
+    // Upload vertex data
+    glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, batch.vertices.data());
+    
+    // Update index buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+    
+    // Check if we need to resize the buffer
+    glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    size_t requiredIndexSize = batch.indices.size() * sizeof(uint32_t);
+    
+    if (requiredIndexSize > static_cast<size_t>(bufferSize)) {
+        // Resize buffer with some extra space
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, requiredIndexSize * 2, nullptr, GL_DYNAMIC_DRAW);
+    }
+    
+    // Upload index data
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, requiredIndexSize, batch.indices.data());
+    
+    // Unbind buffers
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 float OutlineRenderer::calculatePatternCoordinate(float distance, LinePattern pattern, 
@@ -230,16 +423,77 @@ float OutlineRenderer::calculatePatternCoordinate(float distance, LinePattern pa
 }
 
 std::vector<OutlineRenderer::Edge> OutlineRenderer::findExternalEdges(const std::vector<VoxelId>& voxels) {
-    std::vector<Edge> edges;
+    // Map to track edge usage count
+    std::map<std::pair<Math::Vector3f, Math::Vector3f>, uint32_t> edgeCount;
     
-    // TODO: Implement edge detection algorithm
-    // This would involve:
-    // 1. Converting VoxelIds to positions
-    // 2. Finding all edges of all voxels
-    // 3. Counting how many faces share each edge
-    // 4. Keeping only edges shared by exactly one face (external edges)
+    // Helper to create ordered edge key (ensures consistent ordering)
+    auto makeEdgeKey = [](const Math::Vector3f& a, const Math::Vector3f& b) {
+        if (a.x < b.x || (a.x == b.x && a.y < b.y) || (a.x == b.x && a.y == b.y && a.z < b.z)) {
+            return std::make_pair(a, b);
+        }
+        return std::make_pair(b, a);
+    };
     
-    return edges;
+    // Process each voxel
+    for (VoxelId voxelId : voxels) {
+        // Extract position and resolution from VoxelId
+        // VoxelId encoding: high 32 bits = position hash, low 32 bits = resolution + flags
+        uint32_t positionHash = static_cast<uint32_t>(voxelId >> 32);
+        uint32_t resolutionData = static_cast<uint32_t>(voxelId & 0xFFFFFFFF);
+        
+        // Decode position (simplified - assumes voxel positions are small enough)
+        int32_t x = static_cast<int32_t>((positionHash >> 20) & 0x3FF) - 512;
+        int32_t y = static_cast<int32_t>((positionHash >> 10) & 0x3FF) - 512;
+        int32_t z = static_cast<int32_t>(positionHash & 0x3FF) - 512;
+        
+        // Get resolution
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(resolutionData & 0xF);
+        float voxelSize = VoxelData::getVoxelSize(resolution);
+        
+        Math::Vector3f basePos(x * voxelSize, y * voxelSize, z * voxelSize);
+        
+        // Define the 8 corners of the voxel
+        Math::Vector3f corners[8] = {
+            basePos + Math::Vector3f(0, 0, 0),
+            basePos + Math::Vector3f(voxelSize, 0, 0),
+            basePos + Math::Vector3f(voxelSize, voxelSize, 0),
+            basePos + Math::Vector3f(0, voxelSize, 0),
+            basePos + Math::Vector3f(0, 0, voxelSize),
+            basePos + Math::Vector3f(voxelSize, 0, voxelSize),
+            basePos + Math::Vector3f(voxelSize, voxelSize, voxelSize),
+            basePos + Math::Vector3f(0, voxelSize, voxelSize)
+        };
+        
+        // Define the 12 edges of a cube
+        std::pair<int, int> edgeIndices[12] = {
+            // Bottom face
+            {0, 1}, {1, 2}, {2, 3}, {3, 0},
+            // Top face
+            {4, 5}, {5, 6}, {6, 7}, {7, 4},
+            // Vertical edges
+            {0, 4}, {1, 5}, {2, 6}, {3, 7}
+        };
+        
+        // Count each edge
+        for (const auto& edge : edgeIndices) {
+            auto key = makeEdgeKey(corners[edge.first], corners[edge.second]);
+            edgeCount[key]++;
+        }
+    }
+    
+    // Extract edges that appear exactly once (external edges)
+    std::vector<Edge> externalEdges;
+    for (const auto& pair : edgeCount) {
+        if (pair.second == 1) {
+            Edge edge;
+            edge.start = pair.first.first;
+            edge.end = pair.first.second;
+            edge.faceCount = 1;
+            externalEdges.push_back(edge);
+        }
+    }
+    
+    return externalEdges;
 }
 
 void OutlineRenderer::removeInternalEdges(std::vector<Edge>& edges) {
@@ -312,9 +566,21 @@ std::vector<Math::Vector3f> VoxelOutlineGenerator::generateVoxelEdges(
 std::vector<Math::Vector3f> VoxelOutlineGenerator::generateGroupOutline(
     const std::vector<VoxelId>& voxels) {
     
-    // TODO: Implement group outline generation
-    // This is a complex algorithm that finds the external boundary of a set of voxels
-    return std::vector<Math::Vector3f>();
+    if (voxels.empty()) return std::vector<Math::Vector3f>();
+    
+    // Find all unique edges in the group
+    auto uniqueEdges = findUniqueEdges(voxels);
+    
+    // Convert edge keys to line list
+    std::vector<Math::Vector3f> outline;
+    outline.reserve(uniqueEdges.size() * 2);
+    
+    for (const auto& edge : uniqueEdges) {
+        outline.push_back(edge.start);
+        outline.push_back(edge.end);
+    }
+    
+    return outline;
 }
 
 // std::vector<Math::Vector3f> VoxelOutlineGenerator::generateSelectionOutline(
@@ -349,12 +615,67 @@ std::vector<VoxelOutlineGenerator::EdgeKey> VoxelOutlineGenerator::findUniqueEdg
     
     std::map<EdgeKey, int> edgeCount;
     
-    // TODO: For each voxel, add its 12 edges to the map
-    // Increment count for each edge
+    // Process each voxel
+    for (VoxelId voxelId : voxels) {
+        // Extract position and resolution from VoxelId
+        uint32_t positionHash = static_cast<uint32_t>(voxelId >> 32);
+        uint32_t resolutionData = static_cast<uint32_t>(voxelId & 0xFFFFFFFF);
+        
+        // Decode position
+        int32_t x = static_cast<int32_t>((positionHash >> 20) & 0x3FF) - 512;
+        int32_t y = static_cast<int32_t>((positionHash >> 10) & 0x3FF) - 512;
+        int32_t z = static_cast<int32_t>(positionHash & 0x3FF) - 512;
+        
+        // Get resolution
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(resolutionData & 0xF);
+        float voxelSize = getVoxelSize(resolution);
+        
+        Math::Vector3f basePos(x * voxelSize, y * voxelSize, z * voxelSize);
+        
+        // Define the 8 corners of the voxel
+        Math::Vector3f corners[8] = {
+            basePos + Math::Vector3f(0, 0, 0),
+            basePos + Math::Vector3f(voxelSize, 0, 0),
+            basePos + Math::Vector3f(voxelSize, voxelSize, 0),
+            basePos + Math::Vector3f(0, voxelSize, 0),
+            basePos + Math::Vector3f(0, 0, voxelSize),
+            basePos + Math::Vector3f(voxelSize, 0, voxelSize),
+            basePos + Math::Vector3f(voxelSize, voxelSize, voxelSize),
+            basePos + Math::Vector3f(0, voxelSize, voxelSize)
+        };
+        
+        // Define the 12 edges of a cube
+        std::pair<int, int> edgeIndices[12] = {
+            // Bottom face
+            {0, 1}, {1, 2}, {2, 3}, {3, 0},
+            // Top face
+            {4, 5}, {5, 6}, {6, 7}, {7, 4},
+            // Vertical edges
+            {0, 4}, {1, 5}, {2, 6}, {3, 7}
+        };
+        
+        // Add each edge to the map
+        for (const auto& edge : edgeIndices) {
+            EdgeKey key;
+            // Ensure consistent edge ordering
+            if (corners[edge.first].x < corners[edge.second].x ||
+                (corners[edge.first].x == corners[edge.second].x && corners[edge.first].y < corners[edge.second].y) ||
+                (corners[edge.first].x == corners[edge.second].x && corners[edge.first].y == corners[edge.second].y && 
+                 corners[edge.first].z < corners[edge.second].z)) {
+                key.start = corners[edge.first];
+                key.end = corners[edge.second];
+            } else {
+                key.start = corners[edge.second];
+                key.end = corners[edge.first];
+            }
+            edgeCount[key]++;
+        }
+    }
     
+    // Extract edges that appear exactly once (external edges)
     std::vector<EdgeKey> uniqueEdges;
     for (const auto& pair : edgeCount) {
-        if (pair.second == 1) { // Edge appears only once (external edge)
+        if (pair.second == 1) {
             uniqueEdges.push_back(pair.first);
         }
     }

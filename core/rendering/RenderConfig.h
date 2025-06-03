@@ -15,6 +15,7 @@ struct RenderConfig {
     int samples = 4;                    // MSAA samples
     bool vsync = true;
     bool debugContext = false;
+    bool enableDebugOutput = false;
     ColorFormat colorFormat = ColorFormat::RGBA8;
     DepthFormat depthFormat = DepthFormat::Depth24Stencil8;
     
@@ -101,11 +102,16 @@ struct RenderSettings {
     float wireframeWidth = 1.0f;
     
     // Lighting settings
-    bool lightingEnabled = true;
+    bool enableLighting = true;
+    bool enableShadows = false;
     Math::Vector3f lightDirection = Math::Vector3f(-0.5f, -0.7f, -0.5f).normalized();
     Color lightColor = Color::White();
     float lightIntensity = 1.0f;
-    Color ambientColor = Color(0.2f, 0.2f, 0.2f, 1.0f);
+    Color ambientLight = Color(0.2f, 0.2f, 0.2f, 1.0f);
+    
+    // Debug rendering options
+    bool showNormals = false;
+    bool showBounds = false;
     
     // Material overrides
     bool useVertexColors = false;

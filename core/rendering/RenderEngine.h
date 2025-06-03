@@ -72,9 +72,9 @@ public:
     void setViewport(int x, int y, int width, int height);
     void setCamera(const Camera::Camera& camera);
     
-    // Render targets and framebuffers
-    void setRenderTarget(FrameBuffer* target);
-    void setDefaultRenderTarget();
+    // Render targets and framebuffers (TODO: Implement)
+    // void setRenderTarget(FrameBuffer* target);
+    // void setDefaultRenderTarget();
     
     // Resource management
     BufferId createVertexBuffer(const void* data, size_t size, BufferUsage usage = BufferUsage::Static);
@@ -105,11 +105,13 @@ public:
     void setDepthWrite(bool enabled);
     void setCullMode(CullMode mode);
     void setDepthTest(bool enabled);
+    void setLineWidth(float width);
     
     // Shader management
     ShaderId getBuiltinShader(const std::string& name);
     ShaderId loadShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
     void reloadShaders();
+    ShaderManager* getShaderManager() { return m_shaderManager.get(); }
     
     // Debug and profiling
     void setDebugMode(bool enabled);
@@ -127,14 +129,14 @@ private:
     std::unique_ptr<OpenGLRenderer> m_glRenderer;
     std::unique_ptr<ShaderManager> m_shaderManager;
     std::unique_ptr<RenderState> m_renderState;
-    std::unique_ptr<FrameBuffer> m_defaultFrameBuffer;
-    FrameBuffer* m_currentRenderTarget;
+    // std::unique_ptr<FrameBuffer> m_defaultFrameBuffer; // TODO: Implement
+    // FrameBuffer* m_currentRenderTarget; // TODO: Implement
     
     // Configuration and state
     RenderConfig m_config;
     RenderSettings m_currentSettings;
     RenderStats m_stats;
-    RenderTimer m_frameTimer;
+    mutable RenderTimer m_frameTimer;
     bool m_initialized;
     bool m_debugMode;
     

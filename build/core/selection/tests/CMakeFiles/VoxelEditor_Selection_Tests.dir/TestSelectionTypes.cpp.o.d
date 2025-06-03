@@ -937,10 +937,6 @@ core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestSelectionTyp
   /Users/michaelhalloran/cube_edit/foundation/math/MathUtils.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/selection/../voxel_data/VoxelTypes.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h \
   /Users/michaelhalloran/cube_edit/core/selection/../rendering/RenderTypes.h \

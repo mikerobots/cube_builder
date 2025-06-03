@@ -165,30 +165,48 @@ TEST_F(VoxelDataManagerTest, WorldSpaceOperations) {
     Vector3f worldPos(1.0f, 0.5f, 2.0f); // Using positive coordinates (0-based system)
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
+    // Debug information
+    ASSERT_TRUE(manager != nullptr) << "Manager is null";
+    ASSERT_TRUE(manager->isValidWorldPosition(worldPos)) << "World position should be valid";
+    ASSERT_TRUE(manager->getGrid(resolution) != nullptr) << "Grid should exist for resolution";
+    
     // Set voxel at world position
-    EXPECT_TRUE(manager->setVoxelAtWorldPos(worldPos, resolution, true));
-    EXPECT_TRUE(manager->getVoxelAtWorldPos(worldPos, resolution));
-    EXPECT_TRUE(manager->hasVoxelAtWorldPos(worldPos, resolution));
+    bool setResult = manager->setVoxelAtWorldPos(worldPos, resolution, true);
+    EXPECT_TRUE(setResult) << "setVoxelAtWorldPos failed for position (" << worldPos.x << ", " << worldPos.y << ", " << worldPos.z << ")";
+    
+    if (setResult) {
+        EXPECT_TRUE(manager->getVoxelAtWorldPos(worldPos, resolution));
+        EXPECT_TRUE(manager->hasVoxelAtWorldPos(worldPos, resolution));
+    }
     
     // Test with active resolution
     manager->setActiveResolution(resolution);
-    EXPECT_TRUE(manager->setVoxelAtWorldPos(worldPos, true));
-    EXPECT_TRUE(manager->getVoxelAtWorldPos(worldPos));
-    EXPECT_TRUE(manager->hasVoxelAtWorldPos(worldPos));
+    EXPECT_EQ(manager->getActiveResolution(), resolution);
+    
+    bool setResult2 = manager->setVoxelAtWorldPos(worldPos, true);
+    EXPECT_TRUE(setResult2) << "setVoxelAtWorldPos with active resolution failed";
+    
+    if (setResult2) {
+        EXPECT_TRUE(manager->getVoxelAtWorldPos(worldPos));
+        EXPECT_TRUE(manager->hasVoxelAtWorldPos(worldPos));
+    }
 }
 
 TEST_F(VoxelDataManagerTest, ResolutionManagement) {
     VoxelResolution originalResolution = manager->getActiveResolution();
     VoxelResolution newResolution = VoxelResolution::Size_8cm;
     
+    // Ensure we're changing to a different resolution
+    ASSERT_NE(originalResolution, newResolution) << "Test needs different resolutions to be meaningful";
+    
     // Change active resolution
     manager->setActiveResolution(newResolution);
     EXPECT_EQ(manager->getActiveResolution(), newResolution);
     EXPECT_FLOAT_EQ(manager->getActiveVoxelSize(), getVoxelSize(newResolution));
     
-    // Check event was dispatched
+    // Check event was dispatched - add some delay for event processing
     updateEventTracking();
-    EXPECT_EQ(resolutionChangedEventCount, 1);
+    EXPECT_EQ(resolutionChangedEventCount, 1) << "Resolution changed event should be dispatched once";
     EXPECT_EQ(lastResolutionChangedEvent.oldResolution, originalResolution);
     EXPECT_EQ(lastResolutionChangedEvent.newResolution, newResolution);
     

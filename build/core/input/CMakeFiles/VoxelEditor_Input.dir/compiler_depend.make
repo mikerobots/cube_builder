@@ -936,6 +936,7 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/InputManager.cpp.o: /Users/michaelha
   /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Matrix4f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/MathUtils.h \
   /Users/michaelhalloran/cube_edit/foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/foundation/events/CommonEvents.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
@@ -4680,6 +4681,7 @@ core/input/CMakeFiles/VoxelEditor_Input.dir/MouseHandler.cpp.o: /Users/michaelha
   /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Matrix4f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
+  /Users/michaelhalloran/cube_edit/foundation/math/MathUtils.h \
   /Users/michaelhalloran/cube_edit/foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/foundation/events/CommonEvents.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \

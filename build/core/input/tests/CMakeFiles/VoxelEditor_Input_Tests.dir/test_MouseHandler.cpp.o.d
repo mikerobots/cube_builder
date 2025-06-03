@@ -982,6 +982,7 @@ core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_MouseHandler.cpp.o:
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/Matrix4f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
+  /Users/michaelhalloran/cube_edit/core/camera/../../foundation/math/MathUtils.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/EventDispatcher.h \
   /Users/michaelhalloran/cube_edit/core/camera/../../foundation/events/CommonEvents.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \

@@ -927,9 +927,5 @@ core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/test_VoxelTypes
   /opt/homebrew/include/gtest/gtest_pred_impl.h \
   /opt/homebrew/include/gtest/gtest_prod.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/tests/../VoxelTypes.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/stack \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h

@@ -3,6 +3,7 @@
 #include "StateSnapshot.h"
 #include "../../foundation/logging/Logger.h"
 #include <algorithm>
+#include <unordered_set>
 
 namespace VoxelEditor {
 namespace UndoRedo {
@@ -400,6 +401,16 @@ void HistoryManager::setMemoryPressureCallback(MemoryPressureCallback callback) 
     m_memoryPressureCallback = callback;
 }
 
+void HistoryManager::setSnapshotCallback(SnapshotCallback callback) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_snapshotCallback = callback;
+}
+
+void HistoryManager::setRestoreCallback(RestoreCallback callback) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_restoreCallback = callback;
+}
+
 void HistoryManager::pushToUndoStack(std::unique_ptr<Command> command) {
     m_undoStack.push_back(std::move(command));
     m_currentMemoryUsage += m_undoStack.back()->getMemoryUsage();
@@ -435,13 +446,38 @@ void HistoryManager::enforceHistoryLimits() {
 }
 
 void HistoryManager::createSnapshot() {
-    // TODO: Implement snapshot creation
-    // This will capture the current state of the application
+    if (!m_snapshotCallback) {
+        return;
+    }
+    
+    try {
+        auto snapshot = m_snapshotCallback();
+        if (snapshot) {
+            m_snapshots.push_back(std::move(snapshot));
+            
+            // Keep only the most recent snapshots
+            while (m_snapshots.size() > m_maxSnapshots) {
+                m_snapshots.erase(m_snapshots.begin());
+            }
+            
+            // Update memory usage
+            m_currentMemoryUsage = calculateMemoryUsage();
+        }
+    } catch (const std::exception& e) {
+        Logging::Logger::getInstance().error("HistoryManager: Snapshot creation failed: " + std::string(e.what()));
+    }
 }
 
 void HistoryManager::restoreFromSnapshot(const StateSnapshot& snapshot) {
-    // TODO: Implement snapshot restoration
-    // This will restore the application state from a snapshot
+    if (!m_restoreCallback) {
+        return;
+    }
+    
+    try {
+        m_restoreCallback(snapshot);
+    } catch (const std::exception& e) {
+        Logging::Logger::getInstance().error("HistoryManager: Snapshot restoration failed: " + std::string(e.what()));
+    }
 }
 
 void HistoryManager::notifyEvent(const UndoRedoEvent& event) {
@@ -453,6 +489,7 @@ void HistoryManager::notifyEvent(const UndoRedoEvent& event) {
 size_t HistoryManager::calculateMemoryUsage() const {
     size_t usage = 0;
     
+    // Calculate command memory usage
     for (const auto& command : m_undoStack) {
         usage += command->getMemoryUsage();
     }
@@ -461,7 +498,18 @@ size_t HistoryManager::calculateMemoryUsage() const {
         usage += command->getMemoryUsage();
     }
     
-    // TODO: Add snapshot memory usage
+    // Calculate snapshot memory usage
+    for (const auto& snapshot : m_snapshots) {
+        usage += snapshot->getMemoryUsage();
+    }
+    
+    // Add transaction memory usage if active
+    if (m_currentTransaction) {
+        usage += m_currentTransaction->getMemoryUsage();
+    }
+    
+    // Add base class overhead
+    usage += sizeof(*this);
     
     return usage;
 }

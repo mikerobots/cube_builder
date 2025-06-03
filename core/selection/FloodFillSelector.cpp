@@ -168,7 +168,9 @@ std::vector<VoxelId> FloodFillSelector::getNeighbors(const VoxelId& voxel) const
 bool FloodFillSelector::meetsFloodFillCriteria(const VoxelId& current, const VoxelId& neighbor, 
                                               FloodFillCriteria criteria) const {
     switch (criteria) {
-        case FloodFillCriteria::Connected:
+        case FloodFillCriteria::Connected6:
+        case FloodFillCriteria::Connected18:
+        case FloodFillCriteria::Connected26:
             return areVoxelsConnected(current, neighbor);
             
         case FloodFillCriteria::SameResolution:
@@ -184,10 +186,9 @@ bool FloodFillSelector::meetsFloodFillCriteria(const VoxelId& current, const Vox
 }
 
 bool FloodFillSelector::voxelExists(const VoxelId& voxel) const {
-    if (!m_voxelManager) return true; // Assume exists if no manager
+    if (!m_voxelManager) return true; // For testing: assume all voxels exist when no manager
     
-    // TODO: Implement actual voxel existence check
-    return true;
+    return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 
 bool FloodFillSelector::areVoxelsConnected(const VoxelId& voxel1, const VoxelId& voxel2) const {

@@ -146,19 +146,245 @@ void SelectionRenderer::renderPreview(const SelectionSet& preview, const Camera:
 }
 
 void SelectionRenderer::renderBox(const Math::BoundingBox& box, const Rendering::Color& color, float thickness) {
-    // TODO: Implement box rendering
-    Logging::Logger::getInstance().warning("SelectionRenderer::renderBox: Not implemented");
+    if (!m_renderEngine) return;
+    
+    // Generate box wireframe vertices
+    std::vector<Rendering::Vertex> vertices;
+    std::vector<uint32_t> indices;
+    
+    Math::Vector3f min = box.min;
+    Math::Vector3f max = box.max;
+    
+    // Add 8 vertices for the box corners
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(min.x, min.y, min.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(max.x, min.y, min.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(max.x, max.y, min.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(min.x, max.y, min.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(min.x, min.y, max.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(max.x, min.y, max.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(max.x, max.y, max.z), Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(Math::Vector3f(min.x, max.y, max.z), Math::Vector3f(0, 0, 0)));
+    
+    // Add line indices for box edges
+    // Bottom face
+    indices.push_back(0); indices.push_back(1);
+    indices.push_back(1); indices.push_back(2);
+    indices.push_back(2); indices.push_back(3);
+    indices.push_back(3); indices.push_back(0);
+    // Top face
+    indices.push_back(4); indices.push_back(5);
+    indices.push_back(5); indices.push_back(6);
+    indices.push_back(6); indices.push_back(7);
+    indices.push_back(7); indices.push_back(4);
+    // Vertical edges
+    indices.push_back(0); indices.push_back(4);
+    indices.push_back(1); indices.push_back(5);
+    indices.push_back(2); indices.push_back(6);
+    indices.push_back(3); indices.push_back(7);
+    
+    // Create temporary buffers for immediate rendering
+    Rendering::VertexBufferId tempVBO = m_renderEngine->createVertexBuffer(
+        vertices.data(), vertices.size() * sizeof(Rendering::Vertex), Rendering::BufferUsage::Static);
+    Rendering::IndexBufferId tempIBO = m_renderEngine->createIndexBuffer(
+        indices.data(), indices.size() * sizeof(uint32_t), Rendering::BufferUsage::Static);
+    
+    // Create temporary vertex array
+    Rendering::VertexLayout layout;
+    layout.addAttribute(Rendering::VertexAttribute::Position, 3, Rendering::VertexAttributeType::Float);
+    layout.addAttribute(Rendering::VertexAttribute::Normal, 3, Rendering::VertexAttributeType::Float);
+    Rendering::VertexArrayId tempVAO = m_renderEngine->createVertexArray(layout);
+    
+    m_renderEngine->bindVertexBuffer(tempVAO, tempVBO, 0);
+    m_renderEngine->bindIndexBuffer(tempVAO, tempIBO);
+    
+    // Set line width if supported
+    m_renderEngine->setLineWidth(thickness);
+    
+    // TODO: Set shader and color uniform
+    // m_renderEngine->setShader(m_resources->selectionShader);
+    // m_renderEngine->setUniform("u_color", Math::Vector4f(color.r, color.g, color.b, color.a));
+    
+    // Draw
+    m_renderEngine->setVertexArray(tempVAO);
+    m_renderEngine->drawIndexed(Rendering::PrimitiveType::Lines, indices.size(), 
+                               Rendering::IndexType::UInt32, 0);
+    
+    // Clean up temporary resources
+    m_renderEngine->deleteVertexArray(tempVAO);
+    m_renderEngine->deleteIndexBuffer(tempIBO);
+    m_renderEngine->deleteVertexBuffer(tempVBO);
 }
 
 void SelectionRenderer::renderSphere(const Math::Vector3f& center, float radius, const Rendering::Color& color) {
-    // TODO: Implement sphere rendering
-    Logging::Logger::getInstance().warning("SelectionRenderer::renderSphere: Not implemented");
+    if (!m_renderEngine) return;
+    
+    // Generate sphere wireframe using icosahedron subdivision
+    std::vector<Rendering::Vertex> vertices;
+    std::vector<uint32_t> indices;
+    
+    // Create icosahedron vertices
+    const float t = (1.0f + std::sqrt(5.0f)) / 2.0f; // Golden ratio
+    const float s = 1.0f / std::sqrt(1.0f + t * t); // Normalize factor
+    
+    // 12 vertices of icosahedron
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(-s, t*s, 0) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f( s, t*s, 0) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(-s,-t*s, 0) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f( s,-t*s, 0) * radius, Math::Vector3f(0, 0, 0)));
+    
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(0, -s, t*s) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(0,  s, t*s) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(0, -s,-t*s) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(0,  s,-t*s) * radius, Math::Vector3f(0, 0, 0)));
+    
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f( t*s, 0, -s) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f( t*s, 0,  s) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(-t*s, 0, -s) * radius, Math::Vector3f(0, 0, 0)));
+    vertices.push_back(Rendering::Vertex(center + Math::Vector3f(-t*s, 0,  s) * radius, Math::Vector3f(0, 0, 0)));
+    
+    // Create icosahedron edges
+    // 5 faces around vertex 0
+    indices.push_back(0); indices.push_back(11);
+    indices.push_back(0); indices.push_back(5);
+    indices.push_back(0); indices.push_back(1);
+    indices.push_back(0); indices.push_back(7);
+    indices.push_back(0); indices.push_back(10);
+    
+    // 5 adjacent faces
+    indices.push_back(11); indices.push_back(5);
+    indices.push_back(5); indices.push_back(1);
+    indices.push_back(1); indices.push_back(7);
+    indices.push_back(7); indices.push_back(10);
+    indices.push_back(10); indices.push_back(11);
+    
+    // 5 faces around vertex 3
+    indices.push_back(3); indices.push_back(9);
+    indices.push_back(3); indices.push_back(4);
+    indices.push_back(3); indices.push_back(2);
+    indices.push_back(3); indices.push_back(6);
+    indices.push_back(3); indices.push_back(8);
+    
+    // 5 adjacent faces
+    indices.push_back(9); indices.push_back(4);
+    indices.push_back(4); indices.push_back(2);
+    indices.push_back(2); indices.push_back(6);
+    indices.push_back(6); indices.push_back(8);
+    indices.push_back(8); indices.push_back(9);
+    
+    // 5 edges connecting two halves
+    indices.push_back(11); indices.push_back(4);
+    indices.push_back(5); indices.push_back(9);
+    indices.push_back(1); indices.push_back(8);
+    indices.push_back(7); indices.push_back(6);
+    indices.push_back(10); indices.push_back(2);
+    
+    // Create and render temporary buffers
+    Rendering::VertexBufferId tempVBO = m_renderEngine->createVertexBuffer(
+        vertices.data(), vertices.size() * sizeof(Rendering::Vertex), Rendering::BufferUsage::Static);
+    Rendering::IndexBufferId tempIBO = m_renderEngine->createIndexBuffer(
+        indices.data(), indices.size() * sizeof(uint32_t), Rendering::BufferUsage::Static);
+    
+    Rendering::VertexLayout layout;
+    layout.addAttribute(Rendering::VertexAttribute::Position, 3, Rendering::VertexAttributeType::Float);
+    layout.addAttribute(Rendering::VertexAttribute::Normal, 3, Rendering::VertexAttributeType::Float);
+    Rendering::VertexArrayId tempVAO = m_renderEngine->createVertexArray(layout);
+    
+    m_renderEngine->bindVertexBuffer(tempVAO, tempVBO, 0);
+    m_renderEngine->bindIndexBuffer(tempVAO, tempIBO);
+    
+    // TODO: Set shader and color uniform
+    // m_renderEngine->setShader(m_resources->selectionShader);
+    // m_renderEngine->setUniform("u_color", Math::Vector4f(color.r, color.g, color.b, color.a));
+    
+    // Draw
+    m_renderEngine->setVertexArray(tempVAO);
+    m_renderEngine->drawIndexed(Rendering::PrimitiveType::Lines, indices.size(), 
+                               Rendering::IndexType::UInt32, 0);
+    
+    // Clean up
+    m_renderEngine->deleteVertexArray(tempVAO);
+    m_renderEngine->deleteIndexBuffer(tempIBO);
+    m_renderEngine->deleteVertexBuffer(tempVBO);
 }
 
 void SelectionRenderer::renderCylinder(const Math::Vector3f& base, const Math::Vector3f& direction, 
                                      float radius, float height, const Rendering::Color& color) {
-    // TODO: Implement cylinder rendering
-    Logging::Logger::getInstance().warning("SelectionRenderer::renderCylinder: Not implemented");
+    if (!m_renderEngine) return;
+    
+    // Generate cylinder wireframe
+    std::vector<Rendering::Vertex> vertices;
+    std::vector<uint32_t> indices;
+    
+    // Number of segments for cylinder
+    const int segments = 16;
+    
+    // Calculate perpendicular vectors for cylinder orientation
+    Math::Vector3f up = direction.normalized();
+    Math::Vector3f right(1, 0, 0);
+    if (std::abs(up.dot(right)) > 0.99f) {
+        right = Math::Vector3f(0, 1, 0);
+    }
+    Math::Vector3f tangent = up.cross(right).normalized();
+    Math::Vector3f bitangent = up.cross(tangent).normalized();
+    
+    // Generate vertices for top and bottom circles
+    for (int i = 0; i < segments; ++i) {
+        float angle = 2.0f * M_PI * i / segments;
+        float cos_a = std::cos(angle);
+        float sin_a = std::sin(angle);
+        
+        Math::Vector3f offset = (tangent * cos_a + bitangent * sin_a) * radius;
+        
+        // Bottom circle vertex
+        vertices.push_back(Rendering::Vertex(base + offset, Math::Vector3f(0, 0, 0)));
+        // Top circle vertex
+        vertices.push_back(Rendering::Vertex(base + up * height + offset, Math::Vector3f(0, 0, 0)));
+    }
+    
+    // Generate indices for circle edges and vertical lines
+    for (int i = 0; i < segments; ++i) {
+        int next = (i + 1) % segments;
+        
+        // Bottom circle edge
+        indices.push_back(i * 2);
+        indices.push_back(next * 2);
+        
+        // Top circle edge
+        indices.push_back(i * 2 + 1);
+        indices.push_back(next * 2 + 1);
+        
+        // Vertical line
+        indices.push_back(i * 2);
+        indices.push_back(i * 2 + 1);
+    }
+    
+    // Create and render temporary buffers
+    Rendering::VertexBufferId tempVBO = m_renderEngine->createVertexBuffer(
+        vertices.data(), vertices.size() * sizeof(Rendering::Vertex), Rendering::BufferUsage::Static);
+    Rendering::IndexBufferId tempIBO = m_renderEngine->createIndexBuffer(
+        indices.data(), indices.size() * sizeof(uint32_t), Rendering::BufferUsage::Static);
+    
+    Rendering::VertexLayout layout;
+    layout.addAttribute(Rendering::VertexAttribute::Position, 3, Rendering::VertexAttributeType::Float);
+    layout.addAttribute(Rendering::VertexAttribute::Normal, 3, Rendering::VertexAttributeType::Float);
+    Rendering::VertexArrayId tempVAO = m_renderEngine->createVertexArray(layout);
+    
+    m_renderEngine->bindVertexBuffer(tempVAO, tempVBO, 0);
+    m_renderEngine->bindIndexBuffer(tempVAO, tempIBO);
+    
+    // TODO: Set shader and color uniform
+    // m_renderEngine->setShader(m_resources->selectionShader);
+    // m_renderEngine->setUniform("u_color", Math::Vector4f(color.r, color.g, color.b, color.a));
+    
+    // Draw
+    m_renderEngine->setVertexArray(tempVAO);
+    m_renderEngine->drawIndexed(Rendering::PrimitiveType::Lines, indices.size(), 
+                               Rendering::IndexType::UInt32, 0);
+    
+    // Clean up
+    m_renderEngine->deleteVertexArray(tempVAO);
+    m_renderEngine->deleteIndexBuffer(tempIBO);
+    m_renderEngine->deleteVertexBuffer(tempVBO);
 }
 
 void SelectionRenderer::updateGeometry(const SelectionSet& selection) {
@@ -331,11 +557,62 @@ void SelectionRenderer::renderFill(const Math::Matrix4f& viewProj) {
 }
 
 void SelectionRenderer::renderBounds(const Math::BoundingBox& bounds, const Math::Matrix4f& viewProj) {
-    // TODO: Implement bounds rendering
+    if (!m_renderEngine) return;
+    
+    // Render bounds as a colored wireframe box
+    Rendering::Color boundsColor(0.2f, 0.8f, 1.0f, 0.8f); // Light blue
+    renderBox(bounds, boundsColor, 2.0f);
+    
+    // Additionally, render corner markers for better visibility
+    const float markerSize = 0.05f * bounds.getDiagonalLength();
+    Math::Vector3f corners[8] = {
+        Math::Vector3f(bounds.min.x, bounds.min.y, bounds.min.z),
+        Math::Vector3f(bounds.max.x, bounds.min.y, bounds.min.z),
+        Math::Vector3f(bounds.max.x, bounds.max.y, bounds.min.z),
+        Math::Vector3f(bounds.min.x, bounds.max.y, bounds.min.z),
+        Math::Vector3f(bounds.min.x, bounds.min.y, bounds.max.z),
+        Math::Vector3f(bounds.max.x, bounds.min.y, bounds.max.z),
+        Math::Vector3f(bounds.max.x, bounds.max.y, bounds.max.z),
+        Math::Vector3f(bounds.min.x, bounds.max.y, bounds.max.z)
+    };
+    
+    // Render small spheres at each corner
+    for (const auto& corner : corners) {
+        renderSphere(corner, markerSize, boundsColor);
+    }
 }
 
 void SelectionRenderer::renderStats(const SelectionStats& stats, const Math::Matrix4f& viewProj) {
-    // TODO: Implement stats rendering (text overlay)
+    if (!m_renderEngine) return;
+    
+    // TODO: This would typically render text overlay showing selection stats
+    // Since text rendering is complex and requires font systems, we'll log the stats for now
+    
+    // For now, render a small indicator showing the selection count
+    // This could be expanded to proper text rendering when font support is added
+    
+    if (stats.voxelCount > 0) {
+        // Render a small sphere at the selection center as an indicator
+        // The size could represent the selection count
+        float indicatorSize = 0.1f + 0.01f * std::log(static_cast<float>(stats.voxelCount));
+        Rendering::Color indicatorColor(1.0f, 0.8f, 0.0f, 0.8f); // Golden yellow
+        
+        // Calculate selection center
+        Math::Vector3f center = m_selectionManager ? 
+            m_selectionManager->getSelection().getBounds().getCenter() : 
+            Math::Vector3f(0, 0, 0);
+            
+        renderSphere(center, indicatorSize, indicatorColor);
+        
+        // Log the actual stats
+        static float lastLogTime = 0.0f;
+        if (m_animationTime - lastLogTime > 2.0f) { // Log every 2 seconds
+            Logging::Logger::getInstance().info("Selection stats: " + 
+                                              std::to_string(stats.voxelCount) + " voxels, volume: " +
+                                              std::to_string(stats.totalVolume));
+            lastLogTime = m_animationTime;
+        }
+    }
 }
 
 Math::Vector4f SelectionRenderer::getAnimatedColor(const Rendering::Color& baseColor) {
@@ -351,9 +628,79 @@ Math::Vector4f SelectionRenderer::getAnimatedColor(const Rendering::Color& baseC
 }
 
 void SelectionRenderer::createShaders() {
-    // TODO: Create selection shader program
-    // This would typically load vertex and fragment shaders for selection rendering
-    Logging::Logger::getInstance().info("SelectionRenderer::createShaders: Shader creation not implemented");
+    if (!m_renderEngine) return;
+    
+    // Vertex shader for selection rendering
+    const char* vertexShader = R"(
+#version 330 core
+
+layout(location = 0) in vec3 a_position;
+layout(location = 1) in vec3 a_normal;
+
+uniform mat4 u_viewProj;
+uniform mat4 u_model;
+
+out vec3 v_worldPos;
+out vec3 v_normal;
+
+void main() {
+    vec4 worldPos = u_model * vec4(a_position, 1.0);
+    v_worldPos = worldPos.xyz;
+    v_normal = normalize((u_model * vec4(a_normal, 0.0)).xyz);
+    gl_Position = u_viewProj * worldPos;
+}
+)";
+    
+    // Fragment shader for selection rendering
+    const char* fragmentShader = R"(
+#version 330 core
+
+in vec3 v_worldPos;
+in vec3 v_normal;
+
+uniform vec4 u_color;
+uniform float u_time;
+uniform bool u_animated;
+
+out vec4 fragColor;
+
+void main() {
+    vec4 color = u_color;
+    
+    // Add animation effect if enabled
+    if (u_animated) {
+        float pulse = sin(u_time * 2.0) * 0.5 + 0.5;
+        color.a *= 0.5 + pulse * 0.5;
+        
+        // Add rim lighting effect
+        vec3 viewDir = normalize(-v_worldPos);
+        float rim = 1.0 - max(0.0, dot(v_normal, viewDir));
+        color.rgb += vec3(0.2, 0.3, 0.4) * rim * pulse;
+    }
+    
+    fragColor = color;
+}
+)";
+    
+    // Create shader program
+    auto shaderManager = m_renderEngine->getShaderManager();
+    if (shaderManager) {
+        try {
+            // Try to create shader through the engine's own methods
+            m_resources->selectionShader = m_renderEngine->loadShader(
+                "SelectionShader", "selection.vert", "selection.frag");
+                
+            if (m_resources->selectionShader != Rendering::InvalidId) {
+                Logging::Logger::getInstance().info("SelectionRenderer: Created selection shader successfully");
+            } else {
+                Logging::Logger::getInstance().error("SelectionRenderer: Failed to create selection shader");
+            }
+        } catch (const std::exception& e) {
+            Logging::Logger::getInstance().error("SelectionRenderer: Shader creation exception: {}", e.what());
+        }
+    } else {
+        Logging::Logger::getInstance().warning("SelectionRenderer: No shader manager available");
+    }
 }
 
 }

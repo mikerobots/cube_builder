@@ -180,6 +180,8 @@ struct MeshStats {
     size_t duplicateVertices = 0;
     float surfaceArea = 0.0f;
     float volume = 0.0f;
+    bool isManifold = true;
+    bool isWatertight = true;
     Math::BoundingBox bounds;
     
     void clear() {

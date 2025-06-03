@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include "../voxel_data/VoxelTypes.h"
 
 namespace VoxelEditor {
 
@@ -16,7 +17,7 @@ namespace Selection {
     class SelectionSet;
 }
 namespace Camera {
-    class CameraState;
+    class OrbitCamera;
 }
 namespace Rendering {
     struct RenderSettings;
@@ -28,9 +29,9 @@ namespace UndoRedo {
 class StateSnapshot {
 public:
     struct VoxelDataSnapshot {
-        // TODO: Implement efficient voxel data storage
         std::vector<uint8_t> compressedData;
         size_t uncompressedSize;
+        VoxelData::VoxelResolution activeResolution;
     };
     
     struct SelectionSnapshot {
@@ -62,24 +63,24 @@ public:
     // Capture current state
     bool captureVoxelData(const VoxelData::VoxelDataManager* voxelManager);
     bool captureSelections(const Selection::SelectionManager* selectionManager);
-    bool captureCamera(const Camera::CameraState* cameraState);
+    bool captureCamera(const Camera::OrbitCamera* camera);
     bool captureRenderSettings(const Rendering::RenderSettings* renderSettings);
     
     // Restore state
     bool restoreVoxelData(VoxelData::VoxelDataManager* voxelManager) const;
     bool restoreSelections(Selection::SelectionManager* selectionManager) const;
-    bool restoreCamera(Camera::CameraState* cameraState) const;
+    bool restoreCamera(Camera::OrbitCamera* camera) const;
     bool restoreRenderSettings(Rendering::RenderSettings* renderSettings) const;
     
     // Full state operations
     bool captureFullState(const VoxelData::VoxelDataManager* voxelManager,
                          const Selection::SelectionManager* selectionManager,
-                         const Camera::CameraState* cameraState,
+                         const Camera::OrbitCamera* camera,
                          const Rendering::RenderSettings* renderSettings);
     
     bool restoreFullState(VoxelData::VoxelDataManager* voxelManager,
                          Selection::SelectionManager* selectionManager,
-                         Camera::CameraState* cameraState,
+                         Camera::OrbitCamera* camera,
                          Rendering::RenderSettings* renderSettings) const;
     
     // Metadata
@@ -121,7 +122,7 @@ public:
     static std::unique_ptr<StateSnapshot> createFullSnapshot(
         const VoxelData::VoxelDataManager* voxelManager,
         const Selection::SelectionManager* selectionManager,
-        const Camera::CameraState* cameraState,
+        const Camera::OrbitCamera* camera,
         const Rendering::RenderSettings* renderSettings,
         const std::string& description = "");
     

@@ -18,6 +18,7 @@ target_include_directories(VoxelEditor_Selection PUBLIC
 target_link_libraries(VoxelEditor_Selection PUBLIC
     VoxelEditor_VoxelData
     VoxelEditor_Rendering
+    VoxelEditor_FileIO
 )
 
 # Add tests subdirectory

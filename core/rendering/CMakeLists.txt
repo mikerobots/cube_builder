@@ -11,11 +11,10 @@ add_library(VoxelEditor_Rendering STATIC
     
     # Source files
     RenderTypes.cpp
-    # RenderEngine.cpp  # TODO: Fix incomplete type issues
+    RenderEngine.cpp
     OpenGLRenderer.cpp
-    # TODO: Add implementations when OpenGL integration is complete
-    # RenderState.cpp
-    # ShaderManager.cpp
+    RenderState.cpp
+    ShaderManager.cpp
 )
 
 # Set target properties
@@ -36,22 +35,24 @@ target_link_libraries(VoxelEditor_Rendering
     VoxelEditor_Math
     VoxelEditor_Events
     VoxelEditor_Camera
+    VoxelEditor_VoxelData
+    VoxelEditor_Logging
     glad
 )
 
-# OpenGL dependencies (when implementation is added)
-# find_package(OpenGL REQUIRED)
-# target_link_libraries(VoxelEditor_Rendering ${OPENGL_LIBRARIES})
+# OpenGL dependencies
+find_package(OpenGL REQUIRED)
+target_link_libraries(VoxelEditor_Rendering ${OPENGL_LIBRARIES})
 
-# Platform-specific OpenGL loader (when implementation is added)
-# if(WIN32)
-#     target_link_libraries(VoxelEditor_Rendering opengl32)
-# elseif(APPLE)
-#     find_library(OPENGL_LIBRARY OpenGL)
-#     target_link_libraries(VoxelEditor_Rendering ${OPENGL_LIBRARY})
-# else()
-#     target_link_libraries(VoxelEditor_Rendering GL)
-# endif()
+# Platform-specific OpenGL loader
+if(WIN32)
+    target_link_libraries(VoxelEditor_Rendering opengl32)
+elseif(APPLE)
+    find_library(OPENGL_LIBRARY OpenGL)
+    target_link_libraries(VoxelEditor_Rendering ${OPENGL_LIBRARY})
+else()
+    target_link_libraries(VoxelEditor_Rendering GL)
+endif()
 
 # Preprocessor definitions
 target_compile_definitions(VoxelEditor_Rendering PRIVATE

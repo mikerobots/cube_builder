@@ -248,6 +248,7 @@
 /Users/michaelhalloran/cube_edit/build_ninja/core/file_io/CMakeFiles/install.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/file_io/CMakeFiles/install/local.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/file_io/CMakeFiles/install/strip.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/VoxelEditor_CLI_Lib.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/VoxelEditor_CLI.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/edit_cache.dir
@@ -256,3 +257,12 @@
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/install.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/install/local.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/install/strip.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/VoxelEditor_CLI_Tests.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/VoxelEditor_VoxelMeshGenerator_Tests.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/edit_cache.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/rebuild_cache.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/list_install_components.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/install.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/install/local.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/install/strip.dir

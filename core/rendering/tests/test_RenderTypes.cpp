@@ -185,9 +185,9 @@ TEST_F(RenderTypesTest, EnumValues) {
 
 TEST_F(RenderTypesTest, ClearFlagsOperations) {
     // Test bitwise operations on clear flags
-    ClearFlags colorOnly = ClearFlags::Color;
-    ClearFlags depthOnly = ClearFlags::Depth;
-    ClearFlags stencilOnly = ClearFlags::Stencil;
+    ClearFlags colorOnly = ClearFlags::COLOR;
+    ClearFlags depthOnly = ClearFlags::DEPTH;
+    ClearFlags stencilOnly = ClearFlags::STENCIL;
     ClearFlags all = ClearFlags::All;
     
     // Test individual flags
@@ -196,7 +196,7 @@ TEST_F(RenderTypesTest, ClearFlagsOperations) {
     EXPECT_EQ(static_cast<int>(stencilOnly), 4);
     
     // Test combined flags
-    ClearFlags colorAndDepth = static_cast<ClearFlags>(static_cast<int>(ClearFlags::Color) | static_cast<int>(ClearFlags::Depth));
+    ClearFlags colorAndDepth = static_cast<ClearFlags>(static_cast<int>(ClearFlags::COLOR) | static_cast<int>(ClearFlags::DEPTH));
     EXPECT_EQ(static_cast<int>(colorAndDepth), 3);
     
     // Test all flags

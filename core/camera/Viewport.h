@@ -3,6 +3,7 @@
 #include "../../foundation/math/Vector2i.h"
 #include "../../foundation/math/Vector2f.h"
 #include "../../foundation/math/Vector3f.h"
+#include <cmath>
 #include "../../foundation/math/Ray.h"
 #include "../../foundation/math/Matrix4f.h"
 
@@ -83,7 +84,16 @@ public:
         Math::Vector3f rayClipFar(ndc.x, ndc.y, 1.0f);
         
         // Transform to world space
-        Math::Matrix4f invViewProj = (projectionMatrix * viewMatrix).inverse();
+        Math::Matrix4f viewProj = projectionMatrix * viewMatrix;
+        
+        // Check if matrix is invertible
+        float det = viewProj.determinant();
+        if (std::abs(det) < 1e-6f) {
+            // Matrix is not invertible, return default ray
+            return Math::Ray(Math::Vector3f(0, 0, 0), Math::Vector3f(0, 0, -1));
+        }
+        
+        Math::Matrix4f invViewProj = viewProj.inverse();
         
         Math::Vector3f rayWorldNear = invViewProj.transformPoint(rayClipNear);
         Math::Vector3f rayWorldFar = invViewProj.transformPoint(rayClipFar);

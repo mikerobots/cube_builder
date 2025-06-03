@@ -1,4 +1,7 @@
 #include "SelectionManager.h"
+#include "BoxSelector.h"
+#include "SphereSelector.h"
+#include "FloodFillSelector.h"
 #include "../../foundation/logging/Logger.h"
 #include <algorithm>
 
@@ -120,11 +123,33 @@ void SelectionManager::selectFloodFill(const VoxelId& seed, FloodFillCriteria cr
     }
     
     SelectionSet oldSelection = m_currentSelection;
-    SelectionSet floodSelection;
     
-    // TODO: Implement flood fill algorithm
-    // For now, just select the seed
-    floodSelection.add(seed);
+    // Use FloodFillSelector to perform the flood fill
+    FloodFillSelector floodFillSelector(m_voxelManager);
+    
+    // Configure flood fill based on criteria
+    switch (criteria) {
+        case FloodFillCriteria::Connected6:
+            floodFillSelector.setConnectivityMode(FloodFillSelector::ConnectivityMode::Face6);
+            break;
+        case FloodFillCriteria::Connected18:
+            floodFillSelector.setConnectivityMode(FloodFillSelector::ConnectivityMode::Edge18);
+            break;
+        case FloodFillCriteria::Connected26:
+            floodFillSelector.setConnectivityMode(FloodFillSelector::ConnectivityMode::Vertex26);
+            break;
+        case FloodFillCriteria::SameResolution:
+            // For same resolution, use 6-connected but add filtering by resolution
+            floodFillSelector.setConnectivityMode(FloodFillSelector::ConnectivityMode::Face6);
+            break;
+        case FloodFillCriteria::ConnectedSameRes:
+            // For connected same resolution, use 6-connected with resolution filtering
+            floodFillSelector.setConnectivityMode(FloodFillSelector::ConnectivityMode::Face6);
+            break;
+    }
+    
+    // Perform flood fill
+    SelectionSet floodSelection = floodFillSelector.selectFloodFill(seed);
     
     m_currentSelection = std::move(floodSelection);
     notifySelectionChanged(oldSelection, SelectionChangeType::Replaced);
@@ -359,9 +384,7 @@ void SelectionManager::trimHistory() {
 bool SelectionManager::voxelExists(const VoxelId& voxel) const {
     if (!m_voxelManager) return false;
     
-    // TODO: Implement actual voxel existence check using VoxelDataManager
-    // For now, assume all voxels exist
-    return true;
+    return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 
 std::vector<VoxelId> SelectionManager::getAllVoxels() const {
@@ -371,9 +394,52 @@ std::vector<VoxelId> SelectionManager::getAllVoxels() const {
         return allVoxels;
     }
     
-    // TODO: Implement getting all voxels from VoxelDataManager
-    // For now, return empty vector
+    // Get all voxels for each resolution level
+    for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(i);
+        auto voxelPositions = m_voxelManager->getAllVoxels(resolution);
+        
+        // Convert VoxelPosition to VoxelId
+        for (const auto& voxelPos : voxelPositions) {
+            allVoxels.emplace_back(voxelPos.gridPos, voxelPos.resolution);
+        }
+    }
+    
     return allVoxels;
+}
+
+SelectionSet SelectionManager::makeBoxSelection(const Math::BoundingBox& box, VoxelData::VoxelResolution resolution) {
+    BoxSelector boxSelector(m_voxelManager);
+    return boxSelector.selectFromWorld(box, resolution, true);
+}
+
+SelectionSet SelectionManager::makeSphereSelection(const Math::Vector3f& center, float radius, VoxelData::VoxelResolution resolution) {
+    SphereSelector sphereSelector(m_voxelManager);
+    return sphereSelector.selectFromSphere(center, radius, resolution, true);
+}
+
+SelectionSet SelectionManager::makeCylinderSelection(const Math::Vector3f& base, const Math::Vector3f& direction, 
+                                                   float radius, float height, VoxelData::VoxelResolution resolution) {
+    // For cylinder selection, we'll use a combination of sphere selections along the cylinder axis
+    SelectionSet result;
+    Math::Vector3f normalizedDir = direction.normalized();
+    
+    float voxelSize = VoxelId(Math::Vector3i::Zero(), resolution).getVoxelSize();
+    int steps = static_cast<int>(height / voxelSize) + 1;
+    
+    for (int i = 0; i <= steps; ++i) {
+        float t = static_cast<float>(i) / static_cast<float>(steps);
+        Math::Vector3f center = base + normalizedDir * (height * t);
+        
+        // Create a sphere selector for this slice
+        SphereSelector sphereSelector(m_voxelManager);
+        SelectionSet slice = sphereSelector.selectFromSphere(center, radius, resolution, true);
+        
+        // Union with result
+        result.unite(slice);
+    }
+    
+    return result;
 }
 
 }

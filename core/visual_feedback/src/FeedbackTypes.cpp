@@ -122,12 +122,45 @@ bool Face::operator==(const Face& other) const {
 
 // Transform implementation
 Math::Matrix4f Transform::toMatrix() const {
-    Math::Matrix4f mat; // Default constructor should create identity
+    // Build transformation matrix manually
+    // First create rotation matrix from quaternion
+    float xx = rotation.x * rotation.x;
+    float yy = rotation.y * rotation.y;
+    float zz = rotation.z * rotation.z;
+    float xy = rotation.x * rotation.y;
+    float xz = rotation.x * rotation.z;
+    float yz = rotation.y * rotation.z;
+    float wx = rotation.w * rotation.x;
+    float wy = rotation.w * rotation.y;
+    float wz = rotation.w * rotation.z;
     
-    // TODO: Apply transformations - requires Matrix4f implementation
-    // mat = mat * Math::Matrix4f::scale(scale);
-    // mat = mat * rotation.toMatrix();
-    // mat = mat * Math::Matrix4f::translation(position);
+    // Build transformation matrix using proper array indexing
+    // Matrix4f uses column-major order: m[col * 4 + row]
+    Math::Matrix4f mat;
+    
+    // Column 0
+    mat[0] = (1.0f - 2.0f * (yy + zz)) * scale.x;
+    mat[1] = (2.0f * (xy + wz)) * scale.y;
+    mat[2] = (2.0f * (xz - wy)) * scale.z;
+    mat[3] = 0.0f;
+    
+    // Column 1
+    mat[4] = (2.0f * (xy - wz)) * scale.x;
+    mat[5] = (1.0f - 2.0f * (xx + zz)) * scale.y;
+    mat[6] = (2.0f * (yz + wx)) * scale.z;
+    mat[7] = 0.0f;
+    
+    // Column 2
+    mat[8] = (2.0f * (xz + wy)) * scale.x;
+    mat[9] = (2.0f * (yz - wx)) * scale.y;
+    mat[10] = (1.0f - 2.0f * (xx + yy)) * scale.z;
+    mat[11] = 0.0f;
+    
+    // Column 3 (translation)
+    mat[12] = position.x;
+    mat[13] = position.y;
+    mat[14] = position.z;
+    mat[15] = 1.0f;
     
     return mat;
 }

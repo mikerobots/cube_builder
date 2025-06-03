@@ -888,8 +888,6 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionManager.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/bitset \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2i.h \
   /Users/michaelhalloran/cube_edit/core/selection/../voxel_data/VoxelTypes.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h \
   /Users/michaelhalloran/cube_edit/core/selection/../rendering/RenderTypes.h \
@@ -907,6 +905,8 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionManager.cpp.o: \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/BoundingBox.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/WorkspaceManager.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/events/EventDispatcher.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/typeindex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Users/michaelhalloran/cube_edit/foundation/events/EventBase.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/chrono \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/calendar.h \
@@ -950,12 +950,15 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionManager.cpp.o: \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/events/../math/Vector3i.h \
-  /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/memory/MemoryTracker.h \
-  /Users/michaelhalloran/cube_edit/foundation/memory/../events/EventDispatcher.h \
-  /Users/michaelhalloran/cube_edit/foundation/memory/../events/CommonEvents.h \
   /Users/michaelhalloran/cube_edit/core/selection/../../foundation/events/EventDispatcher.h \
+  /Users/michaelhalloran/cube_edit/core/selection/BoxSelector.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Ray.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Vector4f.h \
+  /Users/michaelhalloran/cube_edit/core/selection/SphereSelector.h \
+  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Quaternion.h \
+  /Users/michaelhalloran/cube_edit/core/selection/FloodFillSelector.h \
   /Users/michaelhalloran/cube_edit/core/selection/../../foundation/logging/Logger.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/logging/LogOutput.h \
+  /Users/michaelhalloran/cube_edit/foundation/logging/LogOutput.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/fstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \

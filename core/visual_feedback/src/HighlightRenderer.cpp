@@ -1,6 +1,13 @@
 #include "../include/visual_feedback/HighlightRenderer.h"
+#include "../../rendering/OpenGLRenderer.h"
+#include "../../rendering/RenderTypes.h"
 #include <algorithm>
 #include <cmath>
+
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#endif
+#include <glad/glad.h>
 
 namespace VoxelEditor {
 namespace VisualFeedback {
@@ -13,13 +20,36 @@ HighlightRenderer::HighlightRenderer()
     , m_globalTime(0.0f)
     , m_animationEnabled(true)
     , m_instancingEnabled(true)
-    , m_maxHighlights(1000) {
+    , m_maxHighlights(1000)
+    , m_vao(0)
+    , m_vbo(0)
+    , m_ibo(0)
+    , m_initialized(false) {
     
     createHighlightMeshes();
 }
 
 HighlightRenderer::~HighlightRenderer() {
-    // TODO: Clean up GPU resources
+    // Clean up GPU resources
+    if (m_vao != 0) {
+#ifdef __APPLE__
+        glDeleteVertexArraysAPPLE(1, &m_vao);
+#else
+        glDeleteVertexArrays(1, &m_vao);
+#endif
+    }
+    if (m_vbo != 0) {
+        glDeleteBuffers(1, &m_vbo);
+    }
+    if (m_ibo != 0) {
+        glDeleteBuffers(1, &m_ibo);
+    }
+    if (m_instanceBuffer != 0) {
+        glDeleteBuffers(1, &m_instanceBuffer);
+    }
+    if (m_highlightShader != 0) {
+        glDeleteProgram(m_highlightShader);
+    }
 }
 
 void HighlightRenderer::renderFaceHighlight(const Face& face, const HighlightStyle& style) {
@@ -117,18 +147,108 @@ void HighlightRenderer::createHighlightMeshes() {
     createBoxMesh();
     createFaceMesh();
     
-    // TODO: Create shader program
-    // m_highlightShader = createHighlightShader();
+    // Create shader program
+    createHighlightShader();
+    m_initialized = true;
 }
 
 void HighlightRenderer::createBoxMesh() {
     // Create unit cube mesh for voxel highlights
-    // TODO: Create GPU mesh
+    float vertices[] = {
+        // Position (3), Normal (3)
+        // Front face
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        // Back face
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        // Top face
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+        // Bottom face
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        // Right face
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+        // Left face
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f
+    };
+    
+    uint32_t indices[] = {
+        0,  1,  2,  0,  2,  3,   // front
+        4,  5,  6,  4,  6,  7,   // back
+        8,  9, 10,  8, 10, 11,   // top
+        12, 13, 14, 12, 14, 15,  // bottom
+        16, 17, 18, 16, 18, 19,  // right
+        20, 21, 22, 20, 22, 23   // left
+    };
+    
+    // Create VAO
+#ifdef __APPLE__
+    glGenVertexArraysAPPLE(1, &m_vao);
+    glBindVertexArrayAPPLE(m_vao);
+#else
+    glGenVertexArrays(1, &m_vao);
+    glBindVertexArray(m_vao);
+#endif
+    
+    // Create VBO
+    glGenBuffers(1, &m_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    // Create IBO
+    glGenBuffers(1, &m_ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    
+    // Set vertex attributes
+    glEnableVertexAttribArray(0); // Position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    
+    glEnableVertexAttribArray(1); // Normal
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    
+    // Unbind
+#ifdef __APPLE__
+    glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
+    
+    m_highlightMesh = m_vao;
+    m_meshIndexCount = 36;
 }
 
 void HighlightRenderer::createFaceMesh() {
     // Create quad mesh for face highlights
-    // TODO: Create GPU mesh
+    float vertices[] = {
+        // Position (3), Normal (3)
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+         0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+         0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+        -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+    };
+    
+    uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
+    
+    // Create face mesh VAO/VBO/IBO if needed
+    // For now, we'll reuse the box mesh for simplicity
+    m_faceMesh = m_highlightMesh;
 }
 
 void HighlightRenderer::updateInstanceBuffer() {
@@ -140,23 +260,112 @@ void HighlightRenderer::updateInstanceBuffer() {
 }
 
 void HighlightRenderer::renderInstanced(const Camera::Camera& camera) {
+    if (!m_initialized || m_highlightShader == 0) return;
+    
     updateInstanceBuffer();
     
-    // TODO: Set shader uniforms
-    // - View/projection matrices
-    // - Global time
-    // - Animation settings
+    glUseProgram(m_highlightShader);
     
-    // TODO: Render instanced highlights
+    // Set shader uniforms
+    Math::Matrix4f viewMatrix = camera.getViewMatrix();
+    Math::Matrix4f projMatrix = camera.getProjectionMatrix();
+    
+    GLint viewLoc = glGetUniformLocation(m_highlightShader, "u_view");
+    GLint projLoc = glGetUniformLocation(m_highlightShader, "u_projection");
+    GLint timeLoc = glGetUniformLocation(m_highlightShader, "u_time");
+    
+    if (viewLoc != -1) glUniformMatrix4fv(viewLoc, 1, GL_FALSE, viewMatrix.data());
+    if (projLoc != -1) glUniformMatrix4fv(projLoc, 1, GL_FALSE, projMatrix.data());
+    if (timeLoc != -1) glUniform1f(timeLoc, m_globalTime);
+    
+    // Enable blending for transparency
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthMask(GL_FALSE);
+    
+    // Bind VAO and render
+#ifdef __APPLE__
+    glBindVertexArrayAPPLE(m_highlightMesh);
+#else
+    glBindVertexArray(m_highlightMesh);
+#endif
+    
+    // Render all instances
+#ifdef __APPLE__
+    glDrawElementsInstancedARB(GL_TRIANGLES, m_meshIndexCount, GL_UNSIGNED_INT, 0, 
+                              static_cast<GLsizei>(m_highlights.size()));
+#else
+    glDrawElementsInstanced(GL_TRIANGLES, m_meshIndexCount, GL_UNSIGNED_INT, 0, 
+                           static_cast<GLsizei>(m_highlights.size()));
+#endif
+    
+    // Restore state
+    glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
+    
+#ifdef __APPLE__
+    glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
 }
 
 void HighlightRenderer::renderImmediate(const Camera::Camera& camera) {
-    // TODO: Render each highlight individually
+    if (!m_initialized || m_highlightShader == 0) return;
+    
+    glUseProgram(m_highlightShader);
+    
+    // Set common uniforms
+    Math::Matrix4f viewMatrix = camera.getViewMatrix();
+    Math::Matrix4f projMatrix = camera.getProjectionMatrix();
+    
+    GLint viewLoc = glGetUniformLocation(m_highlightShader, "u_view");
+    GLint projLoc = glGetUniformLocation(m_highlightShader, "u_projection");
+    GLint modelLoc = glGetUniformLocation(m_highlightShader, "u_model");
+    GLint colorLoc = glGetUniformLocation(m_highlightShader, "u_color");
+    GLint timeLoc = glGetUniformLocation(m_highlightShader, "u_time");
+    
+    if (viewLoc != -1) glUniformMatrix4fv(viewLoc, 1, GL_FALSE, viewMatrix.data());
+    if (projLoc != -1) glUniformMatrix4fv(projLoc, 1, GL_FALSE, projMatrix.data());
+    if (timeLoc != -1) glUniform1f(timeLoc, m_globalTime);
+    
+    // Enable blending
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthMask(GL_FALSE);
+    
+    // Bind VAO
+#ifdef __APPLE__
+    glBindVertexArrayAPPLE(m_highlightMesh);
+#else
+    glBindVertexArray(m_highlightMesh);
+#endif
+    
+    // Render each highlight individually
     for (const auto& highlight : m_highlights) {
         // Set transform
+        Math::Matrix4f modelMatrix = highlight.transform.toMatrix();
+        if (modelLoc != -1) glUniformMatrix4fv(modelLoc, 1, GL_FALSE, modelMatrix.data());
+        
         // Set color with animation
+        Rendering::Color animColor = calculateAnimatedColor(highlight.color, 
+                                                          highlight.animationPhase, 
+                                                          m_globalTime);
+        if (colorLoc != -1) glUniform4f(colorLoc, animColor.r, animColor.g, animColor.b, animColor.a);
+        
         // Draw mesh
+        glDrawElements(GL_TRIANGLES, m_meshIndexCount, GL_UNSIGNED_INT, 0);
     }
+    
+    // Restore state
+    glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
+    
+#ifdef __APPLE__
+    glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
 }
 
 Rendering::Color HighlightRenderer::calculateAnimatedColor(const Rendering::Color& baseColor, 
@@ -228,6 +437,71 @@ Transform HighlightRenderer::calculateFaceTransform(const Face& face) const {
     // TODO: Calculate rotation to align with face normal
     
     return transform;
+}
+
+void HighlightRenderer::createHighlightShader() {
+    const char* vertexShaderSrc = R"(
+        #version 330 core
+        layout(location = 0) in vec3 a_position;
+        layout(location = 1) in vec3 a_normal;
+        
+        uniform mat4 u_model;
+        uniform mat4 u_view;
+        uniform mat4 u_projection;
+        uniform float u_time;
+        
+        out vec3 v_normal;
+        out vec3 v_worldPos;
+        
+        void main() {
+            vec4 worldPos = u_model * vec4(a_position, 1.0);
+            v_worldPos = worldPos.xyz;
+            v_normal = mat3(u_model) * a_normal;
+            
+            gl_Position = u_projection * u_view * worldPos;
+        }
+    )";
+    
+    const char* fragmentShaderSrc = R"(
+        #version 330 core
+        in vec3 v_normal;
+        in vec3 v_worldPos;
+        
+        uniform vec4 u_color;
+        uniform float u_time;
+        
+        out vec4 FragColor;
+        
+        void main() {
+            vec3 normal = normalize(v_normal);
+            float fresnel = 1.0 - abs(dot(normal, vec3(0.0, 0.0, 1.0)));
+            fresnel = pow(fresnel, 2.0);
+            
+            vec4 color = u_color;
+            color.a *= (0.3 + 0.7 * fresnel);
+            
+            FragColor = color;
+        }
+    )";
+    
+    // Create shaders
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSrc, nullptr);
+    glCompileShader(vertexShader);
+    
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSrc, nullptr);
+    glCompileShader(fragmentShader);
+    
+    // Create program
+    m_highlightShader = glCreateProgram();
+    glAttachShader(m_highlightShader, vertexShader);
+    glAttachShader(m_highlightShader, fragmentShader);
+    glLinkProgram(m_highlightShader);
+    
+    // Clean up shaders
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 }
 
 } // namespace VisualFeedback

@@ -9,6 +9,9 @@ protected:
     void SetUp() override {
         selector = std::make_unique<FloodFillSelector>();
         
+        // Set smaller max voxels for faster testing
+        selector->setMaxVoxels(100);
+        
         // Create test voxels
         seed = VoxelId(Math::Vector3i(5, 5, 5), VoxelData::VoxelResolution::Size_4cm);
     }
@@ -19,9 +22,11 @@ protected:
 
 // Basic Tests
 TEST_F(FloodFillSelectorTest, DefaultConfiguration) {
-    EXPECT_EQ(selector->getMaxVoxels(), 1000000u);
-    EXPECT_FALSE(selector->getDiagonalConnectivity());
-    EXPECT_EQ(selector->getConnectivityMode(), FloodFillSelector::ConnectivityMode::Face6);
+    // Create fresh selector to test defaults
+    auto freshSelector = std::make_unique<FloodFillSelector>();
+    EXPECT_EQ(freshSelector->getMaxVoxels(), 1000000u);
+    EXPECT_FALSE(freshSelector->getDiagonalConnectivity());
+    EXPECT_EQ(freshSelector->getConnectivityMode(), FloodFillSelector::ConnectivityMode::Face6);
 }
 
 TEST_F(FloodFillSelectorTest, SetConfiguration) {
@@ -37,7 +42,7 @@ TEST_F(FloodFillSelectorTest, SetConfiguration) {
 // Basic Flood Fill Tests
 TEST_F(FloodFillSelectorTest, SelectFloodFill_SingleVoxel) {
     // Without voxel manager, assumes all voxels exist
-    SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected6);
     
     // Should at least contain the seed
     EXPECT_GE(result.size(), 1u);
@@ -47,7 +52,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFill_SingleVoxel) {
 TEST_F(FloodFillSelectorTest, SelectFloodFill_Connected) {
     selector->setConnectivityMode(FloodFillSelector::ConnectivityMode::Face6);
     
-    SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected6);
     
     // Should contain seed and its face-connected neighbors
     EXPECT_TRUE(result.contains(seed));
@@ -111,7 +116,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillCustom_MaxDistance) {
 TEST_F(FloodFillSelectorTest, SelectFloodFillLimited_OneStep) {
     VoxelId originSeed(Math::Vector3i(10, 10, 10), VoxelData::VoxelResolution::Size_4cm);
     
-    SelectionSet result = selector->selectFloodFillLimited(originSeed, FloodFillCriteria::Connected, 1);
+    SelectionSet result = selector->selectFloodFillLimited(originSeed, FloodFillCriteria::Connected6, 1);
     
     // Should contain seed plus immediate neighbors (max 7 for Face6)
     EXPECT_LE(result.size(), 7u);
@@ -121,7 +126,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillLimited_OneStep) {
 TEST_F(FloodFillSelectorTest, SelectFloodFillLimited_MultipleSteps) {
     VoxelId originSeed(Math::Vector3i(20, 20, 20), VoxelData::VoxelResolution::Size_4cm);
     
-    SelectionSet result = selector->selectFloodFillLimited(originSeed, FloodFillCriteria::Connected, 3);
+    SelectionSet result = selector->selectFloodFillLimited(originSeed, FloodFillCriteria::Connected6, 3);
     
     // Should be limited to 3 steps from seed
     EXPECT_GT(result.size(), 7u); // More than 1 step
@@ -142,7 +147,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillBounded_InsideBounds) {
         Math::Vector3f(0.22f, 0.22f, 0.22f)   // 5.5, 5.5, 5.5 in voxel coords
     );
     
-    SelectionSet result = selector->selectFloodFillBounded(seed, FloodFillCriteria::Connected, bounds);
+    SelectionSet result = selector->selectFloodFillBounded(seed, FloodFillCriteria::Connected6, bounds);
     
     // Should only contain voxels within bounds
     for (const auto& voxel : result) {
@@ -157,7 +162,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillBounded_OutsideBounds) {
     );
     
     // Seed is outside bounds
-    SelectionSet result = selector->selectFloodFillBounded(seed, FloodFillCriteria::Connected, bounds);
+    SelectionSet result = selector->selectFloodFillBounded(seed, FloodFillCriteria::Connected6, bounds);
     
     // Should be empty
     EXPECT_TRUE(result.empty());
@@ -202,7 +207,7 @@ TEST_F(FloodFillSelectorTest, ConnectivityMode_Face6) {
     selector->setMaxVoxels(7); // Limit to immediate neighbors
     
     VoxelId centerSeed(Math::Vector3i(50, 50, 50), VoxelData::VoxelResolution::Size_4cm);
-    SelectionSet result = selector->selectFloodFill(centerSeed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(centerSeed, FloodFillCriteria::Connected6);
     
     // Should have at most 7 voxels (center + 6 faces)
     EXPECT_LE(result.size(), 7u);
@@ -213,7 +218,7 @@ TEST_F(FloodFillSelectorTest, ConnectivityMode_Edge18) {
     selector->setMaxVoxels(19); // Limit to immediate neighbors
     
     VoxelId centerSeed(Math::Vector3i(60, 60, 60), VoxelData::VoxelResolution::Size_4cm);
-    SelectionSet result = selector->selectFloodFill(centerSeed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(centerSeed, FloodFillCriteria::Connected6);
     
     // Should have at most 19 voxels (center + 6 faces + 12 edges)
     EXPECT_LE(result.size(), 19u);
@@ -224,7 +229,7 @@ TEST_F(FloodFillSelectorTest, ConnectivityMode_Vertex26) {
     selector->setMaxVoxels(27); // Limit to immediate neighbors
     
     VoxelId centerSeed(Math::Vector3i(70, 70, 70), VoxelData::VoxelResolution::Size_4cm);
-    SelectionSet result = selector->selectFloodFill(centerSeed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(centerSeed, FloodFillCriteria::Connected6);
     
     // Should have at most 27 voxels (center + all 26 neighbors)
     EXPECT_LE(result.size(), 27u);
@@ -235,7 +240,7 @@ TEST_F(FloodFillSelectorTest, MaxVoxelsLimit) {
     selector->setMaxVoxels(10);
     
     VoxelId originSeed(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm);
-    SelectionSet result = selector->selectFloodFill(originSeed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(originSeed, FloodFillCriteria::Connected6);
     
     // Should not exceed max voxels
     EXPECT_LE(result.size(), 10u);
@@ -247,7 +252,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFill_NonExistentSeed) {
     // For now, this will still work as we assume all voxels exist
     VoxelId nonExistentSeed(Math::Vector3i(1000, 1000, 1000), VoxelData::VoxelResolution::Size_4cm);
     
-    SelectionSet result = selector->selectFloodFill(nonExistentSeed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(nonExistentSeed, FloodFillCriteria::Connected6);
     
     // Without proper voxel manager, it will still select voxels
     EXPECT_GE(result.size(), 1u);
@@ -279,6 +284,6 @@ TEST_F(FloodFillSelectorTest, SetVoxelManager) {
     selector->setVoxelManager(nullptr);
     
     // Selection should still work without manager (assumes all voxels exist)
-    SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected);
+    SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected6);
     EXPECT_GT(result.size(), 0u);
 }

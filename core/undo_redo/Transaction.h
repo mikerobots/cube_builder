@@ -28,6 +28,7 @@ public:
     bool isEmpty() const { return m_commands.empty(); }
     size_t getCommandCount() const { return m_commands.size(); }
     const std::string& getName() const { return m_name; }
+    size_t getMemoryUsage() const;
     
 private:
     std::string m_name;

@@ -1,6 +1,8 @@
 #include "BoxSelector.h"
+#include "../../foundation/math/Matrix4f.h"
 #include "../../foundation/logging/Logger.h"
 #include <algorithm>
+#include <limits>
 
 namespace VoxelEditor {
 namespace Selection {
@@ -66,12 +68,47 @@ SelectionSet BoxSelector::selectFromRays(const Math::Ray& startRay,
                                        const Math::Ray& endRay,
                                        float maxDistance,
                                        VoxelData::VoxelResolution resolution) {
-    // Find intersection points
-    Math::Vector3f startPoint = startRay.origin + startRay.direction * maxDistance;
-    Math::Vector3f endPoint = endRay.origin + endRay.direction * maxDistance;
+    // Get workspace bounds from voxel manager
+    Math::BoundingBox workspaceBounds;
+    if (m_voxelManager) {
+        Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+        workspaceBounds = Math::BoundingBox(
+            Math::Vector3f(0.0f, 0.0f, 0.0f),
+            workspaceSize
+        );
+    } else {
+        // Default workspace bounds if no manager
+        workspaceBounds = Math::BoundingBox(
+            Math::Vector3f(-5.0f, -5.0f, -5.0f),
+            Math::Vector3f(5.0f, 5.0f, 5.0f)
+        );
+    }
     
-    // TODO: Implement proper ray-scene intersection
-    // For now, use the ray endpoints to create a box
+    // Find intersection points with workspace bounds
+    float t1, t2;
+    Math::Vector3f startPoint, endPoint;
+    
+    // Intersect start ray with workspace
+    if (workspaceBounds.intersectRay(startRay, t1, t2)) {
+        // Use the entry point or maxDistance, whichever is closer
+        float t = std::min(t1, maxDistance);
+        startPoint = startRay.origin + startRay.direction * t;
+    } else {
+        // No intersection, use max distance
+        startPoint = startRay.origin + startRay.direction * maxDistance;
+    }
+    
+    // Intersect end ray with workspace
+    if (workspaceBounds.intersectRay(endRay, t1, t2)) {
+        // Use the entry point or maxDistance, whichever is closer
+        float t = std::min(t1, maxDistance);
+        endPoint = endRay.origin + endRay.direction * t;
+    } else {
+        // No intersection, use max distance
+        endPoint = endRay.origin + endRay.direction * maxDistance;
+    }
+    
+    // Create selection box from the two points
     Math::BoundingBox worldBox(
         Math::Vector3f::min(startPoint, endPoint),
         Math::Vector3f::max(startPoint, endPoint)
@@ -111,14 +148,52 @@ Math::BoundingBox BoxSelector::computeScreenBox(const Math::Vector2i& screenStar
                                                const Math::Matrix4f& viewMatrix,
                                                const Math::Matrix4f& projMatrix,
                                                const Math::Vector2i& viewportSize) {
-    // TODO: Implement screen to world space conversion
-    // This requires unprojecting screen coordinates to world space
-    // For now, return a default box
-    Logging::Logger::getInstance().warning("BoxSelector::computeScreenBox: Not fully implemented");
-    return Math::BoundingBox(
-        Math::Vector3f(-1.0f, -1.0f, -1.0f),
-        Math::Vector3f(1.0f, 1.0f, 1.0f)
-    );
+    // Compute the inverse of the combined view-projection matrix
+    Math::Matrix4f viewProjMatrix = projMatrix * viewMatrix;
+    Math::Matrix4f invViewProjMatrix = viewProjMatrix.inverse();
+    
+    // Convert screen coordinates to normalized device coordinates (NDC)
+    float x1 = (2.0f * screenStart.x / viewportSize.x) - 1.0f;
+    float y1 = 1.0f - (2.0f * screenStart.y / viewportSize.y); // Y is inverted
+    float x2 = (2.0f * screenEnd.x / viewportSize.x) - 1.0f;
+    float y2 = 1.0f - (2.0f * screenEnd.y / viewportSize.y);
+    
+    // Create corner points in NDC space at near and far planes
+    Math::Vector4f corners[8] = {
+        Math::Vector4f(x1, y1, -1.0f, 1.0f), // Near plane corners
+        Math::Vector4f(x2, y1, -1.0f, 1.0f),
+        Math::Vector4f(x1, y2, -1.0f, 1.0f),
+        Math::Vector4f(x2, y2, -1.0f, 1.0f),
+        Math::Vector4f(x1, y1,  1.0f, 1.0f), // Far plane corners
+        Math::Vector4f(x2, y1,  1.0f, 1.0f),
+        Math::Vector4f(x1, y2,  1.0f, 1.0f),
+        Math::Vector4f(x2, y2,  1.0f, 1.0f)
+    };
+    
+    // Transform corners to world space
+    Math::Vector3f minPoint(std::numeric_limits<float>::max());
+    Math::Vector3f maxPoint(std::numeric_limits<float>::lowest());
+    
+    for (int i = 0; i < 8; ++i) {
+        Math::Vector4f worldPoint = invViewProjMatrix * corners[i];
+        
+        // Perspective divide
+        if (std::abs(worldPoint.w) > std::numeric_limits<float>::epsilon()) {
+            worldPoint.x /= worldPoint.w;
+            worldPoint.y /= worldPoint.w;
+            worldPoint.z /= worldPoint.w;
+        }
+        
+        // Update bounding box
+        minPoint.x = std::min(minPoint.x, worldPoint.x);
+        minPoint.y = std::min(minPoint.y, worldPoint.y);
+        minPoint.z = std::min(minPoint.z, worldPoint.z);
+        maxPoint.x = std::max(maxPoint.x, worldPoint.x);
+        maxPoint.y = std::max(maxPoint.y, worldPoint.y);
+        maxPoint.z = std::max(maxPoint.z, worldPoint.z);
+    }
+    
+    return Math::BoundingBox(minPoint, maxPoint);
 }
 
 bool BoxSelector::isVoxelInBox(const VoxelId& voxel, const Math::BoundingBox& box) const {
@@ -134,10 +209,9 @@ bool BoxSelector::isVoxelInBox(const VoxelId& voxel, const Math::BoundingBox& bo
 }
 
 bool BoxSelector::voxelExists(const VoxelId& voxel) const {
-    if (!m_voxelManager) return true; // Assume exists if no manager
+    if (!m_voxelManager) return true; // For testing: assume all voxels exist when no manager
     
-    // TODO: Implement actual voxel existence check
-    return true;
+    return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 
 }

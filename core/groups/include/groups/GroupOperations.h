@@ -1,9 +1,12 @@
 #pragma once
 
 #include "GroupTypes.h"
-#include "VoxelDataManager.h"
+#include "../../voxel_data/VoxelDataManager.h"
+#include "../../foundation/math/Vector3f.h"
+#include "../../foundation/math/BoundingBox.h"
 #include <vector>
 #include <memory>
+#include <unordered_set>
 
 namespace VoxelEditor {
 namespace Groups {

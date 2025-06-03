@@ -65,6 +65,13 @@ private:
     bool m_instancingEnabled;
     int m_maxHighlights;
     
+    // Additional GPU resources
+    uint32_t m_vao;
+    uint32_t m_vbo;
+    uint32_t m_ibo;
+    uint32_t m_meshIndexCount;
+    bool m_initialized;
+    
     // Mesh generation
     void createHighlightMeshes();
     void createBoxMesh();
@@ -86,6 +93,9 @@ private:
     Transform calculateVoxelTransform(const Math::Vector3i& position, 
                                      VoxelData::VoxelResolution resolution) const;
     Transform calculateFaceTransform(const Face& face) const;
+    
+    // Shader creation
+    void createHighlightShader();
 };
 
 } // namespace VisualFeedback

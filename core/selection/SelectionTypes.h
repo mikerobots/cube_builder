@@ -88,7 +88,9 @@ enum class SelectionOperationType {
 
 // Flood fill criteria
 enum class FloodFillCriteria {
-    Connected,          // Connected voxels only
+    Connected6,         // 6-connected voxels (face neighbors)
+    Connected18,        // 18-connected voxels (face + edge neighbors)  
+    Connected26,        // 26-connected voxels (face + edge + corner neighbors)
     SameResolution,     // Same resolution level
     ConnectedSameRes    // Connected + same resolution
 };
@@ -96,6 +98,7 @@ enum class FloodFillCriteria {
 // Selection statistics
 struct SelectionStats {
     size_t voxelCount = 0;
+    size_t groupCount = 0;
     std::unordered_map<VoxelData::VoxelResolution, size_t> countByResolution;
     Math::BoundingBox bounds;
     Math::Vector3f center;
@@ -103,6 +106,7 @@ struct SelectionStats {
     
     void clear() {
         voxelCount = 0;
+        groupCount = 0;
         countByResolution.clear();
         bounds = Math::BoundingBox();
         center = Math::Vector3f::Zero();

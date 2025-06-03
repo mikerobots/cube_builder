@@ -209,6 +209,54 @@ OpenGLRenderer.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.s
 .PHONY : OpenGLRenderer.cpp.s
 
+RenderEngine.o: RenderEngine.cpp.o
+.PHONY : RenderEngine.o
+
+# target to build an object file
+RenderEngine.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderEngine.cpp.o
+.PHONY : RenderEngine.cpp.o
+
+RenderEngine.i: RenderEngine.cpp.i
+.PHONY : RenderEngine.i
+
+# target to preprocess a source file
+RenderEngine.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderEngine.cpp.i
+.PHONY : RenderEngine.cpp.i
+
+RenderEngine.s: RenderEngine.cpp.s
+.PHONY : RenderEngine.s
+
+# target to generate assembly for a file
+RenderEngine.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderEngine.cpp.s
+.PHONY : RenderEngine.cpp.s
+
+RenderState.o: RenderState.cpp.o
+.PHONY : RenderState.o
+
+# target to build an object file
+RenderState.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o
+.PHONY : RenderState.cpp.o
+
+RenderState.i: RenderState.cpp.i
+.PHONY : RenderState.i
+
+# target to preprocess a source file
+RenderState.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.i
+.PHONY : RenderState.cpp.i
+
+RenderState.s: RenderState.cpp.s
+.PHONY : RenderState.s
+
+# target to generate assembly for a file
+RenderState.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.s
+.PHONY : RenderState.cpp.s
+
 RenderTypes.o: RenderTypes.cpp.o
 .PHONY : RenderTypes.o
 
@@ -233,6 +281,30 @@ RenderTypes.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.s
 .PHONY : RenderTypes.cpp.s
 
+ShaderManager.o: ShaderManager.cpp.o
+.PHONY : ShaderManager.o
+
+# target to build an object file
+ShaderManager.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o
+.PHONY : ShaderManager.cpp.o
+
+ShaderManager.i: ShaderManager.cpp.i
+.PHONY : ShaderManager.i
+
+# target to preprocess a source file
+ShaderManager.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.i
+.PHONY : ShaderManager.cpp.i
+
+ShaderManager.s: ShaderManager.cpp.s
+.PHONY : ShaderManager.s
+
+# target to generate assembly for a file
+ShaderManager.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.s
+.PHONY : ShaderManager.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -250,9 +322,18 @@ help:
 	@echo "... OpenGLRenderer.o"
 	@echo "... OpenGLRenderer.i"
 	@echo "... OpenGLRenderer.s"
+	@echo "... RenderEngine.o"
+	@echo "... RenderEngine.i"
+	@echo "... RenderEngine.s"
+	@echo "... RenderState.o"
+	@echo "... RenderState.i"
+	@echo "... RenderState.s"
 	@echo "... RenderTypes.o"
 	@echo "... RenderTypes.i"
 	@echo "... RenderTypes.s"
+	@echo "... ShaderManager.o"
+	@echo "... ShaderManager.i"
+	@echo "... ShaderManager.s"
 .PHONY : help
 
 

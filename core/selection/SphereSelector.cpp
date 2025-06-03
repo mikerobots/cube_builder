@@ -61,9 +61,34 @@ SelectionSet SphereSelector::selectFromRay(const Math::Ray& ray,
                                          float radius,
                                          float maxDistance,
                                          VoxelData::VoxelResolution resolution) {
-    // Find intersection point
-    // TODO: Implement proper ray-scene intersection
-    Math::Vector3f intersectionPoint = ray.origin + ray.direction * (maxDistance * 0.5f);
+    // Get workspace bounds from voxel manager
+    Math::BoundingBox workspaceBounds;
+    if (m_voxelManager) {
+        Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+        workspaceBounds = Math::BoundingBox(
+            Math::Vector3f(0.0f, 0.0f, 0.0f),
+            workspaceSize
+        );
+    } else {
+        // Default workspace bounds if no manager
+        workspaceBounds = Math::BoundingBox(
+            Math::Vector3f(-5.0f, -5.0f, -5.0f),
+            Math::Vector3f(5.0f, 5.0f, 5.0f)
+        );
+    }
+    
+    // Find intersection point with workspace bounds
+    float t1, t2;
+    Math::Vector3f intersectionPoint;
+    
+    if (workspaceBounds.intersectRay(ray, t1, t2)) {
+        // Use the entry point or maxDistance, whichever is closer
+        float t = std::min(t1, maxDistance);
+        intersectionPoint = ray.origin + ray.direction * t;
+    } else {
+        // No intersection with workspace, use a point along the ray
+        intersectionPoint = ray.origin + ray.direction * std::min(maxDistance, 10.0f);
+    }
     
     return selectFromSphere(intersectionPoint, radius, resolution, true);
 }
@@ -221,10 +246,9 @@ float SphereSelector::getVoxelWeight(const VoxelId& voxel, const Math::Vector3f&
 }
 
 bool SphereSelector::voxelExists(const VoxelId& voxel) const {
-    if (!m_voxelManager) return true; // Assume exists if no manager
+    if (!m_voxelManager) return true; // For testing: assume all voxels exist when no manager
     
-    // TODO: Implement actual voxel existence check
-    return true;
+    return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 
 }
