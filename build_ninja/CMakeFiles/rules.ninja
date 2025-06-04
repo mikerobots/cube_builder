@@ -31,25 +31,6 @@ rule CXX_EXECUTABLE_LINKER__test_render_core_
 
 
 #############################################
-# Rule for compiling CXX files.
-
-rule CXX_COMPILER__test_zoom_detailed_
-  depfile = $DEP_FILE
-  deps = gcc
-  command = /Library/Developer/CommandLineTools/usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building CXX object $out
-
-
-#############################################
-# Rule for linking CXX executable.
-
-rule CXX_EXECUTABLE_LINKER__test_zoom_detailed_
-  command = $PRE_LINK && /Library/Developer/CommandLineTools/usr/bin/c++ $FLAGS -Wl,-search_paths_first -Wl,-headerpad_max_install_names $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
-  description = Linking CXX executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
 # Rule for running custom commands.
 
 rule CUSTOM_COMMAND
@@ -242,6 +223,25 @@ rule CXX_COMPILER__VoxelEditor_VoxelData_Tests_
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__VoxelEditor_VoxelData_Tests_
+  command = $PRE_LINK && /Library/Developer/CommandLineTools/usr/bin/c++ $FLAGS -Wl,-search_paths_first -Wl,-headerpad_max_install_names $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__VoxelEditor_Camera_Tests_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /Library/Developer/CommandLineTools/usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__VoxelEditor_Camera_Tests_
   command = $PRE_LINK && /Library/Developer/CommandLineTools/usr/bin/c++ $FLAGS -Wl,-search_paths_first -Wl,-headerpad_max_install_names $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT

@@ -236,38 +236,6 @@ build bin/test_render_core: CXX_EXECUTABLE_LINKER__test_render_core_ CMakeFiles/
   TARGET_FILE = bin/test_render_core
   TARGET_PDB = test_render_core.dbg
 
-# =============================================================================
-# Object build statements for EXECUTABLE target test_zoom_detailed
-
-
-#############################################
-# Order-only phony target for test_zoom_detailed
-
-build cmake_object_order_depends_target_test_zoom_detailed: phony || CMakeFiles/test_zoom_detailed.dir
-
-build CMakeFiles/test_zoom_detailed.dir/test_zoom_detailed.cpp.o: CXX_COMPILER__test_zoom_detailed_ /Users/michaelhalloran/cube_edit/test_zoom_detailed.cpp || cmake_object_order_depends_target_test_zoom_detailed
-  DEP_FILE = CMakeFiles/test_zoom_detailed.dir/test_zoom_detailed.cpp.o.d
-  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
-  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/foundation/logging
-  OBJECT_DIR = CMakeFiles/test_zoom_detailed.dir
-  OBJECT_FILE_DIR = CMakeFiles/test_zoom_detailed.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target test_zoom_detailed
-
-
-#############################################
-# Link the executable bin/test_zoom_detailed
-
-build bin/test_zoom_detailed: CXX_EXECUTABLE_LINKER__test_zoom_detailed_ CMakeFiles/test_zoom_detailed.dir/test_zoom_detailed.cpp.o
-  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
-  OBJECT_DIR = CMakeFiles/test_zoom_detailed.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = bin/test_zoom_detailed
-  TARGET_PDB = test_zoom_detailed.dbg
-
 
 #############################################
 # Utility command for test
@@ -2747,6 +2715,165 @@ build core/camera/install/strip: phony core/camera/CMakeFiles/install/strip.util
 
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
+# /Users/michaelhalloran/cube_edit/core/camera/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target VoxelEditor_Camera_Tests
+
+
+#############################################
+# Order-only phony target for VoxelEditor_Camera_Tests
+
+build cmake_object_order_depends_target_VoxelEditor_Camera_Tests: phony || cmake_object_order_depends_target_gtest cmake_object_order_depends_target_gtest_main
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Camera.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_Camera.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Camera.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera_transformations.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_Viewport.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_CameraController.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_zoom_functionality.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_zoom_functionality.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_zoom_functionality.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+build core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_setDistance.cpp.o: CXX_COMPILER__VoxelEditor_Camera_Tests_ /Users/michaelhalloran/cube_edit/core/camera/tests/test_setDistance.cpp || cmake_object_order_depends_target_VoxelEditor_Camera_Tests
+  DEP_FILE = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_setDistance.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  OBJECT_FILE_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target VoxelEditor_Camera_Tests
+
+
+#############################################
+# Link the executable bin/VoxelEditor_Camera_Tests
+
+build bin/VoxelEditor_Camera_Tests core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake | ${cmake_ninja_workdir}core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake: CXX_EXECUTABLE_LINKER__VoxelEditor_Camera_Tests_ core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Camera.cpp.o core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.o core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_zoom_functionality.cpp.o core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_setDistance.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  LINK_LIBRARIES = lib/libgtest.a  lib/libgtest_main.a  lib/libgtest.a
+  OBJECT_DIR = core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+  POST_BUILD = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Camera_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build_ninja/bin/VoxelEditor_Camera_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Camera_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
+  PRE_LINK = :
+  RESTAT = 1
+  TARGET_FILE = bin/VoxelEditor_Camera_Tests
+  TARGET_PDB = VoxelEditor_Camera_Tests.dbg
+
+
+#############################################
+# Utility command for test
+
+build core/camera/tests/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build core/camera/tests/test: phony core/camera/tests/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build core/camera/tests/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/ccmake -S/Users/michaelhalloran/cube_edit -B/Users/michaelhalloran/cube_edit/build_ninja
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build core/camera/tests/edit_cache: phony core/camera/tests/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build core/camera/tests/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake --regenerate-during-build -S/Users/michaelhalloran/cube_edit -B/Users/michaelhalloran/cube_edit/build_ninja
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build core/camera/tests/rebuild_cache: phony core/camera/tests/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build core/camera/tests/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build core/camera/tests/CMakeFiles/install.util: CUSTOM_COMMAND core/camera/tests/all
+  COMMAND = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build core/camera/tests/install: phony core/camera/tests/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build core/camera/tests/CMakeFiles/install/local.util: CUSTOM_COMMAND core/camera/tests/all
+  COMMAND = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build core/camera/tests/install/local: phony core/camera/tests/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build core/camera/tests/CMakeFiles/install/strip.util: CUSTOM_COMMAND core/camera/tests/all
+  COMMAND = cd /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build core/camera/tests/install/strip: phony core/camera/tests/CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
 # /Users/michaelhalloran/cube_edit/core/CMakeLists.txt
 # =============================================================================
 
@@ -5056,6 +5183,8 @@ build VoxelEditor_CLI_Lib: phony lib/libVoxelEditor_CLI_Lib.a
 
 build VoxelEditor_CLI_Tests: phony bin/VoxelEditor_CLI_Tests
 
+build VoxelEditor_Camera_Tests: phony bin/VoxelEditor_Camera_Tests
+
 build VoxelEditor_Config_Tests: phony bin/VoxelEditor_Config_Tests
 
 build VoxelEditor_FileIO: phony lib/libVoxelEditor_FileIO.a
@@ -5138,8 +5267,6 @@ build test_camera_cube_visibility_simple: phony bin/test_camera_cube_visibility_
 
 build test_render_core: phony bin/test_render_core
 
-build test_zoom_detailed: phony bin/test_zoom_detailed
-
 build uninstall: phony _deps/glfw-build/uninstall
 
 build update_mappings: phony _deps/glfw-build/src/update_mappings
@@ -5152,7 +5279,7 @@ build update_mappings: phony _deps/glfw-build/src/update_mappings
 #############################################
 # Folder: /Users/michaelhalloran/cube_edit/build_ninja
 
-build all: phony bin/test_render_core bin/test_zoom_detailed _deps/glm-build/all _deps/googletest-build/all _deps/glfw-build/all external/glad/all foundation/all core/all apps/cli/all tests/integration/all
+build all: phony bin/test_render_core _deps/glm-build/all _deps/googletest-build/all _deps/glfw-build/all external/glad/all foundation/all core/all apps/cli/all tests/integration/all
 
 # =============================================================================
 
@@ -5229,7 +5356,14 @@ build core/all: phony core/voxel_data/all core/camera/all core/rendering/all cor
 #############################################
 # Folder: /Users/michaelhalloran/cube_edit/build_ninja/core/camera
 
-build core/camera/all: phony
+build core/camera/all: phony core/camera/tests/all
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests
+
+build core/camera/tests/all: phony bin/VoxelEditor_Camera_Tests
 
 # =============================================================================
 
@@ -5399,14 +5533,14 @@ build tests/integration/all: phony bin/test_camera_cube_visibility bin/test_came
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /Users/michaelhalloran/cube_edit/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/camera/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/file_io/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/groups/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/surface_gen/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/undo_redo/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/visual_feedback/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/external/glad/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/events/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/math/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/memory/CMakeLists.txt /Users/michaelhalloran/cube_edit/test_render_core_CMakeLists.txt /Users/michaelhalloran/cube_edit/test_zoom_detailed_CMakeLists.txt /Users/michaelhalloran/cube_edit/tests/integration/CMakeLists.txt /opt/homebrew/lib/cmake/GTest/GTestConfig.cmake /opt/homebrew/lib/cmake/GTest/GTestConfigVersion.cmake /opt/homebrew/lib/cmake/GTest/GTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeDependentOption.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeFindDependencyMacro.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakePackageConfigHelpers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestUseLaunchers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCXXSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFile.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFileCXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckLibraryExists.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/GNU.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/DartConfiguration.tcl.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent/CMakeLists.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGit.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindOpenGL.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageMessage.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPkgConfig.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython/Support.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindThreads.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GNUInstallDirs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.25.0/CMakeCCompiler.cmake CMakeFiles/3.25.0/CMakeCXXCompiler.cmake CMakeFiles/3.25.0/CMakeSystem.cmake _deps/glfw-src/CMakeLists.txt _deps/glfw-src/cmake_uninstall.cmake.in _deps/glfw-src/src/CMakeLists.txt _deps/glfw-src/src/glfw3.pc.in _deps/glfw-src/src/glfw3Config.cmake.in _deps/glfw-src/src/glfw_config.h.in _deps/glm-src/CMakeLists.txt _deps/glm-src/glm/CMakeLists.txt _deps/googletest-src/CMakeLists.txt _deps/googletest-src/googlemock/CMakeLists.txt _deps/googletest-src/googlemock/cmake/gmock.pc.in _deps/googletest-src/googlemock/cmake/gmock_main.pc.in _deps/googletest-src/googletest/CMakeLists.txt _deps/googletest-src/googletest/cmake/Config.cmake.in _deps/googletest-src/googletest/cmake/gtest.pc.in _deps/googletest-src/googletest/cmake/gtest_main.pc.in _deps/googletest-src/googletest/cmake/internal_utils.cmake
+build build.ninja: RERUN_CMAKE | /Users/michaelhalloran/cube_edit/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/camera/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/camera/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/file_io/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/groups/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/surface_gen/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/undo_redo/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/visual_feedback/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/external/glad/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/events/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/math/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/memory/CMakeLists.txt /Users/michaelhalloran/cube_edit/test_render_core_CMakeLists.txt /Users/michaelhalloran/cube_edit/tests/integration/CMakeLists.txt /opt/homebrew/lib/cmake/GTest/GTestConfig.cmake /opt/homebrew/lib/cmake/GTest/GTestConfigVersion.cmake /opt/homebrew/lib/cmake/GTest/GTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeDependentOption.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeFindDependencyMacro.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakePackageConfigHelpers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestUseLaunchers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCXXSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFile.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFileCXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckLibraryExists.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/GNU.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/DartConfiguration.tcl.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent/CMakeLists.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGit.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindOpenGL.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageMessage.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPkgConfig.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython/Support.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindThreads.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GNUInstallDirs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.25.0/CMakeCCompiler.cmake CMakeFiles/3.25.0/CMakeCXXCompiler.cmake CMakeFiles/3.25.0/CMakeSystem.cmake _deps/glfw-src/CMakeLists.txt _deps/glfw-src/cmake_uninstall.cmake.in _deps/glfw-src/src/CMakeLists.txt _deps/glfw-src/src/glfw3.pc.in _deps/glfw-src/src/glfw3Config.cmake.in _deps/glfw-src/src/glfw_config.h.in _deps/glm-src/CMakeLists.txt _deps/glm-src/glm/CMakeLists.txt _deps/googletest-src/CMakeLists.txt _deps/googletest-src/googlemock/CMakeLists.txt _deps/googletest-src/googlemock/cmake/gmock.pc.in _deps/googletest-src/googlemock/cmake/gmock_main.pc.in _deps/googletest-src/googletest/CMakeLists.txt _deps/googletest-src/googletest/cmake/Config.cmake.in _deps/googletest-src/googletest/cmake/gtest.pc.in _deps/googletest-src/googletest/cmake/gtest_main.pc.in _deps/googletest-src/googletest/cmake/internal_utils.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /Users/michaelhalloran/cube_edit/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/camera/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/file_io/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/groups/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/surface_gen/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/undo_redo/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/visual_feedback/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/external/glad/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/events/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/math/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/memory/CMakeLists.txt /Users/michaelhalloran/cube_edit/test_render_core_CMakeLists.txt /Users/michaelhalloran/cube_edit/test_zoom_detailed_CMakeLists.txt /Users/michaelhalloran/cube_edit/tests/integration/CMakeLists.txt /opt/homebrew/lib/cmake/GTest/GTestConfig.cmake /opt/homebrew/lib/cmake/GTest/GTestConfigVersion.cmake /opt/homebrew/lib/cmake/GTest/GTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeDependentOption.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeFindDependencyMacro.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakePackageConfigHelpers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestUseLaunchers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCXXSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFile.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFileCXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckLibraryExists.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/GNU.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/DartConfiguration.tcl.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent/CMakeLists.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGit.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindOpenGL.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageMessage.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPkgConfig.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython/Support.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindThreads.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GNUInstallDirs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.25.0/CMakeCCompiler.cmake CMakeFiles/3.25.0/CMakeCXXCompiler.cmake CMakeFiles/3.25.0/CMakeSystem.cmake _deps/glfw-src/CMakeLists.txt _deps/glfw-src/cmake_uninstall.cmake.in _deps/glfw-src/src/CMakeLists.txt _deps/glfw-src/src/glfw3.pc.in _deps/glfw-src/src/glfw3Config.cmake.in _deps/glfw-src/src/glfw_config.h.in _deps/glm-src/CMakeLists.txt _deps/glm-src/glm/CMakeLists.txt _deps/googletest-src/CMakeLists.txt _deps/googletest-src/googlemock/CMakeLists.txt _deps/googletest-src/googlemock/cmake/gmock.pc.in _deps/googletest-src/googlemock/cmake/gmock_main.pc.in _deps/googletest-src/googletest/CMakeLists.txt _deps/googletest-src/googletest/cmake/Config.cmake.in _deps/googletest-src/googletest/cmake/gtest.pc.in _deps/googletest-src/googletest/cmake/gtest_main.pc.in _deps/googletest-src/googletest/cmake/internal_utils.cmake: phony
+build /Users/michaelhalloran/cube_edit/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/CMakeLists.txt /Users/michaelhalloran/cube_edit/apps/cli/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/camera/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/camera/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/file_io/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/groups/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/input/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/rendering/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/selection/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/surface_gen/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/undo_redo/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/visual_feedback/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/CMakeLists.txt /Users/michaelhalloran/cube_edit/core/voxel_data/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/external/glad/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/config/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/events/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/logging/tests/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/math/CMakeLists.txt /Users/michaelhalloran/cube_edit/foundation/memory/CMakeLists.txt /Users/michaelhalloran/cube_edit/test_render_core_CMakeLists.txt /Users/michaelhalloran/cube_edit/tests/integration/CMakeLists.txt /opt/homebrew/lib/cmake/GTest/GTestConfig.cmake /opt/homebrew/lib/cmake/GTest/GTestConfigVersion.cmake /opt/homebrew/lib/cmake/GTest/GTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCXXInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeDependentOption.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeFindDependencyMacro.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeGenericSystem.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakePackageConfigHelpers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestTargets.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CTestUseLaunchers.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckCXXSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFile.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckIncludeFileCXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/CheckLibraryExists.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Compiler/GNU.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/DartConfiguration.tcl.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FetchContent/CMakeLists.cmake.in /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindGit.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindOpenGL.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPackageMessage.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPkgConfig.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindPython/Support.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/FindThreads.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GNUInstallDirs.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTest.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-AppleClang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-C.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang-CXX.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Apple-Clang.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin-Initialize.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/Darwin.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/Platform/UnixPaths.cmake /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.25.0/CMakeCCompiler.cmake CMakeFiles/3.25.0/CMakeCXXCompiler.cmake CMakeFiles/3.25.0/CMakeSystem.cmake _deps/glfw-src/CMakeLists.txt _deps/glfw-src/cmake_uninstall.cmake.in _deps/glfw-src/src/CMakeLists.txt _deps/glfw-src/src/glfw3.pc.in _deps/glfw-src/src/glfw3Config.cmake.in _deps/glfw-src/src/glfw_config.h.in _deps/glm-src/CMakeLists.txt _deps/glm-src/glm/CMakeLists.txt _deps/googletest-src/CMakeLists.txt _deps/googletest-src/googlemock/CMakeLists.txt _deps/googletest-src/googlemock/cmake/gmock.pc.in _deps/googletest-src/googlemock/cmake/gmock_main.pc.in _deps/googletest-src/googletest/CMakeLists.txt _deps/googletest-src/googletest/cmake/Config.cmake.in _deps/googletest-src/googletest/cmake/gtest.pc.in _deps/googletest-src/googletest/cmake/gtest_main.pc.in _deps/googletest-src/googletest/cmake/internal_utils.cmake: phony
 
 
 #############################################

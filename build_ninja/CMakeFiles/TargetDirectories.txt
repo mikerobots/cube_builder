@@ -27,7 +27,6 @@
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousMemCheck.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousSubmit.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test_render_core.dir
-/Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test_zoom_detailed.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/rebuild_cache.dir
@@ -187,6 +186,14 @@
 /Users/michaelhalloran/cube_edit/build_ninja/core/camera/CMakeFiles/install.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/camera/CMakeFiles/install/local.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/camera/CMakeFiles/install/strip.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/test.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/edit_cache.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/rebuild_cache.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/list_install_components.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/install.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/install/local.dir
+/Users/michaelhalloran/cube_edit/build_ninja/core/camera/tests/CMakeFiles/install/strip.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/rendering/CMakeFiles/VoxelEditor_Rendering.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/rendering/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/core/rendering/CMakeFiles/edit_cache.dir

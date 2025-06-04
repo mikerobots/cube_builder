@@ -7,6 +7,7 @@ set(CAMERA_TEST_SOURCES
     test_Viewport.cpp
     test_CameraController.cpp
     test_zoom_functionality.cpp
+    test_setDistance.cpp
 )
 
 add_executable(VoxelEditor_Camera_Tests ${CAMERA_TEST_SOURCES})

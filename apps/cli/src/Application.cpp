@@ -166,7 +166,7 @@ bool Application::initializeFoundation() {
         Config::ConfigManager::getInstance().setValue("workspace.size", 5.0f);
         Config::ConfigManager::getInstance().setValue("workspace.min", 2.0f);
         Config::ConfigManager::getInstance().setValue("workspace.max", 8.0f);
-        Config::ConfigManager::getInstance().setValue("voxel.defaultResolution", static_cast<int>(VoxelData::VoxelResolution::Size_8cm));
+        Config::ConfigManager::getInstance().setValue("voxel.defaultResolution", static_cast<int>(VoxelData::VoxelResolution::Size_64cm));
         
         return true;
     } catch (const std::exception& e) {
@@ -181,6 +181,10 @@ bool Application::initializeCoreSystem() {
         m_voxelManager = std::make_unique<VoxelData::VoxelDataManager>(
             m_eventDispatcher.get()
         );
+        
+        // Set the active resolution from config
+        int defaultResolution = Config::ConfigManager::getInstance().getValue<int>("voxel.defaultResolution");
+        m_voxelManager->setActiveResolution(static_cast<VoxelData::VoxelResolution>(defaultResolution));
         
         // Camera controller
         m_cameraController = std::make_unique<Camera::CameraController>(m_eventDispatcher.get());
