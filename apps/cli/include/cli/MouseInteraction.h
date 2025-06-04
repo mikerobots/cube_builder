@@ -82,12 +82,15 @@ private:
     bool m_orbitMode = false;
     
     // Helper methods
-    Math::Ray getMouseRay(float x, float y) const;
     bool performRaycast(const Math::Ray& ray, VisualFeedback::Face& hitFace) const;
-    glm::ivec3 getPlacementPosition(const VisualFeedback::Face& face) const;
     void updateHoverState();
     void placeVoxel();
     void removeVoxel();
+    
+protected:
+    // Made protected for testing
+    Math::Ray getMouseRay(float x, float y) const;
+    glm::ivec3 getPlacementPosition(const VisualFeedback::Face& face) const;
 };
 
 } // namespace VoxelEditor

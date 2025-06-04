@@ -1,4 +1,5 @@
 #include "../include/visual_feedback/FaceDetector.h"
+#include "../../foundation/logging/Logger.h"
 #include <algorithm>
 #include <limits>
 #include <cmath>
@@ -15,6 +16,15 @@ FaceDetector::~FaceDetector() = default;
 Face FaceDetector::detectFace(const Ray& ray, const VoxelData::VoxelGrid& grid, 
                              VoxelData::VoxelResolution resolution) {
     RaycastHit hit = raycastVoxelGrid(ray, grid, resolution);
+    
+    static int detectCount = 0;
+    if (detectCount++ % 30 == 0) {
+        Logging::Logger::getInstance().debugfc("FaceDetector",
+            "Ray: origin=(%.2f,%.2f,%.2f) dir=(%.3f,%.3f,%.3f) hit=%d",
+            ray.origin.x, ray.origin.y, ray.origin.z,
+            ray.direction.x, ray.direction.y, ray.direction.z,
+            hit.hit);
+    }
     
     if (hit.hit) {
         return createFaceFromHit(hit, resolution);
@@ -115,41 +125,98 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     float maxDistance = m_maxRayDistance / voxelSize;
     float currentDistance = 0.0f;
     
+    // Track the closest hit
+    struct HitInfo {
+        Math::Vector3i voxel;
+        float distance;
+        Math::Vector3f normal;
+        Face face;
+        bool valid = false;
+    } closestHit;
+    
     while (currentDistance < maxDistance) {
         // Check current voxel
         if (traversal.current.x >= 0 && traversal.current.y >= 0 && traversal.current.z >= 0) {
             if (grid.getVoxel(traversal.current)) {
-                // Found hit
-                result.hit = true;
-                result.distance = currentDistance * voxelSize;
-                result.position = ray.pointAt(result.distance);
+                // Calculate actual distance to this voxel
+                Math::Vector3f voxelCenter(
+                    traversal.current.x + 0.5f,
+                    traversal.current.y + 0.5f,
+                    traversal.current.z + 0.5f
+                );
                 
-                // Determine which face was hit
-                float minT = std::min({traversal.tMax.x, traversal.tMax.y, traversal.tMax.z});
-                if (traversal.tMax.x == minT) {
-                    result.normal = traversal.step.x > 0 ? 
-                        Math::Vector3f(-1, 0, 0) : Math::Vector3f(1, 0, 0);
-                    result.face = Face(traversal.current, resolution, 
-                        traversal.step.x > 0 ? FaceDirection::NegativeX : FaceDirection::PositiveX);
-                } else if (traversal.tMax.y == minT) {
-                    result.normal = traversal.step.y > 0 ? 
-                        Math::Vector3f(0, -1, 0) : Math::Vector3f(0, 1, 0);
-                    result.face = Face(traversal.current, resolution,
-                        traversal.step.y > 0 ? FaceDirection::NegativeY : FaceDirection::PositiveY);
-                } else {
-                    result.normal = traversal.step.z > 0 ? 
-                        Math::Vector3f(0, 0, -1) : Math::Vector3f(0, 0, 1);
-                    result.face = Face(traversal.current, resolution,
-                        traversal.step.z > 0 ? FaceDirection::NegativeZ : FaceDirection::PositiveZ);
+                // Calculate exact intersection with voxel box
+                Math::BoundingBox voxelBox(
+                    Math::Vector3f(traversal.current.x, traversal.current.y, traversal.current.z),
+                    Math::Vector3f(traversal.current.x + 1, traversal.current.y + 1, traversal.current.z + 1)
+                );
+                
+                float tMin, tMax;
+                if (rayIntersectsBox(voxelRay, voxelBox, tMin, tMax)) {
+                    float hitDistance = tMin * voxelSize;
+                    
+                    // Only update if this is closer than any previous hit
+                    if (!closestHit.valid || hitDistance < closestHit.distance) {
+                        closestHit.valid = true;
+                        closestHit.voxel = traversal.current;
+                        closestHit.distance = hitDistance;
+                        
+                        // Calculate hit point to determine which face was hit
+                        Math::Vector3f hitPoint = voxelRay.origin + voxelRay.direction * tMin;
+                        
+                        // Determine which face based on hit point relative to voxel center
+                        Math::Vector3f voxelMin(traversal.current.x, traversal.current.y, traversal.current.z);
+                        Math::Vector3f voxelMax = voxelMin + Math::Vector3f(1, 1, 1);
+                        
+                        // Check which face the hit point is closest to
+                        const float epsilon = 0.001f;
+                        if (std::abs(hitPoint.x - voxelMin.x) < epsilon) {
+                            closestHit.normal = Math::Vector3f(-1, 0, 0);
+                            closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeX);
+                        } else if (std::abs(hitPoint.x - voxelMax.x) < epsilon) {
+                            closestHit.normal = Math::Vector3f(1, 0, 0);
+                            closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveX);
+                        } else if (std::abs(hitPoint.y - voxelMin.y) < epsilon) {
+                            closestHit.normal = Math::Vector3f(0, -1, 0);
+                            closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeY);
+                        } else if (std::abs(hitPoint.y - voxelMax.y) < epsilon) {
+                            closestHit.normal = Math::Vector3f(0, 1, 0);
+                            closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveY);
+                        } else if (std::abs(hitPoint.z - voxelMin.z) < epsilon) {
+                            closestHit.normal = Math::Vector3f(0, 0, -1);
+                            closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeZ);
+                        } else if (std::abs(hitPoint.z - voxelMax.z) < epsilon) {
+                            closestHit.normal = Math::Vector3f(0, 0, 1);
+                            closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveZ);
+                        }
+                        
+                        // Log which voxel was hit
+                        Logging::Logger::getInstance().debugfc("FaceDetector",
+                            "Found voxel at (%d,%d,%d) distance=%.3f",
+                            traversal.current.x, traversal.current.y, traversal.current.z,
+                            closestHit.distance);
+                    }
                 }
-                
-                return result;
             }
         }
         
         // Step to next voxel
         stepTraversal(traversal);
         currentDistance = std::min({traversal.tMax.x, traversal.tMax.y, traversal.tMax.z});
+    }
+    
+    // Return the closest hit if we found one
+    if (closestHit.valid) {
+        result.hit = true;
+        result.distance = closestHit.distance;
+        result.position = ray.pointAt(result.distance);
+        result.normal = closestHit.normal;
+        result.face = closestHit.face;
+        
+        Logging::Logger::getInstance().debugfc("FaceDetector",
+            "Returning closest hit: voxel (%d,%d,%d) at distance %.3f",
+            closestHit.voxel.x, closestHit.voxel.y, closestHit.voxel.z,
+            closestHit.distance);
     }
     
     return result;
