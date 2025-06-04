@@ -14,8 +14,11 @@
 // Include OpenGL headers for glFlush
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
-#endif
+#include <OpenGL/gl3.h>
+#include "MacOSGLLoader.h"
+#else
 #include <glad/glad.h>
+#endif
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -161,22 +164,11 @@ void RenderEngine::renderMesh(const Mesh& mesh, const Transform& transform, cons
     if (!m_initialized || mesh.isEmpty()) return;
     
     // Ensure mesh has VAO and GPU buffers
-    if (const_cast<Mesh&>(mesh).vertexArray == InvalidId) {
-        const_cast<Mesh&>(mesh).vertexArray = m_glRenderer->createVertexArray();
-    }
-    
-    if (const_cast<Mesh&>(mesh).vertexBuffer == InvalidId) {
-        const_cast<Mesh&>(mesh).vertexBuffer = m_glRenderer->createVertexBuffer(
-            mesh.vertices.data(), 
-            mesh.vertices.size() * sizeof(Vertex), 
-            BufferUsage::Static);
-    }
-    
-    if (const_cast<Mesh&>(mesh).indexBuffer == InvalidId) {
-        const_cast<Mesh&>(mesh).indexBuffer = m_glRenderer->createIndexBuffer(
-            mesh.indices.data(), 
-            mesh.indices.size(), 
-            BufferUsage::Static);
+    if (const_cast<Mesh&>(mesh).vertexArray == InvalidId || 
+        const_cast<Mesh&>(mesh).vertexBuffer == InvalidId ||
+        const_cast<Mesh&>(mesh).indexBuffer == InvalidId) {
+        // Use setupMeshBuffers which properly configures the VAO
+        setupMeshBuffers(const_cast<Mesh&>(mesh));
     }
     
     renderMeshInternal(mesh, transform, material);
@@ -542,10 +534,12 @@ void RenderEngine::bindMaterial(const Material& material) {
     m_glRenderer->useProgram(shader);
     
     // Set material uniforms
-    m_glRenderer->setUniform("u_albedo", UniformValue(material.albedo));
-    m_glRenderer->setUniform("u_metallic", UniformValue(material.metallic));
-    m_glRenderer->setUniform("u_roughness", UniformValue(material.roughness));
-    m_glRenderer->setUniform("u_emission", UniformValue(material.emission));
+    // NOTE: The current basic shader doesn't use these uniforms - it uses vertex colors
+    // Uncomment when we implement a proper PBR shader
+    // m_glRenderer->setUniform("u_albedo", UniformValue(material.albedo));
+    // m_glRenderer->setUniform("u_metallic", UniformValue(material.metallic));
+    // m_glRenderer->setUniform("u_roughness", UniformValue(material.roughness));
+    // m_glRenderer->setUniform("u_emission", UniformValue(material.emission));
     
     // No texture binding for now - shader doesn't use textures
 }
@@ -554,8 +548,8 @@ void RenderEngine::updatePerFrameUniforms() {
     if (!m_glRenderer) return;
     
     // Update lighting uniforms - but we need to set these for each shader program
-    // For now, let's disable lighting to debug
-    m_glRenderer->setUniform("u_enableLighting", UniformValue(0));
+    // NOTE: The current basic shader doesn't use lighting uniforms
+    // m_glRenderer->setUniform("u_enableLighting", UniformValue(0));
 }
 
 void RenderEngine::loadBuiltinShaders() {
@@ -599,15 +593,9 @@ in vec3 v_normal;
 out vec4 FragColor;
 
 void main() {
-    // Simple directional lighting with high ambient
-    vec3 lightDir = normalize(vec3(0.5, -1.0, 0.3));
-    vec3 normal = normalize(v_normal);
-    
-    float NdotL = max(dot(normal, -lightDir), 0.0);
-    float lighting = 0.7 + 0.3 * NdotL;  // High ambient (0.7) to ensure visibility
-    
-    // Output lit color
-    FragColor = vec4(v_color.rgb * lighting, v_color.a);
+    // Output vertex color directly without any lighting
+    // This will help us verify that colors are being passed correctly
+    FragColor = v_color;
 }
     )";
     

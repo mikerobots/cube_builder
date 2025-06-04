@@ -24,6 +24,13 @@
 
 using namespace VoxelEditor;
 
+// Helper stream operator for Vector3i in tests
+namespace std {
+    ostream& operator<<(ostream& os, const VoxelEditor::Math::Vector3i& v) {
+        return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+    }
+}
+
 class CameraCubeVisibilityTest : public ::testing::Test {
 protected:
     void SetUp() override {
@@ -129,10 +136,12 @@ TEST_F(CameraCubeVisibilityTest, SingleVoxelAtOrigin_FrontCamera) {
     // Place a single voxel at grid position (0,0,0)
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
-    voxelData->placeVoxel(0, 0, 0);
+    voxelData->setVoxel(Math::Vector3i(0, 0, 0), resolution, true);
     
     // Set camera to front view
-    camera->setViewPreset(Camera::ViewPreset::Front);
+    // Set camera to front view
+    camera->setPosition(Math::Vector3f(5.0f, 5.0f, 15.0f));
+    camera->setTarget(Math::Vector3f(5.0f, 5.0f, 5.0f));
     camera->setDistance(5.0f);
     
     // Get voxel world position
@@ -148,19 +157,22 @@ TEST_F(CameraCubeVisibilityTest, SingleVoxelAtOrigin_FrontCamera) {
 
 TEST_F(CameraCubeVisibilityTest, VoxelGrid3x3x3_IsometricCamera) {
     // Create 3x3x3 grid of voxels
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm16;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_16cm;
     voxelData->setActiveResolution(resolution);
     
     for (int x = 3; x <= 5; x++) {
         for (int y = 3; y <= 5; y++) {
             for (int z = 3; z <= 5; z++) {
-                voxelData->placeVoxel(x, y, z);
+                voxelData->setVoxel(Math::Vector3i(x, y, z), resolution, true);
             }
         }
     }
     
     // Set camera to isometric view
-    camera->setViewPreset(Camera::ViewPreset::Isometric);
+    // Set camera to isometric view
+    float angle = 45.0f * M_PI / 180.0f;
+    camera->setPosition(Math::Vector3f(10.0f, 10.0f, 10.0f));
+    camera->setTarget(Math::Vector3f(4.0f, 4.0f, 4.0f));
     
     // Check center voxel
     Math::Vector3f centerVoxelPos = getVoxelWorldPos(4, 4, 4, resolution);
@@ -186,9 +198,9 @@ TEST_F(CameraCubeVisibilityTest, VoxelGrid3x3x3_IsometricCamera) {
 
 TEST_F(CameraCubeVisibilityTest, LargeVoxel_CloseCamera) {
     // Use large voxels (32cm)
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm32;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_32cm;
     voxelData->setActiveResolution(resolution);
-    voxelData->placeVoxel(5, 5, 5);
+    voxelData->setVoxel(Math::Vector3i(5, 5, 5), resolution, true);
     
     // Position camera very close
     camera->setTarget(getVoxelWorldPos(5, 5, 5, resolution));
@@ -208,7 +220,7 @@ TEST_F(CameraCubeVisibilityTest, VoxelBehindCamera) {
     // Place voxel at position that will be behind camera
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
-    voxelData->placeVoxel(10, 10, 10);
+    voxelData->setVoxel(Math::Vector3i(10, 10, 10), resolution, true);
     
     // Set camera looking away from voxel
     camera->setPosition(Math::Vector3f(5.0f, 5.0f, 5.0f));
@@ -224,9 +236,9 @@ TEST_F(CameraCubeVisibilityTest, VoxelBehindCamera) {
 
 TEST_F(CameraCubeVisibilityTest, VoxelRayIntersection) {
     // Test ray-cube intersection from camera through viewport center
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm16;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_16cm;
     voxelData->setActiveResolution(resolution);
-    voxelData->placeVoxel(6, 6, 6);
+    voxelData->setVoxel(Math::Vector3i(6, 6, 6), resolution, true);
     
     // Set camera to look directly at voxel
     Math::Vector3f voxelPos = getVoxelWorldPos(6, 6, 6, resolution);
@@ -258,8 +270,8 @@ TEST_F(CameraCubeVisibilityTest, VoxelRayIntersection) {
     bool intersects = tMax >= tMin && tMax >= 0.0f;
     
     printDebugInfo("Ray-Cube Intersection Test", voxelPos, voxelSize);
-    std::cout << "Ray origin: " << rayOrigin << std::endl;
-    std::cout << "Ray direction: " << rayDir << std::endl;
+    std::cout << "Ray origin: (" << rayOrigin.x << ", " << rayOrigin.y << ", " << rayOrigin.z << ")" << std::endl;
+    std::cout << "Ray direction: (" << rayDir.x << ", " << rayDir.y << ", " << rayDir.z << ")" << std::endl;
     std::cout << "Intersection t values: tMin=" << tMin << ", tMax=" << tMax << std::endl;
     
     EXPECT_TRUE(intersects) << "Ray from camera should intersect voxel cube";
@@ -281,11 +293,13 @@ TEST_F(CameraCubeVisibilityTest, MultipleVoxelsScreenCoverage) {
     };
     
     for (const auto& pos : voxelPositions) {
-        voxelData->placeVoxel(pos.x, pos.y, pos.z);
+        voxelData->setVoxel(pos, resolution, true);
     }
     
     // Set camera to front view
-    camera->setViewPreset(Camera::ViewPreset::Front);
+    // Set camera to front view
+    camera->setPosition(Math::Vector3f(5.0f, 5.0f, 15.0f));
+    camera->setTarget(Math::Vector3f(5.0f, 5.0f, 5.0f));
     camera->setDistance(5.0f);
     
     std::cout << "\n=== Multiple Voxels Screen Coverage ===" << std::endl;
@@ -322,7 +336,7 @@ TEST_F(CameraCubeVisibilityTest, MultipleVoxelsScreenCoverage) {
 TEST_F(CameraCubeVisibilityTest, ExplicitMatrixCalculations) {
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
-    voxelData->placeVoxel(6, 6, 6);
+    voxelData->setVoxel(Math::Vector3i(6, 6, 6), resolution, true);
     
     // Manually set camera parameters
     Math::Vector3f cameraPos(10.0f, 10.0f, 10.0f);
@@ -340,9 +354,9 @@ TEST_F(CameraCubeVisibilityTest, ExplicitMatrixCalculations) {
     Math::Vector3f up = forward.cross(right);
     
     std::cout << "Camera basis vectors:" << std::endl;
-    std::cout << "  Right: " << right << std::endl;
-    std::cout << "  Up: " << up << std::endl;
-    std::cout << "  Forward: " << forward << std::endl;
+    std::cout << "  Right: (" << right.x << ", " << right.y << ", " << right.z << ")" << std::endl;
+    std::cout << "  Up: (" << up.x << ", " << up.y << ", " << up.z << ")" << std::endl;
+    std::cout << "  Forward: (" << forward.x << ", " << forward.y << ", " << forward.z << ")" << std::endl;
     
     // Get actual matrices from camera
     Math::Matrix4f viewMatrix = camera->getViewMatrix();

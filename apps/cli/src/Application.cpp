@@ -373,8 +373,8 @@ void Application::render() {
     // Begin frame
     m_renderEngine->beginFrame();
     
-    // Clear with purple background for debugging
-    m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.5f, 0.0f, 0.5f, 1.0f));
+    // Clear with grey background
+    m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.3f, 0.3f, 0.3f, 1.0f));
     
     // Render all voxel meshes
     static int frameCount = 0;

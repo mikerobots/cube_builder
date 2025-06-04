@@ -26,6 +26,8 @@
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousCoverage.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousMemCheck.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousSubmit.dir
+/Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test_render_core.dir
+/Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test_zoom_detailed.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/rebuild_cache.dir

@@ -49,11 +49,29 @@ The refactoring is complete and VAO support has been successfully implemented fo
 
 ### Next Steps
 1. ~~Fix VAO initialization on macOS for proper OpenGL 3.3 core profile support~~ ✅ COMPLETED
-2. Fix shader attribute naming inconsistencies (shader expects different attribute names)
-3. Resolve VisualFeedback module compilation errors with Vector3i streaming operators
-4. Update GLAD to properly load OpenGL functions instead of being a stub
-3. Add proper error handling for OpenGL context creation failures
-4. Complete the rendering test coverage plan below
+2. ~~Verify core rendering functionality with standalone test~~ ✅ COMPLETED
+   - Created test_render_core.cpp that successfully renders a colored triangle
+   - Fixed shader lighting issue by simplifying fragment shader  
+   - Confirmed VAO support works correctly on macOS
+   - Triangle renders with correct vertex colors (red, green, blue)
+
+### Core Rendering Validation Results
+The standalone test program (`test_render_core.cpp`) successfully validates that:
+- VAO initialization works correctly with dynamic function loading on macOS
+- Vertex and index buffers are created and managed properly
+- Shaders compile and link successfully
+- Uniforms (model, view, projection matrices) are set correctly
+- Triangle renders with proper vertex color interpolation
+- Screenshot capture functionality works
+
+The test renders a simple triangle with red, green, and blue vertices, and the output shows proper color interpolation across the triangle surface.
+
+### Remaining Tasks
+1. Fix shader attribute naming inconsistencies (shader expects different attribute names)
+2. Resolve VisualFeedback module compilation errors with Vector3i streaming operators
+3. Update GLAD to properly load OpenGL functions instead of being a stub
+4. Add proper error handling for OpenGL context creation failures
+5. Complete the rendering test coverage plan below
 
 ---
 

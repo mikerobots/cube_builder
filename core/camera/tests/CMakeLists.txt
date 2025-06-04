@@ -6,6 +6,7 @@ set(CAMERA_TEST_SOURCES
     test_OrbitCamera_transformations.cpp
     test_Viewport.cpp
     test_CameraController.cpp
+    test_zoom_functionality.cpp
 )
 
 add_executable(VoxelEditor_Camera_Tests ${CAMERA_TEST_SOURCES})

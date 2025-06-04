@@ -6,10 +6,11 @@
 // Silence OpenGL deprecation warnings on macOS
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
+#include <OpenGL/gl3.h>
 #include "MacOSGLLoader.h"
-#endif
-
+#else
 #include <glad/glad.h>
+#endif
 
 // Define missing GL constants
 #ifndef GL_VERTEX_ARRAY_BINDING
@@ -308,8 +309,8 @@ void OpenGLRenderer::setupVertexAttributes(const std::vector<VertexAttribute>& a
     } standardLayout[] = {
         { VertexAttribute::Position, 0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, position) },
         { VertexAttribute::Normal, 1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, normal) },
-        { VertexAttribute::TexCoord0, 2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, texCoords) },
-        { VertexAttribute::Color, 3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, color) }
+        { VertexAttribute::Color, 2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, color) },
+        { VertexAttribute::TexCoord0, 3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, texCoords) }
     };
     
     // First disable all attributes
@@ -358,10 +359,17 @@ void OpenGLRenderer::setUniform(const std::string& name, const UniformValue& val
     
     GLuint program = static_cast<GLuint>(location);
     location = glGetUniformLocation(program, name.c_str());
-    if (location == -1) return;
+    if (location == -1) {
+        static int errorCount = 0;
+        if (errorCount < 10) {
+            std::cerr << "Warning: Uniform '" << name << "' not found in program " << program << std::endl;
+            errorCount++;
+        }
+        return;
+    }
     
     static int uniformCount = 0;
-    if (uniformCount < 20 && name.find("u_") == 0) {
+    if (uniformCount < 20) {
         std::cout << "Setting uniform '" << name << "' at location " << location << std::endl;
         uniformCount++;
     }
@@ -538,14 +546,11 @@ ShaderId OpenGLRenderer::createProgram(const std::vector<ShaderId>& shaders) {
     }
     
     // Bind standard attribute locations before linking
-    // Try both naming conventions to support different shaders
+    // Match the shader's expected locations
     glBindAttribLocation(info.glHandle, 0, "a_position");
-    glBindAttribLocation(info.glHandle, 0, "aPos");
     glBindAttribLocation(info.glHandle, 1, "a_normal");
-    glBindAttribLocation(info.glHandle, 1, "aNormal");
-    glBindAttribLocation(info.glHandle, 2, "a_texCoord");
-    glBindAttribLocation(info.glHandle, 2, "aColor");  // Note: shader has color at location 2
-    glBindAttribLocation(info.glHandle, 3, "a_color");
+    glBindAttribLocation(info.glHandle, 2, "a_color");
+    glBindAttribLocation(info.glHandle, 3, "a_texCoord");
     
     linkProgramInternal(info);
     

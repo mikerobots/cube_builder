@@ -7,6 +7,7 @@ set(TEST_SOURCES
     test_cli_commands.cpp
     test_cli_error_handling.cpp
     test_cli_rendering_basic.cpp
+    test_zoom_behavior.cpp
 )
 
 # Create test executable

@@ -6,8 +6,11 @@
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
-#endif
+#include <OpenGL/gl3.h>
+#include <OpenGL/gl3ext.h>
+#else
 #include <glad/glad.h>
+#endif
 
 namespace VoxelEditor {
 namespace VisualFeedback {
@@ -33,7 +36,7 @@ HighlightRenderer::~HighlightRenderer() {
     // Clean up GPU resources
     if (m_vao != 0) {
 #ifdef __APPLE__
-        glDeleteVertexArraysAPPLE(1, &m_vao);
+        glDeleteVertexArrays(1, &m_vao);
 #else
         glDeleteVertexArrays(1, &m_vao);
 #endif
@@ -199,8 +202,8 @@ void HighlightRenderer::createBoxMesh() {
     
     // Create VAO
 #ifdef __APPLE__
-    glGenVertexArraysAPPLE(1, &m_vao);
-    glBindVertexArrayAPPLE(m_vao);
+    glGenVertexArrays(1, &m_vao);
+    glBindVertexArray(m_vao);
 #else
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
@@ -225,7 +228,7 @@ void HighlightRenderer::createBoxMesh() {
     
     // Unbind
 #ifdef __APPLE__
-    glBindVertexArrayAPPLE(0);
+    glBindVertexArray(0);
 #else
     glBindVertexArray(0);
 #endif
@@ -285,26 +288,21 @@ void HighlightRenderer::renderInstanced(const Camera::Camera& camera) {
     
     // Bind VAO and render
 #ifdef __APPLE__
-    glBindVertexArrayAPPLE(m_highlightMesh);
+    glBindVertexArray(m_highlightMesh);
 #else
     glBindVertexArray(m_highlightMesh);
 #endif
     
     // Render all instances
-#ifdef __APPLE__
-    glDrawElementsInstancedARB(GL_TRIANGLES, m_meshIndexCount, GL_UNSIGNED_INT, 0, 
-                              static_cast<GLsizei>(m_highlights.size()));
-#else
     glDrawElementsInstanced(GL_TRIANGLES, m_meshIndexCount, GL_UNSIGNED_INT, 0, 
                            static_cast<GLsizei>(m_highlights.size()));
-#endif
     
     // Restore state
     glDepthMask(GL_TRUE);
     glDisable(GL_BLEND);
     
 #ifdef __APPLE__
-    glBindVertexArrayAPPLE(0);
+    glBindVertexArray(0);
 #else
     glBindVertexArray(0);
 #endif
@@ -336,7 +334,7 @@ void HighlightRenderer::renderImmediate(const Camera::Camera& camera) {
     
     // Bind VAO
 #ifdef __APPLE__
-    glBindVertexArrayAPPLE(m_highlightMesh);
+    glBindVertexArray(m_highlightMesh);
 #else
     glBindVertexArray(m_highlightMesh);
 #endif
@@ -362,7 +360,7 @@ void HighlightRenderer::renderImmediate(const Camera::Camera& camera) {
     glDisable(GL_BLEND);
     
 #ifdef __APPLE__
-    glBindVertexArrayAPPLE(0);
+    glBindVertexArray(0);
 #else
     glBindVertexArray(0);
 #endif

@@ -68,6 +68,10 @@ add_subdirectory(apps/cli)
 # Add tests if building with testing enabled
 if(BUILD_TESTING)
     add_subdirectory(tests/integration)
+    # Add render core test
+    include(test_render_core_CMakeLists.txt)
+    # Add zoom detailed test
+    include(test_zoom_detailed_CMakeLists.txt)
 endif()
 
 # Optional: Build documentation
