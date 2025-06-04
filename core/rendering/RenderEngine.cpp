@@ -204,6 +204,16 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
         m_glRenderer->setUniform("view", UniformValue(m_currentCamera->getViewMatrix()));
         m_glRenderer->setUniform("projection", UniformValue(m_currentCamera->getProjectionMatrix()));
         
+        // Set lighting uniforms
+        // Default light position above and to the side of the scene
+        Math::Vector3f lightPos(5.0f, 10.0f, 5.0f);
+        Math::Vector3f lightColor(1.0f, 1.0f, 1.0f);  // White light
+        Math::Vector3f viewPos = m_currentCamera->getPosition();
+        
+        m_glRenderer->setUniform("lightPos", UniformValue(lightPos));
+        m_glRenderer->setUniform("lightColor", UniformValue(lightColor));
+        m_glRenderer->setUniform("viewPos", UniformValue(viewPos));
+        
         // Debug: Print matrices and test transform
         static int transformCount = 0;
         if (transformCount < 3) {
@@ -531,6 +541,11 @@ void RenderEngine::bindMaterial(const Material& material) {
     
     // Use material shader or default
     ShaderId shader = material.shader != InvalidId ? material.shader : getBuiltinShader("basic");
+    static int bindCount = 0;
+    if (bindCount < 5) {
+        std::cout << "bindMaterial: Using shader ID " << shader << " (material shader: " << material.shader << ")" << std::endl;
+        bindCount++;
+    }
     m_glRenderer->useProgram(shader);
     
     // Set material uniforms
@@ -555,7 +570,7 @@ void RenderEngine::updatePerFrameUniforms() {
 void RenderEngine::loadBuiltinShaders() {
     if (!m_shaderManager || !m_glRenderer) return;
     
-    // Load basic shader - OpenGL 3.3 compatible
+    // Load basic shader with lighting - OpenGL 3.3 compatible
     const std::string basicVertex = R"(
 #version 330 core
 layout(location = 0) in vec3 a_position;
@@ -566,40 +581,58 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-out vec4 v_color;
-out vec3 v_normal;
+out vec3 FragPos;
+out vec3 Normal;
+out vec4 Color;
 
 void main() {
-    // Transform through MVP
-    vec4 worldPos = model * vec4(a_position, 1.0);
-    vec4 viewPos = view * worldPos;
-    vec4 clipPos = projection * viewPos;
+    FragPos = vec3(model * vec4(a_position, 1.0));
+    Normal = mat3(transpose(inverse(model))) * a_normal;
+    Color = a_color;
     
-    // Output the clip position
-    gl_Position = clipPos;
-    
-    // Pass through color and normal
-    v_color = a_color;
-    v_normal = mat3(model) * a_normal;
+    gl_Position = projection * view * vec4(FragPos, 1.0);
 }
     )";
     
     const std::string basicFragment = R"(
 #version 330 core
 
-in vec4 v_color;
-in vec3 v_normal;
+in vec3 FragPos;
+in vec3 Normal;
+in vec4 Color;
 
 out vec4 FragColor;
 
+uniform vec3 lightPos;
+uniform vec3 lightColor;
+uniform vec3 viewPos;
+
 void main() {
-    // Output vertex color directly without any lighting
-    // This will help us verify that colors are being passed correctly
-    FragColor = v_color;
+    // Ambient lighting
+    float ambientStrength = 0.3;
+    vec3 ambient = ambientStrength * lightColor;
+    
+    // Diffuse lighting
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
+    
+    // Specular lighting
+    float specularStrength = 0.5;
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = specularStrength * spec * lightColor;
+    
+    // Combine results
+    vec3 result = (ambient + diffuse + specular) * Color.rgb;
+    FragColor = vec4(result, Color.a);
 }
     )";
     
-    m_shaderManager->createShaderFromSource("basic", basicVertex, basicFragment, m_glRenderer.get());
+    auto basicShaderId = m_shaderManager->createShaderFromSource("basic", basicVertex, basicFragment, m_glRenderer.get());
+    std::cout << "Created basic shader with ID: " << basicShaderId << std::endl;
 }
 
 void RenderEngine::onRenderModeChanged() {

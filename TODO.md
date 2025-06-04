@@ -66,7 +66,40 @@ The standalone test program (`test_render_core.cpp`) successfully validates that
 
 The test renders a simple triangle with red, green, and blue vertices, and the output shows proper color interpolation across the triangle surface.
 
-### Remaining Tasks
+### Current Issue: Voxel Rendering Without Lighting
+**Status**: Basic rendering works, but voxels appear as solid yellow with no lighting effects.
+
+#### Problem
+- Voxels are rendering but appear as flat, solid yellow color
+- No visible lighting or shading effects
+- Likely issues:
+  - Lighting calculations not working in shaders
+  - Normals not being passed correctly to shaders
+  - Lighting uniforms not being set properly
+  - Shader may be using a fallback color instead of calculated lighting
+
+#### Tasks to Fix Lighting
+1. **Investigate shader lighting calculations**
+   - Check vertex and fragment shaders for lighting implementation
+   - Verify lighting equations are correct
+   - Ensure shader is using lighting calculations, not just outputting solid color
+
+2. **Verify normal data flow**
+   - Check if normals are generated correctly in VoxelMeshGenerator
+   - Verify normals are included in vertex data sent to GPU
+   - Ensure vertex attributes for normals are properly configured
+
+3. **Check lighting uniforms**
+   - Verify light position/direction uniforms are being set
+   - Check if material properties are being passed to shaders
+   - Ensure view position is available for specular calculations
+
+4. **Test with simplified shader**
+   - Create a debug shader that visualizes normals as colors
+   - Verify basic lighting with a simple directional light
+   - Gradually add complexity back
+
+### Other Remaining Tasks
 1. Fix shader attribute naming inconsistencies (shader expects different attribute names)
 2. Resolve VisualFeedback module compilation errors with Vector3i streaming operators
 3. Update GLAD to properly load OpenGL functions instead of being a stub

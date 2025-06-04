@@ -78,8 +78,8 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
                       << worldPos.x << ", " << worldPos.y << ", " << worldPos.z << ")" << std::endl;
         }
         
-        // Use bright colors for easy identification 
-        Math::Vector3f color(1.0f, 1.0f, 0.0f);  // Bright yellow for debugging
+        // Use a neutral gray color that will show lighting well
+        Math::Vector3f color(0.7f, 0.7f, 0.7f);  // Light gray
         
         addCube(vertices, indices, worldPos, voxelSize * 0.95f, color); // Slight gap between cubes
         voxelCount++;
