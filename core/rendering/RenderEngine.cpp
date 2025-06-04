@@ -183,7 +183,6 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
     
     // Set transform uniforms
     if (m_currentCamera) {
-        std::cout << "Setting transform uniforms, camera exists" << std::endl;
         // Build model matrix from transform
         Math::Matrix4f modelMatrix = Math::Matrix4f::translation(transform.position);
         

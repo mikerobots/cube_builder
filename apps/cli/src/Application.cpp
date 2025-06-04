@@ -9,7 +9,14 @@
 #include <algorithm>
 #include <cstddef>  // for offsetof
 
-
+// Platform-specific includes for non-blocking input
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <sys/select.h>
+#include <termios.h>
+#include <unistd.h>
+#endif
 
 // Application headers
 #include "cli/Application.h"
@@ -334,10 +341,6 @@ bool Application::initializeCLI() {
 
 void Application::processInput() {
     // Non-blocking input processing
-    // In a real implementation, this would use a separate thread or
-    // non-blocking console I/O
-    
-    // For now, we'll use a simple blocking approach
     static std::string input;
     static bool waitingForInput = true;
     
@@ -346,9 +349,31 @@ void Application::processInput() {
         waitingForInput = false;
     }
     
-    // Check if input is available (platform-specific)
-    // For now, we'll use std::getline which blocks
-    if (std::getline(std::cin, input)) {
+    // Non-blocking input check
+    bool hasInput = false;
+    
+#ifdef _WIN32
+    // Windows: Use _kbhit() to check for input
+    if (_kbhit()) {
+        hasInput = true;
+    }
+#else
+    // Unix/Linux/macOS: Use select() to check for input
+    fd_set readfds;
+    struct timeval timeout;
+    
+    FD_ZERO(&readfds);
+    FD_SET(STDIN_FILENO, &readfds);
+    
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 0;
+    
+    int result = select(STDIN_FILENO + 1, &readfds, NULL, NULL, &timeout);
+    hasInput = (result > 0 && FD_ISSET(STDIN_FILENO, &readfds));
+#endif
+    
+    // Only read input if available
+    if (hasInput && std::getline(std::cin, input)) {
         auto result = m_commandProcessor->execute(input);
         
         if (!result.message.empty()) {
