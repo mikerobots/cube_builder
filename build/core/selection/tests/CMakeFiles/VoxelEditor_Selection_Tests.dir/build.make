@@ -173,8 +173,8 @@ bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Sel
 bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/TestFloodFillSelector.cpp.o
 bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/build.make
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Selection.a
-bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
-bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest_main.a
+bin/VoxelEditor_Selection_Tests: lib/libgtest.a
+bin/VoxelEditor_Selection_Tests: lib/libgtest_main.a
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_FileIO.a
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Selection.a
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_FileIO.a
@@ -182,7 +182,7 @@ bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Groups.a
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_Rendering.a
 bin/VoxelEditor_Selection_Tests: lib/libVoxelEditor_VoxelData.a
 bin/VoxelEditor_Selection_Tests: lib/libglad.a
-bin/VoxelEditor_Selection_Tests: /opt/homebrew/lib/libgtest.a
+bin/VoxelEditor_Selection_Tests: lib/libgtest.a
 bin/VoxelEditor_Selection_Tests: core/selection/tests/CMakeFiles/VoxelEditor_Selection_Tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../../../bin/VoxelEditor_Selection_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/core/selection/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Selection_Tests.dir/link.txt --verbose=$(VERBOSE)

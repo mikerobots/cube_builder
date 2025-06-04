@@ -153,6 +153,118 @@ core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManag
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.s"
 	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManager.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.s
 
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderAttributeBinding.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderAttributeBinding.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderAttributeBinding.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderAttributeBinding.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderUniforms.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderUniforms.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderUniforms.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderUniforms.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerLogging.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerLogging.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerLogging.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerLogging.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSimple.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSimple.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSimple.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSimple.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerDebug.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerDebug.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerDebug.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerDebug.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerFixed.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerFixed.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerFixed.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerFixed.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSafe.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSafe.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSafe.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_ShaderManagerSafe.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.s
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/flags.make
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderIncremental.cpp
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o -MF CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderIncremental.cpp
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderIncremental.cpp > CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.i
+
+core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderIncremental.cpp -o CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.s
+
 # Object files for target VoxelEditor_Rendering_Tests
 VoxelEditor_Rendering_Tests_OBJECTS = \
 "CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderTypes.cpp.o" \
@@ -160,7 +272,15 @@ VoxelEditor_Rendering_Tests_OBJECTS = \
 "CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderStats.cpp.o" \
 "CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_OpenGLRenderer.cpp.o" \
 "CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderEngine.cpp.o" \
-"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.o"
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o"
 
 # External object files for target VoxelEditor_Rendering_Tests
 VoxelEditor_Rendering_Tests_EXTERNAL_OBJECTS =
@@ -171,15 +291,36 @@ bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Ren
 bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_OpenGLRenderer.cpp.o
 bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderEngine.cpp.o
 bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o
+bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o
 bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make
 bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_Rendering.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_CLI_Lib.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_SurfaceGen.a
 bin/VoxelEditor_Rendering_Tests: lib/libglad.a
-bin/VoxelEditor_Rendering_Tests: /opt/homebrew/lib/libgtest.a
-bin/VoxelEditor_Rendering_Tests: /opt/homebrew/lib/libgtest_main.a
+bin/VoxelEditor_Rendering_Tests: lib/libgtest.a
+bin/VoxelEditor_Rendering_Tests: lib/libgtest_main.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_Input.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_UndoRedo.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_VisualFeedback.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_Selection.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_FileIO.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_Selection.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_FileIO.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_Groups.a
+bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_Rendering.a
+bin/VoxelEditor_Rendering_Tests: lib/libglad.a
 bin/VoxelEditor_Rendering_Tests: lib/libVoxelEditor_VoxelData.a
-bin/VoxelEditor_Rendering_Tests: /opt/homebrew/lib/libgtest.a
+bin/VoxelEditor_Rendering_Tests: lib/libglfw3.a
+bin/VoxelEditor_Rendering_Tests: lib/libgtest.a
 bin/VoxelEditor_Rendering_Tests: core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../../../bin/VoxelEditor_Rendering_Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable ../../../bin/VoxelEditor_Rendering_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Rendering_Tests.dir/link.txt --verbose=$(VERBOSE)
 	cd /Users/michaelhalloran/cube_edit/build/core/rendering/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Rendering_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_Rendering_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build/core/rendering/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Rendering_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build/core/rendering/tests/VoxelEditor_Rendering_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
 

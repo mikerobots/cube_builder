@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/michaelhalloran/cube_edit/core/rendering/RenderState.cpp" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o" "gcc" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o.d"
   "/Users/michaelhalloran/cube_edit/core/rendering/RenderTypes.cpp" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o" "gcc" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o.d"
   "/Users/michaelhalloran/cube_edit/core/rendering/ShaderManager.cpp" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o" "gcc" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o.d"
+  "/Users/michaelhalloran/cube_edit/core/rendering/ShaderManagerSafe.cpp" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o" "gcc" "core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o.d"
   )
 
 # Targets to which this target links.

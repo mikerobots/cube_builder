@@ -8,6 +8,8 @@
 #include <sstream>
 #include <algorithm>
 #include <cmath>
+#include <fstream>
+#include <cstring>
 
 // Include OpenGL headers for glFlush
 #ifdef __APPLE__
@@ -107,6 +109,8 @@ void RenderEngine::beginFrame() {
     m_frameTimer.start();
     m_stats.frameCount++;
     
+    Logging::Logger::getInstance().debugfc("RenderEngine", "Begin frame %d", m_stats.frameCount);
+    
     // Clear frame stats
     m_stats.drawCalls = 0;
     m_stats.trianglesRendered = 0;
@@ -124,6 +128,11 @@ void RenderEngine::endFrame() {
     m_stats.frameTime = m_frameTimer.getElapsedMs();
     m_stats.fps = 1000.0f / m_stats.frameTime;
     
+    Logging::Logger::getInstance().debugfc("RenderEngine", 
+        "End frame %d: %.2fms, %.1f FPS, %d draws, %d triangles", 
+        m_stats.frameCount, m_stats.frameTime, m_stats.fps, 
+        m_stats.drawCalls, m_stats.trianglesRendered);
+    
     if (m_debugMode) {
         renderDebugInfo();
     }
@@ -140,6 +149,10 @@ void RenderEngine::present() {
 void RenderEngine::clear(ClearFlags flags, const Color& color, float depth, int stencil) {
     if (!m_glRenderer) return;
     
+    Logging::Logger::getInstance().debugfc("RenderEngine", 
+        "Clear: flags=%d, color=(%.3f,%.3f,%.3f,%.3f), depth=%.3f, stencil=%d", 
+        static_cast<int>(flags), color.r, color.g, color.b, color.a, depth, stencil);
+    
     m_glRenderer->clear(flags, color, depth, stencil);
 }
 
@@ -147,7 +160,11 @@ void RenderEngine::clear(ClearFlags flags, const Color& color, float depth, int 
 void RenderEngine::renderMesh(const Mesh& mesh, const Transform& transform, const Material& material) {
     if (!m_initialized || mesh.isEmpty()) return;
     
-    // Ensure mesh has GPU buffers
+    // Ensure mesh has VAO and GPU buffers
+    if (const_cast<Mesh&>(mesh).vertexArray == InvalidId) {
+        const_cast<Mesh&>(mesh).vertexArray = m_glRenderer->createVertexArray();
+    }
+    
     if (const_cast<Mesh&>(mesh).vertexBuffer == InvalidId) {
         const_cast<Mesh&>(mesh).vertexBuffer = m_glRenderer->createVertexBuffer(
             mesh.vertices.data(), 
@@ -174,6 +191,7 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
     
     // Set transform uniforms
     if (m_currentCamera) {
+        std::cout << "Setting transform uniforms, camera exists" << std::endl;
         // Build model matrix from transform
         Math::Matrix4f modelMatrix = Math::Matrix4f::translation(transform.position);
         
@@ -190,29 +208,113 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
         
         modelMatrix = modelMatrix * Math::Matrix4f::scale(transform.scale);
         
-        m_glRenderer->setUniform("u_model", UniformValue(modelMatrix));
-        m_glRenderer->setUniform("u_view", UniformValue(m_currentCamera->getViewMatrix()));
-        m_glRenderer->setUniform("u_projection", UniformValue(m_currentCamera->getProjectionMatrix()));
+        m_glRenderer->setUniform("model", UniformValue(modelMatrix));
+        m_glRenderer->setUniform("view", UniformValue(m_currentCamera->getViewMatrix()));
+        m_glRenderer->setUniform("projection", UniformValue(m_currentCamera->getProjectionMatrix()));
+        
+        // Debug: Print matrices and test transform
+        static int transformCount = 0;
+        if (transformCount < 3) {
+            const auto& view = m_currentCamera->getViewMatrix();
+            const auto& proj = m_currentCamera->getProjectionMatrix();
+            
+            if (transformCount == 0) {
+                std::cout << "Camera target: " << m_currentCamera->getTarget().x << ", " 
+                          << m_currentCamera->getTarget().y << ", " 
+                          << m_currentCamera->getTarget().z << std::endl;
+                std::cout << "Camera position: " << m_currentCamera->getPosition().x << ", " 
+                          << m_currentCamera->getPosition().y << ", " 
+                          << m_currentCamera->getPosition().z << std::endl;
+                          
+                // Print first row of view matrix
+                std::cout << "View matrix first row: " << view.m[0] << ", " << view.m[1] 
+                          << ", " << view.m[2] << ", " << view.m[3] << std::endl;
+                          
+                // Check workspace bounds
+                Math::Vector3f wsSize = Math::Vector3f(10, 10, 10);
+                std::cout << "Workspace: 0,0,0 to " << wsSize.x << "," << wsSize.y << "," << wsSize.z << std::endl;
+            }
+            
+            // Test transform vertices from the mesh
+            if (mesh.vertices.size() >= 3) {
+                float minX = 9999, maxX = -9999, minY = 9999, maxY = -9999;
+                
+                for (int i = 0; i < 3; i++) {
+                    Math::Vector4f testPos(mesh.vertices[i].position.x, 
+                                          mesh.vertices[i].position.y,
+                                          mesh.vertices[i].position.z, 1.0f);
+                    
+                    Math::Vector4f worldPos = modelMatrix * testPos;
+                    Math::Vector4f viewPos = view * worldPos;
+                    Math::Vector4f clipPos = proj * viewPos;
+                    
+                    if (i == 0) {
+                        std::cout << "Vertex 0 transform: world(" << worldPos.x << "," << worldPos.y << "," << worldPos.z 
+                                  << ") -> clip(" << clipPos.x << "," << clipPos.y << "," << clipPos.z << "," << clipPos.w << ")";
+                    }
+                    
+                    if (std::abs(clipPos.w) > 0.001f) {
+                        float ndcX = clipPos.x / clipPos.w;
+                        float ndcY = clipPos.y / clipPos.w;
+                        float ndcZ = clipPos.z / clipPos.w;
+                        
+                        // Convert to screen coordinates
+                        float screenX = (ndcX + 1.0f) * 0.5f * 1280;
+                        float screenY = (1.0f - ndcY) * 0.5f * 720;
+                        
+                        minX = std::min(minX, screenX);
+                        maxX = std::max(maxX, screenX);
+                        minY = std::min(minY, screenY);
+                        maxY = std::max(maxY, screenY);
+                        
+                        if (i == 0) {
+                            std::cout << " -> NDC(" << ndcX << "," << ndcY << "," << ndcZ << ")";
+                            std::cout << " -> Screen(" << screenX << "," << screenY << ")";
+                            
+                            if (ndcX >= -1 && ndcX <= 1 && ndcY >= -1 && ndcY <= 1 && ndcZ >= -1 && ndcZ <= 1) {
+                                std::cout << " [VISIBLE]";
+                            } else {
+                                std::cout << " [OUTSIDE]";
+                            }
+                        }
+                    }
+                }
+                
+                std::cout << std::endl;
+                std::cout << "  Triangle bounds: (" << minX << "," << minY << ") to (" << maxX << "," << maxY << ")";
+                std::cout << " Size: " << (maxX - minX) << " x " << (maxY - minY) << " pixels" << std::endl;
+            }
+            
+            transformCount++;
+        }
         
         // Normal matrix (inverse transpose of model-view)
         Math::Matrix4f normalMatrix = (m_currentCamera->getViewMatrix() * modelMatrix).inverse().transposed();
-        m_glRenderer->setUniform("u_normalMatrix", UniformValue(normalMatrix));
+        // Note: The shader doesn't use u_normalMatrix, it calculates the normal matrix inline
+        // m_glRenderer->setUniform("u_normalMatrix", UniformValue(normalMatrix));
     }
     
-    // Bind buffers and draw
+    // Bind VAO, buffers and draw
+    m_glRenderer->bindVertexArray(mesh.vertexArray);
     m_glRenderer->bindVertexBuffer(mesh.vertexBuffer);
     m_glRenderer->bindIndexBuffer(mesh.indexBuffer);
     
-    // Set up vertex attributes
+    // Set up vertex attributes - only request what the shader uses
     std::vector<VertexAttribute> attributes = {
         VertexAttribute::Position,
         VertexAttribute::Normal,
-        VertexAttribute::TexCoord0,
         VertexAttribute::Color
     };
     m_glRenderer->setupVertexAttributes(attributes);
     
     // Draw the mesh
+    static int meshDrawCount = 0;
+    if (meshDrawCount < 5) {
+        std::cout << "Drawing mesh with " << mesh.indices.size() << " indices (" 
+                  << mesh.indices.size() / 3 << " triangles)" << std::endl;
+        meshDrawCount++;
+    }
+    
     m_glRenderer->drawElements(PrimitiveType::Triangles, 
                                static_cast<int>(mesh.indices.size()),
                                IndexType::UInt32);
@@ -239,6 +341,10 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
 // Viewport and camera
 void RenderEngine::setViewport(int x, int y, int width, int height) {
     if (!m_glRenderer) return;
+    
+    Logging::Logger::getInstance().debugfc("RenderEngine", 
+        "Viewport: x=%d, y=%d, width=%d, height=%d (aspect=%.3f)", 
+        x, y, width, height, width > 0 ? static_cast<float>(width) / height : 0.0f);
     
     m_glRenderer->setViewport(x, y, width, height);
     
@@ -380,6 +486,11 @@ void RenderEngine::uploadMeshData(const Mesh& mesh) {
 void RenderEngine::cleanupMeshBuffers(Mesh& mesh) {
     if (!m_glRenderer) return;
     
+    if (mesh.vertexArray != InvalidId) {
+        m_glRenderer->deleteVertexArray(mesh.vertexArray);
+        mesh.vertexArray = InvalidId;
+    }
+    
     if (mesh.vertexBuffer != InvalidId) {
         m_glRenderer->deleteBuffer(mesh.vertexBuffer);
         mesh.vertexBuffer = InvalidId;
@@ -398,8 +509,12 @@ void RenderEngine::setupRenderState(const Material& material) {
     // Set up blending
     m_glRenderer->setBlending(material.blendMode != BlendMode::Opaque, material.blendMode);
     
-    // Set up culling
-    m_glRenderer->setCulling(material.cullMode != CullMode::None && !material.doubleSided, material.cullMode);
+    // Set up culling - DISABLED for debugging
+    // m_glRenderer->setCulling(material.cullMode != CullMode::None && !material.doubleSided, material.cullMode);
+    m_glRenderer->setCulling(false, CullMode::Back);
+    
+    // Enable depth test
+    m_glRenderer->setDepthTest(true);
     
     // Set up polygon mode based on render settings
     m_glRenderer->setPolygonMode(m_currentSettings.renderMode == RenderMode::Wireframe);
@@ -418,99 +533,68 @@ void RenderEngine::bindMaterial(const Material& material) {
     m_glRenderer->setUniform("u_roughness", UniformValue(material.roughness));
     m_glRenderer->setUniform("u_emission", UniformValue(material.emission));
     
-    // Bind textures
-    if (material.albedoTexture != InvalidId) {
-        m_glRenderer->bindTexture(material.albedoTexture, 0);
-        m_glRenderer->setUniform("u_albedoTexture", UniformValue(0));
-        m_glRenderer->setUniform("u_hasAlbedoTexture", UniformValue(1));
-    } else {
-        m_glRenderer->setUniform("u_hasAlbedoTexture", UniformValue(0));
-    }
+    // No texture binding for now - shader doesn't use textures
 }
 
 void RenderEngine::updatePerFrameUniforms() {
     if (!m_glRenderer) return;
     
-    // Update lighting uniforms
-    m_glRenderer->setUniform("u_ambientLight", UniformValue(m_currentSettings.ambientLight));
-    m_glRenderer->setUniform("u_lightDirection", UniformValue(m_currentSettings.lightDirection));
-    m_glRenderer->setUniform("u_lightColor", UniformValue(m_currentSettings.lightColor));
-    m_glRenderer->setUniform("u_enableLighting", UniformValue(m_currentSettings.enableLighting ? 1 : 0));
+    // Update lighting uniforms - but we need to set these for each shader program
+    // For now, let's disable lighting to debug
+    m_glRenderer->setUniform("u_enableLighting", UniformValue(0));
 }
 
 void RenderEngine::loadBuiltinShaders() {
     if (!m_shaderManager || !m_glRenderer) return;
     
-    // Load basic shader
+    // Load basic shader - OpenGL 3.3 compatible
     const std::string basicVertex = R"(
-        #version 330 core
-        layout(location = 0) in vec3 a_position;
-        layout(location = 1) in vec3 a_normal;
-        layout(location = 2) in vec2 a_texCoord;
-        layout(location = 3) in vec4 a_color;
-        
-        uniform mat4 u_model;
-        uniform mat4 u_view;
-        uniform mat4 u_projection;
-        uniform mat4 u_normalMatrix;
-        
-        out vec3 v_worldPos;
-        out vec3 v_normal;
-        out vec2 v_texCoord;
-        out vec4 v_color;
-        
-        void main() {
-            vec4 worldPos = u_model * vec4(a_position, 1.0);
-            v_worldPos = worldPos.xyz;
-            v_normal = mat3(u_normalMatrix) * a_normal;
-            v_texCoord = a_texCoord;
-            v_color = a_color;
-            
-            gl_Position = u_projection * u_view * worldPos;
-        }
+#version 330 core
+layout(location = 0) in vec3 a_position;
+layout(location = 1) in vec3 a_normal;
+layout(location = 2) in vec4 a_color;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+out vec4 v_color;
+out vec3 v_normal;
+
+void main() {
+    // Transform through MVP
+    vec4 worldPos = model * vec4(a_position, 1.0);
+    vec4 viewPos = view * worldPos;
+    vec4 clipPos = projection * viewPos;
+    
+    // Output the clip position
+    gl_Position = clipPos;
+    
+    // Pass through color and normal
+    v_color = a_color;
+    v_normal = mat3(model) * a_normal;
+}
     )";
     
     const std::string basicFragment = R"(
-        #version 330 core
-        in vec3 v_worldPos;
-        in vec3 v_normal;
-        in vec2 v_texCoord;
-        in vec4 v_color;
-        
-        uniform vec4 u_albedo;
-        uniform float u_metallic;
-        uniform float u_roughness;
-        uniform float u_emission;
-        
-        uniform vec4 u_ambientLight;
-        uniform vec3 u_lightDirection;
-        uniform vec4 u_lightColor;
-        uniform int u_enableLighting;
-        
-        uniform sampler2D u_albedoTexture;
-        uniform int u_hasAlbedoTexture;
-        
-        out vec4 FragColor;
-        
-        void main() {
-            vec4 albedo = u_albedo * v_color;
-            if (u_hasAlbedoTexture > 0) {
-                albedo *= texture(u_albedoTexture, v_texCoord);
-            }
-            
-            if (u_enableLighting > 0) {
-                vec3 normal = normalize(v_normal);
-                float NdotL = max(dot(normal, -u_lightDirection), 0.0);
-                
-                vec3 diffuse = albedo.rgb * u_lightColor.rgb * NdotL;
-                vec3 ambient = albedo.rgb * u_ambientLight.rgb;
-                vec3 emission = albedo.rgb * u_emission;
-                
-                FragColor = vec4(ambient + diffuse + emission, albedo.a);
-            } else {
-                FragColor = albedo;
-            }
-        }
+#version 330 core
+
+in vec4 v_color;
+in vec3 v_normal;
+
+out vec4 FragColor;
+
+void main() {
+    // Simple directional lighting with high ambient
+    vec3 lightDir = normalize(vec3(0.5, -1.0, 0.3));
+    vec3 normal = normalize(v_normal);
+    
+    float NdotL = max(dot(normal, -lightDir), 0.0);
+    float lighting = 0.7 + 0.3 * NdotL;  // High ambient (0.7) to ensure visibility
+    
+    // Output lit color
+    FragColor = vec4(v_color.rgb * lighting, v_color.a);
+}
     )";
     
     m_shaderManager->createShaderFromSource("basic", basicVertex, basicFragment, m_glRenderer.get());
@@ -593,6 +677,71 @@ void RenderEngine::renderVoxels(const VoxelData::VoxelGrid& grid,
     (void)grid;
     (void)resolution;
     (void)settings;
+}
+
+// Screenshot functionality
+void RenderEngine::captureFrame(const std::string& filename) {
+    if (!m_glRenderer || !m_initialized) {
+        Logging::Logger::getInstance().error("Cannot capture frame: RenderEngine not initialized");
+        return;
+    }
+    
+    // Get current viewport dimensions
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    int width = viewport[2];
+    int height = viewport[3];
+    
+    // Allocate buffer for pixels (RGB format)
+    std::vector<unsigned char> pixels(width * height * 3);
+    
+    // Ensure all OpenGL commands are finished
+    glFlush();
+    glFinish();
+    
+    // Read pixels from framebuffer
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
+    
+    // OpenGL gives us the image upside down, so we need to flip it
+    std::vector<unsigned char> flipped(width * height * 3);
+    for (int y = 0; y < height; ++y) {
+        std::memcpy(&flipped[y * width * 3], 
+                   &pixels[(height - 1 - y) * width * 3], 
+                   width * 3);
+    }
+    
+    // Determine output format and save
+    std::string actualFilename = filename;
+    
+    // If filename ends with .png, replace with .ppm for now
+    size_t dotPos = actualFilename.find_last_of('.');
+    if (dotPos != std::string::npos && actualFilename.substr(dotPos) == ".png") {
+        actualFilename = actualFilename.substr(0, dotPos) + ".ppm";
+    } else if (dotPos == std::string::npos) {
+        actualFilename += ".ppm";
+    }
+    
+    // Write PPM file
+    std::ofstream file(actualFilename, std::ios::binary);
+    if (!file) {
+        Logging::Logger::getInstance().error("Failed to open file for screenshot: " + actualFilename);
+        return;
+    }
+    
+    // PPM header
+    file << "P6\n" << width << " " << height << "\n255\n";
+    
+    // Write pixel data
+    file.write(reinterpret_cast<const char*>(flipped.data()), flipped.size());
+    file.close();
+    
+    // Log that we saved as PPM instead of PNG
+    if (filename.find(".png") != std::string::npos) {
+        Logging::Logger::getInstance().info("Screenshot saved as " + actualFilename + " (PPM format)");
+    } else {
+        Logging::Logger::getInstance().info("Screenshot saved: " + actualFilename);
+    }
 }
 
 } // namespace Rendering

@@ -323,6 +323,183 @@ TEST_F(OpenGLRendererTest, ResourceCounting) {
     renderer->deleteTexture(tex2);
 }
 
+// Test comprehensive vertex buffer creation
+TEST_F(OpenGLRendererTest, VertexBufferCreation) {
+    // Test creating buffer with actual vertex data
+    struct Vertex {
+        float position[3];
+        float normal[3];
+        float color[4];
+    };
+    
+    std::vector<Vertex> vertices = {
+        {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+        {{1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+        {{0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f, 1.0f}}
+    };
+    
+    size_t dataSize = vertices.size() * sizeof(Vertex);
+    
+    // Test static buffer creation
+    BufferId staticBuffer = renderer->createVertexBuffer(
+        vertices.data(), 
+        dataSize, 
+        BufferUsage::Static
+    );
+    
+    EXPECT_NE(staticBuffer, InvalidId);
+    
+    const BufferInfo* staticInfo = renderer->getBufferInfo(staticBuffer);
+    ASSERT_NE(staticInfo, nullptr);
+    EXPECT_EQ(staticInfo->size, dataSize);
+    EXPECT_EQ(staticInfo->usage, BufferUsage::Static);
+    EXPECT_FALSE(staticInfo->isIndexBuffer);
+    
+    // Test dynamic buffer creation
+    BufferId dynamicBuffer = renderer->createVertexBuffer(
+        nullptr,  // No initial data
+        dataSize, 
+        BufferUsage::Dynamic
+    );
+    
+    EXPECT_NE(dynamicBuffer, InvalidId);
+    
+    const BufferInfo* dynamicInfo = renderer->getBufferInfo(dynamicBuffer);
+    ASSERT_NE(dynamicInfo, nullptr);
+    EXPECT_EQ(dynamicInfo->size, dataSize);
+    EXPECT_EQ(dynamicInfo->usage, BufferUsage::Dynamic);
+    
+    // Test stream buffer creation
+    BufferId streamBuffer = renderer->createVertexBuffer(
+        vertices.data(), 
+        dataSize, 
+        BufferUsage::Stream
+    );
+    
+    EXPECT_NE(streamBuffer, InvalidId);
+    
+    const BufferInfo* streamInfo = renderer->getBufferInfo(streamBuffer);
+    ASSERT_NE(streamInfo, nullptr);
+    EXPECT_EQ(streamInfo->usage, BufferUsage::Stream);
+    
+    // Test buffer update
+    vertices[0].color[0] = 0.5f; // Change color
+    renderer->updateBuffer(dynamicBuffer, vertices.data(), dataSize, 0);
+    
+    // Clean up
+    renderer->deleteBuffer(staticBuffer);
+    renderer->deleteBuffer(dynamicBuffer);
+    renderer->deleteBuffer(streamBuffer);
+}
+
+// Test index buffer creation and management
+TEST_F(OpenGLRendererTest, IndexBufferCreation) {
+    // Test with different index types
+    std::vector<uint32_t> indices32 = {0, 1, 2, 2, 3, 0};
+    std::vector<uint16_t> indices16 = {0, 1, 2, 2, 3, 0};
+    
+    // Create 32-bit index buffer
+    BufferId ib32 = renderer->createIndexBuffer(
+        indices32.data(), 
+        indices32.size(), 
+        BufferUsage::Static
+    );
+    
+    EXPECT_NE(ib32, InvalidId);
+    
+    const BufferInfo* info32 = renderer->getBufferInfo(ib32);
+    ASSERT_NE(info32, nullptr);
+    EXPECT_TRUE(info32->isIndexBuffer);
+    EXPECT_EQ(info32->size, indices32.size() * sizeof(uint32_t));
+    
+    // Test buffer binding
+    renderer->bindIndexBuffer(ib32);
+    
+    // Test drawing with index buffer (would only work with valid context)
+    renderer->drawElements(PrimitiveType::Triangles, 6, IndexType::UInt32);
+    
+    // Clean up
+    renderer->deleteBuffer(ib32);
+}
+
+// Test vertex array setup with different attribute configurations
+TEST_F(OpenGLRendererTest, VertexAttributeConfigurations) {
+    // Test position-only vertices
+    {
+        std::vector<VertexAttribute> posOnly = {VertexAttribute::Position};
+        EXPECT_NO_THROW(renderer->setupVertexAttributes(posOnly));
+    }
+    
+    // Test position + normal
+    {
+        std::vector<VertexAttribute> posNormal = {
+            VertexAttribute::Position,
+            VertexAttribute::Normal
+        };
+        EXPECT_NO_THROW(renderer->setupVertexAttributes(posNormal));
+    }
+    
+    // Test full vertex format
+    {
+        std::vector<VertexAttribute> fullFormat = {
+            VertexAttribute::Position,
+            VertexAttribute::Normal,
+            VertexAttribute::TexCoord0,
+            VertexAttribute::Color,
+            VertexAttribute::Tangent
+        };
+        EXPECT_NO_THROW(renderer->setupVertexAttributes(fullFormat));
+    }
+    
+    // Test custom attributes
+    {
+        std::vector<VertexAttribute> customFormat = {
+            VertexAttribute::Position,
+            VertexAttribute::Color,
+            VertexAttribute::TexCoord0,
+            VertexAttribute::TexCoord1
+        };
+        EXPECT_NO_THROW(renderer->setupVertexAttributes(customFormat));
+    }
+}
+
+// Test buffer memory management
+TEST_F(OpenGLRendererTest, BufferMemoryManagement) {
+    // Track memory usage
+    size_t initialMemory = renderer->getTotalBufferMemory();
+    
+    // Create multiple buffers
+    std::vector<BufferId> buffers;
+    const size_t bufferSize = 1024 * 1024; // 1MB each
+    const size_t bufferCount = 10;
+    
+    for (size_t i = 0; i < bufferCount; ++i) {
+        BufferId id = renderer->createVertexBuffer(nullptr, bufferSize, BufferUsage::Static);
+        EXPECT_NE(id, InvalidId);
+        buffers.push_back(id);
+    }
+    
+    // Check total memory
+    size_t totalMemory = renderer->getTotalBufferMemory();
+    EXPECT_EQ(totalMemory - initialMemory, bufferSize * bufferCount);
+    
+    // Delete half the buffers
+    for (size_t i = 0; i < bufferCount / 2; ++i) {
+        renderer->deleteBuffer(buffers[i]);
+    }
+    
+    // Check memory reduced
+    size_t reducedMemory = renderer->getTotalBufferMemory();
+    EXPECT_EQ(reducedMemory - initialMemory, bufferSize * (bufferCount / 2));
+    
+    // Clean up remaining
+    for (size_t i = bufferCount / 2; i < bufferCount; ++i) {
+        renderer->deleteBuffer(buffers[i]);
+    }
+    
+    EXPECT_EQ(renderer->getTotalBufferMemory(), initialMemory);
+}
+
 // Test error handling
 TEST_F(OpenGLRendererTest, ErrorHandling) {
     // Test invalid resource access

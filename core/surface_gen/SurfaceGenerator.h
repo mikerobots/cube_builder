@@ -6,6 +6,7 @@
 #include "../voxel_data/VoxelGrid.h"
 #include "../voxel_data/VoxelDataManager.h"
 #include "../../foundation/events/EventDispatcher.h"
+#include "../../foundation/logging/Logger.h"
 #include <memory>
 #include <future>
 #include <unordered_map>

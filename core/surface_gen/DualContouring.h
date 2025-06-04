@@ -4,6 +4,7 @@
 #include "../voxel_data/VoxelGrid.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
+#include "../../foundation/logging/Logger.h"
 #include <vector>
 #include <unordered_map>
 #include <array>

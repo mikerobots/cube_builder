@@ -124,9 +124,9 @@ bin/VoxelEditor_Config_Tests: foundation/config/tests/CMakeFiles/VoxelEditor_Con
 bin/VoxelEditor_Config_Tests: foundation/config/tests/CMakeFiles/VoxelEditor_Config_Tests.dir/test_ConfigSection.cpp.o
 bin/VoxelEditor_Config_Tests: foundation/config/tests/CMakeFiles/VoxelEditor_Config_Tests.dir/test_ConfigManager.cpp.o
 bin/VoxelEditor_Config_Tests: foundation/config/tests/CMakeFiles/VoxelEditor_Config_Tests.dir/build.make
-bin/VoxelEditor_Config_Tests: /opt/homebrew/lib/libgtest.a
-bin/VoxelEditor_Config_Tests: /opt/homebrew/lib/libgtest_main.a
-bin/VoxelEditor_Config_Tests: /opt/homebrew/lib/libgtest.a
+bin/VoxelEditor_Config_Tests: lib/libgtest.a
+bin/VoxelEditor_Config_Tests: lib/libgtest_main.a
+bin/VoxelEditor_Config_Tests: lib/libgtest.a
 bin/VoxelEditor_Config_Tests: foundation/config/tests/CMakeFiles/VoxelEditor_Config_Tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ../../../bin/VoxelEditor_Config_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/foundation/config/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Config_Tests.dir/link.txt --verbose=$(VERBOSE)

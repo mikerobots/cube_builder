@@ -159,6 +159,78 @@ TEST_F(OrbitCameraTest, ViewPresets) {
     EXPECT_FLOAT_EQ(camera->getPitch(), 35.26f);
 }
 
+TEST_F(OrbitCameraTest, IsometricViewMatrixValidation) {
+    // Set isometric view preset
+    camera->setViewPreset(ViewPreset::ISOMETRIC);
+    camera->setTarget(Vector3f(0, 0, 0));
+    camera->setDistance(10.0f);
+    
+    // Get the view matrix
+    Matrix4f view = camera->getViewMatrix();
+    
+    // In isometric view:
+    // - Yaw = 45 degrees (π/4 radians)
+    // - Pitch = 35.26 degrees (atan(1/sqrt(2)) radians) 
+    // This creates the classic isometric angle
+    
+    // Calculate expected camera position
+    float yawRad = 45.0f * M_PI / 180.0f;
+    float pitchRad = 35.26f * M_PI / 180.0f;
+    float distance = 10.0f;
+    
+    Vector3f expectedPos(
+        distance * cosf(pitchRad) * sinf(yawRad),
+        distance * sinf(pitchRad),
+        distance * cosf(pitchRad) * cosf(yawRad)
+    );
+    
+    Vector3f actualPos = camera->getPosition();
+    EXPECT_NEAR(actualPos.x, expectedPos.x, 0.01f);
+    EXPECT_NEAR(actualPos.y, expectedPos.y, 0.01f);
+    EXPECT_NEAR(actualPos.z, expectedPos.z, 0.01f);
+    
+    // Test that parallel lines remain parallel (orthographic property)
+    // Transform two parallel edges of a cube
+    Vector3f cubeEdge1Start(0, 0, 0);
+    Vector3f cubeEdge1End(1, 0, 0);
+    Vector3f cubeEdge2Start(0, 1, 0);
+    Vector3f cubeEdge2End(1, 1, 0);
+    
+    // Transform to view space
+    Vector3f viewEdge1Start = view * cubeEdge1Start;
+    Vector3f viewEdge1End = view * cubeEdge1End;
+    Vector3f viewEdge2Start = view * cubeEdge2Start;
+    Vector3f viewEdge2End = view * cubeEdge2End;
+    
+    // Direction vectors in view space
+    Vector3f dir1 = (viewEdge1End - viewEdge1Start).normalized();
+    Vector3f dir2 = (viewEdge2End - viewEdge2Start).normalized();
+    
+    // Parallel lines should have same direction (or opposite)
+    float dot = dir1.dot(dir2);
+    EXPECT_NEAR(std::abs(dot), 1.0f, 0.001f);
+    
+    // Verify the view matrix maintains right-handed coordinate system
+    // Extract basis vectors from view matrix (rows for row-major)
+    Vector3f right(view.m[0], view.m[1], view.m[2]);
+    Vector3f up(view.m[4], view.m[5], view.m[6]);
+    Vector3f forward(view.m[8], view.m[9], view.m[10]);
+    
+    // Should be orthonormal
+    EXPECT_NEAR(right.length(), 1.0f, 0.001f);
+    EXPECT_NEAR(up.length(), 1.0f, 0.001f);
+    EXPECT_NEAR(forward.length(), 1.0f, 0.001f);
+    
+    // Should be orthogonal
+    EXPECT_NEAR(right.dot(up), 0.0f, 0.001f);
+    EXPECT_NEAR(right.dot(forward), 0.0f, 0.001f);
+    EXPECT_NEAR(up.dot(forward), 0.0f, 0.001f);
+    
+    // Should form right-handed system
+    Vector3f cross = right.cross(up);
+    EXPECT_NEAR(cross.dot(forward), 1.0f, 0.001f);
+}
+
 TEST_F(OrbitCameraTest, FocusOnPoint) {
     Vector3f focusPoint(10.0f, 5.0f, 15.0f);
     camera->focusOn(focusPoint, 8.0f);

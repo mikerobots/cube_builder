@@ -305,6 +305,30 @@ ShaderManager.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.s
 .PHONY : ShaderManager.cpp.s
 
+ShaderManagerSafe.o: ShaderManagerSafe.cpp.o
+.PHONY : ShaderManagerSafe.o
+
+# target to build an object file
+ShaderManagerSafe.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o
+.PHONY : ShaderManagerSafe.cpp.o
+
+ShaderManagerSafe.i: ShaderManagerSafe.cpp.i
+.PHONY : ShaderManagerSafe.i
+
+# target to preprocess a source file
+ShaderManagerSafe.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.i
+.PHONY : ShaderManagerSafe.cpp.i
+
+ShaderManagerSafe.s: ShaderManagerSafe.cpp.s
+.PHONY : ShaderManagerSafe.s
+
+# target to generate assembly for a file
+ShaderManagerSafe.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.s
+.PHONY : ShaderManagerSafe.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -334,6 +358,9 @@ help:
 	@echo "... ShaderManager.o"
 	@echo "... ShaderManager.i"
 	@echo "... ShaderManager.s"
+	@echo "... ShaderManagerSafe.o"
+	@echo "... ShaderManagerSafe.i"
+	@echo "... ShaderManagerSafe.s"
 .PHONY : help
 
 

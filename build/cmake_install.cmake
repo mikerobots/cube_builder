@@ -44,6 +44,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/Users/michaelhalloran/cube_edit/build/_deps/googletest-build/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/Users/michaelhalloran/cube_edit/build/_deps/glfw-build/cmake_install.cmake")
 endif()
 
@@ -65,6 +70,11 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("/Users/michaelhalloran/cube_edit/build/apps/cli/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/Users/michaelhalloran/cube_edit/build/tests/integration/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

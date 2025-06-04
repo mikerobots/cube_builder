@@ -251,6 +251,85 @@ TEST_F(CameraTest, EdgeCases) {
     EXPECT_FLOAT_EQ(camera->getFarPlane(), 100000.0f);
 }
 
+TEST_F(CameraTest, ProjectionMatrixWithAspectRatio) {
+    // Test projection matrix generation with different aspect ratios
+    float fov = 60.0f;
+    float nearPlane = 0.1f;
+    float farPlane = 100.0f;
+    
+    camera->setFieldOfView(fov);
+    camera->setNearFarPlanes(nearPlane, farPlane);
+    
+    // Test 1: Square aspect ratio (1:1)
+    {
+        camera->setAspectRatio(1.0f);
+        Matrix4f proj = camera->getProjectionMatrix();
+        
+        // For square aspect, horizontal and vertical FOV should be same
+        float fovRad = fov * M_PI / 180.0f;
+        float expectedDiagonal = 1.0f / tanf(fovRad / 2.0f);
+        
+        EXPECT_NEAR(proj.m[0], expectedDiagonal, 0.001f); // X scaling
+        EXPECT_NEAR(proj.m[5], expectedDiagonal, 0.001f); // Y scaling (should be same)
+    }
+    
+    // Test 2: Wide aspect ratio (16:9)
+    {
+        float aspect = 16.0f / 9.0f;
+        camera->setAspectRatio(aspect);
+        Matrix4f proj = camera->getProjectionMatrix();
+        
+        float fovRad = fov * M_PI / 180.0f;
+        float yScale = 1.0f / tanf(fovRad / 2.0f);
+        float xScale = yScale / aspect;
+        
+        EXPECT_NEAR(proj.m[0], xScale, 0.001f);
+        EXPECT_NEAR(proj.m[5], yScale, 0.001f);
+        
+        // X scale should be less than Y scale for wide aspect
+        EXPECT_LT(proj.m[0], proj.m[5]);
+    }
+    
+    // Test 3: Tall aspect ratio (9:16)
+    {
+        float aspect = 9.0f / 16.0f;
+        camera->setAspectRatio(aspect);
+        Matrix4f proj = camera->getProjectionMatrix();
+        
+        float fovRad = fov * M_PI / 180.0f;
+        float yScale = 1.0f / tanf(fovRad / 2.0f);
+        float xScale = yScale / aspect;
+        
+        EXPECT_NEAR(proj.m[0], xScale, 0.001f);
+        EXPECT_NEAR(proj.m[5], yScale, 0.001f);
+        
+        // X scale should be greater than Y scale for tall aspect
+        EXPECT_GT(proj.m[0], proj.m[5]);
+    }
+    
+    // Test 4: Verify frustum shape changes with aspect ratio
+    {
+        // Create test points at the edges of the near plane
+        camera->setAspectRatio(2.0f); // Wide aspect
+        Matrix4f projWide = camera->getProjectionMatrix();
+        
+        camera->setAspectRatio(0.5f); // Tall aspect
+        Matrix4f projTall = camera->getProjectionMatrix();
+        
+        // Point at right edge of near plane
+        Vector4f rightEdge(nearPlane * tanf(fov * M_PI / 360.0f) * 2.0f, 0, -nearPlane, 1);
+        Vector4f rightWide = projWide * rightEdge;
+        Vector4f rightTall = projTall * rightEdge;
+        
+        // Wide aspect should map the right edge differently than tall aspect
+        float ndcXWide = rightWide.x / rightWide.w;
+        float ndcXTall = rightTall.x / rightTall.w;
+        
+        EXPECT_NE(ndcXWide, ndcXTall);
+        EXPECT_LT(std::abs(ndcXWide), std::abs(ndcXTall)); // Wide aspect compresses X more
+    }
+}
+
 TEST_F(CameraTest, VectorNormalization) {
     // Test that direction vectors are properly normalized
     camera->setPosition(Vector3f(10, 20, 30));

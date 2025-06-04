@@ -173,9 +173,9 @@ bin/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests
 bin/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/test_VRInputHandler.cpp.o
 bin/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/build.make
 bin/VoxelEditor_Input_Tests: lib/libVoxelEditor_Input.a
-bin/VoxelEditor_Input_Tests: /opt/homebrew/lib/libgtest.a
-bin/VoxelEditor_Input_Tests: /opt/homebrew/lib/libgtest_main.a
-bin/VoxelEditor_Input_Tests: /opt/homebrew/lib/libgtest.a
+bin/VoxelEditor_Input_Tests: lib/libgtest.a
+bin/VoxelEditor_Input_Tests: lib/libgtest_main.a
+bin/VoxelEditor_Input_Tests: lib/libgtest.a
 bin/VoxelEditor_Input_Tests: core/input/tests/CMakeFiles/VoxelEditor_Input_Tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../../../bin/VoxelEditor_Input_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/core/input/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Input_Tests.dir/link.txt --verbose=$(VERBOSE)

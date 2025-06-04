@@ -134,6 +134,34 @@ TEST_F(VoxelTypesTest, GridDimensionCalculation) {
     EXPECT_EQ(dims4cm.z, 125);
 }
 
+TEST_F(VoxelTypesTest, Resolution8cmValidation) {
+    // Specifically test 8cm voxels as mentioned in TODO
+    EXPECT_FLOAT_EQ(getVoxelSize(VoxelResolution::Size_8cm), 0.08f);
+    
+    // Test grid dimensions for 8cm voxels
+    Vector3i dims8cm = calculateMaxGridDimensions(VoxelResolution::Size_8cm, workspaceSize);
+    EXPECT_EQ(dims8cm.x, 63); // 5.0m / 0.08m = 62.5, rounded up to 63
+    EXPECT_EQ(dims8cm.y, 63);
+    EXPECT_EQ(dims8cm.z, 63);
+    
+    // Test world position conversion for 8cm voxels
+    VoxelPosition voxelPos(Vector3i(2, 2, 2), VoxelResolution::Size_8cm);
+    Vector3f worldPos = voxelPos.toWorldSpace(workspaceSize);
+    EXPECT_FLOAT_EQ(worldPos.x, 0.16f); // 2 * 0.08 = 0.16
+    EXPECT_FLOAT_EQ(worldPos.y, 0.16f);
+    EXPECT_FLOAT_EQ(worldPos.z, 0.16f);
+    
+    // Test bounds for 8cm voxel
+    Vector3f minBounds, maxBounds;
+    voxelPos.getWorldBounds(workspaceSize, minBounds, maxBounds);
+    EXPECT_FLOAT_EQ(minBounds.x, 0.16f);
+    EXPECT_FLOAT_EQ(minBounds.y, 0.16f);
+    EXPECT_FLOAT_EQ(minBounds.z, 0.16f);
+    EXPECT_FLOAT_EQ(maxBounds.x, 0.24f); // 0.16 + 0.08
+    EXPECT_FLOAT_EQ(maxBounds.y, 0.24f);
+    EXPECT_FLOAT_EQ(maxBounds.z, 0.24f);
+}
+
 TEST_F(VoxelTypesTest, PositionBoundsChecking) {
     Vector3i validPos(10, 10, 10);
     Vector3i invalidPos(1000, 10, 10);

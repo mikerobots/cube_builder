@@ -210,6 +210,7 @@ struct Mesh {
     std::vector<uint32_t> indices;
     BufferId vertexBuffer = 0;
     BufferId indexBuffer = 0;
+    VertexArrayId vertexArray = 0;
     bool dirty = true;
     
     void clear() {

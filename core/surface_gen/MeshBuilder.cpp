@@ -1,4 +1,5 @@
 #include "MeshBuilder.h"
+#include "../../foundation/logging/Logger.h"
 #include <algorithm>
 #include <cmath>
 #include <unordered_set>
@@ -96,14 +97,22 @@ void MeshBuilder::beginMesh() {
     m_indices.clear();
     m_vertexMap.clear();
     m_currentMaterial = 0;
+    
+    Logging::Logger::getInstance().debug("Starting new mesh build", "MeshBuilder");
 }
 
 uint32_t MeshBuilder::addVertex(const Math::Vector3f& position) {
+    uint32_t index = static_cast<uint32_t>(m_vertices.size());
     m_vertices.push_back(position);
-    return static_cast<uint32_t>(m_vertices.size() - 1);
+    
+    Logging::Logger::getInstance().debugfc("MeshBuilder", 
+        "Added vertex %u: pos(%.3f, %.3f, %.3f)", index, position.x, position.y, position.z);
+    
+    return index;
 }
 
 uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vector3f& normal) {
+    uint32_t index = static_cast<uint32_t>(m_vertices.size());
     m_vertices.push_back(position);
     m_normals.push_back(normal);
     
@@ -112,10 +121,15 @@ uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vect
         m_normals.push_back(Math::Vector3f(0, 1, 0));
     }
     
-    return static_cast<uint32_t>(m_vertices.size() - 1);
+    Logging::Logger::getInstance().debugfc("MeshBuilder", 
+        "Added vertex %u: pos(%.3f, %.3f, %.3f), normal(%.3f, %.3f, %.3f)", 
+        index, position.x, position.y, position.z, normal.x, normal.y, normal.z);
+    
+    return index;
 }
 
 uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vector3f& normal, const Math::Vector2f& uv) {
+    uint32_t index = static_cast<uint32_t>(m_vertices.size());
     m_vertices.push_back(position);
     m_normals.push_back(normal);
     m_uvCoords.push_back(uv);
@@ -128,13 +142,21 @@ uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vect
         m_uvCoords.push_back(Math::Vector2f(0, 0));
     }
     
-    return static_cast<uint32_t>(m_vertices.size() - 1);
+    Logging::Logger::getInstance().debugfc("MeshBuilder", 
+        "Added vertex %u: pos(%.3f, %.3f, %.3f), normal(%.3f, %.3f, %.3f), uv(%.3f, %.3f)", 
+        index, position.x, position.y, position.z, normal.x, normal.y, normal.z, uv.x, uv.y);
+    
+    return index;
 }
 
 void MeshBuilder::addTriangle(uint32_t v0, uint32_t v1, uint32_t v2) {
     m_indices.push_back(v0);
     m_indices.push_back(v1);
     m_indices.push_back(v2);
+    
+    uint32_t triangleIndex = static_cast<uint32_t>(m_indices.size() / 3 - 1);
+    Logging::Logger::getInstance().debugfc("MeshBuilder", 
+        "Added triangle %u: vertices [%u, %u, %u]", triangleIndex, v0, v1, v2);
 }
 
 void MeshBuilder::addQuad(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3) {
@@ -158,6 +180,10 @@ Mesh MeshBuilder::endMesh() {
     if (mesh.normals.empty() && !mesh.vertices.empty()) {
         mesh.calculateNormals();
     }
+    
+    Logging::Logger::getInstance().debugfc("MeshBuilder", 
+        "Finished mesh build: %zu vertices, %zu triangles, %zu indices", 
+        mesh.vertices.size(), mesh.indices.size() / 3, mesh.indices.size());
     
     // Clear builder state
     beginMesh();

@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o.d"
   "CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o"
   "CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o.d"
+  "CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o"
+  "CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -10,6 +10,8 @@
 #include <thread>
 #include <chrono>
 
+
+
 // Application headers
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
@@ -17,7 +19,11 @@
 
 // Core includes
 #include "voxel_data/VoxelDataManager.h"
+#include "voxel_data/VoxelTypes.h"
 #include "camera/CameraController.h"
+#include "camera/Camera.h"
+#include "camera/OrbitCamera.h"
+#include "rendering/RenderEngine.h"
 #include "file_io/FileManager.h"
 #include "file_io/STLExporter.h"
 #include "file_io/Project.h"
@@ -736,6 +742,245 @@ void Application::registerCommands() {
             ss << "Memory: " << (memUsage / (1024.0 * 1024.0)) << " MB\n";
             
             return CommandResult::Success(ss.str());
+        }
+    });
+    
+    // Debug camera command
+    m_commandProcessor->registerCommand({
+        "debug",
+        "Debug commands for troubleshooting",
+        CommandCategory::SYSTEM,
+        {},
+        {
+            {"subcommand", "What to debug: camera, voxels, render, frustum", "string", true, ""}
+        },
+        [this](const CommandContext& ctx) {
+            std::string subcommand = ctx.getArg(0);
+            
+            if (subcommand == "camera") {
+                std::stringstream ss;
+                ss << "Camera Debug Info\n";
+                ss << "================\n";
+                
+                auto camera = m_cameraController->getCamera();
+                auto pos = camera->getPosition();
+                auto target = camera->getTarget();
+                auto up = camera->getUp();
+                
+                ss << "Position: (" << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
+                ss << "Target: (" << target.x << ", " << target.y << ", " << target.z << ")\n";
+                ss << "Up: (" << up.x << ", " << up.y << ", " << up.z << ")\n";
+                
+                // Try to cast to OrbitCamera to get distance
+                if (auto orbitCamera = dynamic_cast<const Camera::OrbitCamera*>(camera)) {
+                    ss << "Distance: " << orbitCamera->getDistance() << "\n";
+                }
+                
+                ss << "FOV: " << camera->getFieldOfView() << " degrees\n";
+                ss << "Near/Far: " << camera->getNearPlane() << " / " << camera->getFarPlane() << "\n";
+                
+                // View matrix
+                auto viewMatrix = camera->getViewMatrix();
+                ss << "\nView Matrix:\n";
+                for (int i = 0; i < 4; i++) {
+                    ss << "  ";
+                    for (int j = 0; j < 4; j++) {
+                        ss << std::fixed << std::setprecision(3) << viewMatrix.m[i*4+j] << " ";
+                    }
+                    ss << "\n";
+                }
+                
+                // Projection matrix
+                auto projMatrix = camera->getProjectionMatrix();
+                ss << "\nProjection Matrix:\n";
+                for (int i = 0; i < 4; i++) {
+                    ss << "  ";
+                    for (int j = 0; j < 4; j++) {
+                        ss << std::fixed << std::setprecision(3) << projMatrix.m[i*4+j] << " ";
+                    }
+                    ss << "\n";
+                }
+                
+                return CommandResult::Success(ss.str());
+            }
+            else if (subcommand == "voxels") {
+                std::stringstream ss;
+                ss << "Voxel Debug Info\n";
+                ss << "===============\n";
+                
+                size_t voxelCount = m_voxelManager->getVoxelCount();
+                ss << "Total voxels: " << voxelCount << "\n";
+                
+                auto resolution = m_voxelManager->getActiveResolution();
+                float voxelSize = VoxelData::getVoxelSize(resolution);
+                ss << "Resolution: " << VoxelData::getVoxelSizeName(resolution) 
+                   << " (" << voxelSize << "m)\n";
+                
+                auto wsSize = m_voxelManager->getWorkspaceSize();
+                ss << "Workspace size: " << wsSize.x << " x " << wsSize.y << " x " << wsSize.z << " meters\n";
+                
+                // List first 10 voxels
+                if (voxelCount > 0) {
+                    auto allVoxels = m_voxelManager->getAllVoxels();
+                    size_t displayCount = std::min(size_t(10), allVoxels.size());
+                    ss << "\nFirst " << displayCount << " voxels:\n";
+                    
+                    for (size_t i = 0; i < displayCount; i++) {
+                        const auto& voxelPos = allVoxels[i];
+                        
+                        // Convert grid to world position
+                        Math::Vector3f worldPos(
+                            voxelPos.gridPos.x * voxelSize,
+                            voxelPos.gridPos.y * voxelSize,
+                            voxelPos.gridPos.z * voxelSize
+                        );
+                        
+                        ss << "  [" << i << "] Grid(" << voxelPos.gridPos.x << "," << voxelPos.gridPos.y 
+                           << "," << voxelPos.gridPos.z << ") -> World(" 
+                           << worldPos.x << "," << worldPos.y << "," << worldPos.z << ")\n";
+                    }
+                }
+                
+                return CommandResult::Success(ss.str());
+            }
+            else if (subcommand == "render") {
+                std::stringstream ss;
+                ss << "Render Debug Info\n";
+                ss << "================\n";
+                
+                if (!m_renderEngine) {
+                    return CommandResult::Error("Render engine not initialized");
+                }
+                
+                auto stats = m_renderEngine->getRenderStats();
+                ss << "FPS: " << stats.fps << "\n";
+                ss << "Frame time: " << stats.frameTime << " ms\n";
+                ss << "Draw calls: " << stats.drawCalls << "\n";
+                ss << "Triangles: " << stats.trianglesRendered << "\n";
+                ss << "Vertices: " << stats.verticesProcessed << "\n";
+                
+                // RenderEngine handles OpenGL error checking internally
+                ss << "\nRender engine status: " << (m_renderEngine->isInitialized() ? "Initialized" : "Not initialized") << "\n";
+                
+                // Check if we have meshes
+                ss << "\nVoxel meshes: " << m_voxelMeshes.size() << "\n";
+                for (size_t i = 0; i < m_voxelMeshes.size(); i++) {
+                    ss << "  Mesh " << i << ": " << m_voxelMeshes[i].vertices.size() 
+                       << " vertices, " << m_voxelMeshes[i].indices.size() << " indices\n";
+                }
+                
+                return CommandResult::Success(ss.str());
+            }
+            else if (subcommand == "frustum") {
+                std::stringstream ss;
+                ss << "Frustum Debug Info\n";
+                ss << "==================\n";
+                
+                auto camera = m_cameraController->getCamera();
+                auto viewProj = camera->getViewProjectionMatrix();
+                
+                // Test if workspace center is visible
+                auto wsSize = m_voxelManager->getWorkspaceSize();
+                Math::Vector3f center = wsSize * 0.5f;
+                Math::Vector4f centerClip = viewProj * Math::Vector4f(center.x, center.y, center.z, 1.0f);
+                
+                ss << "Workspace center (" << center.x << "," << center.y << "," << center.z << ")\n";
+                ss << "  Clip space: (" << centerClip.x << "," << centerClip.y << "," 
+                   << centerClip.z << "," << centerClip.w << ")\n";
+                
+                if (centerClip.w != 0) {
+                    float ndcX = centerClip.x / centerClip.w;
+                    float ndcY = centerClip.y / centerClip.w;
+                    float ndcZ = centerClip.z / centerClip.w;
+                    ss << "  NDC: (" << ndcX << "," << ndcY << "," << ndcZ << ")\n";
+                    
+                    bool visible = (ndcX >= -1 && ndcX <= 1 && 
+                                   ndcY >= -1 && ndcY <= 1 && 
+                                   ndcZ >= -1 && ndcZ <= 1);
+                    ss << "  Visible: " << (visible ? "YES" : "NO") << "\n";
+                }
+                
+                // Test first voxel if any
+                if (m_voxelManager->getVoxelCount() > 0) {
+                    auto allVoxels = m_voxelManager->getAllVoxels();
+                    if (!allVoxels.empty()) {
+                        const auto& voxelPos = allVoxels[0];
+                        float voxelSize = VoxelData::getVoxelSize(voxelPos.resolution);
+                        
+                        Math::Vector3f worldPos(
+                            voxelPos.gridPos.x * voxelSize,
+                            voxelPos.gridPos.y * voxelSize,
+                            voxelPos.gridPos.z * voxelSize
+                        );
+                        Math::Vector4f clipPos = viewProj * Math::Vector4f(worldPos.x, worldPos.y, worldPos.z, 1.0f);
+                        
+                        ss << "\nFirst voxel at grid(" << voxelPos.gridPos.x << "," << voxelPos.gridPos.y 
+                           << "," << voxelPos.gridPos.z << ")\n";
+                        ss << "  World: (" << worldPos.x << "," << worldPos.y << "," << worldPos.z << ")\n";
+                        ss << "  Clip: (" << clipPos.x << "," << clipPos.y << "," << clipPos.z << "," << clipPos.w << ")\n";
+                        
+                        if (clipPos.w != 0) {
+                            float ndcX = clipPos.x / clipPos.w;
+                            float ndcY = clipPos.y / clipPos.w;
+                            float ndcZ = clipPos.z / clipPos.w;
+                            ss << "  NDC: (" << ndcX << "," << ndcY << "," << ndcZ << ")\n";
+                            
+                            bool visible = (ndcX >= -1 && ndcX <= 1 && 
+                                           ndcY >= -1 && ndcY <= 1 && 
+                                           ndcZ >= -1 && ndcZ <= 1);
+                            ss << "  Visible: " << (visible ? "YES" : "NO") << "\n";
+                        }
+                    }
+                }
+                
+                return CommandResult::Success(ss.str());
+            }
+            else if (subcommand == "triangle") {
+                std::stringstream ss;
+                ss << "Triangle Test Debug\n";
+                ss << "==================\n";
+                
+                // Create a simple triangle mesh using the core rendering system
+                Rendering::Mesh triangleMesh;
+                
+                // Add vertices
+                triangleMesh.vertices.resize(3);
+                triangleMesh.vertices[0].position = Math::Vector3f(-0.5f, -0.5f, 0.0f);
+                triangleMesh.vertices[0].color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red
+                triangleMesh.vertices[1].position = Math::Vector3f(0.5f, -0.5f, 0.0f);
+                triangleMesh.vertices[1].color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f);
+                triangleMesh.vertices[2].position = Math::Vector3f(0.0f, 0.5f, 0.0f);
+                triangleMesh.vertices[2].color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f);
+                
+                // Add indices
+                triangleMesh.indices = {0, 1, 2};
+                
+                // Clear and render
+                m_renderEngine->beginFrame();
+                m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.2f, 0.2f, 0.2f, 1.0f));
+                
+                // Set identity transform and basic material
+                Rendering::Transform transform;
+                Rendering::Material material;
+                material.albedo = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red
+                material.shader = m_renderEngine->getBuiltinShader("basic");
+                
+                m_renderEngine->renderMesh(triangleMesh, transform, material);
+                m_renderEngine->endFrame();
+                m_renderEngine->present();
+                
+                ss << "Triangle rendered using core rendering system\n";
+                
+                // Save screenshot for verification
+                std::string screenshotFile = "debug_triangle.ppm";
+                m_renderWindow->saveScreenshot(screenshotFile);
+                ss << "Screenshot saved to: " << screenshotFile << "\n";
+                
+                return CommandResult::Success(ss.str());
+            }
+            else {
+                return CommandResult::Error("Unknown debug subcommand. Use: camera, voxels, render, or frustum");
+            }
         }
     });
     

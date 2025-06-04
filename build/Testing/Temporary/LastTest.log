@@ -1,93 +1,1305 @@
-Start testing: May 31 17:59 EDT
+Start testing: Jun 03 22:44 EDT
 ----------------------------------------------------------
-239/241 Testing: test_undo_redo
-239/241 Test: test_undo_redo
-Command: "/Users/michaelhalloran/cube_edit/build/core/undo_redo/tests/test_undo_redo"
-Directory: /Users/michaelhalloran/cube_edit/build/core/undo_redo/tests
-"test_undo_redo" start time: May 31 17:59 EDT
+657/729 Testing: CLIHeadlessTest.HeadlessModeInitialization
+657/729 Test: CLIHeadlessTest.HeadlessModeInitialization
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.HeadlessModeInitialization" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.HeadlessModeInitialization" start time: Jun 03 22:44 EDT
 Output:
 ----------------------------------------------------------
-Running main() from /private/tmp/googletest-20250430-4705-6kzjyz/googletest-1.17.0/googletest/src/gtest_main.cc
-[==========] Running 9 tests from 4 test suites.
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.HeadlessModeInitialization
+[==========] Running 1 test from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from CommandTest
-[ RUN      ] CommandTest.BasicExecuteUndo
-[       OK ] CommandTest.BasicExecuteUndo (0 ms)
-[----------] 1 test from CommandTest (0 ms total)
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.HeadlessModeInitialization
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
 
-[----------] 3 tests from HistoryManagerTest
-[ RUN      ] HistoryManagerTest.BasicUndoRedo
-[       OK ] HistoryManagerTest.BasicUndoRedo (0 ms)
-[ RUN      ] HistoryManagerTest.RedoStackClear
-[       OK ] HistoryManagerTest.RedoStackClear (0 ms)
-[ RUN      ] HistoryManagerTest.HistoryLimit
-[       OK ] HistoryManagerTest.HistoryLimit (0 ms)
-[----------] 3 tests from HistoryManagerTest (0 ms total)
-
-[----------] 2 tests from CompositeCommandTest
-[ RUN      ] CompositeCommandTest.BasicComposite
-[       OK ] CompositeCommandTest.BasicComposite (0 ms)
-[ RUN      ] CompositeCommandTest.PartialFailure
-[2025-05-31 17:59:14.067] [ERROR] CompositeCommand: Command FailingCommand failed
-[       OK ] CompositeCommandTest.PartialFailure (0 ms)
-[----------] 2 tests from CompositeCommandTest (0 ms total)
-
-[----------] 3 tests from TransactionTest
-[ RUN      ] TransactionTest.BasicTransaction
-[       OK ] TransactionTest.BasicTransaction (0 ms)
-[ RUN      ] TransactionTest.AutoRollback
-[       OK ] TransactionTest.AutoRollback (0 ms)
-[ RUN      ] TransactionTest.ManualRollback
-[       OK ] TransactionTest.ManualRollback (0 ms)
-[----------] 3 tests from TransactionTest (0 ms total)
+[       OK ] CLIHeadlessTest.HeadlessModeInitialization (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 9 tests from 4 test suites ran. (0 ms total)
-[  PASSED  ] 9 tests.
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"test_undo_redo" end time: May 31 17:59 EDT
-"test_undo_redo" time elapsed: 00:00:00
+"CLIHeadlessTest.HeadlessModeInitialization" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.HeadlessModeInitialization" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-240/241 Testing: test_simple_command
-240/241 Test: test_simple_command
-Command: "/Users/michaelhalloran/cube_edit/build/core/undo_redo/tests/test_simple_command"
-Directory: /Users/michaelhalloran/cube_edit/build/core/undo_redo/tests
-"test_simple_command" start time: May 31 17:59 EDT
+658/729 Testing: CLIHeadlessTest.HeadlessVoxelOperations
+658/729 Test: CLIHeadlessTest.HeadlessVoxelOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.HeadlessVoxelOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.HeadlessVoxelOperations" start time: Jun 03 22:44 EDT
 Output:
 ----------------------------------------------------------
-Running main() from /private/tmp/googletest-20250430-4705-6kzjyz/googletest-1.17.0/googletest/src/gtest_main.cc
-[==========] Running 4 tests from 3 test suites.
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.HeadlessVoxelOperations
+[==========] Running 1 test from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 1 test from SimpleCommandTest
-[ RUN      ] SimpleCommandTest.ExecuteAndUndo
-[       OK ] SimpleCommandTest.ExecuteAndUndo (0 ms)
-[----------] 1 test from SimpleCommandTest (0 ms total)
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.HeadlessVoxelOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
 
-[----------] 1 test from CompositeCommandTest
-[ RUN      ] CompositeCommandTest.ExecuteMultiple
-[       OK ] CompositeCommandTest.ExecuteMultiple (0 ms)
-[----------] 1 test from CompositeCommandTest (0 ms total)
-
-[----------] 2 tests from TransactionTest
-[ RUN      ] TransactionTest.CommitTransaction
-[       OK ] TransactionTest.CommitTransaction (0 ms)
-[ RUN      ] TransactionTest.RollbackTransaction
-[       OK ] TransactionTest.RollbackTransaction (0 ms)
-[----------] 2 tests from TransactionTest (0 ms total)
+[       OK ] CLIHeadlessTest.HeadlessVoxelOperations (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 4 tests from 3 test suites ran. (0 ms total)
-[  PASSED  ] 4 tests.
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"test_simple_command" end time: May 31 17:59 EDT
-"test_simple_command" time elapsed: 00:00:00
+"CLIHeadlessTest.HeadlessVoxelOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.HeadlessVoxelOperations" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: May 31 17:59 EDT
+659/729 Testing: CLIHeadlessTest.WorkspaceManagement
+659/729 Test: CLIHeadlessTest.WorkspaceManagement
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.WorkspaceManagement" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.WorkspaceManagement" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.WorkspaceManagement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.WorkspaceManagement
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.WorkspaceManagement (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.WorkspaceManagement" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.WorkspaceManagement" time elapsed: 00:00:00
+----------------------------------------------------------
+
+660/729 Testing: CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement
+660/729 Test: CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.WorkspaceBoundaryVoxelPlacement" time elapsed: 00:00:00
+----------------------------------------------------------
+
+661/729 Testing: CLIHeadlessTest.MultiResolutionSupport
+661/729 Test: CLIHeadlessTest.MultiResolutionSupport
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.MultiResolutionSupport" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.MultiResolutionSupport" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.MultiResolutionSupport
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.MultiResolutionSupport
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.MultiResolutionSupport (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.MultiResolutionSupport" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.MultiResolutionSupport" time elapsed: 00:00:00
+----------------------------------------------------------
+
+662/729 Testing: CLIHeadlessTest.ResolutionSwitching
+662/729 Test: CLIHeadlessTest.ResolutionSwitching
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.ResolutionSwitching" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.ResolutionSwitching" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.ResolutionSwitching
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.ResolutionSwitching
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.ResolutionSwitching (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.ResolutionSwitching" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.ResolutionSwitching" time elapsed: 00:00:00
+----------------------------------------------------------
+
+663/729 Testing: CLIHeadlessTest.BasicSelectionOperations
+663/729 Test: CLIHeadlessTest.BasicSelectionOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.BasicSelectionOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.BasicSelectionOperations" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.BasicSelectionOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.BasicSelectionOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.BasicSelectionOperations (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.BasicSelectionOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.BasicSelectionOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+664/729 Testing: CLIHeadlessTest.BoxSelection
+664/729 Test: CLIHeadlessTest.BoxSelection
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.BoxSelection" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.BoxSelection" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.BoxSelection
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.BoxSelection
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+Box selection selected 27 voxels
+[       OK ] CLIHeadlessTest.BoxSelection (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.BoxSelection" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.BoxSelection" time elapsed: 00:00:00
+----------------------------------------------------------
+
+665/729 Testing: CLIHeadlessTest.SphereSelection
+665/729 Test: CLIHeadlessTest.SphereSelection
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.SphereSelection" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.SphereSelection" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.SphereSelection
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.SphereSelection
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+Sphere selection selected 30 voxels
+[       OK ] CLIHeadlessTest.SphereSelection (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.SphereSelection" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.SphereSelection" time elapsed: 00:00:00
+----------------------------------------------------------
+
+666/729 Testing: CLIHeadlessTest.BasicFileOperations
+666/729 Test: CLIHeadlessTest.BasicFileOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.BasicFileOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.BasicFileOperations" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.BasicFileOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.BasicFileOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[2025-06-03 22:44:26.015] [ERROR] BinaryFormat error: Invalid file header
+Load failed: Invalid file header
+[       OK ] CLIHeadlessTest.BasicFileOperations (1 ms)
+[----------] 1 test from CLIHeadlessTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.BasicFileOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.BasicFileOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+667/729 Testing: CLIHeadlessTest.MultipleFileOperations
+667/729 Test: CLIHeadlessTest.MultipleFileOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.MultipleFileOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.MultipleFileOperations" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.MultipleFileOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.MultipleFileOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[2025-06-03 22:44:26.025] [ERROR] BinaryFormat error: Invalid file header
+Load from test_multifile.vxl failed: Invalid file header
+[2025-06-03 22:44:26.026] [ERROR] BinaryFormat error: Invalid file header
+Load from test_backup.vxl failed: Invalid file header
+[       OK ] CLIHeadlessTest.MultipleFileOperations (1 ms)
+[----------] 1 test from CLIHeadlessTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.MultipleFileOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.MultipleFileOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+668/729 Testing: CLIHeadlessTest.InvalidFileOperations
+668/729 Test: CLIHeadlessTest.InvalidFileOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.InvalidFileOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.InvalidFileOperations" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.InvalidFileOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.InvalidFileOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.InvalidFileOperations (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.InvalidFileOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.InvalidFileOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+669/729 Testing: CLIHeadlessTest.UndoRedoOperations
+669/729 Test: CLIHeadlessTest.UndoRedoOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.UndoRedoOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.UndoRedoOperations" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.UndoRedoOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.UndoRedoOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.UndoRedoOperations (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.UndoRedoOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.UndoRedoOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+670/729 Testing: CLIHeadlessTest.GroupOperations
+670/729 Test: CLIHeadlessTest.GroupOperations
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.GroupOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.GroupOperations" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.GroupOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.GroupOperations
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.GroupOperations (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.GroupOperations" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.GroupOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+671/729 Testing: CLIHeadlessTest.MultipleGroups
+671/729 Test: CLIHeadlessTest.MultipleGroups
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.MultipleGroups" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.MultipleGroups" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.MultipleGroups
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.MultipleGroups
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLIHeadlessTest.MultipleGroups (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.MultipleGroups" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.MultipleGroups" time elapsed: 00:00:00
+----------------------------------------------------------
+
+672/729 Testing: CLIHeadlessTest.LargeVoxelCount
+672/729 Test: CLIHeadlessTest.LargeVoxelCount
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.LargeVoxelCount" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.LargeVoxelCount" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.LargeVoxelCount
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.LargeVoxelCount
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+Placed 1000 voxels in 1ms
+[       OK ] CLIHeadlessTest.LargeVoxelCount (1 ms)
+[----------] 1 test from CLIHeadlessTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.LargeVoxelCount" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.LargeVoxelCount" time elapsed: 00:00:00
+----------------------------------------------------------
+
+673/729 Testing: CLIHeadlessTest.MemoryUsage
+673/729 Test: CLIHeadlessTest.MemoryUsage
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLIHeadlessTest.MemoryUsage" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLIHeadlessTest.MemoryUsage" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLIHeadlessTest.MemoryUsage
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLIHeadlessTest
+[ RUN      ] CLIHeadlessTest.MemoryUsage
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+Memory usage: 10648 MB
+Memory after clear: 568 MB
+[       OK ] CLIHeadlessTest.MemoryUsage (0 ms)
+[----------] 1 test from CLIHeadlessTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLIHeadlessTest.MemoryUsage" end time: Jun 03 22:44 EDT
+"CLIHeadlessTest.MemoryUsage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+674/729 Testing: CLICommandTest.HelpCommand
+674/729 Test: CLICommandTest.HelpCommand
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.HelpCommand" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.HelpCommand" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.HelpCommand
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.HelpCommand
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.HelpCommand (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.HelpCommand" end time: Jun 03 22:44 EDT
+"CLICommandTest.HelpCommand" time elapsed: 00:00:00
+----------------------------------------------------------
+
+675/729 Testing: CLICommandTest.VoxelEditCommands
+675/729 Test: CLICommandTest.VoxelEditCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.VoxelEditCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.VoxelEditCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.VoxelEditCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.VoxelEditCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.VoxelEditCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.VoxelEditCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.VoxelEditCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+676/729 Testing: CLICommandTest.WorkspaceCommands
+676/729 Test: CLICommandTest.WorkspaceCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.WorkspaceCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.WorkspaceCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.WorkspaceCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.WorkspaceCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.WorkspaceCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.WorkspaceCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.WorkspaceCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+677/729 Testing: CLICommandTest.FileCommands
+677/729 Test: CLICommandTest.FileCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.FileCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.FileCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.FileCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.FileCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.FileCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.FileCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.FileCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+678/729 Testing: CLICommandTest.SelectionCommands
+678/729 Test: CLICommandTest.SelectionCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.SelectionCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.SelectionCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.SelectionCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.SelectionCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.SelectionCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.SelectionCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.SelectionCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+679/729 Testing: CLICommandTest.GroupCommands
+679/729 Test: CLICommandTest.GroupCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.GroupCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.GroupCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.GroupCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.GroupCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.GroupCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.GroupCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.GroupCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+680/729 Testing: CLICommandTest.CameraCommands
+680/729 Test: CLICommandTest.CameraCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.CameraCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.CameraCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.CameraCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.CameraCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.CameraCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.CameraCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.CameraCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+681/729 Testing: CLICommandTest.UndoRedoCommands
+681/729 Test: CLICommandTest.UndoRedoCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.UndoRedoCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.UndoRedoCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.UndoRedoCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.UndoRedoCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.UndoRedoCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.UndoRedoCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.UndoRedoCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+682/729 Testing: CLICommandTest.SystemCommands
+682/729 Test: CLICommandTest.SystemCommands
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.SystemCommands" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.SystemCommands" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.SystemCommands
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.SystemCommands
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.SystemCommands (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.SystemCommands" end time: Jun 03 22:44 EDT
+"CLICommandTest.SystemCommands" time elapsed: 00:00:00
+----------------------------------------------------------
+
+683/729 Testing: CLICommandTest.PositionParameterValidation
+683/729 Test: CLICommandTest.PositionParameterValidation
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.PositionParameterValidation" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.PositionParameterValidation" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.PositionParameterValidation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.PositionParameterValidation
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.PositionParameterValidation (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.PositionParameterValidation" end time: Jun 03 22:44 EDT
+"CLICommandTest.PositionParameterValidation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+684/729 Testing: CLICommandTest.ResolutionParameterValidation
+684/729 Test: CLICommandTest.ResolutionParameterValidation
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.ResolutionParameterValidation" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.ResolutionParameterValidation" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.ResolutionParameterValidation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.ResolutionParameterValidation
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.ResolutionParameterValidation (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.ResolutionParameterValidation" end time: Jun 03 22:44 EDT
+"CLICommandTest.ResolutionParameterValidation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+685/729 Testing: CLICommandTest.FilePathParameterValidation
+685/729 Test: CLICommandTest.FilePathParameterValidation
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.FilePathParameterValidation" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.FilePathParameterValidation" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.FilePathParameterValidation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.FilePathParameterValidation
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.FilePathParameterValidation (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.FilePathParameterValidation" end time: Jun 03 22:44 EDT
+"CLICommandTest.FilePathParameterValidation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+686/729 Testing: CLICommandTest.NumericParameterValidation
+686/729 Test: CLICommandTest.NumericParameterValidation
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.NumericParameterValidation" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.NumericParameterValidation" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.NumericParameterValidation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.NumericParameterValidation
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.NumericParameterValidation (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.NumericParameterValidation" end time: Jun 03 22:44 EDT
+"CLICommandTest.NumericParameterValidation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+687/729 Testing: CLICommandTest.CommandAliases
+687/729 Test: CLICommandTest.CommandAliases
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.CommandAliases" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.CommandAliases" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.CommandAliases
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.CommandAliases
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.CommandAliases (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.CommandAliases" end time: Jun 03 22:44 EDT
+"CLICommandTest.CommandAliases" time elapsed: 00:00:00
+----------------------------------------------------------
+
+688/729 Testing: CLICommandTest.CommandCompletion
+688/729 Test: CLICommandTest.CommandCompletion
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.CommandCompletion" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.CommandCompletion" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.CommandCompletion
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.CommandCompletion
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.CommandCompletion (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.CommandCompletion" end time: Jun 03 22:44 EDT
+"CLICommandTest.CommandCompletion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+689/729 Testing: CLICommandTest.ParameterCompletion
+689/729 Test: CLICommandTest.ParameterCompletion
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.ParameterCompletion" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.ParameterCompletion" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.ParameterCompletion
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.ParameterCompletion
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.ParameterCompletion (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.ParameterCompletion" end time: Jun 03 22:44 EDT
+"CLICommandTest.ParameterCompletion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+690/729 Testing: CLICommandTest.InvalidCommandHandling
+690/729 Test: CLICommandTest.InvalidCommandHandling
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.InvalidCommandHandling" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.InvalidCommandHandling" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.InvalidCommandHandling
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.InvalidCommandHandling
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+/Users/michaelhalloran/cube_edit/apps/cli/tests/test_cli_commands.cpp:331: Failure
+Value of: cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true
+  Actual: true
+Expected: false
+[  FAILED  ] CLICommandTest.InvalidCommandHandling (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] CLICommandTest.InvalidCommandHandling
+
+ 1 FAILED TEST
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"CLICommandTest.InvalidCommandHandling" end time: Jun 03 22:44 EDT
+"CLICommandTest.InvalidCommandHandling" time elapsed: 00:00:00
+----------------------------------------------------------
+
+691/729 Testing: CLICommandTest.ParameterRangeValidation
+691/729 Test: CLICommandTest.ParameterRangeValidation
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.ParameterRangeValidation" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.ParameterRangeValidation" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.ParameterRangeValidation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.ParameterRangeValidation
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.ParameterRangeValidation (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.ParameterRangeValidation" end time: Jun 03 22:44 EDT
+"CLICommandTest.ParameterRangeValidation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+692/729 Testing: CLICommandTest.CommandSequences
+692/729 Test: CLICommandTest.CommandSequences
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.CommandSequences" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.CommandSequences" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.CommandSequences
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.CommandSequences
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.CommandSequences (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.CommandSequences" end time: Jun 03 22:44 EDT
+"CLICommandTest.CommandSequences" time elapsed: 00:00:00
+----------------------------------------------------------
+
+693/729 Testing: CLICommandTest.StateConsistency
+693/729 Test: CLICommandTest.StateConsistency
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.StateConsistency" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.StateConsistency" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.StateConsistency
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.StateConsistency
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+[       OK ] CLICommandTest.StateConsistency (0 ms)
+[----------] 1 test from CLICommandTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.StateConsistency" end time: Jun 03 22:44 EDT
+"CLICommandTest.StateConsistency" time elapsed: 00:00:00
+----------------------------------------------------------
+
+694/729 Testing: CLICommandTest.CommandPerformance
+694/729 Test: CLICommandTest.CommandPerformance
+Command: "/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_CLI_Tests" "--gtest_filter=CLICommandTest.CommandPerformance" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build/apps/cli/tests
+"CLICommandTest.CommandPerformance" start time: Jun 03 22:44 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = CLICommandTest.CommandPerformance
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CLICommandTest
+[ RUN      ] CLICommandTest.CommandPerformance
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Initialization complete!
+Type 'help' for available commands.
+
+Parsed 7000 commands in 1750 microseconds
+[       OK ] CLICommandTest.CommandPerformance (2 ms)
+[----------] 1 test from CLICommandTest (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (2 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"CLICommandTest.CommandPerformance" end time: Jun 03 22:44 EDT
+"CLICommandTest.CommandPerformance" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 03 22:44 EDT

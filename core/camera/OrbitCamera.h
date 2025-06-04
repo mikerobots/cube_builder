@@ -4,6 +4,7 @@
 
 #include "Camera.h"
 #include "../../foundation/math/MathUtils.h"
+#include "../../foundation/logging/Logger.h"
 
 namespace VoxelEditor {
 namespace Camera {
@@ -39,6 +40,9 @@ public:
         // Clamp pitch to prevent gimbal lock
         newPitch = Math::clamp(newPitch, m_minPitch, m_maxPitch);
         
+        Logging::Logger::getInstance().debugfc("OrbitCamera", "Orbit: yaw=%.1f°, pitch=%.1f°, distance=%.3f", 
+            newYaw, newPitch, m_distance);
+        
         if (m_smoothing) {
             m_targetYaw = newYaw;
             m_targetPitch = newPitch;
@@ -52,6 +56,8 @@ public:
     void zoom(float delta) {
         float newDistance = m_distance - delta * m_zoomSensitivity;
         newDistance = Math::clamp(newDistance, m_minDistance, m_maxDistance);
+        
+        Logging::Logger::getInstance().debugfc("OrbitCamera", "Zoom: distance %.3f -> %.3f", m_distance, newDistance);
         
         if (m_smoothing) {
             m_targetDistance = newDistance;
@@ -151,9 +157,16 @@ public:
             {45.0f, 35.26f, 12.0f}    // ISOMETRIC (classic 3D view)
         };
         
+        static const char* presetNames[] = {
+            "FRONT", "BACK", "LEFT", "RIGHT", "TOP", "BOTTOM", "ISOMETRIC"
+        };
+        
         int index = static_cast<int>(preset);
         if (index >= 0 && index < 7) {
             const PresetData& data = presets[index];
+            
+            Logging::Logger::getInstance().debugfc("OrbitCamera", "View preset: %s (yaw=%.1f°, pitch=%.1f°, distance=%.1f)", 
+                presetNames[index], data.yaw, data.pitch, data.distance);
             
             if (m_smoothing) {
                 m_targetYaw = data.yaw;

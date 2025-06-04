@@ -191,6 +191,12 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     m_sampler.grid = &grid;
     m_sampler.isoValue = 0.5f; // Use default iso value
     
+    Math::Vector3i dims = grid.getGridDimensions();
+    float voxelSize = grid.getVoxelSize();
+    Logging::Logger::getInstance().debugfc("DualContouring", 
+        "Starting dual contouring: grid=%dx%dx%d, voxelSize=%.3f", 
+        dims.x, dims.y, dims.z, voxelSize);
+    
     // Clear previous data
     m_cellData.clear();
     m_vertices.clear();
@@ -203,21 +209,24 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     
     // Step 2: Generate vertices
     reportProgress(0.33f);
+    Logging::Logger::getInstance().debugfc("DualContouring", "Extracted %zu edge intersections", m_cellData.size());
     generateVertices();
     if (m_cancelled) return Mesh();
     
     // Step 3: Generate quads
     reportProgress(0.66f);
+    Logging::Logger::getInstance().debugfc("DualContouring", "Generated %zu vertices", m_vertices.size());
     generateQuads();
     if (m_cancelled) return Mesh();
     
     // Build final mesh
     reportProgress(0.9f);
+    Logging::Logger::getInstance().debugfc("DualContouring", "Generated %zu quads", m_indices.size() / 4);
+    
     MeshBuilder builder;
     builder.beginMesh();
     
     // Convert vertices from grid coordinates to world coordinates
-    float voxelSize = grid.getVoxelSize();
     for (const auto& vertex : m_vertices) {
         Math::Vector3f worldVertex = vertex * voxelSize;
         builder.addVertex(worldVertex);
@@ -228,6 +237,10 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     }
     
     Mesh mesh = builder.endMesh();
+    
+    Logging::Logger::getInstance().debugfc("DualContouring", 
+        "Final mesh: %zu vertices, %zu triangles", 
+        mesh.vertices.size(), mesh.indices.size() / 3);
     
     // Apply smoothing if requested
     if (settings.smoothingIterations > 0) {

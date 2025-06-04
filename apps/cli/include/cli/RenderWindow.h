@@ -7,6 +7,12 @@
 
 // Forward declarations
 struct GLFWwindow;
+namespace VoxelEditor {
+namespace Rendering {
+    class RenderEngine;
+    class RenderContext;
+}
+}
 
 namespace VoxelEditor {
 
@@ -71,6 +77,10 @@ public:
     // Screenshot functionality
     bool saveScreenshot(const std::string& filename);
     
+    // Render engine integration
+    void setRenderEngine(Rendering::RenderEngine* engine) { m_renderEngine = engine; }
+    Rendering::RenderEngine* getRenderEngine() const { return m_renderEngine; }
+    
     // Event callbacks
     using MouseCallback = std::function<void(const MouseEvent&)>;
     using KeyCallback = std::function<void(const KeyEvent&)>;
@@ -83,6 +93,7 @@ public:
 private:
     Application* m_app;
     GLFWwindow* m_window = nullptr;
+    Rendering::RenderEngine* m_renderEngine = nullptr;
     int m_width = 1280;
     int m_height = 720;
     

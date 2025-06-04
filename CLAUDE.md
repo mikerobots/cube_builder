@@ -3,10 +3,7 @@ At the beginning of each session, read: DESIGN.md, ARCHITECTURE.md
 You will keep track of what you are working on with the TODO.md file
 in the root folder.  The TODO.md files will have a list of
 everything you have accomplished, and the next thing to do. Keep
-the top-level TODO.md file high level. Make TODO.md files for each
-subsystem as you are working on them. You will keep track of what
-you are working on with the TODO.md file.  The TODO.md files will have
-a list of everything you have accomplished, and the next thing to do.
+the top-level TODO.md file high level.
 
 ## Build System
 
@@ -23,17 +20,6 @@ cmake --build build
 # Or directly with ninja
 ninja -C build
 ```
-
-### Using ccache
-ccache is automatically detected by CMake if installed. To verify it's working:
-```bash
-# Check ccache stats
-ccache -s
-
-# Clear ccache if needed
-ccache -C
-```
-
 ### Combined Usage (optimal)
 ```bash
 # Configure once with Ninja
@@ -65,7 +51,7 @@ cmake --build build_release
 
 ## Documentation
 
-This project uses Doxygen for code documentation. The generated documentation is available in the `docs/` folder:
+This project uses Doxygen for code documentation in `docs/` folder.
 
 ```bash
 # Generate documentation
@@ -78,48 +64,38 @@ open docs/html/index.html
 open docs/latex/refman.pdf
 ```
 
-The documentation includes:
-- Class hierarchies and relationships
-- API references for all components
-- Architecture diagrams
-- Design documents
-
 ## CLI Commands
 Commands can be found apps/cli/CLI_GUIDE.md
 
 ## Testing
 
-### Automated CLI Test Scripts
+### CLI Validation Test Suite
 
-Several test scripts are available to automatically test the CLI application:
+**Location**: `tests/cli_validation/`
 
-1. **`test_voxel_simple.sh`** - Simple test that places voxels and quits after 5 seconds
-   ```bash
-   ./test_voxel_simple.sh
-   ```
+A comprehensive automated test suite that validates CLI functionality using screenshot analysis:
 
-2. **`test_voxel_placement.sh`** - Creates a more complex voxel structure
-   ```bash
-   ./test_voxel_placement.sh
-   ```
+- **`test_basic_voxel_placement.sh`** - Single voxel placement and visibility validation
+- **`test_camera_views.sh`** - All camera view presets (front, back, top, bottom, left, right, iso)
+- **`test_resolution_switching.sh`** - Multiple voxel resolutions (1cm, 4cm, 8cm, 16cm, 32cm)
+- **`test_multiple_voxels.sh`** - Multiple voxel placement in patterns
+- **`test_render_modes.sh`** - Basic rendering functionality validation
+- **`run_all_tests.sh`** - Execute all validation tests with summary report
 
-3. **`test_voxel_timed.sh`** - Uses expect for precise timing (falls back to FIFO if expect unavailable)
-   ```bash
-   ./test_voxel_timed.sh
-   ```
+**Usage:**
+```bash
+cd tests/cli_validation
+./run_all_tests.sh  # Run all tests
+./test_basic_voxel_placement.sh  # Run individual test
+```
 
-Each test script will:
-- Launch the voxel-cli application
-- Set up a 5x5x5 workspace
-- Set resolution to 8cm voxels
-- Place voxels in a pattern
-- Save the structure to a .vxl file
-- Display the window for 5 seconds
-- Quit automatically
+**Key Features:**
+- Screenshot-based validation using PPM color analysis
+- Proper failure detection when voxels are not visually rendered
+- Detailed color distribution analysis with `tools/analyze_ppm_colors.py`
+- Comprehensive documentation in `tests/cli_validation/README.md`
 
 ### Other Test Scripts
-
-- **`test_cli.sh`** - Basic CLI functionality test
 - **`integration_test.sh`** - Full integration testing
 - **`performance_test.sh`** - Performance benchmarking
 - **`validate_project.sh`** - Project structure validation

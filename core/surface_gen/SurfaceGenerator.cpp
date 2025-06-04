@@ -40,6 +40,11 @@ SurfaceGenerator::~SurfaceGenerator() {
 
 Mesh SurfaceGenerator::generateSurface(const VoxelData::VoxelGrid& grid, 
                                       const SurfaceSettings& settings) {
+    Math::Vector3i dims = grid.getGridDimensions();
+    Logging::Logger::getInstance().debugfc("SurfaceGenerator", 
+        "Generating surface from grid (%dx%dx%d, resolution=%dcm)", 
+        dims.x, dims.y, dims.z, 1 << static_cast<int>(grid.getResolution()));
+    
     return generateInternal(grid, settings, LODLevel::LOD0);
 }
 
@@ -180,10 +185,20 @@ Mesh SurfaceGenerator::generateInternal(const VoxelData::VoxelGrid& grid,
     
     if (lod == LODLevel::LOD0) {
         // Full resolution
+        Logging::Logger::getInstance().debug("Generating full resolution mesh", "SurfaceGenerator");
         mesh = m_dualContouring->generateMesh(grid, settings);
     } else {
         // Generate LOD
+        Logging::Logger::getInstance().debugfc("SurfaceGenerator", "Generating LOD%d mesh", static_cast<int>(lod));
         mesh = m_lodManager->generateLOD(grid, lod, settings, m_dualContouring.get());
+    }
+    
+    if (mesh.isValid()) {
+        Logging::Logger::getInstance().debugfc("SurfaceGenerator", 
+            "Generated mesh: %zu vertices, %zu triangles", 
+            mesh.vertices.size(), mesh.indices.size() / 3);
+    } else {
+        Logging::Logger::getInstance().warning("Generated invalid mesh", "SurfaceGenerator");
     }
     
     if (m_cancelRequested) {

@@ -97,10 +97,24 @@ core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.s
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.s"
 	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera.cpp -o CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.s
 
+core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/flags.make
+core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o: /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera_transformations.cpp
+core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o -MF CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o.d -o CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o -c /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera_transformations.cpp
+
+core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera_transformations.cpp > CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.i
+
+core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/camera/tests/test_OrbitCamera_transformations.cpp -o CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.s
+
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/flags.make
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o: /Users/michaelhalloran/cube_edit/core/camera/tests/test_Viewport.cpp
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o"
 	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o -MF CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o.d -o CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o -c /Users/michaelhalloran/cube_edit/core/camera/tests/test_Viewport.cpp
 
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.i: cmake_force
@@ -114,7 +128,7 @@ core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.s: c
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/flags.make
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o: /Users/michaelhalloran/cube_edit/core/camera/tests/test_CameraController.cpp
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o"
 	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o -MF CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o.d -o CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o -c /Users/michaelhalloran/cube_edit/core/camera/tests/test_CameraController.cpp
 
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.i: cmake_force
@@ -129,27 +143,29 @@ core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.
 VoxelEditor_Camera_Tests_OBJECTS = \
 "CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Camera.cpp.o" \
 "CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.o" \
+"CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o" \
 "CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o" \
 "CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o"
 
 # External object files for target VoxelEditor_Camera_Tests
 VoxelEditor_Camera_Tests_EXTERNAL_OBJECTS =
 
-core/camera/tests/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Camera.cpp.o
-core/camera/tests/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.o
-core/camera/tests/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o
-core/camera/tests/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o
-core/camera/tests/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make
-core/camera/tests/VoxelEditor_Camera_Tests: /opt/homebrew/lib/libgtest.a
-core/camera/tests/VoxelEditor_Camera_Tests: /opt/homebrew/lib/libgtest_main.a
-core/camera/tests/VoxelEditor_Camera_Tests: /opt/homebrew/lib/libgtest.a
-core/camera/tests/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable VoxelEditor_Camera_Tests"
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Camera.cpp.o
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.o
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_Viewport.cpp.o
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_CameraController.cpp.o
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make
+bin/VoxelEditor_Camera_Tests: lib/libgtest.a
+bin/VoxelEditor_Camera_Tests: lib/libgtest_main.a
+bin/VoxelEditor_Camera_Tests: lib/libgtest.a
+bin/VoxelEditor_Camera_Tests: core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable ../../../bin/VoxelEditor_Camera_Tests"
 	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Camera_Tests.dir/link.txt --verbose=$(VERBOSE)
-	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Camera_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build/core/camera/tests/VoxelEditor_Camera_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build/core/camera/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Camera_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build/core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
+	cd /Users/michaelhalloran/cube_edit/build/core/camera/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=VoxelEditor_Camera_Tests -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build/bin/VoxelEditor_Camera_Tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build/core/camera/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=VoxelEditor_Camera_Tests_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build/core/camera/tests/VoxelEditor_Camera_Tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
 
 # Rule to build all files generated by this target.
-core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build: core/camera/tests/VoxelEditor_Camera_Tests
+core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build: bin/VoxelEditor_Camera_Tests
 .PHONY : core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build
 
 core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/clean:

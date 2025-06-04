@@ -17,6 +17,9 @@
 //Build documentation
 BUILD_DOCUMENTATION:BOOL=OFF
 
+//Builds the googlemock subproject
+BUILD_GMOCK:BOOL=ON
+
 //Build shared libraries
 BUILD_SHARED_LIBS:BOOL=OFF
 
@@ -313,6 +316,10 @@ FETCHCONTENT_SOURCE_DIR_GLFW:PATH=
 // for glm
 FETCHCONTENT_SOURCE_DIR_GLM:PATH=
 
+//When not empty, overrides where to find pre-populated content
+// for googletest
+FETCHCONTENT_SOURCE_DIR_GOOGLETEST:PATH=
+
 //Enables UPDATE_DISCONNECTED behavior for all content population
 FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
 
@@ -321,6 +328,9 @@ FETCHCONTENT_UPDATES_DISCONNECTED_GLFW:BOOL=OFF
 
 //Enables UPDATE_DISCONNECTED behavior just for population of glm
 FETCHCONTENT_UPDATES_DISCONNECTED_GLM:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of googletest
+FETCHCONTENT_UPDATES_DISCONNECTED_GOOGLETEST:BOOL=OFF
 
 //Path to a program.
 GITCOMMAND:FILEPATH=/opt/homebrew/bin/git
@@ -357,6 +367,10 @@ GLFW_VULKAN_STATIC:BOOL=OFF
 
 //The directory containing a CMake configuration file for GTest.
 GTest_DIR:PATH=/opt/homebrew/lib/cmake/GTest
+
+//Enable installation of googletest. (Projects embedding googletest
+// may want to turn this OFF.)
+INSTALL_GTEST:BOOL=ON
 
 //Command to build the project
 MAKECOMMAND:STRING=/opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
@@ -415,6 +429,9 @@ glad_IS_TOP_LEVEL:STATIC=OFF
 //Value Computed by CMake
 glad_SOURCE_DIR:STATIC=/Users/michaelhalloran/cube_edit/external/glad
 
+//The directory containing a CMake configuration file for glfw3.
+glfw3_DIR:PATH=glfw3_DIR-NOTFOUND
+
 //Value Computed by CMake
 glm_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/glm-build
 
@@ -425,6 +442,33 @@ glm_IS_TOP_LEVEL:STATIC=OFF
 glm_SOURCE_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/glm-src
 
 //Value Computed by CMake
+gmock_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-build/googlemock
+
+//Value Computed by CMake
+gmock_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies for the target
+gmock_LIB_DEPENDS:STATIC=general;gtest;
+
+//Value Computed by CMake
+gmock_SOURCE_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googlemock
+
+//Build all of Google Mock's own tests.
+gmock_build_tests:BOOL=OFF
+
+//Dependencies for the target
+gmock_main_LIB_DEPENDS:STATIC=general;gmock;
+
+//Value Computed by CMake
+googletest-distribution_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-build
+
+//Value Computed by CMake
+googletest-distribution_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+googletest-distribution_SOURCE_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src
+
+//Value Computed by CMake
 groups_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/core/groups
 
 //Value Computed by CMake
@@ -432,6 +476,34 @@ groups_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 groups_SOURCE_DIR:STATIC=/Users/michaelhalloran/cube_edit/core/groups
+
+//Value Computed by CMake
+gtest_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-build/googletest
+
+//Value Computed by CMake
+gtest_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+gtest_SOURCE_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+
+//Build gtest's sample programs.
+gtest_build_samples:BOOL=OFF
+
+//Build all of gtest's own tests.
+gtest_build_tests:BOOL=OFF
+
+//Disable uses of pthreads in gtest.
+gtest_disable_pthreads:BOOL=OFF
+
+//Use shared (DLL) run-time lib even when Google Test is built
+// as static lib.
+gtest_force_shared_crt:BOOL=OFF
+
+//Build gtest with internal symbols hidden in shared libraries.
+gtest_hide_internal_symbols:BOOL=OFF
+
+//Dependencies for the target
+gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 
 //Path to a library.
 pkgcfg_lib_LZ4_lz4:FILEPATH=/opt/homebrew/opt/lz4/lib/liblz4.dylib
@@ -578,7 +650,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=31
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=35
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -637,6 +709,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_GTest:INTERNAL=[/opt/homebrew/lib/cmake/GTest/GTest
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework][/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework][c ][v()]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/opt/homebrew/bin/pkg-config][v2.4.3()]
+//Details about finding Python
+FIND_PACKAGE_MESSAGE_DETAILS_Python:INTERNAL=[/opt/homebrew/Frameworks/Python.framework/Versions/3.12/bin/python3.12][cfound components: Interpreter ][v3.12.10()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: GITCOMMAND
@@ -698,9 +772,37 @@ PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 SITE-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
+//Compiler reason failure
+_Python_Compiler_REASON_FAILURE:INTERNAL=
+//Development reason failure
+_Python_Development_REASON_FAILURE:INTERNAL=
+//Path to a program.
+_Python_EXECUTABLE:INTERNAL=/opt/homebrew/Frameworks/Python.framework/Versions/3.12/bin/python3.12
+//Python Properties
+_Python_INTERPRETER_PROPERTIES:INTERNAL=Python;3;12;10;64;;cpython-312-darwin;/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12;/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12;/opt/homebrew/lib/python3.12/site-packages;/opt/homebrew/lib/python3.12/site-packages
+_Python_INTERPRETER_SIGNATURE:INTERNAL=4a88e62a1732031393af8d56e6300efe
+//Interpreter reason failure
+_Python_Interpreter_REASON_FAILURE:INTERNAL=
+//NumPy reason failure
+_Python_NumPy_REASON_FAILURE:INTERNAL=
 __pkg_config_arguments_LZ4:INTERNAL=liblz4
 __pkg_config_checked_LZ4:INTERNAL=1
+cmake_package_name:INTERNAL=GTest
+generated_dir:INTERNAL=/Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-build/googletest/generated
+//ADVANCED property for variable: gmock_build_tests
+gmock_build_tests-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: gtest_build_samples
+gtest_build_samples-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: gtest_build_tests
+gtest_build_tests-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: gtest_disable_pthreads
+gtest_disable_pthreads-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: gtest_force_shared_crt
+gtest_force_shared_crt-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: gtest_hide_internal_symbols
+gtest_hide_internal_symbols-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_LZ4_lz4
 pkgcfg_lib_LZ4_lz4-ADVANCED:INTERNAL=1
 prefix_result:INTERNAL=/opt/homebrew/opt/lz4/lib
+targets_export_name:INTERNAL=GTestTargets
 

@@ -1,0 +1,523 @@
+#include "cli/RenderValidation.h"
+#include "logging/Logger.h"
+#include "cli/VoxelMeshGenerator.h"
+#include <cmath>
+#include <cstring>
+#include <algorithm>
+
+namespace VoxelEditor {
+
+ValidationResult RenderValidation::validateVoxelStorage(
+    SparseOctree* octree,
+    const Vector3i& position,
+    const Voxel& expectedVoxel) {
+    
+    ValidationResult result;
+    result.stage = "Voxel Storage";
+    
+    if (!octree) {
+        result.passed = false;
+        result.message = "Null octree pointer";
+        return result;
+    }
+    
+    // Check if voxel exists
+    const Voxel* storedVoxel = octree->getVoxel(position);
+    if (!storedVoxel) {
+        result.passed = false;
+        result.message = "Voxel not found at position";
+        result.details.push_back("Position: (" + std::to_string(position.x) + ", " + 
+                                std::to_string(position.y) + ", " + 
+                                std::to_string(position.z) + ")");
+        return result;
+    }
+    
+    // Validate color
+    if (storedVoxel->color != expectedVoxel.color) {
+        result.passed = false;
+        result.message = "Color mismatch";
+        result.details.push_back("Expected: 0x" + std::to_string(expectedVoxel.color));
+        result.details.push_back("Stored: 0x" + std::to_string(storedVoxel->color));
+        return result;
+    }
+    
+    // Check morton encoding
+    uint32_t morton = octree->mortonEncode3D(position);
+    result.details.push_back("Morton code: " + std::to_string(morton));
+    result.details.push_back("Total voxels: " + std::to_string(octree->getTotalVoxelCount()));
+    
+    result.message = "Voxel storage validated successfully";
+    return result;
+}
+
+ValidationResult RenderValidation::validateMeshGeneration(
+    const std::vector<VoxelVertex>& vertices,
+    size_t expectedVoxelCount) {
+    
+    ValidationResult result;
+    result.stage = "Mesh Generation";
+    
+    size_t expectedVertices = expectedVoxelCount * 24; // 6 faces * 4 vertices
+    
+    if (vertices.size() != expectedVertices) {
+        result.passed = false;
+        result.message = "Incorrect vertex count";
+        result.details.push_back("Expected: " + std::to_string(expectedVertices) + 
+                                " (" + std::to_string(expectedVoxelCount) + " voxels * 24)");
+        result.details.push_back("Actual: " + std::to_string(vertices.size()));
+        return result;
+    }
+    
+    // Sample first voxel's vertices
+    if (!vertices.empty()) {
+        for (size_t i = 0; i < std::min(size_t(4), vertices.size()); i++) {
+            const auto& v = vertices[i];
+            result.details.push_back("Vertex " + std::to_string(i) + ": pos(" +
+                std::to_string(v.position.x) + ", " +
+                std::to_string(v.position.y) + ", " +
+                std::to_string(v.position.z) + "), color: 0x" +
+                std::to_string(v.color));
+        }
+    }
+    
+    result.message = "Mesh generation validated: " + 
+                    std::to_string(expectedVoxelCount) + " voxels";
+    return result;
+}
+
+ValidationResult RenderValidation::validateGPUBuffers(
+    GLuint vao, GLuint vbo, size_t vertexCount) {
+    
+    ValidationResult result;
+    result.stage = "GPU Buffers";
+    
+    // Check VAO
+    if (!glIsVertexArray(vao)) {
+        result.passed = false;
+        result.message = "Invalid VAO";
+        result.details.push_back("VAO ID: " + std::to_string(vao));
+        return result;
+    }
+    
+    // Check VBO
+    if (!glIsBuffer(vbo)) {
+        result.passed = false;
+        result.message = "Invalid VBO";
+        result.details.push_back("VBO ID: " + std::to_string(vbo));
+        return result;
+    }
+    
+    // Check buffer size
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    GLint bufferSize = 0;
+    glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    
+    size_t expectedSize = vertexCount * sizeof(VoxelVertex);
+    result.details.push_back("Buffer size: " + std::to_string(bufferSize) + " bytes");
+    result.details.push_back("Expected: " + std::to_string(expectedSize) + " bytes");
+    
+    if (bufferSize != expectedSize) {
+        result.passed = false;
+        result.message = "Buffer size mismatch";
+        return result;
+    }
+    
+    // Check vertex attributes
+    glBindVertexArray(vao);
+    GLint posEnabled = 0, normalEnabled = 0, colorEnabled = 0;
+    glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &posEnabled);
+    glGetVertexAttribiv(1, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &normalEnabled);
+    glGetVertexAttribiv(2, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &colorEnabled);
+    
+    result.details.push_back("Position attribute: " + 
+                            std::string(posEnabled ? "enabled" : "disabled"));
+    result.details.push_back("Normal attribute: " + 
+                            std::string(normalEnabled ? "enabled" : "disabled"));
+    result.details.push_back("Color attribute: " + 
+                            std::string(colorEnabled ? "enabled" : "disabled"));
+    
+    if (!posEnabled || !normalEnabled || !colorEnabled) {
+        result.passed = false;
+        result.message = "Vertex attributes not properly enabled";
+        return result;
+    }
+    
+    result.message = "GPU buffers validated successfully";
+    return result;
+}
+
+ValidationResult RenderValidation::validateShaderProgram(GLuint program) {
+    ValidationResult result;
+    result.stage = "Shader Program";
+    
+    if (!glIsProgram(program)) {
+        result.passed = false;
+        result.message = "Invalid shader program";
+        result.details.push_back("Program ID: " + std::to_string(program));
+        return result;
+    }
+    
+    // Check link status
+    GLint linkStatus = 0;
+    glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
+    if (linkStatus != GL_TRUE) {
+        result.passed = false;
+        result.message = "Shader program not linked";
+        
+        GLint logLength = 0;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+        if (logLength > 0) {
+            std::string log(logLength, '\0');
+            glGetProgramInfoLog(program, logLength, nullptr, log.data());
+            result.details.push_back("Link log: " + log);
+        }
+        return result;
+    }
+    
+    // Check uniforms
+    const char* uniforms[] = {
+        "mvpMatrix", "modelMatrix", "normalMatrix",
+        "lightDirection", "viewPos", "ambientStrength",
+        "specularStrength", "shininess"
+    };
+    
+    for (const char* uniformName : uniforms) {
+        GLint location = glGetUniformLocation(program, uniformName);
+        result.details.push_back(std::string(uniformName) + " location: " + 
+                                std::to_string(location));
+    }
+    
+    // Check attributes
+    GLint posLoc = glGetAttribLocation(program, "position");
+    GLint normalLoc = glGetAttribLocation(program, "normal");
+    GLint colorLoc = glGetAttribLocation(program, "color");
+    
+    result.details.push_back("Attribute locations - position: " + 
+                            std::to_string(posLoc) + ", normal: " + 
+                            std::to_string(normalLoc) + ", color: " + 
+                            std::to_string(colorLoc));
+    
+    result.message = "Shader program validated successfully";
+    return result;
+}
+
+ValidationResult RenderValidation::validateMatrices(
+    const Matrix4f& model, const Matrix4f& view, const Matrix4f& projection) {
+    
+    ValidationResult result;
+    result.stage = "Matrix Transforms";
+    
+    // Check for finite values
+    if (!isMatrixFinite(model)) {
+        result.passed = false;
+        result.message = "Model matrix contains non-finite values";
+        return result;
+    }
+    if (!isMatrixFinite(view)) {
+        result.passed = false;
+        result.message = "View matrix contains non-finite values";
+        return result;
+    }
+    if (!isMatrixFinite(projection)) {
+        result.passed = false;
+        result.message = "Projection matrix contains non-finite values";
+        return result;
+    }
+    
+    // Test transformation
+    Vector4f testPoint(0, 0, -5, 1);
+    Matrix4f mvp = projection * view * model;
+    Vector4f transformed = mvp * testPoint;
+    
+    if (transformed.w != 0) {
+        Vector3f ndc(transformed.x / transformed.w,
+                     transformed.y / transformed.w,
+                     transformed.z / transformed.w);
+        
+        result.details.push_back("Test point (0,0,-5) -> NDC: (" +
+            std::to_string(ndc.x) + ", " +
+            std::to_string(ndc.y) + ", " +
+            std::to_string(ndc.z) + ")");
+        
+        if (std::abs(ndc.x) > 1.5f || std::abs(ndc.y) > 1.5f ||
+            ndc.z < -1.5f || ndc.z > 1.5f) {
+            result.passed = false;
+            result.message = "Test point transforms outside reasonable NDC bounds";
+        }
+    }
+    
+    result.message = "Matrix transforms validated successfully";
+    return result;
+}
+
+ValidationResult RenderValidation::validateOpenGLState() {
+    ValidationResult result;
+    result.stage = "OpenGL State";
+    
+    // Check critical states
+    struct StateCheck {
+        GLenum cap;
+        const char* name;
+        bool expected;
+    };
+    
+    StateCheck states[] = {
+        {GL_DEPTH_TEST, "Depth Test", true},
+        {GL_CULL_FACE, "Face Culling", true},
+        {GL_BLEND, "Blending", false}
+    };
+    
+    for (const auto& state : states) {
+        bool enabled = glIsEnabled(state.cap);
+        result.details.push_back(std::string(state.name) + ": " +
+                                (enabled ? "enabled" : "disabled"));
+        
+        if (enabled != state.expected) {
+            result.passed = false;
+            result.message = std::string(state.name) + " incorrectly " +
+                           (enabled ? "enabled" : "disabled");
+        }
+    }
+    
+    // Check viewport
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    result.details.push_back("Viewport: " + std::to_string(viewport[2]) + "x" +
+                            std::to_string(viewport[3]));
+    
+    if (viewport[2] <= 0 || viewport[3] <= 0) {
+        result.passed = false;
+        result.message = "Invalid viewport dimensions";
+    }
+    
+    // Check for errors
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        result.passed = false;
+        result.message = "OpenGL error: " + getOpenGLErrorString(error);
+    }
+    
+    if (result.passed) {
+        result.message = "OpenGL state validated successfully";
+    }
+    
+    return result;
+}
+
+ValidationResult RenderValidation::validateDrawCall(
+    GLenum mode, GLsizei count, bool checkPixelChange) {
+    
+    ValidationResult result;
+    result.stage = "Draw Call";
+    
+    // Check program
+    GLint currentProgram = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+    if (currentProgram == 0) {
+        result.passed = false;
+        result.message = "No shader program active";
+        return result;
+    }
+    
+    // Check VAO
+    GLint currentVAO = 0;
+    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &currentVAO);
+    if (currentVAO == 0) {
+        result.passed = false;
+        result.message = "No VAO bound";
+        return result;
+    }
+    
+    result.details.push_back("Mode: 0x" + std::to_string(mode));
+    result.details.push_back("Count: " + std::to_string(count));
+    
+    // Clear errors
+    clearOpenGLErrors();
+    
+    // Sample pixel before draw
+    GLubyte pixelBefore[4] = {0};
+    if (checkPixelChange) {
+        glReadPixels(400, 300, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixelBefore);
+    }
+    
+    // Execute draw
+    glDrawArrays(mode, 0, count);
+    
+    // Check for errors
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        result.passed = false;
+        result.message = "Draw call error: " + getOpenGLErrorString(error);
+        return result;
+    }
+    
+    // Check pixel change
+    if (checkPixelChange && count > 0) {
+        GLubyte pixelAfter[4] = {0};
+        glReadPixels(400, 300, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixelAfter);
+        
+        bool changed = memcmp(pixelBefore, pixelAfter, 4) != 0;
+        result.details.push_back("Pixel changed: " + std::string(changed ? "yes" : "no"));
+        
+        if (!changed) {
+            result.details.push_back("Before: RGBA(" +
+                std::to_string(pixelBefore[0]) + ", " +
+                std::to_string(pixelBefore[1]) + ", " +
+                std::to_string(pixelBefore[2]) + ", " +
+                std::to_string(pixelBefore[3]) + ")");
+            result.details.push_back("After: RGBA(" +
+                std::to_string(pixelAfter[0]) + ", " +
+                std::to_string(pixelAfter[1]) + ", " +
+                std::to_string(pixelAfter[2]) + ", " +
+                std::to_string(pixelAfter[3]) + ")");
+        }
+    }
+    
+    result.message = "Draw call executed successfully";
+    return result;
+}
+
+ValidationResult RenderValidation::validateFragmentOutput(
+    int windowWidth, int windowHeight) {
+    
+    ValidationResult result;
+    result.stage = "Fragment Output";
+    
+    // Check framebuffer
+    GLenum fbStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (fbStatus != GL_FRAMEBUFFER_COMPLETE) {
+        result.passed = false;
+        result.message = "Framebuffer incomplete: 0x" + std::to_string(fbStatus);
+        return result;
+    }
+    
+    // Sample points
+    struct SamplePoint {
+        int x, y;
+        const char* name;
+    };
+    
+    SamplePoint points[] = {
+        {windowWidth/2, windowHeight/2, "center"},
+        {100, 100, "top-left"},
+        {windowWidth-100, windowHeight-100, "bottom-right"}
+    };
+    
+    int nonClearPixels = 0;
+    
+    for (const auto& pt : points) {
+        if (pt.x < 0 || pt.x >= windowWidth || pt.y < 0 || pt.y >= windowHeight) {
+            continue;
+        }
+        
+        GLubyte color[4];
+        GLfloat depth;
+        samplePixels(pt.x, pt.y, color, &depth);
+        
+        result.details.push_back(std::string(pt.name) + " (" +
+            std::to_string(pt.x) + ", " + std::to_string(pt.y) + "): RGBA(" +
+            std::to_string(color[0]) + ", " +
+            std::to_string(color[1]) + ", " +
+            std::to_string(color[2]) + ", " +
+            std::to_string(color[3]) + "), depth=" +
+            std::to_string(depth));
+        
+        // Check if not clear color (0.2, 0.2, 0.2, 1.0)
+        bool isClearColor = (color[0] == 51 && color[1] == 51 && 
+                           color[2] == 51 && color[3] == 255);
+        if (!isClearColor) {
+            nonClearPixels++;
+        }
+    }
+    
+    result.details.push_back("Non-clear pixels found: " + std::to_string(nonClearPixels));
+    result.message = "Fragment output validated";
+    
+    return result;
+}
+
+std::vector<ValidationResult> RenderValidation::validateCompletePipeline(
+    SparseOctree* octree,
+    GLuint vao,
+    GLuint vbo,
+    GLuint shaderProgram,
+    const Matrix4f& viewMatrix,
+    const Matrix4f& projMatrix,
+    size_t vertexCount,
+    int windowWidth,
+    int windowHeight) {
+    
+    std::vector<ValidationResult> results;
+    
+    // 1. Validate voxel storage
+    if (octree && octree->getTotalVoxelCount() > 0) {
+        // Find first voxel for testing
+        auto voxels = octree->getAllVoxels();
+        if (!voxels.empty()) {
+            const auto& firstVoxel = voxels[0];
+            results.push_back(validateVoxelStorage(octree, firstVoxel.position, firstVoxel));
+        }
+    }
+    
+    // 2. Validate GPU buffers
+    results.push_back(validateGPUBuffers(vao, vbo, vertexCount));
+    
+    // 3. Validate shader program
+    results.push_back(validateShaderProgram(shaderProgram));
+    
+    // 4. Validate matrices
+    Matrix4f model = Matrix4f::identity();
+    results.push_back(validateMatrices(model, viewMatrix, projMatrix));
+    
+    // 5. Validate OpenGL state
+    results.push_back(validateOpenGLState());
+    
+    // 6. Validate fragment output
+    results.push_back(validateFragmentOutput(windowWidth, windowHeight));
+    
+    return results;
+}
+
+void RenderValidation::printMatrix(const std::string& name, const Matrix4f& matrix) {
+    LOG_DEBUG("{} Matrix:", name);
+    for (int i = 0; i < 4; i++) {
+        LOG_DEBUG("  [{:7.3f} {:7.3f} {:7.3f} {:7.3f}]",
+                  matrix.m[i*4], matrix.m[i*4+1], 
+                  matrix.m[i*4+2], matrix.m[i*4+3]);
+    }
+}
+
+std::string RenderValidation::getOpenGLErrorString(GLenum error) {
+    switch (error) {
+        case GL_NO_ERROR: return "GL_NO_ERROR";
+        case GL_INVALID_ENUM: return "GL_INVALID_ENUM";
+        case GL_INVALID_VALUE: return "GL_INVALID_VALUE";
+        case GL_INVALID_OPERATION: return "GL_INVALID_OPERATION";
+        case GL_INVALID_FRAMEBUFFER_OPERATION: return "GL_INVALID_FRAMEBUFFER_OPERATION";
+        case GL_OUT_OF_MEMORY: return "GL_OUT_OF_MEMORY";
+        default: return "Unknown error: 0x" + std::to_string(error);
+    }
+}
+
+void RenderValidation::clearOpenGLErrors() {
+    while (glGetError() != GL_NO_ERROR) {}
+}
+
+bool RenderValidation::isMatrixFinite(const Matrix4f& matrix) {
+    for (int i = 0; i < 16; i++) {
+        if (!std::isfinite(matrix.data[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void RenderValidation::samplePixels(int x, int y, GLubyte* color, GLfloat* depth) {
+    glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, depth);
+}
+
+} // namespace VoxelEditor
+
+
+

@@ -1,364 +1,217 @@
-# Voxel Editor Development TODO
+# Voxel Editor - Development Status
 
-## Project Status: Core/VoxelData Complete! 🎉
+## Current Work: CLI Application Rendering System Refactoring
 
-### ✅ Completed
+### What We Did
+Refactored the CLI application to use the core rendering subsystem instead of making direct OpenGL calls. This aligns with the modular architecture where all OpenGL operations should be handled by the core rendering system.
 
-1. **Project Design & Architecture**
-   - ✅ Created comprehensive DESIGN.md with all specifications
-   - ✅ Created detailed ARCHITECTURE.md with subsystem breakdown
-   - ✅ Created folder structure with proper naming conventions
-   - ✅ Created DESIGN.md for all 15 subsystems (10 core + 5 foundation)
+### Changes Made
+1. **RenderWindow** 
+   - Removed direct OpenGL initialization code
+   - Now delegates viewport management to RenderEngine
+   - Screenshot functionality now uses RenderEngine::captureFrame()
 
-2. **Requirements Definition**
-   - ✅ Multi-resolution voxel system (1cm to 512cm)
-   - ✅ Workspace constraints (2m³ to 8m³, default 5m³)
-   - ✅ Custom binary format + STL export
-   - ✅ Dual Contouring surface generation
-   - ✅ Group management with hide/show/move
-   - ✅ Camera system with preset views
-   - ✅ Visual feedback with green outlines
-   - ✅ Command line tool priority established
-   - ✅ Meta Quest 3 memory constraints defined
-   - ✅ CMake + Google Test + dependencies specified
+2. **Application**
+   - Removed all OpenGL headers and direct GL calls
+   - Properly initializes RenderEngine in the rendering pipeline
+   - Cleaned up VAO function pointer loading that was in initializeCLI()
 
-3. **Foundation Layer** ✅ FULLY COMPLETED
-   - ✅ **Foundation/Math** (47 tests) - Vector operations, matrices, rays, bounding boxes
-   - ✅ **Foundation/Events** (13 tests) - Type-safe event dispatch with priorities and async queuing
-   - ✅ **Foundation/Memory** (23 tests) - Thread-safe pooling, allocation tracking, and optimization
-   - ✅ **Foundation/Logging** (22 tests) - Multi-level logging with components and performance profiling
-   - ✅ **Foundation/Config** (37+ tests) - Hierarchical configuration with type safety and file I/O
-   - ✅ **Total: 142+ passing tests** providing complete infrastructure
+3. **Commands**
+   - Updated debug commands to use RenderEngine statistics instead of direct OpenGL queries
+   - Replaced immediate mode triangle test with proper mesh rendering through RenderEngine
 
-4. **Core/VoxelData** ✅ FULLY COMPLETED
-   - ✅ **Multi-Resolution System** - 10 discrete voxel sizes (1cm to 512cm)
-   - ✅ **Sparse Octree Storage** - Memory-efficient storage with node pooling
-   - ✅ **VoxelGrid Management** - Single-resolution grids with coordinate conversion
-   - ✅ **WorkspaceManager** - Dynamic workspace sizing (2-8m³) with constraints
-   - ✅ **VoxelDataManager** - Thread-safe multi-resolution voxel operations
-   - ✅ **Comprehensive Testing** - 400+ tests covering all functionality
-   - ✅ **Event Integration** - Voxel change, resolution change, workspace resize events
-   - ✅ **Performance Metrics** - Memory usage tracking and efficiency calculations
-   - ✅ **CMake Integration** - Full build system integration
+4. **RenderEngine**
+   - Implemented captureFrame() method for screenshot functionality
+   - Updated shaders from GLSL 120 to 330 core for OpenGL 3.3 core profile compatibility
 
-5. **Core/Camera** ✅ FULLY COMPLETED
-   - ✅ **OrbitCamera** - Smooth orbital controls with pan, rotate, zoom
-   - ✅ **View Presets** - 8 preset views (front, back, left, right, top, bottom, iso, default)
-   - ✅ **Viewport Management** - Window-to-NDC coordinate conversion
-   - ✅ **CameraController** - Animation system for smooth transitions
-   - ✅ **Comprehensive Testing** - 74 tests covering all camera functionality
-   - ✅ **Fixed Issues** - Corrected spherical coordinates, pitch constraints, smoothing defaults
+### Current State
+The refactoring is complete and the application runs, but there is a platform-specific issue with Vertex Array Objects (VAOs) on macOS:
 
-6. **Core/Rendering** ✅ FULLY COMPLETED
-   - ✅ **RenderTypes** - Core data structures (Vertex, Mesh, Material, Texture)
-   - ✅ **RenderConfig** - Comprehensive rendering configuration management
-   - ✅ **RenderStats** - Performance monitoring and metrics collection
-   - ✅ **RenderEngine** - Abstract interface for rendering implementations
-   - ✅ **OpenGLRenderer** - OpenGL-specific rendering abstraction
-   - ✅ **RenderState** - State optimization and caching system
-   - ✅ **ShaderManager** - Shader compilation and management
-   - ✅ **Comprehensive Testing** - 25 tests covering core rendering components
+- **Issue**: `GL_INVALID_OPERATION` errors when setting vertex attributes
+- **Cause**: OpenGL 3.3 Core Profile requires a VAO to be bound before setting vertex attributes
+- **Problem**: The VAO creation fails with the Apple-specific functions (glGenVertexArraysAPPLE returns 0)
+- **Impact**: Vertex attributes are not properly set, which may affect rendering
 
-7. **Core/Input** ✅ FULLY COMPLETED
-   - ✅ **InputTypes** - Complete type definitions with hash functions
-   - ✅ **InputMapping** - Configurable input binding system with presets
-   - ✅ **InputManager** - Central input coordinator with action system
-   - ✅ **MouseHandler** - Mouse input with ray casting support
-   - ✅ **KeyboardHandler** - Keyboard input with key combinations
-   - ✅ **TouchHandler** - Touch gesture recognition (tap, pinch, pan, rotate)
-   - ✅ **VRInputHandler** - VR hand tracking and gesture recognition
-   - ✅ **Event Integration** - Comprehensive event types for all input modalities
-   - ✅ **Input Presets** - Default, Gaming, Productivity, VR, Accessibility
+### Known Limitations
+1. **VAO Support on macOS**: The OpenGL 3.3 core profile on macOS requires proper VAO handling, but the current implementation fails to create VAOs. This needs:
+   - Proper OpenGL extension loading (update GLAD or use a real loader)
+   - Or downgrade to OpenGL 2.1 compatibility profile
+   - Or properly load VAO functions at runtime
 
-8. **Core/Selection** ✅ FULLY COMPLETED
-   - ✅ **SelectionManager** - Central selection coordinator with multi-algorithm support
-   - ✅ **SelectionSet** - Efficient voxel selection storage with operations
-   - ✅ **SelectionTypes** - Comprehensive type definitions
-   - ✅ **BoxSelector** - Box selection algorithm with inside/intersect modes
-   - ✅ **SphereSelector** - Sphere selection algorithm with radius control
-   - ✅ **FloodFillSelector** - Connected voxel selection with threshold
-   - ✅ **SelectionRenderer** - Visual feedback integration
-   - ✅ **Comprehensive Testing** - 6 test files covering all components
+2. **OpenGL Errors**: 
+   - `GL_INVALID_ENUM` in createVertexBuffer (possibly related to VAO state)
+   - `GL_INVALID_OPERATION` in setupVertexAttributes (definitely VAO-related)
 
-9. **Core/Undo_Redo** ✅ FULLY COMPLETED
-   - ✅ **Command Pattern** - Abstract command interface
-   - ✅ **HistoryManager** - Undo/redo stack with size limits
-   - ✅ **VoxelCommands** - Commands for voxel operations
-   - ✅ **SelectionCommands** - Commands for selection operations
-   - ✅ **CompositeCommand** - Batch multiple commands
-   - ✅ **Transaction** - Automatic command grouping
-   - ✅ **StateSnapshot** - Save/restore complete state
-   - ✅ **Comprehensive Testing** - All components tested
+### Next Steps
+1. Fix VAO initialization on macOS for proper OpenGL 3.3 core profile support
+2. Update GLAD to properly load OpenGL functions instead of being a stub
+3. Add proper error handling for OpenGL context creation failures
+4. Complete the rendering test coverage plan below
 
-10. **Core/Surface_Gen** ✅ FULLY COMPLETED
-    - ✅ **SurfaceGenerator** - Main surface generation coordinator
-    - ✅ **DualContouring** - Dual Contouring algorithm implementation
-    - ✅ **MeshBuilder** - Mesh construction and optimization
-    - ✅ **SurfaceTypes** - Data structures for surface generation
-    - ✅ **Multi-resolution Support** - Handle different voxel sizes
-    - ✅ **Comprehensive Testing** - All components tested
+---
 
-11. **Core/Visual_Feedback** ✅ FULLY COMPLETED
-    - ✅ **FeedbackRenderer** - Main visual feedback coordinator
-    - ✅ **FaceDetector** - Ray-voxel face intersection detection
-    - ✅ **HighlightRenderer** - Face and voxel highlighting
-    - ✅ **OutlineRenderer** - Green outline rendering
-    - ✅ **OverlayRenderer** - Text and icon overlays
-    - ✅ **FeedbackTypes** - Core data structures
-    - ✅ **Comprehensive Testing** - All components tested
+# Previous Plan: Rendering Test Coverage
 
-12. **Core/Groups** ✅ FULLY COMPLETED
-    - ✅ **GroupTypes** - Core data structures and type definitions
-    - ✅ **VoxelGroup** - Individual group management with properties
-    - ✅ **GroupHierarchy** - Parent-child relationships with cycle detection
-    - ✅ **GroupOperations** - Complete transformation operations (move, copy, rotate, scale, merge, split)
-    - ✅ **GroupManager** - Central group coordination with full hierarchy support
-    - ✅ **Event Integration** - GroupCreated, GroupModified, GroupDeleted events
-    - ✅ **Comprehensive Testing** - All test files created
-    - ✅ **CMake Integration** - Added to core build system
+## Current Status
+The rendering pipeline has been debugged and is working, but test coverage analysis reveals critical gaps that need to be addressed to ensure rendering functions work correctly.
 
-13. **Core/FileIO** ✅ FULLY COMPLETED
-    - ✅ **FileTypes** - Complete file format data structures and options
-    - ✅ **BinaryIO** - Binary reader/writer with type safety
-    - ✅ **Project** - Project structure with validation and factory
-    - ✅ **BinaryFormat** - Custom binary format (.cvef) implementation
-    - ✅ **STLExporter** - STL export for 3D printing and CAD
-    - ✅ **Compression** - LZ4 compression wrapper (stub implementation)
-    - ✅ **FileVersioning** - Version migration and compatibility
-    - ✅ **FileManager** - Central file operations with auto-save and backup
-    - ✅ **CMake Integration** - Added to core build system
+## Priority 1: Critical Missing Test Coverage
 
-### 🎉 Current Phase: Build System Integration
+### 1.1 RenderState Tests (CRITICAL)
+**File to create**: `core/rendering/tests/test_RenderState.cpp`
 
-**Status: Fixing build errors and library dependencies**
+- [ ] **OpenGL state management**:
+  - Test depth test enable/disable and depth function
+  - Test blending modes and blend function parameters
+  - Test face culling modes (front, back, both)
+  - Test polygon mode (fill vs wireframe)
+  - Test line width and point size settings
+  
+- [ ] **Binding state tests**:
+  - Test shader binding and switching
+  - Test texture binding to multiple slots
+  - Test VAO/VBO/IBO binding sequences
+  - Verify proper unbinding behavior
+  
+- [ ] **State reset and initialization**:
+  - Test reset() returns to known default state
+  - Test initial state after construction
+  - Test state persistence across frames
 
-### ✅ Apps/CLI Complete Implementation
+### 1.2 RenderEngine::renderMesh() Tests (CRITICAL)
+**File to update**: `core/rendering/tests/test_RenderEngine.cpp`
 
-14. **Apps/CLI** ✅ FEATURE COMPLETE
-    - ✅ **main.cpp** - Entry point with branding
-    - ✅ **CommandTypes** - Complete command structure with arguments and context
-    - ✅ **CommandProcessor** - Full command parsing, execution, help, and history
-    - ✅ **Application** - System coordination with all 12 core systems integrated
-    - ✅ **RenderWindow** - GLFW/OpenGL window with full event handling
-    - ✅ **Commands.cpp** - ALL voxel editor commands registered:
-        - File operations: new, open, save, saveas, export
-        - Edit operations: place, delete, fill, undo, redo, resolution, workspace
-        - View controls: camera, zoom, rotate, resetview
-        - Selection: select, selectbox, selectall, selectnone
-        - Groups: group, groups, hide, show
-        - System: help, quit, clear, status
-    - ✅ **MouseInteraction** - Complete mouse ray casting with:
-        - Left click to place voxels
-        - Right click to remove voxels
-        - Middle mouse for camera orbit
-        - Scroll wheel zoom
-        - Hover detection with face highlighting
-    - ✅ **AutoComplete** - Smart tab completion with:
-        - Command name completion
-        - Context-aware argument completion
-        - File path completion
-        - Group name completion
-        - View preset completion
-        - Resolution completion
-    - ✅ **Visual Feedback Integration** - Green outline previews
-    - ✅ **CMakeLists.txt** - Complete build configuration
+- [ ] **Basic mesh rendering**:
+  - Test rendering single mesh with valid data
+  - Test rendering multiple meshes in sequence
+  - Test empty mesh handling (0 vertices/indices)
+  
+- [ ] **Transform and material handling**:
+  - Test mesh with custom transform matrix
+  - Test mesh with different material properties
+  - Test mesh without material (default material)
+  
+- [ ] **Integration with state management**:
+  - Verify correct OpenGL state before/after renderMesh
+  - Test that mesh rendering doesn't leak state
+  - Test interaction with RenderState caching
+  
+- [ ] **Error cases**:
+  - Test invalid mesh data (null pointers, bad indices)
+  - Test mesh with missing shaders
+  - Test out-of-bounds vertex attributes
 
-### 🔨 CLI Feature Summary
-- **50+ Commands**: Comprehensive command set for all operations
-- **Mouse Interaction**: Click-to-place with visual feedback
-- **Smart Auto-complete**: Context-aware tab completion
-- **Visual Feedback**: Green outlines and face highlighting
-- **Full Integration**: All 12 core systems working together
-- **Render Pipeline**: Voxel rendering with selection highlighting
+### 1.3 OpenGLRenderer Mesh Operations
+**File to update**: `core/rendering/tests/test_OpenGLRenderer.cpp`
 
-### ✅ Final Steps Complete
-    - ✅ **Build Script** - Created build.sh for easy compilation
-    - ✅ **Fixed Includes** - Corrected Ray type references
-    - ✅ **Documentation** - Created comprehensive README and CLI Guide
-    - ✅ **Test Script** - Added test_cli.sh for basic validation
-    - ✅ **Usage Examples** - Provided in CLI_GUIDE.md
+- [ ] **Mesh creation and management**:
+  - Test createMesh() with various vertex formats
+  - Test updateMesh() with different data sizes
+  - Test deleteMesh() and resource cleanup
+  
+- [ ] **Vertex attribute setup**:
+  - Test different vertex attribute configurations
+  - Test interleaved vs separate attribute buffers
+  - Test dynamic vs static buffer usage
+  
+- [ ] **Draw call validation**:
+  - Test drawElements() with different primitive types
+  - Test drawArrays() for non-indexed geometry
+  - Test instanced rendering if supported
+
+## Priority 2: Integration Test Coverage
+
+### 2.1 Full Rendering Pipeline Tests
+**File to create**: `core/rendering/tests/test_RenderPipeline.cpp`
+
+- [ ] **End-to-end rendering tests**:
+  - Test complete frame rendering with multiple meshes
+  - Test render order and transparency sorting
+  - Test frustum culling integration
+  
+- [ ] **State interaction tests**:
+  - Test mesh rendering with different RenderStates
+  - Test state changes between meshes
+  - Test render target switching
+
+### 2.2 Shader-Mesh Integration
+**File to update**: `core/rendering/tests/test_ShaderManager.cpp`
+
+- [ ] **Shader uniform setting for meshes**:
+  - Test setting MVP matrices for mesh rendering
+  - Test material uniforms (colors, textures)
+  - Test light uniforms for shading
+  
+- [ ] **Attribute binding validation**:
+  - Test that mesh attributes match shader expectations
+  - Test missing attribute handling
+  - Test extra attribute handling
+
+## Priority 3: Visual Validation Tests
+
+### 3.1 Automated Visual Tests
+**Directory to create**: `tests/visual/rendering/`
+
+- [ ] **Reference image tests**:
+  - Create reference images for known good renders
+  - Implement image comparison with tolerance
+  - Test basic shapes (cube, sphere, complex mesh)
+  
+- [ ] **Regression tests**:
+  - Test that voxel rendering matches expected output
+  - Test different camera angles produce correct results
+  - Test lighting changes are visible
+
+## Priority 4: Shader Loading Implementation
+**File to update**: `core/rendering/ShaderManager.cpp`
+
+- [ ] **Implement loadShaderFromFile()**:
+  - Complete the file loading functionality
+  - Add proper error handling and reporting
+  - Support shader hot-reloading for development
+  
+- [ ] **Fix shader uniform issues**:
+  - Ensure lighting uniforms are properly set
+  - Add missing uniform setters in RenderEngine
+  - Validate uniform locations on shader load
+
+## Test Implementation Guidelines
+
+### Test Structure
+```cpp
+class RenderStateTest : public ::testing::Test {
+protected:
+    void SetUp() override {
+        // Initialize OpenGL context if needed
+        // Create RenderState instance
+    }
     
-### 🔧 Current Build Status
-
-**Build Progress**: ~99% Complete
-- ✅ Application.cpp: All API mismatches fixed
-- ✅ Commands.cpp: All API mismatches fixed
-- ✅ MouseInteraction.cpp: All API mismatches fixed
-- ✅ LZ4 linking issue resolved
-- 🔨 Final linking issues:
-  - RenderEngine/OpenGLRenderer missing implementations
-  - Need to stub out or implement missing rendering methods
-  - SurfaceGenerator missing generateMultiResMesh implementation
-
-### 🔧 Remaining Build Issues (Minor)
-
-The major architecture issues have been resolved. Remaining issues are implementation details:
-
-**Surface Generation**:
-- Missing `MeshStats` fields: `isManifold`, `isWatertight`
-- Incomplete `Edge` type definition in MeshBuilder
-
-**Undo/Redo System**: 
-- Missing camera methods: Camera needs `getFieldOfView()`, `getNearPlane()`, `getFarPlane()` methods
-- Incomplete `RenderSettings` type access
-
-**Status**: These are minor implementation gaps, not fundamental architecture problems. The core system interfaces are now consistent and compatible.
-
-### 📋 TODO - Future Phases
-
-15. **Fix Remaining Implementation Details** (Current - Minor issues)
-16. **Qt Desktop Application** (Month 4+)
-17. **VR Application for Meta Quest 3** (Month 6+)
-18. **Performance Optimization** (Ongoing)
-19. **Documentation & Polish** (Final)
-
-## Development Guidelines
-
-- **Priority**: Command line application first
-- **Testing**: Unit tests for every component (currently 540+ tests)
-- **Memory**: Keep Quest 3 constraints in mind (<4GB total)
-- **Dependencies**: CMake + Google Test + OpenGL + LZ4
-- **Code Style**: No comments unless requested
-- **Architecture**: Follow the modular design strictly
-- **Foundation**: Complete with 5 subsystems providing full infrastructure
-- **VoxelData**: Complete with multi-resolution storage and management
-
-## Current Focus
-
-**Core Systems Progress** ✅ 
-- **Foundation Layer**: Complete with 142+ tests
-- **Core/VoxelData**: Complete with 400+ tests  
-- **Core/Camera**: Complete with 74 tests
-- **Core/Rendering**: Complete with 25 tests
-- **Core/Input**: Complete with implementation
-- **Core/Selection**: Complete with all selection algorithms
-- **Core/Undo_Redo**: Complete with command pattern implementation
-- **Core/Surface_Gen**: Complete with Dual Contouring
-- **Core/Visual_Feedback**: Complete with all renderers
-- **Core/Groups**: Complete with full hierarchy and operations
-- **Core/FileIO**: Complete with binary format and STL export
-
-**Total Progress: ALL 12 CORE SYSTEMS COMPLETE! 🎉**
-
-### ✅ Build Issues RESOLVED! 
-
-**Build Progress**: 100% Complete - All Compilation Errors Fixed! 🎉
-- ✅ Foundation Layer: All libraries building successfully
-- ✅ Core/VoxelData: Building successfully
-- ✅ Core/Camera: Building successfully  
-- ✅ Core/Rendering: Building successfully - **Agent 1 tasks COMPLETE** ✅
-  - Fixed matrix inverse safety in Viewport.h
-  - OpenGLRenderer fully implemented
-  - RenderEngine with basic implementation complete
-  - ShaderManager integrated into rendering pipeline
-- ✅ Core/Input: Building successfully
-- ✅ Core/Selection: Building successfully
-- ✅ Core/Undo_Redo: Building successfully
-- ✅ Core/Surface_Gen: Building successfully
-- ✅ Core/Visual_Feedback: Building successfully
-- ✅ Core/Groups: Building successfully
-- ✅ Core/FileIO: Building successfully
-- ✅ Apps/CLI: Building and running successfully with voxel rendering!
-
-**Recent Progress**:
-- ✅ **COMPLETED AGENT 1 TASKS**: All rendering and camera system tasks from agent_1_todo.md are complete
-  - Matrix inverse safety issue in Viewport.h was fixed
-  - OpenGLRenderer has all methods fully implemented
-  - RenderEngine provides complete rendering pipeline
-  - ShaderManager is integrated and working
-- ✅ **IMPLEMENTED VOXEL RENDERING**: CLI window now displays voxels!
-  - Created VoxelMeshGenerator class to convert voxel data to renderable meshes
-  - Added shader programs with lighting for 3D voxel visualization
-  - Integrated mesh generation with MouseInteraction for real-time updates
-  - Fixed platform-specific OpenGL issues for macOS
-  - Created test scripts: test_voxel_simple.sh, test_voxel_placement.sh, test_voxel_timed.sh
-- ✅ **COMPLETED AGENT 3 TASKS**: All visual feedback and UI rendering tasks from agent_3_todo.md are complete
-  - OutlineRenderer fully implemented with GPU resources, edge detection, and line patterns
-  - OverlayRenderer fully implemented with text rendering and world-to-screen projection
-  - All visual feedback systems operational with proper OpenGL integration
-- ✅ **RESOLVED MAJOR ARCHITECTURE ISSUES**: Fixed critical API mismatches between subsystems
-  - Fixed Selection system FloodFillCriteria enum values (Connected6/18/26)
-  - Added missing RenderEngine methods (setLineWidth, getShaderManager)
-  - Fixed missing Vector4f includes in BoxSelector
-  - Fixed VoxelResolution enum naming (Res1cm → Size_1cm)
-  - Added VoxelGrid isEmpty() method
-  - Added BoundingBox getDiagonal() method
-  - Added SelectionStats groupCount field
-  - Fixed Matrix4f multiplication operator includes
-- ✅ Fixed standard library namespace conflicts by including STL headers before namespace declarations
-- ✅ Fixed incorrect forward declarations in MouseInteraction.h (Core:: → correct module namespaces)
-- ✅ Updated integration test to use correct namespaces
-- ✅ Added global namespace qualifiers (::std::) to MemoryPool.h
-- ✅ **COMPLETED CLI NAMESPACE REFACTORING**: Moved all CLI code from nested VoxelEditor::CLI namespace to just VoxelEditor namespace
-  - Updated all 6 header files in apps/cli/include/cli/
-  - Updated all 8 source files in apps/cli/src/
-  - Updated integration test file
-  - Updated main.cpp to use VoxelEditor::Application instead of VoxelEditor::CLI::Application
-  - Fixed incomplete MouseInteraction.h file (added missing closing brace)
-- ✅ **FIXED APPLICATION.CPP API MISMATCHES**:
-  - Updated Logger/ConfigManager to use singleton getInstance()
-  - Fixed OpenGLRenderer initialization with RenderConfig
-  - Fixed InputManager method names (injectKeyboardEvent)
-  - Fixed VoxelResolution/ViewPreset enum values
-  - Fixed KeyEvent structure (removed ButtonAction)
-  - Fixed ModifierFlags enum values
-  - Removed non-existent LightingState
-  - Fixed render method signatures and implementations
-  - Fixed GroupId usage (INVALID_GROUP_ID constant)
-  - Fixed FeedbackRenderer render() parameters
-- ✅ **COMPLETED ALL REMAINING BUILD FIXES**:
-  - Fixed integration_test.cpp API mismatches (glm → Math types)
-  - Fixed SelectionManager API usage (selectBox with BoundingBox)
-  - Fixed VoxelId type differences between Selection and Groups modules
-  - Updated camera method calls (orbit instead of rotateAzimuth)
-  - Fixed FileManager API usage (Project object requirements)
-  - Corrected enum naming (CM_8 → Size_8cm, CM_1 → Size_1cm, etc.)
-  - Fixed method availability (selectNone vs clearSelection)
-  - All compilation errors resolved - only linking issues remain (Application class implementation)
-
-**Namespace Refactoring Summary**:
-- Changed "namespace VoxelEditor { namespace CLI {" to just "namespace VoxelEditor {"
-- Changed "} // namespace CLI } // namespace VoxelEditor" to just "} // namespace VoxelEditor"
-- Updated all references from CLI::ClassName to just ClassName
-- This simplifies the namespace hierarchy and should resolve the duplicate namespace level issues
-
-## Quick Start Commands
-
-```bash
-# Build entire project
-cmake --build build
-
-# Run Foundation tests
-./build/foundation/math/tests/VoxelEditor_Math_Tests
-./build/foundation/events/tests/VoxelEditor_Events_Tests  
-./build/foundation/memory/tests/VoxelEditor_Memory_Tests
-./build/foundation/logging/tests/VoxelEditor_Logging_Tests
-./build/foundation/config/tests/VoxelEditor_Config_Tests
-
-# Run Core tests
-./build/core/voxel_data/tests/VoxelEditor_VoxelData_Tests
-./build/core/camera/tests/VoxelEditor_Camera_Tests
-./build/core/rendering/tests/VoxelEditor_Rendering_Tests
-# Input tests pending (linking issues with test expectations)
+    void TearDown() override {
+        // Cleanup
+    }
+    
+    // Helper to verify GL state matches RenderState
+    void VerifyGLState(const RenderState& state);
+};
 ```
 
-## Build Status
+### Mock Requirements
+- Mock OpenGL functions for unit tests
+- Mock RenderContext for isolated testing
+- Mock Mesh data for render tests
 
-✅ **Foundation Layer**: Fully operational with 142+ tests passing
-✅ **Core/VoxelData**: Complete with 400+ tests passing
-✅ **Core/Camera**: Fully operational with 74 tests passing
-✅ **Core/Rendering**: Fully operational with 25 tests passing
-✅ **Core/Input**: Implementation complete
-✅ **Core/Selection**: Implementation complete with tests
-✅ **Core/Undo_Redo**: Implementation complete with tests
-✅ **Core/Surface_Gen**: Implementation complete with tests
-✅ **Core/Visual_Feedback**: Implementation complete with tests
-✅ **Core/Groups**: Fully implemented with hierarchy and operations
-✅ **Core/FileIO**: Fully implemented with save/load and STL export
+## Success Criteria
 
-**Key Achievements**: 
-- Complete Foundation layer providing robust infrastructure
-- ALL 12 Core systems fully implemented
-- Custom binary format (.cvef) for efficient project storage
-- STL export for 3D printing and CAD applications
-- CLI application basic structure complete and ready for command integration
+1. **All tests pass**: No failing tests in the rendering module
+2. **Visual validation**: Screenshots show correct rendering
+3. **Functionality**: All render functions work as expected
+4. **Stability**: No crashes or GL errors during extended use
+
+## Execution Order
+
+1. Start with RenderState tests (most critical gap)
+2. Add renderMesh() test coverage
+3. Implement shader loading from files
+4. Implement visual validation framework
+
+This plan ensures the rendering functions are properly tested and work correctly.

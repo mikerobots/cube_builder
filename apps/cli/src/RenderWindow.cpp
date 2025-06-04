@@ -10,10 +10,11 @@
 
 // Third-party includes
 #include <GLFW/glfw3.h>
-extern "C" {
-#include <glad/glad.h>
-}
 #include <glm/gtc/matrix_transform.hpp>
+
+// Core rendering headers
+#include "rendering/RenderEngine.h"
+#include "rendering/RenderContext.h"
 
 // Application headers
 #include "cli/RenderWindow.h"
@@ -37,15 +38,13 @@ bool RenderWindow::create(int width, int height, const std::string& title) {
     }
     
     // Set OpenGL version and profile
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    // Use compatibility profile for debugging
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
-    // Don't use forward compat in compatibility mode
-    // #ifdef __APPLE__
-    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    // #endif
+    #ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
     
     // Create window
     m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
@@ -70,27 +69,8 @@ bool RenderWindow::create(int width, int height, const std::string& title) {
     // Make context current
     makeContextCurrent();
     
-    // Load OpenGL functions
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        destroy();
-        return false;
-    }
-    
-    // Set initial viewport
-    glViewport(0, 0, width, height);
-    
-    // Disable depth testing and culling initially to debug rendering
-    // TODO: Re-enable these once rendering is working
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    
-    // // Enable depth testing
-    // glEnable(GL_DEPTH_TEST);
-    // 
-    // // Enable backface culling
-    // glEnable(GL_CULL_FACE);
-    // glCullFace(GL_BACK);
+    // The RenderEngine will handle OpenGL initialization
+    // No need for direct OpenGL calls here
     
     return true;
 }
@@ -269,8 +249,10 @@ void RenderWindow::onResize(GLFWwindow* window, int width, int height) {
     self->m_width = width;
     self->m_height = height;
     
-    // Update viewport
-    glViewport(0, 0, width, height);
+    // Update viewport through render engine
+    if (self->m_renderEngine) {
+        self->m_renderEngine->setViewport(0, 0, width, height);
+    }
     
     if (self->m_resizeCallback) {
         self->m_resizeCallback(width, height);
@@ -282,72 +264,15 @@ void RenderWindow::onError(int error, const char* description) {
 }
 
 bool RenderWindow::saveScreenshot(const std::string& filename) {
-    if (!m_window) {
+    if (!m_window || !m_renderEngine) {
         return false;
     }
     
     makeContextCurrent();
     
-    // Get framebuffer size (may be different from window size on high DPI displays)
-    int fbWidth, fbHeight;
-    glfwGetFramebufferSize(m_window, &fbWidth, &fbHeight);
-    
-    // Allocate buffer for pixels (RGB format)
-    std::vector<unsigned char> pixels(fbWidth * fbHeight * 3);
-    
-    // Read from the back buffer (where we just rendered)
-    glReadBuffer(GL_BACK);
-    
-    // Force all pending GL commands to execute
-    glFlush();
-    
-    // Ensure all OpenGL commands are finished
-    glFinish();
-    
-    // Read pixels from framebuffer (back buffer)
-    glPixelStorei(GL_PACK_ALIGNMENT, 1);
-    glReadPixels(0, 0, fbWidth, fbHeight, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
-    
-    // OpenGL gives us the image upside down, so we need to flip it
-    std::vector<unsigned char> flipped(fbWidth * fbHeight * 3);
-    for (int y = 0; y < fbHeight; ++y) {
-        memcpy(&flipped[y * fbWidth * 3], 
-               &pixels[(fbHeight - 1 - y) * fbWidth * 3], 
-               fbWidth * 3);
-    }
-    
-    // For now, save as PPM format (simple, no external dependencies)
-    // TODO: Add PNG support with stb_image_write or similar
-    std::string actualFilename = filename;
-    
-    // If filename ends with .png, replace with .ppm for now
-    size_t dotPos = actualFilename.find_last_of('.');
-    if (dotPos != std::string::npos && actualFilename.substr(dotPos) == ".png") {
-        actualFilename = actualFilename.substr(0, dotPos) + ".ppm";
-    } else if (dotPos == std::string::npos) {
-        actualFilename += ".ppm";
-    }
-    
-    // Write PPM file
-    std::ofstream file(actualFilename, std::ios::binary);
-    if (!file) {
-        return false;
-    }
-    
-    // PPM header
-    file << "P6\n" << fbWidth << " " << fbHeight << "\n255\n";
-    
-    // Write pixel data
-    file.write(reinterpret_cast<const char*>(flipped.data()), flipped.size());
-    file.close();
-    
-    // Log that we saved as PPM instead of PNG
-    if (filename.find(".png") != std::string::npos) {
-        std::cout << "Note: Saved as " << actualFilename << " (PPM format). "
-                  << "Convert to PNG with: convert " << actualFilename << " " << filename << std::endl;
-    }
-    
-    return true;
+    // Use RenderEngine's capture frame functionality
+    m_renderEngine->captureFrame(filename);
+    return true; // Assume success if no exception thrown
 }
 
 } // namespace VoxelEditor

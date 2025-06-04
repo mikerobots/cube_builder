@@ -8,6 +8,7 @@
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/BoundingBox.h"
+#include "../../foundation/logging/Logger.h"
 
 namespace VoxelEditor {
 namespace VoxelData {
@@ -51,29 +52,44 @@ public:
     // Voxel operations
     bool setVoxel(const Math::Vector3i& pos, bool value) {
         if (!isValidGridPosition(pos)) {
+            Logging::Logger::getInstance().debugfc("VoxelGrid", 
+                "Attempt to set voxel at invalid position (%d, %d, %d)", pos.x, pos.y, pos.z);
             return false;
         }
         
         m_octree->setVoxel(pos, value);
+        Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            "Set voxel at position (%d, %d, %d) to %s", pos.x, pos.y, pos.z, value ? "true" : "false");
         return true;
     }
     
     bool getVoxel(const Math::Vector3i& pos) const {
         if (!isValidGridPosition(pos)) {
+            Logging::Logger::getInstance().debugfc("VoxelGrid", 
+                "Attempt to get voxel at invalid position (%d, %d, %d)", pos.x, pos.y, pos.z);
             return false;
         }
         
-        return m_octree->getVoxel(pos);
+        bool result = m_octree->getVoxel(pos);
+        Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            "Get voxel at position (%d, %d, %d): %s", pos.x, pos.y, pos.z, result ? "true" : "false");
+        return result;
     }
     
     // World space operations
     bool setVoxelAtWorldPos(const Math::Vector3f& worldPos, bool value) {
         Math::Vector3i gridPos = worldToGrid(worldPos);
+        Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            "World position (%.3f, %.3f, %.3f) maps to grid position (%d, %d, %d)", 
+            worldPos.x, worldPos.y, worldPos.z, gridPos.x, gridPos.y, gridPos.z);
         return setVoxel(gridPos, value);
     }
     
     bool getVoxelAtWorldPos(const Math::Vector3f& worldPos) const {
         Math::Vector3i gridPos = worldToGrid(worldPos);
+        Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            "Query world position (%.3f, %.3f, %.3f) -> grid position (%d, %d, %d)", 
+            worldPos.x, worldPos.y, worldPos.z, gridPos.x, gridPos.y, gridPos.z);
         return getVoxel(gridPos);
     }
     
@@ -136,6 +152,9 @@ public:
         
         // Get all voxel positions from octree
         auto positions = m_octree->getAllVoxels();
+        
+        Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            "Retrieved %zu voxel positions from octree", positions.size());
         
         for (const auto& pos : positions) {
             VoxelPosition voxelPos;

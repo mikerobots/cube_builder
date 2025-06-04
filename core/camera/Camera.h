@@ -5,6 +5,7 @@
 #include "../../foundation/math/MathUtils.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
+#include "../../foundation/logging/Logger.h"
 
 namespace VoxelEditor {
 namespace Camera {
@@ -40,6 +41,8 @@ public:
         if (m_position != position) {
             m_position = position;
             m_viewMatrixDirty = true;
+            Logging::Logger::getInstance().debugfc("Camera", "Position changed to (%.3f, %.3f, %.3f)", 
+                position.x, position.y, position.z);
             dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::POSITION);
         }
     }
@@ -48,6 +51,8 @@ public:
         if (m_target != target) {
             m_target = target;
             m_viewMatrixDirty = true;
+            Logging::Logger::getInstance().debugfc("Camera", "Target changed to (%.3f, %.3f, %.3f)", 
+                target.x, target.y, target.z);
             dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::POSITION);
         }
     }
@@ -138,10 +143,13 @@ public:
 protected:
     void updateViewMatrix() const {
         m_viewMatrix = Math::Matrix4f::lookAt(m_position, m_target, m_up);
+        Logging::Logger::getInstance().debug("View matrix updated", "Camera");
     }
 
     void updateProjectionMatrix() const {
         m_projectionMatrix = Math::Matrix4f::perspective(Math::toRadians(m_fov), m_aspectRatio, m_nearPlane, m_farPlane);
+        Logging::Logger::getInstance().debugfc("Camera", "Projection matrix updated (FOV: %.1f, Aspect: %.3f, Near: %.3f, Far: %.1f)", 
+            m_fov, m_aspectRatio, m_nearPlane, m_farPlane);
     }
 
     void dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType changeType) {

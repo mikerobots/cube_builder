@@ -401,3 +401,69 @@ TEST_F(VoxelGridTest, ThreadSafetyPreparation) {
         EXPECT_EQ(grid.getVoxel(positions[i]), shouldExist);
     }
 }
+
+TEST_F(VoxelGridTest, VoxelWorldPositionVerification) {
+    // Test that voxel world positions match expected coordinates
+    // This is critical for rendering - ensures voxels appear where we expect them
+    
+    // Test with 8cm resolution as used in CLI
+    VoxelGrid grid(VoxelResolution::Size_8cm, workspaceSize);
+    float voxelSize = getVoxelSize(VoxelResolution::Size_8cm);
+    EXPECT_FLOAT_EQ(voxelSize, 0.08f);
+    
+    // Test cases with expected world positions
+    struct TestCase {
+        Vector3i gridPos;
+        Vector3f expectedWorldPos;
+        std::string description;
+    };
+    
+    std::vector<TestCase> testCases = {
+        // Grid coordinates are 0-based
+        {Vector3i(0, 0, 0), Vector3f(0.0f, 0.0f, 0.0f), "Origin voxel"},
+        {Vector3i(1, 0, 0), Vector3f(0.08f, 0.0f, 0.0f), "One voxel along X"},
+        {Vector3i(0, 1, 0), Vector3f(0.0f, 0.08f, 0.0f), "One voxel along Y"},
+        {Vector3i(0, 0, 1), Vector3f(0.0f, 0.0f, 0.08f), "One voxel along Z"},
+        {Vector3i(10, 10, 10), Vector3f(0.8f, 0.8f, 0.8f), "10 voxels in each direction"},
+        {Vector3i(25, 25, 25), Vector3f(2.0f, 2.0f, 2.0f), "25 voxels = 2m"},
+        {Vector3i(31, 31, 31), Vector3f(2.48f, 2.48f, 2.48f), "Near center of 5m workspace"}
+    };
+    
+    for (const auto& testCase : testCases) {
+        // Set voxel at grid position
+        EXPECT_TRUE(grid.setVoxel(testCase.gridPos, true)) 
+            << "Failed to set voxel at " << testCase.description;
+        
+        // Get world position from grid
+        Vector3f actualWorldPos = grid.gridToWorld(testCase.gridPos);
+        
+        // Verify world position matches expected
+        EXPECT_FLOAT_EQ(actualWorldPos.x, testCase.expectedWorldPos.x) 
+            << testCase.description << " - X mismatch";
+        EXPECT_FLOAT_EQ(actualWorldPos.y, testCase.expectedWorldPos.y) 
+            << testCase.description << " - Y mismatch";
+        EXPECT_FLOAT_EQ(actualWorldPos.z, testCase.expectedWorldPos.z) 
+            << testCase.description << " - Z mismatch";
+        
+        // Verify we can retrieve the voxel using world position
+        EXPECT_TRUE(grid.getVoxelAtWorldPos(testCase.expectedWorldPos))
+            << testCase.description << " - Can't retrieve voxel at world pos";
+        
+        // Verify round-trip conversion
+        Vector3i roundTripGridPos = grid.worldToGrid(actualWorldPos);
+        EXPECT_EQ(roundTripGridPos, testCase.gridPos)
+            << testCase.description << " - Round-trip conversion failed";
+    }
+    
+    // Verify all voxels are at expected positions
+    std::vector<VoxelPosition> allVoxels = grid.getAllVoxels();
+    EXPECT_EQ(allVoxels.size(), testCases.size());
+    
+    // Log actual voxel positions for debugging
+    for (const auto& voxelPos : allVoxels) {
+        Vector3f worldPos = grid.gridToWorld(voxelPos.gridPos);
+        // This would be where we'd add logging in the actual implementation
+        // For now, just verify the position is valid
+        EXPECT_TRUE(grid.isValidWorldPosition(worldPos));
+    }
+}

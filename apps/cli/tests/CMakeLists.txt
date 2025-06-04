@@ -3,6 +3,10 @@ find_package(GTest REQUIRED)
 # CLI Integration Tests
 set(TEST_SOURCES
     integration_test.cpp
+    test_cli_headless.cpp
+    test_cli_commands.cpp
+    test_cli_error_handling.cpp
+    test_cli_rendering_basic.cpp
 )
 
 # Create test executable
@@ -17,31 +21,12 @@ target_include_directories(VoxelEditor_CLI_Tests PRIVATE
 
 # Link libraries
 target_link_libraries(VoxelEditor_CLI_Tests PRIVATE
-    # Core libraries
-    VoxelEditor_VoxelData
-    VoxelEditor_Camera
-    VoxelEditor_Rendering
-    VoxelEditor_Input
-    VoxelEditor_Selection
-    VoxelEditor_UndoRedo
-    VoxelEditor_SurfaceGen
-    VoxelEditor_VisualFeedback
-    VoxelEditor_Groups
-    VoxelEditor_FileIO
-    
-    # Foundation libraries
-    VoxelEditor_Events
-    VoxelEditor_Logging
-    VoxelEditor_Config
-    VoxelEditor_Math
-    VoxelEditor_Memory
+    # CLI library which includes Application class
+    VoxelEditor_CLI_Lib
     
     # Test framework
     GTest::gtest
     GTest::gtest_main
-    
-    # External dependencies
-    glm::glm
 )
 
 # Add test

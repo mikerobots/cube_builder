@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "../../../bin/test_history_manager"
+  "../../../bin/test_history_manager.pdb"
   "CMakeFiles/test_history_manager.dir/TestHistoryManager.cpp.o"
   "CMakeFiles/test_history_manager.dir/TestHistoryManager.cpp.o.d"
-  "test_history_manager"
-  "test_history_manager.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

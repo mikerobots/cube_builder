@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
+  "../../../bin/VoxelEditor_Memory_Tests"
+  "../../../bin/VoxelEditor_Memory_Tests.pdb"
   "CMakeFiles/VoxelEditor_Memory_Tests.dir/test_MemoryPool.cpp.o"
   "CMakeFiles/VoxelEditor_Memory_Tests.dir/test_MemoryPool.cpp.o.d"
   "CMakeFiles/VoxelEditor_Memory_Tests.dir/test_MemoryTracker.cpp.o"
   "CMakeFiles/VoxelEditor_Memory_Tests.dir/test_MemoryTracker.cpp.o.d"
-  "VoxelEditor_Memory_Tests"
-  "VoxelEditor_Memory_Tests.pdb"
   "VoxelEditor_Memory_Tests[1]_tests.cmake"
 )
 

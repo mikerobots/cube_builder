@@ -257,6 +257,30 @@ test_OrbitCamera.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera.cpp.s
 .PHONY : test_OrbitCamera.cpp.s
 
+test_OrbitCamera_transformations.o: test_OrbitCamera_transformations.cpp.o
+.PHONY : test_OrbitCamera_transformations.o
+
+# target to build an object file
+test_OrbitCamera_transformations.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.o
+.PHONY : test_OrbitCamera_transformations.cpp.o
+
+test_OrbitCamera_transformations.i: test_OrbitCamera_transformations.cpp.i
+.PHONY : test_OrbitCamera_transformations.i
+
+# target to preprocess a source file
+test_OrbitCamera_transformations.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.i
+.PHONY : test_OrbitCamera_transformations.cpp.i
+
+test_OrbitCamera_transformations.s: test_OrbitCamera_transformations.cpp.s
+.PHONY : test_OrbitCamera_transformations.s
+
+# target to generate assembly for a file
+test_OrbitCamera_transformations.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/test_OrbitCamera_transformations.cpp.s
+.PHONY : test_OrbitCamera_transformations.cpp.s
+
 test_Viewport.o: test_Viewport.cpp.o
 .PHONY : test_Viewport.o
 
@@ -304,6 +328,9 @@ help:
 	@echo "... test_OrbitCamera.o"
 	@echo "... test_OrbitCamera.i"
 	@echo "... test_OrbitCamera.s"
+	@echo "... test_OrbitCamera_transformations.o"
+	@echo "... test_OrbitCamera_transformations.i"
+	@echo "... test_OrbitCamera_transformations.s"
 	@echo "... test_Viewport.o"
 	@echo "... test_Viewport.i"
 	@echo "... test_Viewport.s"

@@ -255,6 +255,88 @@ TEST_F(Matrix4fTest, LookAt) {
     EXPECT_FLOAT_EQ(lookAt.m[10], 1.0f);  // -forward.z (negative of -1)
 }
 
+TEST_F(Matrix4fTest, LookAt_DetailedValidation) {
+    // Test 1: Looking down negative Z (standard view)
+    {
+        Vector3f eye(0.0f, 0.0f, 5.0f);
+        Vector3f center(0.0f, 0.0f, 0.0f);
+        Vector3f up(0.0f, 1.0f, 0.0f);
+        
+        Matrix4f view = Matrix4f::lookAt(eye, center, up);
+        
+        // Right vector should be (1, 0, 0)
+        EXPECT_NEAR(view.m[0], 1.0f, 1e-6f);
+        EXPECT_NEAR(view.m[1], 0.0f, 1e-6f);
+        EXPECT_NEAR(view.m[2], 0.0f, 1e-6f);
+        
+        // Up vector should be (0, 1, 0)
+        EXPECT_NEAR(view.m[4], 0.0f, 1e-6f);
+        EXPECT_NEAR(view.m[5], 1.0f, 1e-6f);
+        EXPECT_NEAR(view.m[6], 0.0f, 1e-6f);
+        
+        // Forward vector should be (0, 0, 1) - looking down -Z
+        EXPECT_NEAR(view.m[8], 0.0f, 1e-6f);
+        EXPECT_NEAR(view.m[9], 0.0f, 1e-6f);
+        EXPECT_NEAR(view.m[10], 1.0f, 1e-6f);
+        
+        // Translation should be negative dot products
+        EXPECT_NEAR(view.m[3], 0.0f, 1e-6f);    // -dot(right, eye)
+        EXPECT_NEAR(view.m[7], 0.0f, 1e-6f);    // -dot(up, eye)
+        EXPECT_NEAR(view.m[11], -5.0f, 1e-6f);  // -dot(forward, eye)
+    }
+    
+    // Test 2: Looking from an angle
+    {
+        Vector3f eye(3.0f, 4.0f, 5.0f);
+        Vector3f center(0.0f, 0.0f, 0.0f);
+        Vector3f up(0.0f, 1.0f, 0.0f);
+        
+        Matrix4f view = Matrix4f::lookAt(eye, center, up);
+        
+        // Transform the eye position - should go to origin
+        Vector3f transformedEye = view * eye;
+        EXPECT_NEAR(transformedEye.x, 0.0f, 1e-5f);
+        EXPECT_NEAR(transformedEye.y, 0.0f, 1e-5f);
+        EXPECT_NEAR(transformedEye.z, 0.0f, 1e-5f);
+        
+        // Transform the center - should go to negative Z
+        Vector3f transformedCenter = view * center;
+        float expectedZ = -sqrtf(3*3 + 4*4 + 5*5); // Distance from eye to center
+        EXPECT_NEAR(transformedCenter.x, 0.0f, 1e-5f);
+        EXPECT_NEAR(transformedCenter.y, 0.0f, 1e-5f);
+        EXPECT_NEAR(transformedCenter.z, expectedZ, 1e-5f);
+    }
+    
+    // Test 3: Isometric-style view (45 degree rotation around Y, then tilt)
+    {
+        float dist = 10.0f;
+        float angleY = M_PI / 4.0f; // 45 degrees
+        float angleX = M_PI / 6.0f; // 30 degrees
+        
+        Vector3f eye(
+            dist * sinf(angleY) * cosf(angleX),
+            dist * sinf(angleX),
+            dist * cosf(angleY) * cosf(angleX)
+        );
+        Vector3f center(0.0f, 0.0f, 0.0f);
+        Vector3f up(0.0f, 1.0f, 0.0f);
+        
+        Matrix4f view = Matrix4f::lookAt(eye, center, up);
+        
+        // View matrix should be orthogonal (inverse = transpose for rotation part)
+        Matrix4f viewInv = view.inverted();
+        Matrix4f viewTranspose = view.transposed();
+        
+        // Compare rotation parts (ignore translation)
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                int idx = i * 4 + j;
+                EXPECT_NEAR(viewInv.m[idx], viewTranspose.m[idx], 1e-5f);
+            }
+        }
+    }
+}
+
 TEST_F(Matrix4fTest, Equality) {
     Matrix4f a = Matrix4f::Identity();
     Matrix4f b = Matrix4f::Identity();
@@ -284,4 +366,146 @@ TEST_F(Matrix4fTest, SetTranslation) {
     mat.setTranslation(newTranslation);
     
     EXPECT_EQ(mat.getTranslation(), newTranslation);
+}
+
+TEST_F(Matrix4fTest, MatrixMultiplicationOrder_MVP) {
+    // Test that MVP multiplication order is correct for OpenGL
+    // In OpenGL: MVP = Projection * View * Model
+    // This means we transform vertices as: v' = MVP * v
+    
+    // Create a simple model matrix (translate by 2 on X)
+    Matrix4f model = Matrix4f::translation(Vector3f(2.0f, 0.0f, 0.0f));
+    
+    // Create a simple view matrix (translate camera back by 5)
+    Vector3f eye(0.0f, 0.0f, 5.0f);
+    Vector3f center(0.0f, 0.0f, 0.0f);
+    Vector3f up(0.0f, 1.0f, 0.0f);
+    Matrix4f view = Matrix4f::lookAt(eye, center, up);
+    
+    // Create a simple projection matrix
+    Matrix4f projection = Matrix4f::perspective(M_PI/4.0f, 1.0f, 0.1f, 100.0f);
+    
+    // Test correct order: P * V * M
+    Matrix4f mvp_correct = projection * view * model;
+    
+    // Test incorrect order: M * V * P
+    Matrix4f mvp_wrong = model * view * projection;
+    
+    // Transform a point at origin
+    Vector3f point(0.0f, 0.0f, 0.0f);
+    Vector3f result_correct = mvp_correct * point;
+    Vector3f result_wrong = mvp_wrong * point;
+    
+    // Results should be different
+    EXPECT_NE(result_correct, result_wrong);
+    
+    // With correct order, the point should be translated by model matrix first
+    // then transformed by view and projection
+    // The model translates (0,0,0) to (2,0,0)
+    // The view looks from (0,0,5) to origin, so (2,0,0) is still visible
+    // This is the expected behavior in OpenGL
+}
+
+TEST_F(Matrix4fTest, MatrixMultiplicationOrder_Associativity) {
+    // Test that matrix multiplication is associative but not commutative
+    Matrix4f a = Matrix4f::translation(Vector3f(1.0f, 0.0f, 0.0f));
+    Matrix4f b = Matrix4f::rotationY(M_PI / 4.0f);
+    Matrix4f c = Matrix4f::scale(2.0f);
+    
+    // Test associativity: (A * B) * C == A * (B * C)
+    Matrix4f left_assoc = (a * b) * c;
+    Matrix4f right_assoc = a * (b * c);
+    expectMatrixEqual(left_assoc, right_assoc);
+    
+    // Test non-commutativity: A * B != B * A
+    Matrix4f ab = a * b;
+    Matrix4f ba = b * a;
+    
+    // Transform a test point to verify they produce different results
+    Vector3f testPoint(1.0f, 0.0f, 0.0f);
+    Vector3f result_ab = ab * testPoint;
+    Vector3f result_ba = ba * testPoint;
+    
+    // Results should be different, proving non-commutativity
+    EXPECT_NE(result_ab, result_ba);
+}
+
+TEST_F(Matrix4fTest, MatrixStorageOrder) {
+    // Verify matrix storage order
+    // Our Matrix4f uses row-major order internally
+    // The constructor takes parameters row by row
+    
+    Matrix4f mat(
+        1, 2, 3, 4,      // First row 
+        5, 6, 7, 8,      // Second row
+        9, 10, 11, 12,   // Third row
+        13, 14, 15, 16   // Fourth row
+    );
+    
+    // In row-major storage:
+    // m[0-3] is the first row (1, 2, 3, 4)
+    EXPECT_FLOAT_EQ(mat.m[0], 1.0f);
+    EXPECT_FLOAT_EQ(mat.m[1], 2.0f);
+    EXPECT_FLOAT_EQ(mat.m[2], 3.0f);
+    EXPECT_FLOAT_EQ(mat.m[3], 4.0f);
+    
+    // m[4-7] is the second row (5, 6, 7, 8)
+    EXPECT_FLOAT_EQ(mat.m[4], 5.0f);
+    EXPECT_FLOAT_EQ(mat.m[5], 6.0f);
+    EXPECT_FLOAT_EQ(mat.m[6], 7.0f);
+    EXPECT_FLOAT_EQ(mat.m[7], 8.0f);
+    
+    // Translation components in row-major are in m[3], m[7], m[11]
+    Matrix4f translation = Matrix4f::translation(Vector3f(10.0f, 20.0f, 30.0f));
+    EXPECT_FLOAT_EQ(translation.m[3], 10.0f);   // X translation
+    EXPECT_FLOAT_EQ(translation.m[7], 20.0f);   // Y translation
+    EXPECT_FLOAT_EQ(translation.m[11], 30.0f);  // Z translation
+    
+    // When passing to OpenGL, we need to transpose or use glUniformMatrix4fv with transpose=GL_TRUE
+}
+
+TEST_F(Matrix4fTest, PerspectiveProjection_KnownValues) {
+    // Test perspective projection with specific known values
+    // Using standard OpenGL parameters
+    float fov = M_PI / 2.0f; // 90 degrees
+    float aspect = 1.0f; // Square aspect ratio
+    float nearPlane = 1.0f;
+    float farPlane = 100.0f;
+    
+    Matrix4f proj = Matrix4f::perspective(fov, aspect, nearPlane, farPlane);
+    
+    // For 90 degree FOV and aspect=1:
+    // m[0] = 1/tan(45°) = 1
+    // m[5] = 1/tan(45°) = 1
+    float expectedM0 = 1.0f / tanf(fov / 2.0f);
+    float expectedM5 = expectedM0;
+    
+    EXPECT_NEAR(proj.m[0], expectedM0, 1e-6f);
+    EXPECT_NEAR(proj.m[5], expectedM5, 1e-6f);
+    
+    // Test the Z mapping
+    // m[10] = -(far + near) / (far - near)
+    // m[11] = -2 * far * near / (far - near)
+    float expectedM10 = -(farPlane + nearPlane) / (farPlane - nearPlane);
+    float expectedM11 = -2.0f * farPlane * nearPlane / (farPlane - nearPlane);
+    
+    EXPECT_NEAR(proj.m[10], expectedM10, 1e-6f);
+    EXPECT_NEAR(proj.m[11], expectedM11, 1e-6f);
+    
+    // Standard perspective matrix values
+    EXPECT_FLOAT_EQ(proj.m[14], -1.0f); // Perspective divide
+    EXPECT_FLOAT_EQ(proj.m[15], 0.0f);
+    
+    // Test transformation of points
+    // Point at near plane center should map to Z=-1
+    Vector4f nearPoint(0.0f, 0.0f, -nearPlane, 1.0f);
+    Vector4f nearResult = proj * nearPoint;
+    float nearNDC = nearResult.z / nearResult.w;
+    EXPECT_NEAR(nearNDC, -1.0f, 1e-5f);
+    
+    // Point at far plane center should map to Z=1
+    Vector4f farPoint(0.0f, 0.0f, -farPlane, 1.0f);
+    Vector4f farResult = proj * farPoint;
+    float farNDC = farResult.z / farResult.w;
+    EXPECT_NEAR(farNDC, 1.0f, 1e-5f);
 }

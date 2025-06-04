@@ -1,0 +1,220 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Program linking warning: WARNING: Could not find vertex shader attribute 'a_texCoord' to match BindAttributeLocation request.
+WARNING: Output of vertex shader 'v_color' not read by fragment shader
+WARNING: Output of vertex shader 'v_normal' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=3
+[2025-06-03 18:08:29.852] [INFO ] Created shader program: basic
+[2025-06-03 18:08:29.852] [INFO ] RenderEngine initialized successfully
+[2025-06-03 18:08:29.852] [INFO ] Renderer: OpenGL 2.1 Metal - 89.3 - Apple M2 (Apple)
+OpenGL Version: 2.1 Metal - 89.3
+GLSL Version: 1.20
+VAO extensions: ARB=0 APPLE=1
+VAO functions loaded successfully
+Creating scene...
+Generating mesh for resolution: 0, voxel size: 0.01
+Found 0 voxels to render
+No vertices generated (empty mesh)
+Mesh update: 0 vertices, 0 indices
+Scene created successfully!
+Initialization complete!
+Type 'help' for available commands.
+
+2025-06-03 18:08:29.870 voxel-cli[53589:4614134] +[IMKClient subclass]: chose IMKClient_Legacy
+2025-06-03 18:08:29.870 voxel-cli[53589:4614134] +[IMKInputSession subclass]: chose IMKInputSession_Legacy
+> Failed to resize workspace. Check size constraints (2-8m³)
+Rendering frame 0, mesh count: 0
+> Resolution set to 8cm
+Rendering frame 1, mesh count: 0
+> Generating mesh for resolution: 3, voxel size: 0.08
+Found 1 voxels to render
+  Voxel 0 at grid pos (2, 2, 2) -> world pos (0.2, 0.2, 0.2)
+Generated mesh with 24 vertices and 36 indices
+  Vertex 0: pos(0.162, 0.162, 0.162)
+  Vertex 1: pos(0.238, 0.162, 0.162)
+  Vertex 2: pos(0.238, 0.238, 0.162)
+Mesh update: 24 vertices, 36 indices
+Created render mesh with 24 vertices
+Voxel placed at (2, 2, 2)
+Rendering frame 2, mesh count: 1
+  Rendering mesh 0 with 24 vertices, 36 indices
+    Vertex 0: pos(0.162, 0.162, 0.162)
+  Shader ID: 3
+Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Setting uniform 'u_projection' at location 4
+Camera target: 2.5, 2.5, 2.5
+Camera position: 6.83036, 6.82966, 6.83036
+View matrix first row: 0.707107, 0, -0.707107, 2.10834e-07
+Workspace: 0,0,0 to 10,10,10
+Vertex 0 transform: world(0.162,0.162,0.162) -> clip(3.76365e-07,-0.000749582,11.3518,11.5495) -> NDC(3.2587e-08,-6.49015e-05,0.982881) -> Screen(640,360.023) [VISIBLE]
+  Triangle bounds: (640,357.67) to (645.433,362.367) Size: 5.43335 x 4.69656 pixels
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+Drawing mesh with 36 indices (12 triangles)
+drawElements called: count=36, type=4, offset=0 (expected 12 triangles)
+  Current program: 3
+  VAO=0, VBO=8, IBO=9
+  Position attrib 0 enabled: 1
+> Generating mesh for resolution: 3, voxel size: 0.08
+Found 2 voxels to render
+  Voxel 0 at grid pos (2, 2, 2) -> world pos (0.2, 0.2, 0.2)
+  Voxel 1 at grid pos (3, 2, 2) -> world pos (0.28, 0.2, 0.2)
+Generated mesh with 48 vertices and 72 indices
+  Vertex 0: pos(0.162, 0.162, 0.162)
+  Vertex 1: pos(0.238, 0.162, 0.162)
+  Vertex 2: pos(0.238, 0.238, 0.162)
+Mesh update: 48 vertices, 72 indices
+Created render mesh with 48 vertices
+Voxel placed at (3, 2, 2)
+Rendering frame 3, mesh count: 1
+  Rendering mesh 0 with 48 vertices, 72 indices
+    Vertex 0: pos(0.162, 0.162, 0.162)
+  Shader ID: 3
+Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Setting uniform 'u_projection' at location 4
+Vertex 0 transform: world(0.162,0.162,0.162) -> clip(3.76365e-07,-0.000749582,11.3518,11.5495) -> NDC(3.2587e-08,-6.49015e-05,0.982881) -> Screen(640,360.023) [VISIBLE]
+  Triangle bounds: (640,357.67) to (645.433,362.367) Size: 5.43335 x 4.69656 pixels
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+Drawing mesh with 72 indices (24 triangles)
+drawElements called: count=72, type=4, offset=0 (expected 24 triangles)
+  Current program: 3
+  VAO=0, VBO=10, IBO=11
+  Position attrib 0 enabled: 1
+> Generating mesh for resolution: 3, voxel size: 0.08
+Found 3 voxels to render
+  Voxel 0 at grid pos (2, 2, 2) -> world pos (0.2, 0.2, 0.2)
+  Voxel 1 at grid pos (3, 2, 2) -> world pos (0.28, 0.2, 0.2)
+  Voxel 2 at grid pos (2, 3, 2) -> world pos (0.2, 0.28, 0.2)
+Generated mesh with 72 vertices and 108 indices
+  Vertex 0: pos(0.162, 0.162, 0.162)
+  Vertex 1: pos(0.238, 0.162, 0.162)
+  Vertex 2: pos(0.238, 0.238, 0.162)
+Mesh update: 72 vertices, 108 indices
+Created render mesh with 72 vertices
+Voxel placed at (2, 3, 2)
+Rendering frame 4, mesh count: 1
+  Rendering mesh 0 with 72 vertices, 108 indices
+    Vertex 0: pos(0.162, 0.162, 0.162)
+  Shader ID: 3
+Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Setting uniform 'u_projection' at location 4
+Vertex 0 transform: world(0.162,0.162,0.162) -> clip(3.76365e-07,-0.000749582,11.3518,11.5495) -> NDC(3.2587e-08,-6.49015e-05,0.982881) -> Screen(640,360.023) [VISIBLE]
+  Triangle bounds: (640,357.67) to (645.433,362.367) Size: 5.43335 x 4.69656 pixels
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+Drawing mesh with 108 indices (36 triangles)
+drawElements called: count=108, type=4, offset=0 (expected 36 triangles)
+  Current program: 3
+  VAO=0, VBO=12, IBO=13
+  Position attrib 0 enabled: 1
+> Generating mesh for resolution: 3, voxel size: 0.08
+Found 4 voxels to render
+  Voxel 0 at grid pos (2, 2, 2) -> world pos (0.2, 0.2, 0.2)
+  Voxel 1 at grid pos (3, 2, 2) -> world pos (0.28, 0.2, 0.2)
+  Voxel 2 at grid pos (2, 3, 2) -> world pos (0.2, 0.28, 0.2)
+Generated mesh with 96 vertices and 144 indices
+  Vertex 0: pos(0.162, 0.162, 0.162)
+  Vertex 1: pos(0.238, 0.162, 0.162)
+  Vertex 2: pos(0.238, 0.238, 0.162)
+Mesh update: 96 vertices, 144 indices
+Created render mesh with 96 vertices
+Voxel placed at (2, 2, 3)
+Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Setting uniform 'u_projection' at location 4
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+Drawing mesh with 144 indices (48 triangles)
+drawElements called: count=144, type=4, offset=0 (expected 48 triangles)
+  Current program: 3
+  VAO=0, VBO=14, IBO=15
+  Position attrib 0 enabled: 1
+> Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Setting uniform 'u_projection' at location 4
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+Drawing mesh with 144 indices (48 triangles)
+drawElements called: count=144, type=4, offset=0 (expected 48 triangles)
+  Current program: 3
+  VAO=0, VBO=14, IBO=15
+  Position attrib 0 enabled: 1
+Note: Saved as test_yellow.ppm.ppm (PPM format). Convert to PNG with: convert test_yellow.ppm.ppm test_yellow.ppm.png
+Screenshot saved: test_yellow.ppm.png
+Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Setting uniform 'u_projection' at location 4
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+> Goodbye!
+Setting transform uniforms, camera exists
+Setting uniform 'u_model' at location 8
+  u_model matrix:
+    1 0 0 0 
+    0 1 0 0 
+    0 0 1 0 
+    0 0 0 1 
+Setting uniform 'u_view' at location 0
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Other at offset 24
+Enabled attribute 3 for Color at offset 32
+
+Shutting down...
+[2025-06-03 18:08:38.855] [INFO ] RenderEngine shut down

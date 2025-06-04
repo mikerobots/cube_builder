@@ -28,6 +28,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+# Add Google Test
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.12.1
+)
+FetchContent_MakeAvailable(googletest)
+
 # Set up GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -56,6 +64,11 @@ add_subdirectory(external/glad)
 add_subdirectory(foundation)
 add_subdirectory(core)
 add_subdirectory(apps/cli)
+
+# Add tests if building with testing enabled
+if(BUILD_TESTING)
+    add_subdirectory(tests/integration)
+endif()
 
 # Optional: Build documentation
 option(BUILD_DOCUMENTATION "Build documentation" OFF)

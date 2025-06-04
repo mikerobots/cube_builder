@@ -1,0 +1,5 @@
+workspace 5 5 5
+resolution 8cm
+place 2 2 2
+screenshot test_output/basic_voxel.ppm
+quit

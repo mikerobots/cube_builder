@@ -63,6 +63,8 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
     int voxelCount = 0;
     for (const auto& voxelPos : voxelPositions) {
         // Convert voxel coordinates to world position
+        // Grid position * voxel size gives bottom-left corner
+        // Add half voxel size to get center of voxel
         Math::Vector3f worldPos(
             voxelPos.gridPos.x * voxelSize + voxelSize * 0.5f,
             voxelPos.gridPos.y * voxelSize + voxelSize * 0.5f,
@@ -77,7 +79,7 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
         }
         
         // Use bright colors for easy identification 
-        Math::Vector3f color(1.0f, 0.0f, 0.0f);  // Bright red for debugging
+        Math::Vector3f color(1.0f, 1.0f, 0.0f);  // Bright yellow for debugging
         
         addCube(vertices, indices, worldPos, voxelSize * 0.95f, color); // Slight gap between cubes
         voxelCount++;

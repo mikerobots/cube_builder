@@ -139,13 +139,28 @@ core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.s: cmake_f
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.s"
 	cd /Users/michaelhalloran/cube_edit/build/core/rendering && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/ShaderManager.cpp -o CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.s
 
+core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/flags.make
+core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o: /Users/michaelhalloran/cube_edit/core/rendering/ShaderManagerSafe.cpp
+core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o -MF CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o.d -o CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o -c /Users/michaelhalloran/cube_edit/core/rendering/ShaderManagerSafe.cpp
+
+core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.i"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelhalloran/cube_edit/core/rendering/ShaderManagerSafe.cpp > CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.i
+
+core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.s"
+	cd /Users/michaelhalloran/cube_edit/build/core/rendering && /Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelhalloran/cube_edit/core/rendering/ShaderManagerSafe.cpp -o CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.s
+
 # Object files for target VoxelEditor_Rendering
 VoxelEditor_Rendering_OBJECTS = \
 "CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o" \
 "CMakeFiles/VoxelEditor_Rendering.dir/RenderEngine.cpp.o" \
 "CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.o" \
 "CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o" \
-"CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o"
+"CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o" \
+"CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o"
 
 # External object files for target VoxelEditor_Rendering
 VoxelEditor_Rendering_EXTERNAL_OBJECTS =
@@ -155,9 +170,10 @@ lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.
 lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.o
 lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o
 lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o
+lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o
 lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/build.make
 lib/libVoxelEditor_Rendering.a: core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library ../../lib/libVoxelEditor_Rendering.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelhalloran/cube_edit/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library ../../lib/libVoxelEditor_Rendering.a"
 	cd /Users/michaelhalloran/cube_edit/build/core/rendering && $(CMAKE_COMMAND) -P CMakeFiles/VoxelEditor_Rendering.dir/cmake_clean_target.cmake
 	cd /Users/michaelhalloran/cube_edit/build/core/rendering && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/VoxelEditor_Rendering.dir/link.txt --verbose=$(VERBOSE)
 

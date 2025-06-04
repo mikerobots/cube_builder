@@ -74,10 +74,15 @@ public:
     
     // Rendering updates
     void requestMeshUpdate() { updateVoxelMesh(); }
+    void updateVoxelMeshes() { updateVoxelMesh(); } // Alias for tests
+    void render(); // Make render public for tests
     
     // Headless mode
     bool isHeadless() const { return m_headless; }
     void setHeadless(bool headless) { m_headless = headless; }
+    
+    // Test support methods
+    void setHoverPosition(const Math::Vector3i& pos) { m_hoverPosition = pos; }
     
 private:
     // Core systems
@@ -107,6 +112,7 @@ private:
     bool m_running = false;
     bool m_headless = false;
     std::string m_currentProject;
+    Math::Vector3i m_hoverPosition;
     
     // Current scene data for rendering
     std::vector<Rendering::Mesh> m_voxelMeshes;
@@ -118,7 +124,6 @@ private:
     bool initializeCLI();
     void registerCommands();
     void processInput();
-    void render();
     
     // Rendering helpers  
     void updateVoxelMesh();

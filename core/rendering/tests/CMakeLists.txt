@@ -7,10 +7,21 @@ set(RENDERING_TEST_SOURCES
     test_OpenGLRenderer.cpp
     test_RenderEngine.cpp
     test_ShaderManager.cpp
-    # test_RenderState.cpp       # When implementation is added
+    test_ShaderAttributeBinding.cpp
+    test_ShaderUniforms.cpp
+    test_ShaderManagerLogging.cpp
+    test_ShaderManagerSimple.cpp
+    test_ShaderManagerDebug.cpp
+    test_ShaderManagerFixed.cpp
+    test_ShaderManagerSafe.cpp
+    test_RenderIncremental.cpp
+    test_RenderState.cpp
 )
 
 add_executable(VoxelEditor_Rendering_Tests ${RENDERING_TEST_SOURCES})
+
+# Find GLFW for OpenGL context in tests
+find_package(glfw3 QUIET)
 
 # Link dependencies
 target_link_libraries(VoxelEditor_Rendering_Tests
@@ -18,10 +29,18 @@ target_link_libraries(VoxelEditor_Rendering_Tests
     VoxelEditor_Math
     VoxelEditor_Events
     VoxelEditor_Camera
+    VoxelEditor_CLI_Lib  # For VoxelMeshGenerator
+    VoxelEditor_SurfaceGen  # For SurfaceTypes
     glad
     GTest::gtest
     GTest::gtest_main
 )
+
+# Add GLFW if found (for OpenGL context tests)
+if(glfw3_FOUND)
+    target_link_libraries(VoxelEditor_Rendering_Tests glfw)
+    target_compile_definitions(VoxelEditor_Rendering_Tests PRIVATE HAVE_GLFW)
+endif()
 
 target_compile_features(VoxelEditor_Rendering_Tests PRIVATE cxx_std_20)
 

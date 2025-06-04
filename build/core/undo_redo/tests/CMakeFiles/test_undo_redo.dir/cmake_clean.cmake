@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "../../../bin/test_undo_redo"
+  "../../../bin/test_undo_redo.pdb"
   "CMakeFiles/test_undo_redo.dir/TestCommand.cpp.o"
   "CMakeFiles/test_undo_redo.dir/TestCommand.cpp.o.d"
-  "test_undo_redo"
-  "test_undo_redo.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

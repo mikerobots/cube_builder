@@ -1,0 +1,6 @@
+workspace 5 5 5
+resolution 1cm
+place 2 2 2
+view iso
+screenshot test_output/resolution_1cm.ppm
+quit

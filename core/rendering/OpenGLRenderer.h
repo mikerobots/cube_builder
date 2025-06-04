@@ -110,11 +110,11 @@ struct UniformValue {
 class OpenGLRenderer {
 public:
     OpenGLRenderer();
-    ~OpenGLRenderer();
+    virtual ~OpenGLRenderer();
     
     // Context management
-    bool initializeContext(const RenderConfig& config);
-    void destroyContext();
+    virtual bool initializeContext(const RenderConfig& config);
+    virtual void destroyContext();
     bool isContextValid() const { return m_contextValid; }
     const std::string& getRendererInfo() const { return m_rendererInfo; }
     
@@ -142,11 +142,11 @@ public:
     void setTextureParameters(TextureId textureId, bool mipmapping, float anisotropy);
     
     // Shader operations
-    ShaderId createShader(ShaderType type, const std::string& source);
-    ShaderId createProgram(const std::vector<ShaderId>& shaders);
-    void useProgram(ShaderId programId);
-    void deleteShader(ShaderId shaderId);
-    void deleteProgram(ShaderId programId);
+    virtual ShaderId createShader(ShaderType type, const std::string& source);
+    virtual ShaderId createProgram(const std::vector<ShaderId>& shaders);
+    virtual void useProgram(ShaderId programId);
+    virtual void deleteShader(ShaderId shaderId);
+    virtual void deleteProgram(ShaderId programId);
     
     // Uniform operations
     void setUniform(ShaderId programId, const std::string& name, const UniformValue& value);
@@ -229,6 +229,9 @@ private:
     int m_maxTextureSize;
     int m_maxTextureUnits;
     int m_maxVertexAttributes;
+    
+    // Default VAO for OpenGL 3.3 core profile
+    uint32_t m_defaultVAO;
     
     // Performance monitoring
     struct TimestampQuery {

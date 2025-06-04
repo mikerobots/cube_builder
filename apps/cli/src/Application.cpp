@@ -9,39 +9,7 @@
 #include <algorithm>
 #include <cstddef>  // for offsetof
 
-// Silence OpenGL deprecation warnings on macOS
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#endif
 
-// OpenGL headers
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#ifdef __APPLE__
-#include <OpenGL/glext.h>
-#endif
-
-// OpenGL function pointers for VAO (needed because our GLAD is a stub)
-#ifndef APIENTRY
-#define APIENTRY
-#endif
-#ifndef APIENTRYP
-#define APIENTRYP APIENTRY *
-#endif
-
-typedef void (APIENTRYP PFNGLGENVERTEXARRAYSPROC) (GLsizei n, GLuint *arrays);
-typedef void (APIENTRYP PFNGLBINDVERTEXARRAYPROC) (GLuint array);
-typedef void (APIENTRYP PFNGLDELETEVERTEXARRAYSPROC) (GLsizei n, const GLuint *arrays);
-
-static PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
-static PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
-static PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays = nullptr;
-
-// Define missing GL constants
-#ifndef GL_VERTEX_ARRAY_BINDING
-#define GL_VERTEX_ARRAY_BINDING 0x85B5
-#endif
 
 // Application headers
 #include "cli/Application.h"
@@ -217,14 +185,21 @@ bool Application::initializeCoreSystem() {
         // Camera controller
         m_cameraController = std::make_unique<Camera::CameraController>(m_eventDispatcher.get());
         
-        // Set camera to look at center of 5x5x5 voxel grid
+        // Set camera to look at center of workspace
         m_cameraController->setViewPreset(Camera::ViewPreset::ISOMETRIC);
-        // Center of 5x5x5 grid at 8cm voxels is at (0.2, 0.2, 0.2)
-        m_cameraController->getCamera()->setTarget(Math::Vector3f(0.20f, 0.20f, 0.20f));
-        m_cameraController->getCamera()->setDistance(1.3f);  // Optimal distance for 5x5x5 grid
         
-        // Debug: Camera setup for 5x5x5 voxel grid
-        std::cout << "DEBUG: Setting up camera to view center of 5x5x5 grid at (0.2, 0.2, 0.2)" << std::endl;
+        // Get workspace size to center camera
+        Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+        Math::Vector3f workspaceCenter = workspaceSize * 0.5f;
+        
+        m_cameraController->getCamera()->setTarget(workspaceCenter);
+        
+        // Set distance based on workspace size
+        float maxDimension = std::max({workspaceSize.x, workspaceSize.y, workspaceSize.z});
+        m_cameraController->getCamera()->setDistance(maxDimension * 1.5f);
+        
+        std::cout << "Camera set to view workspace center at (" 
+                  << workspaceCenter.x << ", " << workspaceCenter.y << ", " << workspaceCenter.z << ")" << std::endl;
         
         // Input manager
         m_inputManager = std::make_unique<Input::InputManager>(m_eventDispatcher.get());
@@ -284,6 +259,9 @@ bool Application::initializeRendering() {
             return false;
         }
         
+        // Set render engine on window
+        m_renderWindow->setRenderEngine(m_renderEngine.get());
+        
         // Create feedback renderer (pass nullptr for now)
         m_feedbackRenderer = std::make_unique<VisualFeedback::FeedbackRenderer>(nullptr);
         
@@ -331,53 +309,7 @@ bool Application::initializeCLI() {
             m_mouseInteraction->initialize();
             m_meshGenerator = std::make_unique<VoxelMeshGenerator>();
             
-            // Check OpenGL version
-            const GLubyte* version = glGetString(GL_VERSION);
-            const GLubyte* glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
-            std::cout << "OpenGL Version: " << version << std::endl;
-            std::cout << "GLSL Version: " << glslVersion << std::endl;
-        
-        // Check for VAO extensions
-        const GLubyte* extensions = glGetString(GL_EXTENSIONS);
-        std::string extStr(reinterpret_cast<const char*>(extensions));
-        bool hasVAO = extStr.find("GL_ARB_vertex_array_object") != std::string::npos;
-        bool hasVAOApple = extStr.find("GL_APPLE_vertex_array_object") != std::string::npos;
-        std::cout << "VAO extensions: ARB=" << hasVAO << " APPLE=" << hasVAOApple << std::endl;
-        
-        // Load VAO functions (needed because our GLAD is a stub)
-        // Try ARB extension first for OpenGL 2.1
-        glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glfwGetProcAddress("glGenVertexArraysARB");
-        glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) glfwGetProcAddress("glBindVertexArrayARB");
-        glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glfwGetProcAddress("glDeleteVertexArraysARB");
-        
-        // Fall back to core functions if ARB not available
-        if (!glGenVertexArrays) {
-            glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glfwGetProcAddress("glGenVertexArrays");
-        }
-        if (!glBindVertexArray) {
-            glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) glfwGetProcAddress("glBindVertexArray");
-        }
-        if (!glDeleteVertexArrays) {
-            glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glfwGetProcAddress("glDeleteVertexArrays");
-        }
-        
-        // Check for Apple extension as last resort
-        if (!glGenVertexArrays) {
-            glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glfwGetProcAddress("glGenVertexArraysAPPLE");
-        }
-        if (!glBindVertexArray) {
-            glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) glfwGetProcAddress("glBindVertexArrayAPPLE");
-        }
-        if (!glDeleteVertexArrays) {
-            glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glfwGetProcAddress("glDeleteVertexArraysAPPLE");
-        }
-        
-            if (!glGenVertexArrays || !glBindVertexArray || !glDeleteVertexArrays) {
-                std::cerr << "Warning: VAO functions not available, will use client-side vertex arrays" << std::endl;
-                // Don't fail - we can work without VAOs in OpenGL 2.1
-            } else {
-                std::cout << "VAO functions loaded successfully" << std::endl;
-            }
+            // The RenderEngine will handle all OpenGL initialization
             
             // Create initial scene
             createScene();
@@ -441,21 +373,45 @@ void Application::render() {
     // Begin frame
     m_renderEngine->beginFrame();
     
-    // Clear with dark gray background
-    m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.2f, 0.2f, 0.2f, 1.0f));
+    // Clear with purple background for debugging
+    m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.5f, 0.0f, 0.5f, 1.0f));
     
     // Render all voxel meshes
-    for (const auto& mesh : m_voxelMeshes) {
+    static int frameCount = 0;
+    if (frameCount < 5) {
+        std::cout << "Rendering frame " << frameCount << ", mesh count: " << m_voxelMeshes.size() << std::endl;
+    }
+    
+    for (size_t i = 0; i < m_voxelMeshes.size(); ++i) {
+        const auto& mesh = m_voxelMeshes[i];
         if (!mesh.vertices.empty()) {
+            if (frameCount < 5) {
+                std::cout << "  Rendering mesh " << i << " with " << mesh.vertices.size() 
+                          << " vertices, " << mesh.indices.size() << " indices" << std::endl;
+                
+                // Show first few vertex positions to verify they're different
+                for (size_t v = 0; v < std::min(size_t(3), mesh.vertices.size()); v += 24) {
+                    std::cout << "    Vertex " << v << ": pos(" 
+                              << mesh.vertices[v].position.x << ", "
+                              << mesh.vertices[v].position.y << ", "
+                              << mesh.vertices[v].position.z << ")" << std::endl;
+                }
+            }
+            
             // Create identity transform and basic material
             Rendering::Transform transform;
             Rendering::Material material;
             material.albedo = Rendering::Color(0.8f, 0.8f, 0.8f, 1.0f);
-            material.shader = m_renderEngine->getBuiltinShader("basic_voxel");
+            material.shader = m_renderEngine->getBuiltinShader("basic");
+            
+            if (frameCount < 5) {
+                std::cout << "  Shader ID: " << material.shader << std::endl;
+            }
             
             m_renderEngine->renderMesh(mesh, transform, material);
         }
     }
+    frameCount++;
     
     // Render visual feedback (highlights, outlines, previews)
     if (m_feedbackRenderer) {
@@ -465,6 +421,7 @@ void Application::render() {
     
     // End frame and present
     m_renderEngine->endFrame();
+    
     m_renderEngine->present();
 }
 
@@ -516,9 +473,10 @@ void Application::updateVoxelMesh() {
         }
         
         // Add to our mesh collection
+        size_t vertexCount = renderMesh.vertices.size();
         m_voxelMeshes.push_back(std::move(renderMesh));
         
-        std::cout << "Created render mesh with " << renderMesh.vertices.size() << " vertices" << std::endl;
+        std::cout << "Created render mesh with " << vertexCount << " vertices" << std::endl;
     }
 }
 

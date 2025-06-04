@@ -257,6 +257,30 @@ test_RenderEngine.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderEngine.cpp.s
 .PHONY : test_RenderEngine.cpp.s
 
+test_RenderIncremental.o: test_RenderIncremental.cpp.o
+.PHONY : test_RenderIncremental.o
+
+# target to build an object file
+test_RenderIncremental.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.o
+.PHONY : test_RenderIncremental.cpp.o
+
+test_RenderIncremental.i: test_RenderIncremental.cpp.i
+.PHONY : test_RenderIncremental.i
+
+# target to preprocess a source file
+test_RenderIncremental.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.i
+.PHONY : test_RenderIncremental.cpp.i
+
+test_RenderIncremental.s: test_RenderIncremental.cpp.s
+.PHONY : test_RenderIncremental.s
+
+# target to generate assembly for a file
+test_RenderIncremental.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderIncremental.cpp.s
+.PHONY : test_RenderIncremental.cpp.s
+
 test_RenderStats.o: test_RenderStats.cpp.o
 .PHONY : test_RenderStats.o
 
@@ -305,6 +329,30 @@ test_RenderTypes.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_RenderTypes.cpp.s
 .PHONY : test_RenderTypes.cpp.s
 
+test_ShaderAttributeBinding.o: test_ShaderAttributeBinding.cpp.o
+.PHONY : test_ShaderAttributeBinding.o
+
+# target to build an object file
+test_ShaderAttributeBinding.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.o
+.PHONY : test_ShaderAttributeBinding.cpp.o
+
+test_ShaderAttributeBinding.i: test_ShaderAttributeBinding.cpp.i
+.PHONY : test_ShaderAttributeBinding.i
+
+# target to preprocess a source file
+test_ShaderAttributeBinding.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.i
+.PHONY : test_ShaderAttributeBinding.cpp.i
+
+test_ShaderAttributeBinding.s: test_ShaderAttributeBinding.cpp.s
+.PHONY : test_ShaderAttributeBinding.s
+
+# target to generate assembly for a file
+test_ShaderAttributeBinding.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderAttributeBinding.cpp.s
+.PHONY : test_ShaderAttributeBinding.cpp.s
+
 test_ShaderManager.o: test_ShaderManager.cpp.o
 .PHONY : test_ShaderManager.o
 
@@ -329,6 +377,150 @@ test_ShaderManager.cpp.s:
 	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManager.cpp.s
 .PHONY : test_ShaderManager.cpp.s
 
+test_ShaderManagerDebug.o: test_ShaderManagerDebug.cpp.o
+.PHONY : test_ShaderManagerDebug.o
+
+# target to build an object file
+test_ShaderManagerDebug.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.o
+.PHONY : test_ShaderManagerDebug.cpp.o
+
+test_ShaderManagerDebug.i: test_ShaderManagerDebug.cpp.i
+.PHONY : test_ShaderManagerDebug.i
+
+# target to preprocess a source file
+test_ShaderManagerDebug.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.i
+.PHONY : test_ShaderManagerDebug.cpp.i
+
+test_ShaderManagerDebug.s: test_ShaderManagerDebug.cpp.s
+.PHONY : test_ShaderManagerDebug.s
+
+# target to generate assembly for a file
+test_ShaderManagerDebug.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerDebug.cpp.s
+.PHONY : test_ShaderManagerDebug.cpp.s
+
+test_ShaderManagerFixed.o: test_ShaderManagerFixed.cpp.o
+.PHONY : test_ShaderManagerFixed.o
+
+# target to build an object file
+test_ShaderManagerFixed.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.o
+.PHONY : test_ShaderManagerFixed.cpp.o
+
+test_ShaderManagerFixed.i: test_ShaderManagerFixed.cpp.i
+.PHONY : test_ShaderManagerFixed.i
+
+# target to preprocess a source file
+test_ShaderManagerFixed.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.i
+.PHONY : test_ShaderManagerFixed.cpp.i
+
+test_ShaderManagerFixed.s: test_ShaderManagerFixed.cpp.s
+.PHONY : test_ShaderManagerFixed.s
+
+# target to generate assembly for a file
+test_ShaderManagerFixed.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerFixed.cpp.s
+.PHONY : test_ShaderManagerFixed.cpp.s
+
+test_ShaderManagerLogging.o: test_ShaderManagerLogging.cpp.o
+.PHONY : test_ShaderManagerLogging.o
+
+# target to build an object file
+test_ShaderManagerLogging.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.o
+.PHONY : test_ShaderManagerLogging.cpp.o
+
+test_ShaderManagerLogging.i: test_ShaderManagerLogging.cpp.i
+.PHONY : test_ShaderManagerLogging.i
+
+# target to preprocess a source file
+test_ShaderManagerLogging.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.i
+.PHONY : test_ShaderManagerLogging.cpp.i
+
+test_ShaderManagerLogging.s: test_ShaderManagerLogging.cpp.s
+.PHONY : test_ShaderManagerLogging.s
+
+# target to generate assembly for a file
+test_ShaderManagerLogging.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerLogging.cpp.s
+.PHONY : test_ShaderManagerLogging.cpp.s
+
+test_ShaderManagerSafe.o: test_ShaderManagerSafe.cpp.o
+.PHONY : test_ShaderManagerSafe.o
+
+# target to build an object file
+test_ShaderManagerSafe.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.o
+.PHONY : test_ShaderManagerSafe.cpp.o
+
+test_ShaderManagerSafe.i: test_ShaderManagerSafe.cpp.i
+.PHONY : test_ShaderManagerSafe.i
+
+# target to preprocess a source file
+test_ShaderManagerSafe.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.i
+.PHONY : test_ShaderManagerSafe.cpp.i
+
+test_ShaderManagerSafe.s: test_ShaderManagerSafe.cpp.s
+.PHONY : test_ShaderManagerSafe.s
+
+# target to generate assembly for a file
+test_ShaderManagerSafe.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSafe.cpp.s
+.PHONY : test_ShaderManagerSafe.cpp.s
+
+test_ShaderManagerSimple.o: test_ShaderManagerSimple.cpp.o
+.PHONY : test_ShaderManagerSimple.o
+
+# target to build an object file
+test_ShaderManagerSimple.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.o
+.PHONY : test_ShaderManagerSimple.cpp.o
+
+test_ShaderManagerSimple.i: test_ShaderManagerSimple.cpp.i
+.PHONY : test_ShaderManagerSimple.i
+
+# target to preprocess a source file
+test_ShaderManagerSimple.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.i
+.PHONY : test_ShaderManagerSimple.cpp.i
+
+test_ShaderManagerSimple.s: test_ShaderManagerSimple.cpp.s
+.PHONY : test_ShaderManagerSimple.s
+
+# target to generate assembly for a file
+test_ShaderManagerSimple.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderManagerSimple.cpp.s
+.PHONY : test_ShaderManagerSimple.cpp.s
+
+test_ShaderUniforms.o: test_ShaderUniforms.cpp.o
+.PHONY : test_ShaderUniforms.o
+
+# target to build an object file
+test_ShaderUniforms.cpp.o:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.o
+.PHONY : test_ShaderUniforms.cpp.o
+
+test_ShaderUniforms.i: test_ShaderUniforms.cpp.i
+.PHONY : test_ShaderUniforms.i
+
+# target to preprocess a source file
+test_ShaderUniforms.cpp.i:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.i
+.PHONY : test_ShaderUniforms.cpp.i
+
+test_ShaderUniforms.s: test_ShaderUniforms.cpp.s
+.PHONY : test_ShaderUniforms.s
+
+# target to generate assembly for a file
+test_ShaderUniforms.cpp.s:
+	cd /Users/michaelhalloran/cube_edit/build && $(MAKE) $(MAKESILENT) -f core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/build.make core/rendering/tests/CMakeFiles/VoxelEditor_Rendering_Tests.dir/test_ShaderUniforms.cpp.s
+.PHONY : test_ShaderUniforms.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -352,15 +544,39 @@ help:
 	@echo "... test_RenderEngine.o"
 	@echo "... test_RenderEngine.i"
 	@echo "... test_RenderEngine.s"
+	@echo "... test_RenderIncremental.o"
+	@echo "... test_RenderIncremental.i"
+	@echo "... test_RenderIncremental.s"
 	@echo "... test_RenderStats.o"
 	@echo "... test_RenderStats.i"
 	@echo "... test_RenderStats.s"
 	@echo "... test_RenderTypes.o"
 	@echo "... test_RenderTypes.i"
 	@echo "... test_RenderTypes.s"
+	@echo "... test_ShaderAttributeBinding.o"
+	@echo "... test_ShaderAttributeBinding.i"
+	@echo "... test_ShaderAttributeBinding.s"
 	@echo "... test_ShaderManager.o"
 	@echo "... test_ShaderManager.i"
 	@echo "... test_ShaderManager.s"
+	@echo "... test_ShaderManagerDebug.o"
+	@echo "... test_ShaderManagerDebug.i"
+	@echo "... test_ShaderManagerDebug.s"
+	@echo "... test_ShaderManagerFixed.o"
+	@echo "... test_ShaderManagerFixed.i"
+	@echo "... test_ShaderManagerFixed.s"
+	@echo "... test_ShaderManagerLogging.o"
+	@echo "... test_ShaderManagerLogging.i"
+	@echo "... test_ShaderManagerLogging.s"
+	@echo "... test_ShaderManagerSafe.o"
+	@echo "... test_ShaderManagerSafe.i"
+	@echo "... test_ShaderManagerSafe.s"
+	@echo "... test_ShaderManagerSimple.o"
+	@echo "... test_ShaderManagerSimple.i"
+	@echo "... test_ShaderManagerSimple.s"
+	@echo "... test_ShaderUniforms.o"
+	@echo "... test_ShaderUniforms.i"
+	@echo "... test_ShaderUniforms.s"
 .PHONY : help
 
 

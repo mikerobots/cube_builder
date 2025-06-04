@@ -8,6 +8,7 @@ add_library(VoxelEditor_Rendering STATIC
     OpenGLRenderer.h
     RenderState.h
     ShaderManager.h
+    ShaderManagerSafe.h
     
     # Source files
     RenderTypes.cpp
@@ -15,6 +16,7 @@ add_library(VoxelEditor_Rendering STATIC
     OpenGLRenderer.cpp
     RenderState.cpp
     ShaderManager.cpp
+    ShaderManagerSafe.cpp
 )
 
 # Set target properties

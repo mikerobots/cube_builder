@@ -1,5 +1,6 @@
 #include "ShaderManager.h"
 #include "../../foundation/logging/Logger.h"
+#include <algorithm>
 
 namespace VoxelEditor {
 namespace Rendering {
@@ -23,7 +24,9 @@ ShaderId ShaderManager::getShader(const std::string& name) {
 
 ShaderId ShaderManager::loadShaderFromFile(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath) {
     // TODO: Implement shader loading from files
-    Logging::Logger::getInstance().warning("ShaderManager::loadShader not implemented");
+    try {
+        Logging::Logger::getInstance().warning("ShaderManager::loadShader not implemented");
+    } catch (...) {}
     (void)name;
     (void)vertexPath;
     (void)fragmentPath;
@@ -32,29 +35,63 @@ ShaderId ShaderManager::loadShaderFromFile(const std::string& name, const std::s
 
 void ShaderManager::reloadAllShaders() {
     // TODO: Implement shader reloading
-    Logging::Logger::getInstance().warning("ShaderManager::reloadAllShaders not implemented");
+    try {
+        Logging::Logger::getInstance().warning("ShaderManager::reloadAllShaders not implemented");
+    } catch (...) {}
 }
 
 ShaderId ShaderManager::createShaderFromSource(const std::string& name, 
                                                const std::string& vertexSource, 
                                                const std::string& fragmentSource,
                                                OpenGLRenderer* renderer) {
-    if (!renderer) return InvalidId;
+    if (!renderer) {
+        try {
+            Logging::Logger::getInstance().error("ShaderManager::createShaderFromSource - null renderer provided");
+        } catch (...) {}
+        return InvalidId;
+    }
+    
+    // Re-enable logging with proper error handling
+    try {
+        auto& logger = Logging::Logger::getInstance();
+        logger.info("Compiling shader program: " + name);
+        
+        // Count lines safely
+        auto vertexLines = std::count(vertexSource.begin(), vertexSource.end(), '\n');
+        auto fragmentLines = std::count(fragmentSource.begin(), fragmentSource.end(), '\n');
+        
+        logger.debug("Vertex shader source lines: " + std::to_string(static_cast<int>(vertexLines)));
+        logger.debug("Fragment shader source lines: " + std::to_string(static_cast<int>(fragmentLines)));
+    } catch (...) {
+        // If logging fails, continue without it
+    }
     
     // Create vertex shader
     ShaderId vertexShader = renderer->createShader(ShaderType::Vertex, vertexSource);
     if (vertexShader == InvalidId) {
-        Logging::Logger::getInstance().error("Failed to compile vertex shader: " + name);
+        try {
+            Logging::Logger::getInstance().error("Failed to compile vertex shader: " + name);
+            Logging::Logger::getInstance().debug("Vertex shader source:\n" + vertexSource);
+        } catch (...) {}
         return InvalidId;
     }
+    try {
+        Logging::Logger::getInstance().debug("Successfully compiled vertex shader for: " + name);
+    } catch (...) {}
     
     // Create fragment shader
     ShaderId fragmentShader = renderer->createShader(ShaderType::Fragment, fragmentSource);
     if (fragmentShader == InvalidId) {
-        Logging::Logger::getInstance().error("Failed to compile fragment shader: " + name);
+        try {
+            Logging::Logger::getInstance().error("Failed to compile fragment shader: " + name);
+            Logging::Logger::getInstance().debug("Fragment shader source:\n" + fragmentSource);
+        } catch (...) {}
         renderer->deleteShader(vertexShader);
         return InvalidId;
     }
+    try {
+        Logging::Logger::getInstance().debug("Successfully compiled fragment shader for: " + name);
+    } catch (...) {}
     
     // Create program
     std::vector<ShaderId> shaders = {vertexShader, fragmentShader};
@@ -65,14 +102,19 @@ ShaderId ShaderManager::createShaderFromSource(const std::string& name,
     renderer->deleteShader(fragmentShader);
     
     if (program == InvalidId) {
-        Logging::Logger::getInstance().error("Failed to link shader program: " + name);
+        try {
+            Logging::Logger::getInstance().error("Failed to link shader program: " + name);
+            Logging::Logger::getInstance().debug("Make sure vertex outputs match fragment inputs (varyings)");
+        } catch (...) {}
         return InvalidId;
     }
     
     // Store in our map
     m_shadersByName[name] = program;
     
-    Logging::Logger::getInstance().info("Created shader program: " + name);
+    try {
+        Logging::Logger::getInstance().info("Successfully created shader program: " + name + " (ID: " + std::to_string(program) + ")");
+    } catch (...) {}
     return program;
 }
 

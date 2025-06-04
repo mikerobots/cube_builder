@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "../../../bin/test_surface_gen"
+  "../../../bin/test_surface_gen.pdb"
   "CMakeFiles/test_surface_gen.dir/TestDualContouring.cpp.o"
   "CMakeFiles/test_surface_gen.dir/TestDualContouring.cpp.o.d"
   "CMakeFiles/test_surface_gen.dir/TestMeshBuilder.cpp.o"
@@ -7,8 +9,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/test_surface_gen.dir/TestSurfaceGenerator.cpp.o.d"
   "CMakeFiles/test_surface_gen.dir/TestSurfaceTypes.cpp.o"
   "CMakeFiles/test_surface_gen.dir/TestSurfaceTypes.cpp.o.d"
-  "test_surface_gen"
-  "test_surface_gen.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

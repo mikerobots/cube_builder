@@ -125,6 +125,108 @@ TEST(MeshBuilderTest, CombineMeshes) {
     EXPECT_TRUE(combined.isValid());
 }
 
+TEST(MeshBuilderTest, CreateCubeMesh) {
+    // Test creating a cube mesh with correct vertex positions and winding order
+    // This is critical for voxel rendering
+    
+    MeshBuilder builder;
+    builder.beginMesh();
+    
+    // Define cube vertices (8 corners of a unit cube)
+    // Bottom face (z = 0)
+    uint32_t v0 = builder.addVertex(Vector3f(0, 0, 0)); // 0: bottom-left-front
+    uint32_t v1 = builder.addVertex(Vector3f(1, 0, 0)); // 1: bottom-right-front
+    uint32_t v2 = builder.addVertex(Vector3f(1, 1, 0)); // 2: bottom-right-back
+    uint32_t v3 = builder.addVertex(Vector3f(0, 1, 0)); // 3: bottom-left-back
+    
+    // Top face (z = 1)
+    uint32_t v4 = builder.addVertex(Vector3f(0, 0, 1)); // 4: top-left-front
+    uint32_t v5 = builder.addVertex(Vector3f(1, 0, 1)); // 5: top-right-front
+    uint32_t v6 = builder.addVertex(Vector3f(1, 1, 1)); // 6: top-right-back
+    uint32_t v7 = builder.addVertex(Vector3f(0, 1, 1)); // 7: top-left-back
+    
+    // Add faces with counter-clockwise winding when viewed from outside
+    // Front face (y = 0)
+    builder.addQuad(v0, v1, v5, v4);
+    
+    // Back face (y = 1)
+    builder.addQuad(v2, v3, v7, v6);
+    
+    // Left face (x = 0)
+    builder.addQuad(v3, v0, v4, v7);
+    
+    // Right face (x = 1)
+    builder.addQuad(v1, v2, v6, v5);
+    
+    // Bottom face (z = 0)
+    builder.addQuad(v3, v2, v1, v0);
+    
+    // Top face (z = 1)
+    builder.addQuad(v4, v5, v6, v7);
+    
+    Mesh mesh = builder.endMesh();
+    
+    // Verify mesh structure
+    EXPECT_EQ(mesh.vertices.size(), 8);  // 8 unique vertices
+    EXPECT_EQ(mesh.indices.size(), 36);  // 6 faces * 2 triangles * 3 vertices = 36 indices
+    EXPECT_TRUE(mesh.isValid());
+    
+    // Verify vertex positions
+    EXPECT_EQ(mesh.vertices[0], Vector3f(0, 0, 0));
+    EXPECT_EQ(mesh.vertices[1], Vector3f(1, 0, 0));
+    EXPECT_EQ(mesh.vertices[2], Vector3f(1, 1, 0));
+    EXPECT_EQ(mesh.vertices[3], Vector3f(0, 1, 0));
+    EXPECT_EQ(mesh.vertices[4], Vector3f(0, 0, 1));
+    EXPECT_EQ(mesh.vertices[5], Vector3f(1, 0, 1));
+    EXPECT_EQ(mesh.vertices[6], Vector3f(1, 1, 1));
+    EXPECT_EQ(mesh.vertices[7], Vector3f(0, 1, 1));
+    
+    // Calculate bounds
+    mesh.calculateBounds();
+    EXPECT_EQ(mesh.bounds.min, Vector3f(0, 0, 0));
+    EXPECT_EQ(mesh.bounds.max, Vector3f(1, 1, 1));
+}
+
+TEST(MeshBuilderTest, CubeWindingOrder) {
+    // Test that cube faces have correct winding order for back-face culling
+    
+    MeshBuilder builder;
+    builder.beginMesh();
+    
+    // Create a simple quad to test winding order
+    uint32_t v0 = builder.addVertex(Vector3f(0, 0, 0));
+    uint32_t v1 = builder.addVertex(Vector3f(1, 0, 0));
+    uint32_t v2 = builder.addVertex(Vector3f(1, 1, 0));
+    uint32_t v3 = builder.addVertex(Vector3f(0, 1, 0));
+    
+    // Add quad with CCW winding
+    builder.addQuad(v0, v1, v2, v3);
+    
+    Mesh mesh = builder.endMesh();
+    
+    // Verify the triangulation maintains CCW order
+    // First triangle: v0, v1, v2
+    EXPECT_EQ(mesh.indices[0], 0);
+    EXPECT_EQ(mesh.indices[1], 1);
+    EXPECT_EQ(mesh.indices[2], 2);
+    
+    // Second triangle: v0, v2, v3
+    EXPECT_EQ(mesh.indices[3], 0);
+    EXPECT_EQ(mesh.indices[4], 2);
+    EXPECT_EQ(mesh.indices[5], 3);
+    
+    // Generate normals to verify they point outward
+    builder.generateFlatNormals();
+    mesh = builder.endMesh();
+    
+    // All normals should point in +Z direction for a quad in XY plane
+    for (const auto& normal : mesh.normals) {
+        EXPECT_GT(normal.z, 0.9f);  // Should be close to 1.0
+        EXPECT_NEAR(normal.x, 0.0f, 0.1f);
+        EXPECT_NEAR(normal.y, 0.0f, 0.1f);
+    }
+}
+
 TEST(MeshTest, CalculateBounds) {
     Mesh mesh;
     mesh.vertices.push_back(Vector3f(-1, -1, -1));
@@ -159,6 +261,133 @@ TEST(MeshTest, CalculateNormals) {
         EXPECT_NEAR(normal.z, 1.0f, 0.001f);
         EXPECT_NEAR(normal.x, 0.0f, 0.001f);
         EXPECT_NEAR(normal.y, 0.0f, 0.001f);
+    }
+}
+
+TEST(MeshBuilderTest, VertexWindingOrderValidation) {
+    // Test that all triangles have consistent counter-clockwise winding order
+    // This is critical for proper back-face culling and lighting
+    
+    MeshBuilder builder;
+    builder.beginMesh();
+    
+    // Create a cube with each face added separately
+    // We'll verify each face has CCW winding when viewed from outside
+    
+    // Front face vertices (facing +Z)
+    uint32_t f0 = builder.addVertex(Vector3f(0, 0, 1));
+    uint32_t f1 = builder.addVertex(Vector3f(1, 0, 1));
+    uint32_t f2 = builder.addVertex(Vector3f(1, 1, 1));
+    uint32_t f3 = builder.addVertex(Vector3f(0, 1, 1));
+    
+    // Add front face with CCW winding
+    builder.addQuad(f0, f1, f2, f3);
+    
+    Mesh mesh = builder.endMesh();
+    
+    // Verify winding order by calculating face normal
+    Vector3f v0 = mesh.vertices[mesh.indices[0]];
+    Vector3f v1 = mesh.vertices[mesh.indices[1]];
+    Vector3f v2 = mesh.vertices[mesh.indices[2]];
+    
+    Vector3f edge1 = v1 - v0;
+    Vector3f edge2 = v2 - v0;
+    Vector3f normal = edge1.cross(edge2).normalized();
+    
+    // For front face, normal should point in +Z direction
+    EXPECT_GT(normal.z, 0.9f);
+    EXPECT_NEAR(normal.x, 0.0f, 0.1f);
+    EXPECT_NEAR(normal.y, 0.0f, 0.1f);
+}
+
+TEST(MeshBuilderTest, NormalDirectionValidation) {
+    // Test that normals point outward from the surface
+    // This is critical for proper lighting calculations
+    
+    MeshBuilder builder;
+    builder.beginMesh();
+    
+    // Create a complete cube
+    float size = 1.0f;
+    
+    // Define all 8 vertices
+    std::vector<Vector3f> positions = {
+        Vector3f(0, 0, 0), Vector3f(size, 0, 0),
+        Vector3f(size, size, 0), Vector3f(0, size, 0),
+        Vector3f(0, 0, size), Vector3f(size, 0, size),
+        Vector3f(size, size, size), Vector3f(0, size, size)
+    };
+    
+    std::vector<uint32_t> vertexIds;
+    for (const auto& pos : positions) {
+        vertexIds.push_back(builder.addVertex(pos));
+    }
+    
+    // Add all 6 faces with proper CCW winding
+    // Front face (+Z)
+    builder.addQuad(vertexIds[4], vertexIds[5], vertexIds[6], vertexIds[7]);
+    // Back face (-Z)
+    builder.addQuad(vertexIds[1], vertexIds[0], vertexIds[3], vertexIds[2]);
+    // Right face (+X)
+    builder.addQuad(vertexIds[5], vertexIds[1], vertexIds[2], vertexIds[6]);
+    // Left face (-X)
+    builder.addQuad(vertexIds[0], vertexIds[4], vertexIds[7], vertexIds[3]);
+    // Top face (+Y)
+    builder.addQuad(vertexIds[7], vertexIds[6], vertexIds[2], vertexIds[3]);
+    // Bottom face (-Y)
+    builder.addQuad(vertexIds[0], vertexIds[1], vertexIds[5], vertexIds[4]);
+    
+    // Generate flat normals (one per face)
+    builder.generateFlatNormals();
+    Mesh mesh = builder.endMesh();
+    
+    // Verify normals point outward
+    // For a cube centered around (0.5, 0.5, 0.5), we can check normal directions
+    Vector3f center(size/2, size/2, size/2);
+    
+    // Check several vertices and their normals
+    for (size_t i = 0; i < mesh.vertices.size() && i < mesh.normals.size(); ++i) {
+        Vector3f toVertex = (mesh.vertices[i] - center).normalized();
+        float dot = mesh.normals[i].dot(toVertex);
+        
+        // Normal should point in same general direction as vector from center to vertex
+        EXPECT_GT(dot, 0.5f) << "Normal at vertex " << i << " doesn't point outward";
+    }
+}
+
+TEST(MeshBuilderTest, ConsistentTriangulation) {
+    // Test that quad triangulation maintains consistent winding order
+    
+    MeshBuilder builder;
+    builder.beginMesh();
+    
+    // Create multiple quads to ensure triangulation is consistent
+    for (int i = 0; i < 3; ++i) {
+        float offset = i * 2.0f;
+        uint32_t v0 = builder.addVertex(Vector3f(offset, 0, 0));
+        uint32_t v1 = builder.addVertex(Vector3f(offset + 1, 0, 0));
+        uint32_t v2 = builder.addVertex(Vector3f(offset + 1, 1, 0));
+        uint32_t v3 = builder.addVertex(Vector3f(offset, 1, 0));
+        
+        builder.addQuad(v0, v1, v2, v3);
+    }
+    
+    Mesh mesh = builder.endMesh();
+    
+    // Each quad should produce 2 triangles with consistent winding
+    EXPECT_EQ(mesh.indices.size(), 18); // 3 quads * 2 triangles * 3 vertices
+    
+    // Check that all triangles have positive area (CCW winding)
+    for (size_t i = 0; i < mesh.indices.size(); i += 3) {
+        Vector3f v0 = mesh.vertices[mesh.indices[i]];
+        Vector3f v1 = mesh.vertices[mesh.indices[i + 1]];
+        Vector3f v2 = mesh.vertices[mesh.indices[i + 2]];
+        
+        // Calculate 2D cross product (assuming Z=0 plane)
+        float crossZ = (v1.x - v0.x) * (v2.y - v0.y) - (v1.y - v0.y) * (v2.x - v0.x);
+        
+        // Should be positive for CCW winding
+        EXPECT_GT(crossZ, 0.0f) << "Triangle " << i/3 << " has incorrect winding order";
     }
 }
 

@@ -536,6 +536,58 @@ ContinuousSubmit/fast:
 .PHONY : ContinuousSubmit/fast
 
 #=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+#=============================================================================
 # Target rules for targets named uninstall
 
 # Build rule for target.
@@ -588,6 +640,45 @@ glad/fast:
 .PHONY : glad/fast
 
 #=============================================================================
+# Target rules for targets named VoxelEditor_Math_Tests
+
+# Build rule for target.
+VoxelEditor_Math_Tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Math_Tests
+.PHONY : VoxelEditor_Math_Tests
+
+# fast build rule for target.
+VoxelEditor_Math_Tests/fast:
+	$(MAKE) $(MAKESILENT) -f foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build.make foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/build
+.PHONY : VoxelEditor_Math_Tests/fast
+
+#=============================================================================
+# Target rules for targets named VoxelEditor_Events_Tests
+
+# Build rule for target.
+VoxelEditor_Events_Tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Events_Tests
+.PHONY : VoxelEditor_Events_Tests
+
+# fast build rule for target.
+VoxelEditor_Events_Tests/fast:
+	$(MAKE) $(MAKESILENT) -f foundation/events/tests/CMakeFiles/VoxelEditor_Events_Tests.dir/build.make foundation/events/tests/CMakeFiles/VoxelEditor_Events_Tests.dir/build
+.PHONY : VoxelEditor_Events_Tests/fast
+
+#=============================================================================
+# Target rules for targets named VoxelEditor_Memory_Tests
+
+# Build rule for target.
+VoxelEditor_Memory_Tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Memory_Tests
+.PHONY : VoxelEditor_Memory_Tests
+
+# fast build rule for target.
+VoxelEditor_Memory_Tests/fast:
+	$(MAKE) $(MAKESILENT) -f foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build.make foundation/memory/tests/CMakeFiles/VoxelEditor_Memory_Tests.dir/build
+.PHONY : VoxelEditor_Memory_Tests/fast
+
+#=============================================================================
 # Target rules for targets named VoxelEditor_Logging_Tests
 
 # Build rule for target.
@@ -638,6 +729,19 @@ VoxelEditor_VoxelData_Tests: cmake_check_build_system
 VoxelEditor_VoxelData_Tests/fast:
 	$(MAKE) $(MAKESILENT) -f core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build.make core/voxel_data/tests/CMakeFiles/VoxelEditor_VoxelData_Tests.dir/build
 .PHONY : VoxelEditor_VoxelData_Tests/fast
+
+#=============================================================================
+# Target rules for targets named VoxelEditor_Camera_Tests
+
+# Build rule for target.
+VoxelEditor_Camera_Tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VoxelEditor_Camera_Tests
+.PHONY : VoxelEditor_Camera_Tests
+
+# fast build rule for target.
+VoxelEditor_Camera_Tests/fast:
+	$(MAKE) $(MAKESILENT) -f core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build.make core/camera/tests/CMakeFiles/VoxelEditor_Camera_Tests.dir/build
+.PHONY : VoxelEditor_Camera_Tests/fast
 
 #=============================================================================
 # Target rules for targets named VoxelEditor_Rendering
@@ -731,6 +835,45 @@ VoxelEditor_UndoRedo/fast:
 .PHONY : VoxelEditor_UndoRedo/fast
 
 #=============================================================================
+# Target rules for targets named test_undo_redo
+
+# Build rule for target.
+test_undo_redo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_undo_redo
+.PHONY : test_undo_redo
+
+# fast build rule for target.
+test_undo_redo/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build.make core/undo_redo/tests/CMakeFiles/test_undo_redo.dir/build
+.PHONY : test_undo_redo/fast
+
+#=============================================================================
+# Target rules for targets named test_simple_command
+
+# Build rule for target.
+test_simple_command: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_simple_command
+.PHONY : test_simple_command
+
+# fast build rule for target.
+test_simple_command/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build.make core/undo_redo/tests/CMakeFiles/test_simple_command.dir/build
+.PHONY : test_simple_command/fast
+
+#=============================================================================
+# Target rules for targets named test_history_manager
+
+# Build rule for target.
+test_history_manager: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_history_manager
+.PHONY : test_history_manager
+
+# fast build rule for target.
+test_history_manager/fast:
+	$(MAKE) $(MAKESILENT) -f core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build.make core/undo_redo/tests/CMakeFiles/test_history_manager.dir/build
+.PHONY : test_history_manager/fast
+
+#=============================================================================
 # Target rules for targets named VoxelEditor_SurfaceGen
 
 # Build rule for target.
@@ -742,6 +885,19 @@ VoxelEditor_SurfaceGen: cmake_check_build_system
 VoxelEditor_SurfaceGen/fast:
 	$(MAKE) $(MAKESILENT) -f core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build.make core/surface_gen/CMakeFiles/VoxelEditor_SurfaceGen.dir/build
 .PHONY : VoxelEditor_SurfaceGen/fast
+
+#=============================================================================
+# Target rules for targets named test_surface_gen
+
+# Build rule for target.
+test_surface_gen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_surface_gen
+.PHONY : test_surface_gen
+
+# fast build rule for target.
+test_surface_gen/fast:
+	$(MAKE) $(MAKESILENT) -f core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build.make core/surface_gen/tests/CMakeFiles/test_surface_gen.dir/build
+.PHONY : test_surface_gen/fast
 
 #=============================================================================
 # Target rules for targets named VoxelEditor_VisualFeedback
@@ -834,6 +990,32 @@ VoxelEditor_VoxelMeshGenerator_Tests/fast:
 	$(MAKE) $(MAKESILENT) -f apps/cli/tests/CMakeFiles/VoxelEditor_VoxelMeshGenerator_Tests.dir/build.make apps/cli/tests/CMakeFiles/VoxelEditor_VoxelMeshGenerator_Tests.dir/build
 .PHONY : VoxelEditor_VoxelMeshGenerator_Tests/fast
 
+#=============================================================================
+# Target rules for targets named test_camera_cube_visibility
+
+# Build rule for target.
+test_camera_cube_visibility: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_camera_cube_visibility
+.PHONY : test_camera_cube_visibility
+
+# fast build rule for target.
+test_camera_cube_visibility/fast:
+	$(MAKE) $(MAKESILENT) -f tests/integration/CMakeFiles/test_camera_cube_visibility.dir/build.make tests/integration/CMakeFiles/test_camera_cube_visibility.dir/build
+.PHONY : test_camera_cube_visibility/fast
+
+#=============================================================================
+# Target rules for targets named test_camera_cube_visibility_simple
+
+# Build rule for target.
+test_camera_cube_visibility_simple: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_camera_cube_visibility_simple
+.PHONY : test_camera_cube_visibility_simple
+
+# fast build rule for target.
+test_camera_cube_visibility_simple/fast:
+	$(MAKE) $(MAKESILENT) -f tests/integration/CMakeFiles/test_camera_cube_visibility_simple.dir/build.make tests/integration/CMakeFiles/test_camera_cube_visibility_simple.dir/build
+.PHONY : test_camera_cube_visibility_simple/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -880,12 +1062,16 @@ help:
 	@echo "... VoxelEditor_CLI"
 	@echo "... VoxelEditor_CLI_Lib"
 	@echo "... VoxelEditor_CLI_Tests"
+	@echo "... VoxelEditor_Camera_Tests"
 	@echo "... VoxelEditor_Config_Tests"
+	@echo "... VoxelEditor_Events_Tests"
 	@echo "... VoxelEditor_FileIO"
 	@echo "... VoxelEditor_Groups"
 	@echo "... VoxelEditor_Input"
 	@echo "... VoxelEditor_Input_Tests"
 	@echo "... VoxelEditor_Logging_Tests"
+	@echo "... VoxelEditor_Math_Tests"
+	@echo "... VoxelEditor_Memory_Tests"
 	@echo "... VoxelEditor_Rendering"
 	@echo "... VoxelEditor_Rendering_Tests"
 	@echo "... VoxelEditor_Selection"
@@ -898,6 +1084,16 @@ help:
 	@echo "... VoxelEditor_VoxelMeshGenerator_Tests"
 	@echo "... glad"
 	@echo "... glfw"
+	@echo "... gmock"
+	@echo "... gmock_main"
+	@echo "... gtest"
+	@echo "... gtest_main"
+	@echo "... test_camera_cube_visibility"
+	@echo "... test_camera_cube_visibility_simple"
+	@echo "... test_history_manager"
+	@echo "... test_simple_command"
+	@echo "... test_surface_gen"
+	@echo "... test_undo_redo"
 .PHONY : help
 
 

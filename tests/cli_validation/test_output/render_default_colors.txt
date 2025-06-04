@@ -1,0 +1,9 @@
+Image dimensions: 2560x1440
+Total pixels: 3686400
+
+Color distribution:
+Format: (R,G,B) : Count
+----------------------------------------
+(128,   0, 128) : 3686400 (100.00%)
+----------------------------------------
+Unique colors: 1

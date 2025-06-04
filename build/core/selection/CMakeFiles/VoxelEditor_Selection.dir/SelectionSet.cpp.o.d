@@ -1,8 +1,8 @@
 core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionSet.cpp.o: \
   /Users/michaelhalloran/cube_edit/core/selection/SelectionSet.cpp \
-  /Users/michaelhalloran/cube_edit/core/selection/SelectionSet.h \
-  /Users/michaelhalloran/cube_edit/core/selection/SelectionTypes.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Vector3i.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/SelectionSet.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/SelectionTypes.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/../../foundation/math/Vector3i.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__config \
@@ -758,8 +758,8 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionSet.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/weak_result_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/allocator_destructor.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/uses_allocator_construction.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/Vector3f.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../../foundation/math/BoundingBox.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/../../foundation/math/Vector3f.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/../../foundation/math/BoundingBox.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Ray.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector2f.h \
@@ -859,10 +859,10 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionSet.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/width_estimation_table.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/temp_value.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__split_buffer \
-  /Users/michaelhalloran/cube_edit/core/selection/../voxel_data/VoxelTypes.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/../voxel_data/VoxelTypes.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/voxel_data/../../foundation/math/Vector3i.h \
-  /Users/michaelhalloran/cube_edit/core/selection/../rendering/RenderTypes.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/../rendering/RenderTypes.h \
   /Users/michaelhalloran/cube_edit/core/rendering/../../foundation/math/Vector3f.h \
   /Users/michaelhalloran/cube_edit/core/rendering/../../foundation/math/Vector2f.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/functional \
@@ -892,7 +892,7 @@ core/selection/CMakeFiles/VoxelEditor_Selection.dir/SelectionSet.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__functional/unary_negate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/unordered_set \
-  /Users/michaelhalloran/cube_edit/core/selection/../../core/file_io/include/file_io/BinaryIO.h \
+  /Users/michaelhalloran/cube_edit/core/file_io/../selection/../../core/file_io/include/file_io/BinaryIO.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Matrix4f.h \
   /Users/michaelhalloran/cube_edit/foundation/math/Vector4f.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/numeric \
