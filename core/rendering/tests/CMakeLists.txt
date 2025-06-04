@@ -16,6 +16,8 @@ set(RENDERING_TEST_SOURCES
     test_ShaderManagerSafe.cpp
     test_RenderIncremental.cpp
     test_RenderState.cpp
+    test_EnhancedShaderValidation.cpp
+    test_EdgeRendering.cpp
 )
 
 add_executable(VoxelEditor_Rendering_Tests ${RENDERING_TEST_SOURCES})

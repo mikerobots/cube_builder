@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build/foundation/events/tests/VoxelEditor_Events_Tests[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build/foundation/events/tests/VoxelEditor_Events_Tests[1]_tests.cmake")
-else()
-  add_test(VoxelEditor_Events_Tests_NOT_BUILT VoxelEditor_Events_Tests_NOT_BUILT)
-endif()

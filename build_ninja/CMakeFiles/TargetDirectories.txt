@@ -26,7 +26,6 @@
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousCoverage.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousMemCheck.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/ContinuousSubmit.dir
-/Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test_render_core.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build_ninja/CMakeFiles/rebuild_cache.dir
@@ -293,6 +292,11 @@
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/install/strip.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/VoxelEditor_CLI_Tests.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/VoxelEditor_VoxelMeshGenerator_Tests.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_face_clicking.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_click_voxel_placement.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_voxel_face_clicking.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_voxel_face_clicking_simple.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_mouse_ray_movement.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/rebuild_cache.dir

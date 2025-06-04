@@ -7,11 +7,11 @@ the top-level TODO.md file high level.
 
 ## Build System
 
-This project uses CMake with build acceleration tools for faster development:
+This project uses CMake with Ninja for all builds. **Always use Ninja for building this project.**
 
-### Using Ninja (recommended)
+### Configure and Build
 ```bash
-# Configure with Ninja
+# Configure with Ninja (ALWAYS use this)
 cmake -B build -G Ninja
 
 # Build with Ninja
@@ -19,14 +19,6 @@ cmake --build build
 
 # Or directly with ninja
 ninja -C build
-```
-### Combined Usage (optimal)
-```bash
-# Configure once with Ninja
-cmake -B build -G Ninja
-
-# All subsequent builds will use both Ninja and ccache
-cmake --build build
 ```
 
 ### Optimized Build Commands

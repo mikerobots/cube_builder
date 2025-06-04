@@ -329,6 +329,62 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
     }
 }
 
+void RenderEngine::renderMeshAsLines(const Mesh& mesh, const Transform& transform, const Material& material) {
+    if (!m_glRenderer || !m_shaderManager || mesh.isEmpty()) return;
+    
+    // Clear any pending GL errors before starting
+    while (glGetError() != GL_NO_ERROR) {}
+    
+    // Set up mesh buffers if needed
+    if (mesh.vertexArray == 0 || mesh.vertexBuffer == InvalidId) {
+        setupMeshBuffers(const_cast<Mesh&>(mesh));
+    }
+    
+    // Select shader
+    ShaderId shaderId = material.shader;
+    if (shaderId == InvalidId) {
+        shaderId = getBuiltinShader("basic");
+    }
+    
+    // Bind shader
+    m_glRenderer->useProgram(shaderId);
+    
+    // Bind vertex array
+    m_glRenderer->bindVertexArray(mesh.vertexArray);
+    
+    // Set up transform matrices
+    Math::Matrix4f modelMatrix = Math::Matrix4f::Identity();
+    modelMatrix = modelMatrix * Math::Matrix4f::translation(transform.position);
+    // For simplicity, we'll skip rotation for lines - could be enhanced later
+    // modelMatrix = modelMatrix * Math::Matrix4f::rotation(transform.rotation);
+    modelMatrix = modelMatrix * Math::Matrix4f::scale(transform.scale);
+    
+    m_glRenderer->setUniform("model", UniformValue(modelMatrix));
+    m_glRenderer->setUniform("view", UniformValue(m_currentCamera->getViewMatrix()));
+    m_glRenderer->setUniform("projection", UniformValue(m_currentCamera->getProjectionMatrix()));
+    
+    // Set lighting uniforms for basic shader
+    Math::Vector3f lightPos(5.0f, 10.0f, 5.0f);
+    Math::Vector3f lightColor(1.0f, 1.0f, 1.0f);  // White light
+    Math::Vector3f viewPos = m_currentCamera->getPosition();
+    
+    m_glRenderer->setUniform("lightPos", UniformValue(lightPos));
+    m_glRenderer->setUniform("lightColor", UniformValue(lightColor));
+    m_glRenderer->setUniform("viewPos", UniformValue(viewPos));
+    
+    // Clear any pending GL errors before drawing
+    while (glGetError() != GL_NO_ERROR) {}
+    
+    // Draw as lines
+    m_glRenderer->drawElements(PrimitiveType::Lines, 
+                               static_cast<int>(mesh.indices.size()),
+                               IndexType::UInt32);
+    
+    // Update stats
+    m_stats.drawCalls++;
+    m_stats.verticesProcessed += mesh.getVertexCount();
+}
+
 // Viewport and camera
 void RenderEngine::setViewport(int x, int y, int width, int height) {
     if (!m_glRenderer) return;
@@ -569,8 +625,8 @@ void RenderEngine::updatePerFrameUniforms() {
 void RenderEngine::loadBuiltinShaders() {
     if (!m_shaderManager || !m_glRenderer) return;
     
-    // Load basic shader with lighting - OpenGL 3.3 compatible
-    const std::string basicVertex = R"(
+    // Common vertex shader for all voxel shaders
+    const std::string voxelVertex = R"(
 #version 330 core
 layout(location = 0) in vec3 a_position;
 layout(location = 1) in vec3 a_normal;
@@ -593,6 +649,7 @@ void main() {
 }
     )";
     
+    // Basic shader (original lighting)
     const std::string basicFragment = R"(
 #version 330 core
 
@@ -626,12 +683,187 @@ void main() {
     
     // Combine results
     vec3 result = (ambient + diffuse + specular) * Color.rgb;
-    FragColor = vec4(result, Color.a);
+    FragColor = vec4(result, 1.0);
 }
     )";
     
-    auto basicShaderId = m_shaderManager->createShaderFromSource("basic", basicVertex, basicFragment, m_glRenderer.get());
+    // Enhanced shader with better face distinction
+    const std::string enhancedFragment = R"(
+#version 330 core
+
+in vec3 FragPos;
+in vec3 Normal;
+in vec4 Color;
+
+out vec4 FragColor;
+
+uniform vec3 lightPos;
+uniform vec3 lightColor;
+uniform vec3 viewPos;
+
+void main() {
+    // Enhanced lighting with better face distinction
+    vec3 norm = normalize(Normal);
+    
+    // Multiple light sources for better face visibility
+    // Primary light from above-front-right
+    vec3 lightDir1 = normalize(vec3(1.0, 2.0, 1.0));
+    float diff1 = max(dot(norm, lightDir1), 0.0);
+    
+    // Secondary light from left
+    vec3 lightDir2 = normalize(vec3(-1.0, 0.5, 0.5));
+    float diff2 = max(dot(norm, lightDir2), 0.0);
+    
+    // Rim light from behind for edge definition
+    vec3 viewDir = normalize(viewPos - FragPos);
+    float rimLight = 1.0 - max(dot(norm, viewDir), 0.0);
+    rimLight = pow(rimLight, 2.0) * 0.3;
+    
+    // Face-dependent base lighting to ensure each face is distinct
+    float faceBrightness = 0.0;
+    
+    // Top face (Y+) - brightest
+    if (abs(norm.y - 1.0) < 0.01) {
+        faceBrightness = 1.0;
+    }
+    // Bottom face (Y-) - darkest
+    else if (abs(norm.y + 1.0) < 0.01) {
+        faceBrightness = 0.3;
+    }
+    // Right face (X+) - bright
+    else if (abs(norm.x - 1.0) < 0.01) {
+        faceBrightness = 0.85;
+    }
+    // Left face (X-) - medium dark
+    else if (abs(norm.x + 1.0) < 0.01) {
+        faceBrightness = 0.5;
+    }
+    // Front face (Z+) - medium bright
+    else if (abs(norm.z - 1.0) < 0.01) {
+        faceBrightness = 0.7;
+    }
+    // Back face (Z-) - medium
+    else if (abs(norm.z + 1.0) < 0.01) {
+        faceBrightness = 0.6;
+    }
+    
+    // Combine lighting components
+    float ambientStrength = 0.2;
+    vec3 ambient = ambientStrength * lightColor;
+    
+    // Primary and secondary diffuse
+    vec3 diffuse = (diff1 * 0.7 + diff2 * 0.3) * lightColor;
+    
+    // Apply face-dependent brightness
+    vec3 faceLight = faceBrightness * lightColor * 0.4;
+    
+    // Subtle specular for material definition
+    vec3 reflectDir = reflect(-lightDir1, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 64);
+    vec3 specular = 0.2 * spec * lightColor;
+    
+    // Combine all lighting
+    vec3 result = (ambient + diffuse + faceLight + specular + rimLight) * Color.rgb;
+    
+    // Subtle edge darkening based on viewing angle
+    // This creates a gentle darkening effect at grazing angles
+    // viewDir already declared above, reuse it
+    float fresnel = 1.0 - abs(dot(norm, viewDir));
+    fresnel = pow(fresnel, 3.0); // Make the effect more subtle
+    
+    // Apply subtle edge darkening
+    result *= (1.0 - fresnel * 0.3);
+    
+    // Add slight darkening based on face to enhance separation
+    // This is a simple way to make edges more visible
+    float faceDarkening = 0.0;
+    
+    // Apply different subtle darkening to each face edge
+    if (abs(norm.y - 1.0) < 0.01) {
+        // Top face - no extra darkening
+        faceDarkening = 0.0;
+    } else if (abs(norm.y + 1.0) < 0.01) {
+        // Bottom face - slight darkening
+        faceDarkening = 0.1;
+    } else {
+        // Side faces - very slight darkening
+        faceDarkening = 0.05;
+    }
+    
+    result *= (1.0 - faceDarkening);
+    
+    // Slight contrast boost
+    result = pow(result, vec3(0.95));
+    
+    FragColor = vec4(result, 1.0);
+}
+    )";
+    
+    // Flat shader for maximum face distinction
+    const std::string flatFragment = R"(
+#version 330 core
+
+in vec3 FragPos;
+in vec3 Normal;
+in vec4 Color;
+
+out vec4 FragColor;
+
+uniform vec3 lightPos;
+uniform vec3 lightColor;
+uniform vec3 viewPos;
+
+void main() {
+    // Simple flat shading with face-based coloring
+    vec3 norm = normalize(Normal);
+    
+    // Base color with face-dependent tinting
+    vec3 faceColor = Color.rgb;
+    
+    // Apply different brightness to each face based on normal
+    float brightness = 0.5;
+    
+    // Top face - brightest
+    if (abs(norm.y - 1.0) < 0.01) {
+        brightness = 1.0;
+    }
+    // Bottom face - darkest
+    else if (abs(norm.y + 1.0) < 0.01) {
+        brightness = 0.25;
+    }
+    // Right face
+    else if (abs(norm.x - 1.0) < 0.01) {
+        brightness = 0.8;
+    }
+    // Left face
+    else if (abs(norm.x + 1.0) < 0.01) {
+        brightness = 0.4;
+    }
+    // Front face
+    else if (abs(norm.z - 1.0) < 0.01) {
+        brightness = 0.65;
+    }
+    // Back face
+    else if (abs(norm.z + 1.0) < 0.01) {
+        brightness = 0.5;
+    }
+    
+    // Apply brightness
+    vec3 result = faceColor * brightness;
+    
+    FragColor = vec4(result, 1.0);
+}
+    )";
+    
+    // Create all shader variants
+    auto basicShaderId = m_shaderManager->createShaderFromSource("basic", voxelVertex, basicFragment, m_glRenderer.get());
     std::cout << "Created basic shader with ID: " << basicShaderId << std::endl;
+    
+    auto enhancedShaderId = m_shaderManager->createShaderFromSource("enhanced", voxelVertex, enhancedFragment, m_glRenderer.get());
+    std::cout << "Created enhanced shader with ID: " << enhancedShaderId << std::endl;
+    
+    auto flatShaderId = m_shaderManager->createShaderFromSource("flat", voxelVertex, flatFragment, m_glRenderer.get());
+    std::cout << "Created flat shader with ID: " << flatShaderId << std::endl;
 }
 
 void RenderEngine::onRenderModeChanged() {
@@ -711,6 +943,33 @@ void RenderEngine::renderVoxels(const VoxelData::VoxelGrid& grid,
     (void)grid;
     (void)resolution;
     (void)settings;
+}
+
+// Direct OpenGL access methods
+void RenderEngine::drawElements(PrimitiveType primitive, int count, IndexType indexType) {
+    if (!m_glRenderer) return;
+    m_glRenderer->drawElements(primitive, count, indexType);
+    
+    // Update stats
+    m_stats.drawCalls++;
+    if (primitive == PrimitiveType::Triangles) {
+        m_stats.trianglesRendered += count / 3;
+    }
+}
+
+void RenderEngine::bindVertexArray(VertexArrayId vao) {
+    if (!m_glRenderer) return;
+    m_glRenderer->bindVertexArray(vao);
+}
+
+void RenderEngine::useProgram(ShaderId program) {
+    if (!m_glRenderer) return;
+    m_glRenderer->useProgram(program);
+}
+
+void RenderEngine::setUniform(const std::string& name, const UniformValue& value) {
+    if (!m_glRenderer) return;
+    m_glRenderer->setUniform(name, value);
 }
 
 // Screenshot functionality

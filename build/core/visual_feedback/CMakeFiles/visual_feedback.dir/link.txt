@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libvisual_feedback.a CMakeFiles/visual_feedback.dir/src/FeedbackTypes.cpp.o CMakeFiles/visual_feedback.dir/src/FaceDetector.cpp.o CMakeFiles/visual_feedback.dir/src/HighlightRenderer.cpp.o CMakeFiles/visual_feedback.dir/src/OutlineRenderer.cpp.o CMakeFiles/visual_feedback.dir/src/OverlayRenderer.cpp.o CMakeFiles/visual_feedback.dir/src/FeedbackRenderer.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libvisual_feedback.a

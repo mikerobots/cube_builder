@@ -50,7 +50,7 @@ public:
     // Mouse event handlers
     void onMouseMove(float x, float y);
     void onMouseClick(int button, bool pressed, float x, float y);
-    void onMouseScroll(float deltaY);
+    void onMouseScroll(float deltaX, float deltaY, bool ctrlPressed, bool shiftPressed);
     
     // Get current hover info
     bool hasHoverFace() const { return m_hasHoverFace; }
@@ -80,12 +80,14 @@ private:
     
     // Camera control
     bool m_orbitMode = false;
+    bool m_panMode = false;
     
     // Helper methods
     bool performRaycast(const Math::Ray& ray, VisualFeedback::Face& hitFace) const;
     void updateHoverState();
     void placeVoxel();
     void removeVoxel();
+    void centerCameraOnVoxels();
     
 protected:
     // Made protected for testing

@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build/foundation/config/tests/VoxelEditor_Config_Tests[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build/foundation/config/tests/VoxelEditor_Config_Tests[1]_tests.cmake")
-else()
-  add_test(VoxelEditor_Config_Tests_NOT_BUILT VoxelEditor_Config_Tests_NOT_BUILT)
-endif()

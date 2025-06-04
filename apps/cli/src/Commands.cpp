@@ -325,6 +325,122 @@ void Application::registerCommands() {
     
     // View Controls
     m_commandProcessor->registerCommand({
+        "center",
+        "Center camera on origin or voxels",
+        CommandCategory::VIEW,
+        {"focus", "home"},
+        {{"target", "Center target (origin/voxels/x,y,z)", "string", false, "voxels"}},
+        [this](const CommandContext& ctx) {
+            std::string target = ctx.getArgCount() > 0 ? ctx.getArg(0) : "voxels";
+            
+            Math::Vector3f focusPoint;
+            
+            if (target == "origin") {
+                // Focus on world origin
+                focusPoint = Math::Vector3f(0.0f, 0.0f, 0.0f);
+            } else if (target == "voxels") {
+                // Calculate center of all voxels
+                Math::BoundingBox bounds;
+                bool hasVoxels = false;
+                
+                auto* grid = m_voxelManager->getGrid(m_voxelManager->getActiveResolution());
+                if (grid) {
+                    float voxelSize = VoxelData::getVoxelSize(m_voxelManager->getActiveResolution());
+                    
+                    // Find bounds of all voxels
+                    for (int x = 0; x < 100; x++) {
+                        for (int y = 0; y < 100; y++) {
+                            for (int z = 0; z < 100; z++) {
+                                if (m_voxelManager->hasVoxel(Math::Vector3i(x, y, z), m_voxelManager->getActiveResolution())) {
+                                    Math::Vector3f voxelCenter(
+                                        (x + 0.5f) * voxelSize,
+                                        (y + 0.5f) * voxelSize,
+                                        (z + 0.5f) * voxelSize
+                                    );
+                                    
+                                    if (!hasVoxels) {
+                                        bounds.min = bounds.max = voxelCenter;
+                                        hasVoxels = true;
+                                    } else {
+                                        bounds.expand(voxelCenter);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if (hasVoxels) {
+                    focusPoint = bounds.getCenter();
+                } else {
+                    // No voxels, focus on workspace center
+                    auto workspaceSize = m_voxelManager->getWorkspaceSize();
+                    focusPoint = workspaceSize * 0.5f;
+                }
+            } else {
+                // Try to parse as coordinates
+                std::vector<float> coords;
+                std::stringstream ss(target);
+                std::string coord;
+                while (std::getline(ss, coord, ',')) {
+                    try {
+                        coords.push_back(std::stof(coord));
+                    } catch (...) {
+                        return CommandResult::Error("Invalid coordinates: " + target);
+                    }
+                }
+                
+                if (coords.size() != 3) {
+                    return CommandResult::Error("Expected 3 coordinates (x,y,z) or 'origin' or 'voxels'");
+                }
+                
+                focusPoint = Math::Vector3f(coords[0], coords[1], coords[2]);
+            }
+            
+            // Set camera target to focus point
+            auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
+            if (orbitCamera) {
+                orbitCamera->setTarget(focusPoint);
+                orbitCamera->focusOn(focusPoint);
+                
+                return CommandResult::Success("Camera centered on " + target);
+            }
+            
+            return CommandResult::Error("Failed to center camera");
+        }
+    });
+    
+    m_commandProcessor->registerCommand({
+        "camera-info",
+        "Show current camera information",
+        CommandCategory::VIEW,
+        {"cam-info", "ci"},
+        {},
+        [this](const CommandContext& ctx) {
+            auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
+            if (orbitCamera) {
+                auto pos = orbitCamera->getPosition();
+                auto target = orbitCamera->getTarget();
+                float distance = orbitCamera->getDistance();
+                float yaw = orbitCamera->getYaw();
+                float pitch = orbitCamera->getPitch();
+                
+                std::stringstream ss;
+                ss << "Camera Info:\n";
+                ss << "  Position: (" << std::fixed << std::setprecision(2) 
+                   << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
+                ss << "  Target: (" << target.x << ", " << target.y << ", " << target.z << ")\n";
+                ss << "  Distance: " << distance << "\n";
+                ss << "  Yaw: " << yaw << "°\n";
+                ss << "  Pitch: " << pitch << "°\n";
+                
+                return CommandResult::Success(ss.str());
+            }
+            return CommandResult::Error("Camera info not available");
+        }
+    });
+    
+    m_commandProcessor->registerCommand({
         Commands::CAMERA,
         "Set camera view preset",
         CommandCategory::VIEW,
@@ -742,6 +858,95 @@ void Application::registerCommands() {
             ss << "Memory: " << (memUsage / (1024.0 * 1024.0)) << " MB\n";
             
             return CommandResult::Success(ss.str());
+        }
+    });
+    
+    // Shader command
+    m_commandProcessor->registerCommand({
+        "shader",
+        "Switch between shader modes or list available shaders",
+        CommandCategory::VIEW,
+        {},
+        {{"mode", "Shader mode: basic, enhanced, flat, or 'list' to show all", "string", false, "list"}},
+        [this](const CommandContext& ctx) {
+            std::string mode = ctx.getArgCount() > 0 ? ctx.getArg(0) : "list";
+            
+            if (mode == "list") {
+                // List all available shaders
+                std::stringstream ss;
+                ss << "Available shaders:\n";
+                ss << "  basic    - Standard Phong lighting (ambient + diffuse + specular)\n";
+                ss << "  enhanced - Multiple lights with face-dependent brightness (default)\n";
+                ss << "  flat     - Simple flat shading with maximum face distinction\n";
+                
+                // Show current shader
+                std::string currentShader = "unknown";
+                if (m_defaultShaderId != Rendering::InvalidId) {
+                    // Check which shader is currently active
+                    if (m_defaultShaderId == m_renderEngine->getBuiltinShader("basic")) {
+                        currentShader = "basic";
+                    } else if (m_defaultShaderId == m_renderEngine->getBuiltinShader("enhanced")) {
+                        currentShader = "enhanced";
+                    } else if (m_defaultShaderId == m_renderEngine->getBuiltinShader("flat")) {
+                        currentShader = "flat";
+                    }
+                }
+                ss << "\nCurrent shader: " << currentShader;
+                
+                return CommandResult::Success(ss.str());
+            }
+            
+            std::string shaderName;
+            if (mode == "basic") {
+                shaderName = "basic";
+            } else if (mode == "enhanced") {
+                shaderName = "enhanced";
+            } else if (mode == "flat") {
+                shaderName = "flat";
+            } else {
+                return CommandResult::Error("Unknown shader mode. Use: basic, enhanced, flat, or list");
+            }
+            
+            // Get the shader ID from render engine
+            auto shaderId = m_renderEngine->getBuiltinShader(shaderName);
+            if (shaderId == Rendering::InvalidId) {
+                return CommandResult::Error("Shader '" + shaderName + "' not found");
+            }
+            
+            // Set as default shader
+            m_defaultShaderId = shaderId;
+            
+            // Update the voxel mesh to trigger re-render with new shader
+            requestMeshUpdate();
+            
+            return CommandResult::Success("Shader mode set to: " + mode);
+        }
+    });
+    
+    // Edge rendering toggle
+    m_commandProcessor->registerCommand({
+        "edges",
+        "Toggle edge/wireframe overlay rendering",
+        CommandCategory::VIEW,
+        {},
+        {{"state", "on/off to enable/disable edges, or 'toggle' to switch", "string", false, "toggle"}},
+        [this](const CommandContext& ctx) {
+            std::string state = ctx.getArgCount() > 0 ? ctx.getArg(0) : "toggle";
+            
+            if (state == "toggle") {
+                m_showEdges = !m_showEdges;
+            } else if (state == "on") {
+                m_showEdges = true;
+            } else if (state == "off") {
+                m_showEdges = false;
+            } else {
+                return CommandResult::Error("Invalid state. Use: on, off, or toggle");
+            }
+            
+            // Trigger re-render
+            requestMeshUpdate();
+            
+            return CommandResult::Success("Edge rendering " + std::string(m_showEdges ? "enabled" : "disabled"));
         }
     });
     

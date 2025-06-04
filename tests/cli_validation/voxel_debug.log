@@ -1,0 +1,90 @@
+[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [OrbitCamera] View preset: ISOMETRIC (yaw=45.0°, pitch=35.3°, distance=12.0)
+[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (2.887, 2.886, 2.887)
+[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (6.929, 6.927, 6.929)
+[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Target changed to (2.500, 2.500, 2.500)
+[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (9.429, 9.427, 9.429)
+[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (6.830, 6.830, 6.830)
+[2025-06-04 19:01:35.610] [INFO ] [0x1f8143240] Compiling shader program: basic
+[2025-06-04 19:01:35.610] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
+[2025-06-04 19:01:35.610] [DEBUG] [0x1f8143240] Fragment shader source lines: 35
+[2025-06-04 19:01:35.611] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: basic
+[2025-06-04 19:01:35.611] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: basic
+[2025-06-04 19:01:35.612] [INFO ] [0x1f8143240] Successfully created shader program: basic (ID: 3)
+[2025-06-04 19:01:35.612] [INFO ] [0x1f8143240] Compiling shader program: enhanced
+[2025-06-04 19:01:35.612] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
+[2025-06-04 19:01:35.612] [DEBUG] [0x1f8143240] Fragment shader source lines: 109
+[2025-06-04 19:01:35.613] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: enhanced
+[2025-06-04 19:01:35.614] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: enhanced
+[2025-06-04 19:01:35.614] [INFO ] [0x1f8143240] Successfully created shader program: enhanced (ID: 6)
+[2025-06-04 19:01:35.614] [INFO ] [0x1f8143240] Compiling shader program: flat
+[2025-06-04 19:01:35.614] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
+[2025-06-04 19:01:35.614] [DEBUG] [0x1f8143240] Fragment shader source lines: 53
+[2025-06-04 19:01:35.615] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: flat
+[2025-06-04 19:01:35.616] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: flat
+[2025-06-04 19:01:35.616] [INFO ] [0x1f8143240] Successfully created shader program: flat (ID: 9)
+[2025-06-04 19:01:35.616] [INFO ] [0x1f8143240] RenderEngine initialized successfully
+[2025-06-04 19:01:35.616] [INFO ] [0x1f8143240] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating mesh for resolution: 6, voxel size: 0.64
+[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 0 voxel positions from octree
+[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Found 0 voxels to render
+[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [No vertices generated (empty mesh)] VoxelMeshGenerator
+[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [Application] Mesh update: 0 vertices, 0 indices
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Mouse: screen=(0.0,0.0) window=(1280,720) ndc=(-1.000,1.000)
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [Camera] View matrix updated
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [Camera] Projection matrix updated (FOV: 45.0, Aspect: 1.333, Near: 0.100, Far: 1000.0)
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Camera: pos=(6.83,6.83,6.83) target=(2.50,2.50,2.50)
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Ray: origin=(6.83,6.83,6.83) dir=(-0.936,-0.197,-0.293)
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Raycasting against grid with 0 voxels
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [FaceDetector] Ray: origin=(6.83,6.83,6.83) dir=(-0.936,-0.197,-0.293) hit=0
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Hover update: mousePos=(0.0,0.0) hasHit=0
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 1
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [Application] Rendering frame 0, mesh count: 0
+[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [RenderEngine] End frame 1: 0.07ms, 13698.6 FPS, 0 draws, 0 triangles
+[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 2
+[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [Application] Rendering frame 1, mesh count: 0
+[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [RenderEngine] End frame 2: 0.04ms, 26315.8 FPS, 0 draws, 0 triangles
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 2, 2): false
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 2, 2): false
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Set voxel at position (2, 2, 2) to true
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating mesh for resolution: 3, voxel size: 0.08
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 1 voxel positions from octree
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Found 1 voxels to render
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Voxel 0 at grid pos (2, 2, 2) -> world pos (0.20, 0.20, 0.20)
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generated mesh with 24 vertices and 36 indices
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Vertex 0: pos(0.162, 0.162, 0.162)
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Vertex 1: pos(0.238, 0.162, 0.162)
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Vertex 2: pos(0.238, 0.238, 0.162)
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [Application] Mesh update: 24 vertices, 36 indices
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [Application] Created render mesh with 24 vertices
+[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating edge mesh for resolution: 3, voxel size: 0.08
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 1 voxel positions from octree
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generated edge mesh with 8 vertices and 24 indices
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application] Created edge mesh with 8 vertices
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 3
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application] Rendering frame 2, mesh count: 1
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application]   Rendering mesh 0 with 24 vertices, 36 indices
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application]     Vertex 0: pos(0.162, 0.162, 0.162)
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application]   Shader ID: 6
+[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [RenderEngine] End frame 3: 0.82ms, 1212.1 FPS, 2 draws, 12 triangles
+[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 4
+[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application] Rendering frame 3, mesh count: 1
+[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application]   Rendering mesh 0 with 24 vertices, 36 indices
+[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application]     Vertex 0: pos(0.162, 0.162, 0.162)
+[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application]   Shader ID: 6
+[2025-06-04 19:01:35.679] [DEBUG] [0x1f8143240] [RenderEngine] End frame 4: 0.18ms, 5434.8 FPS, 2 draws, 12 triangles
+[2025-06-04 19:01:35.815] [INFO ] [0x1f8143240] Screenshot saved as test_output/basic_voxel.ppm.ppm (PPM format)
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 5
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application] Rendering frame 4, mesh count: 1
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application]   Rendering mesh 0 with 24 vertices, 36 indices
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application]     Vertex 0: pos(0.162, 0.162, 0.162)
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application]   Shader ID: 6
+[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [RenderEngine] End frame 5: 0.17ms, 5882.4 FPS, 2 draws, 12 triangles
+[2025-06-04 19:01:35.951] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 6
+[2025-06-04 19:01:35.951] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-04 19:01:35.951] [DEBUG] [0x1f8143240] [RenderEngine] End frame 6: 0.13ms, 7812.5 FPS, 2 draws, 12 triangles
+[2025-06-04 19:01:35.959] [INFO ] [0x1f8143240] RenderEngine shut down

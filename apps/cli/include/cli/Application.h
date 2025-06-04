@@ -116,6 +116,9 @@ private:
     
     // Current scene data for rendering
     std::vector<Rendering::Mesh> m_voxelMeshes;
+    std::vector<Rendering::Mesh> m_edgeMeshes;  // Wireframe edge meshes
+    Rendering::ShaderId m_defaultShaderId = Rendering::InvalidId;
+    bool m_showEdges = true;  // Toggle for edge rendering
     
     // Private methods
     bool initializeFoundation();

@@ -25,6 +25,9 @@ public:
     // Generate a simple cube mesh for all voxels
     Rendering::Mesh generateCubeMesh(const VoxelData::VoxelDataManager& voxelData);
     
+    // Generate edge lines for all voxels (for wireframe overlay)
+    Rendering::Mesh generateEdgeMesh(const VoxelData::VoxelDataManager& voxelData);
+    
 private:
     // Add cube vertices for a single voxel
     void addCube(std::vector<Vertex>& vertices, 
@@ -32,6 +35,13 @@ private:
                  const Math::Vector3f& position,
                  float size,
                  const Math::Vector3f& color);
+                 
+    // Add edge lines for a single voxel
+    void addCubeEdges(std::vector<Vertex>& vertices,
+                      std::vector<uint32_t>& indices,
+                      const Math::Vector3f& position,
+                      float size,
+                      const Math::Vector3f& color);
     
     // Cube vertex data (8 vertices)
     static const float s_cubeVertices[8][3];

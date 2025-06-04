@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <vector>
 
 // Silence OpenGL deprecation warnings on macOS
 #ifdef __APPLE__
@@ -193,11 +194,15 @@ BufferId OpenGLRenderer::createVertexBuffer(const void* data, size_t size, Buffe
     info.size = size;
     info.isIndexBuffer = false;
     
+    // Clear any pending errors before starting
+    while (glGetError() != GL_NO_ERROR) {}
+    
     // Create OpenGL buffer
     glGenBuffers(1, &info.glHandle);
     glBindBuffer(GL_ARRAY_BUFFER, info.glHandle);
     glBufferData(GL_ARRAY_BUFFER, size, data, translateBufferUsage(usage));
     
+    // Only check for errors at the end
     checkGLError("createVertexBuffer");
     
     m_buffers[id] = info;
@@ -211,6 +216,9 @@ BufferId OpenGLRenderer::createIndexBuffer(const uint32_t* indices, size_t count
     info.usage = usage;
     info.size = count * sizeof(uint32_t);
     info.isIndexBuffer = true;
+    
+    // Clear any pending errors before starting
+    while (glGetError() != GL_NO_ERROR) {}
     
     // Create OpenGL buffer
     glGenBuffers(1, &info.glHandle);
@@ -360,19 +368,18 @@ void OpenGLRenderer::setUniform(const std::string& name, const UniformValue& val
     GLuint program = static_cast<GLuint>(location);
     location = glGetUniformLocation(program, name.c_str());
     if (location == -1) {
+        // Silently ignore missing uniforms - this is expected for shaders that don't use all uniforms
+        // Only log in debug mode if needed
         static int errorCount = 0;
-        if (errorCount < 10) {
+        if (errorCount < 5 && name != "lightPos" && name != "lightColor" && name != "viewPos") {
+            // Only warn for unexpected missing uniforms
             std::cerr << "Warning: Uniform '" << name << "' not found in program " << program << std::endl;
             errorCount++;
         }
         return;
     }
     
-    static int uniformCount = 0;
-    if (uniformCount < 20) {
-        std::cout << "Setting uniform '" << name << "' at location " << location << std::endl;
-        uniformCount++;
-    }
+    // Debug output removed - too verbose
     
     switch (value.type) {
         case UniformValue::Float:
@@ -404,16 +411,6 @@ void OpenGLRenderer::setUniform(const std::string& name, const UniformValue& val
             glUniformMatrix3fv(location, 1, GL_TRUE, value.data.mat3);
             break;
         case UniformValue::Mat4:
-            if (uniformCount < 20 && name == "u_model") {
-                std::cout << "  u_model matrix:" << std::endl;
-                for (int i = 0; i < 4; i++) {
-                    std::cout << "    ";
-                    for (int j = 0; j < 4; j++) {
-                        std::cout << value.data.mat4[i*4+j] << " ";
-                    }
-                    std::cout << std::endl;
-                }
-            }
             // Our Matrix4f uses row-major order, but OpenGL expects column-major
             // So we need to transpose when uploading
             glUniformMatrix4fv(location, 1, GL_TRUE, value.data.mat4);
@@ -440,6 +437,29 @@ void OpenGLRenderer::drawElements(PrimitiveType type, int count, IndexType index
         glGetIntegerv(GL_CURRENT_PROGRAM, &prog);
         std::cout << "  Current program: " << prog << std::endl;
         
+        // Validate program
+        if (prog != 0) {
+            glValidateProgram(prog);
+            GLint status;
+            glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
+            std::cout << "  Program validation: " << (status == GL_TRUE ? "PASSED" : "FAILED") << std::endl;
+            
+            if (status != GL_TRUE) {
+                GLint logLength;
+                glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+                if (logLength > 1) {
+                    std::vector<char> log(logLength);
+                    glGetProgramInfoLog(prog, logLength, nullptr, log.data());
+                    std::cerr << "  Program validation log: " << log.data() << std::endl;
+                }
+            }
+            
+            // Check if program is linked
+            GLint linkStatus;
+            glGetProgramiv(prog, GL_LINK_STATUS, &linkStatus);
+            std::cout << "  Program linked: " << (linkStatus == GL_TRUE ? "YES" : "NO") << std::endl;
+        }
+        
         // Check vertex array and buffers
         GLint vao, vbo, ibo;
         glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao);
@@ -447,10 +467,24 @@ void OpenGLRenderer::drawElements(PrimitiveType type, int count, IndexType index
         glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &ibo);
         std::cout << "  VAO=" << vao << ", VBO=" << vbo << ", IBO=" << ibo << std::endl;
         
-        // Check if position attribute is enabled
-        GLint posEnabled;
-        glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &posEnabled);
-        std::cout << "  Position attrib 0 enabled: " << posEnabled << std::endl;
+        // Check all vertex attributes
+        for (int i = 0; i < 4; i++) {
+            GLint enabled;
+            glGetVertexAttribiv(i, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
+            if (enabled) {
+                GLint size, type, stride, normalized;
+                GLvoid* pointer;
+                glGetVertexAttribiv(i, GL_VERTEX_ATTRIB_ARRAY_SIZE, &size);
+                glGetVertexAttribiv(i, GL_VERTEX_ATTRIB_ARRAY_TYPE, &type);
+                glGetVertexAttribiv(i, GL_VERTEX_ATTRIB_ARRAY_STRIDE, &stride);
+                glGetVertexAttribiv(i, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, &normalized);
+                glGetVertexAttribPointerv(i, GL_VERTEX_ATTRIB_ARRAY_POINTER, &pointer);
+                
+                std::cout << "  Attrib " << i << ": enabled, size=" << size 
+                          << ", type=" << type << ", stride=" << stride 
+                          << ", normalized=" << normalized << std::endl;
+            }
+        }
         
         // Check depth test state
         GLboolean depthTest;
@@ -482,6 +516,15 @@ void OpenGLRenderer::drawElements(PrimitiveType type, int count, IndexType index
     GLenum errorAfter = glGetError();
     if (errorAfter != GL_NO_ERROR) {
         std::cerr << "GL Error after drawElements: " << errorAfter << std::endl;
+        
+        // Additional diagnostics for GL_INVALID_OPERATION
+        if (errorAfter == GL_INVALID_OPERATION) {
+            std::cerr << "GL_INVALID_OPERATION details:" << std::endl;
+            std::cerr << "  - Check that VAO is bound and contains valid vertex data" << std::endl;
+            std::cerr << "  - Check that shader program is successfully linked" << std::endl;
+            std::cerr << "  - Check that all active vertex attributes are enabled" << std::endl;
+            std::cerr << "  - Check that index buffer contains valid indices" << std::endl;
+        }
     }
 }
 
@@ -545,12 +588,8 @@ ShaderId OpenGLRenderer::createProgram(const std::vector<ShaderId>& shaders) {
         }
     }
     
-    // Bind standard attribute locations before linking
-    // Match the shader's expected locations
-    glBindAttribLocation(info.glHandle, 0, "a_position");
-    glBindAttribLocation(info.glHandle, 1, "a_normal");
-    glBindAttribLocation(info.glHandle, 2, "a_color");
-    glBindAttribLocation(info.glHandle, 3, "a_texCoord");
+    // Don't bind attribute locations - shaders use layout qualifiers
+    // This avoids warnings about mismatched attribute names
     
     linkProgramInternal(info);
     

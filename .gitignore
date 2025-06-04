@@ -28,3 +28,14 @@ test_cli.sh
 # Temporary files
 *.tmp
 #*#
+
+# Log files
+*.log
+edge_test.log
+click_test.log
+voxel_debug.log
+voxel_*.log
+
+# Test output files
+*.ppm
+test_output/

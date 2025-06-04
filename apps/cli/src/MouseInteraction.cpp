@@ -7,6 +7,9 @@
 #include <memory>
 #include <algorithm>
 
+// GLFW for input handling
+#include <GLFW/glfw3.h>
+
 // Application headers
 #include "cli/MouseInteraction.h"
 #include "cli/Application.h"
@@ -21,7 +24,9 @@
 #include "undo_redo/HistoryManager.h"
 #include "undo_redo/VoxelCommands.h"
 #include "math/Ray.h"
+#include "math/BoundingBox.h"
 #include "logging/Logger.h"
+#include "camera/OrbitCamera.h"
 
 namespace VoxelEditor {
 
@@ -60,9 +65,9 @@ void MouseInteraction::initialize() {
                 onMouseClick(2, event.pressed, event.x, event.y);
                 lastMiddlePressed = event.pressed;
             }
-            // Handle scroll
-            if (event.deltaY != 0) {
-                onMouseScroll(event.deltaY);
+            // Handle scroll/pinch zoom
+            if (event.deltaY != 0 || event.deltaX != 0) {
+                onMouseScroll(event.deltaX, event.deltaY, event.ctrl, event.shift);
             }
         }
     });
@@ -84,16 +89,79 @@ void MouseInteraction::onMouseMove(float x, float y) {
             x, y, oldPos.x, oldPos.y);
     }
     
-    // Camera orbit mode
-    if (m_orbitMode && m_middlePressed) {
+    // Camera controls
+    if (m_orbitMode) {
+        // Orbit mode (either middle mouse or Ctrl/Cmd+left mouse)
         glm::vec2 delta = m_mousePos - oldPos;
         
-        // Convert pixel movement to radians
-        float sensitivity = 0.01f;
-        float deltaTheta = -delta.x * sensitivity;
-        float deltaPhi = -delta.y * sensitivity;
+        // Convert pixel movement to degrees (orbit expects degrees based on the OrbitCamera code)
+        // Reduce sensitivity for more controlled movement
+        float sensitivity = 0.2f;  // degrees per pixel
+        float deltaYaw = delta.x * sensitivity;    // Positive X movement = rotate right
+        float deltaPitch = delta.y * sensitivity;  // Positive Y movement = rotate down
         
-        m_cameraController->getCamera()->orbit(deltaTheta, deltaPhi);
+        auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
+        if (orbitCamera) {
+            // Debug: Check target before and after orbit
+            auto targetBefore = orbitCamera->getTarget();
+            auto posBefore = orbitCamera->getPosition();
+            
+            orbitCamera->orbit(deltaYaw, deltaPitch);
+            
+            auto targetAfter = orbitCamera->getTarget();
+            auto posAfter = orbitCamera->getPosition();
+            
+            // Log significant changes
+            if ((targetAfter - targetBefore).length() > 0.001f) {
+                Logging::Logger::getInstance().warningfc("MouseInteraction",
+                    "Target moved during orbit! Before: (%.2f,%.2f,%.2f) After: (%.2f,%.2f,%.2f)",
+                    targetBefore.x, targetBefore.y, targetBefore.z,
+                    targetAfter.x, targetAfter.y, targetAfter.z);
+            }
+        }
+        
+        // Log orbit only occasionally to avoid spam
+        static int orbitLogCount = 0;
+        if (orbitLogCount++ % 30 == 0 && orbitCamera) {
+            auto pos = orbitCamera->getPosition();
+            auto target = orbitCamera->getTarget();
+            float distance = orbitCamera->getDistance();
+            float yaw = orbitCamera->getYaw();
+            float pitch = orbitCamera->getPitch();
+            
+            Logging::Logger::getInstance().debugfc("MouseInteraction",
+                "Orbit: yaw=%.1f° pitch=%.1f° dist=%.2f target=(%.2f,%.2f,%.2f) pos=(%.2f,%.2f,%.2f)",
+                yaw, pitch, distance, target.x, target.y, target.z, pos.x, pos.y, pos.z);
+        }
+    } else if (m_panMode) {
+        // Pan mode (Shift+left mouse)
+        glm::vec2 delta = m_mousePos - oldPos;
+        
+        // Convert pixel movement to world space pan
+        // Negative because we want to drag the world, not the camera
+        float panSensitivity = 0.01f;
+        float distance = m_cameraController->getCamera()->getDistance();
+        
+        // Scale pan speed based on zoom level for consistent feel
+        float scaledSensitivity = panSensitivity * distance * 0.1f;
+        
+        Math::Vector3f panDelta(-delta.x * scaledSensitivity, 
+                                delta.y * scaledSensitivity, 
+                                0.0f);
+        
+        auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
+        if (orbitCamera) {
+            orbitCamera->pan(panDelta);
+            
+            // Log pan occasionally
+            static int panLogCount = 0;
+            if (panLogCount++ % 30 == 0) {
+                auto target = orbitCamera->getTarget();
+                Logging::Logger::getInstance().debugfc("MouseInteraction",
+                    "Pan: delta=(%.1f,%.1f) target=(%.2f,%.2f,%.2f)",
+                    delta.x, delta.y, target.x, target.y, target.z);
+            }
+        }
     }
 }
 
@@ -128,15 +196,53 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
         std::cout << "===========================" << std::endl;
     }
     
+    // Get modifier keys
+    bool ctrlPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
+                       glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
+    bool cmdPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_SUPER) == GLFW_PRESS ||
+                      glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS;
+    
+    // Get shift key state for panning
+    bool shiftPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                        glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    
+    // On macOS, treat Cmd as Ctrl for consistency
+    bool modifierPressed = ctrlPressed || cmdPressed;
+    
     if (button == 0) { // Left click
         m_mousePressed = pressed;
         
-        if (pressed && m_hasHoverFace) {
+        if (shiftPressed) {
+            // Shift + Left click for pan
+            if (pressed) {
+                m_dragStart = m_mousePos;
+                m_panMode = true;
+                Logging::Logger::getInstance().debug("MouseInteraction", "Starting pan mode");
+            } else {
+                m_panMode = false;
+                Logging::Logger::getInstance().debug("MouseInteraction", "Ending pan mode");
+            }
+        } else if (modifierPressed) {
+            // Ctrl/Cmd + Left click for orbit
+            if (pressed) {
+                m_dragStart = m_mousePos;
+                m_orbitMode = true;
+                
+                // Auto-center on voxels when starting orbit
+                centerCameraOnVoxels();
+                
+                Logging::Logger::getInstance().debug("MouseInteraction", "Starting orbit mode");
+            } else {
+                m_orbitMode = false;
+                Logging::Logger::getInstance().debug("MouseInteraction", "Ending orbit mode");
+            }
+        } else if (pressed && m_hasHoverFace) {
+            // Regular left click for voxel placement
             Logging::Logger::getInstance().debug("MouseInteraction", "Placing voxel at hover position");
             placeVoxel();
         }
     } else if (button == 1) { // Right click
-        if (pressed && m_hasHoverFace) {
+        if (pressed && m_hasHoverFace && !modifierPressed) {
             Logging::Logger::getInstance().debug("MouseInteraction", "Removing voxel at hover position");
             removeVoxel();
         }
@@ -145,19 +251,63 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
         if (pressed) {
             m_dragStart = m_mousePos;
             m_orbitMode = true;
+            
+            // Auto-center on voxels when starting orbit
+            centerCameraOnVoxels();
         } else {
             m_orbitMode = false;
         }
     }
 }
 
-void MouseInteraction::onMouseScroll(float deltaY) {
-    // Zoom with scroll
-    float zoomSpeed = 0.1f;
-    float factor = 1.0f + deltaY * zoomSpeed;
+void MouseInteraction::onMouseScroll(float deltaX, float deltaY, bool ctrlPressed, bool shiftPressed) {
+    // Handle different zoom methods:
+    // 1. Trackpad pinch: Usually comes as scroll with Ctrl modifier on macOS
+    // 2. Mouse wheel: Standard scroll without modifiers
+    // 3. Two-finger scroll: Comes as regular scroll events
+    // 4. Native trackpad: May have both X and Y components
+    
+    float zoomDelta = 0.0f;
+    bool isPinchGesture = false;
+    
+    // Detect pinch gesture patterns
+    if (ctrlPressed) {
+        // Explicit pinch zoom (Ctrl+scroll)
+        isPinchGesture = true;
+        zoomDelta = deltaY;
+    } else if (std::abs(deltaX) > 0.001f && std::abs(deltaY) > 0.001f) {
+        // Two-finger scroll often has both X and Y components
+        // Use the magnitude for smoother zoom
+        float magnitude = std::sqrt(deltaX * deltaX + deltaY * deltaY);
+        zoomDelta = (deltaY > 0) ? magnitude : -magnitude;
+        isPinchGesture = true;
+    } else {
+        // Regular vertical scroll
+        zoomDelta = deltaY;
+    }
+    
+    // Apply zoom with appropriate speed
+    float zoomSpeed = isPinchGesture ? 0.3f : 0.1f;
+    
+    // Invert the zoom direction for more intuitive control
+    // Pinch out (fingers apart) = zoom in (decrease distance)
+    // Pinch in (fingers together) = zoom out (increase distance)
+    float factor = 1.0f - zoomDelta * zoomSpeed;
     
     float currentDistance = m_cameraController->getCamera()->getDistance();
-    m_cameraController->getCamera()->setDistance(currentDistance / factor);
+    float newDistance = currentDistance * factor;
+    
+    // Clamp zoom distance
+    newDistance = std::max(1.0f, std::min(50.0f, newDistance));
+    m_cameraController->getCamera()->setDistance(newDistance);
+    
+    // Debug log only significant changes
+    if (std::abs(newDistance - currentDistance) > 0.01f) {
+        Logging::Logger::getInstance().debugfc("MouseInteraction",
+            "%s zoom: deltaX=%.3f deltaY=%.3f factor=%.3f distance: %.2f -> %.2f",
+            isPinchGesture ? "Pinch" : "Scroll",
+            deltaX, deltaY, factor, currentDistance, newDistance);
+    }
 }
 
 Math::Ray MouseInteraction::getMouseRay(float x, float y) const {
@@ -280,6 +430,17 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
 }
 
 void MouseInteraction::updateHoverState() {
+    // Don't update hover state while in orbit or pan mode
+    if (m_orbitMode || m_panMode) {
+        // Clear any existing hover highlights during camera movement
+        if (m_hasHoverFace) {
+            m_hasHoverFace = false;
+            m_feedbackRenderer->clearFaceHighlight();
+            m_feedbackRenderer->clearVoxelPreview();
+        }
+        return;
+    }
+    
     // Get mouse ray
     Math::Ray ray = getMouseRay(m_mousePos.x, m_mousePos.y);
     
@@ -371,6 +532,56 @@ void MouseInteraction::removeVoxel() {
     
     // Update mesh for rendering
     m_app->requestMeshUpdate();
+}
+
+void MouseInteraction::centerCameraOnVoxels() {
+    // Calculate bounds of all voxels
+    Math::BoundingBox bounds;
+    bool hasVoxels = false;
+    
+    auto* grid = m_voxelManager->getGrid(m_voxelManager->getActiveResolution());
+    if (grid) {
+        float voxelSize = VoxelData::getVoxelSize(m_voxelManager->getActiveResolution());
+        auto allVoxels = m_voxelManager->getAllVoxels();
+        
+        for (const auto& voxel : allVoxels) {
+            // Convert grid position to world position (center of voxel)
+            Math::Vector3f voxelCenter(
+                (voxel.gridPos.x + 0.5f) * voxelSize,
+                (voxel.gridPos.y + 0.5f) * voxelSize,
+                (voxel.gridPos.z + 0.5f) * voxelSize
+            );
+            
+            if (!hasVoxels) {
+                bounds.min = bounds.max = voxelCenter;
+                hasVoxels = true;
+            } else {
+                bounds.expand(voxelCenter);
+            }
+        }
+    }
+    
+    if (hasVoxels) {
+        Math::Vector3f center = bounds.getCenter();
+        auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
+        if (orbitCamera) {
+            orbitCamera->setTarget(center);
+            
+            // Optionally adjust distance based on bounds size
+            Math::Vector3f size = bounds.max - bounds.min;
+            float maxDimension = std::max({size.x, size.y, size.z});
+            float distance = maxDimension * 2.0f; // Give some breathing room
+            distance = std::max(1.0f, std::min(50.0f, distance)); // Clamp to reasonable range
+            orbitCamera->setDistance(distance);
+            
+            Logging::Logger::getInstance().debugfc("MouseInteraction",
+                "Centered camera on voxels: center=(%.2f,%.2f,%.2f) distance=%.2f",
+                center.x, center.y, center.z, distance);
+        }
+    } else {
+        // No voxels, keep current position
+        Logging::Logger::getInstance().debug("MouseInteraction", "No voxels to center on");
+    }
 }
 
 } // namespace VoxelEditor

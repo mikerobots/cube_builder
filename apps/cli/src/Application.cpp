@@ -166,8 +166,33 @@ bool Application::initializeFoundation() {
         m_eventDispatcher = std::make_unique<Events::EventDispatcher>();
         
         // Logger is a singleton
-        Logging::Logger::getInstance().setLevel(Logging::LogLevel::Info);
-        // Note: Logger doesn't have enableComponent(), console output is added by default
+        Logging::Logger::getInstance().setLevel(Logging::LogLevel::Debug);
+        
+        // Clear any existing outputs
+        Logging::Logger::getInstance().clearOutputs();
+        
+        // Add file output for ALL debug info (overwrite mode)
+        auto fileOutput = std::make_unique<Logging::FileOutput>("voxel_debug.log", "DebugFile", false);
+        Logging::Logger::getInstance().addOutput(std::move(fileOutput));
+        
+        // Only add console output if not in headless mode
+        // Create a custom filtered console output that only shows Info and above
+        if (!m_headless) {
+            class FilteredConsoleOutput : public Logging::ConsoleOutput {
+            public:
+                FilteredConsoleOutput() : ConsoleOutput("FilteredConsole") {}
+                
+                void write(const Logging::LogMessage& message) override {
+                    // Only write Info level and above to console
+                    if (message.level >= Logging::LogLevel::Info) {
+                        ConsoleOutput::write(message);
+                    }
+                }
+            };
+            
+            Logging::Logger::getInstance().addOutput(
+                std::make_unique<FilteredConsoleOutput>());
+        }
         
         // Config is a singleton
         Config::ConfigManager::getInstance().setValue("workspace.size", 5.0f);
@@ -408,22 +433,25 @@ void Application::render() {
     // Render all voxel meshes
     static int frameCount = 0;
     if (frameCount < 5) {
-        std::cout << "Rendering frame " << frameCount << ", mesh count: " << m_voxelMeshes.size() << std::endl;
+        Logging::Logger::getInstance().debugfc("Application", 
+            "Rendering frame %d, mesh count: %zu", frameCount, m_voxelMeshes.size());
     }
     
     for (size_t i = 0; i < m_voxelMeshes.size(); ++i) {
         const auto& mesh = m_voxelMeshes[i];
         if (!mesh.vertices.empty()) {
             if (frameCount < 5) {
-                std::cout << "  Rendering mesh " << i << " with " << mesh.vertices.size() 
-                          << " vertices, " << mesh.indices.size() << " indices" << std::endl;
+                Logging::Logger::getInstance().debugfc("Application",
+                    "  Rendering mesh %zu with %zu vertices, %zu indices", 
+                    i, mesh.vertices.size(), mesh.indices.size());
                 
                 // Show first few vertex positions to verify they're different
                 for (size_t v = 0; v < std::min(size_t(3), mesh.vertices.size()); v += 24) {
-                    std::cout << "    Vertex " << v << ": pos(" 
-                              << mesh.vertices[v].position.x << ", "
-                              << mesh.vertices[v].position.y << ", "
-                              << mesh.vertices[v].position.z << ")" << std::endl;
+                    Logging::Logger::getInstance().debugfc("Application",
+                        "    Vertex %zu: pos(%.3f, %.3f, %.3f)", v,
+                        mesh.vertices[v].position.x,
+                        mesh.vertices[v].position.y,
+                        mesh.vertices[v].position.z);
                 }
             }
             
@@ -431,15 +459,44 @@ void Application::render() {
             Rendering::Transform transform;
             Rendering::Material material;
             material.albedo = Rendering::Color(0.8f, 0.8f, 0.8f, 1.0f);
-            material.shader = m_renderEngine->getBuiltinShader("basic");
+            
+            // Use configured shader or default to enhanced
+            if (m_defaultShaderId == Rendering::InvalidId) {
+                m_defaultShaderId = m_renderEngine->getBuiltinShader("enhanced");
+            }
+            material.shader = m_defaultShaderId;
             
             if (frameCount < 5) {
-                std::cout << "  Shader ID: " << material.shader << std::endl;
+                Logging::Logger::getInstance().debugfc("Application", "  Shader ID: %u", material.shader);
             }
             
             m_renderEngine->renderMesh(mesh, transform, material);
         }
     }
+    
+    // Render edge meshes as lines if enabled
+    if (m_showEdges && !m_edgeMeshes.empty()) {
+        // Set up for line rendering
+        m_renderEngine->setLineWidth(2.0f);  // Thicker lines for visibility
+        
+        for (const auto& edgeMesh : m_edgeMeshes) {
+            if (edgeMesh.vertices.empty()) continue;
+            
+            // Create material for edges
+            Rendering::Transform transform;
+            Rendering::Material edgeMaterial;
+            edgeMaterial.albedo = Rendering::Color(0.1f, 0.1f, 0.1f, 1.0f);  // Dark edges
+            edgeMaterial.shader = m_renderEngine->getBuiltinShader("basic");  // Use basic shader for lines
+            edgeMaterial.doubleSided = true;
+            
+            // Use the proper render method for lines
+            m_renderEngine->renderMeshAsLines(edgeMesh, transform, edgeMaterial);
+        }
+        
+        // Reset line width
+        m_renderEngine->setLineWidth(1.0f);
+    }
+    
     frameCount++;
     
     // Render visual feedback (highlights, outlines, previews)
@@ -472,11 +529,13 @@ void Application::updateVoxelMesh() {
     auto generatedMesh = m_meshGenerator->generateCubeMesh(*m_voxelManager);
     
     // Debug: Print mesh statistics
-    std::cout << "Mesh update: " << generatedMesh.vertices.size() << " vertices, " 
-              << generatedMesh.indices.size() << " indices" << std::endl;
+    Logging::Logger::getInstance().debugfc("Application",
+        "Mesh update: %zu vertices, %zu indices", 
+        generatedMesh.vertices.size(), generatedMesh.indices.size());
     
     // Clear existing meshes
     m_voxelMeshes.clear();
+    m_edgeMeshes.clear();
     
     // Convert VoxelMeshGenerator::Mesh to Rendering::Mesh if we have data
     if (!generatedMesh.vertices.empty()) {
@@ -505,7 +564,21 @@ void Application::updateVoxelMesh() {
         size_t vertexCount = renderMesh.vertices.size();
         m_voxelMeshes.push_back(std::move(renderMesh));
         
-        std::cout << "Created render mesh with " << vertexCount << " vertices" << std::endl;
+        Logging::Logger::getInstance().debugfc("Application",
+            "Created render mesh with %zu vertices", vertexCount);
+            
+        // Generate edge mesh for wireframe overlay
+        auto edgeMesh = m_meshGenerator->generateEdgeMesh(*m_voxelManager);
+        if (!edgeMesh.vertices.empty()) {
+            // Set up edge mesh for rendering
+            if (m_renderEngine) {
+                m_renderEngine->setupMeshBuffers(edgeMesh);
+            }
+            m_edgeMeshes.push_back(std::move(edgeMesh));
+            
+            Logging::Logger::getInstance().debugfc("Application",
+                "Created edge mesh with %zu vertices", m_edgeMeshes.back().vertices.size());
+        }
     }
 }
 

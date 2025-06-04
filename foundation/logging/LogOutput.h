@@ -76,9 +76,10 @@ private:
 
 class FileOutput : public LogOutput {
 public:
-    FileOutput(const std::string& filename, const std::string& name = "File") 
+    FileOutput(const std::string& filename, const std::string& name = "File", bool append = true) 
         : m_name(name), m_filename(filename) {
-        m_file.open(filename, std::ios::app);
+        auto mode = append ? (std::ios::out | std::ios::app) : (std::ios::out | std::ios::trunc);
+        m_file.open(filename, mode);
         if (!m_file.is_open()) {
             throw std::runtime_error("Failed to open log file: " + filename);
         }

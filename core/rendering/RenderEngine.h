@@ -3,6 +3,7 @@
 #include "RenderTypes.h"
 #include "RenderConfig.h"
 #include "RenderStats.h"
+#include "OpenGLRenderer.h"  // For UniformValue
 #include "../../foundation/events/EventDispatcher.h"
 #include "../camera/Camera.h"
 #include <memory>
@@ -55,6 +56,7 @@ public:
     
     // Basic rendering
     void renderMesh(const Mesh& mesh, const Transform& transform, const Material& material);
+    void renderMeshAsLines(const Mesh& mesh, const Transform& transform, const Material& material);
     void renderMeshInstanced(const Mesh& mesh, const std::vector<Transform>& transforms, const Material& material);
     
     // Voxel rendering
@@ -99,6 +101,12 @@ public:
     // Drawing operations
     void drawIndexed(PrimitiveType primitive, size_t indexCount, IndexType indexType, size_t offset = 0);
     void drawArrays(PrimitiveType primitive, size_t vertexCount, size_t offset = 0);
+    void drawElements(PrimitiveType primitive, int count, IndexType indexType);
+    
+    // Direct OpenGL access (for advanced rendering)
+    void bindVertexArray(VertexArrayId vao);
+    void useProgram(ShaderId program);
+    void setUniform(const std::string& name, const UniformValue& value);
     
     // State management
     void setBlendMode(BlendMode mode);
