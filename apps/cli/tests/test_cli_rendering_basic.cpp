@@ -1,3 +1,4 @@
+#define GL_SILENCE_DEPRECATION
 #include <gtest/gtest.h>
 #include "cli/Application.h"
 #include "cli/RenderWindow.h"

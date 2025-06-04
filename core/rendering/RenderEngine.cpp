@@ -294,18 +294,8 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
         // m_glRenderer->setUniform("u_normalMatrix", UniformValue(normalMatrix));
     }
     
-    // Bind VAO, buffers and draw
+    // Bind VAO - the VAO already has all the vertex attributes configured
     m_glRenderer->bindVertexArray(mesh.vertexArray);
-    m_glRenderer->bindVertexBuffer(mesh.vertexBuffer);
-    m_glRenderer->bindIndexBuffer(mesh.indexBuffer);
-    
-    // Set up vertex attributes - only request what the shader uses
-    std::vector<VertexAttribute> attributes = {
-        VertexAttribute::Position,
-        VertexAttribute::Normal,
-        VertexAttribute::Color
-    };
-    m_glRenderer->setupVertexAttributes(attributes);
     
     // Draw the mesh
     static int meshDrawCount = 0;
@@ -448,6 +438,14 @@ void RenderEngine::reloadShaders() {
 void RenderEngine::setupMeshBuffers(Mesh& mesh) {
     if (!m_glRenderer || mesh.isEmpty()) return;
     
+    // Create VAO for the mesh
+    if (mesh.vertexArray == 0) {
+        mesh.vertexArray = m_glRenderer->createVertexArray();
+    }
+    
+    // Bind VAO before setting up buffers
+    m_glRenderer->bindVertexArray(mesh.vertexArray);
+    
     if (mesh.vertexBuffer == InvalidId) {
         mesh.vertexBuffer = m_glRenderer->createVertexBuffer(
             mesh.vertices.data(),
@@ -463,6 +461,22 @@ void RenderEngine::setupMeshBuffers(Mesh& mesh) {
             BufferUsage::Static
         );
     }
+    
+    // Setup vertex attributes while VAO is bound
+    m_glRenderer->bindVertexBuffer(mesh.vertexBuffer);
+    m_glRenderer->bindIndexBuffer(mesh.indexBuffer);
+    
+    // Configure vertex attributes for the VAO
+    std::vector<VertexAttribute> attributes = {
+        VertexAttribute::Position,
+        VertexAttribute::Normal,
+        VertexAttribute::TexCoord0,
+        VertexAttribute::Color
+    };
+    m_glRenderer->setupVertexAttributes(attributes);
+    
+    // Unbind VAO
+    m_glRenderer->bindVertexArray(0);
     
     mesh.dirty = false;
 }

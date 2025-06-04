@@ -97,10 +97,13 @@ protected:
     // Helper to print debug info
     void printDebugInfo(const std::string& testName, const Math::Vector3f& cubePos, float cubeSize) {
         std::cout << "\n=== " << testName << " ===" << std::endl;
-        std::cout << "Camera position: " << camera->getPosition() << std::endl;
-        std::cout << "Camera target: " << camera->getTarget() << std::endl;
-        std::cout << "Camera forward: " << camera->getForward() << std::endl;
-        std::cout << "Cube position: " << cubePos << std::endl;
+        auto pos = camera->getPosition();
+        std::cout << "Camera position: (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
+        auto target = camera->getTarget();
+        std::cout << "Camera target: (" << target.x << ", " << target.y << ", " << target.z << ")" << std::endl;
+        auto forward = camera->getForward();
+        std::cout << "Camera forward: (" << forward.x << ", " << forward.y << ", " << forward.z << ")" << std::endl;
+        std::cout << "Cube position: (" << cubePos.x << ", " << cubePos.y << ", " << cubePos.z << ")" << std::endl;
         std::cout << "Cube size: " << cubeSize << std::endl;
         
         // Calculate view space position
@@ -124,7 +127,7 @@ protected:
 
 TEST_F(CameraCubeVisibilityTest, SingleVoxelAtOrigin_FrontCamera) {
     // Place a single voxel at grid position (0,0,0)
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm8;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
     voxelData->placeVoxel(0, 0, 0);
     
@@ -203,7 +206,7 @@ TEST_F(CameraCubeVisibilityTest, LargeVoxel_CloseCamera) {
 
 TEST_F(CameraCubeVisibilityTest, VoxelBehindCamera) {
     // Place voxel at position that will be behind camera
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm8;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
     voxelData->placeVoxel(10, 10, 10);
     
@@ -265,7 +268,7 @@ TEST_F(CameraCubeVisibilityTest, VoxelRayIntersection) {
 
 TEST_F(CameraCubeVisibilityTest, MultipleVoxelsScreenCoverage) {
     // Test that voxels cover different parts of the screen
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm8;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
     
     // Place voxels in a pattern
@@ -317,7 +320,7 @@ TEST_F(CameraCubeVisibilityTest, MultipleVoxelsScreenCoverage) {
 
 // Test voxel visibility with explicit camera matrix verification
 TEST_F(CameraCubeVisibilityTest, ExplicitMatrixCalculations) {
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Cm8;
+    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
     voxelData->placeVoxel(6, 6, 6);
     

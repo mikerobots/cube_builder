@@ -19,6 +19,14 @@ add_library(VoxelEditor_Rendering STATIC
     ShaderManagerSafe.cpp
 )
 
+# Add macOS-specific OpenGL loader
+if(APPLE)
+    target_sources(VoxelEditor_Rendering PRIVATE
+        MacOSGLLoader.h
+        MacOSGLLoader.cpp
+    )
+endif()
+
 # Set target properties
 set_target_properties(VoxelEditor_Rendering PROPERTIES
     CXX_STANDARD 17

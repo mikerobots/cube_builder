@@ -2742,6 +2742,14 @@ build core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.
   OBJECT_DIR = core/rendering/CMakeFiles/VoxelEditor_Rendering.dir
   OBJECT_FILE_DIR = core/rendering/CMakeFiles/VoxelEditor_Rendering.dir
 
+build core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/MacOSGLLoader.cpp.o: CXX_COMPILER__VoxelEditor_Rendering_ /Users/michaelhalloran/cube_edit/core/rendering/MacOSGLLoader.cpp || cmake_object_order_depends_target_VoxelEditor_Rendering
+  DEFINES = -DVOXEL_EDITOR_RENDERING_MODULE
+  DEP_FILE = core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/MacOSGLLoader.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wall -Wextra -pedantic -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/rendering -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/core/voxel_data -I/Users/michaelhalloran/cube_edit/foundation/memory -I/Users/michaelhalloran/cube_edit/foundation/logging
+  OBJECT_DIR = core/rendering/CMakeFiles/VoxelEditor_Rendering.dir
+  OBJECT_FILE_DIR = core/rendering/CMakeFiles/VoxelEditor_Rendering.dir
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target VoxelEditor_Rendering
@@ -2750,7 +2758,7 @@ build core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.
 #############################################
 # Link the static library lib/libVoxelEditor_Rendering.a
 
-build lib/libVoxelEditor_Rendering.a: CXX_STATIC_LIBRARY_LINKER__VoxelEditor_Rendering_ core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderEngine.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o || lib/libVoxelEditor_VoxelData.a lib/libglad.a
+build lib/libVoxelEditor_Rendering.a: CXX_STATIC_LIBRARY_LINKER__VoxelEditor_Rendering_ core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderTypes.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderEngine.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/OpenGLRenderer.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/RenderState.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManager.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/ShaderManagerSafe.cpp.o core/rendering/CMakeFiles/VoxelEditor_Rendering.dir/MacOSGLLoader.cpp.o || lib/libVoxelEditor_VoxelData.a lib/libglad.a
   ARCH_FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = core/rendering/CMakeFiles/VoxelEditor_Rendering.dir
   POST_BUILD = :

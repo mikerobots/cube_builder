@@ -6,6 +6,7 @@
 // Silence OpenGL deprecation warnings on macOS
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
+#include "MacOSGLLoader.h"
 #endif
 
 #include <glad/glad.h>
@@ -71,6 +72,14 @@ bool OpenGLRenderer::initializeContext(const RenderConfig& config) {
         return false;
     }
     
+#ifdef __APPLE__
+    // Load OpenGL extensions on macOS
+    if (!LoadOpenGLExtensions()) {
+        std::cerr << "Failed to load OpenGL extensions on macOS" << std::endl;
+        return false;
+    }
+#endif
+    
     // Query OpenGL capabilities (skip in test environments)
     try {
         queryCapabilities();
@@ -101,9 +110,25 @@ bool OpenGLRenderer::initializeContext(const RenderConfig& config) {
     glFrontFace(GL_CCW);
     
     // Create and bind a default VAO for OpenGL 3.3 core profile
-    // Skip VAO creation for now - we'll work without it
-    m_defaultVAO = 0;
-    std::cout << "Running without VAO support" << std::endl;
+    // This is REQUIRED on macOS
+#ifdef __APPLE__
+    if (glGenVertexArrays && glBindVertexArray) {
+        glGenVertexArrays(1, &m_defaultVAO);
+        if (m_defaultVAO != 0) {
+            glBindVertexArray(m_defaultVAO);
+            std::cout << "Successfully created and bound default VAO: " << m_defaultVAO << std::endl;
+        } else {
+            std::cerr << "Failed to create default VAO" << std::endl;
+            return false;
+        }
+    } else {
+        std::cerr << "VAO functions not available - cannot continue on macOS" << std::endl;
+        return false;
+    }
+#else
+    glGenVertexArrays(1, &m_defaultVAO);
+    glBindVertexArray(m_defaultVAO);
+#endif
     
     // Ensure depth range is correct
     glDepthRange(0.0, 1.0);
@@ -126,7 +151,9 @@ void OpenGLRenderer::destroyContext() {
     // Clean up default VAO
     if (m_defaultVAO != 0) {
 #ifdef __APPLE__
-        glDeleteVertexArraysAPPLE(1, &m_defaultVAO);
+        if (glDeleteVertexArrays) {
+            glDeleteVertexArrays(1, &m_defaultVAO);
+        }
 #else
         glDeleteVertexArrays(1, &m_defaultVAO);
 #endif
@@ -231,19 +258,41 @@ void OpenGLRenderer::deleteBuffer(BufferId bufferId) {
 }
 
 uint32_t OpenGLRenderer::createVertexArray() {
-    // We use a single default VAO created during initialization
-    // Just return a dummy ID
-    return 1;
+    uint32_t vao = 0;
+#ifdef __APPLE__
+    if (glGenVertexArrays) {
+        glGenVertexArrays(1, &vao);
+    }
+#else
+    glGenVertexArrays(1, &vao);
+#endif
+    return vao;
 }
 
 void OpenGLRenderer::bindVertexArray(uint32_t vaoId) {
-    // Do nothing - we always use the default VAO
-    (void)vaoId;
+    // If vaoId is 0, bind the default VAO
+    if (vaoId == 0) {
+        vaoId = m_defaultVAO;
+    }
+#ifdef __APPLE__
+    if (glBindVertexArray) {
+        glBindVertexArray(vaoId);
+    }
+#else
+    glBindVertexArray(vaoId);
+#endif
 }
 
 void OpenGLRenderer::deleteVertexArray(uint32_t vaoId) {
-    // Do nothing - we don't actually create per-mesh VAOs
-    (void)vaoId;
+    if (vaoId != 0 && vaoId != m_defaultVAO) {
+#ifdef __APPLE__
+        if (glDeleteVertexArrays) {
+            glDeleteVertexArrays(1, &vaoId);
+        }
+#else
+        glDeleteVertexArrays(1, &vaoId);
+#endif
+    }
 }
 
 void OpenGLRenderer::setupVertexAttributes(const std::vector<VertexAttribute>& attributes) {
@@ -290,8 +339,7 @@ void OpenGLRenderer::setupVertexAttributes(const std::vector<VertexAttribute>& a
         }
     }
     
-    static int setupCount = 0;
-    setupCount++;
+    // Static counter removed - was unused
     
     checkGLError("setupVertexAttributes");
 }
@@ -573,11 +621,7 @@ void OpenGLRenderer::drawArrays(PrimitiveType type, int first, int count) {
 }
 
 void OpenGLRenderer::drawElementsInstanced(PrimitiveType type, int count, int instanceCount, IndexType indexType) {
-#ifdef __APPLE__
-    glDrawElementsInstancedARB(translatePrimitiveType(type), count, translateIndexType(indexType), nullptr, instanceCount);
-#else
     glDrawElementsInstanced(translatePrimitiveType(type), count, translateIndexType(indexType), nullptr, instanceCount);
-#endif
     checkGLError("drawElementsInstanced");
 }
 
