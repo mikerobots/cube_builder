@@ -3,6 +3,21 @@
 ## Purpose
 Handles project save/load operations using custom binary format, STL export functionality, file versioning, and compression for efficient storage.
 
+## Current Implementation Status
+The implementation closely matches the design with most components properly implemented:
+- **FileManager** - Fully implemented with auto-save and backup functionality integrated
+- **BinaryFormat** - Implemented as specified
+- **STLExporter** - Implemented for mesh export
+- **FileVersioning** - Implemented for version management
+- **Compression** - Implemented with LZ4 support
+- **BinaryIO** - Contains BinaryReader/BinaryWriter utilities
+- **FileTypes** - Contains options and type definitions
+- **Project** - Project structure definition
+
+Missing separate components (functionality integrated into FileManager):
+- **AutoSave** - Implemented within FileManager rather than as separate class
+- **FileValidator** - Validation functionality not visible as separate component
+
 ## Key Components
 
 ### FileManager
@@ -553,3 +568,53 @@ private:
 - Background I/O for auto-save
 - Incremental saves for large changes
 - Async loading with progress indication
+
+## Known Issues and Technical Debt
+
+### Issue 1: Missing File Validation Component
+- **Severity**: Medium
+- **Impact**: No dedicated validation system for checking file integrity and repairing corrupted files
+- **Proposed Solution**: Implement FileValidator class as designed or add validation methods to FileManager
+- **Dependencies**: None
+
+### Issue 2: AutoSave Threading Concerns
+- **Severity**: High
+- **Impact**: Auto-save uses std::thread but lacks proper synchronization for Project access, potential race conditions
+- **Proposed Solution**: Implement proper thread-safe project snapshotting or use async I/O instead
+- **Dependencies**: Thread-safe Project design
+
+### Issue 3: Global Singleton Pattern
+- **Severity**: Low
+- **Impact**: FileManagerInstance uses singleton pattern, making testing harder and creating global state
+- **Proposed Solution**: Use dependency injection instead of singleton
+- **Dependencies**: Application architecture refactoring
+
+### Issue 4: Missing Streaming Support
+- **Severity**: Medium
+- **Impact**: Large files must be loaded entirely into memory, limiting scalability
+- **Proposed Solution**: Implement streaming I/O for large voxel grids
+- **Dependencies**: VoxelData streaming support
+
+### Issue 5: No Format Migration Implementation
+- **Severity**: Medium
+- **Impact**: FileVersioning interface exists but no actual migration functions implemented
+- **Proposed Solution**: Implement version migration functions as files evolve
+- **Dependencies**: Format stability
+
+### Issue 6: Hardcoded File Extension
+- **Severity**: Low
+- **Impact**: File format uses ".cvef" extension but it's not clearly defined or registered
+- **Proposed Solution**: Define file extension constants and implement proper file type registration
+- **Dependencies**: Platform-specific file association APIs
+
+### Issue 7: Progress Callback Threading
+- **Severity**: Medium
+- **Impact**: Progress callbacks may be called from background threads without synchronization
+- **Proposed Solution**: Document thread safety requirements or provide thread-safe callback wrapper
+- **Dependencies**: UI thread synchronization
+
+### Issue 8: Memory Management for Large Projects
+- **Severity**: High
+- **Impact**: No memory limits or streaming for very large projects (approaching VR memory constraints)
+- **Proposed Solution**: Implement memory-aware loading with partial project support
+- **Dependencies**: VoxelData memory management improvements

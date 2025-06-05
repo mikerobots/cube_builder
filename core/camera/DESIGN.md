@@ -3,6 +3,15 @@
 ## Purpose
 Manages 3D camera controls, view presets, smooth transitions, and camera state persistence for the voxel editor across all platforms.
 
+## Current Implementation Status
+The actual implementation differs from the original design. The system currently has:
+- **Camera** (base class) instead of CameraManager
+- **CameraController** handling input and camera management
+- **OrbitCamera** as the concrete camera implementation
+- **Viewport** for screen-space calculations
+- View presets are integrated into Camera base class rather than a separate component
+- No dedicated CameraAnimator or ViewPresets classes
+
 ## Key Components
 
 ### CameraManager
@@ -406,3 +415,47 @@ struct ViewChangedEvent {
 - Export camera paths for animation
 - Import camera presets
 - Version compatibility for camera data
+
+## Known Issues and Technical Debt
+
+### Issue 1: Design vs Implementation Mismatch
+- **Severity**: Medium
+- **Impact**: The implementation doesn't match the design specification, leading to confusion and potential feature gaps
+- **Proposed Solution**: Either update the design to match the simpler implementation or implement the missing components (CameraManager, ViewPresets, CameraAnimator)
+- **Dependencies**: Decision on whether to keep simple or implement full design
+
+### Issue 2: Missing Animation System
+- **Severity**: Medium
+- **Impact**: No smooth camera transitions between views, jarring user experience
+- **Proposed Solution**: Implement CameraAnimator as specified or add animation capabilities to CameraController
+- **Dependencies**: None
+
+### Issue 3: Limited View Preset Management
+- **Severity**: Low
+- **Impact**: View presets are hardcoded in enum, no custom presets or dynamic preset management
+- **Proposed Solution**: Implement ViewPresets class for extensible preset management
+- **Dependencies**: None
+
+### Issue 4: No State Serialization
+- **Severity**: Medium
+- **Impact**: Camera state is not saved/restored with projects, users lose their view when reopening
+- **Proposed Solution**: Implement CameraState serialization methods
+- **Dependencies**: File I/O system integration
+
+### Issue 5: Tight Coupling with Events
+- **Severity**: Low
+- **Impact**: Camera classes directly depend on EventDispatcher, making unit testing harder
+- **Proposed Solution**: Use interface or callback pattern for event notification
+- **Dependencies**: Event system refactoring
+
+### Issue 6: Missing Orthographic Projection Support
+- **Severity**: High
+- **Impact**: Only perspective projection is implemented, but orthographic views are essential for CAD-like editing
+- **Proposed Solution**: Add projection type switching to Camera base class
+- **Dependencies**: None
+
+### Issue 7: No Camera Constraints Implementation
+- **Severity**: Medium
+- **Impact**: Camera can clip through geometry or go to invalid positions
+- **Proposed Solution**: Implement CameraConstraints as designed
+- **Dependencies**: None
