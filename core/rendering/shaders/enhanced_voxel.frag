@@ -2,7 +2,7 @@
 
 in vec3 FragPos;
 in vec3 Normal;
-in vec3 Color;
+in vec4 Color;
 
 out vec4 FragColor;
 
@@ -95,7 +95,7 @@ void main() {
     vec3 specular = 0.3 * spec * lightColor;
     
     // 6. Calculate base lit color
-    vec3 baseColor = Color * faceModulation;
+    vec3 baseColor = Color.rgb * faceModulation;
     vec3 litColor = (ambient + diffuse + faceLight + specular) * baseColor;
     
     // 7. Apply edge enhancements
@@ -131,5 +131,5 @@ void main() {
     // Ensure we don't go too dark or too bright
     litColor = clamp(litColor, vec3(0.05), vec3(1.0));
     
-    FragColor = vec4(litColor, 1.0);
+    FragColor = vec4(litColor, Color.a);
 }

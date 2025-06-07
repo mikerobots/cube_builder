@@ -57,6 +57,7 @@ private:
         uint32_t textShader;
         uint32_t vertexBuffer;
         uint32_t indexBuffer;
+        uint32_t vertexArray;  // Add VAO
         std::vector<float> vertices;
         std::vector<uint32_t> indices;
         int screenWidth;

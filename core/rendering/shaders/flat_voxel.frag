@@ -2,7 +2,7 @@
 
 in vec3 FragPos;
 in vec3 Normal;
-in vec3 Color;
+in vec4 Color;
 
 out vec4 FragColor;
 
@@ -15,7 +15,7 @@ void main() {
     vec3 norm = normalize(Normal);
     
     // Base color with face-dependent tinting
-    vec3 faceColor = Color;
+    vec3 faceColor = Color.rgb;
     
     // Apply different brightness to each face based on normal
     float brightness = 0.5;
@@ -48,5 +48,5 @@ void main() {
     // Apply brightness
     vec3 result = faceColor * brightness;
     
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(result, Color.a);
 }

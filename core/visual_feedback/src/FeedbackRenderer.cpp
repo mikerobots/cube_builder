@@ -209,30 +209,12 @@ void FeedbackRenderer::renderOutlines(const Camera::Camera& camera) {
 
 void FeedbackRenderer::renderOverlays(const Camera::Camera& camera, const Rendering::RenderContext& context) {
     if (m_workspaceVisualizationEnabled) {
-        // Render grid
-        Math::Vector3f center = m_workspaceBounds.getCenter();
-        float extent = (m_workspaceBounds.max - m_workspaceBounds.min).length() * 0.5f;
-        m_overlay->renderGrid(m_previewResolution, center, extent, camera);
-        
-        // Render workspace indicator
+        // DEBUG: Only render workspace indicator to see what text is causing white boxes
         Math::Vector3f size = m_workspaceBounds.max - m_workspaceBounds.min;
         m_overlay->renderWorkspaceIndicator(size, Math::Vector2f(10, context.screenHeight - 50));
     }
     
-    if (m_debugOverlaysEnabled) {
-        // Render performance metrics
-        m_overlay->renderPerformanceMetrics(m_lastStats, Math::Vector2f(10, 10));
-        
-        // Render memory usage
-        if (m_memoryTotal > 0) {
-            m_overlay->renderMemoryUsage(m_memoryUsed, m_memoryTotal, Math::Vector2f(10, 120));
-        }
-        
-        // Render camera info
-        m_overlay->renderCameraInfo(camera, Math::Vector2f(10, 180));
-    }
-    
-    // Render resolution indicator
+    // DEBUG: Only render resolution indicator to see what text is causing white boxes
     m_overlay->renderResolutionIndicator(m_previewResolution, 
                                         Math::Vector2f(context.screenWidth - 150, 10));
 }

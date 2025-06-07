@@ -27,6 +27,9 @@ OverlayRenderer::~OverlayRenderer() {
     if (m_textRenderer.textShader) {
         glDeleteProgram(m_textRenderer.textShader);
     }
+    if (m_textRenderer.vertexArray) {
+        glDeleteVertexArrays(1, &m_textRenderer.vertexArray);
+    }
     if (m_textRenderer.vertexBuffer) {
         glDeleteBuffers(1, &m_textRenderer.vertexBuffer);
     }
@@ -237,13 +240,231 @@ void OverlayRenderer::initializeTextRenderer() {
     // For simplicity, we'll create a placeholder texture
     unsigned char* fontData = new unsigned char[textureSize * textureSize * 4];
     
-    // Fill with a simple pattern for now (in production, load real font data)
-    for (int i = 0; i < textureSize * textureSize * 4; i += 4) {
-        fontData[i] = 255;     // R
-        fontData[i+1] = 255;   // G
-        fontData[i+2] = 255;   // B
-        fontData[i+3] = (i % 8 < 4) ? 255 : 0; // A - simple pattern
-    }
+    // Create a simple bitmap font for ASCII characters 32-127
+    // Characters are arranged in a 16x8 grid, each character is 8x8 pixels
+    memset(fontData, 0, textureSize * textureSize * 4); // Start with transparent
+    
+    // Define simple bitmaps for common characters
+    auto setPixel = [&](int charX, int charY, int pixelX, int pixelY, bool on) {
+        if (charX >= 16 || charY >= 8 || pixelX >= 8 || pixelY >= 8) return;
+        int x = charX * 8 + pixelX;
+        int y = charY * 8 + pixelY;
+        int idx = (y * textureSize + x) * 4;
+        if (on) {
+            fontData[idx] = 255;     // R
+            fontData[idx+1] = 255;   // G  
+            fontData[idx+2] = 255;   // B
+            fontData[idx+3] = 255;   // A - fully opaque white
+        }
+    };
+    
+    // Space (ASCII 32) - already transparent
+    
+    // Colon ':' (ASCII 58 = index 26, row 1, col 10)
+    setPixel(10, 1, 3, 2, true);
+    setPixel(10, 1, 3, 5, true);
+    
+    // Numbers 0-9 (ASCII 48-57)
+    // '0' (ASCII 48 = index 16, row 1, col 0)
+    for (int i = 1; i <= 6; i++) { setPixel(0, 1, 1, i, true); setPixel(0, 1, 5, i, true); }
+    for (int i = 2; i <= 4; i++) { setPixel(0, 1, i, 1, true); setPixel(0, 1, i, 6, true); }
+    
+    // '1' (ASCII 49 = index 17, row 1, col 1)
+    for (int i = 1; i <= 6; i++) setPixel(1, 1, 3, i, true);
+    setPixel(1, 1, 2, 2, true);
+    for (int i = 1; i <= 5; i++) setPixel(1, 1, i, 6, true);
+    
+    // Letters (simplified versions)
+    // 'R' (ASCII 82 = index 50, row 3, col 2)
+    for (int i = 1; i <= 6; i++) setPixel(2, 3, 1, i, true);
+    for (int i = 2; i <= 4; i++) { setPixel(2, 3, i, 1, true); setPixel(2, 3, i, 3, true); }
+    setPixel(2, 3, 5, 2, true);
+    setPixel(2, 3, 3, 4, true);
+    setPixel(2, 3, 4, 5, true);
+    setPixel(2, 3, 5, 6, true);
+    
+    // 'e' (ASCII 101 = index 69, row 4, col 5)
+    for (int i = 2; i <= 4; i++) { setPixel(5, 4, i, 3, true); setPixel(5, 4, i, 6, true); }
+    for (int i = 4; i <= 5; i++) setPixel(5, 4, 1, i, true);
+    setPixel(5, 4, 5, 4, true);
+    
+    // 's' (ASCII 115 = index 83, row 5, col 3)
+    for (int i = 2; i <= 4; i++) { setPixel(3, 5, i, 3, true); setPixel(3, 5, i, 6, true); }
+    setPixel(3, 5, 1, 4, true);
+    setPixel(3, 5, 3, 5, true);
+    setPixel(3, 5, 5, 5, true);
+    
+    // 'o' (ASCII 111 = index 79, row 4, col 15)
+    for (int i = 2; i <= 4; i++) { setPixel(15, 4, i, 3, true); setPixel(15, 4, i, 6, true); }
+    for (int i = 4; i <= 5; i++) { setPixel(15, 4, 1, i, true); setPixel(15, 4, 5, i, true); }
+    
+    // 'l' (ASCII 108 = index 76, row 4, col 12)
+    for (int i = 1; i <= 6; i++) setPixel(12, 4, 2, i, true);
+    
+    // 'u' (ASCII 117 = index 85, row 5, col 5)
+    for (int i = 3; i <= 5; i++) { setPixel(5, 5, 1, i, true); setPixel(5, 5, 5, i, true); }
+    for (int i = 2; i <= 4; i++) setPixel(5, 5, i, 6, true);
+    
+    // 't' (ASCII 116 = index 84, row 5, col 4)
+    for (int i = 1; i <= 6; i++) setPixel(4, 5, 2, i, true);
+    for (int i = 1; i <= 3; i++) setPixel(4, 5, i, 2, true);
+    
+    // 'i' (ASCII 105 = index 73, row 4, col 9)
+    setPixel(9, 4, 2, 1, true);
+    for (int i = 3; i <= 6; i++) setPixel(9, 4, 2, i, true);
+    
+    // 'n' (ASCII 110 = index 78, row 4, col 14)
+    for (int i = 3; i <= 6; i++) { setPixel(14, 4, 1, i, true); setPixel(14, 4, 5, i, true); }
+    for (int i = 2; i <= 4; i++) setPixel(14, 4, i, 3, true);
+    
+    // 'W' (ASCII 87 = index 55, row 3, col 7)
+    for (int i = 1; i <= 6; i++) { setPixel(7, 3, 0, i, true); setPixel(7, 3, 6, i, true); }
+    for (int i = 4; i <= 6; i++) { setPixel(7, 3, 2, i, true); setPixel(7, 3, 4, i, true); }
+    setPixel(7, 3, 3, 6, true);
+    
+    // 'k' (ASCII 107 = index 75, row 4, col 11)
+    for (int i = 1; i <= 6; i++) setPixel(11, 4, 1, i, true);
+    setPixel(11, 4, 4, 3, true);
+    setPixel(11, 4, 3, 4, true);
+    setPixel(11, 4, 4, 5, true);
+    setPixel(11, 4, 5, 6, true);
+    
+    // 'r' (ASCII 114 = index 82, row 5, col 2)
+    for (int i = 3; i <= 6; i++) setPixel(2, 5, 1, i, true);
+    for (int i = 2; i <= 3; i++) setPixel(2, 5, i, 3, true);
+    setPixel(2, 5, 4, 4, true);
+    
+    // 'p' (ASCII 112 = index 80, row 5, col 0)
+    for (int i = 3; i <= 7; i++) setPixel(0, 5, 1, i, true);
+    for (int i = 2; i <= 4; i++) { setPixel(0, 5, i, 3, true); setPixel(0, 5, i, 5, true); }
+    setPixel(0, 5, 5, 4, true);
+    
+    // 'a' (ASCII 97 = index 65, row 4, col 1)
+    for (int i = 2; i <= 4; i++) setPixel(1, 4, i, 4, true);
+    setPixel(1, 4, 1, 5, true);
+    for (int i = 4; i <= 6; i++) { setPixel(1, 4, 5, i, true); setPixel(1, 4, i, 6, true); }
+    
+    // 'c' (ASCII 99 = index 67, row 4, col 3)  
+    for (int i = 2; i <= 4; i++) { setPixel(3, 4, i, 3, true); setPixel(3, 4, i, 6, true); }
+    for (int i = 4; i <= 5; i++) setPixel(3, 4, 1, i, true);
+    
+    // 'm' (ASCII 109 = index 77, row 4, col 13)
+    for (int i = 3; i <= 6; i++) { setPixel(13, 4, 1, i, true); setPixel(13, 4, 3, i, true); setPixel(13, 4, 5, i, true); }
+    setPixel(13, 4, 2, 3, true);
+    setPixel(13, 4, 4, 3, true);
+    
+    // Space for 'x' patterns and other basic shapes
+    // Add more characters as needed...
+    
+    // 'x' (ASCII 120 = index 88, row 5, col 8)
+    setPixel(8, 5, 1, 3, true);
+    setPixel(8, 5, 2, 4, true);
+    setPixel(8, 5, 3, 5, true);
+    setPixel(8, 5, 4, 4, true);
+    setPixel(8, 5, 5, 3, true);
+    setPixel(8, 5, 1, 6, true);
+    setPixel(8, 5, 5, 6, true);
+    
+    // Period '.' (ASCII 46 = index 14, row 0, col 14)
+    setPixel(14, 0, 3, 6, true);
+    
+    // More digits for completeness
+    // '2' (ASCII 50 = index 18, row 1, col 2)
+    for (int i = 2; i <= 4; i++) { setPixel(2, 1, i, 1, true); setPixel(2, 1, i, 3, true); setPixel(2, 1, i, 6, true); }
+    setPixel(2, 1, 5, 2, true);
+    setPixel(2, 1, 1, 4, true);
+    setPixel(2, 1, 1, 5, true);
+    
+    // '3' (ASCII 51 = index 19, row 1, col 3)
+    for (int i = 2; i <= 4; i++) { setPixel(3, 1, i, 1, true); setPixel(3, 1, i, 3, true); setPixel(3, 1, i, 6, true); }
+    setPixel(3, 1, 5, 2, true);
+    setPixel(3, 1, 5, 4, true);
+    setPixel(3, 1, 5, 5, true);
+    
+    // '4' (ASCII 52 = index 20, row 1, col 4)
+    for (int i = 1; i <= 3; i++) setPixel(4, 1, 1, i, true);
+    setPixel(4, 1, 3, 2, true);
+    for (int i = 1; i <= 5; i++) setPixel(4, 1, i, 3, true);
+    for (int i = 4; i <= 6; i++) setPixel(4, 1, 5, i, true);
+    
+    // '5' (ASCII 53 = index 21, row 1, col 5)
+    for (int i = 1; i <= 5; i++) setPixel(5, 1, i, 1, true);
+    for (int i = 2; i <= 3; i++) setPixel(5, 1, 1, i, true);
+    for (int i = 2; i <= 4; i++) setPixel(5, 1, i, 3, true);
+    setPixel(5, 1, 5, 4, true);
+    setPixel(5, 1, 5, 5, true);
+    for (int i = 2; i <= 4; i++) setPixel(5, 1, i, 6, true);
+    
+    // More essential letters
+    // 'd' (ASCII 100 = index 68, row 4, col 4)
+    for (int i = 1; i <= 6; i++) setPixel(4, 4, 5, i, true);
+    for (int i = 2; i <= 4; i++) { setPixel(4, 4, i, 3, true); setPixel(4, 4, i, 6, true); }
+    for (int i = 4; i <= 5; i++) setPixel(4, 4, 1, i, true);
+    
+    // 'h' (ASCII 104 = index 72, row 4, col 8)
+    for (int i = 1; i <= 6; i++) setPixel(8, 4, 1, i, true);
+    for (int i = 2; i <= 4; i++) setPixel(8, 4, i, 3, true);
+    for (int i = 4; i <= 6; i++) setPixel(8, 4, 5, i, true);
+    
+    // 'f' (ASCII 102 = index 70, row 4, col 6)
+    for (int i = 1; i <= 6; i++) setPixel(6, 4, 1, i, true);
+    for (int i = 2; i <= 4; i++) { setPixel(6, 4, i, 1, true); setPixel(6, 4, i, 3, true); }
+    
+    // 'g' (ASCII 103 = index 71, row 4, col 7)
+    for (int i = 2; i <= 4; i++) { setPixel(7, 4, i, 1, true); setPixel(7, 4, i, 6, true); }
+    for (int i = 2; i <= 5; i++) setPixel(7, 4, 1, i, true);
+    setPixel(7, 4, 4, 4, true);
+    setPixel(7, 4, 5, 4, true);
+    setPixel(7, 4, 5, 5, true);
+    
+    // 'v' (ASCII 118 = index 86, row 5, col 6)
+    setPixel(6, 5, 0, 3, true);
+    setPixel(6, 5, 1, 4, true);
+    setPixel(6, 5, 2, 5, true);
+    setPixel(6, 5, 3, 6, true);
+    setPixel(6, 5, 4, 5, true);
+    setPixel(6, 5, 5, 4, true);
+    setPixel(6, 5, 6, 3, true);
+    
+    // 'y' (ASCII 121 = index 89, row 5, col 9)
+    setPixel(9, 5, 0, 3, true);
+    setPixel(9, 5, 1, 4, true);
+    setPixel(9, 5, 2, 5, true);
+    setPixel(9, 5, 3, 6, true);
+    setPixel(9, 5, 4, 5, true);
+    setPixel(9, 5, 5, 4, true);
+    setPixel(9, 5, 6, 3, true);
+    setPixel(9, 5, 2, 7, true);
+    setPixel(9, 5, 1, 7, true);
+    
+    // 'b' (ASCII 98 = index 66, row 4, col 2)
+    for (int i = 1; i <= 6; i++) setPixel(2, 4, 1, i, true);
+    for (int i = 2; i <= 4; i++) { setPixel(2, 4, i, 3, true); setPixel(2, 4, i, 6, true); }
+    setPixel(2, 4, 5, 4, true);
+    setPixel(2, 4, 5, 5, true);
+    
+    // Missing numbers for completeness
+    // '6' (ASCII 54 = index 22, row 1, col 6)
+    for (int i = 2; i <= 5; i++) setPixel(6, 1, 1, i, true);
+    for (int i = 2; i <= 4; i++) { setPixel(6, 1, i, 1, true); setPixel(6, 1, i, 4, true); setPixel(6, 1, i, 6, true); }
+    setPixel(6, 1, 5, 5, true);
+    
+    // '7' (ASCII 55 = index 23, row 1, col 7)
+    for (int i = 1; i <= 5; i++) setPixel(7, 1, i, 1, true);
+    setPixel(7, 1, 4, 2, true);
+    setPixel(7, 1, 3, 3, true);
+    setPixel(7, 1, 2, 4, true);
+    setPixel(7, 1, 2, 5, true);
+    setPixel(7, 1, 2, 6, true);
+    
+    // '8' (ASCII 56 = index 24, row 1, col 8)
+    for (int i = 2; i <= 4; i++) { setPixel(8, 1, i, 1, true); setPixel(8, 1, i, 3, true); setPixel(8, 1, i, 6, true); }
+    for (int i = 2; i <= 5; i++) { setPixel(8, 1, 1, i, true); setPixel(8, 1, 5, i, true); }
+    
+    // '9' (ASCII 57 = index 25, row 1, col 9)
+    for (int i = 2; i <= 4; i++) { setPixel(9, 1, i, 1, true); setPixel(9, 1, i, 3, true); setPixel(9, 1, i, 6, true); }
+    setPixel(9, 1, 1, 2, true);
+    for (int i = 2; i <= 5; i++) setPixel(9, 1, 5, i, true);
     
     // Create font texture
     glGenTextures(1, &m_textRenderer.fontTexture);
@@ -285,22 +506,39 @@ void OverlayRenderer::initializeTextRenderer() {
         
         uniform sampler2D fontTexture;
         
-        out vec4 color;
+        out vec4 finalColor;
         
         void main() {
             float alpha = texture(fontTexture, fragTexCoord).a;
-            color = vec4(fragColor.rgb, fragColor.a * alpha);
+            finalColor = vec4(fragColor.rgb, fragColor.a * alpha);
         }
     )";
     
-    // Compile shaders
+    // Compile shaders with error checking
     uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
     
+    // Check vertex shader compilation
+    GLint success;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+        printf("ERROR: Text vertex shader compilation failed: %s\n", infoLog);
+    }
+    
     uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
+    
+    // Check fragment shader compilation
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+        printf("ERROR: Text fragment shader compilation failed: %s\n", infoLog);
+    }
     
     // Create and link program
     m_textRenderer.textShader = glCreateProgram();
@@ -308,9 +546,21 @@ void OverlayRenderer::initializeTextRenderer() {
     glAttachShader(m_textRenderer.textShader, fragmentShader);
     glLinkProgram(m_textRenderer.textShader);
     
+    // Check program linking
+    glGetProgramiv(m_textRenderer.textShader, GL_LINK_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetProgramInfoLog(m_textRenderer.textShader, 512, nullptr, infoLog);
+        printf("ERROR: Text shader program linking failed: %s\n", infoLog);
+    }
+    
     // Clean up
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+    
+    // Create VAO first
+    glGenVertexArrays(1, &m_textRenderer.vertexArray);
+    glBindVertexArray(m_textRenderer.vertexArray);
     
     // Create vertex and index buffers
     glGenBuffers(1, &m_textRenderer.vertexBuffer);
@@ -323,7 +573,19 @@ void OverlayRenderer::initializeTextRenderer() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_textRenderer.indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * 6 * 256, nullptr, GL_DYNAMIC_DRAW);
     
+    // Set up vertex attributes while VAO is bound
+    size_t stride = 8 * sizeof(float);
+    glEnableVertexAttribArray(0); // position
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, (void*)0);
+    
+    glEnableVertexAttribArray(1); // texCoord
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)(2 * sizeof(float)));
+    
+    glEnableVertexAttribArray(2); // color
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, stride, (void*)(4 * sizeof(float)));
+    
     // Unbind
+    glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -516,6 +778,9 @@ void OverlayRenderer::flushTextBatch() {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_textRenderer.fontTexture);
     
+    // Bind VAO (contains all vertex attribute setup)
+    glBindVertexArray(m_textRenderer.vertexArray);
+    
     // Upload vertex data
     glBindBuffer(GL_ARRAY_BUFFER, m_textRenderer.vertexBuffer);
     glBufferSubData(GL_ARRAY_BUFFER, 0, m_textRenderer.vertices.size() * sizeof(float), 
@@ -526,25 +791,12 @@ void OverlayRenderer::flushTextBatch() {
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_textRenderer.indices.size() * sizeof(uint32_t),
                     m_textRenderer.indices.data());
     
-    // Setup vertex attributes
-    glEnableVertexAttribArray(0); // position
-    glEnableVertexAttribArray(1); // texCoord
-    glEnableVertexAttribArray(2); // color
-    
-    size_t stride = 8 * sizeof(float);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, (void*)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)(2 * sizeof(float)));
-    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, stride, (void*)(4 * sizeof(float)));
-    
-    // Draw text
+    // Draw text (VAO already has vertex attributes set up)
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_textRenderer.indices.size()),
                    GL_UNSIGNED_INT, nullptr);
     
     // Cleanup
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-    
+    glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
