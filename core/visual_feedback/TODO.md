@@ -140,7 +140,14 @@ This subsystem renders visual cues and overlays including grid visualization, pr
 **Test Coverage**: 117 tests (10 new tests added for requirements validation)
 **Requirements Status**: 22 of 24 implemented (91.7% complete)
 
-## Code Quality Issues Found
+## Outstanding Technical Issues
+
+### OpenGL Context Issue (Fixed)
+- OutlineRenderer and OverlayRenderer previously created OpenGL resources in constructors
+- This caused segmentation faults in unit tests (no OpenGL context available)
+- **FIXED**: Added lazy initialization pattern to delay OpenGL resource creation
+- Core functionality tests (FeedbackTypes, FaceDetector) all pass
+- Renderer tests require proper OpenGL integration test environment
 
 ### TODO Comments (10 instances)
 

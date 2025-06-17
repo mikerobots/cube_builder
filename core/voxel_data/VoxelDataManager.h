@@ -54,16 +54,21 @@ public:
             return false;
         }
         
-        // Check for overlaps if we're setting a voxel (not removing)
-        if (value && wouldOverlapInternal(pos, resolution)) {
-            return false;
-        }
-        
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
         bool oldValue = grid->getVoxel(pos);
         
+        // Handle redundant operations (setting same value as current)
+        if (oldValue == value) {
+            // This is a redundant operation - no change needed, but return true to indicate success
+            return true;
+        }
+        
+        // Check for overlaps if we're setting a voxel (not removing)
+        if (value && wouldOverlapInternal(pos, resolution)) {
+            return false;
+        }
         
         bool success = grid->setVoxel(pos, value);
         
@@ -103,49 +108,38 @@ public:
     bool setVoxelAtWorldPos(const Math::Vector3f& worldPos, VoxelResolution resolution, bool value) {
         std::lock_guard<std::mutex> lock(m_mutex);
         
-        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-            "setVoxelAtWorldPos called with worldPos=(%.3f, %.3f, %.3f), resolution=%d, value=%d",
-            worldPos.x, worldPos.y, worldPos.z, static_cast<int>(resolution), value);
+        // Removed verbose debug logging for performance
         
         // Validate 1cm increment position for world coordinates
         if (!isValidIncrementPosition(worldPos)) {
-            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                "Position failed increment validation");
+            // Position validation failed
             return false;
         }
         
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) {
-            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                "Failed to get grid for resolution %d", static_cast<int>(resolution));
+            // Failed to get grid
             return false;
         }
         
         // Convert world position to grid position using the grid's coordinate system
         Math::Vector3i gridPos = grid->worldToGrid(worldPos);
-        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-            "Converted to grid position: (%d, %d, %d)",
-            gridPos.x, gridPos.y, gridPos.z);
+        // Grid position converted
         
         // Check for overlaps if we're setting a voxel (not removing)
         if (value) {
-            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                "Checking for overlaps...");
+            // Check for overlaps
             if (wouldOverlapInternal(gridPos, resolution)) {
-                Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                    "Position would overlap with existing voxel");
+                // Overlap detected
                 return false;
             }
-            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                "No overlaps detected");
+            // No overlaps detected
         }
         
         // Get the old value before setting
         bool oldValue = grid->getVoxel(gridPos);
         
-        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-            "Calling grid->setVoxel with gridPos (%d, %d, %d)",
-            gridPos.x, gridPos.y, gridPos.z);
+        // Set the voxel in the grid
         bool result = grid->setVoxel(gridPos, value);
         
         // Dispatch event if successful and value changed

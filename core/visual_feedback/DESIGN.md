@@ -541,6 +541,12 @@ private:
 - Visual regression tests
 - Mock-based unit tests
 
+### Test Environment Limitations
+- Renderer unit tests require OpenGL context which is not available in CI/headless environments
+- OutlineRenderer and OverlayRenderer have been fixed to delay OpenGL initialization
+- Tests pass for non-OpenGL components (FeedbackTypes, FaceDetector, logic classes)
+- Renderer tests need integration test environment with proper OpenGL context
+
 ### Unit Tests
 - Face detection accuracy ✓ (implemented)
 - Outline generation correctness ✗ (not implemented)
