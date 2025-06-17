@@ -9,6 +9,8 @@ add_library(VoxelEditor_Input STATIC
     KeyboardHandler.h
     TouchHandler.h
     VRInputHandler.h
+    PlacementValidation.h
+    PlaneDetector.h
     
     # Source files
     InputTypes.cpp
@@ -18,6 +20,8 @@ add_library(VoxelEditor_Input STATIC
     TouchHandler.cpp
     VRInputHandler.cpp
     InputManager.cpp
+    PlacementValidation.cpp
+    PlaneDetector.cpp
     # TODO: Add full implementations when platform integration is complete
 )
 
@@ -38,6 +42,8 @@ target_link_libraries(VoxelEditor_Input
     VoxelEditor_Math
     VoxelEditor_Events
     VoxelEditor_Camera
+    VoxelEditor_VoxelData
+    VoxelEditor_VisualFeedback
 )
 
 # Platform-specific dependencies (when implementation is added)

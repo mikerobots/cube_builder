@@ -257,12 +257,18 @@ void SurfaceGenerator::applyPostProcessing(Mesh& mesh, const SurfaceSettings& se
     // Generate UVs if requested
     if (settings.generateUVs) {
         builder.generateBoxUVs();
+        Logging::Logger::getInstance().debugfc("SurfaceGenerator", 
+            "Generated UVs for %zu vertices", builder.getCurrentVertexCount());
     }
     
     mesh = builder.endMesh();
     
-    // Apply simplification
-    if (settings.simplificationRatio < 1.0f) {
+    Logging::Logger::getInstance().debugfc("SurfaceGenerator", 
+        "Post-processing complete: %zu vertices, %zu UVs", 
+        mesh.vertices.size(), mesh.uvCoords.size());
+    
+    // Apply simplification (but skip if UVs were generated to preserve them)
+    if (settings.simplificationRatio < 1.0f && !settings.generateUVs) {
         optimizeMesh(mesh, settings.simplificationRatio);
     }
 }

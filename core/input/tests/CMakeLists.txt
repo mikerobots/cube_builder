@@ -7,6 +7,9 @@ set(INPUT_TEST_SOURCES
     test_KeyboardHandler.cpp
     test_TouchHandler.cpp
     test_VRInputHandler.cpp
+    test_PlacementValidation.cpp
+    test_ModifierKeyTracking.cpp
+    test_PlaneDetector.cpp
     # test_InputManager.cpp     # When full implementation is added
 )
 
@@ -18,6 +21,8 @@ target_link_libraries(VoxelEditor_Input_Tests
     VoxelEditor_Math
     VoxelEditor_Events
     VoxelEditor_Camera
+    VoxelEditor_VoxelData
+    VoxelEditor_VisualFeedback
     GTest::gtest
     GTest::gtest_main
 )

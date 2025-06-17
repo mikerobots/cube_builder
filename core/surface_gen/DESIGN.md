@@ -331,6 +331,26 @@ void onResolutionChanged(const ResolutionChangedEvent& event) {
 - Scale and unit conversion
 - Material information preservation
 
+## Post-Processing Pipeline
+
+### UV Generation
+UV coordinates are generated using box mapping in the `MeshBuilder::generateBoxUVs()` method:
+- Projects vertices onto the most aligned plane (XY, XZ, or YZ)
+- Provides basic texture mapping support
+- Applied during post-processing when `generateUVs` flag is set
+
+### Mesh Simplification
+The `MeshSimplifier` class provides quadric error metric-based simplification:
+- Preserves overall mesh shape while reducing polygon count
+- **Important**: Current implementation does not preserve UV coordinates or per-vertex attributes
+- Simplification is skipped when UV generation is requested to avoid data loss
+
+### Post-Processing Flow
+1. Duplicate vertex removal
+2. UV generation (if requested)
+3. Normal generation (if missing)
+4. Mesh simplification (if requested and UVs not generated)
+
 ## Known Issues and Technical Debt
 
 ### Issue 1: LODManager and MeshCache as Nested Classes
@@ -338,57 +358,74 @@ void onResolutionChanged(const ResolutionChangedEvent& event) {
 - **Impact**: Components defined inside SurfaceGenerator.h instead of separate headers
 - **Proposed Solution**: Extract to separate headers for better modularity
 - **Dependencies**: None
+- **Status**: Active
 
 ### Issue 2: Missing Hermite Data Interpolation
 - **Severity**: Medium
 - **Impact**: Design mentions hermite interpolation but implementation details unclear
 - **Proposed Solution**: Ensure proper hermite data interpolation in DualContouring
 - **Dependencies**: Algorithm correctness verification
+- **Status**: Active
 
 ### Issue 3: Thread Safety Concerns
 - **Severity**: High
 - **Impact**: MeshCache has mutex but SurfaceGenerator async operations may have race conditions
 - **Proposed Solution**: Comprehensive thread safety review and documentation
 - **Dependencies**: Threading architecture
+- **Status**: Active
 
 ### Issue 4: Memory Pool Not Implemented
 - **Severity**: Medium
 - **Impact**: Design mentions memory pooling for temporary data but not visible
 - **Proposed Solution**: Implement memory pool for mesh generation temporaries
 - **Dependencies**: Foundation memory system
+- **Status**: Active
 
 ### Issue 5: Background LOD Pre-generation Missing
 - **Severity**: Low
 - **Impact**: Design mentions background LOD pre-generation not implemented
 - **Proposed Solution**: Add background LOD generation thread pool
 - **Dependencies**: Thread pool implementation
+- **Status**: Active
 
 ### Issue 6: Streaming Geometry Not Implemented
 - **Severity**: Medium
 - **Impact**: Large meshes may cause memory issues without streaming
 - **Proposed Solution**: Implement streaming mesh generation for large volumes
 - **Dependencies**: Memory constraints analysis
+- **Status**: Active
 
-### Issue 7: QEF Solver Implementation Unclear
-- **Severity**: Medium
-- **Impact**: Quadratic Error Function solver critical for quality but implementation not visible
-- **Proposed Solution**: Verify QEF implementation in DualContouring
+### Issue 7: QEF Solver Implementation
+- **Severity**: Low  
+- **Impact**: QEF solver is implemented in DualContouring::QEFSolver
+- **Proposed Solution**: None needed - implementation verified
 - **Dependencies**: None
+- **Status**: Resolved
 
 ### Issue 8: Export Quality Integration
 - **Severity**: Low
-- **Impact**: ExportQuality enum exists but actual quality differences unclear
-- **Proposed Solution**: Document and implement quality level differences
+- **Impact**: ExportQuality properly affects smoothing iterations and simplification ratios
+- **Proposed Solution**: None needed - implementation complete
 - **Dependencies**: None
+- **Status**: Resolved
 
 ### Issue 9: Watertight Guarantee Not Enforced
 - **Severity**: High (for 3D printing)
 - **Impact**: No visible watertight mesh validation despite being critical for export
 - **Proposed Solution**: Implement mesh validation and repair algorithms
 - **Dependencies**: Mesh analysis algorithms
+- **Status**: Active
 
 ### Issue 10: Multi-Resolution Grid Interface Mismatch
 - **Severity**: Low
 - **Impact**: Design shows MultiResolutionGrid but implementation uses VoxelDataManager
 - **Proposed Solution**: Update design to match implementation or vice versa
 - **Dependencies**: VoxelData architecture
+- **Status**: Active
+
+### Issue 11: MeshSimplifier Loses Vertex Attributes
+- **Severity**: Medium
+- **Impact**: UV coordinates and other per-vertex attributes are lost during simplification
+- **Proposed Solution**: Enhance MeshSimplifier to preserve vertex attributes during edge collapse
+- **Dependencies**: Vertex structure enhancement
+- **Status**: Active - Workaround implemented (skip simplification when UVs generated)
