@@ -84,21 +84,15 @@ bool MoveGroupOperation::execute() {
         }
     }
     
-    // Remove old voxels
+    // Clear the group and rebuild with moved voxels
+    group->clearVoxels();
+    
+    // Remove old voxels from VoxelDataManager and add new ones
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
         m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, false);
-        group->removeVoxel(oldPos);
-    }
-    
-    // Add new voxels
-    for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        // Note: VoxelDataManager doesn't store color, only existence
         m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
         group->addVoxel(newPos);
     }
-    
-    // Update group transform
-    group->translate(m_offset);
     
     m_executed = true;
     return true;
@@ -110,21 +104,15 @@ bool MoveGroupOperation::undo() {
     auto group = m_groupManager->getGroup(m_groupId);
     if (!group) return false;
     
-    // Remove new voxels
+    // Clear the group and rebuild with original voxels
+    group->clearVoxels();
+    
+    // Remove new voxels from VoxelDataManager and restore old ones
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
         m_voxelManager->setVoxel(newPos.position, newPos.resolution, false);
-        group->removeVoxel(newPos);
-    }
-    
-    // Restore old voxels
-    for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        // Note: VoxelDataManager doesn't store color, only existence
         m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, true);
         group->addVoxel(oldPos);
     }
-    
-    // Reverse group transform
-    group->translate(-m_offset);
     
     m_executed = false;
     return true;

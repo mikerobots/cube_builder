@@ -4,11 +4,11 @@
 Manages voxel grouping, group operations (move, hide, copy), hierarchical organization, and group metadata persistence.
 
 ## Current Implementation Status
-The implementation perfectly matches the design with all components properly implemented:
+The implementation mostly matches the design with all components implemented, though some features are incomplete:
 - **GroupManager** - Main interface fully implemented with additional features
-- **VoxelGroup** - Individual group representation implemented
+- **VoxelGroup** - Individual group representation implemented (rotation/scaling are stubs)
 - **GroupHierarchy** - Nested group management implemented
-- **GroupOperations** - Bulk operations properly abstracted
+- **GroupOperations** - Bulk operations implemented (rotation/scaling incomplete)
 - **GroupEvents** - Event types properly defined
 - **GroupTypes** - All data structures properly defined
 
@@ -16,8 +16,14 @@ Additional features in implementation:
 - Thread safety with mutex
 - Group statistics and validation
 - Batch operations (merge/split groups)
-- Serialization support
+- Serialization support (partial - no file I/O integration)
 - Visitor pattern for iteration
+
+Known Issues:
+- Rotation operations not implemented (TODO comments in code)
+- Scaling only works for integer factors
+- MoveGroupOperation had a bug with double translation (fixed)
+- No integration with file I/O system for persistence
 
 ## Key Components
 
@@ -354,3 +360,24 @@ struct GroupDeletedEvent {
 - **Impact**: GroupModifiedEvent uses generic type enum rather than specific event types
 - **Proposed Solution**: Create specific event types for each modification type
 - **Dependencies**: Event system refactoring
+
+## Recent Improvements (2025-06-16)
+
+### Bug Fixes
+1. **Fixed MoveGroupOperation Double Translation**:
+   - Issue: MoveGroupOperation was both manually moving voxels AND calling group->translate()
+   - This caused voxels to be duplicated (6 instead of 3) on undo
+   - Fix: Now only updates VoxelDataManager and rebuilds group voxel list
+   - All 75 tests now pass
+
+### Documentation Updates
+1. Created comprehensive TODO.md documenting:
+   - Missing rotation and scaling implementations
+   - Thread safety concerns
+   - Memory management improvements needed
+   - Design coupling issues
+
+2. Updated DESIGN.md to reflect actual implementation status:
+   - Noted incomplete features (rotation/scaling)
+   - Documented known issues
+   - Added bug fix information
