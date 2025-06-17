@@ -73,7 +73,11 @@ void GroundPlaneGrid::updateGridMesh(const Vector3f& workspaceSize) {
     }
     
     m_currentWorkspaceSize = workspaceSize;
-    generateGridMesh(workspaceSize);
+    
+    // Only generate mesh if we're initialized (have OpenGL context)
+    if (m_initialized) {
+        generateGridMesh(workspaceSize);
+    }
 }
 
 void GroundPlaneGrid::update(float deltaTime) {
