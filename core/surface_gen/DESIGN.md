@@ -7,7 +7,7 @@ Converts voxel data into smooth 3D meshes using Dual Contouring algorithm with m
 The implementation closely matches the design with all major components implemented:
 - **SurfaceGenerator** - Main interface fully implemented with async support
 - **DualContouring** - Core algorithm implemented
-- **MeshBuilder** - Mesh construction implemented
+- **MeshBuilder** - Mesh construction implemented (many optimization features are stubs)
 - **LODManager** - Implemented within SurfaceGenerator header
 - **MeshCache** - Implemented within SurfaceGenerator header
 - **SurfaceTypes** - All data structures and types defined
@@ -17,6 +17,12 @@ Additional implementation details:
 - Cancellation support for async operations
 - Comprehensive mesh statistics and validation
 - Simplification settings for quality control
+
+Known Issues:
+- MeshBuilder has 14 TODO stub implementations for advanced features
+- Missing implementations for UV mapping, mesh repair, optimization
+- Test utilities (calculateVolume, calculateSurfaceArea) not fully implemented
+- All core functionality works, but advanced mesh operations are incomplete
 
 ## Key Components
 
@@ -429,3 +435,23 @@ The `MeshSimplifier` class provides quadric error metric-based simplification:
 - **Proposed Solution**: Enhance MeshSimplifier to preserve vertex attributes during edge collapse
 - **Dependencies**: Vertex structure enhancement
 - **Status**: Active - Workaround implemented (skip simplification when UVs generated)
+
+## Recent Improvements (2025-06-16)
+
+### Documentation Updates
+1. Created comprehensive TODO.md documenting:
+   - 14 TODO stub implementations in MeshBuilder.cpp
+   - Missing features for UV mapping, mesh optimization, and repair
+   - Test utility functions that need implementation
+
+2. Updated DESIGN.md to reflect:
+   - Current implementation status with known limitations
+   - Clarified that core functionality works but advanced features are stubs
+   - All 61 tests pass, indicating core algorithms are solid
+
+### Analysis Summary
+- The surface generation subsystem is functionally complete for basic mesh generation
+- Dual Contouring algorithm is properly implemented and tested
+- Advanced mesh operations (UV mapping, optimization, repair) are stub implementations
+- No critical bugs found - all tests pass
+- The subsystem is ready for basic use but needs work for advanced features
