@@ -8,10 +8,13 @@
 namespace VoxelEditor {
 namespace Selection {
 
+// Default configuration constants
+constexpr size_t DEFAULT_MAX_HISTORY_SIZE = 100;
+
 SelectionManager::SelectionManager(VoxelData::VoxelDataManager* voxelManager,
                                  ::VoxelEditor::Events::EventDispatcher* eventDispatcher)
     : m_previewMode(false)
-    , m_maxHistorySize(100)
+    , m_maxHistorySize(DEFAULT_MAX_HISTORY_SIZE)
     , m_voxelManager(voxelManager)
     , m_eventDispatcher(eventDispatcher) {
 }
@@ -193,11 +196,9 @@ bool SelectionManager::isSelected(const VoxelId& voxel) const {
 }
 
 void SelectionManager::pushSelectionToHistory() {
-    m_undoStack.push(m_currentSelection);
+    m_undoStack.push_back(m_currentSelection);
     // Clear redo stack when new action is performed
-    while (!m_redoStack.empty()) {
-        m_redoStack.pop();
-    }
+    m_redoStack.clear();
     trimHistory();
 }
 
@@ -205,9 +206,9 @@ void SelectionManager::undoSelection() {
     if (m_undoStack.empty()) return;
     
     SelectionSet oldSelection = m_currentSelection;
-    m_redoStack.push(m_currentSelection);
-    m_currentSelection = m_undoStack.top();
-    m_undoStack.pop();
+    m_redoStack.push_back(m_currentSelection);
+    m_currentSelection = m_undoStack.back();
+    m_undoStack.pop_back();
     
     notifySelectionChanged(oldSelection, SelectionChangeType::Replaced);
 }
@@ -216,20 +217,16 @@ void SelectionManager::redoSelection() {
     if (m_redoStack.empty()) return;
     
     SelectionSet oldSelection = m_currentSelection;
-    m_undoStack.push(m_currentSelection);
-    m_currentSelection = m_redoStack.top();
-    m_redoStack.pop();
+    m_undoStack.push_back(m_currentSelection);
+    m_currentSelection = m_redoStack.back();
+    m_redoStack.pop_back();
     
     notifySelectionChanged(oldSelection, SelectionChangeType::Replaced);
 }
 
 void SelectionManager::clearHistory() {
-    while (!m_undoStack.empty()) {
-        m_undoStack.pop();
-    }
-    while (!m_redoStack.empty()) {
-        m_redoStack.pop();
-    }
+    m_undoStack.clear();
+    m_redoStack.clear();
 }
 
 void SelectionManager::saveSelectionSet(const std::string& name) {
@@ -367,17 +364,8 @@ void SelectionManager::notifySelectionChanged(const SelectionSet& oldSelection, 
 
 void SelectionManager::trimHistory() {
     while (m_undoStack.size() > m_maxHistorySize) {
-        // Remove oldest item (bottom of stack)
-        std::stack<SelectionSet> tempStack;
-        while (m_undoStack.size() > 1) {
-            tempStack.push(m_undoStack.top());
-            m_undoStack.pop();
-        }
-        m_undoStack.pop(); // Remove the oldest
-        while (!tempStack.empty()) {
-            m_undoStack.push(tempStack.top());
-            tempStack.pop();
-        }
+        // Remove oldest item (front of deque)
+        m_undoStack.pop_front();
     }
 }
 

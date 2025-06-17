@@ -5,9 +5,12 @@
 namespace VoxelEditor {
 namespace Selection {
 
+// Default configuration constants
+constexpr size_t DEFAULT_MAX_VOXELS = 1000000;
+
 FloodFillSelector::FloodFillSelector(VoxelData::VoxelDataManager* voxelManager)
     : m_voxelManager(voxelManager)
-    , m_maxVoxels(1000000)
+    , m_maxVoxels(DEFAULT_MAX_VOXELS)
     , m_diagonalConnectivity(false)
     , m_connectivityMode(ConnectivityMode::Face6) {
 }

@@ -615,6 +615,14 @@ Events are dispatched through the EventDispatcher when:
 - ✅ Preview mode for selections
 - ✅ Configurable visual styles
 
+### Known Issues (See TODO.md for details)
+- Magic numbers throughout SelectionRenderer (segments, animation constants)
+- Unused inline shader code in SelectionRenderer
+- Inefficient trimHistory() implementation in SelectionManager
+- Testing assumptions in selectors when VoxelDataManager is null
+- Missing error handling in rendering operations
+- No shader file validation (attempts to load from files that may not exist)
+
 ### Design Considerations
 1. **Selection Operations**: Move/Copy/Delete operations are not implemented as separate command classes. These should be implemented in the undo/redo system or as voxel manipulation commands that use the selection system.
 

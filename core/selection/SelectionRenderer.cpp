@@ -6,6 +6,15 @@
 namespace VoxelEditor {
 namespace Selection {
 
+// Constants for rendering
+constexpr int CYLINDER_SEGMENTS = 16;
+constexpr float MARKER_SIZE_MULTIPLIER = 0.05f;
+constexpr float INDICATOR_SIZE_BASE = 0.1f;
+constexpr float INDICATOR_SIZE_LOG_MULTIPLIER = 0.01f;
+constexpr float LOG_INTERVAL_SECONDS = 2.0f;
+constexpr float ANIMATION_FREQUENCY = 2.0f;
+constexpr float ANIMATION_AMPLITUDE = 0.5f;
+
 SelectionRenderer::SelectionRenderer(Rendering::RenderEngine* renderEngine)
     : m_renderEngine(renderEngine)
     , m_selectionManager(nullptr)
@@ -316,7 +325,7 @@ void SelectionRenderer::renderCylinder(const Math::Vector3f& base, const Math::V
     std::vector<uint32_t> indices;
     
     // Number of segments for cylinder
-    const int segments = 16;
+    const int segments = CYLINDER_SEGMENTS;
     
     // Calculate perpendicular vectors for cylinder orientation
     Math::Vector3f up = direction.normalized();
@@ -564,7 +573,7 @@ void SelectionRenderer::renderBounds(const Math::BoundingBox& bounds, const Math
     renderBox(bounds, boundsColor, 2.0f);
     
     // Additionally, render corner markers for better visibility
-    const float markerSize = 0.05f * bounds.getDiagonalLength();
+    const float markerSize = MARKER_SIZE_MULTIPLIER * bounds.getDiagonalLength();
     Math::Vector3f corners[8] = {
         Math::Vector3f(bounds.min.x, bounds.min.y, bounds.min.z),
         Math::Vector3f(bounds.max.x, bounds.min.y, bounds.min.z),
@@ -594,7 +603,7 @@ void SelectionRenderer::renderStats(const SelectionStats& stats, const Math::Mat
     if (stats.voxelCount > 0) {
         // Render a small sphere at the selection center as an indicator
         // The size could represent the selection count
-        float indicatorSize = 0.1f + 0.01f * std::log(static_cast<float>(stats.voxelCount));
+        float indicatorSize = INDICATOR_SIZE_BASE + INDICATOR_SIZE_LOG_MULTIPLIER * std::log(static_cast<float>(stats.voxelCount));
         Rendering::Color indicatorColor(1.0f, 0.8f, 0.0f, 0.8f); // Golden yellow
         
         // Calculate selection center
@@ -606,7 +615,7 @@ void SelectionRenderer::renderStats(const SelectionStats& stats, const Math::Mat
         
         // Log the actual stats
         static float lastLogTime = 0.0f;
-        if (m_animationTime - lastLogTime > 2.0f) { // Log every 2 seconds
+        if (m_animationTime - lastLogTime > LOG_INTERVAL_SECONDS) { // Log every few seconds
             Logging::Logger::getInstance().info("Selection stats: " + 
                                               std::to_string(stats.voxelCount) + " voxels, volume: " +
                                               std::to_string(stats.totalVolume));
@@ -621,7 +630,7 @@ Math::Vector4f SelectionRenderer::getAnimatedColor(const Rendering::Color& baseC
     }
     
     // Pulse alpha for highlight effect
-    float pulse = (std::sin(m_animationTime * 2.0f) + 1.0f) * 0.5f;
+    float pulse = (std::sin(m_animationTime * ANIMATION_FREQUENCY) + 1.0f) * ANIMATION_AMPLITUDE;
     float alpha = baseColor.a * (0.5f + pulse * 0.5f);
     
     return Math::Vector4f(baseColor.r, baseColor.g, baseColor.b, alpha);
@@ -682,13 +691,13 @@ void main() {
 }
 )";
     
-    // Create shader program
+    // Create shader program using inline shaders
     auto shaderManager = m_renderEngine->getShaderManager();
     if (shaderManager) {
         try {
-            // Try to create shader through the engine's own methods
-            m_resources->selectionShader = m_renderEngine->loadShader(
-                "SelectionShader", "selection.vert", "selection.frag");
+            // Create shader from inline source code using ShaderSource
+            ShaderSource source(vertexShader, fragmentShader);
+            m_resources->selectionShader = shaderManager->compileShader("SelectionShader", source);
                 
             if (m_resources->selectionShader != Rendering::InvalidId) {
                 Logging::Logger::getInstance().info("SelectionRenderer: Created selection shader successfully");

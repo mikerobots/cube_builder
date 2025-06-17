@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stack>
+#include <deque>
 #include <unordered_map>
 #include <memory>
 
@@ -108,8 +108,8 @@ private:
     bool m_previewMode;
     
     // History
-    std::stack<SelectionSet> m_undoStack;
-    std::stack<SelectionSet> m_redoStack;
+    std::deque<SelectionSet> m_undoStack;
+    std::deque<SelectionSet> m_redoStack;
     size_t m_maxHistorySize;
     
     // Named selection sets
