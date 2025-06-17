@@ -63,6 +63,7 @@ private:
     
     // Chunk operations
     bool writeChunk(BinaryWriter& writer, ChunkType type, const std::vector<uint8_t>& data);
+    bool writeCompressedChunk(BinaryWriter& writer, ChunkType type, const std::vector<uint8_t>& compressedData, size_t uncompressedSize);
     bool readChunk(BinaryReader& reader, ChunkHeader& header, std::vector<uint8_t>& data);
     bool skipChunk(BinaryReader& reader, const ChunkHeader& header);
     

@@ -116,13 +116,78 @@ All 11 rendering requirements have been validated and verified:
 - [ ] Debugging guide
 
 ## Known Issues 🐛
-None currently - all tests passing!
+
+### Critical Architecture Issues
+1. **ShaderManagerSafe Hack**: Duplicate ShaderManager implementation exists specifically for tests
+   - Indicates thread safety issues with singleton Logger
+   - Tests crash when using regular ShaderManager
+   - Located in: ShaderManagerSafe.h/cpp
+
+2. **Missing FrameBuffer Implementation**: 
+   - Declared in RenderEngine.h but commented out
+   - Required for proper render targets
+   - Lines 78, 152-153 in RenderEngine.h
+
+3. **Incomplete GPU Profiling**:
+   - GPU timing queries not implemented (OpenGLRenderer.cpp:1176-1186)
+   - No performance profiling as designed
+
+### TODO Comments in Code
+1. **OpenGLRenderer.cpp**:
+   - Line 1176: GPU timing not implemented
+   - Debug output code commented out (lines 894, 912-914, 1149)
+
+2. **RenderEngine.cpp**:
+   - Line 981: Debug info rendering not implemented
+   - Line 1006: Normal visualization not implemented
+   - Line 1012: Bounding box visualization not implemented
+   - Line 1020: Voxel rendering placeholder
+
+3. **ShaderManager.cpp**:
+   - Line 75: Shader hot-reloading not implemented (despite TODO.md claiming it's done)
+
+### Magic Numbers and Constants
+1. **GroundPlaneGrid.cpp**:
+   - Line 81: `smoothFactor = 10.0f` - hardcoded
+   - Line 137: `glLineWidth(1.0f)` - hardcoded
+   - Lines 195, 205: `i % 5` - major line interval hardcoded
+   - Line 323: `1.2` - major line visibility multiplier
+
+2. **GroundPlaneGrid.h**:
+   - Lines 143-149: Color values hardcoded (180.0f/255.0f, 200.0f/255.0f)
+   - Line 152: `ProximityRadius = 2.0f` - hardcoded
+
+### Platform-Specific Code Issues
+- MacOSGLLoader mixed into core rendering instead of platform abstraction layer
+- Platform detection in core code rather than build system
 
 ## Technical Debt
-1. **Shader Preprocessor**: No #include support for shader files
-2. **State Tracking**: Some redundant state changes could be optimized
-3. **Error Recovery**: Limited graceful degradation for GPU errors
-4. **Resource Management**: Manual cleanup required in some cases
+1. **Shader System Issues**:
+   - No #include support for shader files
+   - ShaderManagerSafe hack for testing indicates design flaw
+   - Hot-reloading not actually implemented despite being marked complete
+   - Thread safety problems with Logger singleton
+
+2. **Architecture Issues**:
+   - Type confusion: Multiple aliases for same concepts (BufferId, VertexBufferId, etc.)
+   - Inconsistent use of InvalidId vs 0 for validity checks
+   - Platform-specific code (MacOSGLLoader) in core layer
+   - Missing FrameBuffer implementation
+
+3. **Resource Management**:
+   - Manual cleanup required in some cases
+   - ShaderProgram destructor empty with TODO comment
+   - Mix of RAII and manual patterns
+
+4. **Performance**:
+   - Some redundant state changes could be optimized
+   - No GPU profiling implementation
+   - Limited instanced rendering support
+
+5. **Error Handling**:
+   - Limited graceful degradation for GPU errors
+   - Try-catch blocks around logging suggest Logger issues
+   - No comprehensive error recovery strategy
 
 ## Performance Metrics
 Current performance with test hardware:

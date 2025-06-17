@@ -84,7 +84,7 @@ struct FileInfo {
 
 // Save options
 struct SaveOptions {
-    bool compress = true;
+    bool compress = false;  // TODO: Enable once compression read is implemented
     int compressionLevel = 6;
     bool includeHistory = false;
     bool includeCache = false;

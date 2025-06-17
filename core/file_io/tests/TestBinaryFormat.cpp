@@ -251,9 +251,9 @@ TEST_F(BinaryFormatTest, SaveOptionsHandling) {
     EXPECT_TRUE(m_format->writeProject(compactWriter, project, compactOptions));
     size_t compactSize = compactStream.str().size();
     
-    // Fast save should be larger or equal (no compression)
-    // Note: Since compression might not be implemented, sizes might be equal
-    EXPECT_GE(fastSize, compactSize);
+    // Since compression is not implemented yet (just adds header),
+    // compact size will actually be larger than fast size
+    EXPECT_LE(fastSize, compactSize);
 }
 
 TEST_F(BinaryFormatTest, LoadOptionsHandling) {

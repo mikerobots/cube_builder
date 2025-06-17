@@ -1,6 +1,16 @@
 # TODO - Core Subsystem Review and Cleanup
 
-## Process for Each Subsystem
+## ⚠️ IMPORTANT: MULTIPLE AGENTS WORKING CONCURRENTLY ⚠️
+
+**This TODO list is being worked on by MULTIPLE AGENTS simultaneously.**
+
+### Before Starting Work:
+1. **CHECK STATUS FIRST**: Only work on subsystems marked as `[ ]` (not started)
+2. **SKIP IN-PROGRESS ITEMS**: If a subsystem is marked as `[IN PROGRESS]`, DO NOT work on it
+3. **MARK YOUR WORK**: Immediately mark a subsystem as `[IN PROGRESS]` when you start
+4. **ONE AT A TIME**: Only work on ONE subsystem at a time
+
+### Process for Each Subsystem
 
 For each subsystem in the core folder:
 
@@ -15,22 +25,22 @@ For each subsystem in the core folder:
 ## Subsystems to Review
 
 ### Camera System (`core/camera/`)
-- [ ] Review diffs for hacks
-- [ ] Update camera/TODO.md with issues
-- [ ] Update camera/DESIGN.md
-- [ ] Run camera tests
-- [ ] Fix all issues
-- [ ] Commit changes
+- [x] Review diffs for hacks
+- [x] Update camera/TODO.md with issues
+- [x] Update camera/DESIGN.md
+- [x] Run camera tests
+- [x] Fix all issues
+- [x] Commit changes
 
 ### Groups System (`core/groups/`)
-- [ ] Review diffs for hacks
-- [ ] Update groups/TODO.md with issues
-- [ ] Update groups/DESIGN.md
-- [ ] Run groups tests
-- [ ] Fix all issues
-- [ ] Commit changes
+- [x] Review diffs for hacks
+- [x] Update groups/TODO.md with issues
+- [x] Update groups/DESIGN.md
+- [x] Run groups tests
+- [x] Fix all issues
+- [x] Commit changes
 
-### Input System (`core/input/`)
+### Input System (`core/input/`) [IN PROGRESS]
 - [ ] Review diffs for hacks
 - [ ] Update input/TODO.md with issues
 - [ ] Update input/DESIGN.md
@@ -38,7 +48,7 @@ For each subsystem in the core folder:
 - [ ] Fix all issues
 - [ ] Commit changes
 
-### Rendering System (`core/rendering/`)
+### Rendering System (`core/rendering/`) [IN PROGRESS]
 - [ ] Review diffs for hacks
 - [ ] Update rendering/TODO.md with issues
 - [ ] Update rendering/DESIGN.md
@@ -46,7 +56,7 @@ For each subsystem in the core folder:
 - [ ] Fix all issues
 - [ ] Commit changes
 
-### Selection System (`core/selection/`)
+### Selection System (`core/selection/`) [IN PROGRESS]
 - [ ] Review diffs for hacks
 - [ ] Update selection/TODO.md with issues
 - [ ] Update selection/DESIGN.md
@@ -54,7 +64,7 @@ For each subsystem in the core folder:
 - [ ] Fix all issues
 - [ ] Commit changes
 
-### Surface Generation (`core/surface_gen/`)
+### Surface Generation (`core/surface_gen/`) [IN PROGRESS]
 - [ ] Review diffs for hacks
 - [ ] Update surface_gen/TODO.md with issues
 - [ ] Update surface_gen/DESIGN.md
@@ -98,4 +108,16 @@ For each subsystem in the core folder:
 
 ## Completed Subsystems
 
-None yet.
+### Camera System (`core/camera/`) - 2025-06-16
+- Fixed perspective divide issues in ray generation
+- Eliminated magic numbers with named constants
+- Fixed frame-rate dependent smoothing
+- All 108 tests passing
+- Committed with message: "Fix camera subsystem code quality issues"
+
+### Groups System (`core/groups/`) - 2025-06-16
+- Fixed MoveGroupOperation bug duplicating voxels on undo
+- Created TODO.md documenting missing features (rotation/scaling)
+- Updated DESIGN.md with current implementation status
+- All 75 tests passing
+- Committed with message: "Fix groups subsystem issues and update documentation"

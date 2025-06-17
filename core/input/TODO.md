@@ -147,10 +147,7 @@ All input subsystem tests are passing. The subsystem is fully implemented with t
 - [ ] Accessibility configuration guide
 
 ## Known Issues 🐛
-- **Floating Point Precision in Tests**: 2 PlaneDetector tests fail due to float comparison precision
-  - `PlaneDetectorTest.VoxelAtBoundary`
-  - `PlaneDetectorTest.ComplexStackingScenario`
-  - Tests should use EXPECT_NEAR instead of EXPECT_FLOAT_EQ
+- None currently - all tests passing!
 
 ## Technical Debt
 1. **VRComfortSettings Structure**: Referenced but needs full implementation
@@ -174,6 +171,9 @@ All input subsystem tests are passing. The subsystem is fully implemented with t
 5. **Fixed Overlap Detection**: Simplified to use VoxelDataManager's efficient `wouldOverlap()` method
 6. **Added Named Constants**: Replaced magic numbers with `MAX_VOXEL_SEARCH_HEIGHT` and `DEFAULT_SEARCH_RADIUS`
 7. **Proper Validation**: `isValidIncrementPosition()` now actually validates Y >= 0
+8. **Fixed Test Issues**: 
+   - Fixed PlaneDetector tests using incorrect grid coordinates (was using cm values instead of grid units)
+   - Changed float comparisons from EXPECT_FLOAT_EQ to EXPECT_NEAR with appropriate tolerance
 
 ### Original Implementation
 - PlacementValidation component for voxel placement validation and snapping

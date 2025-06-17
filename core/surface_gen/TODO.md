@@ -58,6 +58,37 @@ Since this subsystem isn't explicitly covered in requirements.md, potential requ
 5. **Performance**: Handle large voxel datasets efficiently
 6. **Memory Management**: Efficient memory usage for mesh data
 
+### Code Quality Issues Found
+
+#### MeshBuilder.cpp - Missing Implementations (14 TODOs)
+1. **Optimization Features**:
+   - `optimizeVertexCache()` - Stub only, needed for GPU cache optimization
+   - `generateFlatNormals()` - Stub only, needed for flat shading
+
+2. **UV Mapping Features**:
+   - `generateSphericalUVs()` - Incomplete implementation
+   - `generateCylindricalUVs()` - Stub only
+
+3. **Mesh Operations**:
+   - `transformMesh()` - Stub only, needed for mesh transformations
+   - `calculateMeshStatistics()` - Stub only, needed for analysis
+   - `repairMesh()` - Stub only, needed for fixing mesh issues
+
+4. **Advanced Mesh Validation**:
+   - `isManifold()` - TODO: Implement full manifold check
+   - `fillHoles()` - Stub only, needed for watertight meshes
+   - `makeWatertight()` - Stub only, critical for 3D printing
+
+5. **Mesh Conversion**:
+   - `trianglesToQuads()` - Stub only
+   - `subdivide()` - Stub only (e.g., Loop subdivision)
+   - `remesh()` - Stub only, needed for mesh quality
+
+#### Test Coverage Issues
+- `TestMeshBuilder.cpp` has TODOs for:
+  - `MeshUtils::calculateVolume` - Not implemented
+  - `MeshUtils::calculateSurfaceArea` - Not implemented
+
 ## Test Coverage Needed
 1. Basic mesh generation from simple voxel patterns
 2. Multi-resolution voxel mesh generation

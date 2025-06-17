@@ -273,8 +273,9 @@ TEST_F(FileManagerTest, AutoSaveBasic) {
     // Update auto-save
     m_fileManager->updateAutoSave(0.2f);
     
-    // File should exist
-    EXPECT_TRUE(std::filesystem::exists(filename));
+    // File should exist (with .autosave added before extension)
+    std::string autosaveFilename = m_testDir + "/autosave_test.autosave.cvef";
+    EXPECT_TRUE(std::filesystem::exists(autosaveFilename));
     
     // Disable auto-save
     m_fileManager->setAutoSaveEnabled(false);

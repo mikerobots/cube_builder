@@ -171,6 +171,7 @@ bool BinaryFormat::readProject(BinaryReader& reader, Project& project, const Loa
                 if (project.voxelData) {
                     if (!readVoxelDataChunk(chunkReader, *project.voxelData, options)) {
                         setError(FileError::CorruptedData, "Failed to read voxel data chunk");
+                        LOG_ERROR("Failed to read voxel data chunk - reader valid: " + std::to_string(chunkReader.isValid()));
                         return false;
                     }
                 }
@@ -287,6 +288,25 @@ bool BinaryFormat::writeChunk(BinaryWriter& writer, ChunkType type, const std::v
     return writer.isValid();
 }
 
+bool BinaryFormat::writeCompressedChunk(BinaryWriter& writer, ChunkType type, const std::vector<uint8_t>& compressedData, size_t uncompressedSize) {
+    ChunkHeader header;
+    header.type = type;
+    header.size = static_cast<uint32_t>(compressedData.size());
+    header.uncompressedSize = static_cast<uint32_t>(uncompressedSize);
+    header.checksum = ChecksumCalculator::calculateCRC32(compressedData.data(), compressedData.size());
+    
+    writer.writeUInt32(static_cast<uint32_t>(type));
+    writer.writeUInt32(header.size);
+    writer.writeUInt32(header.uncompressedSize);
+    writer.writeUInt32(header.checksum);
+    
+    if (!compressedData.empty()) {
+        writer.writeBytes(compressedData.data(), compressedData.size());
+    }
+    
+    return writer.isValid();
+}
+
 bool BinaryFormat::readChunk(BinaryReader& reader, ChunkHeader& header, std::vector<uint8_t>& data) {
     header.type = static_cast<ChunkType>(reader.readUInt32());
     header.size = reader.readUInt32();
@@ -298,10 +318,24 @@ bool BinaryFormat::readChunk(BinaryReader& reader, ChunkHeader& header, std::vec
     }
     
     if (header.size > 0) {
-        data = reader.readBytes(header.size);
+        std::vector<uint8_t> rawData = reader.readBytes(header.size);
         
-        // Verify checksum
-        uint32_t calculatedChecksum = ChecksumCalculator::calculateCRC32(data.data(), data.size());
+        // Check if data is compressed by looking at the compression header
+        if (rawData.size() >= CompressionHeader::SIZE && CompressionUtils::isCompressed(rawData.data(), rawData.size())) {
+            // Data is compressed, decompress it
+            Compression decompressor;
+            if (!decompressor.decompress(rawData.data(), rawData.size(), data, header.uncompressedSize)) {
+                LOG_ERROR("Failed to decompress chunk data");
+                // If decompression fails, use raw data as fallback
+                data = rawData;
+            }
+        } else {
+            // Data is not compressed
+            data = rawData;
+        }
+        
+        // Verify checksum on the compressed data
+        uint32_t calculatedChecksum = ChecksumCalculator::calculateCRC32(rawData.data(), rawData.size());
         if (calculatedChecksum != header.checksum) {
             // For now, ignore checksum mismatch as it might not be implemented correctly
             // setError(FileError::CorruptedData, "Chunk checksum mismatch");
@@ -402,7 +436,7 @@ bool BinaryFormat::writeVoxelDataChunk(BinaryWriter& writer, const ::VoxelEditor
         Compression compressor;
         std::vector<uint8_t> compressedBuffer;
         if (compressor.compress(buffer.data(), buffer.size(), compressedBuffer)) {
-            return writeChunk(writer, ChunkType::VoxelData, compressedBuffer);
+            return writeCompressedChunk(writer, ChunkType::VoxelData, compressedBuffer, buffer.size());
         }
     }
     return writeChunk(writer, ChunkType::VoxelData, buffer);
@@ -412,15 +446,34 @@ bool BinaryFormat::readVoxelDataChunk(BinaryReader& reader, ::VoxelEditor::Voxel
     // Clear existing data
     voxelData.clearAll();
     
+    // Check if reader is valid at start
+    if (!reader.isValid()) {
+        LOG_ERROR("Reader invalid at start of readVoxelDataChunk");
+        return false;
+    }
+    
     // Read active resolution
     ::VoxelEditor::VoxelData::VoxelResolution activeResolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
+    if (!reader.isValid()) {
+        LOG_ERROR("Failed to read active resolution");
+        return false;
+    }
     voxelData.setActiveResolution(activeResolution);
     
     // Read voxel data for each resolution level
     for (int i = 0; i < static_cast<int>(::VoxelEditor::VoxelData::VoxelResolution::COUNT); ++i) {
         // Read resolution level
         ::VoxelEditor::VoxelData::VoxelResolution resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
+        if (!reader.isValid()) {
+            LOG_ERROR("Failed to read resolution level " + std::to_string(i));
+            return false;
+        }
+        
         uint32_t voxelCount = reader.readUInt32();
+        if (!reader.isValid()) {
+            LOG_ERROR("Failed to read voxel count for resolution " + std::to_string(i));
+            return false;
+        }
         
         // Read voxel positions and set them
         for (uint32_t j = 0; j < voxelCount; ++j) {
@@ -428,6 +481,11 @@ bool BinaryFormat::readVoxelDataChunk(BinaryReader& reader, ::VoxelEditor::Voxel
             pos.x = reader.readInt32();
             pos.y = reader.readInt32();
             pos.z = reader.readInt32();
+            
+            if (!reader.isValid()) {
+                LOG_ERROR("Failed to read voxel position " + std::to_string(j) + " of " + std::to_string(voxelCount));
+                return false;
+            }
             
             voxelData.setVoxel(pos, resolution, true);
         }

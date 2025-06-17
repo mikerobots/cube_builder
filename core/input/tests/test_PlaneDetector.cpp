@@ -266,14 +266,15 @@ TEST_F(PlaneDetectorTest, EmptyWorkspace) {
 // Test edge case: voxel at workspace boundary
 TEST_F(PlaneDetectorTest, VoxelAtBoundary) {
     // Place voxel at edge of workspace
-    Vector3i boundaryPos(250, 0, 250); // 250cm = 2.5m (edge of 5m workspace)
+    // For 32cm voxels: grid position 7 = 7 * 0.32m = 2.24m (near edge of 5m workspace)
+    Vector3i boundaryPos(7, 0, 7);
     placeVoxel(boundaryPos, VoxelResolution::Size_32cm);
     
-    auto context = createContext(Vector3f(2.5f, 0.5f, 2.5f));
+    auto context = createContext(Vector3f(2.24f, 0.5f, 2.24f));
     auto result = m_planeDetector->detectPlane(context);
     
     EXPECT_TRUE(result.found);
-    EXPECT_FLOAT_EQ(result.plane.height, 0.32f);
+    EXPECT_NEAR(result.plane.height, 0.32f, 0.0001f);
 }
 
 // Test complex stacking scenario
@@ -284,21 +285,23 @@ TEST_F(PlaneDetectorTest, ComplexStackingScenario) {
     placeVoxel(Vector3i(0, 0, 1), VoxelResolution::Size_32cm);
     placeVoxel(Vector3i(1, 0, 1), VoxelResolution::Size_32cm);
     
-    placeVoxel(Vector3i(0, 1, 0), VoxelResolution::Size_16cm);  // Second level
-    placeVoxel(Vector3i(1, 1, 0), VoxelResolution::Size_16cm);
+    // For 16cm voxels on top of 32cm voxels: grid Y = 2 (since 32cm = 2 * 16cm)
+    placeVoxel(Vector3i(0, 2, 0), VoxelResolution::Size_16cm);  // Second level
+    placeVoxel(Vector3i(1, 2, 0), VoxelResolution::Size_16cm);
     
-    placeVoxel(Vector3i(0, 2, 0), VoxelResolution::Size_8cm);   // Top level
+    // For 8cm voxels on top of 32cm+16cm: grid Y = 6 (since 32cm = 4*8cm, 16cm = 2*8cm)
+    placeVoxel(Vector3i(0, 6, 0), VoxelResolution::Size_8cm);   // Top level
     
     // Test detection at different positions
     auto topResult = m_planeDetector->detectPlane(createContext(Vector3f(0.04f, 1.0f, 0.04f)));
     EXPECT_TRUE(topResult.found);
-    EXPECT_FLOAT_EQ(topResult.plane.height, 0.56f); // 0.32 + 0.16 + 0.08 = 0.56m
+    EXPECT_NEAR(topResult.plane.height, 0.56f, 0.0001f); // 0.32 + 0.16 + 0.08 = 0.56m
     
     auto middleResult = m_planeDetector->detectPlane(createContext(Vector3f(0.16f, 1.0f, 0.04f)));
     EXPECT_TRUE(middleResult.found);
-    EXPECT_FLOAT_EQ(middleResult.plane.height, 0.48f); // 0.32 + 0.16 = 0.48m
+    EXPECT_NEAR(middleResult.plane.height, 0.48f, 0.0001f); // 0.32 + 0.16 = 0.48m
     
     auto baseResult = m_planeDetector->detectPlane(createContext(Vector3f(0.16f, 1.0f, 0.16f)));
     EXPECT_TRUE(baseResult.found);
-    EXPECT_FLOAT_EQ(baseResult.plane.height, 0.32f); // Base level
+    EXPECT_NEAR(baseResult.plane.height, 0.32f, 0.0001f); // Base level
 }
