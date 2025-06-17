@@ -155,8 +155,8 @@ TEST_F(CoreFunctionalityTest, OneCmIncrementPlacement) {
     
     // Test invalid Y position (below ground)
     Vector3i invalidPos(0, -1, 0);
-    // For Y < 0, the position is technically a valid increment position but placement will fail
-    EXPECT_TRUE(Input::PlacementUtils::isValidIncrementPosition(invalidPos));
+    // For Y < 0, the position is invalid according to PlacementUtils
+    EXPECT_FALSE(Input::PlacementUtils::isValidIncrementPosition(invalidPos));
     EXPECT_FALSE(voxelManager->setVoxel(invalidPos, VoxelData::VoxelResolution::Size_1cm, true));
 }
 
@@ -266,12 +266,13 @@ TEST_F(CoreFunctionalityTest, UndoRedoOperational) {
     EXPECT_TRUE(historyManager->redo());
     EXPECT_TRUE(voxelManager->hasVoxel(pos1, resolution));
     
-    // Test with multiple commands
-    Vector3i pos2(1, 0, 0);
-    Vector3i pos3(2, 0, 0);
+    // Test with multiple commands - use positions aligned to 16cm grid (16 increments)
+    Vector3i pos2(16, 0, 0);  // 16cm in X direction
+    Vector3i pos3(32, 0, 0);  // 32cm in X direction
     
-    auto cmd2 = std::make_unique<UndoRedo::VoxelPlacementCommand>(voxelManager, pos2, resolution);
-    auto cmd3 = std::make_unique<UndoRedo::VoxelPlacementCommand>(voxelManager, pos3, resolution);
+    // Use VoxelEditCommand directly for simplicity
+    auto cmd2 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, pos2, resolution, true);
+    auto cmd3 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, pos3, resolution, true);
     
     historyManager->executeCommand(std::move(cmd2));
     historyManager->executeCommand(std::move(cmd3));

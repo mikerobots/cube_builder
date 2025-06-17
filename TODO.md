@@ -1,99 +1,237 @@
-# TODO - Fix Integration Test Failures
+# TODO - Coordinate System Fixes
 
-## 🎯 CURRENT WORK: Fixing Broken Integration Tests
+## 🎯 OBJECTIVE
+Fix all coordinate system issues to resolve integration test failures. All subsystems must use the centered coordinate system consistently.
 
-**Context**: After fixing FaceDetector coordinate system and completing core subsystem cleanup, several integration tests are still failing.
+**Coordinate System**: Workspace extends from `(-size/2, 0, -size/2)` to `(size/2, size, size/2)` with origin at center.
 
-### Test Status Summary
+## 📋 AGENT INSTRUCTIONS
 
-**✅ Passing Tests:**
-- `test_ground_plane_voxel_placement` - All 6 tests passed
-- `test_mouse_ray_movement` - All 8 tests passed
-- `test_mouse_boundary_clicking` - All 5 tests passed
-- `test_voxel_face_clicking_simple` - All 3 tests passed (fixed with FaceDetector coordinate system)
-- `VoxelEditor_VoxelData_Tests` - Tests are passing
+### Before Starting:
+1. **CLAIM YOUR SUBSYSTEM**: Update status to "🔄 IN PROGRESS - Agent: [Your Name]"
+2. **Focus on Critical Files**: Start with files marked as CRITICAL
+3. **Test After Each Fix**: Run unit tests for the subsystem to ensure 100% pass rate
+4. **Verify Integration**: Run integration tests to verify fixes don't break other systems
 
-**❌ Failing Tests:**
-1. `test_mouse_ground_plane_clicking` - 1/6 tests failed
-2. `CoreFunctionalityTests` - 2/6 tests failed (4 skipped in headless mode)
-3. `test_click_voxel_placement` - All 3 tests failed
-4. `test_voxel_face_clicking` - Hangs (possible infinite loop or deadlock)
+### Common Fix Pattern:
+Replace: `worldPos = gridPos * voxelSize`  
+With: `worldPos = voxelGrid->gridToWorld(gridPos)`
 
-### 🔥 HIGH PRIORITY FAILURES
+## 🚨 CRITICAL PRIORITY (Integration Test Blockers)
 
-#### 1. Mouse Ground Plane Clicking Test - ClickGroundPlaneMultiplePositions
+### 1. Input System - PlacementValidation.cpp ⚠️ CRITICAL
 **Status**: ⏳ PENDING  
-**Failure**: Expected 7 voxels placed, but only 5 were placed
-**Theory**: Likely related to coordinate transformation or workspace boundary issues
-- Missing voxels at grid positions (90, 0, 50) and (50, 0, 90)
-- These positions might be outside the valid workspace bounds
-- Or the coordinate transformation is placing them incorrectly
+**Agent**: None  
+**File**: `core/input/PlacementValidation.cpp`
 
-#### 2. Core Functionality Tests
-**Status**: ⏳ PENDING
+**Issues**:
+- Line 45-47: `if (gridPos.y < 0) return InvalidYBelowZero;` - Prevents placement below Y=0
+- Line 59: Workspace bounds check uses `worldPos.y < 0` instead of centered bounds  
+- Line 72: `isValidIncrementPosition()` enforces `pos.y >= 0` constraint
+- Line 302-304: Another hardcoded `worldPos.y < 0.0f` check
 
-**a) OneCmIncrementPlacement Test**
-- **Failure**: `isValidIncrementPosition(invalidPos)` returns false when expected true
-- **Theory**: The test's understanding of valid increment positions doesn't match the new coordinate system
-- Likely testing with old coordinate assumptions that are no longer valid
+**Fix**: Remove all Y >= 0 constraints. Update workspace bounds checks to use centered coordinates.
 
-**b) UndoRedoOperational Test**  
-- **Failure**: `historyManager->undo()` returns false
-- **Theory**: Commands might not be properly registered in history manager
-- Or the command execution is failing silently, so there's nothing to undo
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_Input_Tests" --output-on-failure
+```
 
-#### 3. Click Voxel Placement Tests
-**Status**: ⏳ PENDING
-**Failure**: All tests fail at voxel placement with "Failed to place voxel"
-**Theory**: 
-- The click-to-placement pipeline is broken somewhere
-- Likely related to face detection → placement position calculation
-- May be using old coordinate system assumptions
-- The Face's calculatePlacementPosition might return invalid positions
-
-#### 4. Voxel Face Clicking Test (Hanging)
+### 2. Visual Feedback System - FeedbackTypes.cpp ⚠️ CRITICAL  
 **Status**: ⏳ PENDING  
-**Issue**: Test hangs indefinitely
-**Theory**:
-- Possible infinite loop in ray traversal algorithm
-- Or deadlock in voxel placement logic
-- Could be related to the coordinate system changes causing unexpected behavior
+**Agent**: None  
+**File**: `core/visual_feedback/src/FeedbackTypes.cpp`
 
-### 🛠️ DEBUGGING APPROACH
+**Issues**:
+- Line 65: `Face::getWorldPosition()` uses `basePos = Vector3f(position) * voxelSize`
+- Lines 88-132: `Face::getCorners()` same coordinate conversion issue
 
-#### Priority Order:
-1. **Click Voxel Placement Tests** - Core functionality that other tests depend on
-2. **Voxel Face Clicking Test** - Hanging issue could reveal systemic problems
-3. **Mouse Ground Plane Clicking** - Boundary case handling
-4. **Core Functionality Tests** - May resolve themselves once placement works
+**Fix**: Use VoxelGrid's `gridToWorld()` method for proper coordinate conversion.
 
-### 📋 ROOT CAUSE ANALYSIS
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_VisualFeedback_Tests" --output-on-failure
+```
 
-**Common Thread**: All failures seem related to the coordinate system changes
-- FaceDetector was fixed to handle centered workspace
-- But other components (PlacementUtils, CalculatePlacementPosition, Commands) may still use old assumptions
-- The placement pipeline: Face Detection → Calculate Position → Validate → Place needs review
+### 3. Application Layer - VoxelMeshGenerator.cpp ⚠️ CRITICAL
+**Status**: ⏳ PENDING  
+**Agent**: None  
+**File**: `apps/cli/VoxelMeshGenerator.cpp`
 
-### 🔄 NEXT ACTIONS
+**Issues**:
+- Lines 69-73: `worldPos = gridPos * voxelSize + voxelSize * 0.5f`
+- Lines 184-188: Same issue in edge mesh generation
 
-**1. Fix Click Voxel Placement (HIGHEST PRIORITY)**
-   - Check if calculatePlacementPosition returns valid increment coordinates
-   - Verify PlacementUtils validates positions correctly with new coordinate system
-   - Ensure commands properly convert between coordinate systems
+**Fix**: Use VoxelGrid's `gridToWorld()` method. This is the ROOT CAUSE of voxels appearing in wrong positions.
 
-**2. Debug Hanging Test**
-   - Add timeout to identify where it hangs
-   - Check for infinite loops in ray traversal
-   - Look for coordinate values that might cause infinite iteration
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_VoxelMeshGenerator_Tests" --output-on-failure
+```
 
-**3. Fix Boundary Issues**
-   - Review workspace bounds validation
-   - Check if positions (90,0,50) and (50,0,90) are within valid bounds
-   - Verify coordinate snapping at boundaries
+---
 
-**4. Update Test Assumptions**
-   - Review what positions tests consider "valid"
-   - Update tests to match new coordinate system
-   - Ensure undo/redo tracks commands correctly
+## 🔥 HIGH PRIORITY
 
-**Strategy**: Start with click placement as it's fundamental to all voxel operations. The coordinate system fix for FaceDetector needs to be propagated through the entire placement pipeline.
+### 4. VoxelData Management - VoxelTypes.h
+**Status**: ⏳ PENDING  
+**Agent**: None  
+**File**: `core/voxel_data/VoxelTypes.h`
+
+**Issues**:
+- Lines 59-70: `VoxelPosition::toWorldSpace()` assumes old coordinate system
+- Lines 73-86: `VoxelPosition::fromWorldSpace()` same issue
+
+**Fix**: Update methods to handle centered coordinates or remove them entirely.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_VoxelData_Tests" --output-on-failure
+```
+
+### 5. Visual Feedback System - Multiple Files
+**Status**: ⏳ PENDING  
+**Agent**: None  
+
+**Files to Fix**:
+- `core/visual_feedback/src/FeedbackRenderer.cpp` (lines 30-33): Hardcoded workspace bounds
+- `core/visual_feedback/src/HighlightRenderer.cpp` (lines 416-436): `calculateVoxelTransform()`  
+- `core/visual_feedback/src/OutlineRenderer.cpp` (lines 267-279): `addVoxelEdges()`
+
+**Fix**: Replace manual coordinate conversion with VoxelGrid methods.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_VisualFeedback_Tests" --output-on-failure
+```
+
+### 6. Surface Generation - DualContouring.cpp
+**Status**: ⏳ PENDING  
+**Agent**: None  
+**File**: `core/surface_gen/DualContouring.cpp`
+
+**Issues**:
+- Line 231: `Math::Vector3f worldVertex = vertex * voxelSize;`
+
+**Fix**: Use VoxelGrid's `gridToWorld()` method for proper vertex positioning.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_SurfaceGen_Tests" --output-on-failure
+```
+
+---
+
+## 🔧 MEDIUM PRIORITY
+
+### 7. Selection System - Multiple Files
+**Status**: ⏳ PENDING  
+**Agent**: None  
+
+**Files to Fix**:
+- `core/selection/SelectionTypes.cpp` (lines 8-12, 21-25): VoxelId coordinate methods
+- `core/selection/BoxSelector.cpp` (lines 74-78): Hardcoded workspace bounds  
+- `core/selection/SphereSelector.cpp` (lines 68-71): Same workspace bounds issue
+
+**Fix**: Use WorkspaceManager's centered bounds instead of hardcoded `(0,0,0)` to `workspaceSize`.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_Selection_Tests" --output-on-failure
+```
+
+### 8. Groups System - VoxelGroup.cpp  
+**Status**: ⏳ PENDING  
+**Agent**: None  
+**File**: `core/groups/src/VoxelGroup.cpp`
+
+**Issues**:
+- Line 112: `translate()` method uses `voxel.position * voxelSize`
+- Lines 176-177: `updateBounds()` method same issue
+
+**Fix**: Use VoxelGrid's coordinate conversion or account for workspace center.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_Groups_Tests" --output-on-failure
+```
+
+### 9. Undo/Redo System - Multiple Files
+**Status**: ⏳ PENDING  
+**Agent**: None  
+
+**Files to Fix**:
+- `core/undo_redo/VoxelCommands.cpp` (lines 233-245): VoxelFillCommand coordinate calculations
+- `core/undo_redo/StateSnapshot.cpp` (lines 50-72, 188-196): Raw coordinate storage
+- `core/undo_redo/PlacementCommands.cpp` (lines 80, 103): Uses broken PlacementUtils
+
+**Fix**: Update coordinate calculations for negative space and add coordinate system versioning.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_UndoRedo_Tests" --output-on-failure
+```
+
+---
+
+## 🎯 LOW PRIORITY (CLI Application - Do Last)
+
+### 10. Application Layer - CLI Commands  
+**Status**: ⏳ PENDING  
+**Agent**: None  
+
+**Files to Fix**:
+- `apps/cli/Commands.cpp` (multiple lines): Camera centering and debug commands
+- `apps/cli/MouseInteraction.cpp` (lines 442-443, 658-662): Placement position calculation
+
+**Fix**: Replace manual coordinate conversions with VoxelGrid methods.
+
+**Unit Tests**: After fixing, run:
+```bash
+cd build_ninja && ctest -R "VoxelEditor_CLI_Tests" --output-on-failure
+```
+
+---
+
+## 📊 COMPLETION TRACKING
+
+**Total Fixes Needed**: 10 subsystems  
+**Critical (Blocking Tests)**: 3  
+**High Priority**: 3  
+**Medium Priority**: 3  
+**Low Priority**: 1  
+
+**Status**: 0 Complete, 10 Pending
+
+---
+
+## 🧪 TESTING VALIDATION
+
+**CRITICAL**: After fixing each subsystem:
+
+1. **Run Unit Tests** (must pass 100%):
+```bash
+cd build_ninja && ctest -R "VoxelEditor_[Subsystem]_Tests" --output-on-failure
+```
+
+2. **Run Integration Tests** (verify no regressions):
+```bash
+./run_integration_tests.sh core
+```
+
+3. **Run Failing Tests** (verify fixes work):
+```bash
+cd build_ninja && ctest -R "test_click_voxel_placement" --output-on-failure
+cd build_ninja && ctest -R "test_mouse_ground_plane_clicking" --output-on-failure
+```
+
+**DO NOT PROCEED** to next subsystem until current subsystem's unit tests pass 100%.
+
+## 🎯 SUCCESS CRITERIA
+
+All coordinate system fixes are complete when:
+1. All integration tests pass
+2. Click placement tests work correctly  
+3. Voxels render in correct positions
+4. Mouse interaction works at all workspace locations
+5. Visual feedback appears at correct positions

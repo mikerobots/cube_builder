@@ -234,26 +234,41 @@ TEST_F(MouseGroundPlaneClickingTest, ClickGroundPlaneMultiplePositions) {
         {0.00f, 0.0f, 3.20f},    // Near +Z edge
     };
     
-    // Expected grid positions in VoxelGrid coordinates
-    std::vector<Math::Vector3i> expectedGridPos = {
-        {0, 0, 0},    // -3.96 maps to 0 in VoxelGrid
-        {10, 0, 0},   // -3.20 maps to 10 in VoxelGrid
-        {0, 0, 10},   // +Z
-        {10, 0, 10},  // +X+Z
-        {50, 0, 50},  // Center: 0.0 in centered coords = 4.0 in grid coords
-        {90, 0, 50},  // 3.2 in centered = 7.2 in grid
-        {50, 0, 90}   // +Z edge
-    };
+    // For 8cm voxels, we need to calculate expected increment positions
+    // The hasVoxelAt function expects grid coordinates, but let's directly
+    // check if voxels were placed at the expected positions
+    std::vector<Math::Vector3i> expectedIncrementPos;
+    for (const auto& worldPos : testPositions) {
+        // Convert world position to increment position for 8cm voxels
+        // Snap to 8cm grid
+        float voxelSize = 0.08f;
+        Math::Vector3i incrementPos(
+            static_cast<int>(std::round(worldPos.x / voxelSize) * (voxelSize / 0.01f)),
+            static_cast<int>(std::round(worldPos.y / voxelSize) * (voxelSize / 0.01f)),
+            static_cast<int>(std::round(worldPos.z / voxelSize) * (voxelSize / 0.01f))
+        );
+        expectedIncrementPos.push_back(incrementPos);
+    }
     
     for (size_t i = 0; i < testPositions.size(); ++i) {
         bool success = simulateGroundPlaneClick(testPositions[i]);
         
-        EXPECT_TRUE(success) << "Should place voxel at position " << i;
-        EXPECT_TRUE(hasVoxelAt(expectedGridPos[i])) 
-            << "Voxel should be placed at grid position (" 
-            << expectedGridPos[i].x << ", " 
-            << expectedGridPos[i].y << ", " 
-            << expectedGridPos[i].z << ")";
+        EXPECT_TRUE(success) << "Should place voxel at position " << i << " world pos (" 
+            << testPositions[i].x << ", " << testPositions[i].y << ", " << testPositions[i].z << ")";
+        
+        // For debugging: Print where voxel was actually placed
+        if (success) {
+            Logging::Logger::getInstance().debugfc("MouseGroundPlaneClickingTest",
+                "Placed voxel %zu at world position (%.2f, %.2f, %.2f)",
+                i, testPositions[i].x, testPositions[i].y, testPositions[i].z);
+        }
+        
+        // Check using increment coordinates directly
+        EXPECT_TRUE(voxelManager->getVoxel(expectedIncrementPos[i], voxelManager->getActiveResolution())) 
+            << "Voxel should be placed at increment position (" 
+            << expectedIncrementPos[i].x << ", " 
+            << expectedIncrementPos[i].y << ", " 
+            << expectedIncrementPos[i].z << ")";
     }
     
     EXPECT_EQ(getVoxelCount(), testPositions.size()) 
@@ -263,18 +278,34 @@ TEST_F(MouseGroundPlaneClickingTest, ClickGroundPlaneMultiplePositions) {
 // Test clicking near existing voxels
 TEST_F(MouseGroundPlaneClickingTest, ClickNearExistingVoxel) {
     // Place initial voxel near bottom-left
-    bool success = simulateGroundPlaneClick(Math::Vector3f(-3.96f, 0.0f, -3.96f));
+    Math::Vector3f initPos(-3.96f, 0.0f, -3.96f);
+    bool success = simulateGroundPlaneClick(initPos);
     
     ASSERT_TRUE(success) << "Should place initial voxel";
     ASSERT_EQ(getVoxelCount(), 1) << "Should have placed initial voxel";
-    ASSERT_TRUE(hasVoxelAt(Math::Vector3i(0, 0, 0))) << "Initial voxel should be at grid origin";
+    
+    // Check using increment coordinates
+    Math::Vector3i expectedIncrement(
+        static_cast<int>(std::round(initPos.x / 0.08f) * 8),
+        0,
+        static_cast<int>(std::round(initPos.z / 0.08f) * 8)
+    );
+    ASSERT_TRUE(voxelManager->getVoxel(expectedIncrement, voxelManager->getActiveResolution())) 
+        << "Initial voxel should be at expected increment position";
     
     // Place adjacent voxel
     success = simulateGroundPlaneClick(Math::Vector3f(-3.88f, 0.0f, -3.96f)); // Adjacent in +X
     
     EXPECT_TRUE(success) << "Should place adjacent voxel";
     EXPECT_EQ(getVoxelCount(), 2) << "Should have placed second voxel";
-    EXPECT_TRUE(hasVoxelAt(Math::Vector3i(1, 0, 0))) << "Second voxel should be adjacent in +X";
+    // The second voxel should be adjacent
+    Math::Vector3i expectedIncrement2(
+        static_cast<int>(std::round(-3.88f / 0.08f) * 8),
+        0,
+        static_cast<int>(std::round(-3.96f / 0.08f) * 8)
+    );
+    EXPECT_TRUE(voxelManager->getVoxel(expectedIncrement2, voxelManager->getActiveResolution())) 
+        << "Second voxel should be adjacent in +X";
 }
 
 // Test ground plane constraint

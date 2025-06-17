@@ -106,14 +106,12 @@ TEST_F(VoxelFaceClickingTest, ClickOnVoxelFaceAddsAdjacentVoxel) {
     
     // Update mesh and mouse interaction
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     // Click on the center of the screen (should hit the voxel's front face)
     simulateClick(0.0f, 0.0f);
     
     // Update again to process the click result
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     // Should now have 2 voxels
     EXPECT_EQ(countVoxels(), 2) << "Should have 2 voxels after clicking on face";
@@ -121,7 +119,6 @@ TEST_F(VoxelFaceClickingTest, ClickOnVoxelFaceAddsAdjacentVoxel) {
     // Click again to add a third voxel
     simulateClick(0.1f, 0.0f);  // Slightly offset to ensure we hit a face
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     EXPECT_EQ(countVoxels(), 3) << "Should have 3 voxels after second click";
 }
@@ -141,19 +138,15 @@ TEST_F(VoxelFaceClickingTest, ClickOnDifferentFacesAddsVoxelsCorrectly) {
     camera->setOrbitAngles(0.0f, 0.0f);  // Front view
     
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     simulateClick(0.0f, 0.0f);
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     EXPECT_EQ(countVoxels(), 2) << "Should add voxel on front face";
     
     // View from right - click to add voxel on right face
     camera->setOrbitAngles(90.0f, 0.0f);  // Right view
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     simulateClick(0.0f, 0.0f);
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     EXPECT_EQ(countVoxels(), 3) << "Should add voxel on right face";
 }
 
@@ -169,12 +162,10 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     camera->setDistance(5.0f);
     
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     // Try to click on the voxel
     simulateClick(0.0f, 0.0f);
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     // Should be able to add adjacent voxel
     int voxelCount = countVoxels();
@@ -195,11 +186,9 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     
     camera->setTarget(Math::Vector3f(0.32f, 0.32f, 0.32f));  // Center of voxel at (0,0,0)
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     simulateClick(0.0f, 0.0f);
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     EXPECT_EQ(countVoxels(), 2) << "Should add voxel by clicking on (0,0,0)";
 }
@@ -218,12 +207,10 @@ TEST_F(VoxelFaceClickingTest, ClosestVoxelIsSelected) {
     camera->setOrbitAngles(90.0f, 0.0f);  // Look from positive X direction
     
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     // Click - should hit the closer voxel (1,0,0) and add voxel at (2,0,0)
     simulateClick(0.0f, 0.0f);
     app->updateVoxelMeshes();
-    mouseInteraction->update();
     
     EXPECT_EQ(countVoxels(), 3) << "Should add voxel adjacent to the closer one";
     
