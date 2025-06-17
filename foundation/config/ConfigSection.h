@@ -193,6 +193,15 @@ public:
         return m_name;
     }
     
+    // Method to get raw ConfigValue for serialization purposes
+    ConfigValue getRawValue(const std::string& key) const {
+        auto it = m_values.find(key);
+        if (it != m_values.end()) {
+            return it->second;
+        }
+        return ConfigValue{};
+    }
+    
 private:
     std::string m_name;
     std::unordered_map<std::string, ConfigValue> m_values;

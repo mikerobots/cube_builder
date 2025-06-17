@@ -93,30 +93,14 @@ protected:
     
     // Helper to count voxels in the grid
     int countVoxels() {
-        int count = 0;
-        // Use a reasonable range based on workspace size
-        auto workspaceSize = voxelManager->getWorkspaceSize();
-        auto resolution = voxelManager->getActiveResolution();
-        float voxelSize = VoxelData::getVoxelSize(resolution);
-        int maxX = static_cast<int>(workspaceSize.x / voxelSize);
-        int maxY = static_cast<int>(workspaceSize.y / voxelSize);
-        int maxZ = static_cast<int>(workspaceSize.z / voxelSize);
-        
-        for (int x = 0; x < std::min(maxX, 100); x++) {
-            for (int y = 0; y < std::min(maxY, 100); y++) {
-                for (int z = 0; z < std::min(maxZ, 100); z++) {
-                    if (voxelManager->hasVoxel(Math::Vector3i(x, y, z), resolution)) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
+        // Use VoxelDataManager's built-in count which is more efficient and accurate
+        return static_cast<int>(voxelManager->getVoxelCount());
     }
 };
 
 TEST_F(VoxelFaceClickingTest, ClickOnVoxelFaceAddsAdjacentVoxel) {
-    // Place initial voxel at origin
+    // Place initial voxel at world center using increment coordinates
+    // For a centered workspace, the origin in world space (0,0,0) corresponds to increment coordinates (0,0,0)
     voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
     EXPECT_EQ(countVoxels(), 1) << "Should have 1 voxel after initial placement";
     

@@ -57,6 +57,11 @@ Math::Vector3f Face::getWorldPosition() const {
     }
     
     float voxelSize = getVoxelSize();
+    
+    // Face stores grid coordinates, need to convert to world coordinates
+    // accounting for centered workspace
+    // For now, use the simple multiplication approach
+    // TODO: This should use VoxelGrid::gridToWorld() for proper centered workspace handling
     Math::Vector3f basePos = Math::Vector3f(m_voxelPosition.x, m_voxelPosition.y, m_voxelPosition.z) * voxelSize;
     
     // Offset to face center

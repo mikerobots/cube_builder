@@ -170,16 +170,21 @@ protected:
     }
     
     // Helper to check if voxel exists at grid position
-    // Note: VoxelDataManager stores voxels using increment grid positions (1cm grid)
+    // Note: This function expects VoxelGrid coordinates and converts them to
+    // the increment coordinates that VoxelDataManager expects
     bool hasVoxelAt(const Math::Vector3i& gridPos) {
-        // Convert from VoxelGrid coordinates to increment grid coordinates
-        float voxelSize = VoxelData::getVoxelSize(voxelManager->getActiveResolution());
-        int incrementsPerVoxel = static_cast<int>(voxelSize / 0.01f); // 0.01f = 1cm increment
+        // Convert VoxelGrid coordinates to world coordinates first
+        const VoxelData::VoxelGrid* grid = voxelManager->getGrid(voxelManager->getActiveResolution());
+        if (!grid) return false;
         
+        Math::Vector3f worldPos = grid->gridToWorld(gridPos);
+        
+        // Convert world coordinates to increment grid coordinates (1cm grid)
+        const float INCREMENT_SIZE = 0.01f;
         Math::Vector3i incrementGridPos(
-            gridPos.x * incrementsPerVoxel,
-            gridPos.y * incrementsPerVoxel,
-            gridPos.z * incrementsPerVoxel
+            static_cast<int>(std::round(worldPos.x / INCREMENT_SIZE)),
+            static_cast<int>(std::round(worldPos.y / INCREMENT_SIZE)),
+            static_cast<int>(std::round(worldPos.z / INCREMENT_SIZE))
         );
         
         // Check using VoxelDataManager which uses increment coordinates

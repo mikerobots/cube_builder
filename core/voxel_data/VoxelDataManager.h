@@ -61,7 +61,10 @@ public:
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
-        bool oldValue = grid->getVoxel(pos);
+        // Convert increment coordinates to grid coordinates
+        Math::Vector3i gridPos = incrementToGridCoordinates(pos, resolution);
+        
+        bool oldValue = grid->getVoxel(gridPos);
         
         // Handle redundant operations (setting same value as current)
         if (oldValue == value) {
@@ -70,11 +73,11 @@ public:
         }
         
         // Check for overlaps if we're setting a voxel (not removing)
-        if (value && wouldOverlapInternal(pos, resolution)) {
+        if (value && wouldOverlapInternal(gridPos, resolution)) {
             return false;
         }
         
-        bool success = grid->setVoxel(pos, value);
+        bool success = grid->setVoxel(gridPos, value);
         
         if (success && oldValue != value) {
             dispatchVoxelChangedEvent(pos, resolution, oldValue, value);
@@ -93,7 +96,10 @@ public:
         const VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
-        return grid->getVoxel(pos);
+        // Convert increment coordinates to grid coordinates
+        Math::Vector3i gridPos = incrementToGridCoordinates(pos, resolution);
+        
+        return grid->getVoxel(gridPos);
     }
     
     bool getVoxel(const VoxelPosition& voxelPos) const {
@@ -413,7 +419,9 @@ public:
     // Enhancement: Collision detection
     bool wouldOverlap(const Math::Vector3i& pos, VoxelResolution resolution) const {
         std::lock_guard<std::mutex> lock(m_mutex);
-        return wouldOverlapInternal(pos, resolution);
+        // Convert increment coordinates to grid coordinates
+        Math::Vector3i gridPos = incrementToGridCoordinates(pos, resolution);
+        return wouldOverlapInternal(gridPos, resolution);
     }
     
     bool wouldOverlap(const VoxelPosition& voxelPos) const {
@@ -554,6 +562,25 @@ private:
         return true;
     }
     
+    // Convert increment coordinates to VoxelGrid coordinates
+    Math::Vector3i incrementToGridCoordinates(const Math::Vector3i& incrementPos, VoxelResolution resolution) const {
+        // Convert increment coordinates (1cm grid) to world coordinates
+        const float INCREMENT_SIZE = 0.01f;
+        Math::Vector3f worldPos(
+            static_cast<float>(incrementPos.x) * INCREMENT_SIZE,
+            static_cast<float>(incrementPos.y) * INCREMENT_SIZE,
+            static_cast<float>(incrementPos.z) * INCREMENT_SIZE
+        );
+        
+        // Use VoxelGrid's worldToGrid method to get proper grid coordinates
+        const VoxelGrid* grid = getGrid(resolution);
+        if (!grid) {
+            return Math::Vector3i(0, 0, 0);
+        }
+        
+        return grid->worldToGrid(worldPos);
+    }
+    
     void dispatchVoxelChangedEvent(const Math::Vector3i& position, VoxelResolution resolution, 
                                  bool oldValue, bool newValue) {
         if (m_eventDispatcher) {
@@ -563,12 +590,13 @@ private:
     }
     
     // Internal collision detection without lock (must be called with lock already held)
+    // Note: pos parameter is expected to be in VoxelGrid coordinates (not increment coordinates)
     bool wouldOverlapInternal(const Math::Vector3i& pos, VoxelResolution resolution) const {
         // Check if placing a voxel at this position would overlap with existing voxels
         // Optimized version that uses spatial queries to reduce checks
         
         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-            "wouldOverlapInternal: checking position (%d, %d, %d) with resolution %d",
+            "wouldOverlapInternal: checking grid position (%d, %d, %d) with resolution %d",
             pos.x, pos.y, pos.z, static_cast<int>(resolution));
         
         // Get the grid for this resolution to convert to world space correctly

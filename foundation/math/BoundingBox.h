@@ -6,6 +6,9 @@
 #include <array>
 #include <vector>
 
+// Forward declaration to avoid circular dependencies
+namespace VoxelEditor { namespace Math { class Matrix4f; }}
+
 namespace VoxelEditor {
 namespace Math {
 
@@ -220,6 +223,35 @@ public:
         return "BoundingBox(min: " + min.toString() + ", max: " + max.toString() + ")";
     }
 };
+
+}
+}
+
+// Include Matrix4f after the class declaration to avoid circular dependencies
+#include "Matrix4f.h"
+
+namespace VoxelEditor {
+namespace Math {
+
+// Inline implementation of method that depends on Matrix4f
+
+inline BoundingBox BoundingBox::transformed(const Matrix4f& transform) const {
+    if (!isValid()) {
+        return BoundingBox();  // Return invalid box if input is invalid
+    }
+    
+    // Get all 8 corners of the bounding box
+    std::array<Vector3f, 8> corners = getCorners();
+    
+    // Transform all corners
+    BoundingBox result;
+    for (const Vector3f& corner : corners) {
+        Vector3f transformedCorner = transform * corner;
+        result.expandToInclude(transformedCorner);
+    }
+    
+    return result;
+}
 
 }
 }

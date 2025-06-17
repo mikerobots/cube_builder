@@ -3,6 +3,7 @@
 #include "Vector3f.h"
 #include "Vector2f.h"
 #include "Vector2i.h"
+#include "Vector4f.h"
 
 // Forward declaration to avoid circular dependencies
 namespace VoxelEditor { namespace Math { class Matrix4f; }}
@@ -116,6 +117,59 @@ public:
         return "Ray(origin: " + origin.toString() + ", direction: " + direction.toString() + ")";
     }
 };
+
+}
+}
+
+// Include Matrix4f after the class declaration to avoid circular dependencies
+#include "Matrix4f.h"
+
+namespace VoxelEditor {
+namespace Math {
+
+// Inline implementations of methods that depend on Matrix4f
+
+inline Ray Ray::transformed(const Matrix4f& transform) const {
+    // Transform origin as a point (w=1)
+    Vector3f transformedOrigin = transform * origin;
+    
+    // Transform direction as a vector (w=0, no translation)
+    Vector3f transformedDirection = transform.transformDirection(direction);
+    
+    return Ray(transformedOrigin, transformedDirection);
+}
+
+inline Ray Ray::screenToWorld(const Vector2f& screenPos, const Vector2i& screenSize, 
+                             const Matrix4f& viewMatrix, const Matrix4f& projectionMatrix) {
+    // Convert screen coordinates to normalized device coordinates [-1, 1]
+    float x = (2.0f * screenPos.x) / screenSize.x - 1.0f;
+    float y = 1.0f - (2.0f * screenPos.y) / screenSize.y;  // Flip Y for screen space
+    
+    // Create ray in clip space (homogeneous coordinates)
+    Vector4f rayClipNear(x, y, -1.0f, 1.0f);  // Near plane
+    Vector4f rayClipFar(x, y, 1.0f, 1.0f);    // Far plane
+    
+    // Transform to world space
+    Matrix4f viewProj = projectionMatrix * viewMatrix;
+    Matrix4f invViewProj = viewProj.inverted();
+    
+    // Transform clip space points to world space
+    Vector4f worldNear4 = invViewProj * rayClipNear;
+    Vector4f worldFar4 = invViewProj * rayClipFar;
+    
+    // Perspective divide
+    Vector3f rayWorldNear(worldNear4.x / worldNear4.w, 
+                          worldNear4.y / worldNear4.w, 
+                          worldNear4.z / worldNear4.w);
+    Vector3f rayWorldFar(worldFar4.x / worldFar4.w, 
+                         worldFar4.y / worldFar4.w, 
+                         worldFar4.z / worldFar4.w);
+    
+    // Create ray from near to far
+    Vector3f rayDirection = (rayWorldFar - rayWorldNear).normalized();
+    
+    return Ray(rayWorldNear, rayDirection);
+}
 
 }
 }

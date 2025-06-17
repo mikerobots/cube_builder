@@ -18,6 +18,9 @@ namespace VoxelEditor {
 namespace VoxelEditor {
 namespace Input {
 
+// 1cm increment size for world grid
+constexpr float INCREMENT_SIZE = 0.01f;
+
 // Result of placement validation
 enum class PlacementValidationResult {
     Valid,              // Placement is valid

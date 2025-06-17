@@ -1,0 +1,1 @@
+Please clean up the test files and the .ppm files and random log files in the root directory.

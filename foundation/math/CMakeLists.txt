@@ -15,6 +15,6 @@ target_include_directories(VoxelEditor_Math INTERFACE
 
 target_compile_features(VoxelEditor_Math INTERFACE cxx_std_20)
 
-if(BUILD_TESTS)
+if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

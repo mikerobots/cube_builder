@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "FeedbackTypes.h"
-#include "VoxelGrid.h"
+#include "voxel_data/VoxelGrid.h"
 
 namespace VoxelEditor {
 namespace VisualFeedback {

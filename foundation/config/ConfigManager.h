@@ -292,7 +292,7 @@ private:
         // Save direct values
         for (const auto& key : section.getKeys()) {
             std::string fullKey = prefix.empty() ? key : prefix + "." + key;
-            ConfigValue value = section.getValue<ConfigValue>(key, ConfigValue{});
+            ConfigValue value = section.getRawValue(key);
             
             if (value.isValid()) {
                 stream << fullKey << "=" << value.toString() << "\n";

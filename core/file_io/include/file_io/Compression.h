@@ -4,13 +4,15 @@
 #include <cstdint>
 #include <iostream>
 
-namespace VoxelEditor {
-namespace FileIO {
-
 // Forward declarations
+namespace VoxelEditor {
 namespace VoxelData {
     class VoxelGrid;
 }
+}
+
+namespace VoxelEditor {
+namespace FileIO {
 
 // Compression wrapper for LZ4
 class Compression {
@@ -33,8 +35,8 @@ public:
     bool decompressStream(std::istream& input, std::ostream& output, size_t expectedSize);
     
     // Specialized voxel compression
-    bool compressVoxelData(const VoxelData::VoxelGrid& grid, std::vector<uint8_t>& output, int level = 6);
-    bool decompressVoxelData(const uint8_t* input, size_t inputSize, VoxelData::VoxelGrid& grid);
+    bool compressVoxelData(const ::VoxelEditor::VoxelData::VoxelGrid& grid, std::vector<uint8_t>& output, int level = 6);
+    bool decompressVoxelData(const uint8_t* input, size_t inputSize, ::VoxelEditor::VoxelData::VoxelGrid& grid);
     
     // Configuration
     void setCompressionLevel(int level) { m_compressionLevel = level; }
@@ -55,8 +57,8 @@ private:
                       std::vector<uint8_t>& output, size_t expectedSize);
     
     // Voxel data optimization
-    std::vector<uint8_t> optimizeVoxelDataForCompression(const VoxelData::VoxelGrid& grid);
-    void restoreVoxelDataFromOptimized(const std::vector<uint8_t>& data, VoxelData::VoxelGrid& grid);
+    std::vector<uint8_t> optimizeVoxelDataForCompression(const ::VoxelEditor::VoxelData::VoxelGrid& grid);
+    void restoreVoxelDataFromOptimized(const std::vector<uint8_t>& data, ::VoxelEditor::VoxelData::VoxelGrid& grid);
     
     // Run-length encoding for sparse voxel data
     void runLengthEncode(const std::vector<uint8_t>& input, std::vector<uint8_t>& output);
@@ -65,6 +67,9 @@ private:
     // Error handling
     void setError(const std::string& error);
     void clearError();
+    
+    // Checksum calculation
+    uint32_t calculateChecksum(const uint8_t* data, size_t size);
 };
 
 // Compression utilities

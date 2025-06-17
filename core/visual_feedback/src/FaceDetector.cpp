@@ -160,25 +160,36 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     result.hit = false;
     
     float voxelSize = VoxelData::getVoxelSize(resolution);
-    Math::Vector3f gridMin(0, 0, 0);
-    Math::Vector3f gridMax = grid.getWorkspaceSize();
     
-    // Convert to voxel space
-    Ray voxelRay;
-    voxelRay.origin = ray.origin / voxelSize;
-    voxelRay.direction = ray.direction;
+    // Get workspace bounds in world coordinates (centered)
+    Math::Vector3f workspaceSize = grid.getWorkspaceSize();
+    Math::Vector3f gridMin(-workspaceSize.x * 0.5f, 0.0f, -workspaceSize.z * 0.5f);
+    Math::Vector3f gridMax(workspaceSize.x * 0.5f, workspaceSize.y, workspaceSize.z * 0.5f);
     
-    
-    // Check if ray intersects grid bounds
+    // Check if ray intersects workspace bounds
     float tMin, tMax;
-    Math::BoundingBox gridBounds(gridMin / voxelSize, gridMax / voxelSize);
-    if (!rayIntersectsBox(voxelRay, gridBounds, tMin, tMax)) {
+    Math::BoundingBox workspaceBounds(gridMin, gridMax);
+    if (!rayIntersectsBox(ray, workspaceBounds, tMin, tMax)) {
         return result;
     }
     
-    // Initialize traversal
+    // Convert ray origin to grid coordinates
+    Math::Vector3i gridOrigin = grid.worldToGrid(ray.origin);
+    Math::Vector3f gridOriginF(gridOrigin.x, gridOrigin.y, gridOrigin.z);
+    
+    Logging::Logger::getInstance().debugfc("FaceDetector",
+        "Ray origin world=(%.2f, %.2f, %.2f) -> grid=(%d, %d, %d)",
+        ray.origin.x, ray.origin.y, ray.origin.z,
+        gridOrigin.x, gridOrigin.y, gridOrigin.z);
+    
+    // Ray in grid space
+    Ray gridRay;
+    gridRay.origin = gridOriginF;
+    gridRay.direction = ray.direction / voxelSize;  // Scale direction by voxel size
+    
+    // Initialize traversal in grid space
     GridTraversal traversal;
-    initializeTraversal(voxelRay, gridMin / voxelSize, 1.0f, traversal);
+    initializeTraversal(gridRay, Math::Vector3f(0, 0, 0), 1.0f, traversal);
     
     
     // Traverse grid
@@ -214,6 +225,12 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
         // Check current voxel
         if (traversal.current.x >= 0 && traversal.current.y >= 0 && traversal.current.z >= 0) {
             bool isCurrentVoxel = grid.getVoxel(traversal.current);
+            
+            if (isCurrentVoxel) {
+                Logging::Logger::getInstance().debugfc("FaceDetector",
+                    "Found voxel at grid position (%d, %d, %d)",
+                    traversal.current.x, traversal.current.y, traversal.current.z);
+            }
             
             // Special case: ray started inside a voxel and we just exited it
             if (startedInsideVoxel && wasInsideStartVoxel && 
@@ -274,7 +291,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                 );
                 
                 float tMin, tMax;
-                if (rayIntersectsBox(voxelRay, voxelBox, tMin, tMax)) {
+                if (rayIntersectsBox(gridRay, voxelBox, tMin, tMax)) {
                     float hitDistance = tMin * voxelSize;
                     
                     // Only update if this is closer than any previous hit
@@ -284,7 +301,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                         closestHit.distance = hitDistance;
                         
                         // Calculate hit point to determine which face was hit
-                        Math::Vector3f hitPoint = voxelRay.origin + voxelRay.direction * tMin;
+                        Math::Vector3f hitPoint = gridRay.origin + gridRay.direction * tMin;
                         
                         // Determine which face based on hit point relative to voxel center
                         Math::Vector3f voxelMin(traversal.current.x, traversal.current.y, traversal.current.z);
