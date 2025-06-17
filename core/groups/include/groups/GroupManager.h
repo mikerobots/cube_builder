@@ -146,6 +146,7 @@ private:
     // Internal methods without locking
     bool deleteGroupInternal(GroupId id);
     void forEachGroupInHierarchyInternal(GroupId rootId, const GroupVisitor& visitor) const;
+    bool validateGroupsInternal() const;
     
     // Event dispatching
     void dispatchGroupCreated(GroupId groupId, const std::string& name, 

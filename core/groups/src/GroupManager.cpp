@@ -562,6 +562,11 @@ Math::BoundingBox GroupManager::getGroupBounds(GroupId id) const {
 
 bool GroupManager::validateGroups() const {
     std::lock_guard<std::mutex> lock(m_mutex);
+    return validateGroupsInternal();
+}
+
+bool GroupManager::validateGroupsInternal() const {
+    // Internal version that doesn't lock - mutex should already be held
     
     // Check hierarchy consistency
     if (!m_hierarchy->isValid()) {
@@ -670,7 +675,7 @@ bool GroupManager::importData(const GroupManagerData& data) {
     m_hierarchy->importData(data.hierarchy);
     m_nextGroupId = data.nextGroupId;
     
-    return validateGroups();
+    return validateGroupsInternal();
 }
 
 GroupId GroupManager::generateGroupId() {

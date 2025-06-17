@@ -16,6 +16,10 @@
 namespace VoxelEditor {
 namespace VoxelData {
 
+// Configuration constants
+constexpr size_t DEFAULT_OCTREE_POOL_SIZE = 1024;
+constexpr size_t COLLISION_SEARCH_VOLUME_THRESHOLD = 1000;
+
 class VoxelDataManager {
 public:
     explicit VoxelDataManager(Events::EventDispatcher* eventDispatcher = nullptr)
@@ -24,7 +28,7 @@ public:
         , m_workspaceManager(std::make_unique<WorkspaceManager>(eventDispatcher)) {
         
         // Initialize octree memory pool
-        SparseOctree::initializePool(1024);
+        SparseOctree::initializePool(DEFAULT_OCTREE_POOL_SIZE);
         
         // Set up workspace change callback to validate grid compatibility
         m_workspaceManager->setSizeChangeCallback([this](const Math::Vector3f& oldSize, const Math::Vector3f& newSize) {
@@ -617,7 +621,7 @@ private:
                               (maxGridCheck.y - minGridCheck.y) * 
                               (maxGridCheck.z - minGridCheck.z);
             
-            if (searchVolume > 1000 || grid->getVoxelCount() < searchVolume / 2) {
+            if (searchVolume > COLLISION_SEARCH_VOLUME_THRESHOLD || grid->getVoxelCount() < searchVolume / 2) {
                 // More efficient to check all voxels directly
                 auto voxels = grid->getAllVoxels();
                 for (const auto& voxelPos : voxels) {
