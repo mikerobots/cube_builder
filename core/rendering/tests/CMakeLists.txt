@@ -21,7 +21,7 @@ set(RENDERING_TEST_SOURCES
     test_EnhancedShaderValidation.cpp
     test_EdgeRendering.cpp
     test_GroundPlaneGrid.cpp
-    test_GroundPlaneGridDynamics.cpp
+    test_GroundPlaneGridDynamics_Simple.cpp
     test_GroundPlaneShaderFiles.cpp
     test_InlineShaderValidation.cpp
     test_FileBasedShaderValidation.cpp

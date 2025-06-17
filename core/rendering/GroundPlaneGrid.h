@@ -139,13 +139,21 @@ private:
     bool loadShader();
     void cleanup();
     
+    // Grid visual constants
+    static constexpr float MinorLineColorValue = 180.0f / 255.0f;
+    static constexpr float MajorLineColorValue = 200.0f / 255.0f;
+    static constexpr float CursorSmoothingFactor = 10.0f;
+    static constexpr float DefaultLineWidth = 1.0f;
+    static constexpr int MajorLineInterval = 5; // Major line every 5 minor lines
+    static constexpr float MajorLineVisibilityMultiplier = 1.2f;
+    
     // Colors for grid lines
     static Math::Vector3f MinorLineColor() { 
-        return Math::Vector3f(180.0f/255.0f, 180.0f/255.0f, 180.0f/255.0f); 
+        return Math::Vector3f(MinorLineColorValue, MinorLineColorValue, MinorLineColorValue); 
     }
     
     static Math::Vector3f MajorLineColor() { 
-        return Math::Vector3f(200.0f/255.0f, 200.0f/255.0f, 200.0f/255.0f); 
+        return Math::Vector3f(MajorLineColorValue, MajorLineColorValue, MajorLineColorValue); 
     }
     
     // Proximity fade parameters

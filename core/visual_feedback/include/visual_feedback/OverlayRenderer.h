@@ -76,10 +76,12 @@ private:
     } m_lineRenderer;
     
     bool m_frameActive;
+    bool m_initialized;
     
     // Initialization
     void initializeTextRenderer();
     void initializeLineRenderer();
+    void ensureInitialized();
     
     // Text rendering helpers
     void renderTextQuad(const std::string& text, const Math::Vector2f& position, 

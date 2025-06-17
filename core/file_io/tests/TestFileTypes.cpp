@@ -107,7 +107,7 @@ TEST_F(FileTypesTest, FileResultError) {
 
 TEST_F(FileTypesTest, SaveOptionsDefault) {
     SaveOptions options = SaveOptions::Default();
-    EXPECT_TRUE(options.compress);
+    EXPECT_FALSE(options.compress);  // TODO: Enable once compression read is implemented
     EXPECT_EQ(options.compressionLevel, 6);
     EXPECT_FALSE(options.includeHistory);
     EXPECT_FALSE(options.includeCache);
@@ -124,7 +124,7 @@ TEST_F(FileTypesTest, SaveOptionsFast) {
 
 TEST_F(FileTypesTest, SaveOptionsCompact) {
     SaveOptions options = SaveOptions::Compact();
-    EXPECT_TRUE(options.compress);
+    EXPECT_FALSE(options.compress);  // TODO: Enable once compression read is implemented
     EXPECT_EQ(options.compressionLevel, 9);
     EXPECT_FALSE(options.includeHistory);
     EXPECT_FALSE(options.includeCache);

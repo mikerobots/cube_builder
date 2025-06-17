@@ -13,34 +13,36 @@ namespace VoxelEditor {
 namespace VisualFeedback {
 
 OverlayRenderer::OverlayRenderer()
-    : m_frameActive(false) {
+    : m_frameActive(false)
+    , m_initialized(false) {
     
-    initializeTextRenderer();
-    initializeLineRenderer();
+    // Delay OpenGL resource creation until first use
 }
 
 OverlayRenderer::~OverlayRenderer() {
-    // Clean up GPU resources
-    if (m_textRenderer.fontTexture) {
-        glDeleteTextures(1, &m_textRenderer.fontTexture);
-    }
-    if (m_textRenderer.textShader) {
-        glDeleteProgram(m_textRenderer.textShader);
-    }
-    if (m_textRenderer.vertexArray) {
-        glDeleteVertexArrays(1, &m_textRenderer.vertexArray);
-    }
-    if (m_textRenderer.vertexBuffer) {
-        glDeleteBuffers(1, &m_textRenderer.vertexBuffer);
-    }
-    if (m_textRenderer.indexBuffer) {
-        glDeleteBuffers(1, &m_textRenderer.indexBuffer);
-    }
-    if (m_lineRenderer.vertexBuffer) {
-        glDeleteBuffers(1, &m_lineRenderer.vertexBuffer);
-    }
-    if (m_lineRenderer.lineShader) {
-        glDeleteProgram(m_lineRenderer.lineShader);
+    // Clean up GPU resources only if initialized
+    if (m_initialized) {
+        if (m_textRenderer.fontTexture) {
+            glDeleteTextures(1, &m_textRenderer.fontTexture);
+        }
+        if (m_textRenderer.textShader) {
+            glDeleteProgram(m_textRenderer.textShader);
+        }
+        if (m_textRenderer.vertexArray) {
+            glDeleteVertexArrays(1, &m_textRenderer.vertexArray);
+        }
+        if (m_textRenderer.vertexBuffer) {
+            glDeleteBuffers(1, &m_textRenderer.vertexBuffer);
+        }
+        if (m_textRenderer.indexBuffer) {
+            glDeleteBuffers(1, &m_textRenderer.indexBuffer);
+        }
+        if (m_lineRenderer.vertexBuffer) {
+            glDeleteBuffers(1, &m_lineRenderer.vertexBuffer);
+        }
+        if (m_lineRenderer.lineShader) {
+            glDeleteProgram(m_lineRenderer.lineShader);
+        }
     }
 }
 
@@ -220,6 +222,7 @@ void OverlayRenderer::renderRaycast(const Ray& ray, float length, const Renderin
 // }
 
 void OverlayRenderer::beginFrame(int screenWidth, int screenHeight) {
+    ensureInitialized();
     m_frameActive = true;
     m_textRenderer.screenWidth = screenWidth;
     m_textRenderer.screenHeight = screenHeight;
@@ -235,6 +238,14 @@ void OverlayRenderer::endFrame() {
     if (m_frameActive) {
         flushTextBatch();
         m_frameActive = false;
+    }
+}
+
+void OverlayRenderer::ensureInitialized() {
+    if (!m_initialized) {
+        initializeTextRenderer();
+        initializeLineRenderer();
+        m_initialized = true;
     }
 }
 

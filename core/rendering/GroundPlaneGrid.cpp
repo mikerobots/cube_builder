@@ -78,10 +78,9 @@ void GroundPlaneGrid::updateGridMesh(const Vector3f& workspaceSize) {
 
 void GroundPlaneGrid::update(float deltaTime) {
     // Smooth cursor position for less jittery transitions
-    const float smoothFactor = 10.0f; // Higher = less smooth but more responsive
     m_smoothedCursorPosition = m_smoothedCursorPosition + 
                                (m_cursorPosition - m_smoothedCursorPosition) * 
-                               std::min(smoothFactor * deltaTime, 1.0f);
+                               std::min(CursorSmoothingFactor * deltaTime, 1.0f);
     
     // Calculate target opacity based on smoothed cursor distance to grid
     // We only care about XZ distance since grid is at Y=0
@@ -134,7 +133,7 @@ void GroundPlaneGrid::render(const Matrix4f& viewMatrix,
     m_glRenderer->setUniform("opacity", UniformValue(m_currentOpacity));
     
     // Set line width for better visibility
-    glLineWidth(1.0f);
+    glLineWidth(DefaultLineWidth);
     
     // Enable blending for transparency
     m_glRenderer->setBlending(true, BlendMode::Alpha);
@@ -192,7 +191,7 @@ void GroundPlaneGrid::generateGridMesh(const Vector3f& workspaceSize) {
     // Generate lines parallel to X axis (varying Z)
     for (int i = -cellsZ; i <= cellsZ; ++i) {
         float z = i * cellSize;
-        bool isMajor = (i % 5) == 0; // Major line every 5 cells (160cm)
+        bool isMajor = (i % MajorLineInterval) == 0; // Major line every 5 cells (160cm)
         
         // Start and end points of line
         vertices.emplace_back(Vector3f(minX, 0.0f, z), isMajor);
@@ -202,7 +201,7 @@ void GroundPlaneGrid::generateGridMesh(const Vector3f& workspaceSize) {
     // Generate lines parallel to Z axis (varying X)
     for (int i = -cellsX; i <= cellsX; ++i) {
         float x = i * cellSize;
-        bool isMajor = (i % 5) == 0; // Major line every 5 cells (160cm)
+        bool isMajor = (i % MajorLineInterval) == 0; // Major line every 5 cells (160cm)
         
         // Start and end points of line
         vertices.emplace_back(Vector3f(x, 0.0f, minZ), isMajor);
@@ -320,7 +319,7 @@ void main() {
     // Apply line width effect for major lines (simulated with opacity)
     float finalOpacity = opacity;
     if (vIsMajorLine > 0.5) {
-        finalOpacity *= 1.2; // Make major lines slightly more visible
+        finalOpacity *= MajorLineVisibilityMultiplier; // Make major lines slightly more visible
         finalOpacity = min(finalOpacity, 1.0);
     }
     

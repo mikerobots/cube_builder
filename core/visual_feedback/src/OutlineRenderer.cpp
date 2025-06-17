@@ -19,21 +19,24 @@ OutlineRenderer::OutlineRenderer()
     , m_outlineShader(0)
     , m_patternScale(1.0f)
     , m_patternOffset(0.0f)
-    , m_animationTime(0.0f) {
+    , m_animationTime(0.0f)
+    , m_initialized(false) {
     
-    createBuffers();
+    // Delay OpenGL resource creation until first use
 }
 
 OutlineRenderer::~OutlineRenderer() {
-    // Clean up GPU resources
-    if (m_vertexBuffer) {
-        glDeleteBuffers(1, &m_vertexBuffer);
-    }
-    if (m_indexBuffer) {
-        glDeleteBuffers(1, &m_indexBuffer);
-    }
-    if (m_outlineShader) {
-        glDeleteProgram(m_outlineShader);
+    // Clean up GPU resources only if initialized
+    if (m_initialized) {
+        if (m_vertexBuffer) {
+            glDeleteBuffers(1, &m_vertexBuffer);
+        }
+        if (m_indexBuffer) {
+            glDeleteBuffers(1, &m_indexBuffer);
+        }
+        if (m_outlineShader) {
+            glDeleteProgram(m_outlineShader);
+        }
     }
 }
 
@@ -118,6 +121,8 @@ void OutlineRenderer::endBatch() {
 
 void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     if (m_batches.empty()) return;
+    
+    ensureInitialized();
     
     // Enable line rendering settings
     glEnable(GL_BLEND);
@@ -279,6 +284,13 @@ std::vector<Math::Vector3f> OutlineRenderer::generateGroupOutline(const std::vec
     auto edges = findExternalEdges(voxels);
     removeInternalEdges(edges);
     return edgesToLineList(edges);
+}
+
+void OutlineRenderer::ensureInitialized() {
+    if (!m_initialized) {
+        createBuffers();
+        m_initialized = true;
+    }
 }
 
 void OutlineRenderer::createBuffers() {

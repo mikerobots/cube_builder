@@ -63,6 +63,8 @@ public:
         if (!grid) return false;
         
         bool oldValue = grid->getVoxel(pos);
+        
+        
         bool success = grid->setVoxel(pos, value);
         
         if (success && oldValue != value) {

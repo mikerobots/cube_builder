@@ -41,7 +41,11 @@ GroupId GroupManager::createGroup(const std::string& name, const std::vector<Vox
 
 bool GroupManager::deleteGroup(GroupId id) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    
+    return deleteGroupInternal(id);
+}
+
+bool GroupManager::deleteGroupInternal(GroupId id) {
+    // Internal version that doesn't lock - mutex should already be held
     auto it = m_groups.find(id);
     if (it == m_groups.end()) {
         return false;
@@ -465,14 +469,18 @@ void GroupManager::forEachGroup(const GroupVisitor& visitor) const {
 
 void GroupManager::forEachGroupInHierarchy(GroupId rootId, const GroupVisitor& visitor) const {
     std::lock_guard<std::mutex> lock(m_mutex);
-    
+    forEachGroupInHierarchyInternal(rootId, visitor);
+}
+
+void GroupManager::forEachGroupInHierarchyInternal(GroupId rootId, const GroupVisitor& visitor) const {
+    // Internal version that doesn't lock - mutex should already be held
     auto it = m_groups.find(rootId);
     if (it != m_groups.end()) {
         visitor(*it->second);
         
         auto children = m_hierarchy->getChildren(rootId);
         for (GroupId childId : children) {
-            forEachGroupInHierarchy(childId, visitor);
+            forEachGroupInHierarchyInternal(childId, visitor);
         }
     }
 }
@@ -600,7 +608,7 @@ void GroupManager::cleanupEmptyGroups() {
     }
     
     for (GroupId id : toDelete) {
-        deleteGroup(id);
+        deleteGroupInternal(id);
     }
 }
 

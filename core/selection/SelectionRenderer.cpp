@@ -6,6 +6,8 @@
 namespace VoxelEditor {
 namespace Selection {
 
+using namespace Rendering;
+
 // Constants for rendering
 constexpr int CYLINDER_SEGMENTS = 16;
 constexpr float MARKER_SIZE_MULTIPLIER = 0.05f;

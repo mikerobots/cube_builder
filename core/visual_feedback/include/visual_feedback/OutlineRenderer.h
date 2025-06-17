@@ -66,6 +66,7 @@ private:
     float m_patternScale;
     float m_patternOffset;
     float m_animationTime;
+    bool m_initialized;
     
     // Line generation
     void addLineSegment(const Math::Vector3f& start, const Math::Vector3f& end, 
@@ -83,6 +84,7 @@ private:
     // Buffer management
     void createBuffers();
     void updateBuffers(const OutlineBatch& batch);
+    void ensureInitialized();
     
     // Pattern calculation
     float calculatePatternCoordinate(float distance, LinePattern pattern, 

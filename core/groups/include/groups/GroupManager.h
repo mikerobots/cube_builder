@@ -143,6 +143,10 @@ private:
     void updateVoxelMapping(GroupId groupId, const VoxelId& voxel, bool add);
     void removeFromVoxelMapping(GroupId groupId);
     
+    // Internal methods without locking
+    bool deleteGroupInternal(GroupId id);
+    void forEachGroupInHierarchyInternal(GroupId rootId, const GroupVisitor& visitor) const;
+    
     // Event dispatching
     void dispatchGroupCreated(GroupId groupId, const std::string& name, 
                              const std::vector<VoxelId>& voxels);

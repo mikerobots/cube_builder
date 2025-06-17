@@ -115,6 +115,20 @@ All 11 rendering requirements have been validated and verified:
 - [ ] Visual effect tutorials
 - [ ] Debugging guide
 
+## Test Failures (2025-01-14)
+- **GroundPlaneGridDynamicsTest**: All 8 tests SEGFAULT
+  - OpacityBasedOnDistance, SmoothOpacityTransitions, CursorPositionSmoothing, etc.
+  - Likely issue with cursor position handling or OpenGL context in tests
+  
+- **FileBasedShaderTest**: 5 tests failed
+  - FlatVoxelShader, BasicVoxelGL33Shader, EnhancedVoxelShader, GroundPlaneShader
+  - ShaderVersionCompatibility
+  - Shader files may be missing or incorrect paths in test environment
+
+- **Skipped Tests**: 39 tests skipped (mostly OpenGL context dependent)
+
+Total: 186 tests, 15 failed, 39 skipped
+
 ## Known Issues 🐛
 
 ### Critical Architecture Issues
