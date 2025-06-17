@@ -32,7 +32,7 @@ struct FileVersion {
     }
     
     bool isCompatible(const FileVersion& other) const {
-        return major == other.major && minor <= other.minor;
+        return major == other.major && minor == other.minor;
     }
     
     std::string toString() const;
@@ -48,7 +48,7 @@ struct ProjectMetadata {
     std::chrono::system_clock::time_point created;
     std::chrono::system_clock::time_point modified;
     FileVersion version;
-    std::string application = "VoxelEditor";
+    std::string application;
     std::string applicationVersion;
     std::unordered_map<std::string, std::string> customProperties;
     
@@ -97,6 +97,7 @@ struct SaveOptions {
         SaveOptions options;
         options.compress = false;
         options.validateBeforeSave = false;
+        options.createBackup = false;
         return options;
     }
     

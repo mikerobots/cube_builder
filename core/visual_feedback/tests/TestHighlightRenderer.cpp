@@ -2,9 +2,11 @@
 #include "../include/visual_feedback/HighlightRenderer.h"
 #include "../../selection/SelectionSet.h"
 
-using namespace VoxelEditor::VisualFeedback;
 using namespace VoxelEditor::Math;
 using namespace VoxelEditor::VoxelData;
+using VoxelEditor::VisualFeedback::HighlightRenderer;
+using VoxelEditor::VisualFeedback::Face;
+using VoxelEditor::VisualFeedback::HighlightStyle;
 
 class HighlightRendererTest : public ::testing::Test {
 protected:
@@ -23,7 +25,7 @@ TEST_F(HighlightRendererTest, Construction) {
 }
 
 TEST_F(HighlightRendererTest, FaceHighlight) {
-    Face face(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    Face face(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     HighlightStyle style = HighlightStyle::Face();
     
     // Should not crash when rendering face
@@ -60,7 +62,7 @@ TEST_F(HighlightRendererTest, MultiSelection) {
 
 TEST_F(HighlightRendererTest, ClearAll) {
     // Add some highlights
-    Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     renderer->renderFaceHighlight(face, HighlightStyle::Face());
     renderer->renderVoxelHighlight(Vector3i(1, 1, 1), VoxelResolution::Size_32cm, HighlightStyle::Preview());
     
@@ -103,7 +105,7 @@ TEST_F(HighlightRendererTest, MultipleHighlights) {
     
     // Add multiple face highlights
     for (int i = 0; i < 6; ++i) {
-        Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, static_cast<FaceDirection>(i));
+        Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, static_cast<VoxelEditor::VisualFeedback::FaceDirection>(i));
         renderer->renderFaceHighlight(face, HighlightStyle::Face());
     }
     

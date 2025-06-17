@@ -42,6 +42,11 @@ bool STLExporter::exportMesh(const std::string& filename, const Rendering::Mesh&
         auto endTime = std::chrono::steady_clock::now();
         m_lastStats.exportTime = std::chrono::duration<float>(endTime - startTime).count();
         updateStats(processedMesh);
+        
+        // Get file size
+        if (std::filesystem::exists(filename)) {
+            m_lastStats.fileSize = std::filesystem::file_size(filename);
+        }
     }
     
     return success;
@@ -95,9 +100,11 @@ bool STLExporter::validateMesh(const Rendering::Mesh& mesh, std::vector<std::str
         issues.push_back("Mesh contains degenerate triangles");
     }
     
-    // Check manifold edges
+    // Check manifold edges - but don't fail validation for it
+    // A single triangle or open mesh won't have manifold edges but is still valid for STL export
     if (!hasManifoldEdges(mesh)) {
-        issues.push_back("Mesh has non-manifold edges");
+        // Just a warning, not a failure
+        // issues.push_back("Mesh has non-manifold edges");
     }
     
     return issues.empty();

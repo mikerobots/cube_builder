@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <thread>
 #include "../include/groups/GroupTypes.h"
 
 using namespace VoxelEditor::Groups;
@@ -77,7 +78,7 @@ TEST_F(GroupTypesTest, GroupInfoConstruction) {
     GroupId id = 123;
     GroupMetadata metadata;
     metadata.name = "Test Group";
-    metadata.color = Rendering::Color::Red();
+    metadata.color = VoxelEditor::Rendering::Color::Red();
     metadata.visible = false;
     metadata.locked = true;
     metadata.opacity = 0.5f;
@@ -86,7 +87,7 @@ TEST_F(GroupTypesTest, GroupInfoConstruction) {
     
     EXPECT_EQ(info.id, id);
     EXPECT_EQ(info.name, "Test Group");
-    EXPECT_EQ(info.color, Rendering::Color::Red());
+    EXPECT_EQ(info.color, VoxelEditor::Rendering::Color::Red());
     EXPECT_FALSE(info.visible);
     EXPECT_TRUE(info.locked);
     EXPECT_FLOAT_EQ(info.opacity, 0.5f);

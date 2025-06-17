@@ -33,9 +33,12 @@ public:
     void renderWorkspaceIndicator(const Math::Vector3f& size, const Math::Vector2f& position);
     void renderCameraInfo(const Camera::Camera& camera, const Math::Vector2f& position);
     
-    // Grid overlays
+    // Grid overlays - Enhanced for requirements
     void renderGrid(VoxelData::VoxelResolution resolution, const Math::Vector3f& center, 
                    float extent, const Camera::Camera& camera);
+    void renderGroundPlaneGrid(const Math::Vector3f& center, float extent, 
+                             const Math::Vector3f& cursorPos, bool enableDynamicOpacity,
+                             const Camera::Camera& camera);
     void renderAxes(const Math::Vector3f& origin, float length, const Camera::Camera& camera);
     void renderCompass(const Camera::Camera& camera, const Math::Vector2f& position, float size);
     
@@ -92,6 +95,8 @@ private:
     // Grid generation
     void generateGridLines(VoxelData::VoxelResolution resolution, 
                           const Math::Vector3f& center, float extent);
+    void generateGroundPlaneGridLines(const Math::Vector3f& center, float extent, 
+                                    const Math::Vector3f& cursorPos, bool enableDynamicOpacity);
     
     // Axis generation
     void generateAxisLines(const Math::Vector3f& origin, float length);

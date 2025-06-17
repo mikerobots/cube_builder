@@ -172,27 +172,29 @@ TEST_F(SelectionManagerTest, UndoRedo) {
     EXPECT_FALSE(manager->canUndo());
     EXPECT_FALSE(manager->canRedo());
     
-    // Make first selection
+    // Make first selection and save to history
     manager->selectVoxel(voxel1);
     manager->pushSelectionToHistory();
     
-    // Make second selection
+    // Replace with second selection
+    manager->selectNone();
     manager->selectVoxel(voxel2);
-    manager->pushSelectionToHistory();
     
     EXPECT_TRUE(manager->canUndo());
     EXPECT_FALSE(manager->canRedo());
+    EXPECT_TRUE(manager->isSelected(voxel2));
+    EXPECT_FALSE(manager->isSelected(voxel1));
     
-    // Undo
+    // Undo - should restore to previous state (only voxel1 selected)
     manager->undoSelection();
     EXPECT_TRUE(manager->isSelected(voxel1));
     EXPECT_FALSE(manager->isSelected(voxel2));
-    EXPECT_TRUE(manager->canUndo());
+    EXPECT_FALSE(manager->canUndo()); // Should be at beginning of history
     EXPECT_TRUE(manager->canRedo());
     
-    // Redo
+    // Redo - should restore to only voxel2 selected
     manager->redoSelection();
-    EXPECT_TRUE(manager->isSelected(voxel1));
+    EXPECT_FALSE(manager->isSelected(voxel1));
     EXPECT_TRUE(manager->isSelected(voxel2));
     EXPECT_TRUE(manager->canUndo());
     EXPECT_FALSE(manager->canRedo());

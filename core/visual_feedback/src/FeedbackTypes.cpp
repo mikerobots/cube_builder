@@ -10,7 +10,29 @@ Face::Face(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution res, FaceD
     : m_voxelPosition(voxelPos)
     , m_resolution(res)
     , m_direction(dir)
-    , m_valid(true) {
+    , m_valid(true)
+    , m_isGroundPlane(false)
+    , m_groundHitPoint(0, 0, 0) {
+}
+
+// Enhancement: Create a ground plane face
+Face Face::GroundPlane(const Math::Vector3f& hitPoint) {
+    Face face;
+    face.m_valid = true;
+    face.m_isGroundPlane = true;
+    face.m_groundHitPoint = hitPoint;
+    face.m_direction = FaceDirection::PositiveY; // Ground plane faces up
+    face.m_resolution = VoxelData::VoxelResolution::Size_1cm; // Default resolution
+    
+    // Convert hit point to nearest grid position for voxel position
+    // This helps with face ID generation
+    face.m_voxelPosition = Math::Vector3i(
+        static_cast<int>(std::round(hitPoint.x / 0.01f)),
+        0,
+        static_cast<int>(std::round(hitPoint.z / 0.01f))
+    );
+    
+    return face;
 }
 
 FaceId Face::getId() const {
@@ -29,6 +51,11 @@ float Face::getVoxelSize() const {
 }
 
 Math::Vector3f Face::getWorldPosition() const {
+    // Enhancement: Handle ground plane
+    if (m_isGroundPlane) {
+        return m_groundHitPoint;
+    }
+    
     float voxelSize = getVoxelSize();
     Math::Vector3f basePos = Math::Vector3f(m_voxelPosition.x, m_voxelPosition.y, m_voxelPosition.z) * voxelSize;
     
@@ -114,6 +141,19 @@ float Face::getArea() const {
 }
 
 bool Face::operator==(const Face& other) const {
+    // Enhancement: Handle ground plane comparison
+    if (m_isGroundPlane != other.m_isGroundPlane) {
+        return false;
+    }
+    
+    if (m_isGroundPlane) {
+        // For ground plane, compare hit points
+        const float epsilon = 0.001f;
+        return std::abs(m_groundHitPoint.x - other.m_groundHitPoint.x) < epsilon &&
+               std::abs(m_groundHitPoint.y - other.m_groundHitPoint.y) < epsilon &&
+               std::abs(m_groundHitPoint.z - other.m_groundHitPoint.z) < epsilon;
+    }
+    
     return m_voxelPosition == other.m_voxelPosition &&
            m_resolution == other.m_resolution &&
            m_direction == other.m_direction &&
@@ -222,6 +262,18 @@ OutlineStyle OutlineStyle::VoxelPreview() {
     style.depthTest = false;
     style.opacity = 0.8f;
     style.animated = false;
+    return style;
+}
+
+OutlineStyle OutlineStyle::VoxelPreviewInvalid() {
+    OutlineStyle style;
+    style.color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red
+    style.lineWidth = 3.0f;
+    style.pattern = LinePattern::Solid;
+    style.depthTest = false;
+    style.opacity = 0.8f;
+    style.animated = true; // Pulse to indicate invalid
+    style.animationSpeed = 2.0f;
     return style;
 }
 

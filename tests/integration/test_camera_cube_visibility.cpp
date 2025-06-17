@@ -220,13 +220,17 @@ TEST_F(CameraCubeVisibilityTest, VoxelBehindCamera) {
     // Place voxel at position that will be behind camera
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
     voxelData->setActiveResolution(resolution);
-    voxelData->setVoxel(Math::Vector3i(10, 10, 10), resolution, true);
+    
+    // Camera at (5, 5, 5) looking at (0, 0, 0)
+    // So anything with higher coordinates than camera position is behind
+    // Use grid position (80, 80, 80) which gives world position (6.44, 6.44, 6.44)
+    voxelData->setVoxel(Math::Vector3i(80, 80, 80), resolution, true);
     
     // Set camera looking away from voxel
     camera->setPosition(Math::Vector3f(5.0f, 5.0f, 5.0f));
     camera->setTarget(Math::Vector3f(0.0f, 0.0f, 0.0f));
     
-    Math::Vector3f voxelPos = getVoxelWorldPos(10, 10, 10, resolution);
+    Math::Vector3f voxelPos = getVoxelWorldPos(80, 80, 80, resolution);
     float voxelSize = VoxelData::getVoxelSize(resolution);
     
     printDebugInfo("Voxel Behind Camera", voxelPos, voxelSize);

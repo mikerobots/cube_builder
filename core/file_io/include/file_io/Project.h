@@ -72,11 +72,11 @@ struct Project {
     size_t getGroupCount() const;
     Math::BoundingBox getContentBounds() const;
     
-private:
-    mutable bool m_hasUnsavedChanges = false;
-    
     // Initialize default components
     void initializeDefaults();
+    
+private:
+    mutable bool m_hasUnsavedChanges = false;
 };
 
 // Project factory for creating new projects

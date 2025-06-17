@@ -6,6 +6,8 @@ set(VOXEL_DATA_TEST_SOURCES
     test_VoxelGrid.cpp
     test_WorkspaceManager.cpp
     test_VoxelDataManager.cpp
+    test_VoxelData_requirements.cpp
+    test_collision_simple.cpp
 )
 
 add_executable(VoxelEditor_VoxelData_Tests ${VOXEL_DATA_TEST_SOURCES})

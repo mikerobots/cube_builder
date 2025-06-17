@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <thread>
 #include "../include/groups/VoxelGroup.h"
 
 using namespace VoxelEditor::Groups;
@@ -33,7 +34,7 @@ TEST_F(VoxelGroupTest, NameManagement) {
 }
 
 TEST_F(VoxelGroupTest, ColorManagement) {
-    Rendering::Color newColor = Rendering::Color::Blue();
+    VoxelEditor::Rendering::Color newColor = VoxelEditor::Rendering::Color::Blue();
     group->setColor(newColor);
     
     EXPECT_EQ(group->getColor(), newColor);
@@ -170,7 +171,7 @@ TEST_F(VoxelGroupTest, PivotManagement) {
 TEST_F(VoxelGroupTest, GroupInfo) {
     // Set up group with some properties
     group->setName("Info Test Group");
-    group->setColor(Rendering::Color::Green());
+    group->setColor(VoxelEditor::Rendering::Color::Green());
     group->setVisible(false);
     group->setLocked(true);
     group->setOpacity(0.7f);
@@ -182,7 +183,7 @@ TEST_F(VoxelGroupTest, GroupInfo) {
     
     EXPECT_EQ(info.id, groupId);
     EXPECT_EQ(info.name, "Info Test Group");
-    EXPECT_EQ(info.color, Rendering::Color::Green());
+    EXPECT_EQ(info.color, VoxelEditor::Rendering::Color::Green());
     EXPECT_FALSE(info.visible);
     EXPECT_TRUE(info.locked);
     EXPECT_FLOAT_EQ(info.opacity, 0.7f);
@@ -208,7 +209,7 @@ TEST_F(VoxelGroupTest, Translation) {
 TEST_F(VoxelGroupTest, MetadataManagement) {
     GroupMetadata metadata;
     metadata.name = "Metadata Test";
-    metadata.color = Rendering::Color::Red();
+    metadata.color = VoxelEditor::Rendering::Color::Red();
     metadata.visible = false;
     metadata.locked = true;
     metadata.opacity = 0.3f;
@@ -218,7 +219,7 @@ TEST_F(VoxelGroupTest, MetadataManagement) {
     
     const auto& retrievedMetadata = group->getMetadata();
     EXPECT_EQ(retrievedMetadata.name, "Metadata Test");
-    EXPECT_EQ(retrievedMetadata.color, Rendering::Color::Red());
+    EXPECT_EQ(retrievedMetadata.color, VoxelEditor::Rendering::Color::Red());
     EXPECT_FALSE(retrievedMetadata.visible);
     EXPECT_TRUE(retrievedMetadata.locked);
     EXPECT_FLOAT_EQ(retrievedMetadata.opacity, 0.3f);
@@ -238,9 +239,17 @@ TEST_F(VoxelGroupTest, BoundsInvalidation) {
     
     auto bounds2 = group->getBoundingBox();
     
-    // Bounds should be different (larger)
-    EXPECT_NE(bounds1.min, bounds2.min);
-    EXPECT_NE(bounds1.max, bounds2.max);
+    // With a 32cm voxel size (0.32m):
+    // First voxel at (0,0,0) should create bounds from (0,0,0) to (0.32,0.32,0.32)
+    // Second voxel at (5,5,5) should create bounds from (1.6,1.6,1.6) to (1.92,1.92,1.92)
+    // Combined bounds should be from (0,0,0) to (1.92,1.92,1.92)
+    
+    // The bounds should expand when we add the second voxel
+    EXPECT_EQ(bounds1.min, Vector3f(0.0f, 0.0f, 0.0f));
+    EXPECT_EQ(bounds1.max, Vector3f(0.32f, 0.32f, 0.32f));
+    
+    EXPECT_EQ(bounds2.min, Vector3f(0.0f, 0.0f, 0.0f)); // min stays the same
+    EXPECT_EQ(bounds2.max, Vector3f(1.92f, 1.92f, 1.92f)); // max should expand
 }
 
 TEST_F(VoxelGroupTest, DifferentResolutions) {

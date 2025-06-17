@@ -1,0 +1,60 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Camera set to view workspace center at (2.5, 2.5, 2.5)
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 2
+[2025-06-08 16:03:26.542] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-08 16:03:26.542] [INFO ] Found shader directory at: ../../core/rendering/shaders/
+[2025-06-08 16:03:26.542] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-08 16:03:26.546] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-08 16:03:26.546] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-08 16:03:26.548] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-08 16:03:26.548] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-08 16:03:26.550] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-08 16:03:26.550] [INFO ] Successfully loaded shaders from files
+[2025-06-08 16:03:26.550] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-08 16:03:26.550] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-08 16:03:26.550] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-08 16:03:26.550] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-08 16:03:26.550] [INFO ] Ground plane grid renderer initialized
+[2025-06-08 16:03:26.550] [INFO ] RenderEngine initialized successfully
+[2025-06-08 16:03:26.550] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-08 16:03:26.552] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+Creating scene...
+Scene created successfully!
+Initialization complete!
+Type 'help' for available commands.
+
+2025-06-08 16:03:26.567 voxel-cli[66250:7278105] +[IMKClient subclass]: chose IMKClient_Legacy
+2025-06-08 16:03:26.567 voxel-cli[66250:7278105] +[IMKInputSession subclass]: chose IMKInputSession_Legacy
+> Workspace resized to 5.000000x5.000000x5.000000 meters
+> Resolution set to 32cm
+> Invalid X coordinate. Must include units (e.g., 100cm or 1m)
+> Invalid X coordinate. Must include units (e.g., 100cm or 1m)
+> Invalid X coordinate. Must include units (e.g., 100cm or 1m)
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 32cm
+Workspace: 5x5x5 meters
+Voxels: 0
+Selected: 0 voxels
+Groups: 0
+Memory: 0.000541687 MB
+
+> [2025-06-08 16:03:26.770] [INFO ] Screenshot saved as output/rendering/new_features/ground_constraint.ppm.ppm (PPM format)
+Screenshot saved: output/rendering/new_features/ground_constraint.ppm.png
+> Goodbye!
+
+Shutting down...
+[2025-06-08 16:03:26.914] [INFO ] RenderEngine shut down

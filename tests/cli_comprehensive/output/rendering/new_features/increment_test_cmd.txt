@@ -1,0 +1,11 @@
+workspace 5 5 5
+view front
+resolution 8cm
+place 100 0 100
+place 101 0 101
+place 102 0 102
+place 103 0 103
+zoom 0.5
+screenshot output/rendering/new_features/increment_placement.ppm
+stats
+quit

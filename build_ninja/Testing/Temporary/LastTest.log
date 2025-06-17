@@ -1,3 +1,58 @@
-Start testing: Jun 03 19:27 EDT
+Start testing: Jun 08 17:39 EDT
 ----------------------------------------------------------
-End testing: Jun 03 19:27 EDT
+225/949 Testing: VoxelDataManagerTest.RedundantOperations
+225/949 Test: VoxelDataManagerTest.RedundantOperations
+Command: "/Users/michaelhalloran/cube_edit/build_ninja/bin/VoxelEditor_VoxelData_Tests" "--gtest_filter=VoxelDataManagerTest.RedundantOperations" "--gtest_also_run_disabled_tests"
+Directory: /Users/michaelhalloran/cube_edit/build_ninja/core/voxel_data/tests
+"VoxelDataManagerTest.RedundantOperations" start time: Jun 08 17:39 EDT
+Output:
+----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = VoxelDataManagerTest.RedundantOperations
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from VoxelDataManagerTest
+[ RUN      ] VoxelDataManagerTest.RedundantOperations
+/Users/michaelhalloran/cube_edit/core/voxel_data/tests/test_VoxelDataManager.cpp:493: Failure
+Expected equality of these values:
+  voxelChangedEventCount
+    Which is: 0
+  1
+/Users/michaelhalloran/cube_edit/core/voxel_data/tests/test_VoxelDataManager.cpp:495: Failure
+Value of: manager->setVoxelAtWorldPos(worldPos, resolution, true)
+  Actual: false
+Expected: true
+/Users/michaelhalloran/cube_edit/core/voxel_data/tests/test_VoxelDataManager.cpp:497: Failure
+Expected equality of these values:
+  voxelChangedEventCount
+    Which is: 0
+  1
+/Users/michaelhalloran/cube_edit/core/voxel_data/tests/test_VoxelDataManager.cpp:503: Failure
+Expected equality of these values:
+  voxelChangedEventCount
+    Which is: 0
+  2
+/Users/michaelhalloran/cube_edit/core/voxel_data/tests/test_VoxelDataManager.cpp:507: Failure
+Expected equality of these values:
+  voxelChangedEventCount
+    Which is: 0
+  2
+[  FAILED  ] VoxelDataManagerTest.RedundantOperations (0 ms)
+[----------] 1 test from VoxelDataManagerTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] VoxelDataManagerTest.RedundantOperations
+
+ 1 FAILED TEST
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Failed.
+"VoxelDataManagerTest.RedundantOperations" end time: Jun 08 17:39 EDT
+"VoxelDataManagerTest.RedundantOperations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 08 17:39 EDT

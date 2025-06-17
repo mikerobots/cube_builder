@@ -1,0 +1,7 @@
+workspace 5 5 5
+resolution 32cm
+place 100 -10 100
+place 100 0 100
+place 100 10 100
+status
+quit

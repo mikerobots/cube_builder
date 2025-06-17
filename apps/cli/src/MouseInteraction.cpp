@@ -19,10 +19,12 @@
 #include "voxel_data/VoxelDataManager.h"
 #include "camera/CameraController.h"
 #include "input/InputManager.h"
+#include "input/PlacementValidation.h"
 #include "visual_feedback/FeedbackRenderer.h"
 #include "visual_feedback/FaceDetector.h"
 #include "undo_redo/HistoryManager.h"
 #include "undo_redo/VoxelCommands.h"
+#include "undo_redo/PlacementCommands.h"
 #include "math/Ray.h"
 #include "math/BoundingBox.h"
 #include "logging/Logger.h"
@@ -43,8 +45,9 @@ void MouseInteraction::initialize() {
     m_historyManager = m_app->getHistoryManager();
     m_renderWindow = m_app->getRenderWindow();
     
-    // Set up mouse callbacks
-    m_renderWindow->setMouseCallback([this](const MouseEvent& event) {
+    // Set up mouse callbacks (only if render window exists - not in headless mode)
+    if (m_renderWindow) {
+        m_renderWindow->setMouseCallback([this](const MouseEvent& event) {
         // Always update position for hover
         onMouseMove(event.x, event.y);
         
@@ -71,6 +74,7 @@ void MouseInteraction::initialize() {
             }
         }
     });
+    }
 }
 
 void MouseInteraction::update() {
@@ -78,6 +82,18 @@ void MouseInteraction::update() {
 }
 
 void MouseInteraction::onMouseMove(float x, float y) {
+    // Check if mouse position is within window bounds
+    if (x < 0 || y < 0 || x >= m_renderWindow->getWidth() || y >= m_renderWindow->getHeight()) {
+        // Mouse is outside window - clear hover state
+        if (m_hasHoverFace) {
+            m_hasHoverFace = false;
+            m_feedbackRenderer->clearFaceHighlight();
+            m_feedbackRenderer->clearVoxelPreview();
+            Logging::Logger::getInstance().debug("MouseInteraction", "Mouse left window bounds - clearing hover state");
+        }
+        return;
+    }
+    
     glm::vec2 oldPos = m_mousePos;
     m_mousePos = glm::vec2(x, y);
     
@@ -390,8 +406,8 @@ bool MouseInteraction::performRaycast(const Math::Ray& ray, VisualFeedback::Face
             "Raycasting against grid with %zu voxels", voxelCount);
     }
     
-    // Cast ray and find nearest face
-    hitFace = detector.detectFace(vfRay, *grid, m_voxelManager->getActiveResolution());
+    // Cast ray and find nearest face or ground plane
+    hitFace = detector.detectFaceOrGround(vfRay, *grid, m_voxelManager->getActiveResolution());
     
     static int hitCheckCount = 0;
     if (hitCheckCount++ % 60 == 0) {
@@ -406,27 +422,102 @@ bool MouseInteraction::performRaycast(const Math::Ray& ray, VisualFeedback::Face
 }
 
 glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& face) const {
-    // Get the voxel position of the face we clicked on
-    Math::Vector3i clickedVoxel = face.getVoxelPosition();
-    Math::Vector3f normal = face.getNormal();
+    using namespace Input;
+    using namespace VoxelData;
     
-    Logging::Logger::getInstance().debugfc("MouseInteraction",
-        "Clicked voxel: (%d,%d,%d) face normal: (%.2f,%.2f,%.2f)",
-        clickedVoxel.x, clickedVoxel.y, clickedVoxel.z, normal.x, normal.y, normal.z);
+    // Check Shift key state for snapping override
+    bool shiftPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                        glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
     
-    // Calculate new voxel position by adding the normal direction
-    Math::Vector3i newPos = clickedVoxel;
-    if (normal.x > 0.5f) newPos.x += 1;
-    else if (normal.x < -0.5f) newPos.x -= 1;
-    else if (normal.y > 0.5f) newPos.y += 1;
-    else if (normal.y < -0.5f) newPos.y -= 1;
-    else if (normal.z > 0.5f) newPos.z += 1;
-    else if (normal.z < -0.5f) newPos.z -= 1;
+    VoxelResolution resolution = m_voxelManager->getActiveResolution();
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceManager()->getSize();
     
-    Logging::Logger::getInstance().debugfc("MouseInteraction",
-        "Placement grid pos: (%d,%d,%d)", newPos.x, newPos.y, newPos.z);
+    // Get the hit point on the face for smart snapping
+    Math::Vector3f hitPoint;
+    if (face.isGroundPlane()) {
+        hitPoint = face.getGroundPlaneHitPoint();
+    } else {
+        // For voxel faces, calculate hit point based on face center
+        Math::Vector3i voxelPos = face.getVoxelPosition();
+        Math::Vector3f voxelWorldPos = PlacementUtils::incrementGridToWorld(voxelPos);
+        float voxelSize = getVoxelSize(resolution);
+        
+        // Get face center position
+        hitPoint = voxelWorldPos + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+        
+        // Offset hit point to the face surface
+        Math::Vector3f normal = face.getNormal();
+        hitPoint += normal * (voxelSize * 0.5f);
+    }
     
-    return glm::ivec3(newPos.x, newPos.y, newPos.z);
+    Math::Vector3i snappedPos;
+    
+    // Convert VisualFeedback::FaceDirection to VoxelData::FaceDirection for later use
+    VoxelData::FaceDirection surfaceFaceDir = VoxelData::FaceDirection::PosY; // default
+    if (!face.isGroundPlane()) {
+        VisualFeedback::FaceDirection vfDir = face.getDirection();
+        switch (vfDir) {
+            case VisualFeedback::FaceDirection::PositiveX: surfaceFaceDir = VoxelData::FaceDirection::PosX; break;
+            case VisualFeedback::FaceDirection::NegativeX: surfaceFaceDir = VoxelData::FaceDirection::NegX; break;
+            case VisualFeedback::FaceDirection::PositiveY: surfaceFaceDir = VoxelData::FaceDirection::PosY; break;
+            case VisualFeedback::FaceDirection::NegativeY: surfaceFaceDir = VoxelData::FaceDirection::NegY; break;
+            case VisualFeedback::FaceDirection::PositiveZ: surfaceFaceDir = VoxelData::FaceDirection::PosZ; break;
+            case VisualFeedback::FaceDirection::NegativeZ: surfaceFaceDir = VoxelData::FaceDirection::NegZ; break;
+        }
+    }
+    
+    if (face.isGroundPlane()) {
+        // For ground plane, use smart context snapping (no specific surface face)
+        Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
+            hitPoint, resolution, shiftPressed, workspaceSize, *m_voxelManager, nullptr);
+        snappedPos = context.snappedGridPos;
+        
+        Logging::Logger::getInstance().debugfc("MouseInteraction",
+            "Ground plane placement: hit=%.2f,%.2f,%.2f snapped=%d,%d,%d shift=%d",
+            hitPoint.x, hitPoint.y, hitPoint.z, snappedPos.x, snappedPos.y, snappedPos.z, shiftPressed);
+    } else {
+        // For voxel faces, use surface face grid snapping
+        Math::Vector3i surfaceFaceVoxelPos = face.getVoxelPosition();
+        VoxelResolution surfaceFaceVoxelRes = face.getResolution();
+        
+        Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
+            hitPoint, resolution, shiftPressed, workspaceSize, *m_voxelManager,
+            &surfaceFaceVoxelPos, surfaceFaceVoxelRes, surfaceFaceDir);
+        snappedPos = context.snappedGridPos;
+        
+        Logging::Logger::getInstance().debugfc("MouseInteraction",
+            "Surface face placement: voxel=%d,%d,%d dir=%d hit=%.2f,%.2f,%.2f snapped=%d,%d,%d shift=%d",
+            surfaceFaceVoxelPos.x, surfaceFaceVoxelPos.y, surfaceFaceVoxelPos.z, static_cast<int>(surfaceFaceDir),
+            hitPoint.x, hitPoint.y, hitPoint.z, snappedPos.x, snappedPos.y, snappedPos.z, shiftPressed);
+    }
+    
+    // Final validation - ensure position is valid
+    if (!m_voxelManager->isValidPosition(snappedPos, resolution)) {
+        // Only log as warning if this is an actual click, not just hover preview
+        static int warningCount = 0;
+        if (warningCount++ < 5) { // Limit logging to avoid spam
+            Logging::Logger::getInstance().debugfc("MouseInteraction",
+                "Smart snapping resulted in invalid position %d,%d,%d, using fallback",
+                snappedPos.x, snappedPos.y, snappedPos.z);
+        }
+        
+        // Fallback: use simple adjacent position calculation
+        if (face.isGroundPlane()) {
+            // For ground plane, just use the snapped position with Y=0
+            snappedPos.y = 0;
+            // Clamp to workspace bounds
+            Math::Vector3f halfSize = workspaceSize * 0.5f;
+            snappedPos.x = std::max(0, std::min(snappedPos.x, static_cast<int>(workspaceSize.x / getVoxelSize(resolution)) - 1));
+            snappedPos.z = std::max(0, std::min(snappedPos.z, static_cast<int>(workspaceSize.z / getVoxelSize(resolution)) - 1));
+        } else {
+            Math::Vector3i clickedVoxel = face.getVoxelPosition();
+            Math::Vector3i newPos = m_voxelManager->getAdjacentPosition(
+                clickedVoxel, surfaceFaceDir, face.getResolution(), resolution);
+            snappedPos = newPos;
+        }
+    }
+    
+    return glm::ivec3(snappedPos.x, snappedPos.y, snappedPos.z);
 }
 
 void MouseInteraction::updateHoverState() {
@@ -466,10 +557,20 @@ void MouseInteraction::updateHoverState() {
         
         // Update visual feedback
         m_feedbackRenderer->renderFaceHighlight(m_hoverFace);
-        m_feedbackRenderer->renderVoxelPreview(
-            Math::Vector3i(m_previewPos.x, m_previewPos.y, m_previewPos.z), 
-            m_voxelManager->getActiveResolution()
-        );
+        
+        // Validate preview position before rendering
+        VoxelData::VoxelResolution currentResolution = m_voxelManager->getActiveResolution();
+        Math::Vector3i previewPosVec(m_previewPos.x, m_previewPos.y, m_previewPos.z);
+        
+        // Check if preview position is valid for current resolution
+        bool validPosition = m_voxelManager->isValidPosition(previewPosVec, currentResolution) &&
+                           m_voxelManager->isValidIncrementPosition(previewPosVec) &&
+                           !m_voxelManager->wouldOverlap(previewPosVec, currentResolution);
+        
+        // Render preview with appropriate color based on validation
+        Rendering::Color previewColor = validPosition ? 
+            Rendering::Color::Green() : Rendering::Color::Red();
+        m_feedbackRenderer->renderVoxelPreview(previewPosVec, currentResolution, previewColor);
     } else {
         if (m_hasHoverFace) {
             Logging::Logger::getInstance().debug("MouseInteraction", "Stopped hovering over face");
@@ -489,13 +590,17 @@ void MouseInteraction::placeVoxel() {
     Logging::Logger::getInstance().debugfc("MouseInteraction",
         "Placing voxel at position (%d, %d, %d)", m_previewPos.x, m_previewPos.y, m_previewPos.z);
     
-    // Create place command (VoxelEditCommand with value = true)
-    auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
+    // Use PlacementCommandFactory to create placement command with validation
+    auto cmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
         m_voxelManager,
         Math::Vector3i(m_previewPos.x, m_previewPos.y, m_previewPos.z),
-        m_voxelManager->getActiveResolution(),
-        true  // Place voxel
+        m_voxelManager->getActiveResolution()
     );
+    
+    if (!cmd) {
+        Logging::Logger::getInstance().warning("MouseInteraction", "Failed to create placement command - validation failed");
+        return;
+    }
     
     // Execute through history manager
     bool success = m_historyManager->executeCommand(std::move(cmd));
@@ -516,13 +621,17 @@ void MouseInteraction::removeVoxel() {
     // Get the voxel position from the face
     Math::Vector3i voxelPos = m_hoverFace.getVoxelPosition();
     
-    // Remove the voxel we're pointing at (VoxelEditCommand with value = false)
-    auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
+    // Use PlacementCommandFactory to create removal command with validation
+    auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
         m_voxelManager,
         voxelPos,
-        m_voxelManager->getActiveResolution(),
-        false  // Remove voxel
+        m_voxelManager->getActiveResolution()
     );
+    
+    if (!cmd) {
+        Logging::Logger::getInstance().warning("MouseInteraction", "Failed to create removal command - validation failed");
+        return;
+    }
     
     // Execute through history manager
     m_historyManager->executeCommand(std::move(cmd));

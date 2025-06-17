@@ -79,9 +79,9 @@ public:
         // Convert screen coordinates to normalized device coordinates
         Math::Vector2f ndc = screenToNormalized(screenPos);
         
-        // Create ray in clip space
-        Math::Vector3f rayClipNear(ndc.x, ndc.y, -1.0f);
-        Math::Vector3f rayClipFar(ndc.x, ndc.y, 1.0f);
+        // Create ray in clip space (homogeneous coordinates)
+        Math::Vector4f rayClipNear(ndc.x, ndc.y, -1.0f, 1.0f);
+        Math::Vector4f rayClipFar(ndc.x, ndc.y, 1.0f, 1.0f);
         
         // Transform to world space
         Math::Matrix4f viewProj = projectionMatrix * viewMatrix;
@@ -95,8 +95,17 @@ public:
         
         Math::Matrix4f invViewProj = viewProj.inverse();
         
-        Math::Vector3f rayWorldNear = invViewProj.transformPoint(rayClipNear);
-        Math::Vector3f rayWorldFar = invViewProj.transformPoint(rayClipFar);
+        // Transform to world space (with proper perspective divide)
+        Math::Vector4f worldNear4 = invViewProj * rayClipNear;
+        Math::Vector4f worldFar4 = invViewProj * rayClipFar;
+        
+        // Perspective divide
+        Math::Vector3f rayWorldNear(worldNear4.x / worldNear4.w, 
+                                   worldNear4.y / worldNear4.w, 
+                                   worldNear4.z / worldNear4.w);
+        Math::Vector3f rayWorldFar(worldFar4.x / worldFar4.w, 
+                                  worldFar4.y / worldFar4.w, 
+                                  worldFar4.z / worldFar4.w);
         
         Math::Vector3f rayDirection = (rayWorldFar - rayWorldNear).normalized();
         
@@ -108,14 +117,16 @@ public:
                                 const Math::Matrix4f& viewMatrix,
                                 const Math::Matrix4f& projectionMatrix) const {
         
-        // Transform to clip space
+        // Transform to clip space (homogeneous coordinates)
         Math::Matrix4f viewProj = projectionMatrix * viewMatrix;
-        Math::Vector3f clipPos = viewProj.transformPoint(worldPos);
+        Math::Vector4f worldPos4(worldPos.x, worldPos.y, worldPos.z, 1.0f);
+        Math::Vector4f clipPos = viewProj * worldPos4;
         
         // Perspective divide to get NDC
-        if (clipPos.z != 0.0f) {
-            clipPos.x /= clipPos.z;
-            clipPos.y /= clipPos.z;
+        if (std::abs(clipPos.w) > 1e-6f) {
+            clipPos.x /= clipPos.w;
+            clipPos.y /= clipPos.w;
+            clipPos.z /= clipPos.w;
         }
         
         // Convert NDC to screen coordinates
@@ -133,7 +144,8 @@ public:
 
     // Calculate appropriate zoom factor based on viewport size
     float getZoomFactor() const {
-        return std::min(m_width, m_height) / 800.0f; // Normalized to 800px reference
+        static constexpr float REFERENCE_SIZE = 800.0f; // pixels
+        return std::min(m_width, m_height) / REFERENCE_SIZE;
     }
 
 private:

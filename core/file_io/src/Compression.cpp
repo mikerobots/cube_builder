@@ -58,7 +58,9 @@ bool Compression::decompress(const uint8_t* input, size_t inputSize,
     
     // For now, just copy the data
     output.resize(header.originalSize);
-    std::memcpy(output.data(), input + CompressionHeader::SIZE, header.originalSize);
+    if (header.originalSize > 0) {
+        std::memcpy(output.data(), input + CompressionHeader::SIZE, header.originalSize);
+    }
     
     return true;
 }
@@ -214,7 +216,7 @@ void CompressionHeader::read(const uint8_t* buffer) {
 }
 
 bool CompressionHeader::isValid() const {
-    return magic == 0x4C5A3443 && originalSize > 0 && compressedSize > 0;
+    return magic == 0x4C5A3443;  // Empty data (size 0) is valid
 }
 
 } // namespace FileIO

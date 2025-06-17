@@ -6,7 +6,7 @@ namespace FileIO {
 
 // Project implementation
 Project::Project() {
-    initializeDefaults();
+    // Don't automatically initialize - let user call initializeDefaults if needed
 }
 
 Project::~Project() = default;
@@ -71,6 +71,9 @@ void Project::clear() {
     namedSelections.clear();
     customData.clear();
     m_hasUnsavedChanges = false;
+    
+    // Reset metadata
+    metadata = ProjectMetadata();
     
     initializeDefaults();
 }

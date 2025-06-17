@@ -9,6 +9,8 @@ add_library(VoxelEditor_UndoRedo STATIC
     CompositeCommand.cpp
     VoxelCommands.h
     VoxelCommands.cpp
+    PlacementCommands.h
+    PlacementCommands.cpp
     SelectionCommands.h
     SelectionCommands.cpp
     StateSnapshot.h
@@ -26,6 +28,7 @@ target_link_libraries(VoxelEditor_UndoRedo
         VoxelEditor_Logging
         VoxelEditor_VoxelData
         VoxelEditor_Selection
+        VoxelEditor_Input
 )
 
 # Set compile features

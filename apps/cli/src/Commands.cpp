@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <thread>
 #include <chrono>
+#include <ctime>
 
 
 
@@ -16,6 +17,7 @@
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
 #include "cli/RenderWindow.h"
+#include "cli/BuildInfo.h"
 
 // Core includes
 #include "voxel_data/VoxelDataManager.h"
@@ -34,6 +36,7 @@
 #include "surface_gen/SurfaceGenerator.h"
 #include "undo_redo/HistoryManager.h"
 #include "undo_redo/VoxelCommands.h"
+#include "undo_redo/PlacementCommands.h"
 #include "visual_feedback/FeedbackRenderer.h"
 #include "math/BoundingBox.h"
 
@@ -185,25 +188,54 @@ void Application::registerCommands() {
     // Edit Operations
     m_commandProcessor->registerCommand({
         Commands::PLACE,
-        "Place a voxel at position",
+        "Place a voxel at position (coordinates must include units: cm or m)",
         CommandCategory::EDIT,
         {"add", "set"},
         {
-            {"x", "X coordinate", "int", true, ""},
-            {"y", "Y coordinate", "int", true, ""},
-            {"z", "Z coordinate", "int", true, ""}
+            {"x", "X coordinate with units (e.g. 100cm or 1m)", "coordinate", true, ""},
+            {"y", "Y coordinate with units (e.g. 50cm or 0.5m)", "coordinate", true, ""},
+            {"z", "Z coordinate with units (e.g. -100cm or -1m)", "coordinate", true, ""}
         },
         [this](const CommandContext& ctx) {
-            int x = ctx.getIntArg(0);
-            int y = ctx.getIntArg(1);
-            int z = ctx.getIntArg(2);
+            // Parse coordinates with units
+            int x = ctx.getCoordinateArg(0);
+            int y = ctx.getCoordinateArg(1);
+            int z = ctx.getCoordinateArg(2);
             
-            auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
+            // Check if all coordinates were parsed successfully
+            if (x == -1) {
+                return CommandResult::Error("Invalid X coordinate. Must include units (e.g., 100cm or 1m)");
+            }
+            if (y == -1) {
+                return CommandResult::Error("Invalid Y coordinate. Must include units (e.g., 50cm or 0.5m)");
+            }
+            if (z == -1) {
+                return CommandResult::Error("Invalid Z coordinate. Must include units (e.g., -100cm or -1m)");
+            }
+            
+            // Use PlacementCommandFactory for validation
+            auto cmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
                 m_voxelManager.get(),
                 Math::Vector3i(x, y, z),
-                m_voxelManager->getActiveResolution(),
-                true // place voxel
+                m_voxelManager->getActiveResolution()
             );
+            
+            if (!cmd) {
+                // Get validation details for error message
+                auto validation = UndoRedo::PlacementCommandFactory::validatePlacement(
+                    m_voxelManager.get(),
+                    Math::Vector3i(x, y, z),
+                    m_voxelManager->getActiveResolution()
+                );
+                
+                std::string errorMsg = "Cannot place voxel: ";
+                if (!validation.errors.empty()) {
+                    errorMsg += validation.errors[0];
+                } else {
+                    errorMsg += "Invalid position";
+                }
+                return CommandResult::Error(errorMsg);
+            }
             
             m_historyManager->executeCommand(std::move(cmd));
             
@@ -217,25 +249,41 @@ void Application::registerCommands() {
     
     m_commandProcessor->registerCommand({
         Commands::DELETE,
-        "Delete a voxel at position",
+        "Delete a voxel at position (coordinates must include units: cm or m)",
         CommandCategory::EDIT,
         {"remove", "del"},
         {
-            {"x", "X coordinate", "int", true, ""},
-            {"y", "Y coordinate", "int", true, ""},
-            {"z", "Z coordinate", "int", true, ""}
+            {"x", "X coordinate with units (e.g. 100cm or 1m)", "coordinate", true, ""},
+            {"y", "Y coordinate with units (e.g. 50cm or 0.5m)", "coordinate", true, ""},
+            {"z", "Z coordinate with units (e.g. -100cm or -1m)", "coordinate", true, ""}
         },
         [this](const CommandContext& ctx) {
-            int x = ctx.getIntArg(0);
-            int y = ctx.getIntArg(1);
-            int z = ctx.getIntArg(2);
+            // Parse coordinates with units
+            int x = ctx.getCoordinateArg(0);
+            int y = ctx.getCoordinateArg(1);
+            int z = ctx.getCoordinateArg(2);
             
-            auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
+            // Check if all coordinates were parsed successfully
+            if (x == -1) {
+                return CommandResult::Error("Invalid X coordinate. Must include units (e.g., 100cm or 1m)");
+            }
+            if (y == -1) {
+                return CommandResult::Error("Invalid Y coordinate. Must include units (e.g., 50cm or 0.5m)");
+            }
+            if (z == -1) {
+                return CommandResult::Error("Invalid Z coordinate. Must include units (e.g., -100cm or -1m)");
+            }
+            
+            // Use PlacementCommandFactory for removal
+            auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
                 m_voxelManager.get(),
                 Math::Vector3i(x, y, z),
-                m_voxelManager->getActiveResolution(),
-                false // remove voxel
+                m_voxelManager->getActiveResolution()
             );
+            
+            if (!cmd) {
+                return CommandResult::Error("No voxel at specified position");
+            }
             
             m_historyManager->executeCommand(std::move(cmd));
             
@@ -249,20 +297,38 @@ void Application::registerCommands() {
     
     m_commandProcessor->registerCommand({
         Commands::FILL,
-        "Fill a box region with voxels",
+        "Fill a box region with voxels (coordinates must include units: cm or m)",
         CommandCategory::EDIT,
         {},
         {
-            {"x1", "Start X", "int", true, ""},
-            {"y1", "Start Y", "int", true, ""},
-            {"z1", "Start Z", "int", true, ""},
-            {"x2", "End X", "int", true, ""},
-            {"y2", "End Y", "int", true, ""},
-            {"z2", "End Z", "int", true, ""}
+            {"x1", "Start X with units (e.g. 0cm or 0m)", "coordinate", true, ""},
+            {"y1", "Start Y with units (e.g. 0cm or 0m)", "coordinate", true, ""},
+            {"z1", "Start Z with units (e.g. -100cm or -1m)", "coordinate", true, ""},
+            {"x2", "End X with units (e.g. 200cm or 2m)", "coordinate", true, ""},
+            {"y2", "End Y with units (e.g. 100cm or 1m)", "coordinate", true, ""},
+            {"z2", "End Z with units (e.g. 100cm or 1m)", "coordinate", true, ""}
         },
         [this](const CommandContext& ctx) {
-            Math::Vector3i start(ctx.getIntArg(0), ctx.getIntArg(1), ctx.getIntArg(2));
-            Math::Vector3i end(ctx.getIntArg(3), ctx.getIntArg(4), ctx.getIntArg(5));
+            // Parse start coordinates with units
+            int x1 = ctx.getCoordinateArg(0);
+            int y1 = ctx.getCoordinateArg(1);
+            int z1 = ctx.getCoordinateArg(2);
+            
+            // Parse end coordinates with units
+            int x2 = ctx.getCoordinateArg(3);
+            int y2 = ctx.getCoordinateArg(4);
+            int z2 = ctx.getCoordinateArg(5);
+            
+            // Check if all coordinates were parsed successfully
+            if (x1 == -1 || y1 == -1 || z1 == -1) {
+                return CommandResult::Error("Invalid start coordinates. Must include units (e.g., 0cm or 0m)");
+            }
+            if (x2 == -1 || y2 == -1 || z2 == -1) {
+                return CommandResult::Error("Invalid end coordinates. Must include units (e.g., 100cm or 1m)");
+            }
+            
+            Math::Vector3i start(x1, y1, z1);
+            Math::Vector3i end(x2, y2, z2);
             
             // Create bounds
             Math::Vector3f minF(std::min(start.x, end.x), std::min(start.y, end.y), std::min(start.z, end.z));
@@ -469,6 +535,11 @@ void Application::registerCommands() {
                 m_cameraController->getCamera()->setDistance(3.0f);
             }
             
+            // Force camera matrix update by accessing them
+            // This ensures the lazy evaluation happens immediately
+            m_cameraController->getCamera()->getViewMatrix();
+            m_cameraController->getCamera()->getProjectionMatrix();
+            
             return CommandResult::Success("Camera set to " + preset + " view");
         }
     });
@@ -487,6 +558,9 @@ void Application::registerCommands() {
             
             float currentDistance = m_cameraController->getCamera()->getDistance();
             m_cameraController->getCamera()->setDistance(currentDistance / factor);
+            
+            // Force camera matrix update
+            m_cameraController->getCamera()->getViewMatrix();
             
             return CommandResult::Success("Zoomed by factor " + std::to_string(factor));
         }
@@ -510,6 +584,9 @@ void Application::registerCommands() {
                 deltaY
             );
             
+            // Force camera matrix update
+            m_cameraController->getCamera()->getViewMatrix();
+            
             return CommandResult::Success("Camera rotated");
         }
     });
@@ -522,9 +599,53 @@ void Application::registerCommands() {
         {},
         [this](const CommandContext& ctx) {
             m_cameraController->setViewPreset(Camera::ViewPreset::ISOMETRIC);
+            
+            // Force camera matrix update
+            m_cameraController->getCamera()->getViewMatrix();
+            m_cameraController->getCamera()->getProjectionMatrix();
+            
             return CommandResult::Success("Camera reset to default view");
         }
     });
+    
+    m_commandProcessor->registerCommand({
+        Commands::GRID,
+        "Toggle ground plane grid visibility",
+        CommandCategory::VIEW,
+        {"groundplane"},
+        {{"state", "on/off/toggle (optional)", "string", false, "toggle"}},
+        [this](const CommandContext& ctx) {
+            // Check if we're in headless mode
+            if (!m_renderEngine) {
+                return CommandResult::Error("Grid command not available in headless mode");
+            }
+            
+            std::string state = ctx.getArg(0, "toggle");
+            
+            bool currentState = m_renderEngine->isGroundPlaneGridVisible();
+            bool newState;
+            
+            if (state == "on") {
+                newState = true;
+            } else if (state == "off") {
+                newState = false;
+            } else if (state == "toggle") {
+                newState = !currentState;
+            } else {
+                return CommandResult::Error("Invalid state. Use 'on', 'off', or 'toggle'");
+            }
+            
+            m_renderEngine->setGroundPlaneGridVisible(newState);
+            
+            // Update the ground plane grid with workspace size if turning on
+            if (newState) {
+                m_renderEngine->updateGroundPlaneGrid(m_voxelManager->getWorkspaceSize());
+            }
+            
+            return CommandResult::Success("Ground plane grid " + std::string(newState ? "enabled" : "disabled"));
+        }
+    });
+    
     
     // Resolution control
     m_commandProcessor->registerCommand({
@@ -606,20 +727,36 @@ void Application::registerCommands() {
     
     m_commandProcessor->registerCommand({
         Commands::SELECT_BOX,
-        "Select voxels in box region",
+        "Select voxels in box region (coordinates must include units: cm or m)",
         CommandCategory::SELECT,
         {"selbox"},
         {
-            {"x1", "Start X", "int", true, ""},
-            {"y1", "Start Y", "int", true, ""},
-            {"z1", "Start Z", "int", true, ""},
-            {"x2", "End X", "int", true, ""},
-            {"y2", "End Y", "int", true, ""},
-            {"z2", "End Z", "int", true, ""}
+            {"x1", "Start X with units (e.g. -100cm or -1m)", "coordinate", true, ""},
+            {"y1", "Start Y with units (e.g. 0cm or 0m)", "coordinate", true, ""},
+            {"z1", "Start Z with units (e.g. -100cm or -1m)", "coordinate", true, ""},
+            {"x2", "End X with units (e.g. 100cm or 1m)", "coordinate", true, ""},
+            {"y2", "End Y with units (e.g. 200cm or 2m)", "coordinate", true, ""},
+            {"z2", "End Z with units (e.g. 100cm or 1m)", "coordinate", true, ""}
         },
         [this](const CommandContext& ctx) {
-            Math::Vector3f min(ctx.getIntArg(0), ctx.getIntArg(1), ctx.getIntArg(2));
-            Math::Vector3f max(ctx.getIntArg(3), ctx.getIntArg(4), ctx.getIntArg(5));
+            // Parse coordinates with units
+            int x1 = ctx.getCoordinateArg(0);
+            int y1 = ctx.getCoordinateArg(1);
+            int z1 = ctx.getCoordinateArg(2);
+            int x2 = ctx.getCoordinateArg(3);
+            int y2 = ctx.getCoordinateArg(4);
+            int z2 = ctx.getCoordinateArg(5);
+            
+            // Check if all coordinates were parsed successfully
+            if (x1 == -1 || y1 == -1 || z1 == -1) {
+                return CommandResult::Error("Invalid start coordinates. Must include units (e.g., -100cm or -1m)");
+            }
+            if (x2 == -1 || y2 == -1 || z2 == -1) {
+                return CommandResult::Error("Invalid end coordinates. Must include units (e.g., 100cm or 1m)");
+            }
+            
+            Math::Vector3f min(x1, y1, z1);
+            Math::Vector3f max(x2, y2, z2);
             
             Math::BoundingBox box(min, max);
             m_selectionManager->selectBox(box, m_voxelManager->getActiveResolution());
@@ -773,6 +910,11 @@ void Application::registerCommands() {
         {"ss", "capture"},
         {{"filename", "Output filename (.png)", "string", true, ""}},
         [this](const CommandContext& ctx) {
+            // Check if we're in headless mode
+            if (!m_renderWindow || !m_renderEngine) {
+                return CommandResult::Error("Screenshot command not available in headless mode");
+            }
+            
             std::string filename = ctx.getArg(0);
             if (filename.empty()) {
                 return CommandResult::Error("Filename required");
@@ -869,6 +1011,11 @@ void Application::registerCommands() {
         {},
         {{"mode", "Shader mode: basic, enhanced, flat, or 'list' to show all", "string", false, "list"}},
         [this](const CommandContext& ctx) {
+            // Check if we're in headless mode
+            if (!m_renderEngine) {
+                return CommandResult::Error("Shader command not available in headless mode");
+            }
+            
             std::string mode = ctx.getArgCount() > 0 ? ctx.getArg(0) : "list";
             
             if (mode == "list") {
@@ -1141,6 +1288,11 @@ void Application::registerCommands() {
                 return CommandResult::Success(ss.str());
             }
             else if (subcommand == "triangle") {
+                // Check if we're in headless mode
+                if (!m_renderEngine) {
+                    return CommandResult::Error("Triangle debug command not available in headless mode");
+                }
+                
                 std::stringstream ss;
                 ss << "Triangle Test Debug\n";
                 ss << "==================\n";
@@ -1197,6 +1349,57 @@ void Application::registerCommands() {
         {"check", "diag"},
         {},
         executeSimpleValidateCommand
+    });
+    
+    // Build command
+    m_commandProcessor->registerCommand({
+        Commands::BUILD,
+        "Show build information",
+        CommandCategory::SYSTEM,
+        {"buildinfo", "version"},
+        {},
+        [](const CommandContext& ctx) {
+            std::stringstream ss;
+            ss << "Voxel Editor Build Information\n";
+            ss << "==============================\n";
+            
+            // Version
+            ss << "Version: " << CLI::VERSION_STRING << "\n";
+            
+            // Build date and time
+            ss << "Built: " << CLI::BUILD_DATE << " " << CLI::BUILD_TIME << "\n";
+            
+            // Calculate how long ago it was built
+            auto now = std::chrono::system_clock::now();
+            auto nowTime = std::chrono::system_clock::to_time_t(now);
+            auto buildTime = static_cast<time_t>(CLI::BUILD_TIMESTAMP);
+            auto diff = nowTime - buildTime;
+            
+            // Format time difference
+            if (diff < 60) {
+                ss << "Built " << diff << " seconds ago\n";
+            } else if (diff < 3600) {
+                ss << "Built " << (diff / 60) << " minutes ago\n";
+            } else if (diff < 86400) {
+                ss << "Built " << (diff / 3600) << " hours ago\n";
+            } else {
+                ss << "Built " << (diff / 86400) << " days ago\n";
+            }
+            
+            // Git information
+            if (std::string(CLI::GIT_COMMIT_HASH) != "unknown") {
+                ss << "\nGit Information:\n";
+                ss << "  Branch: " << CLI::GIT_BRANCH << "\n";
+                ss << "  Commit: " << CLI::GIT_COMMIT_HASH << "\n";
+            }
+            
+            // Build configuration
+            ss << "\nBuild Configuration:\n";
+            ss << "  Type: " << CLI::BUILD_TYPE << "\n";
+            ss << "  Compiler: " << CLI::COMPILER_ID << " " << CLI::COMPILER_VERSION << "\n";
+            
+            return CommandResult::Success(ss.str());
+        }
     });
 }
 

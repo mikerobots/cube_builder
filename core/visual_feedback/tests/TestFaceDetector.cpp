@@ -45,11 +45,112 @@ TEST_F(FaceDetectorTest, RayHit) {
     
     EXPECT_TRUE(face.isValid());
     EXPECT_EQ(face.getVoxelPosition(), Vector3i(5, 5, 5));
-    EXPECT_EQ(face.getDirection(), FaceDirection::NegativeZ);
+    EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ);
+}
+
+// Enhancement Tests
+TEST_F(FaceDetectorTest, GroundPlaneDetection) {
+    // Ray pointing down at ground plane
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(2.5f, 1.0f, 3.5f), Vector3f(0, -1, 0));
+    
+    Face face = detector->detectGroundPlane(ray);
+    
+    EXPECT_TRUE(face.isValid());
+    EXPECT_TRUE(face.isGroundPlane());
+    EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::PositiveY);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().y, 0.0f);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().x, 2.5f);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().z, 3.5f);
+}
+
+TEST_F(FaceDetectorTest, GroundPlaneNoHit_ParallelRay) {
+    // Ray parallel to ground plane
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 1.0f, 0), Vector3f(1, 0, 0));
+    
+    Face face = detector->detectGroundPlane(ray);
+    
+    EXPECT_FALSE(face.isValid());
+}
+
+TEST_F(FaceDetectorTest, GroundPlaneNoHit_UpwardRay) {
+    // Ray pointing upward
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 1.0f, 0), Vector3f(0, 1, 0));
+    
+    Face face = detector->detectGroundPlane(ray);
+    
+    EXPECT_FALSE(face.isValid());
+}
+
+TEST_F(FaceDetectorTest, DetectFaceOrGround_HitsVoxel) {
+    // Ray that hits a voxel
+    float voxelSize = getVoxelSize(resolution);
+    Vector3f rayOrigin = Vector3f(5 * voxelSize, 5 * voxelSize, 0);
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1));
+    
+    Face face = detector->detectFaceOrGround(ray, *testGrid, resolution);
+    
+    EXPECT_TRUE(face.isValid());
+    EXPECT_FALSE(face.isGroundPlane());
+    EXPECT_EQ(face.getVoxelPosition(), Vector3i(5, 5, 5));
+}
+
+TEST_F(FaceDetectorTest, DetectFaceOrGround_HitsGround) {
+    // Ray that misses voxels but hits ground
+    VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 2.0f, 0), Vector3f(0, -1, 0));
+    
+    Face face = detector->detectFaceOrGround(ray, *testGrid, resolution);
+    
+    EXPECT_TRUE(face.isValid());
+    EXPECT_TRUE(face.isGroundPlane());
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().y, 0.0f);
+}
+
+TEST_F(FaceDetectorTest, CalculatePlacementPosition_GroundPlane) {
+    // Create a ground plane face
+    Face groundFace = Face::GroundPlane(Vector3f(1.234f, 0.0f, 2.567f));
+    
+    Vector3i placementPos = detector->calculatePlacementPosition(groundFace);
+    
+    // Should snap to nearest 1cm increment
+    EXPECT_EQ(placementPos.x, 123); // 1.234m = 123.4cm, rounds to 123
+    EXPECT_EQ(placementPos.y, 0);
+    EXPECT_EQ(placementPos.z, 257); // 2.567m = 256.7cm, rounds to 257
+}
+
+TEST_F(FaceDetectorTest, FaceDirection_AllDirections) {
+    // Test that we correctly identify face directions
+    testGrid->setVoxel(Vector3i(10, 10, 10), true);
+    
+    // Test each face direction
+    struct TestCase {
+        Vector3f rayOrigin;
+        Vector3f rayDir;
+        VoxelEditor::VisualFeedback::FaceDirection expectedDir;
+    };
+    
+    float voxelSize = getVoxelSize(resolution);
+    Vector3f voxelCenter = Vector3f(10.5f, 10.5f, 10.5f) * voxelSize;
+    
+    TestCase testCases[] = {
+        {voxelCenter + Vector3f(-2 * voxelSize, 0, 0), Vector3f(1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeX},
+        {voxelCenter + Vector3f(2 * voxelSize, 0, 0), Vector3f(-1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveX},
+        {voxelCenter + Vector3f(0, -2 * voxelSize, 0), Vector3f(0, 1, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeY},
+        {voxelCenter + Vector3f(0, 2 * voxelSize, 0), Vector3f(0, -1, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveY},
+        {voxelCenter + Vector3f(0, 0, -2 * voxelSize), Vector3f(0, 0, 1), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ},
+        {voxelCenter + Vector3f(0, 0, 2 * voxelSize), Vector3f(0, 0, -1), VoxelEditor::VisualFeedback::FaceDirection::PositiveZ}
+    };
+    
+    for (const auto& test : testCases) {
+        VoxelEditor::VisualFeedback::Ray ray(test.rayOrigin, test.rayDir);
+        Face face = detector->detectFace(ray, *testGrid, resolution);
+        
+        EXPECT_TRUE(face.isValid());
+        EXPECT_EQ(face.getDirection(), test.expectedDir);
+    }
 }
 
 TEST_F(FaceDetectorTest, ValidFaceForPlacement) {
-    Face face(Vector3i(5, 5, 5), resolution, FaceDirection::PositiveZ);
+    Face face(Vector3i(5, 5, 5), resolution, VoxelEditor::VisualFeedback::FaceDirection::PositiveZ);
     
     bool isValid = detector->isValidFaceForPlacement(face, *testGrid);
     
@@ -57,7 +158,7 @@ TEST_F(FaceDetectorTest, ValidFaceForPlacement) {
 }
 
 TEST_F(FaceDetectorTest, InvalidFaceForPlacement) {
-    Face face(Vector3i(5, 5, 5), resolution, FaceDirection::PositiveX);
+    Face face(Vector3i(5, 5, 5), resolution, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
     bool isValid = detector->isValidFaceForPlacement(face, *testGrid);
     
@@ -65,7 +166,7 @@ TEST_F(FaceDetectorTest, InvalidFaceForPlacement) {
 }
 
 TEST_F(FaceDetectorTest, PlacementPosition) {
-    Face face(Vector3i(5, 5, 5), resolution, FaceDirection::PositiveZ);
+    Face face(Vector3i(5, 5, 5), resolution, VoxelEditor::VisualFeedback::FaceDirection::PositiveZ);
     
     Vector3i placementPos = detector->calculatePlacementPosition(face);
     
@@ -112,7 +213,7 @@ TEST_F(FaceDetectorTest, RayFromInside) {
     
     // Should detect the exit face
     EXPECT_TRUE(face.isValid());
-    EXPECT_EQ(face.getDirection(), FaceDirection::PositiveX);
+    EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
 }
 
 TEST_F(FaceDetectorTest, EmptyGrid) {
@@ -156,5 +257,5 @@ TEST_F(FaceDetectorTest, MultipleVoxelRay) {
     
     EXPECT_TRUE(face.isValid());
     EXPECT_EQ(face.getVoxelPosition(), Vector3i(5, 5, 5)); // Should hit first voxel
-    EXPECT_EQ(face.getDirection(), FaceDirection::NegativeX);
+    EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::NegativeX);
 }

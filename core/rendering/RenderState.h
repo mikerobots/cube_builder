@@ -44,14 +44,14 @@ public:
     uint32_t getTextureBinds() const { return m_textureBinds; }
     void resetStatistics();
     
-    // State queries
-    bool isDepthTestEnabled() const { return m_current.depthTest; }
-    bool isDepthWriteEnabled() const { return m_current.depthWrite; }
-    bool isBlendingEnabled() const { return m_current.blending; }
-    BlendMode getBlendMode() const { return m_current.blendMode; }
-    bool isCullingEnabled() const { return m_current.culling; }
-    CullMode getCullMode() const { return m_current.cullMode; }
-    ShaderId getBoundShader() const { return m_current.boundShader; }
+    // State queries - return pending state since that's what will be applied
+    bool isDepthTestEnabled() const { return m_pending.depthTest; }
+    bool isDepthWriteEnabled() const { return m_pending.depthWrite; }
+    bool isBlendingEnabled() const { return m_pending.blending; }
+    BlendMode getBlendMode() const { return m_pending.blendMode; }
+    bool isCullingEnabled() const { return m_pending.culling; }
+    CullMode getCullMode() const { return m_pending.cullMode; }
+    ShaderId getBoundShader() const { return m_pending.boundShader; }
     
 private:
     struct StateBlock {
@@ -203,5 +203,5 @@ private:
     ShaderId m_savedShader;
 };
 
-}
-}
+} // namespace Rendering
+} // namespace VoxelEditor

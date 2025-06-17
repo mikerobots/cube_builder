@@ -144,6 +144,16 @@ struct WorkspaceConstraints {
     }
 };
 
+// Face direction enum for adjacent position calculation
+enum class FaceDirection : uint8_t {
+    PosX = 0,  // +X direction (right)
+    NegX = 1,  // -X direction (left)
+    PosY = 2,  // +Y direction (up)
+    NegY = 3,  // -Y direction (down)
+    PosZ = 4,  // +Z direction (forward)
+    NegZ = 5   // -Z direction (back)
+};
+
 // Calculate maximum grid dimensions for a given resolution and workspace size
 inline Math::Vector3i calculateMaxGridDimensions(VoxelResolution resolution, const Math::Vector3f& workspaceSize) {
     float voxelSize = getVoxelSize(resolution);

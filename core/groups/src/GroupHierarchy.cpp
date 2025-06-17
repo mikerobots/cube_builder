@@ -17,7 +17,21 @@ bool GroupHierarchy::addChild(GroupId parent, GroupId child) {
     auto parentIt = m_parentMap.find(child);
     if (parentIt != m_parentMap.end()) {
         GroupId oldParent = parentIt->second;
-        removeChild(oldParent, child);
+        
+        // Inline removal to avoid recursive locking
+        auto childrenIt = m_childrenMap.find(oldParent);
+        if (childrenIt != m_childrenMap.end()) {
+            auto& children = childrenIt->second;
+            auto it = std::find(children.begin(), children.end(), child);
+            if (it != children.end()) {
+                children.erase(it);
+                // Clean up empty children vector
+                if (children.empty()) {
+                    m_childrenMap.erase(childrenIt);
+                }
+            }
+        }
+        m_parentMap.erase(child);
     }
     
     // Set new parent-child relationship
@@ -54,7 +68,21 @@ bool GroupHierarchy::setParent(GroupId child, GroupId parent) {
         std::lock_guard<std::mutex> lock(m_mutex);
         auto parentIt = m_parentMap.find(child);
         if (parentIt != m_parentMap.end()) {
-            removeChild(parentIt->second, child);
+            GroupId oldParent = parentIt->second;
+            
+            // Inline removal to avoid recursive locking
+            auto childrenIt = m_childrenMap.find(oldParent);
+            if (childrenIt != m_childrenMap.end()) {
+                auto& children = childrenIt->second;
+                auto it = std::find(children.begin(), children.end(), child);
+                if (it != children.end()) {
+                    children.erase(it);
+                    if (children.empty()) {
+                        m_childrenMap.erase(childrenIt);
+                    }
+                }
+            }
+            m_parentMap.erase(child);
             return true;
         }
         return false;
@@ -176,7 +204,29 @@ bool GroupHierarchy::isDescendant(GroupId descendant, GroupId ancestor) const {
 
 bool GroupHierarchy::wouldCreateCycle(GroupId parent, GroupId child) const {
     // A cycle would be created if parent is a descendant of child
-    return isAncestor(child, parent);
+    // Don't call isAncestor as it would try to lock again
+    GroupId current = parent;
+    std::unordered_set<GroupId> visited;
+    
+    while (current != INVALID_GROUP_ID) {
+        if (visited.count(current)) {
+            // Cycle detected
+            break;
+        }
+        visited.insert(current);
+        
+        auto it = m_parentMap.find(current);
+        if (it == m_parentMap.end()) {
+            break;
+        }
+        
+        current = it->second;
+        if (current == child) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 int GroupHierarchy::getDepth(GroupId groupId) const {
@@ -209,7 +259,28 @@ int GroupHierarchy::getMaxDepth() const {
     int maxDepth = 0;
     
     for (const auto& [groupId, parent] : m_parentMap) {
-        int depth = getDepth(groupId);
+        // Calculate depth inline to avoid recursive locking
+        int depth = 0;
+        GroupId current = groupId;
+        std::unordered_set<GroupId> visited;
+        
+        while (current != INVALID_GROUP_ID) {
+            if (visited.count(current)) {
+                // Cycle detected
+                depth = -1;
+                break;
+            }
+            visited.insert(current);
+            
+            auto it = m_parentMap.find(current);
+            if (it == m_parentMap.end()) {
+                break;
+            }
+            
+            current = it->second;
+            depth++;
+        }
+        
         if (depth > maxDepth) {
             maxDepth = depth;
         }
@@ -240,10 +311,16 @@ size_t GroupHierarchy::getTotalGroups() const {
 bool GroupHierarchy::isValid() const {
     std::lock_guard<std::mutex> lock(m_mutex);
     
-    // Check for cycles
-    auto cycles = findCycles();
-    if (!cycles.empty()) {
-        return false;
+    // Check for cycles without calling findCycles() which also locks
+    std::unordered_set<GroupId> visited;
+    std::unordered_set<GroupId> recursionStack;
+    
+    for (const auto& [groupId, parent] : m_parentMap) {
+        if (visited.find(groupId) == visited.end()) {
+            if (hasCycleRecursive(groupId, groupId, visited, recursionStack)) {
+                return false;
+            }
+        }
     }
     
     // Check consistency between parent and children maps

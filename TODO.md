@@ -1,98 +1,101 @@
-# TODO List
+# TODO - Core Subsystem Review and Cleanup
 
-## Progress Summary
-- **Completed**: 10/10 design reviews (100%)
-- **In Progress**: 0/10 design reviews (0%)
-- **Remaining**: 0/10 design reviews (0%)
+## Process for Each Subsystem
 
-### Working Order
-- All subsystems have been reviewed and updated
-- Each review added "Current Implementation Status" and "Known Issues and Technical Debt" sections
+For each subsystem in the core folder:
 
-## Core Subsystem Design Review
+1. **Review Changes**: Look at git diffs to identify any hacks or temporary fixes
+2. **Document Issues**: Record identified hacks in the subsystem's TODO.md file
+3. **Update Documentation**: Update the subsystem's DESIGN.md to reflect current implementation
+4. **Run Tests**: Execute the subsystem's test suite
+5. **Fix Issues**: Address all test failures and documented hacks
+6. **Commit Changes**: Create a clean commit for the subsystem
+7. **Update Progress**: Mark subsystem as complete in this file
 
-This is a comprehensive review of all design.md files in the core directory to ensure they are up-to-date and complete.
+## Subsystems to Review
 
-### High Priority - Design Document Reviews
+### Camera System (`core/camera/`)
+- [ ] Review diffs for hacks
+- [ ] Update camera/TODO.md with issues
+- [ ] Update camera/DESIGN.md
+- [ ] Run camera tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-- [x] Review and update core/camera/DESIGN.md (COMPLETED - Added implementation status, 7 architectural issues documented)
-- [x] Review and update core/file_io/DESIGN.md (COMPLETED - Added implementation status, 8 architectural issues documented)
-- [x] Review and update core/groups/DESIGN.md (COMPLETED - Added implementation status, 8 architectural issues documented)
-- [x] Review and update core/input/DESIGN.md (COMPLETED - Added implementation status, 8 architectural issues documented)
-- [x] Review and update core/rendering/DESIGN.md (COMPLETED - Added implementation status, 10 architectural issues documented)
-- [x] Review and update core/selection/DESIGN.md (COMPLETED - Added implementation status, 8 architectural issues documented)
-- [x] Review and update core/surface_gen/DESIGN.md (COMPLETED - Added implementation status, 10 architectural issues documented)
-- [x] Review and update core/undo_redo/DESIGN.md (COMPLETED - Comprehensive review already existed with 10 architectural issues)
-- [x] Review and update core/visual_feedback/DESIGN.md (COMPLETED - Comprehensive review already existed with extensive technical debt documented)
-- [x] Review and update core/voxel_data/DESIGN.md (COMPLETED - Added implementation status, architecture issues, migration path, and revised performance targets)
+### Groups System (`core/groups/`)
+- [ ] Review diffs for hacks
+- [ ] Update groups/TODO.md with issues
+- [ ] Update groups/DESIGN.md
+- [ ] Run groups tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-### Review Checklist for Each DESIGN.md
+### Input System (`core/input/`)
+- [ ] Review diffs for hacks
+- [ ] Update input/TODO.md with issues
+- [ ] Update input/DESIGN.md
+- [ ] Run input tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-For each subsystem design file, ensure:
-1. Purpose and scope are clearly defined
-2. Key components and classes are documented
-3. Dependencies on other subsystems are listed
-4. Interfaces are well-defined
-5. Implementation details are current
-6. Performance considerations are noted
-7. Testing strategy is included
-8. Any TODOs or future enhancements are tracked
+### Rendering System (`core/rendering/`)
+- [ ] Review diffs for hacks
+- [ ] Update rendering/TODO.md with issues
+- [ ] Update rendering/DESIGN.md
+- [ ] Run rendering tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-### Architecture and Design Issues to Identify
+### Selection System (`core/selection/`)
+- [ ] Review diffs for hacks
+- [ ] Update selection/TODO.md with issues
+- [ ] Update selection/DESIGN.md
+- [ ] Run selection tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-During each review, actively look for and document:
-1. **Circular Dependencies**: Identify any circular dependencies between subsystems that need to be broken
-2. **Tight Coupling**: Find areas where subsystems are too tightly coupled and need better abstraction
-3. **Missing Abstractions**: Identify where interfaces or abstract base classes would improve modularity
-4. **Performance Bottlenecks**: Document any design decisions that could impact performance at scale
-5. **Memory Management Issues**: Identify potential memory leaks or inefficient memory usage patterns
-6. **Thread Safety Concerns**: Note any shared state that isn't properly protected for multi-threading
-7. **API Inconsistencies**: Find inconsistent naming, parameter ordering, or design patterns across subsystems
-8. **Missing Error Handling**: Identify areas where error conditions aren't properly handled or propagated
-9. **Scalability Limitations**: Document design choices that might limit future scalability
-10. **Testing Difficulties**: Note designs that make unit testing difficult or impossible
+### Surface Generation (`core/surface_gen/`)
+- [ ] Review diffs for hacks
+- [ ] Update surface_gen/TODO.md with issues
+- [ ] Update surface_gen/DESIGN.md
+- [ ] Run surface_gen tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-### Issue Documentation Format
+### Undo/Redo System (`core/undo_redo/`)
+- [ ] Review diffs for hacks
+- [ ] Update undo_redo/TODO.md with issues
+- [ ] Update undo_redo/DESIGN.md
+- [ ] Run undo_redo tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-When issues are found, document them in the DESIGN.md file under a new section:
+### Visual Feedback System (`core/visual_feedback/`)
+- [ ] Review diffs for hacks
+- [ ] Update visual_feedback/TODO.md with issues
+- [ ] Update visual_feedback/DESIGN.md
+- [ ] Run visual_feedback tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-```markdown
-## Known Issues and Technical Debt
+### Voxel Data System (`core/voxel_data/`)
+- [ ] Review diffs for hacks
+- [ ] Update voxel_data/TODO.md with issues
+- [ ] Update voxel_data/DESIGN.md
+- [ ] Run voxel_data tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-### Issue 1: [Brief Description]
-- **Severity**: High/Medium/Low
-- **Impact**: Description of the impact
-- **Proposed Solution**: How to fix it
-- **Dependencies**: What other changes are needed
 
-### Issue 2: [Brief Description]
-...
-```
+### File I/O System (`core/file_io/`)
+- [ ] Review diffs for hacks
+- [ ] Update file_io/TODO.md with issues
+- [ ] Update file_io/DESIGN.md
+- [ ] Run file_io tests
+- [ ] Fix all issues
+- [ ] Commit changes
 
-## Summary of Major Findings Across All Subsystems
 
-### Common Architectural Issues Found:
-1. **Thread Safety**: Most subsystems lack proper thread safety mechanisms (8/9 subsystems)
-2. **Missing Abstractions**: Direct coupling instead of interfaces (7/9 subsystems)
-3. **Platform-Specific Code**: Not properly abstracted (5/9 subsystems)
-4. **Memory Management**: Missing optimization strategies (6/9 subsystems)
-5. **Circular Dependencies**: Potential issues in rendering, selection, and visual_feedback
-6. **Missing Components**: Several designed components not implemented (7/9 subsystems)
+## Completed Subsystems
 
-### High-Priority Issues Requiring Immediate Attention:
-1. **Rendering**: Missing VR support and FrameBuffer implementation
-2. **Surface Generation**: No watertight mesh validation for 3D printing
-3. **Undo/Redo**: Severe architectural issues with circular dependencies
-4. **File I/O**: Thread safety concerns for auto-save functionality
-5. **Input**: Thread safety and missing accessibility features
-
-### Subsystems Needing Major Refactoring:
-1. **Undo/Redo**: Complete architectural overhaul needed
-2. **Visual Feedback**: Remove circular dependencies and add abstractions
-3. **Rendering**: Platform abstraction and VR support
-
-### Next Steps:
-1. Complete voxel_data review
-2. Create prioritized refactoring plan based on severity
-3. Address high-priority thread safety issues across all subsystems
-4. Implement missing abstractions to reduce coupling
+None yet.

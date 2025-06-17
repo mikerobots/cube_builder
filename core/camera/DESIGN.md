@@ -4,458 +4,748 @@
 Manages 3D camera controls, view presets, smooth transitions, and camera state persistence for the voxel editor across all platforms.
 
 ## Current Implementation Status
-The actual implementation differs from the original design. The system currently has:
-- **Camera** (base class) instead of CameraManager
-- **CameraController** handling input and camera management
-- **OrbitCamera** as the concrete camera implementation
-- **Viewport** for screen-space calculations
-- View presets are integrated into Camera base class rather than a separate component
-- No dedicated CameraAnimator or ViewPresets classes
+The camera subsystem is implemented as a set of header-only classes providing orbit-style camera controls with comprehensive input handling. The implementation is simpler than originally designed but functionally complete for basic 3D editing needs.
+
+**Architecture Overview:**
+- **Camera** - Abstract base class providing core camera state and matrix management
+- **OrbitCamera** - Concrete implementation with spherical coordinate controls and built-in view presets
+- **CameraController** - High-level controller managing mouse interaction and viewport integration
+- **Viewport** - Screen-space coordinate transformations and ray casting utilities
+
+**Implementation Characteristics:**
+- All classes are header-only for optimal performance
+- Event-driven architecture for state change notifications
+- Lazy matrix computation with caching
+- Built-in smoothing system for animated transitions
+- Comprehensive test coverage (108 tests across 7 test suites)
 
 ## Key Components
 
-### CameraManager
-**Responsibility**: Main interface for camera operations
-- Coordinate camera movement and rotation
-- Manage view presets and transitions
-- Handle camera state persistence
-- Provide camera matrices for rendering
+### Camera (Abstract Base Class)
+**Responsibility**: Core camera functionality with matrix management
+- Position, target, and up vector management
+- View and projection matrix generation with caching
+- Event dispatch for camera state changes
+- Direction vector calculations (forward, right, up)
+- Abstract interface for view preset selection
 
-### OrbitCamera
-**Responsibility**: Core camera implementation
-- Orbit-style camera controls
-- Target-based rotation and zoom
-- Constraint handling (zoom limits, bounds)
-- Smooth interpolation for movements
+### OrbitCamera (Concrete Implementation)
+**Responsibility**: Spherical coordinate orbit camera
+- Yaw/pitch/distance based positioning
+- Mouse-driven orbit, pan, and zoom controls
+- Built-in view presets (7 standard views)
+- Distance and pitch constraints
+- Optional smoothing/animation system
+- Focus and framing utilities
 
-### ViewPresets
-**Responsibility**: Predefined camera positions
-- Standard orthographic views (front, back, top, etc.)
-- Isometric and perspective views
-- Custom user-defined presets
-- View transition calculations
+### CameraController (High-Level Controller)
+**Responsibility**: Input handling and camera management
+- Mouse interaction state machine (orbit/pan/zoom modes)
+- Drag threshold detection to prevent accidental movement
+- Viewport-aware input processing
+- 3D ray casting for mouse picking
+- Automatic aspect ratio synchronization
+- Camera and viewport lifecycle management
 
-### CameraAnimator
-**Responsibility**: Smooth camera transitions
-- Interpolated camera movements
-- Easing functions for natural motion
-- Concurrent animation management
-- Animation cancellation and blending
+### Viewport (Coordinate System Manager)
+**Responsibility**: Screen-space transformations
+- Screen to normalized device coordinate conversion
+- 3D ray generation from screen coordinates
+- World to screen projection
+- Viewport bounds management and testing
+- Mouse delta calculation for camera controls
 
 ## Interface Design
 
+### Camera Base Class
 ```cpp
-class CameraManager {
+class Camera {
 public:
-    // View management
-    void setView(ViewType view);
-    void setCustomView(const Vector3f& position, const Vector3f& target, const Vector3f& up);
-    ViewType getCurrentView() const;
+    Camera(Events::EventDispatcher* eventDispatcher = nullptr);
+    virtual ~Camera() = default;
     
-    // Camera movement
-    void orbit(float deltaAzimuth, float deltaElevation);
-    void pan(const Vector2f& delta);
-    void zoom(float factor);
-    void dolly(float distance);
+    // Core positioning
+    virtual void setPosition(const Math::Vector3f& position);
+    virtual void setTarget(const Math::Vector3f& target);
+    virtual void setUp(const Math::Vector3f& up);
     
-    // Target management
-    void setTarget(const Vector3f& target);
-    Vector3f getTarget() const;
-    void frameSelection(const BoundingBox& bounds);
-    void frameAll(const BoundingBox& worldBounds);
+    const Math::Vector3f& getPosition() const { return m_position; }
+    const Math::Vector3f& getTarget() const { return m_target; }
+    const Math::Vector3f& getUp() const { return m_up; }
     
-    // Animation control
-    void setAnimationEnabled(bool enabled);
-    void setAnimationDuration(float seconds);
-    bool isAnimating() const;
-    void stopAnimation();
+    // Projection settings
+    void setFieldOfView(float fov);
+    void setAspectRatio(float aspectRatio);
+    void setNearFarPlanes(float nearPlane, float farPlane);
     
-    // Camera properties
-    void setProjection(ProjectionType type);
-    void setFieldOfView(float fovDegrees);
-    void setNearFar(float nearPlane, float farPlane);
-    void setViewportSize(int width, int height);
+    float getFieldOfView() const { return m_fieldOfView; }
+    float getAspectRatio() const { return m_aspectRatio; }
+    float getNearPlane() const { return m_nearPlane; }
+    float getFarPlane() const { return m_farPlane; }
     
-    // Matrix access
-    Matrix4f getViewMatrix() const;
-    Matrix4f getProjectionMatrix() const;
-    Matrix4f getViewProjectionMatrix() const;
+    // Matrix access (lazy computation with caching)
+    const Math::Matrix4f& getViewMatrix() const;
+    const Math::Matrix4f& getProjectionMatrix() const;
+    Math::Matrix4f getViewProjectionMatrix() const;
     
-    // State management
-    void reset();
-    CameraState getState() const;
-    void setState(const CameraState& state);
+    // Direction vectors
+    Math::Vector3f getForward() const;
+    Math::Vector3f getRight() const;
+    Math::Vector3f getActualUp() const;
     
-    // Constraints
-    void setZoomLimits(float minZoom, float maxZoom);
-    void setOrbitLimits(float minElevation, float maxElevation);
-    void setBounds(const BoundingBox& bounds);
+    // Abstract view preset interface
+    virtual void setViewPreset(ViewPreset preset) = 0;
+    
+protected:
+    void dispatchCameraChangedEvent(Events::ChangeType changeType);
     
 private:
-    std::unique_ptr<OrbitCamera> m_camera;
-    std::unique_ptr<ViewPresets> m_presets;
-    std::unique_ptr<CameraAnimator> m_animator;
-    EventDispatcher* m_eventDispatcher;
+    mutable Math::Matrix4f m_viewMatrix;
+    mutable Math::Matrix4f m_projectionMatrix;
+    mutable bool m_viewMatrixDirty = true;
+    mutable bool m_projectionMatrixDirty = true;
+};
+```
+
+### OrbitCamera Class
+```cpp
+class OrbitCamera : public Camera {
+public:
+    OrbitCamera(Events::EventDispatcher* eventDispatcher = nullptr);
+    
+    // Orbit controls
+    void orbit(float deltaYaw, float deltaPitch);
+    void zoom(float delta);
+    void pan(const Math::Vector3f& delta);
+    
+    // Direct spherical coordinate control
+    void setDistance(float distance);
+    void setYaw(float yaw);
+    void setPitch(float pitch);
+    void setOrbitAngles(float yaw, float pitch);
+    
+    float getDistance() const { return m_distance; }
+    float getYaw() const { return m_yaw; }
+    float getPitch() const { return m_pitch; }
+    
+    // Constraints
+    void setDistanceConstraints(float minDistance, float maxDistance);
+    void setPitchConstraints(float minPitch, float maxPitch);
+    
+    // Sensitivity controls
+    void setPanSensitivity(float sensitivity) { m_panSensitivity = sensitivity; }
+    void setRotateSensitivity(float sensitivity) { m_rotateSensitivity = sensitivity; }
+    void setZoomSensitivity(float sensitivity) { m_zoomSensitivity = sensitivity; }
+    
+    // Smoothing/animation
+    void setSmoothing(bool enabled) { m_smoothingEnabled = enabled; }
+    void setSmoothFactor(float factor) { m_smoothFactor = factor; }
+    void update(float deltaTime);
+    
+    // View presets
+    void setViewPreset(ViewPreset preset) override;
+    
+    // Utilities
+    void focusOn(const Math::Vector3f& point, float optimalDistance = -1.0f);
+    void frameBox(const Math::Vector3f& minBounds, const Math::Vector3f& maxBounds);
+    
+private:
+    void updatePositionFromSpherical();
+    void applyConstraints();
+};
+```
+
+### CameraController Class
+```cpp
+class CameraController {
+public:
+    enum class InteractionMode {
+        NONE,
+        ORBIT,  // Left mouse button
+        PAN,    // Middle mouse button
+        ZOOM    // Right mouse button
+    };
+    
+    CameraController(Events::EventDispatcher* eventDispatcher = nullptr);
+    
+    // Component access
+    OrbitCamera* getCamera() const { return m_camera.get(); }
+    Viewport* getViewport() const { return m_viewport.get(); }
+    
+    // Viewport configuration
+    void setViewportSize(int width, int height);
+    void setViewportBounds(int x, int y, int width, int height);
+    
+    // Mouse interaction
+    void onMouseButtonDown(const Math::Vector2i& mousePos, int button);
+    void onMouseButtonUp(const Math::Vector2i& mousePos, int button);
+    void onMouseMove(const Math::Vector2i& mousePos);
+    void onMouseWheel(const Math::Vector2i& mousePos, float delta);
+    
+    // 3D interaction utilities
+    Math::Ray getMouseRay(const Math::Vector2i& mousePos) const;
+    Math::Vector2i worldToScreen(const Math::Vector3f& worldPos) const;
+    
+    // Animation update
+    void update(float deltaTime);
+    
+    // State queries
+    bool isInteracting() const { return m_interactionMode != InteractionMode::NONE; }
+    InteractionMode getInteractionMode() const { return m_interactionMode; }
+    
+private:
+    static constexpr float DRAG_THRESHOLD = 3.0f;
 };
 ```
 
 ## Data Structures
 
-### ViewType
+### ViewPreset Enum
 ```cpp
-enum class ViewType {
-    Custom,
-    Front,
-    Back,
-    Left,
-    Right,
-    Top,
-    Bottom,
-    Isometric,
-    Perspective
+enum class ViewPreset {
+    FRONT = 0,
+    BACK = 1,
+    LEFT = 2,
+    RIGHT = 3,
+    TOP = 4,
+    BOTTOM = 5,
+    ISOMETRIC = 6
 };
 ```
 
-### ProjectionType
+### CameraChangedEvent
 ```cpp
-enum class ProjectionType {
-    Perspective,
-    Orthographic
-};
-```
-
-### CameraState
-```cpp
-struct CameraState {
-    Vector3f position;
-    Vector3f target;
-    Vector3f up;
-    float distance;
-    float azimuth;          // Rotation around Y axis
-    float elevation;        // Rotation around X axis
-    ProjectionType projectionType;
-    float fieldOfView;
-    float nearPlane;
-    float farPlane;
-    ViewType currentView;
-    
-    bool operator==(const CameraState& other) const;
-    void serialize(BinaryWriter& writer) const;
-    void deserialize(BinaryReader& reader);
-};
-```
-
-### CameraConstraints
-```cpp
-struct CameraConstraints {
-    float minZoom = 0.1f;
-    float maxZoom = 100.0f;
-    float minElevation = -89.0f;  // degrees
-    float maxElevation = 89.0f;   // degrees
-    std::optional<BoundingBox> bounds;
-    bool constrainTarget = false;
-    
-    void applyToState(CameraState& state) const;
-};
-```
-
-## Camera Implementation
-
-### OrbitCamera
-```cpp
-class OrbitCamera {
-public:
-    OrbitCamera();
-    
-    // Core operations
-    void orbit(float deltaAzimuth, float deltaElevation);
-    void pan(const Vector2f& screenDelta, const Matrix4f& projectionMatrix, const Vector2i& viewportSize);
-    void zoom(float factor);
-    void dolly(float distance);
-    
-    // Position calculation
-    Vector3f calculatePosition() const;
-    Matrix4f calculateViewMatrix() const;
-    
-    // State access
-    void setState(const CameraState& state);
-    CameraState getState() const;
-    
-    // Constraints
-    void setConstraints(const CameraConstraints& constraints);
-    void applyConstraints();
-    
-    // Utility functions
-    void lookAt(const Vector3f& position, const Vector3f& target, const Vector3f& up);
-    void frameBox(const BoundingBox& box, float margin = 0.1f);
-    
-private:
-    Vector3f m_target;
-    Vector3f m_up;
-    float m_distance;
-    float m_azimuth;
-    float m_elevation;
-    float m_fieldOfView;
-    float m_nearPlane;
-    float m_farPlane;
-    ProjectionType m_projectionType;
-    CameraConstraints m_constraints;
-    
-    void updateUpVector();
-    Vector3f sphericalToCartesian(float azimuth, float elevation, float radius) const;
-};
-```
-
-### ViewPresets
-```cpp
-class ViewPresets {
-public:
-    CameraState getPreset(ViewType view) const;
-    void setCustomPreset(const std::string& name, const CameraState& state);
-    std::vector<std::string> getCustomPresetNames() const;
-    
-    // Calculate view transformations
-    CameraState calculateFrontView(const BoundingBox& bounds) const;
-    CameraState calculateBackView(const BoundingBox& bounds) const;
-    CameraState calculateTopView(const BoundingBox& bounds) const;
-    CameraState calculateBottomView(const BoundingBox& bounds) const;
-    CameraState calculateLeftView(const BoundingBox& bounds) const;
-    CameraState calculateRightView(const BoundingBox& bounds) const;
-    CameraState calculateIsometricView(const BoundingBox& bounds) const;
-    
-private:
-    std::unordered_map<std::string, CameraState> m_customPresets;
-    BoundingBox m_sceneBounds;
-    
-    CameraState createOrthographicView(const Vector3f& direction, const Vector3f& up, const BoundingBox& bounds) const;
-    float calculateOptimalDistance(const BoundingBox& bounds, float fieldOfView) const;
-};
-```
-
-### CameraAnimator
-```cpp
-class CameraAnimator {
-public:
-    void animateTo(const CameraState& targetState, float duration, EasingFunction easing = EasingFunction::EaseInOut);
-    void animateOrbit(float deltaAzimuth, float deltaElevation, float duration);
-    void animateZoom(float targetDistance, float duration);
-    void animatePan(const Vector3f& targetPosition, float duration);
-    
-    bool isAnimating() const;
-    void stop();
-    void update(float deltaTime);
-    
-    CameraState getCurrentState() const;
-    
-private:
-    struct Animation {
-        CameraState startState;
-        CameraState targetState;
-        float duration;
-        float elapsedTime;
-        EasingFunction easing;
-        bool active;
+namespace Events {
+    enum class ChangeType {
+        POSITION,      // Camera or target moved
+        ROTATION,      // Up vector changed
+        ZOOM,          // Field of view changed
+        VIEW_PRESET    // View preset selected
     };
     
-    Animation m_currentAnimation;
+    struct CameraChangedEvent {
+        ChangeType changeType;
+        // Event is dispatched through EventDispatcher
+    };
+}
+```
+
+### View Preset Data (Internal)
+```cpp
+// Hardcoded in OrbitCamera implementation
+struct PresetData {
+    float yaw;      // Rotation around Y axis in degrees
+    float pitch;    // Rotation around X axis in degrees
+    float distance; // Distance from target
+};
+
+// Actual preset values:
+// FRONT:      {0.0f, 0.0f, 10.0f}
+// BACK:       {180.0f, 0.0f, 10.0f}
+// LEFT:       {-90.0f, 0.0f, 10.0f}
+// RIGHT:      {90.0f, 0.0f, 10.0f}
+// TOP:        {0.0f, 90.0f, 10.0f}
+// BOTTOM:     {0.0f, -90.0f, 10.0f}
+// ISOMETRIC:  {45.0f, 35.26f, 12.0f}
+```
+
+### Default Values and Constraints
+```cpp
+// Camera defaults
+const float DEFAULT_FOV = 45.0f;
+const float DEFAULT_ASPECT_RATIO = 16.0f / 9.0f;
+const float DEFAULT_NEAR_PLANE = 0.1f;
+const float DEFAULT_FAR_PLANE = 1000.0f;
+
+// OrbitCamera defaults
+const float DEFAULT_DISTANCE = 10.0f;
+const float MIN_DISTANCE = 0.5f;
+const float MAX_DISTANCE = 100.0f;
+const float MIN_PITCH = -90.0f;  // Prevents gimbal lock
+const float MAX_PITCH = 90.0f;
+
+// Sensitivity defaults
+const float DEFAULT_PAN_SENSITIVITY = 1.0f;
+const float DEFAULT_ROTATE_SENSITIVITY = 1.0f;
+const float DEFAULT_ZOOM_SENSITIVITY = 0.1f;
+
+// Smoothing defaults
+const float DEFAULT_SMOOTH_FACTOR = 0.1f;
+```
+
+## Implementation Details
+
+### Coordinate Systems
+```cpp
+// World Space: Right-handed, Y-up
+// - Positive X: Right
+// - Positive Y: Up
+// - Positive Z: Forward (out of screen)
+
+// Screen Space: Top-left origin, Y-down
+// - Origin: Top-left corner
+// - Positive X: Right
+// - Positive Y: Down
+
+// View Space: Camera looks down negative Z
+// - Camera forward direction: -Z
+// - Right vector: +X
+// - Up vector: +Y
+```
+
+### Spherical Coordinate System (OrbitCamera)
+```cpp
+// Position calculation from spherical coordinates:
+void OrbitCamera::updatePositionFromSpherical() {
+    float yawRad = Math::MathUtils::degreesToRadians(m_yaw);
+    float pitchRad = Math::MathUtils::degreesToRadians(m_pitch);
     
-    CameraState interpolateStates(const CameraState& start, const CameraState& end, float t, EasingFunction easing) const;
-    float applyEasing(float t, EasingFunction easing) const;
+    // Calculate position relative to target
+    float cosPitch = std::cos(pitchRad);
+    float x = m_distance * std::sin(yawRad) * cosPitch;
+    float y = m_distance * std::sin(pitchRad);
+    float z = m_distance * std::cos(yawRad) * cosPitch;
+    
+    setPosition(m_target + Math::Vector3f(x, y, z));
+}
+```
+
+### Viewport Transformations
+```cpp
+class Viewport {
+public:
+    // Screen to normalized device coordinates [-1, 1]
+    Math::Vector2f screenToNormalized(const Math::Vector2i& screenPos) const {
+        float nx = (2.0f * (screenPos.x - m_x) / m_width) - 1.0f;
+        float ny = 1.0f - (2.0f * (screenPos.y - m_y) / m_height);
+        return Math::Vector2f(nx, ny);
+    }
+    
+    // Generate 3D ray from screen position
+    Math::Ray screenToWorldRay(const Math::Vector2i& screenPos,
+                              const Math::Matrix4f& viewMatrix,
+                              const Math::Matrix4f& projectionMatrix) const {
+        Math::Vector2f ndc = screenToNormalized(screenPos);
+        
+        // Near and far points in NDC
+        Math::Vector4f nearPoint(ndc.x, ndc.y, -1.0f, 1.0f);
+        Math::Vector4f farPoint(ndc.x, ndc.y, 1.0f, 1.0f);
+        
+        // Transform to world space
+        Math::Matrix4f invViewProj = (projectionMatrix * viewMatrix).inverse();
+        Math::Vector4f worldNear = invViewProj * nearPoint;
+        Math::Vector4f worldFar = invViewProj * farPoint;
+        
+        // Perspective divide
+        worldNear /= worldNear.w;
+        worldFar /= worldFar.w;
+        
+        // Create ray
+        Math::Vector3f origin(worldNear.x, worldNear.y, worldNear.z);
+        Math::Vector3f direction = Math::Vector3f(worldFar.x, worldFar.y, worldFar.z) - origin;
+        direction.normalize();
+        
+        return Math::Ray(origin, direction);
+    }
 };
 ```
 
-## Easing Functions
+### Smoothing System (OrbitCamera)
+```cpp
+// Simple exponential smoothing implementation
+void OrbitCamera::update(float deltaTime) {
+    if (!m_smoothingEnabled) return;
+    
+    // Smooth distance
+    if (std::abs(m_targetDistance - m_distance) > 0.001f) {
+        m_distance = Math::MathUtils::lerp(m_distance, m_targetDistance, m_smoothFactor);
+        m_distanceChanged = true;
+    }
+    
+    // Smooth yaw (handle wrap-around)
+    float yawDiff = m_targetYaw - m_yaw;
+    if (yawDiff > 180.0f) yawDiff -= 360.0f;
+    if (yawDiff < -180.0f) yawDiff += 360.0f;
+    if (std::abs(yawDiff) > 0.01f) {
+        m_yaw += yawDiff * m_smoothFactor;
+        m_yaw = std::fmod(m_yaw + 360.0f, 360.0f);
+        m_anglesChanged = true;
+    }
+    
+    // Smooth pitch
+    if (std::abs(m_targetPitch - m_pitch) > 0.01f) {
+        m_pitch = Math::MathUtils::lerp(m_pitch, m_targetPitch, m_smoothFactor);
+        m_anglesChanged = true;
+    }
+    
+    // Smooth target position
+    if ((m_targetTarget - m_target).lengthSquared() > 0.0001f) {
+        m_target = Math::MathUtils::lerp(m_target, m_targetTarget, m_smoothFactor);
+        m_targetChanged = true;
+    }
+    
+    // Update position if anything changed
+    if (m_distanceChanged || m_anglesChanged || m_targetChanged) {
+        updatePositionFromSpherical();
+    }
+}
+```
+
+## Mouse Interaction State Machine
 
 ```cpp
-enum class EasingFunction {
-    Linear,
-    EaseIn,
-    EaseOut,
-    EaseInOut,
-    EaseInBack,
-    EaseOutBack,
-    EaseInOutBack
-};
+// CameraController manages mouse interaction through a state machine:
 
-class EasingFunctions {
-public:
-    static float apply(float t, EasingFunction function);
+void CameraController::onMouseButtonDown(const Math::Vector2i& mousePos, int button) {
+    if (!m_viewport->contains(mousePos)) return;
     
-private:
-    static float easeInQuad(float t);
-    static float easeOutQuad(float t);
-    static float easeInOutQuad(float t);
-    static float easeInBack(float t);
-    static float easeOutBack(float t);
-    static float easeInOutBack(float t);
-};
+    m_mouseDown = true;
+    m_lastMousePos = mousePos;
+    m_mouseDownPos = mousePos;
+    m_hasDragged = false;
+    
+    // Determine interaction mode based on button
+    switch (button) {
+        case 0: m_interactionMode = InteractionMode::ORBIT; break;  // Left
+        case 1: m_interactionMode = InteractionMode::PAN; break;    // Middle
+        case 2: m_interactionMode = InteractionMode::ZOOM; break;   // Right
+        default: m_interactionMode = InteractionMode::NONE; break;
+    }
+}
+
+void CameraController::onMouseMove(const Math::Vector2i& mousePos) {
+    if (!m_mouseDown) return;
+    
+    // Check drag threshold
+    if (!m_hasDragged) {
+        Math::Vector2f delta = (mousePos - m_mouseDownPos).toVector2f();
+        if (delta.length() >= DRAG_THRESHOLD) {
+            m_hasDragged = true;
+        } else {
+            return;
+        }
+    }
+    
+    // Calculate normalized mouse delta
+    Math::Vector2f mouseDelta = m_viewport->getMouseDelta(mousePos, m_lastMousePos);
+    
+    // Apply interaction based on mode
+    switch (m_interactionMode) {
+        case InteractionMode::ORBIT:
+            m_camera->orbit(mouseDelta.x * 180.0f, mouseDelta.y * 90.0f);
+            break;
+            
+        case InteractionMode::PAN: {
+            float distance = m_camera->getDistance();
+            Math::Vector3f panDelta(
+                -mouseDelta.x * distance,
+                mouseDelta.y * distance,
+                0.0f
+            );
+            m_camera->pan(panDelta);
+            break;
+        }
+        
+        case InteractionMode::ZOOM:
+            m_camera->zoom(mouseDelta.y * 2.0f);
+            break;
+    }
+    
+    m_lastMousePos = mousePos;
+}
 ```
 
 ## Input Integration
 
-### Mouse Controls
-- **Left Drag**: Orbit around target
-- **Right Drag**: Pan camera
-- **Middle Drag**: Alternative pan
-- **Scroll Wheel**: Zoom in/out
-- **Double Click**: Frame selection or auto-focus
+### Current Implementation
+The camera system currently supports mouse-based interaction through the CameraController:
 
-### Keyboard Shortcuts
-- **Number Keys 1-7**: Switch to preset views
-- **F**: Frame selection
-- **Home**: Reset camera
-- **Ctrl + Mouse**: Constrained movement
+**Mouse Controls:**
+- **Left Mouse Drag**: Orbit camera around target
+- **Middle Mouse Drag**: Pan camera (move target)
+- **Right Mouse Drag**: Zoom in/out
+- **Scroll Wheel**: Zoom in/out (with configurable sensitivity)
+- **Drag Threshold**: 3 pixels to prevent accidental movement
 
-### Touch Controls (Qt)
-- **Single Touch Drag**: Orbit
-- **Two Finger Drag**: Pan
-- **Pinch**: Zoom
-- **Double Tap**: Frame selection
+**Interaction Characteristics:**
+- All mouse interactions require the cursor to be within the viewport bounds
+- Drag operations use normalized mouse deltas for consistent behavior
+- Sensitivity can be configured independently for pan, rotate, and zoom
+- Smoothing can be enabled for animated transitions
 
-### VR Controls
-- **Head Movement**: Natural camera movement
-- **Hand Gestures**: Point to focus target
-- **Voice Commands**: "Front view", "Reset camera"
+### Keyboard Integration (Not Yet Implemented)
+The current implementation does not include keyboard shortcuts. These would need to be added:
+- Number keys for view preset selection
+- Reset camera functionality
+- Constrained movement modifiers
+
+### Touch/Mobile Support (Not Implemented)
+No touch gesture support is currently implemented.
+
+### VR Support (Not Implemented)
+No VR-specific camera controls are implemented.
 
 ## Performance Considerations
 
 ### Matrix Caching
-- Cache view and projection matrices
-- Invalidate only when camera changes
-- Avoid unnecessary matrix calculations
-- Use dirty flags for optimization
+The implementation uses dirty flags to avoid redundant matrix calculations:
+```cpp
+// Only recalculate when needed
+const Math::Matrix4f& Camera::getViewMatrix() const {
+    if (m_viewMatrixDirty) {
+        m_viewMatrix = Math::Matrix4f::lookAt(m_position, m_target, m_up);
+        m_viewMatrixDirty = false;
+    }
+    return m_viewMatrix;
+}
+```
 
-### Animation Optimization
-- Skip interpolation for very small changes
-- Use fixed timestep for consistent animation
-- Batch multiple small movements
-- Early termination for completed animations
+### Header-Only Design
+- All classes are header-only for optimal inlining
+- No virtual function overhead except for view preset selection
+- Minimal dynamic allocations
 
-### Constraint Validation
-- Lazy constraint application
-- Incremental constraint checking
-- Optimized bounds testing
-- Minimal state copying
+### Smoothing System
+- Simple exponential decay avoids complex calculations
+- Early termination when values are close enough
+- Optional system - can be disabled for immediate response
+
+### Constraint Application
+- Constraints checked only when values change
+- Simple min/max clamping for efficient validation
+- No complex boundary calculations
 
 ## Events
 
-### CameraChanged Event
+The camera system dispatches events through the EventDispatcher when camera state changes:
+
+### CameraChangedEvent
 ```cpp
-struct CameraChangedEvent {
-    CameraState oldState;
-    CameraState newState;
-    ChangeType changeType; // POSITION, ROTATION, ZOOM, VIEW_PRESET
-};
+namespace Events {
+    enum class ChangeType {
+        POSITION,      // Camera position or target changed
+        ROTATION,      // Camera up vector changed
+        ZOOM,          // Field of view changed
+        VIEW_PRESET    // View preset selected
+    };
+    
+    struct CameraChangedEvent {
+        ChangeType changeType;
+    };
+}
 ```
 
-### ViewChanged Event
-```cpp
-struct ViewChangedEvent {
-    ViewType oldView;
-    ViewType newView;
-    bool animated;
-};
-```
+**Event Dispatch Points:**
+- `setPosition()` - Dispatches POSITION event
+- `setTarget()` - Dispatches POSITION event
+- `setUp()` - Dispatches ROTATION event
+- `setFieldOfView()` - Dispatches ZOOM event
+- `setViewPreset()` - Dispatches VIEW_PRESET event
 
-## Testing Strategy
+**Note:** Events are dispatched immediately on state change. There is no batching or deferred dispatch mechanism.
+
+## Testing Coverage
+
+The camera subsystem has comprehensive test coverage with ~2000 lines of tests:
 
 ### Unit Tests
-- Matrix calculation accuracy
-- Constraint enforcement
-- Animation interpolation
-- State serialization
-- View preset calculations
+**Well Covered:**
+- Matrix calculation accuracy and caching behavior
+- Spherical coordinate conversions
+- Constraint enforcement (distance and pitch limits)
+- View preset positioning
+- Event dispatch verification
+- Coordinate transformations (screen ↔ world)
+- Mouse interaction state machine
+- Drag threshold detection
+
+**Test Files:**
+- `test_Camera.cpp` - Base class functionality
+- `test_OrbitCamera.cpp` - Orbit camera mechanics
+- `test_CameraController.cpp` - Input handling
+- `test_Viewport.cpp` - Coordinate transformations
+- `test_OrbitCamera_transformations.cpp` - Advanced math validation
+- `test_zoom_functionality.cpp` - Zoom behavior
+- `test_setDistance.cpp` - Distance constraints
 
 ### Integration Tests
-- Input handling integration
-- Rendering system integration
-- State persistence
-- Cross-platform behavior
+Currently limited - most testing is unit-level. Integration with rendering system is not directly tested.
 
-### Visual Tests
-- Smooth animation playback
-- Correct view transitions
-- Constraint visualization
-- Matrix accuracy validation
-
-### Performance Tests
-- Animation frame rate consistency
-- Matrix calculation performance
+### Missing Test Coverage
+- Performance benchmarks
 - Memory usage validation
-- Large scene handling
+- Error recovery scenarios
+- Rendering integration
+- Multi-threaded access
 
 ## Dependencies
-- **Foundation/Math**: Matrix and vector operations
-- **Foundation/Events**: Camera change notifications
-- **Core/Input**: Input event processing
-- **Foundation/Config**: Camera settings and preferences
+
+### Direct Dependencies
+- **Foundation/Math**: 
+  - Vector2f, Vector2i, Vector3f - Position and direction vectors
+  - Matrix4f - View and projection matrices
+  - Ray - 3D ray for mouse picking
+  - MathUtils - Degree/radian conversion, interpolation
+  
+- **Foundation/Events**:
+  - EventDispatcher - Event notification system
+  - CameraChangedEvent - State change notifications
+  
+- **Foundation/Logging**:
+  - Logger - Debug output (used sparingly)
+
+### Dependency Characteristics
+- All dependencies are header-only
+- No external library dependencies
+- No file I/O dependencies
+- No configuration system integration (settings are hardcoded)
 
 ## Platform Considerations
 
-### Desktop
-- Mouse and keyboard input
-- Multiple monitor support
-- High precision input handling
-- Customizable shortcuts
+### Current Implementation
+The camera system is platform-agnostic and relies on normalized input:
+- Mouse positions are provided in screen coordinates
+- All calculations use floating-point for precision
+- No platform-specific code or optimizations
 
-### Mobile/Touch
-- Touch gesture recognition
-- Accelerometer integration
-- Battery-conscious animations
-- Adaptive sensitivity
+### Desktop (Implemented)
+- Full mouse interaction support
+- Configurable sensitivity settings
+- Viewport-aware input handling
+- Sub-pixel precision for smooth movement
 
-### VR
-- Head tracking integration
-- Hand gesture recognition
-- Comfort settings (motion sickness)
-- Spatial audio synchronization
+### Mobile/Touch (Not Implemented)
+Would require:
+- Touch gesture recognition layer
+- Pinch-to-zoom handling
+- Touch velocity tracking
+- Modified sensitivity curves
+
+### VR (Not Implemented)
+Would require:
+- 6DOF tracking integration
+- Separate head/hand tracking
+- Comfort options
+- Different interaction paradigm
 
 ## File I/O Integration
-- Save camera state with projects
-- Export camera paths for animation
-- Import camera presets
-- Version compatibility for camera data
+
+### Current Status
+**Not Implemented** - The camera system has no serialization support.
+
+### Required for Implementation
+To add persistence support, the following would be needed:
+
+1. **State Serialization:**
+   - Camera position, target, up vectors
+   - Spherical coordinates (yaw, pitch, distance)
+   - Projection settings (FOV, near/far planes)
+   - Current view preset
+   - Sensitivity settings
+
+2. **Integration Points:**
+   - Project save/load system
+   - Settings/preferences system
+   - Import/export functionality
+
+3. **Version Compatibility:**
+   - Version markers for camera data
+   - Default value handling
+   - Migration strategies
 
 ## Known Issues and Technical Debt
 
-### Issue 1: Design vs Implementation Mismatch
-- **Severity**: Medium
-- **Impact**: The implementation doesn't match the design specification, leading to confusion and potential feature gaps
-- **Proposed Solution**: Either update the design to match the simpler implementation or implement the missing components (CameraManager, ViewPresets, CameraAnimator)
-- **Dependencies**: Decision on whether to keep simple or implement full design
-
-### Issue 2: Missing Animation System
-- **Severity**: Medium
-- **Impact**: No smooth camera transitions between views, jarring user experience
-- **Proposed Solution**: Implement CameraAnimator as specified or add animation capabilities to CameraController
-- **Dependencies**: None
-
-### Issue 3: Limited View Preset Management
-- **Severity**: Low
-- **Impact**: View presets are hardcoded in enum, no custom presets or dynamic preset management
-- **Proposed Solution**: Implement ViewPresets class for extensible preset management
-- **Dependencies**: None
-
-### Issue 4: No State Serialization
-- **Severity**: Medium
-- **Impact**: Camera state is not saved/restored with projects, users lose their view when reopening
-- **Proposed Solution**: Implement CameraState serialization methods
-- **Dependencies**: File I/O system integration
-
-### Issue 5: Tight Coupling with Events
-- **Severity**: Low
-- **Impact**: Camera classes directly depend on EventDispatcher, making unit testing harder
-- **Proposed Solution**: Use interface or callback pattern for event notification
-- **Dependencies**: Event system refactoring
-
-### Issue 6: Missing Orthographic Projection Support
+### Issue 1: Missing Orthographic Projection Support
 - **Severity**: High
-- **Impact**: Only perspective projection is implemented, but orthographic views are essential for CAD-like editing
-- **Proposed Solution**: Add projection type switching to Camera base class
-- **Dependencies**: None
+- **Impact**: Only perspective projection is available, limiting CAD-style editing capabilities
+- **Current State**: Camera base class only generates perspective projection matrices
+- **Proposed Solution**: Add projection type enum and conditional matrix generation
+- **Effort**: Medium - requires matrix generation changes and testing
 
-### Issue 7: No Camera Constraints Implementation
+### Issue 2: No State Serialization
+- **Severity**: High
+- **Impact**: Camera state is lost when closing/reopening projects
+- **Current State**: No serialization methods implemented
+- **Proposed Solution**: Add serialize/deserialize methods to Camera and OrbitCamera
+- **Effort**: Medium - requires file I/O integration
+
+### Issue 3: Limited Animation System  
 - **Severity**: Medium
-- **Impact**: Camera can clip through geometry or go to invalid positions
-- **Proposed Solution**: Implement CameraConstraints as designed
-- **Dependencies**: None
+- **Impact**: Only basic exponential smoothing, no advanced transitions or easing
+- **Current State**: Simple lerp-based smoothing in OrbitCamera::update()
+- **Proposed Solution**: Create dedicated animation system with easing functions
+- **Effort**: High - requires new component design
+
+### Issue 4: Hardcoded View Presets
+- **Severity**: Medium
+- **Impact**: Cannot add custom view presets or modify existing ones
+- **Current State**: 7 presets hardcoded in static array
+- **Proposed Solution**: Create ViewPresets manager class
+- **Effort**: Medium - requires API changes
+
+### Issue 5: No Keyboard Support
+- **Severity**: Medium  
+- **Impact**: No keyboard shortcuts for view selection or camera control
+- **Current State**: Only mouse input is handled
+- **Proposed Solution**: Add keyboard handler to CameraController
+- **Effort**: Low - straightforward to implement
+
+### Issue 6: Event System Coupling
+- **Severity**: Low
+- **Impact**: Harder to unit test, requires EventDispatcher in all tests
+- **Current State**: Direct dependency on EventDispatcher
+- **Proposed Solution**: Use optional callback or interface pattern
+- **Effort**: Low - mostly refactoring
+
+### Issue 7: No Bounds Constraints
+- **Severity**: Low
+- **Impact**: Camera can move anywhere without limits
+- **Current State**: Only distance and pitch constraints implemented
+- **Proposed Solution**: Add optional bounding box constraints
+- **Effort**: Low - simple bounds checking
+
+## Future Enhancements
+
+### Short Term
+1. Add orthographic projection support
+2. Implement basic state serialization  
+3. Add keyboard shortcut support
+4. Improve error handling and validation
+
+### Medium Term
+1. Create proper animation system with easing
+2. Add custom view preset management
+3. Implement camera paths/flythrough support
+4. Add multi-viewport camera synchronization
+
+### Long Term  
+1. Add touch gesture support for mobile
+2. Implement VR camera modes
+3. Create visual debugging tools
+4. Add advanced constraint systems
+
+## Recent Improvements (2025-06-16)
+
+### Code Quality Fixes
+1. **Fixed Perspective Divide in Ray Generation**: 
+   - `Viewport::screenToWorldRay` now properly handles homogeneous coordinates
+   - Uses Vector4f for correct perspective divide instead of Vector3f
+   - Ensures accurate ray casting for mouse interaction
+
+2. **Fixed World-to-Screen Projection**:
+   - `Viewport::worldToScreen` now uses proper homogeneous coordinates
+   - Correctly divides by w component for perspective projection
+   - Improves accuracy of screen coordinate calculations
+
+3. **Eliminated Magic Numbers**:
+   - Added named constants in CameraController for drag threshold, scales
+   - Added REFERENCE_SIZE constant in Viewport for zoom normalization
+   - Improves code maintainability and clarity
+
+4. **Fixed Frame-Rate Dependent Smoothing**:
+   - Removed hardcoded 60 FPS reference in smoothing calculations
+   - Now properly frame-rate independent using exponential decay
+   - Ensures consistent behavior across different frame rates
+
+### Test Status
+All 108 tests continue to pass after these improvements, validating that the fixes maintain backward compatibility while improving correctness.

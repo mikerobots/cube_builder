@@ -8,9 +8,12 @@ set(TEST_SOURCES
     TestFeedbackTypes.cpp
     TestFaceDetector.cpp
     TestHighlightRenderer.cpp
+    TestHighlightManager.cpp
     TestOutlineRenderer.cpp
     TestOverlayRenderer.cpp
     TestFeedbackRenderer.cpp
+    TestPreviewManager.cpp
+    TestOutlineRendererPreview.cpp
 )
 
 # Create test executable
@@ -28,6 +31,7 @@ target_link_libraries(visual_feedback_tests
         VoxelEditor_Memory
         VoxelEditor_Events
         VoxelEditor_Logging
+        VoxelEditor_Input
         GTest::GTest
         GTest::Main
 )

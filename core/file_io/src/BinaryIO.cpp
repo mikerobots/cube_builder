@@ -1,4 +1,5 @@
 #include "../include/file_io/BinaryIO.h"
+#include "../include/file_io/FileTypes.h"
 #include <cstring>
 
 namespace VoxelEditor {
@@ -208,7 +209,11 @@ std::vector<uint8_t> BinaryReader::readBytes(size_t size) {
 }
 
 bool BinaryReader::isAtEnd() const {
-    return m_stream.eof();
+    if (!m_valid) return true;
+    
+    // Check if we can peek the next character
+    int c = m_stream.peek();
+    return c == std::char_traits<char>::eof();
 }
 
 void BinaryReader::skip(size_t bytes) {
@@ -244,6 +249,25 @@ void BinaryReader::readRaw(void* data, size_t size) {
         // Clear the data on failure
         std::memset(data, 0, size);
     }
+}
+
+// Template specializations for FileVersion
+template<>
+void BinaryWriter::write<FileVersion>(const FileVersion& version) {
+    writeUInt8(version.major);
+    writeUInt8(version.minor);
+    writeUInt16(version.patch);
+    writeUInt32(version.build);
+}
+
+template<>
+FileVersion BinaryReader::read<FileVersion>() {
+    FileVersion version;
+    version.major = readUInt8();
+    version.minor = readUInt8();
+    version.patch = readUInt16();
+    version.build = readUInt32();
+    return version;
 }
 
 } // namespace FileIO

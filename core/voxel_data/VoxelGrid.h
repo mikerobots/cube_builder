@@ -101,25 +101,40 @@ public:
     }
     
     bool isValidWorldPosition(const Math::Vector3f& worldPos) const {
-        return worldPos.x >= 0 && worldPos.x <= m_workspaceSize.x &&
+        // Use centered coordinate system to match WorkspaceManager
+        float halfX = m_workspaceSize.x * 0.5f;
+        float halfZ = m_workspaceSize.z * 0.5f;
+        return worldPos.x >= -halfX && worldPos.x <= halfX &&
                worldPos.y >= 0 && worldPos.y <= m_workspaceSize.y &&
-               worldPos.z >= 0 && worldPos.z <= m_workspaceSize.z;
+               worldPos.z >= -halfZ && worldPos.z <= halfZ;
     }
     
     // Coordinate conversion
     Math::Vector3i worldToGrid(const Math::Vector3f& worldPos) const {
+        // Convert from centered world coordinates to grid indices
+        float halfX = m_workspaceSize.x * 0.5f;
+        float halfZ = m_workspaceSize.z * 0.5f;
+        
+        // Shift from centered to non-centered coordinates
+        float shiftedX = worldPos.x + halfX;
+        float shiftedZ = worldPos.z + halfZ;
+        
         return Math::Vector3i(
-            static_cast<int>(std::floor(worldPos.x / m_voxelSize)),
+            static_cast<int>(std::floor(shiftedX / m_voxelSize)),
             static_cast<int>(std::floor(worldPos.y / m_voxelSize)),
-            static_cast<int>(std::floor(worldPos.z / m_voxelSize))
+            static_cast<int>(std::floor(shiftedZ / m_voxelSize))
         );
     }
     
     Math::Vector3f gridToWorld(const Math::Vector3i& gridPos) const {
+        // Convert from grid indices to centered world coordinates
+        float halfX = m_workspaceSize.x * 0.5f;
+        float halfZ = m_workspaceSize.z * 0.5f;
+        
         return Math::Vector3f(
-            gridPos.x * m_voxelSize,
+            gridPos.x * m_voxelSize - halfX,
             gridPos.y * m_voxelSize,
-            gridPos.z * m_voxelSize
+            gridPos.z * m_voxelSize - halfZ
         );
     }
     

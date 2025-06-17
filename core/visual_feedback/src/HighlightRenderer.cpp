@@ -3,6 +3,8 @@
 #include "../../rendering/RenderTypes.h"
 #include <algorithm>
 #include <cmath>
+#include <vector>
+#include <iostream>
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
@@ -29,7 +31,8 @@ HighlightRenderer::HighlightRenderer()
     , m_ibo(0)
     , m_initialized(false) {
     
-    createHighlightMeshes();
+    // Delay OpenGL resource creation until first use
+    // createHighlightMeshes();
 }
 
 HighlightRenderer::~HighlightRenderer() {
@@ -139,10 +142,28 @@ void HighlightRenderer::render(const Camera::Camera& camera) {
         return;
     }
     
+    // Initialize OpenGL resources on first use
+    if (!m_initialized) {
+        createHighlightMeshes();
+        if (!m_initialized) {
+            std::cerr << "HighlightRenderer: Failed to initialize OpenGL resources" << std::endl;
+            return;
+        }
+    }
+    
+    // Clear any existing GL errors
+    while (glGetError() != GL_NO_ERROR) {}
+    
     if (m_instancingEnabled && m_instanceBuffer != 0) {
         renderInstanced(camera);
     } else {
         renderImmediate(camera);
+    }
+    
+    // Check for GL errors after rendering
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "HighlightRenderer GL Error after render: " << error << std::endl;
     }
 }
 
@@ -306,6 +327,9 @@ void HighlightRenderer::renderInstanced(const Camera::Camera& camera) {
 #else
     glBindVertexArray(0);
 #endif
+    
+    // Restore shader program
+    glUseProgram(0);
 }
 
 void HighlightRenderer::renderImmediate(const Camera::Camera& camera) {
@@ -364,6 +388,9 @@ void HighlightRenderer::renderImmediate(const Camera::Camera& camera) {
 #else
     glBindVertexArray(0);
 #endif
+    
+    // Restore shader program
+    glUseProgram(0);
 }
 
 Rendering::Color HighlightRenderer::calculateAnimatedColor(const Rendering::Color& baseColor, 
@@ -446,7 +473,6 @@ void HighlightRenderer::createHighlightShader() {
         uniform mat4 u_model;
         uniform mat4 u_view;
         uniform mat4 u_projection;
-        uniform float u_time;
         
         out vec3 v_normal;
         out vec3 v_worldPos;
@@ -476,7 +502,9 @@ void HighlightRenderer::createHighlightShader() {
             fresnel = pow(fresnel, 2.0);
             
             vec4 color = u_color;
-            color.a *= (0.3 + 0.7 * fresnel);
+            // Animate the color using time
+            float pulse = sin(u_time * 2.0) * 0.5 + 0.5;
+            color.a *= (0.3 + 0.7 * fresnel) * (0.7 + 0.3 * pulse);
             
             FragColor = color;
         }
@@ -487,15 +515,52 @@ void HighlightRenderer::createHighlightShader() {
     glShaderSource(vertexShader, 1, &vertexShaderSrc, nullptr);
     glCompileShader(vertexShader);
     
+    // Check vertex shader compilation
+    GLint success;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        GLint logLength;
+        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logLength);
+        if (logLength > 0) {
+            std::vector<char> log(logLength);
+            glGetShaderInfoLog(vertexShader, logLength, nullptr, log.data());
+            std::cerr << "HighlightRenderer vertex shader compilation error: " << log.data() << std::endl;
+        }
+    }
+    
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSrc, nullptr);
     glCompileShader(fragmentShader);
+    
+    // Check fragment shader compilation
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        GLint logLength;
+        glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logLength);
+        if (logLength > 0) {
+            std::vector<char> log(logLength);
+            glGetShaderInfoLog(fragmentShader, logLength, nullptr, log.data());
+            std::cerr << "HighlightRenderer fragment shader compilation error: " << log.data() << std::endl;
+        }
+    }
     
     // Create program
     m_highlightShader = glCreateProgram();
     glAttachShader(m_highlightShader, vertexShader);
     glAttachShader(m_highlightShader, fragmentShader);
     glLinkProgram(m_highlightShader);
+    
+    // Check program linking
+    glGetProgramiv(m_highlightShader, GL_LINK_STATUS, &success);
+    if (!success) {
+        GLint logLength;
+        glGetProgramiv(m_highlightShader, GL_INFO_LOG_LENGTH, &logLength);
+        if (logLength > 0) {
+            std::vector<char> log(logLength);
+            glGetProgramInfoLog(m_highlightShader, logLength, nullptr, log.data());
+            std::cerr << "HighlightRenderer shader linking error: " << log.data() << std::endl;
+        }
+    }
     
     // Clean up shaders
     glDeleteShader(vertexShader);

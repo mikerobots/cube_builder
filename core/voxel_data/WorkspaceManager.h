@@ -73,24 +73,26 @@ public:
         return (m_size.x == m_size.y) && (m_size.y == m_size.z);
     }
     
-    // Get workspace bounds
+    // Get workspace bounds (centered at origin)
     Math::Vector3f getMinBounds() const {
-        return Math::Vector3f(0, 0, 0);
+        return Math::Vector3f(-m_size.x * 0.5f, 0.0f, -m_size.z * 0.5f);
     }
     
     Math::Vector3f getMaxBounds() const {
-        return m_size;
+        return Math::Vector3f(m_size.x * 0.5f, m_size.y, m_size.z * 0.5f);
     }
     
     Math::Vector3f getCenter() const {
-        return m_size * 0.5f;
+        return Math::Vector3f(0.0f, m_size.y * 0.5f, 0.0f);
     }
     
-    // Position validation
+    // Position validation (centered workspace, Y >= 0)
     bool isPositionValid(const Math::Vector3f& position) const {
-        return position.x >= 0 && position.x <= m_size.x &&
+        float halfX = m_size.x * 0.5f;
+        float halfZ = m_size.z * 0.5f;
+        return position.x >= -halfX && position.x <= halfX &&
                position.y >= 0 && position.y <= m_size.y &&
-               position.z >= 0 && position.z <= m_size.z;
+               position.z >= -halfZ && position.z <= halfZ;
     }
     
     bool isVoxelPositionValid(const VoxelPosition& voxelPos) const {
@@ -108,10 +110,12 @@ public:
     
     // Clamp position to workspace bounds
     Math::Vector3f clampPosition(const Math::Vector3f& position) const {
+        float halfX = m_size.x * 0.5f;
+        float halfZ = m_size.z * 0.5f;
         return Math::Vector3f(
-            std::clamp(position.x, 0.0f, m_size.x),
+            std::clamp(position.x, -halfX, halfX),
             std::clamp(position.y, 0.0f, m_size.y),
-            std::clamp(position.z, 0.0f, m_size.z)
+            std::clamp(position.z, -halfZ, halfZ)
         );
     }
     

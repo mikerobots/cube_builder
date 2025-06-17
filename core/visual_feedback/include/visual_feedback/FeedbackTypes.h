@@ -4,14 +4,14 @@
 #include <cstdint>
 #include <string>
 
-#include "RenderTypes.h"
-#include "VoxelTypes.h"
-#include "Vector3f.h"
-#include "Vector2f.h"
-#include "Vector3i.h"
-#include "BoundingBox.h"
-#include "Quaternion.h"
-#include "Matrix4f.h"
+#include "core/rendering/RenderTypes.h"
+#include "core/voxel_data/VoxelTypes.h"
+#include "foundation/math/Vector3f.h"
+#include "foundation/math/Vector2f.h"
+#include "foundation/math/Vector3i.h"
+#include "foundation/math/BoundingBox.h"
+#include "foundation/math/Quaternion.h"
+#include "foundation/math/Matrix4f.h"
 
 namespace VoxelEditor {
 namespace VisualFeedback {
@@ -63,9 +63,13 @@ public:
     Face() = default;
     Face(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir);
     
+    // Special constructor for ground plane (Enhancement)
+    static Face GroundPlane(const Math::Vector3f& hitPoint);
+    
     // Face identification
     FaceId getId() const;
     bool isValid() const { return m_valid; }
+    bool isGroundPlane() const { return m_isGroundPlane; }
     
     // Properties
     Math::Vector3i getVoxelPosition() const { return m_voxelPosition; }
@@ -83,11 +87,16 @@ public:
     bool operator==(const Face& other) const;
     bool operator!=(const Face& other) const { return !(*this == other); }
     
+    // Ground plane specific (Enhancement)
+    Math::Vector3f getGroundPlaneHitPoint() const { return m_groundHitPoint; }
+    
 private:
     Math::Vector3i m_voxelPosition;
     VoxelData::VoxelResolution m_resolution;
     FaceDirection m_direction;
     bool m_valid = false;
+    bool m_isGroundPlane = false;  // Enhancement
+    Math::Vector3f m_groundHitPoint;  // Enhancement
     
     float getVoxelSize() const;
 };
@@ -123,6 +132,7 @@ public:
     
     // Factory methods
     static OutlineStyle VoxelPreview();
+    static OutlineStyle VoxelPreviewInvalid(); // Red outline for invalid placement
     static OutlineStyle GroupBoundary();
     static OutlineStyle SelectionBox();
     static OutlineStyle WorkspaceBounds();

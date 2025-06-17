@@ -19,12 +19,18 @@ enum class InteractionMode {
 
 class CameraController {
 public:
+    // Constants
+    static constexpr float DEFAULT_DRAG_THRESHOLD = 3.0f;  // pixels
+    static constexpr float ORBIT_SCALE = 180.0f;          // degrees per normalized delta
+    static constexpr float PAN_DISTANCE_FACTOR = 10.0f;   // reference distance for pan scaling
+    static constexpr float ZOOM_SCALE = 0.5f;             // zoom speed factor
+
     CameraController(Events::EventDispatcher* eventDispatcher = nullptr)
         : m_camera(std::make_unique<OrbitCamera>(eventDispatcher))
         , m_viewport(std::make_unique<Viewport>())
         , m_interactionMode(InteractionMode::NONE)
         , m_lastMousePos(0, 0)
-        , m_mouseDragThreshold(3.0f)
+        , m_mouseDragThreshold(DEFAULT_DRAG_THRESHOLD)
         , m_isDragging(false) {
         
         // Set up camera to use viewport aspect ratio
@@ -211,18 +217,18 @@ private:
 
     void handleOrbit(const Math::Vector2f& delta) {
         // Scale rotation based on distance for more intuitive control
-        float distanceScale = m_camera->getDistance() / 10.0f;
+        float distanceScale = m_camera->getDistance() / PAN_DISTANCE_FACTOR;
         distanceScale = Math::clamp(distanceScale, 0.1f, 2.0f);
         
         m_camera->orbit(
-            -delta.x * 180.0f * distanceScale, // Negative for intuitive left/right
-            -delta.y * 180.0f * distanceScale  // Negative for intuitive up/down
+            -delta.x * ORBIT_SCALE * distanceScale, // Negative for intuitive left/right
+            -delta.y * ORBIT_SCALE * distanceScale  // Negative for intuitive up/down
         );
     }
 
     void handlePan(const Math::Vector2f& delta) {
         // Scale panning based on distance for consistent feel
-        float distanceScale = m_camera->getDistance() / 10.0f;
+        float distanceScale = m_camera->getDistance() / PAN_DISTANCE_FACTOR;
         
         Math::Vector3f panDelta(
             -delta.x * distanceScale, // Negative for intuitive left/right
@@ -235,7 +241,7 @@ private:
 
     void handleZoom(const Math::Vector2f& delta) {
         // Use vertical mouse movement for zoom
-        float zoomDelta = delta.y * m_camera->getDistance() * 0.5f;
+        float zoomDelta = delta.y * m_camera->getDistance() * ZOOM_SCALE;
         m_camera->zoom(zoomDelta);
     }
 

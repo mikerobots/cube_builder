@@ -24,6 +24,7 @@ class OpenGLRenderer;
 class ShaderManager;
 class RenderState;
 class FrameBuffer;
+class GroundPlaneGrid;
 
 class RenderEngine {
 public:
@@ -127,16 +128,27 @@ public:
     const RenderStats& getRenderStats() const { return m_stats; }
     void captureFrame(const std::string& filename);
     
+    // Ground plane grid
+    void setGroundPlaneGridVisible(bool visible);
+    bool isGroundPlaneGridVisible() const;
+    void updateGroundPlaneGrid(const Math::Vector3f& workspaceSize);
+    void updateGroundPlaneGridAnimation(float deltaTime);
+    void renderGroundPlaneGrid(const Math::Vector3f& cursorWorldPos);
+    
     // Utility functions
     void setupMeshBuffers(Mesh& mesh);
     void uploadMeshData(const Mesh& mesh);
     void cleanupMeshBuffers(Mesh& mesh);
     
 private:
+    // Helper methods
+    std::string findShaderDirectory() const;
+    
     // Core components
     std::unique_ptr<OpenGLRenderer> m_glRenderer;
     std::unique_ptr<ShaderManager> m_shaderManager;
     std::unique_ptr<RenderState> m_renderState;
+    std::unique_ptr<GroundPlaneGrid> m_groundPlaneGrid;
     // std::unique_ptr<FrameBuffer> m_defaultFrameBuffer; // TODO: Implement
     // FrameBuffer* m_currentRenderTarget; // TODO: Implement
     

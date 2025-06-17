@@ -71,26 +71,27 @@ TEST_F(ShaderAttributeBindingTest, AttributeLocationMapping) {
     // layout (location = 1) in vec3 aNormal;
     // layout (location = 2) in vec3 aColor;
     
-    // The OpenGLRenderer tries to bind:
-    // 0 -> a_position / aPos
-    // 1 -> a_normal / aNormal
-    // 2 -> a_texCoord / aColor  (mismatch!)
-    // 3 -> a_color
+    // The OpenGLRenderer has been fixed to bind:
+    // 0 -> Position
+    // 1 -> Normal
+    // 2 -> Color
+    // 3 -> TexCoord0
     
-    // Test that we need to fix the binding order
+    // Test that the binding order is correct
     std::vector<VertexAttribute> expectedOrder = {
         VertexAttribute::Position,  // location 0
         VertexAttribute::Normal,    // location 1
-        VertexAttribute::Color,     // location 2 (not TexCoord!)
+        VertexAttribute::Color,     // location 2 (matches shader!)
     };
     
-    // Verify the shader expects color at location 2
+    // Verify enum values (these are just the enum values, not the binding locations)
     EXPECT_EQ(static_cast<int>(VertexAttribute::Position), 0);
     EXPECT_EQ(static_cast<int>(VertexAttribute::Normal), 1);
     EXPECT_EQ(static_cast<int>(VertexAttribute::TexCoord0), 2);
-    EXPECT_EQ(static_cast<int>(VertexAttribute::Color), 3);
+    EXPECT_EQ(static_cast<int>(VertexAttribute::TexCoord1), 3);
+    EXPECT_EQ(static_cast<int>(VertexAttribute::Color), 4);
     
-    // This shows the mismatch - shader wants Color at 2, but enum has TexCoord at 2
+    // The OpenGLRenderer correctly maps Color to location 2 in setupVertexAttributes
 }
 
 TEST_F(ShaderAttributeBindingTest, MeshVertexGeneration) {

@@ -35,9 +35,20 @@ void RenderState::setDepthWrite(bool enabled) {
 }
 
 void RenderState::setBlending(bool enabled, BlendMode mode) {
-    if (m_pending.blending != enabled || m_pending.blendMode != mode) {
+    bool needsUpdate = false;
+    
+    if (m_pending.blending != enabled) {
         m_pending.blending = enabled;
+        needsUpdate = true;
+    }
+    
+    // Only update blend mode when enabling blending
+    if (enabled && m_pending.blendMode != mode) {
         m_pending.blendMode = mode;
+        needsUpdate = true;
+    }
+    
+    if (needsUpdate) {
         markStateDirty();
     }
 }

@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/visual_feedback/FeedbackTypes.h"
 
-using namespace VoxelEditor::VisualFeedback;
 using namespace VoxelEditor::Math;
 using namespace VoxelEditor::VoxelData;
 
@@ -15,9 +14,9 @@ protected:
 TEST_F(FeedbackTypesTest, FaceConstruction) {
     Vector3i voxelPos(1, 2, 3);
     VoxelResolution resolution = VoxelResolution::Size_32cm;
-    FaceDirection direction = FaceDirection::PositiveX;
+    VoxelEditor::VisualFeedback::FaceDirection direction = VoxelEditor::VisualFeedback::FaceDirection::PositiveX;
     
-    Face face(voxelPos, resolution, direction);
+    VoxelEditor::VisualFeedback::Face face(voxelPos, resolution, direction);
     
     EXPECT_TRUE(face.isValid());
     EXPECT_EQ(face.getVoxelPosition(), voxelPos);
@@ -26,16 +25,16 @@ TEST_F(FeedbackTypesTest, FaceConstruction) {
 }
 
 TEST_F(FeedbackTypesTest, FaceId) {
-    Face face1(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    Face face2(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    Face face3(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveY);
+    VoxelEditor::VisualFeedback::Face face1(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face2(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face3(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveY);
     
     EXPECT_EQ(face1.getId(), face2.getId());
     EXPECT_NE(face1.getId(), face3.getId());
 }
 
 TEST_F(FeedbackTypesTest, FaceWorldPosition) {
-    Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
     Vector3f worldPos = face.getWorldPosition();
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
@@ -46,7 +45,7 @@ TEST_F(FeedbackTypesTest, FaceWorldPosition) {
 }
 
 TEST_F(FeedbackTypesTest, FaceNormal) {
-    Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
     Vector3f normal = face.getNormal();
     
@@ -56,7 +55,7 @@ TEST_F(FeedbackTypesTest, FaceNormal) {
 }
 
 TEST_F(FeedbackTypesTest, FaceCorners) {
-    Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
     auto corners = face.getCorners();
     
@@ -71,7 +70,7 @@ TEST_F(FeedbackTypesTest, FaceCorners) {
 }
 
 TEST_F(FeedbackTypesTest, FaceArea) {
-    Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
     float area = face.getArea();
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
@@ -81,9 +80,9 @@ TEST_F(FeedbackTypesTest, FaceArea) {
 }
 
 TEST_F(FeedbackTypesTest, FaceEquality) {
-    Face face1(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    Face face2(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
-    Face face3(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveY);
+    VoxelEditor::VisualFeedback::Face face1(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face2(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
+    VoxelEditor::VisualFeedback::Face face3(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveY);
     
     EXPECT_EQ(face1, face2);
     EXPECT_NE(face1, face3);
@@ -110,7 +109,7 @@ TEST_F(FeedbackTypesTest, RayPointAt) {
 }
 
 TEST_F(FeedbackTypesTest, TransformMatrix) {
-    Transform transform;
+    VoxelEditor::VisualFeedback::Transform transform;
     transform.position = Vector3f(1, 2, 3);
     transform.scale = Vector3f(2, 2, 2);
     
@@ -123,10 +122,10 @@ TEST_F(FeedbackTypesTest, TransformMatrix) {
 }
 
 TEST_F(FeedbackTypesTest, HighlightStyleFactories) {
-    auto faceStyle = HighlightStyle::Face();
-    auto selectionStyle = HighlightStyle::Selection();
-    auto groupStyle = HighlightStyle::Group();
-    auto previewStyle = HighlightStyle::Preview();
+    auto faceStyle = VoxelEditor::VisualFeedback::HighlightStyle::Face();
+    auto selectionStyle = VoxelEditor::VisualFeedback::HighlightStyle::Selection();
+    auto groupStyle = VoxelEditor::VisualFeedback::HighlightStyle::Group();
+    auto previewStyle = VoxelEditor::VisualFeedback::HighlightStyle::Preview();
     
     EXPECT_TRUE(faceStyle.animated);
     EXPECT_TRUE(selectionStyle.animated);
@@ -139,23 +138,23 @@ TEST_F(FeedbackTypesTest, HighlightStyleFactories) {
 }
 
 TEST_F(FeedbackTypesTest, OutlineStyleFactories) {
-    auto voxelStyle = OutlineStyle::VoxelPreview();
-    auto groupStyle = OutlineStyle::GroupBoundary();
-    auto selectionStyle = OutlineStyle::SelectionBox();
-    auto workspaceStyle = OutlineStyle::WorkspaceBounds();
+    auto voxelStyle = VoxelEditor::VisualFeedback::OutlineStyle::VoxelPreview();
+    auto groupStyle = VoxelEditor::VisualFeedback::OutlineStyle::GroupBoundary();
+    auto selectionStyle = VoxelEditor::VisualFeedback::OutlineStyle::SelectionBox();
+    auto workspaceStyle = VoxelEditor::VisualFeedback::OutlineStyle::WorkspaceBounds();
     
-    EXPECT_EQ(voxelStyle.pattern, LinePattern::Solid);
-    EXPECT_EQ(groupStyle.pattern, LinePattern::Dashed);
-    EXPECT_EQ(selectionStyle.pattern, LinePattern::Solid);
-    EXPECT_EQ(workspaceStyle.pattern, LinePattern::Dotted);
+    EXPECT_EQ(voxelStyle.pattern, VoxelEditor::VisualFeedback::LinePattern::Solid);
+    EXPECT_EQ(groupStyle.pattern, VoxelEditor::VisualFeedback::LinePattern::Dashed);
+    EXPECT_EQ(selectionStyle.pattern, VoxelEditor::VisualFeedback::LinePattern::Solid);
+    EXPECT_EQ(workspaceStyle.pattern, VoxelEditor::VisualFeedback::LinePattern::Dotted);
 }
 
 TEST_F(FeedbackTypesTest, TextStyleFactories) {
-    auto defaultStyle = TextStyle::Default();
-    auto headerStyle = TextStyle::Header();
-    auto debugStyle = TextStyle::Debug();
-    auto warningStyle = TextStyle::Warning();
-    auto errorStyle = TextStyle::Error();
+    auto defaultStyle = VoxelEditor::VisualFeedback::TextStyle::Default();
+    auto headerStyle = VoxelEditor::VisualFeedback::TextStyle::Header();
+    auto debugStyle = VoxelEditor::VisualFeedback::TextStyle::Debug();
+    auto warningStyle = VoxelEditor::VisualFeedback::TextStyle::Warning();
+    auto errorStyle = VoxelEditor::VisualFeedback::TextStyle::Error();
     
     EXPECT_FALSE(defaultStyle.background);
     EXPECT_TRUE(headerStyle.background);
@@ -168,12 +167,12 @@ TEST_F(FeedbackTypesTest, TextStyleFactories) {
 }
 
 TEST_F(FeedbackTypesTest, FaceDirectionUtils) {
-    auto normal = faceDirectionToNormal(FaceDirection::PositiveX);
+    auto normal = VoxelEditor::VisualFeedback::faceDirectionToNormal(VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     EXPECT_EQ(normal, Vector3f(1, 0, 0));
     
-    auto opposite = oppositeDirection(FaceDirection::PositiveX);
-    EXPECT_EQ(opposite, FaceDirection::NegativeX);
+    auto opposite = VoxelEditor::VisualFeedback::oppositeDirection(VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
+    EXPECT_EQ(opposite, VoxelEditor::VisualFeedback::FaceDirection::NegativeX);
     
-    opposite = oppositeDirection(FaceDirection::NegativeY);
-    EXPECT_EQ(opposite, FaceDirection::PositiveY);
+    opposite = VoxelEditor::VisualFeedback::oppositeDirection(VoxelEditor::VisualFeedback::FaceDirection::NegativeY);
+    EXPECT_EQ(opposite, VoxelEditor::VisualFeedback::FaceDirection::PositiveY);
 }

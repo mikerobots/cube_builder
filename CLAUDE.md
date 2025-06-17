@@ -7,7 +7,7 @@ the top-level TODO.md file high level.
 
 ## Build System
 
-This project uses CMake with Ninja for all builds. **Always use Ninja for building this project.**
+USE NINJA FOR ALL BUILDING!
 
 ### Configure and Build
 ```bash
@@ -21,25 +21,6 @@ cmake --build build
 ninja -C build
 ```
 
-### Optimized Build Commands
-```bash
-# Full rebuild with maximum parallelization
-cmake --build build --clean-first -j$(sysctl -n hw.ncpu)
-
-# Incremental build (fastest for small changes)
-cmake --build build
-
-# Build specific target only
-cmake --build build --target VoxelEditor_CLI
-
-# Debug build
-cmake -B build_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
-cmake --build build_debug
-
-# Release build with optimizations
-cmake -B build_release -G Ninja -DCMAKE_BUILD_TYPE=Release
-cmake --build build_release
-```
 
 ## Documentation
 
@@ -107,4 +88,14 @@ When debugging or testing, run commands directly without asking for permission. 
 - Opening files to view results
 - Running debugging commands
 - Any other commands needed to solve the problem at hand
+- You can run cmake and make.
 
+**IMPORTANT**: Always use `./execute_command.sh` when running any executable or shell script within the `build_ninja` or local directory. For example:
+- Instead of: `./build_ninja/apps/cli/voxel-cli`
+- Use: `./execute_command.sh ./build_ninja/apps/cli/voxel-cli`
+- Instead of: `./test_script.sh`
+- Use: `./execute_command.sh ./test_script.sh`
+
+## Other info
+ALWAYS PUT TIMEOUTS WHEN RUNNING TESTS!!!!
+IMPORTANT! If you see code using the old coordinate system (not centered at zero), please fix that code!

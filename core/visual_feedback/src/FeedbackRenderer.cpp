@@ -71,6 +71,30 @@ void FeedbackRenderer::renderVoxelPreview(const Math::Vector3i& position,
     m_highlighter->renderVoxelHighlight(position, resolution, highlightStyle);
 }
 
+void FeedbackRenderer::renderVoxelPreviewWithValidation(const Math::Vector3i& position, 
+                                                       VoxelData::VoxelResolution resolution, 
+                                                       bool isValid) {
+    if (!m_enabled || !m_voxelPreviewEnabled) return;
+    
+    m_previewPosition = position;
+    m_previewResolution = resolution;
+    
+    // REQ-4.1.1 & REQ-4.1.2: Green outline for valid, red for invalid
+    OutlineStyle outlineStyle = isValid ? 
+        OutlineStyle::VoxelPreview() : 
+        OutlineStyle::VoxelPreviewInvalid();
+    
+    m_outliner->renderVoxelOutline(position, resolution, outlineStyle);
+    
+    // Add subtle highlight
+    HighlightStyle highlightStyle = HighlightStyle::Preview();
+    highlightStyle.color = isValid ? 
+        Rendering::Color(0.0f, 1.0f, 0.0f, 0.2f) :  // Green for valid
+        Rendering::Color(1.0f, 0.0f, 0.0f, 0.2f);   // Red for invalid
+    
+    m_highlighter->renderVoxelHighlight(position, resolution, highlightStyle);
+}
+
 void FeedbackRenderer::clearVoxelPreview() {
     m_highlighter->clearVoxelHighlights();
     m_outliner->clearBatch();
@@ -145,6 +169,15 @@ void FeedbackRenderer::renderGridLines(VoxelData::VoxelResolution resolution, fl
     
     // This would be rendered in the overlay system
     // m_overlay->renderGrid(resolution, center, extent, camera);
+}
+
+void FeedbackRenderer::renderGroundPlaneGridEnhanced(const Math::Vector3f& center, float extent, 
+                                                    const Math::Vector3f& cursorPos, bool enableDynamicOpacity) {
+    if (!m_enabled || !m_workspaceVisualizationEnabled) return;
+    
+    // This would be rendered during the overlay pass
+    // The actual implementation is in OverlayRenderer::renderGroundPlaneGrid
+    // m_overlay->renderGroundPlaneGrid(center, extent, cursorPos, enableDynamicOpacity, camera);
 }
 
 void FeedbackRenderer::renderPerformanceMetrics(const RenderStats& stats) {

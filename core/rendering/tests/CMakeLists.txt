@@ -8,6 +8,8 @@ set(RENDERING_TEST_SOURCES
     test_RenderEngine.cpp
     test_ShaderManager.cpp
     test_ShaderAttributeBinding.cpp
+    test_ShaderAttributeValidation.cpp
+    test_HighlightShaderValidation.cpp
     test_ShaderUniforms.cpp
     test_ShaderManagerLogging.cpp
     test_ShaderManagerSimple.cpp
@@ -18,6 +20,13 @@ set(RENDERING_TEST_SOURCES
     test_RenderState.cpp
     test_EnhancedShaderValidation.cpp
     test_EdgeRendering.cpp
+    test_GroundPlaneGrid.cpp
+    test_GroundPlaneGridDynamics.cpp
+    test_GroundPlaneShaderFiles.cpp
+    test_InlineShaderValidation.cpp
+    test_FileBasedShaderValidation.cpp
+    test_ShaderVisualValidation.cpp
+    test_GroundPlaneCheckerboard.cpp
 )
 
 add_executable(VoxelEditor_Rendering_Tests ${RENDERING_TEST_SOURCES})
@@ -33,6 +42,8 @@ target_link_libraries(VoxelEditor_Rendering_Tests
     VoxelEditor_Camera
     VoxelEditor_CLI_Lib  # For VoxelMeshGenerator
     VoxelEditor_SurfaceGen  # For SurfaceTypes
+    VoxelEditor_VisualFeedback  # For HighlightRenderer
+    VoxelEditor_VoxelData  # For performance tests
     glad
     GTest::gtest
     GTest::gtest_main
@@ -55,3 +66,13 @@ endif()
 
 include(GoogleTest)
 gtest_discover_tests(VoxelEditor_Rendering_Tests)
+
+# Copy shader files to build directory for rendering tests
+add_custom_command(TARGET VoxelEditor_Rendering_Tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory 
+        $<TARGET_FILE_DIR:VoxelEditor_Rendering_Tests>/core/rendering/shaders
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/core/rendering/shaders
+        $<TARGET_FILE_DIR:VoxelEditor_Rendering_Tests>/core/rendering/shaders
+    COMMENT "Copying shader files for VoxelEditor_Rendering_Tests"
+)

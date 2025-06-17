@@ -74,7 +74,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/Users/michaelhalloran/cube_edit/build_ninja/apps/shader_test/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/Users/michaelhalloran/cube_edit/build_ninja/tests/integration/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/Users/michaelhalloran/cube_edit/build_ninja/tests/verification/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

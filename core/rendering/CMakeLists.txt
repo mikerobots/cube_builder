@@ -9,6 +9,7 @@ add_library(VoxelEditor_Rendering STATIC
     RenderState.h
     ShaderManager.h
     ShaderManagerSafe.h
+    GroundPlaneGrid.h
     
     # Source files
     RenderTypes.cpp
@@ -17,6 +18,7 @@ add_library(VoxelEditor_Rendering STATIC
     RenderState.cpp
     ShaderManager.cpp
     ShaderManagerSafe.cpp
+    GroundPlaneGrid.cpp
 )
 
 # Add macOS-specific OpenGL loader

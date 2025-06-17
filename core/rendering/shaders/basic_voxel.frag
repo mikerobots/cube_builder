@@ -2,7 +2,7 @@
 
 in vec3 FragPos;
 in vec3 Normal;
-in vec3 Color;
+in vec4 Color;
 
 out vec4 FragColor;
 
@@ -29,6 +29,6 @@ void main() {
     vec3 specular = specularStrength * spec * lightColor;
     
     // Combine results
-    vec3 result = (ambient + diffuse + specular) * Color;
-    FragColor = vec4(result, 1.0);
+    vec3 result = (ambient + diffuse + specular) * Color.rgb;
+    FragColor = vec4(result, Color.a);
 }

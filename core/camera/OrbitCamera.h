@@ -256,7 +256,9 @@ private:
 
     void updateSmoothing(float deltaTime) {
         bool changed = false;
-        float lerpFactor = 1.0f - std::pow(1.0f - m_smoothFactor, deltaTime * 60.0f); // 60fps reference
+        // Frame-rate independent smoothing using exponential decay
+        // The smoothFactor is the proportion to move per second at 1 FPS
+        float lerpFactor = 1.0f - std::pow(1.0f - m_smoothFactor, deltaTime);
         
         // Smooth distance
         if (std::abs(m_distance - m_targetDistance) > 0.001f) {

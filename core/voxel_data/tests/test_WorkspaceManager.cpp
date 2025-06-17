@@ -60,9 +60,11 @@ TEST_F(WorkspaceManagerTest, DefaultConstruction) {
     EXPECT_FLOAT_EQ(defaultSize.y, 5.0f);
     EXPECT_FLOAT_EQ(defaultSize.z, 5.0f);
     
+    // Center coordinate system: X and Z from -2.5 to 2.5, Y from 0 to 5
     EXPECT_TRUE(defaultManager.isPositionValid(Vector3f(0.0f, 0.0f, 0.0f)));
     EXPECT_TRUE(defaultManager.isPositionValid(Vector3f(2.0f, 2.0f, 2.0f)));
-    EXPECT_FALSE(defaultManager.isPositionValid(Vector3f(-2.0f, -2.0f, -2.0f))); // Negative positions are invalid
+    EXPECT_TRUE(defaultManager.isPositionValid(Vector3f(-2.0f, 2.0f, -2.0f))); // X and Z can be negative
+    EXPECT_FALSE(defaultManager.isPositionValid(Vector3f(0.0f, -1.0f, 0.0f))); // Y cannot be negative
 }
 
 TEST_F(WorkspaceManagerTest, ConstructionWithEventDispatcher) {
@@ -144,13 +146,15 @@ TEST_F(WorkspaceManagerTest, CubicSizeShorthand) {
 TEST_F(WorkspaceManagerTest, PositionBoundsChecking) {
     manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
     
-    // Test positions within bounds (0-based coordinate system)
+    // Test positions within bounds (centered coordinate system)
+    // X: -2 to 2, Y: 0 to 6, Z: -4 to 4
     std::vector<Vector3f> validPositions = {
         Vector3f(0.0f, 0.0f, 0.0f),     // Origin
-        Vector3f(2.0f, 3.0f, 4.0f),     // Center
-        Vector3f(3.9f, 5.9f, 7.9f),     // Near max bounds
-        Vector3f(4.0f, 6.0f, 8.0f),     // Exactly at max bounds
-        Vector3f(1.0f, 1.5f, 2.0f),     // Various positions within bounds
+        Vector3f(-2.0f, 0.0f, -4.0f),   // Min corner (with Y=0)
+        Vector3f(2.0f, 6.0f, 4.0f),     // Max corner
+        Vector3f(1.9f, 5.9f, 3.9f),     // Near max bounds
+        Vector3f(-1.9f, 0.1f, -3.9f),   // Near min bounds
+        Vector3f(0.0f, 3.0f, 0.0f),     // Center
     };
     
     for (const auto& pos : validPositions) {
@@ -160,14 +164,14 @@ TEST_F(WorkspaceManagerTest, PositionBoundsChecking) {
     
     // Test positions outside bounds
     std::vector<Vector3f> invalidPositions = {
-        Vector3f(4.1f, 0.0f, 0.0f),     // X too large
-        Vector3f(-0.1f, 0.0f, 0.0f),    // X negative
+        Vector3f(2.1f, 0.0f, 0.0f),     // X too large
+        Vector3f(-2.1f, 0.0f, 0.0f),    // X too small
         Vector3f(0.0f, 6.1f, 0.0f),     // Y too large
-        Vector3f(0.0f, -0.1f, 0.0f),    // Y negative
-        Vector3f(0.0f, 0.0f, 8.1f),     // Z too large
-        Vector3f(0.0f, 0.0f, -0.1f),    // Z negative
-        Vector3f(5.0f, 7.0f, 9.0f),     // All dimensions too large
-        Vector3f(-1.0f, -2.0f, -3.0f),  // All dimensions negative
+        Vector3f(0.0f, -0.1f, 0.0f),    // Y negative (not allowed)
+        Vector3f(0.0f, 0.0f, 4.1f),     // Z too large
+        Vector3f(0.0f, 0.0f, -4.1f),    // Z too small
+        Vector3f(3.0f, 7.0f, 5.0f),     // All dimensions too large
+        Vector3f(-3.0f, -1.0f, -5.0f),  // X,Z too small, Y negative
     };
     
     for (const auto& pos : invalidPositions) {
@@ -178,6 +182,7 @@ TEST_F(WorkspaceManagerTest, PositionBoundsChecking) {
 
 TEST_F(WorkspaceManagerTest, PositionClamping) {
     manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
+    // X: -2 to 2, Y: 0 to 6, Z: -4 to 4
     
     // Test clamping of out-of-bounds positions
     struct TestCase {
@@ -186,14 +191,15 @@ TEST_F(WorkspaceManagerTest, PositionClamping) {
     };
     
     std::vector<TestCase> testCases = {
-        { Vector3f(5.0f, 3.0f, 4.0f), Vector3f(4.0f, 3.0f, 4.0f) },     // X clamped to max
-        { Vector3f(-1.0f, 3.0f, 4.0f), Vector3f(0.0f, 3.0f, 4.0f) },    // X clamped to min
-        { Vector3f(2.0f, 7.0f, 4.0f), Vector3f(2.0f, 6.0f, 4.0f) },     // Y clamped to max
-        { Vector3f(2.0f, -1.0f, 4.0f), Vector3f(2.0f, 0.0f, 4.0f) },    // Y clamped to min
-        { Vector3f(2.0f, 3.0f, 9.0f), Vector3f(2.0f, 3.0f, 8.0f) },     // Z clamped to max
-        { Vector3f(2.0f, 3.0f, -1.0f), Vector3f(2.0f, 3.0f, 0.0f) },    // Z clamped to min
-        { Vector3f(5.0f, 7.0f, 9.0f), Vector3f(4.0f, 6.0f, 8.0f) },     // All dimensions clamped
-        { Vector3f(2.0f, 3.0f, 4.0f), Vector3f(2.0f, 3.0f, 4.0f) },     // No clamping needed
+        { Vector3f(3.0f, 3.0f, 0.0f), Vector3f(2.0f, 3.0f, 0.0f) },      // X clamped to max
+        { Vector3f(-3.0f, 3.0f, 0.0f), Vector3f(-2.0f, 3.0f, 0.0f) },   // X clamped to min
+        { Vector3f(0.0f, 7.0f, 0.0f), Vector3f(0.0f, 6.0f, 0.0f) },      // Y clamped to max
+        { Vector3f(0.0f, -1.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f) },     // Y clamped to min
+        { Vector3f(0.0f, 3.0f, 5.0f), Vector3f(0.0f, 3.0f, 4.0f) },      // Z clamped to max
+        { Vector3f(0.0f, 3.0f, -5.0f), Vector3f(0.0f, 3.0f, -4.0f) },    // Z clamped to min
+        { Vector3f(5.0f, 7.0f, 9.0f), Vector3f(2.0f, 6.0f, 4.0f) },      // All dimensions clamped
+        { Vector3f(-5.0f, -1.0f, -9.0f), Vector3f(-2.0f, 0.0f, -4.0f) }, // All dimensions clamped
+        { Vector3f(1.0f, 3.0f, -2.0f), Vector3f(1.0f, 3.0f, -2.0f) },    // No clamping needed
     };
     
     for (const auto& testCase : testCases) {
@@ -210,23 +216,23 @@ TEST_F(WorkspaceManagerTest, PositionClamping) {
 TEST_F(WorkspaceManagerTest, BoundsRetrievalMethods) {
     manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
     
-    // Test getMinBounds - should always be (0,0,0)
+    // Test getMinBounds - centered coordinate system
     Vector3f minBounds = manager->getMinBounds();
-    EXPECT_FLOAT_EQ(minBounds.x, 0.0f);
-    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);
-    EXPECT_FLOAT_EQ(minBounds.z, 0.0f);
+    EXPECT_FLOAT_EQ(minBounds.x, -2.0f);  // -4/2
+    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);    // Y starts at 0
+    EXPECT_FLOAT_EQ(minBounds.z, -4.0f);  // -8/2
     
-    // Test getMaxBounds - should be the workspace size
+    // Test getMaxBounds - centered coordinate system
     Vector3f maxBounds = manager->getMaxBounds();
-    EXPECT_FLOAT_EQ(maxBounds.x, 4.0f);
-    EXPECT_FLOAT_EQ(maxBounds.y, 6.0f);
-    EXPECT_FLOAT_EQ(maxBounds.z, 8.0f);
+    EXPECT_FLOAT_EQ(maxBounds.x, 2.0f);   // 4/2
+    EXPECT_FLOAT_EQ(maxBounds.y, 6.0f);   // Full Y height
+    EXPECT_FLOAT_EQ(maxBounds.z, 4.0f);   // 8/2
     
     // Test getCenter
     Vector3f center = manager->getCenter();
-    EXPECT_FLOAT_EQ(center.x, 2.0f);  // 4 / 2
-    EXPECT_FLOAT_EQ(center.y, 3.0f);  // 6 / 2
-    EXPECT_FLOAT_EQ(center.z, 4.0f);  // 8 / 2
+    EXPECT_FLOAT_EQ(center.x, 0.0f);   // Centered at origin
+    EXPECT_FLOAT_EQ(center.y, 3.0f);   // 6 / 2
+    EXPECT_FLOAT_EQ(center.z, 0.0f);   // Centered at origin
 }
 
 TEST_F(WorkspaceManagerTest, SizeChangeCallbacks) {
@@ -346,45 +352,49 @@ TEST_F(WorkspaceManagerTest, MultipleSizeChanges) {
 TEST_F(WorkspaceManagerTest, EdgeCaseBounds) {
     // Test workspace at minimum size
     manager->setSize(Vector3f(2.0f, 2.0f, 2.0f));
+    // X: -1 to 1, Y: 0 to 2, Z: -1 to 1
     
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(1.0f, 1.0f, 1.0f)));
     EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 0.0f)));
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(2.0f, 2.0f, 2.0f))); // Exactly at max
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(2.1f, 1.0f, 1.0f))); // X too large
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(-0.1f, 1.0f, 1.0f))); // X negative
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(1.0f, 2.0f, 1.0f))); // Exactly at max
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(-1.0f, 0.0f, -1.0f))); // Exactly at min
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(1.1f, 1.0f, 0.0f))); // X too large
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(-1.1f, 1.0f, 0.0f))); // X too small
     
     // Test workspace at maximum size
     manager->setSize(Vector3f(8.0f, 8.0f, 8.0f));
+    // X: -4 to 4, Y: 0 to 8, Z: -4 to 4
     
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(4.0f, 4.0f, 4.0f)));
     EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 0.0f)));
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(8.0f, 8.0f, 8.0f))); // Exactly at max
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(8.1f, 4.0f, 4.0f))); // X too large
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(-0.1f, 4.0f, 4.0f))); // X negative
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(4.0f, 8.0f, 4.0f))); // Exactly at max
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(-4.0f, 0.0f, -4.0f))); // Exactly at min
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(4.1f, 4.0f, 0.0f))); // X too large
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(-4.1f, 4.0f, 0.0f))); // X too small
 }
 
 TEST_F(WorkspaceManagerTest, NonCubicWorkspaces) {
     // Test asymmetric workspace
     manager->setSize(Vector3f(2.0f, 4.0f, 8.0f));
+    // X: -1 to 1, Y: 0 to 4, Z: -4 to 4
     
     // Test bounds for each dimension independently
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(1.0f, 0.0f, 0.0f)));
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(2.0f, 0.0f, 0.0f))); // At max X
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(2.1f, 0.0f, 0.0f))); // Beyond max X
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(0.5f, 0.0f, 0.0f)));
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(1.0f, 0.0f, 0.0f))); // At max X
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(1.1f, 0.0f, 0.0f))); // Beyond max X
     
     EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 2.0f, 0.0f)));
     EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 4.0f, 0.0f))); // At max Y
     EXPECT_FALSE(manager->isPositionValid(Vector3f(0.0f, 4.1f, 0.0f))); // Beyond max Y
     
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 4.0f)));
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 8.0f))); // At max Z
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 8.1f))); // Beyond max Z
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 2.0f)));
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 4.0f))); // At max Z
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(0.0f, 0.0f, 4.1f))); // Beyond max Z
     
     // Test corner cases
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(1.0f, 2.0f, 4.0f)));
-    EXPECT_TRUE(manager->isPositionValid(Vector3f(2.0f, 4.0f, 8.0f))); // At max bounds
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(-1.0f, -2.0f, -4.0f))); // Negative coordinates
-    EXPECT_FALSE(manager->isPositionValid(Vector3f(2.1f, 4.1f, 8.1f))); // Beyond max bounds
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(0.5f, 2.0f, 2.0f)));
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(1.0f, 4.0f, 4.0f))); // At max bounds
+    EXPECT_TRUE(manager->isPositionValid(Vector3f(-1.0f, 0.0f, -4.0f))); // At min bounds (X,Z can be negative)
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(0.0f, -0.1f, 0.0f))); // Y negative not allowed
+    EXPECT_FALSE(manager->isPositionValid(Vector3f(1.1f, 4.1f, 4.1f))); // Beyond max bounds
 }
 
 TEST_F(WorkspaceManagerTest, ConstMethodsWithConstManager) {

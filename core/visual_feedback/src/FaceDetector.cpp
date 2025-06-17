@@ -13,17 +13,59 @@ FaceDetector::FaceDetector()
 
 FaceDetector::~FaceDetector() = default;
 
+// Enhancement: Ground plane detection
+Face FaceDetector::detectGroundPlane(const Ray& ray) {
+    // Check if ray intersects the Y=0 plane
+    if (std::abs(ray.direction.y) < 0.0001f) {
+        // Ray is parallel to ground plane
+        return Face();
+    }
+    
+    // Calculate intersection point
+    float t = -ray.origin.y / ray.direction.y;
+    
+    if (t < 0) {
+        // Intersection is behind the ray origin
+        return Face();
+    }
+    
+    Math::Vector3f hitPoint = ray.pointAt(t);
+    
+    // Check if hit point is within max distance
+    if (t > m_maxRayDistance) {
+        return Face();
+    }
+    
+    // Create a ground plane face
+    return Face::GroundPlane(hitPoint);
+}
+
+// Enhancement: Combined face/ground detection
+Face FaceDetector::detectFaceOrGround(const Ray& ray, const VoxelData::VoxelGrid& grid,
+                                     VoxelData::VoxelResolution resolution) {
+    // First try to detect a voxel face
+    Face voxelFace = detectFace(ray, grid, resolution);
+    
+    if (voxelFace.isValid()) {
+        return voxelFace;
+    }
+    
+    // If no voxel face hit, check ground plane
+    return detectGroundPlane(ray);
+}
+
 Face FaceDetector::detectFace(const Ray& ray, const VoxelData::VoxelGrid& grid, 
                              VoxelData::VoxelResolution resolution) {
     RaycastHit hit = raycastVoxelGrid(ray, grid, resolution);
     
+    // Log occasionally for debugging
     static int detectCount = 0;
     if (detectCount++ % 30 == 0) {
         Logging::Logger::getInstance().debugfc("FaceDetector",
-            "Ray: origin=(%.2f,%.2f,%.2f) dir=(%.3f,%.3f,%.3f) hit=%d",
+            "detectFace: Ray origin=(%.2f,%.2f,%.2f) dir=(%.3f,%.3f,%.3f) hit=%s",
             ray.origin.x, ray.origin.y, ray.origin.z,
             ray.direction.x, ray.direction.y, ray.direction.z,
-            hit.hit);
+            hit.hit ? "true" : "false");
     }
     
     if (hit.hit) {
@@ -82,6 +124,22 @@ bool FaceDetector::isValidFaceForPlacement(const Face& face, const VoxelData::Vo
 }
 
 Math::Vector3i FaceDetector::calculatePlacementPosition(const Face& face) {
+    // Enhancement: Handle ground plane faces
+    if (face.isGroundPlane()) {
+        // For ground plane, snap to nearest grid position at Y=0
+        Math::Vector3f hitPoint = face.getGroundPlaneHitPoint();
+        
+        // Snap to 1cm increments
+        Math::Vector3i gridPos(
+            static_cast<int>(std::round(hitPoint.x / 0.01f)),
+            0,  // Always Y=0 for ground plane
+            static_cast<int>(std::round(hitPoint.z / 0.01f))
+        );
+        
+        return gridPos;
+    }
+    
+    // Original voxel face logic
     Math::Vector3i pos = face.getVoxelPosition();
     
     switch (face.getDirection()) {
@@ -110,6 +168,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     voxelRay.origin = ray.origin / voxelSize;
     voxelRay.direction = ray.direction;
     
+    
     // Check if ray intersects grid bounds
     float tMin, tMax;
     Math::BoundingBox gridBounds(gridMin / voxelSize, gridMax / voxelSize);
@@ -120,6 +179,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     // Initialize traversal
     GridTraversal traversal;
     initializeTraversal(voxelRay, gridMin / voxelSize, 1.0f, traversal);
+    
     
     // Traverse grid
     float maxDistance = m_maxRayDistance / voxelSize;
@@ -134,10 +194,72 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
         bool valid = false;
     } closestHit;
     
+    // Track if we start inside a voxel for special handling
+    Math::Vector3i startVoxel = traversal.current;
+    bool startedInsideVoxel = false;
+    
+    // Check if we start inside a voxel
+    if (traversal.current.x >= 0 && traversal.current.y >= 0 && traversal.current.z >= 0 &&
+        traversal.current.x < grid.getGridDimensions().x &&
+        traversal.current.y < grid.getGridDimensions().y &&
+        traversal.current.z < grid.getGridDimensions().z) {
+        startedInsideVoxel = grid.getVoxel(traversal.current);
+    }
+    
+    // Track the previous voxel for exit detection
+    Math::Vector3i previousVoxel = traversal.current;
+    bool wasInsideStartVoxel = startedInsideVoxel;
+    
     while (currentDistance < maxDistance) {
         // Check current voxel
         if (traversal.current.x >= 0 && traversal.current.y >= 0 && traversal.current.z >= 0) {
-            if (grid.getVoxel(traversal.current)) {
+            bool isCurrentVoxel = grid.getVoxel(traversal.current);
+            
+            // Special case: ray started inside a voxel and we just exited it
+            if (startedInsideVoxel && wasInsideStartVoxel && 
+                (traversal.current.x != startVoxel.x || 
+                 traversal.current.y != startVoxel.y || 
+                 traversal.current.z != startVoxel.z)) {
+                
+                
+                // We just exited the starting voxel - determine which face
+                FaceDirection exitFace;
+                if (traversal.current.x != previousVoxel.x) {
+                    exitFace = (traversal.current.x > previousVoxel.x) ? 
+                        FaceDirection::PositiveX : FaceDirection::NegativeX;
+                } else if (traversal.current.y != previousVoxel.y) {
+                    exitFace = (traversal.current.y > previousVoxel.y) ? 
+                        FaceDirection::PositiveY : FaceDirection::NegativeY;
+                } else {
+                    exitFace = (traversal.current.z > previousVoxel.z) ? 
+                        FaceDirection::PositiveZ : FaceDirection::NegativeZ;
+                }
+                
+                // Create face for the exit
+                closestHit.valid = true;
+                closestHit.voxel = previousVoxel;
+                closestHit.distance = currentDistance * voxelSize;
+                closestHit.face = Face(previousVoxel, resolution, exitFace);
+                
+                // Set normal based on exit face
+                switch (exitFace) {
+                    case FaceDirection::PositiveX: closestHit.normal = Math::Vector3f(1, 0, 0); break;
+                    case FaceDirection::NegativeX: closestHit.normal = Math::Vector3f(-1, 0, 0); break;
+                    case FaceDirection::PositiveY: closestHit.normal = Math::Vector3f(0, 1, 0); break;
+                    case FaceDirection::NegativeY: closestHit.normal = Math::Vector3f(0, -1, 0); break;
+                    case FaceDirection::PositiveZ: closestHit.normal = Math::Vector3f(0, 0, 1); break;
+                    case FaceDirection::NegativeZ: closestHit.normal = Math::Vector3f(0, 0, -1); break;
+                }
+                
+                // Mark that we've handled the starting voxel
+                wasInsideStartVoxel = false;
+                
+                // Return the exit face immediately, even if we hit another voxel
+                break;
+            }
+            
+            // Normal case: ray hits a voxel from outside
+            if (isCurrentVoxel && !wasInsideStartVoxel) {
                 // Calculate actual distance to this voxel
                 Math::Vector3f voxelCenter(
                     traversal.current.x + 0.5f,
@@ -168,26 +290,47 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                         Math::Vector3f voxelMin(traversal.current.x, traversal.current.y, traversal.current.z);
                         Math::Vector3f voxelMax = voxelMin + Math::Vector3f(1, 1, 1);
                         
+                        
                         // Check which face the hit point is closest to
                         const float epsilon = 0.001f;
-                        if (std::abs(hitPoint.x - voxelMin.x) < epsilon) {
-                            closestHit.normal = Math::Vector3f(-1, 0, 0);
-                            closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeX);
-                        } else if (std::abs(hitPoint.x - voxelMax.x) < epsilon) {
-                            closestHit.normal = Math::Vector3f(1, 0, 0);
-                            closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveX);
-                        } else if (std::abs(hitPoint.y - voxelMin.y) < epsilon) {
-                            closestHit.normal = Math::Vector3f(0, -1, 0);
-                            closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeY);
-                        } else if (std::abs(hitPoint.y - voxelMax.y) < epsilon) {
-                            closestHit.normal = Math::Vector3f(0, 1, 0);
-                            closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveY);
-                        } else if (std::abs(hitPoint.z - voxelMin.z) < epsilon) {
-                            closestHit.normal = Math::Vector3f(0, 0, -1);
-                            closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeZ);
-                        } else if (std::abs(hitPoint.z - voxelMax.z) < epsilon) {
-                            closestHit.normal = Math::Vector3f(0, 0, 1);
-                            closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveZ);
+                        
+                        // For rays hitting exactly on edges/corners, we need to determine
+                        // which face was actually entered based on ray direction
+                        float xDist = std::min(std::abs(hitPoint.x - voxelMin.x), 
+                                             std::abs(hitPoint.x - voxelMax.x));
+                        float yDist = std::min(std::abs(hitPoint.y - voxelMin.y), 
+                                             std::abs(hitPoint.y - voxelMax.y));
+                        float zDist = std::min(std::abs(hitPoint.z - voxelMin.z), 
+                                             std::abs(hitPoint.z - voxelMax.z));
+                        
+                        // Find which axis has the smallest distance (most likely the hit face)
+                        if (zDist <= xDist && zDist <= yDist && zDist < epsilon) {
+                            // Hit on Z face
+                            if (std::abs(hitPoint.z - voxelMin.z) < epsilon) {
+                                closestHit.normal = Math::Vector3f(0, 0, -1);
+                                closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeZ);
+                            } else {
+                                closestHit.normal = Math::Vector3f(0, 0, 1);
+                                closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveZ);
+                            }
+                        } else if (yDist <= xDist && yDist < epsilon) {
+                            // Hit on Y face
+                            if (std::abs(hitPoint.y - voxelMin.y) < epsilon) {
+                                closestHit.normal = Math::Vector3f(0, -1, 0);
+                                closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeY);
+                            } else {
+                                closestHit.normal = Math::Vector3f(0, 1, 0);
+                                closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveY);
+                            }
+                        } else if (xDist < epsilon) {
+                            // Hit on X face
+                            if (std::abs(hitPoint.x - voxelMin.x) < epsilon) {
+                                closestHit.normal = Math::Vector3f(-1, 0, 0);
+                                closestHit.face = Face(traversal.current, resolution, FaceDirection::NegativeX);
+                            } else {
+                                closestHit.normal = Math::Vector3f(1, 0, 0);
+                                closestHit.face = Face(traversal.current, resolution, FaceDirection::PositiveX);
+                            }
                         }
                         
                         // Log which voxel was hit
@@ -199,6 +342,9 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                 }
             }
         }
+        
+        // Update tracking variables
+        previousVoxel = traversal.current;
         
         // Step to next voxel
         stepTraversal(traversal);
@@ -253,11 +399,13 @@ bool FaceDetector::rayIntersectsBox(const Ray& ray, const Math::BoundingBox& box
 
 void FaceDetector::initializeTraversal(const Ray& ray, const Math::Vector3f& gridMin, 
                                       float voxelSize, GridTraversal& traversal) const {
-    // Starting voxel
+    // Starting voxel - ray is already in voxel space, so voxelSize should be 1.0
+    // Add small epsilon to handle edge cases where ray origin is exactly on voxel boundary
+    const float nudge = 0.0001f;
     traversal.current = Math::Vector3i(
-        static_cast<int>(std::floor((ray.origin.x - gridMin.x) / voxelSize)),
-        static_cast<int>(std::floor((ray.origin.y - gridMin.y) / voxelSize)),
-        static_cast<int>(std::floor((ray.origin.z - gridMin.z) / voxelSize))
+        static_cast<int>(std::floor(ray.origin.x - gridMin.x + nudge)),
+        static_cast<int>(std::floor(ray.origin.y - gridMin.y + nudge)),
+        static_cast<int>(std::floor(ray.origin.z - gridMin.z + nudge))
     );
     
     // Step direction
@@ -271,27 +419,27 @@ void FaceDetector::initializeTraversal(const Ray& ray, const Math::Vector3f& gri
     const float epsilon = 0.0001f;
     
     if (std::abs(ray.direction.x) > epsilon) {
-        float nextX = gridMin.x + (traversal.current.x + (ray.direction.x > 0 ? 1 : 0)) * voxelSize;
+        float nextX = gridMin.x + (traversal.current.x + (ray.direction.x > 0 ? 1 : 0));
         traversal.tMax.x = (nextX - ray.origin.x) / ray.direction.x;
-        traversal.tDelta.x = voxelSize / std::abs(ray.direction.x);
+        traversal.tDelta.x = 1.0f / std::abs(ray.direction.x);
     } else {
         traversal.tMax.x = std::numeric_limits<float>::max();
         traversal.tDelta.x = std::numeric_limits<float>::max();
     }
     
     if (std::abs(ray.direction.y) > epsilon) {
-        float nextY = gridMin.y + (traversal.current.y + (ray.direction.y > 0 ? 1 : 0)) * voxelSize;
+        float nextY = gridMin.y + (traversal.current.y + (ray.direction.y > 0 ? 1 : 0));
         traversal.tMax.y = (nextY - ray.origin.y) / ray.direction.y;
-        traversal.tDelta.y = voxelSize / std::abs(ray.direction.y);
+        traversal.tDelta.y = 1.0f / std::abs(ray.direction.y);
     } else {
         traversal.tMax.y = std::numeric_limits<float>::max();
         traversal.tDelta.y = std::numeric_limits<float>::max();
     }
     
     if (std::abs(ray.direction.z) > epsilon) {
-        float nextZ = gridMin.z + (traversal.current.z + (ray.direction.z > 0 ? 1 : 0)) * voxelSize;
+        float nextZ = gridMin.z + (traversal.current.z + (ray.direction.z > 0 ? 1 : 0));
         traversal.tMax.z = (nextZ - ray.origin.z) / ray.direction.z;
-        traversal.tDelta.z = voxelSize / std::abs(ray.direction.z);
+        traversal.tDelta.z = 1.0f / std::abs(ray.direction.z);
     } else {
         traversal.tMax.z = std::numeric_limits<float>::max();
         traversal.tDelta.z = std::numeric_limits<float>::max();

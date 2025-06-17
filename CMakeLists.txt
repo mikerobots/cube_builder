@@ -64,10 +64,12 @@ add_subdirectory(external/glad)
 add_subdirectory(foundation)
 add_subdirectory(core)
 add_subdirectory(apps/cli)
+add_subdirectory(apps/shader_test)
 
 # Add tests if building with testing enabled
 if(BUILD_TESTING)
     add_subdirectory(tests/integration)
+    add_subdirectory(tests/verification)
 endif()
 
 # Optional: Build documentation

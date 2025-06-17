@@ -1,10 +1,10 @@
 workspace 5 5 5
 resolution 8cm
-place 1 1 1
-place 1 3 1
-place 3 1 1
-place 3 3 1
-place 2 2 3
+place -50cm 10cm -50cm
+place -50cm 30cm -50cm
+place 50cm 10cm -50cm
+place 50cm 30cm -50cm
+place 0cm 20cm 50cm
 view iso
 zoom 0.8
 screenshot test_output/multiple_voxels.ppm

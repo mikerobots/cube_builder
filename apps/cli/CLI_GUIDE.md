@@ -9,7 +9,7 @@
 
 2. **Create your first voxel**:
    ```
-   > place 0 0 0
+   > place 0cm 0cm 0cm
    ```
 
 3. **View from different angles**:
@@ -34,11 +34,17 @@
 
 ### Building with Voxels
 ```
-> place 0 0 0           # Place first voxel
-> place 1 0 0           # Place adjacent voxel
-> fill 0 0 0 5 0 5      # Fill a wall
-> delete 2 0 2          # Remove a voxel
+> place 0cm 0cm 0cm              # Place first voxel at origin
+> place 1m 0cm 0cm               # Place voxel 1 meter to the right
+> place -50cm 50cm -50cm         # Place voxel using cm units
+> fill 0m 0m 0m 2m 1m 2m         # Fill a 2x1x2 meter region
+> delete 50cm 0cm 50cm           # Remove a voxel
 ```
+
+**Note**: All coordinate commands now require units (cm or m). Examples:
+- `100cm` or `1m` (both equal 1 meter)
+- `-50cm` or `-0.5m` (negative coordinates allowed for X and Z)
+- `1.5m` or `150cm` (decimals supported)
 
 ### Using the Mouse
 - Hover over the render window to see green outline preview
@@ -64,6 +70,12 @@
 > zoom 1.5              # Zoom in 50%
 > rotate 45 0           # Rotate 45° horizontally
 > resetview             # Reset to default
+> grid off              # Hide ground plane grid
+> grid on               # Show ground plane grid
+> grid toggle           # Toggle grid visibility
+> edges off             # Hide voxel edges/wireframe
+> edges on              # Show voxel edges
+> edges toggle          # Toggle edge visibility
 ```
 
 ### File Operations
@@ -106,11 +118,15 @@
 ### Essential Commands
 | Command | Description | Example |
 |---------|-------------|---------|
-| `place` | Add a voxel | `place 0 0 0` |
-| `delete` | Remove a voxel | `delete 0 0 0` |
-| `fill` | Fill box region | `fill 0 0 0 5 5 5` |
+| `place` | Add a voxel | `place 1m 50cm 0cm` |
+| `delete` | Remove a voxel | `delete 1m 50cm 0cm` |
+| `fill` | Fill box region | `fill 0m 0m 0m 2m 1m 2m` |
+| `selectbox` | Select box region | `selectbox -1m 0m -1m 1m 2m 1m` |
 | `camera` | Change view | `camera front` |
+| `grid` | Toggle ground plane | `grid on/off/toggle` |
+| `edges` | Toggle voxel edges | `edges on/off/toggle` |
 | `save` | Save project | `save project.cvef` |
+| `build` | Show build info | `build` |
 | `help` | Get help | `help place` |
 
 ### View Presets
@@ -159,10 +175,12 @@
 ### Detailed Sculpture
 ```
 > new
-> resolution 8cm        # Start with medium size
-> place 0 0 0          # Build base shape
-> resolution 4cm       # Switch to finer detail
-> place 0 1 0          # Add details
-> resolution 2cm       # Finest details
-> export sculpture.stl # Export for 3D printing
+> resolution 8cm           # Start with medium size
+> place 0cm 0cm 0cm        # Build base shape at origin
+> place 8cm 0cm 0cm        # Add adjacent voxel
+> resolution 4cm           # Switch to finer detail
+> place 0cm 8cm 0cm        # Add details on top
+> resolution 2cm           # Finest details
+> place 2cm 12cm 2cm       # Fine detail work
+> export sculpture.stl     # Export for 3D printing
 ```

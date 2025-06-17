@@ -1,0 +1,31 @@
+workspace 6 6 6
+grid on
+view iso
+resolution 64cm
+place 200 0 200
+place 264 0 200
+place 200 0 264
+screenshot output/rendering/integration/workflow_1.ppm
+resolution 32cm
+place 200 64 200
+place 232 64 200
+place 200 64 232
+screenshot output/rendering/integration/workflow_2.ppm
+resolution 16cm
+place 216 96 216
+screenshot output/rendering/integration/workflow_3.ppm
+undo
+undo
+undo
+screenshot output/rendering/integration/workflow_undo.ppm
+redo
+redo
+screenshot output/rendering/integration/workflow_redo.ppm
+save output/rendering/integration/workflow_project.vox
+clear
+screenshot output/rendering/integration/workflow_clear.ppm
+load output/rendering/integration/workflow_project.vox
+screenshot output/rendering/integration/workflow_loaded.ppm
+export output/rendering/integration/workflow_export.stl
+stats
+quit

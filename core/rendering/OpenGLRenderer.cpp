@@ -74,6 +74,12 @@ bool OpenGLRenderer::initializeContext(const RenderConfig& config) {
         return false;
     }
     
+    // Check if we have a valid GL context
+    if (!hasValidGLContext()) {
+        // No OpenGL context available (e.g., unit tests)
+        return false;
+    }
+    
 #ifdef __APPLE__
     // Load OpenGL extensions on macOS
     if (!LoadOpenGLExtensions()) {
@@ -194,6 +200,13 @@ BufferId OpenGLRenderer::createVertexBuffer(const void* data, size_t size, Buffe
     info.size = size;
     info.isIndexBuffer = false;
     
+    // Skip OpenGL calls if no context
+    if (!m_contextValid) {
+        info.glHandle = 0;
+        m_buffers[id] = info;
+        return id;
+    }
+    
     // Clear any pending errors before starting
     while (glGetError() != GL_NO_ERROR) {}
     
@@ -216,6 +229,13 @@ BufferId OpenGLRenderer::createIndexBuffer(const uint32_t* indices, size_t count
     info.usage = usage;
     info.size = count * sizeof(uint32_t);
     info.isIndexBuffer = true;
+    
+    // Skip OpenGL calls if no context
+    if (!m_contextValid) {
+        info.glHandle = 0;
+        m_buffers[id] = info;
+        return id;
+    }
     
     // Clear any pending errors before starting
     while (glGetError() != GL_NO_ERROR) {}
@@ -267,6 +287,10 @@ void OpenGLRenderer::deleteBuffer(BufferId bufferId) {
 }
 
 uint32_t OpenGLRenderer::createVertexArray() {
+    if (!m_contextValid) {
+        return 0;
+    }
+    
     uint32_t vao = 0;
 #ifdef __APPLE__
     if (glGenVertexArrays) {
@@ -279,6 +303,10 @@ uint32_t OpenGLRenderer::createVertexArray() {
 }
 
 void OpenGLRenderer::bindVertexArray(uint32_t vaoId) {
+    if (!m_contextValid) {
+        return;
+    }
+    
     // If vaoId is 0, bind the default VAO
     if (vaoId == 0) {
         vaoId = m_defaultVAO;
@@ -305,6 +333,10 @@ void OpenGLRenderer::deleteVertexArray(uint32_t vaoId) {
 }
 
 void OpenGLRenderer::setupVertexAttributes(const std::vector<VertexAttribute>& attributes) {
+    if (!m_contextValid) {
+        return;
+    }
+    
     // Standard vertex attribute layout
     const struct {
         VertexAttribute attr;
@@ -354,8 +386,19 @@ void OpenGLRenderer::setupVertexAttributes(const std::vector<VertexAttribute>& a
 }
 
 void OpenGLRenderer::useProgram(ShaderId programId) {
+    if (programId == InvalidId) {
+        glUseProgram(0);
+        return;
+    }
+    
     auto it = m_programs.find(programId);
-    if (it == m_programs.end()) return;
+    if (it == m_programs.end()) {
+        static int errorCount = 0;
+        if (errorCount++ < 5) {
+            std::cerr << "OpenGLRenderer::useProgram: Program ID " << programId << " not found in map" << std::endl;
+        }
+        return;
+    }
     
     glUseProgram(it->second.glHandle);
 }
@@ -502,12 +545,6 @@ void OpenGLRenderer::drawElements(PrimitiveType type, int count, IndexType index
         std::cout << "  Face culling: " << (cullFace ? "ON" : "OFF") << std::endl;
         
         drawCount++;
-    }
-    
-    // Always check GL error before
-    GLenum errorBefore = glGetError();
-    if (errorBefore != GL_NO_ERROR) {
-        std::cerr << "GL Error before drawElements: " << errorBefore << std::endl;
     }
     
     glDrawElements(glPrimType, count, glIndexType, reinterpret_cast<const void*>(static_cast<size_t>(offset)));
@@ -982,6 +1019,13 @@ TextureId OpenGLRenderer::createTexture2D(int width, int height, TextureFormat f
     info.height = height;
     info.memorySize = calculateTextureMemory(width, height, format);
     
+    // Skip OpenGL calls if no context
+    if (!m_contextValid) {
+        info.glHandle = 0;
+        m_textures[id] = info;
+        return id;
+    }
+    
     glGenTextures(1, &info.glHandle);
     glBindTexture(GL_TEXTURE_2D, info.glHandle);
     
@@ -1190,6 +1234,12 @@ size_t OpenGLRenderer::calculateTextureMemory(int width, int height, TextureForm
         default: bitsPerPixel = 32; break;
     }
     return (width * height * bitsPerPixel) / 8;
+}
+
+bool OpenGLRenderer::hasValidGLContext() const {
+    // Try to get the GL version string as a simple context check
+    const GLubyte* version = glGetString(GL_VERSION);
+    return version != nullptr;
 }
 
 } // namespace Rendering

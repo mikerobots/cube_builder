@@ -74,6 +74,12 @@ public:
     float getFloatArg(size_t index, float defaultValue = 0.0f) const;
     bool getBoolArg(size_t index, bool defaultValue = false) const;
     
+    // Coordinate parsing with units
+    // Returns coordinate in grid units (1cm increments)
+    // Accepts formats: "100cm", "1.5m", "1m", "-2.5m"
+    // Returns -1 if invalid format
+    int getCoordinateArg(size_t index) const;
+    
     // Named argument access (for future --name=value style)
     bool hasOption(const std::string& name) const;
     std::string getOption(const std::string& name, const std::string& defaultValue = "") const;
@@ -153,6 +159,7 @@ namespace Commands {
     constexpr const char* STATUS = "status";
     constexpr const char* SETTINGS = "settings";
     constexpr const char* VALIDATE = "validate";
+    constexpr const char* BUILD = "build";
 }
 
 } // namespace VoxelEditor

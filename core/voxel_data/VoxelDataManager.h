@@ -4,12 +4,14 @@
 #include <memory>
 #include <mutex>
 #include <vector>
+#include <cmath>
 
 #include "VoxelTypes.h"
 #include "VoxelGrid.h"
 #include "WorkspaceManager.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
+#include "../input/PlacementValidation.h"
 
 namespace VoxelEditor {
 namespace VoxelData {
@@ -46,6 +48,16 @@ public:
     // Voxel operations
     bool setVoxel(const Math::Vector3i& pos, VoxelResolution resolution, bool value) {
         std::lock_guard<std::mutex> lock(m_mutex);
+        
+        // Validate 1cm increment position (includes Y >= 0 check)
+        if (!isValidIncrementPosition(pos)) {
+            return false;
+        }
+        
+        // Check for overlaps if we're setting a voxel (not removing)
+        if (value && wouldOverlapInternal(pos, resolution)) {
+            return false;
+        }
         
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
@@ -89,10 +101,65 @@ public:
     bool setVoxelAtWorldPos(const Math::Vector3f& worldPos, VoxelResolution resolution, bool value) {
         std::lock_guard<std::mutex> lock(m_mutex);
         
-        VoxelGrid* grid = getGrid(resolution);
-        if (!grid) return false;
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "setVoxelAtWorldPos called with worldPos=(%.3f, %.3f, %.3f), resolution=%d, value=%d",
+            worldPos.x, worldPos.y, worldPos.z, static_cast<int>(resolution), value);
         
-        return grid->setVoxelAtWorldPos(worldPos, value);
+        // Validate 1cm increment position for world coordinates
+        if (!isValidIncrementPosition(worldPos)) {
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Position failed increment validation");
+            return false;
+        }
+        
+        VoxelGrid* grid = getGrid(resolution);
+        if (!grid) {
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Failed to get grid for resolution %d", static_cast<int>(resolution));
+            return false;
+        }
+        
+        // Convert world position to grid position using the grid's coordinate system
+        Math::Vector3i gridPos = grid->worldToGrid(worldPos);
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "Converted to grid position: (%d, %d, %d)",
+            gridPos.x, gridPos.y, gridPos.z);
+        
+        // Check for overlaps if we're setting a voxel (not removing)
+        if (value) {
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Checking for overlaps...");
+            if (wouldOverlapInternal(gridPos, resolution)) {
+                Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                    "Position would overlap with existing voxel");
+                return false;
+            }
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "No overlaps detected");
+        }
+        
+        // Get the old value before setting
+        bool oldValue = grid->getVoxel(gridPos);
+        
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "Calling grid->setVoxel with gridPos (%d, %d, %d)",
+            gridPos.x, gridPos.y, gridPos.z);
+        bool result = grid->setVoxel(gridPos, value);
+        
+        // Dispatch event if successful and value changed
+        if (result && oldValue != value && m_eventDispatcher) {
+            Events::VoxelChangedEvent event{
+                gridPos,
+                resolution,
+                oldValue,
+                value
+            };
+            m_eventDispatcher->dispatch(event);
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Dispatched VoxelChangedEvent");
+        }
+        
+        return result;
     }
     
     bool setVoxelAtWorldPos(const Math::Vector3f& worldPos, bool value) {
@@ -300,6 +367,125 @@ public:
         return getAllVoxels(getActiveResolution());
     }
     
+    // Enhancement: 1cm increment validation
+    bool isValidIncrementPosition(const Math::Vector3i& pos) const {
+        // All integer positions are valid 1cm increments since our base unit is 1cm
+        // The constraint is simply that positions must be integers
+        // Additionally, Y must be >= 0 (no voxels below ground plane)
+        return pos.y >= 0;
+    }
+    
+    bool isValidIncrementPosition(const Math::Vector3f& worldPos) const {
+        // Check if world position aligns to 1cm grid
+        // Since 1cm = 0.01m, positions should be multiples of 0.01
+        const float epsilon = 0.0001f; // Small tolerance for float precision
+        
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "isValidIncrementPosition: checking worldPos=(%.6f, %.6f, %.6f)",
+            worldPos.x, worldPos.y, worldPos.z);
+        
+        // Check Y >= 0 constraint
+        if (worldPos.y < -epsilon) {
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Position failed Y >= 0 check");
+            return false;
+        }
+        
+        // Check if each component is close to a 1cm increment
+        float xRemainder = std::fmod(std::abs(worldPos.x), 0.01f);
+        float yRemainder = std::fmod(std::abs(worldPos.y), 0.01f);
+        float zRemainder = std::fmod(std::abs(worldPos.z), 0.01f);
+        
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "Remainders: x=%.6f, y=%.6f, z=%.6f",
+            xRemainder, yRemainder, zRemainder);
+        
+        bool result = (xRemainder < epsilon || xRemainder > (0.01f - epsilon)) &&
+                     (yRemainder < epsilon || yRemainder > (0.01f - epsilon)) &&
+                     (zRemainder < epsilon || zRemainder > (0.01f - epsilon));
+        
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "isValidIncrementPosition result: %s", result ? "true" : "false");
+        
+        return result;
+    }
+    
+    // Enhancement: Collision detection
+    bool wouldOverlap(const Math::Vector3i& pos, VoxelResolution resolution) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return wouldOverlapInternal(pos, resolution);
+    }
+    
+    bool wouldOverlap(const VoxelPosition& voxelPos) const {
+        return wouldOverlap(voxelPos.gridPos, voxelPos.resolution);
+    }
+    
+    // Enhancement: Adjacent position calculation
+    Math::Vector3i getAdjacentPosition(const Math::Vector3i& pos, FaceDirection face, 
+                                     VoxelResolution sourceRes, VoxelResolution targetRes) const {
+        // Calculate the position for placing a voxel of targetRes adjacent to a voxel at pos with sourceRes
+        
+        std::lock_guard<std::mutex> lock(m_mutex);
+        
+        // For same-size voxels, just offset by 1 in the appropriate direction
+        if (sourceRes == targetRes) {
+            Math::Vector3i offset(0, 0, 0);
+            switch (face) {
+                case FaceDirection::PosX: offset.x = 1; break;
+                case FaceDirection::NegX: offset.x = -1; break;
+                case FaceDirection::PosY: offset.y = 1; break;
+                case FaceDirection::NegY: offset.y = -1; break;
+                case FaceDirection::PosZ: offset.z = 1; break;
+                case FaceDirection::NegZ: offset.z = -1; break;
+            }
+            return pos + offset;
+        }
+        
+        // For different sizes, convert to world space using grid coordinate system
+        const VoxelGrid* sourceGrid = getGrid(sourceRes);
+        const VoxelGrid* targetGrid = getGrid(targetRes);
+        if (!sourceGrid || !targetGrid) {
+            return pos; // Fallback
+        }
+        
+        float sourceSize = getVoxelSize(sourceRes);
+        float targetSize = getVoxelSize(targetRes);
+        
+        // Convert source position to world space
+        Math::Vector3f sourceWorldPos = sourceGrid->gridToWorld(pos);
+        
+        // Calculate offset based on face direction
+        Math::Vector3f offset(0, 0, 0);
+        switch (face) {
+            case FaceDirection::PosX:
+                offset.x = sourceSize;
+                break;
+            case FaceDirection::NegX:
+                offset.x = -targetSize;
+                break;
+            case FaceDirection::PosY:
+                offset.y = sourceSize;
+                break;
+            case FaceDirection::NegY:
+                offset.y = -targetSize;
+                break;
+            case FaceDirection::PosZ:
+                offset.z = sourceSize;
+                break;
+            case FaceDirection::NegZ:
+                offset.z = -targetSize;
+                break;
+        }
+        
+        // Calculate target world position
+        Math::Vector3f targetWorldPos = sourceWorldPos + offset;
+        
+        // Convert to grid coordinates for target resolution
+        Math::Vector3i targetGridPos = targetGrid->worldToGrid(targetWorldPos);
+        
+        return targetGridPos;
+    }
+    
     // Event dispatcher
     void setEventDispatcher(Events::EventDispatcher* eventDispatcher) {
         std::lock_guard<std::mutex> lock(m_mutex);
@@ -374,6 +560,106 @@ private:
             Events::VoxelChangedEvent event(position, resolution, oldValue, newValue);
             m_eventDispatcher->dispatch(event);
         }
+    }
+    
+    // Internal collision detection without lock (must be called with lock already held)
+    bool wouldOverlapInternal(const Math::Vector3i& pos, VoxelResolution resolution) const {
+        // Check if placing a voxel at this position would overlap with existing voxels
+        // Optimized version that uses spatial queries to reduce checks
+        
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "wouldOverlapInternal: checking position (%d, %d, %d) with resolution %d",
+            pos.x, pos.y, pos.z, static_cast<int>(resolution));
+        
+        // Get the grid for this resolution to convert to world space correctly
+        const VoxelGrid* targetGrid = getGrid(resolution);
+        if (!targetGrid) return false;
+        
+        // Convert grid position to world space using the grid's coordinate system
+        Math::Vector3f worldMin = targetGrid->gridToWorld(pos);
+        float voxelSize = getVoxelSize(resolution);
+        Math::Vector3f worldMax = worldMin + Math::Vector3f(voxelSize, voxelSize, voxelSize);
+        
+        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+            "World bounds: min=(%.3f, %.3f, %.3f) max=(%.3f, %.3f, %.3f)",
+            worldMin.x, worldMin.y, worldMin.z, worldMax.x, worldMax.y, worldMax.z);
+        
+        // Check each resolution level for overlaps
+        for (int i = 0; i < static_cast<int>(VoxelResolution::COUNT); ++i) {
+            VoxelResolution checkRes = static_cast<VoxelResolution>(i);
+            const VoxelGrid* grid = getGrid(checkRes);
+            if (!grid || grid->getVoxelCount() == 0) continue;
+            
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Checking against resolution %d with %zu voxels",
+                i, grid->getVoxelCount());
+            
+            float checkVoxelSize = getVoxelSize(checkRes);
+            
+            // Convert world bounds to grid coordinates for this resolution
+            // to limit our search space
+            Math::Vector3i minGridCheck = grid->worldToGrid(worldMin);
+            Math::Vector3i maxGridCheck = grid->worldToGrid(worldMax);
+            
+            // Adjust max bounds to be inclusive (ceil behavior)
+            maxGridCheck.x = std::min(maxGridCheck.x + 1, grid->getGridDimensions().x);
+            maxGridCheck.y = std::min(maxGridCheck.y + 1, grid->getGridDimensions().y);
+            maxGridCheck.z = std::min(maxGridCheck.z + 1, grid->getGridDimensions().z);
+            
+            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                "Grid check bounds: min=(%d, %d, %d) max=(%d, %d, %d)",
+                minGridCheck.x, minGridCheck.y, minGridCheck.z,
+                maxGridCheck.x, maxGridCheck.y, maxGridCheck.z);
+            
+            // Clamp bounds to valid grid range
+            minGridCheck.x = std::max(0, minGridCheck.x);
+            minGridCheck.y = std::max(0, minGridCheck.y);
+            minGridCheck.z = std::max(0, minGridCheck.z);
+            
+            // Quick check: if the search range is too large, use getAllVoxels instead
+            int searchVolume = (maxGridCheck.x - minGridCheck.x) * 
+                              (maxGridCheck.y - minGridCheck.y) * 
+                              (maxGridCheck.z - minGridCheck.z);
+            
+            if (searchVolume > 1000 || grid->getVoxelCount() < searchVolume / 2) {
+                // More efficient to check all voxels directly
+                auto voxels = grid->getAllVoxels();
+                for (const auto& voxelPos : voxels) {
+                    Math::Vector3f voxelMin = grid->gridToWorld(voxelPos.gridPos);
+                    Math::Vector3f voxelMax = voxelMin + Math::Vector3f(checkVoxelSize, checkVoxelSize, checkVoxelSize);
+                    
+                    // Check for overlap (AABB intersection)
+                    if (worldMin.x < voxelMax.x && worldMax.x > voxelMin.x &&
+                        worldMin.y < voxelMax.y && worldMax.y > voxelMin.y &&
+                        worldMin.z < voxelMax.z && worldMax.z > voxelMin.z) {
+                        return true; // Would overlap
+                    }
+                }
+                continue; // Next resolution
+            }
+            
+            // Check only the voxels that could potentially overlap
+            for (int x = minGridCheck.x; x < maxGridCheck.x; ++x) {
+                for (int y = minGridCheck.y; y < maxGridCheck.y; ++y) {
+                    for (int z = minGridCheck.z; z < maxGridCheck.z; ++z) {
+                        if (grid->getVoxel(Math::Vector3i(x, y, z))) {
+                            // Found a voxel that might overlap
+                            Math::Vector3f voxelMin = grid->gridToWorld(Math::Vector3i(x, y, z));
+                            Math::Vector3f voxelMax = voxelMin + Math::Vector3f(checkVoxelSize, checkVoxelSize, checkVoxelSize);
+                            
+                            // Check for overlap (AABB intersection)
+                            if (worldMin.x < voxelMax.x && worldMax.x > voxelMin.x &&
+                                worldMin.y < voxelMax.y && worldMax.y > voxelMin.y &&
+                                worldMin.z < voxelMax.z && worldMax.z > voxelMin.z) {
+                                return true; // Would overlap
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return false; // No overlap
     }
 };
 

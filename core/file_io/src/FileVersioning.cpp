@@ -1,4 +1,5 @@
 #include "../include/file_io/FileVersioning.h"
+#include <cstring>
 
 namespace VoxelEditor {
 namespace FileIO {
@@ -14,8 +15,17 @@ FileVersion FileVersioning::getCurrentVersion() const {
 }
 
 FileVersion FileVersioning::detectVersion(BinaryReader& reader) {
-    // TODO: Implement version detection
-    return FileVersion::Current();
+    // Read magic number
+    char magic[4];
+    reader.readBytes(magic, 4);
+    
+    // Check if it's a valid file
+    if (std::memcmp(magic, "CVEF", 4) != 0) {
+        return FileVersion{0, 0, 0, 0};  // Invalid version
+    }
+    
+    // Read version
+    return reader.read<FileVersion>();
 }
 
 bool FileVersioning::isCompatible(FileVersion version) const {
@@ -23,13 +33,18 @@ bool FileVersioning::isCompatible(FileVersion version) const {
 }
 
 bool FileVersioning::canUpgrade(FileVersion from, FileVersion to) const {
-    // For now, only support upgrading to current version
-    if (to != FileVersion::Current()) {
+    // Cannot downgrade
+    if (to < from) {
         return false;
     }
     
-    // Can upgrade from any compatible version
-    return isCompatible(from);
+    // Can upgrade within same major version
+    if (from.major == to.major) {
+        return true;
+    }
+    
+    // For now, don't support major version upgrades
+    return false;
 }
 
 bool FileVersioning::needsUpgrade(FileVersion version) const {

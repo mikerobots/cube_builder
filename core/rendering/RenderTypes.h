@@ -187,6 +187,15 @@ struct Color {
     static Color Green() { return Color(0.0f, 1.0f, 0.0f, 1.0f); }
     static Color Blue() { return Color(0.0f, 0.0f, 1.0f, 1.0f); }
     static Color Transparent() { return Color(0.0f, 0.0f, 0.0f, 0.0f); }
+    
+    // Comparison operators
+    bool operator==(const Color& other) const {
+        return r == other.r && g == other.g && b == other.b && a == other.a;
+    }
+    
+    bool operator!=(const Color& other) const {
+        return !(*this == other);
+    }
 };
 
 // Vertex structure for rendering

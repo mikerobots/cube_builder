@@ -34,6 +34,16 @@ A complete voxel editing system with command-line interface, designed for future
 - **Visual Rendering** - Real-time 3D view
 - **Integration** - All systems working together
 
+### ✅ Recent Enhancements (Phase 1-4 Complete)
+- **1cm Increment Placement** - Precise voxel positioning
+- **Ground Plane Grid** - Visual reference at Y=0 (35% opacity)
+- **Face Highlighting** - Yellow highlight on hover
+- **Preview System** - Green/red outlines for placement validation
+- **Smart Snapping** - Automatic alignment for same-size voxels
+- **Plane Detection** - Intelligent placement on existing voxels
+- **Enhanced Undo/Redo** - Placement and removal commands
+- **Core Verification Tests** - Comprehensive test suite
+
 ## File Statistics
 - **191 source files** (101 .cpp, 90 .h)
 - **35 CMake files** for modular builds

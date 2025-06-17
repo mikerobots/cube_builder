@@ -368,7 +368,9 @@ std::vector<GroupId> GroupManager::splitGroup(GroupId sourceId,
 bool GroupManager::setParentGroup(GroupId child, GroupId parent) {
     std::lock_guard<std::mutex> lock(m_mutex);
     
-    if (!groupExists(child) || (parent != INVALID_GROUP_ID && !groupExists(parent))) {
+    // Check if groups exist without calling groupExists (which would recursively lock)
+    if (m_groups.find(child) == m_groups.end() || 
+        (parent != INVALID_GROUP_ID && m_groups.find(parent) == m_groups.end())) {
         return false;
     }
     

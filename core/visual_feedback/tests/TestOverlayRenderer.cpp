@@ -1,9 +1,12 @@
 #include <gtest/gtest.h>
+#include <chrono>
 #include "../include/visual_feedback/OverlayRenderer.h"
+#include "../../camera/OrbitCamera.h"
 
 using namespace VoxelEditor::VisualFeedback;
 using namespace VoxelEditor::Math;
 using namespace VoxelEditor::VoxelData;
+using namespace VoxelEditor::Camera;
 
 class OverlayRendererTest : public ::testing::Test {
 protected:
@@ -197,4 +200,93 @@ TEST_F(OverlayRendererTest, DifferentScreenSizes) {
         
         EXPECT_NO_THROW(renderer->endFrame());
     }
+}
+
+// Enhanced tests for grid visualization requirements
+TEST_F(OverlayRendererTest, GroundPlaneGridBasic) {
+    renderer->beginFrame(1920, 1080);
+    
+    // REQ-1.1.1, REQ-1.1.3, REQ-1.1.4: Basic grid rendering
+    Vector3f center(0.0f, 0.0f, 0.0f);
+    float extent = 5.0f; // 5 meter extent
+    Vector3f cursorPos(1.0f, 0.0f, 1.0f); 
+    bool enableDynamicOpacity = false;
+    
+    // Create a simple camera for testing
+    OrbitCamera camera;
+    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setDistance(8.0f);
+    camera.setOrbitAngles(45.0f, -30.0f);
+    
+    EXPECT_NO_THROW(renderer->renderGroundPlaneGrid(center, extent, cursorPos, enableDynamicOpacity, camera));
+    
+    renderer->endFrame();
+}
+
+TEST_F(OverlayRendererTest, GroundPlaneGridDynamicOpacity) {
+    renderer->beginFrame(1920, 1080);
+    
+    // REQ-1.2.2: Dynamic opacity near cursor
+    Vector3f center(0.0f, 0.0f, 0.0f);
+    float extent = 5.0f;
+    Vector3f cursorPos(0.64f, 0.0f, 0.32f); // Within 2 grid squares (64cm) of origin
+    bool enableDynamicOpacity = true;
+    
+    OrbitCamera camera;
+    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setDistance(8.0f);
+    camera.setOrbitAngles(45.0f, -30.0f);
+    
+    EXPECT_NO_THROW(renderer->renderGroundPlaneGrid(center, extent, cursorPos, enableDynamicOpacity, camera));
+    
+    renderer->endFrame();
+}
+
+TEST_F(OverlayRendererTest, GroundPlaneGridLargeExtent) {
+    renderer->beginFrame(1920, 1080);
+    
+    // REQ-6.2.2: Grid scaling up to 8m x 8m
+    Vector3f center(0.0f, 0.0f, 0.0f);
+    float extent = 8.0f; // Maximum workspace size
+    Vector3f cursorPos(0.0f, 0.0f, 0.0f);
+    bool enableDynamicOpacity = false;
+    
+    OrbitCamera camera;
+    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setDistance(15.0f);
+    camera.setOrbitAngles(45.0f, -30.0f);
+    
+    EXPECT_NO_THROW(renderer->renderGroundPlaneGrid(center, extent, cursorPos, enableDynamicOpacity, camera));
+    
+    renderer->endFrame();
+}
+
+TEST_F(OverlayRendererTest, GroundPlaneGridPerformance) {
+    // REQ-6.1.1: Grid rendering performance test
+    renderer->beginFrame(1920, 1080);
+    
+    Vector3f center(0.0f, 0.0f, 0.0f);
+    float extent = 5.0f;
+    Vector3f cursorPos(0.0f, 0.0f, 0.0f);
+    bool enableDynamicOpacity = true;
+    
+    OrbitCamera camera;
+    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setDistance(8.0f);
+    camera.setOrbitAngles(45.0f, -30.0f);
+    
+    // Test multiple renders (simulating frame updates)
+    auto start = std::chrono::high_resolution_clock::now();
+    
+    for (int i = 0; i < 60; ++i) { // Simulate 60 frames
+        EXPECT_NO_THROW(renderer->renderGroundPlaneGrid(center, extent, cursorPos, enableDynamicOpacity, camera));
+    }
+    
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    
+    // Should complete 60 renders in reasonable time (less than 1 second for this test)
+    EXPECT_LT(duration.count(), 1000);
+    
+    renderer->endFrame();
 }

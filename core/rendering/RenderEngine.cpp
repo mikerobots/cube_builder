@@ -2,6 +2,7 @@
 #include "OpenGLRenderer.h"
 #include "ShaderManager.h"
 #include "RenderState.h"
+#include "GroundPlaneGrid.h"
 #include "../voxel_data/VoxelGrid.h"
 #include "../../foundation/logging/Logger.h"
 #include "../../foundation/math/Matrix4f.h"
@@ -10,6 +11,7 @@
 #include <cmath>
 #include <fstream>
 #include <cstring>
+#include <cstdlib>
 
 // Include OpenGL headers for glFlush
 #ifdef __APPLE__
@@ -62,14 +64,21 @@ bool RenderEngine::initialize(const RenderConfig& config) {
         return false;
     }
     
-    // Create shader manager
-    m_shaderManager = std::make_unique<ShaderManager>();
+    // Create shader manager with renderer
+    m_shaderManager = std::make_unique<ShaderManager>(m_glRenderer.get());
     
     // Create render state manager
     m_renderState = std::make_unique<RenderState>();
     
     // Load built-in shaders
     loadBuiltinShaders();
+    
+    // Create ground plane grid
+    m_groundPlaneGrid = std::make_unique<GroundPlaneGrid>(m_shaderManager.get(), m_glRenderer.get());
+    if (!m_groundPlaneGrid->initialize()) {
+        Logging::Logger::getInstance().error("Failed to initialize ground plane grid");
+        // Not critical, continue without grid
+    }
     
     // Initialize stats
     m_stats.reset();
@@ -86,6 +95,7 @@ void RenderEngine::shutdown() {
     if (!m_initialized) return;
     
     // Clean up in reverse order
+    m_groundPlaneGrid.reset();
     m_renderState.reset();
     m_shaderManager.reset();
     m_glRenderer.reset();
@@ -478,7 +488,16 @@ void RenderEngine::setLineWidth(float width) {
 // Shader management
 ShaderId RenderEngine::getBuiltinShader(const std::string& name) {
     if (!m_shaderManager) return InvalidId;
-    return m_shaderManager->getShader(name);
+    
+    ShaderId shaderId = m_shaderManager->getShader(name);
+    
+    // Log shader access in debug mode only
+    if (m_debugMode && shaderId != InvalidId) {
+        Logging::Logger::getInstance().debugfc("RenderEngine", 
+            "Getting built-in shader '%s' -> ID %d", name.c_str(), shaderId);
+    }
+    
+    return shaderId;
 }
 
 ShaderId RenderEngine::loadShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath) {
@@ -524,11 +543,12 @@ void RenderEngine::setupMeshBuffers(Mesh& mesh) {
     m_glRenderer->bindIndexBuffer(mesh.indexBuffer);
     
     // Configure vertex attributes for the VAO
+    // Note: Order matches shader expectations - Color at location 2, TexCoord at 3
     std::vector<VertexAttribute> attributes = {
         VertexAttribute::Position,
         VertexAttribute::Normal,
-        VertexAttribute::TexCoord0,
-        VertexAttribute::Color
+        VertexAttribute::Color,
+        VertexAttribute::TexCoord0
     };
     m_glRenderer->setupVertexAttributes(attributes);
     
@@ -624,6 +644,53 @@ void RenderEngine::updatePerFrameUniforms() {
 
 void RenderEngine::loadBuiltinShaders() {
     if (!m_shaderManager || !m_glRenderer) return;
+    
+    Logging::Logger::getInstance().info("RenderEngine: Loading built-in shaders...");
+    
+    // Try to find shader directory
+    std::string shaderDir = findShaderDirectory();
+    bool useFileShaders = !shaderDir.empty();
+    
+    // Try loading basic shader from file
+    ShaderId basicShaderId = m_shaderManager->loadShaderFromFile(
+        "basic", 
+        shaderDir + "basic_voxel_gl33.vert",
+        shaderDir + "basic_voxel_gl33.frag"
+    );
+    
+    if (basicShaderId == InvalidId) {
+        Logging::Logger::getInstance().warning("Failed to load basic shader from file, using built-in version");
+        useFileShaders = false;
+    }
+    
+    // Try loading enhanced shader from file (use same as basic for now)
+    ShaderId enhancedShaderId = InvalidId;
+    if (useFileShaders) {
+        enhancedShaderId = m_shaderManager->loadShaderFromFile(
+            "enhanced",
+            shaderDir + "basic_voxel_gl33.vert",
+            shaderDir + "basic_voxel_gl33.frag"
+        );
+    }
+    
+    // Try loading flat shader from file
+    ShaderId flatShaderId = InvalidId;
+    if (useFileShaders) {
+        flatShaderId = m_shaderManager->loadShaderFromFile(
+            "flat",
+            shaderDir + "basic_voxel_gl33.vert",
+            shaderDir + "flat_voxel.frag"
+        );
+    }
+    
+    // If file loading succeeded, we're done
+    if (useFileShaders && basicShaderId != InvalidId && enhancedShaderId != InvalidId && flatShaderId != InvalidId) {
+        Logging::Logger::getInstance().info("Successfully loaded shaders from files");
+        return;
+    }
+    
+    // Fall back to built-in shaders
+    Logging::Logger::getInstance().info("Using built-in shader definitions");
     
     // Common vertex shader for all voxel shaders
     const std::string voxelVertex = R"(
@@ -855,15 +922,26 @@ void main() {
 }
     )";
     
-    // Create all shader variants
-    auto basicShaderId = m_shaderManager->createShaderFromSource("basic", voxelVertex, basicFragment, m_glRenderer.get());
-    std::cout << "Created basic shader with ID: " << basicShaderId << std::endl;
+    // Create all shader variants (only if file loading failed)
+    if (basicShaderId == InvalidId) {
+        Logging::Logger::getInstance().info("RenderEngine: Creating basic shader from built-in source...");
+        basicShaderId = m_shaderManager->createShaderFromSource("basic", voxelVertex, basicFragment, m_glRenderer.get());
+        std::cout << "Created basic shader with ID: " << basicShaderId << std::endl;
+    }
     
-    auto enhancedShaderId = m_shaderManager->createShaderFromSource("enhanced", voxelVertex, enhancedFragment, m_glRenderer.get());
-    std::cout << "Created enhanced shader with ID: " << enhancedShaderId << std::endl;
+    if (enhancedShaderId == InvalidId) {
+        Logging::Logger::getInstance().info("RenderEngine: Creating enhanced shader from built-in source...");
+        enhancedShaderId = m_shaderManager->createShaderFromSource("enhanced", voxelVertex, enhancedFragment, m_glRenderer.get());
+        std::cout << "Created enhanced shader with ID: " << enhancedShaderId << std::endl;
+    }
     
-    auto flatShaderId = m_shaderManager->createShaderFromSource("flat", voxelVertex, flatFragment, m_glRenderer.get());
-    std::cout << "Created flat shader with ID: " << flatShaderId << std::endl;
+    if (flatShaderId == InvalidId) {
+        Logging::Logger::getInstance().info("RenderEngine: Creating flat shader from built-in source...");
+        flatShaderId = m_shaderManager->createShaderFromSource("flat", voxelVertex, flatFragment, m_glRenderer.get());
+        std::cout << "Created flat shader with ID: " << flatShaderId << std::endl;
+    }
+    
+    Logging::Logger::getInstance().info("RenderEngine: All built-in shaders loaded successfully");
 }
 
 void RenderEngine::onRenderModeChanged() {
@@ -1035,6 +1113,81 @@ void RenderEngine::captureFrame(const std::string& filename) {
     } else {
         Logging::Logger::getInstance().info("Screenshot saved: " + actualFilename);
     }
+}
+
+void RenderEngine::setGroundPlaneGridVisible(bool visible) {
+    if (m_groundPlaneGrid) {
+        m_groundPlaneGrid->setVisible(visible);
+    }
+}
+
+bool RenderEngine::isGroundPlaneGridVisible() const {
+    return m_groundPlaneGrid ? m_groundPlaneGrid->isVisible() : false;
+}
+
+void RenderEngine::updateGroundPlaneGrid(const Math::Vector3f& workspaceSize) {
+    if (m_groundPlaneGrid) {
+        m_groundPlaneGrid->updateGridMesh(workspaceSize);
+    }
+}
+
+void RenderEngine::updateGroundPlaneGridAnimation(float deltaTime) {
+    if (m_groundPlaneGrid) {
+        m_groundPlaneGrid->update(deltaTime);
+    }
+}
+
+void RenderEngine::renderGroundPlaneGrid(const Math::Vector3f& cursorWorldPos) {
+    if (!m_groundPlaneGrid || !m_currentCamera) {
+        return;
+    }
+    
+    // Update cursor position for opacity calculations
+    m_groundPlaneGrid->setCursorPosition(cursorWorldPos);
+    
+    // Get camera matrices
+    Math::Matrix4f viewMatrix = m_currentCamera->getViewMatrix();
+    Math::Matrix4f projMatrix = m_currentCamera->getProjectionMatrix();
+    
+    // Render the grid
+    m_groundPlaneGrid->render(viewMatrix, projMatrix);
+}
+
+std::string RenderEngine::findShaderDirectory() const {
+    // List of potential shader directories to check
+    const std::vector<std::string> searchPaths = {
+        "core/rendering/shaders/",                    // Running from project root
+        "../core/rendering/shaders/",                 // Running from build directory
+        "../../core/rendering/shaders/",              // Running from build/bin
+        "../../../core/rendering/shaders/",           // Running from deeper build directory
+        "shaders/"                                    // Installed location
+    };
+    
+    // Check each path for a known shader file
+    const std::string testFile = "basic_voxel_gl33.vert";
+    for (const auto& path : searchPaths) {
+        std::ifstream file(path + testFile);
+        if (file.is_open()) {
+            file.close();
+            Logging::Logger::getInstance().info("Found shader directory at: " + path);
+            return path;
+        }
+    }
+    
+    // Check environment variable for shader path
+    const char* envPath = std::getenv("VOXEL_EDITOR_SHADER_PATH");
+    if (envPath) {
+        std::string shaderPath = std::string(envPath) + "/";
+        std::ifstream file(shaderPath + testFile);
+        if (file.is_open()) {
+            file.close();
+            Logging::Logger::getInstance().info("Found shader directory from environment: " + shaderPath);
+            return shaderPath;
+        }
+    }
+    
+    Logging::Logger::getInstance().warning("Could not find shader directory, will use built-in shaders");
+    return "";
 }
 
 } // namespace Rendering

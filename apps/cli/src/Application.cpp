@@ -226,7 +226,9 @@ bool Application::initializeCoreSystem() {
         
         // Get workspace size to center camera
         Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
-        Math::Vector3f workspaceCenter = workspaceSize * 0.5f;
+        // Camera should look at origin (0,0,0) for centered coordinate system
+        // with Y slightly up to see the workspace better
+        Math::Vector3f workspaceCenter(0.0f, workspaceSize.y * 0.5f, 0.0f);
         
         m_cameraController->getCamera()->setTarget(workspaceCenter);
         
@@ -300,6 +302,10 @@ bool Application::initializeRendering() {
         
         // Create feedback renderer (pass nullptr for now)
         m_feedbackRenderer = std::make_unique<VisualFeedback::FeedbackRenderer>(nullptr);
+        
+        // Enable ground plane grid and update it with workspace size
+        m_renderEngine->setGroundPlaneGridVisible(true);
+        m_renderEngine->updateGroundPlaneGrid(m_voxelManager->getWorkspaceSize());
         
         // Set up window callbacks
         m_renderWindow->setMouseCallback([this](const MouseEvent& event) {
@@ -499,10 +505,28 @@ void Application::render() {
     
     frameCount++;
     
+    // Render ground plane grid
+    if (m_renderEngine->isGroundPlaneGridVisible()) {
+        // Get cursor world position from mouse interaction
+        Math::Vector3f cursorWorldPos(0.0f, 0.0f, 0.0f);
+        if (m_mouseInteraction && m_mouseInteraction->hasHoverFace()) {
+            auto hoverFace = m_mouseInteraction->getHoverFace();
+            cursorWorldPos = hoverFace.getCenter();
+        }
+        m_renderEngine->renderGroundPlaneGrid(cursorWorldPos);
+    }
+    
     // Render visual feedback (highlights, outlines, previews)
-    if (m_feedbackRenderer) {
-        // The FeedbackRenderer will handle its own rendering calls internally
-        // No need to explicitly call render methods since they're called from MouseInteraction
+    if (m_feedbackRenderer && m_cameraController) {
+        // Create render context for feedback renderer
+        Rendering::RenderContext context;
+        context.screenWidth = m_renderWindow->getWidth();
+        context.screenHeight = m_renderWindow->getHeight();
+        context.deltaTime = 0.016f; // 60 FPS target
+        context.frameNumber = 0; // Could track frame number if needed
+        
+        // Render the feedback system (highlights, outlines, previews)
+        m_feedbackRenderer->render(*m_cameraController->getCamera(), context);
     }
     
     // End frame and present

@@ -1,0 +1,10 @@
+workspace 5 5 5
+resolution 8cm
+place -100 0 0
+place 0 -100 0
+place 0 0 -100
+place 600 0 0
+place 0 600 0
+place 0 0 600
+stats
+quit

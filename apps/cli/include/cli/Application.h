@@ -83,6 +83,7 @@ public:
     
     // Test support methods
     void setHoverPosition(const Math::Vector3i& pos) { m_hoverPosition = pos; }
+    CommandProcessor* getCommandProcessor() const { return m_commandProcessor.get(); }
     
 private:
     // Core systems

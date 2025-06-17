@@ -17,6 +17,13 @@ public:
     Face detectFace(const Ray& ray, const VoxelData::VoxelGrid& grid, 
                    VoxelData::VoxelResolution resolution);
     
+    // Ground plane detection (Enhancement)
+    Face detectGroundPlane(const Ray& ray);
+    
+    // Combined face/ground detection (Enhancement)
+    Face detectFaceOrGround(const Ray& ray, const VoxelData::VoxelGrid& grid,
+                           VoxelData::VoxelResolution resolution);
+    
     std::vector<Face> detectFacesInRegion(const Math::BoundingBox& region, 
                                          const VoxelData::VoxelGrid& grid, 
                                          VoxelData::VoxelResolution resolution);

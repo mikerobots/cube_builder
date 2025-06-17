@@ -1,5 +1,44 @@
 cmake_minimum_required(VERSION 3.10)
 
+# Generate build information
+string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
+string(TIMESTAMP BUILD_TIME "%H:%M:%S")
+string(TIMESTAMP BUILD_TIMESTAMP "%s" UTC)
+
+# Get git information if available
+find_package(Git QUIET)
+if(GIT_FOUND)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_COMMIT_HASH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+    )
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_BRANCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+    )
+else()
+    set(GIT_COMMIT_HASH "unknown")
+    set(GIT_BRANCH "unknown")
+endif()
+
+# Set project version if not defined
+if(NOT DEFINED PROJECT_VERSION)
+    set(PROJECT_VERSION "1.0.0")
+endif()
+
+# Configure build info header
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/cli/BuildInfo.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/include/cli/BuildInfo.h
+    @ONLY
+)
+
 # CLI Library (for testing)
 set(CLI_LIB_SOURCES
     src/Application.cpp
@@ -29,6 +68,7 @@ add_library(VoxelEditor_CLI_Lib STATIC ${CLI_LIB_SOURCES} ${CLI_HEADERS})
 # Include directories for library
 target_include_directories(VoxelEditor_CLI_Lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_BINARY_DIR}/include  # For generated BuildInfo.h
     ${CMAKE_SOURCE_DIR}/core
     ${CMAKE_SOURCE_DIR}/foundation
 )
@@ -93,6 +133,16 @@ target_link_libraries(VoxelEditor_CLI PRIVATE VoxelEditor_CLI_Lib)
 # Copy to build directory
 set_target_properties(VoxelEditor_CLI PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+)
+
+# Copy shader files to build directory for CLI
+add_custom_command(TARGET VoxelEditor_CLI POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory 
+        $<TARGET_FILE_DIR:VoxelEditor_CLI>/core/rendering/shaders
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/core/rendering/shaders
+        $<TARGET_FILE_DIR:VoxelEditor_CLI>/core/rendering/shaders
+    COMMENT "Copying shader files for VoxelEditor_CLI"
 )
 
 # Add tests subdirectory - always include it

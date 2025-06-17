@@ -1,0 +1,12 @@
+workspace 5 5 5
+view iso
+zoom 1.5
+grid on
+screenshot output/rendering/new_features/grid_visible.ppm
+place 0 0 0
+place 32 0 0
+place 0 0 32
+screenshot output/rendering/new_features/grid_with_voxels.ppm
+grid off
+screenshot output/rendering/new_features/grid_hidden.ppm
+quit

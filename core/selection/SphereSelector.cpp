@@ -200,31 +200,74 @@ bool SphereSelector::isVoxelInSphere(const VoxelId& voxel, const Math::Vector3f&
 
 bool SphereSelector::isVoxelInEllipsoid(const VoxelId& voxel, const Math::Vector3f& center, 
                                        const Math::Vector3f& radii, const Math::Quaternion& rotation) const {
-    Math::Vector3f voxelPos = m_includePartial ? voxel.getWorldPosition() : voxel.getWorldPosition();
-    
-    // Transform voxel position to ellipsoid space
-    Math::Vector3f localPos = rotation.conjugate().rotate(voxelPos - center);
-    
-    // Check ellipsoid equation: (x/a)^2 + (y/b)^2 + (z/c)^2 <= 1
-    float value = (localPos.x * localPos.x) / (radii.x * radii.x) +
-                  (localPos.y * localPos.y) / (radii.y * radii.y) +
-                  (localPos.z * localPos.z) / (radii.z * radii.z);
-    
-    return value <= 1.0f;
+    if (m_includePartial) {
+        // Check if voxel bounds intersect ellipsoid (approximation using sphere)
+        Math::BoundingBox voxelBounds = voxel.getBounds();
+        Math::Vector3f closestPoint = voxelBounds.closestPoint(center);
+        
+        // Transform closest point to ellipsoid space
+        Math::Vector3f localPos = rotation.conjugate().rotate(closestPoint - center);
+        
+        // Check ellipsoid equation
+        float value = (localPos.x * localPos.x) / (radii.x * radii.x) +
+                      (localPos.y * localPos.y) / (radii.y * radii.y) +
+                      (localPos.z * localPos.z) / (radii.z * radii.z);
+        
+        return value <= 1.0f;
+    } else {
+        // Check if voxel center is within ellipsoid
+        Math::Vector3f voxelCenter = voxel.getWorldPosition();
+        
+        // Transform voxel position to ellipsoid space
+        Math::Vector3f localPos = rotation.conjugate().rotate(voxelCenter - center);
+        
+        // Check ellipsoid equation: (x/a)^2 + (y/b)^2 + (z/c)^2 <= 1
+        float value = (localPos.x * localPos.x) / (radii.x * radii.x) +
+                      (localPos.y * localPos.y) / (radii.y * radii.y) +
+                      (localPos.z * localPos.z) / (radii.z * radii.z);
+        
+        return value <= 1.0f;
+    }
 }
 
 bool SphereSelector::isVoxelInHemisphere(const VoxelId& voxel, const Math::Vector3f& center, 
                                         float radius, const Math::Vector3f& normal) const {
-    Math::Vector3f voxelPos = m_includePartial ? voxel.getWorldPosition() : voxel.getWorldPosition();
-    
-    // Check if in sphere
-    Math::Vector3f toVoxel = voxelPos - center;
-    if (toVoxel.lengthSquared() > radius * radius) {
+    if (m_includePartial) {
+        // Check if voxel bounds intersect hemisphere
+        Math::BoundingBox voxelBounds = voxel.getBounds();
+        Math::Vector3f closestPoint = voxelBounds.closestPoint(center);
+        
+        // Check if closest point is in sphere
+        Math::Vector3f toClosest = closestPoint - center;
+        if (toClosest.lengthSquared() > radius * radius) {
+            return false;
+        }
+        
+        // For partial inclusion, check if any part of voxel is on correct side of plane
+        // Check all 8 corners of the voxel
+        auto corners = voxelBounds.getCorners();
+        
+        for (const auto& corner : corners) {
+            Math::Vector3f toCorner = corner - center;
+            if (toCorner.lengthSquared() <= radius * radius && toCorner.dot(normal) >= 0) {
+                return true;
+            }
+        }
+        
         return false;
+    } else {
+        // Check if voxel center is within hemisphere
+        Math::Vector3f voxelCenter = voxel.getWorldPosition();
+        
+        // Check if in sphere
+        Math::Vector3f toVoxel = voxelCenter - center;
+        if (toVoxel.lengthSquared() > radius * radius) {
+            return false;
+        }
+        
+        // Check if on correct side of plane
+        return toVoxel.dot(normal) >= 0;
     }
-    
-    // Check if on correct side of plane
-    return toVoxel.dot(normal) >= 0;
 }
 
 float SphereSelector::getVoxelWeight(const VoxelId& voxel, const Math::Vector3f& center, float radius) const {

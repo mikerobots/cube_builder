@@ -28,10 +28,13 @@ public:
     void setFaceHighlightEnabled(bool enabled) { m_faceHighlightEnabled = enabled; }
     bool isFaceHighlightEnabled() const { return m_faceHighlightEnabled; }
     
-    // Voxel preview
+    // Voxel preview - Enhanced for requirements
     void renderVoxelPreview(const Math::Vector3i& position, 
                            VoxelData::VoxelResolution resolution, 
                            const Rendering::Color& color = Rendering::Color::Green());
+    void renderVoxelPreviewWithValidation(const Math::Vector3i& position, 
+                                        VoxelData::VoxelResolution resolution, 
+                                        bool isValid);
     void clearVoxelPreview();
     void setVoxelPreviewEnabled(bool enabled) { m_voxelPreviewEnabled = enabled; }
     bool isVoxelPreviewEnabled() const { return m_voxelPreviewEnabled; }
@@ -50,10 +53,12 @@ public:
     void setGroupVisualizationEnabled(bool enabled) { m_groupVisualizationEnabled = enabled; }
     bool isGroupVisualizationEnabled() const { return m_groupVisualizationEnabled; }
     
-    // Workspace visualization
+    // Workspace visualization - Enhanced for requirements
     void renderWorkspaceBounds(const Math::BoundingBox& workspace, 
                               const Rendering::Color& color = Rendering::Color(0.5f, 0.5f, 0.5f, 1.0f)); // Gray
     void renderGridLines(VoxelData::VoxelResolution resolution, float opacity = 0.1f);
+    void renderGroundPlaneGridEnhanced(const Math::Vector3f& center, float extent, 
+                                     const Math::Vector3f& cursorPos, bool enableDynamicOpacity = true);
     void setWorkspaceVisualizationEnabled(bool enabled) { m_workspaceVisualizationEnabled = enabled; }
     bool isWorkspaceVisualizationEnabled() const { return m_workspaceVisualizationEnabled; }
     

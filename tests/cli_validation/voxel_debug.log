@@ -1,90 +1,917 @@
-[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [OrbitCamera] View preset: ISOMETRIC (yaw=45.0°, pitch=35.3°, distance=12.0)
-[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (2.887, 2.886, 2.887)
-[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (6.929, 6.927, 6.929)
-[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Target changed to (2.500, 2.500, 2.500)
-[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (9.429, 9.427, 9.429)
-[2025-06-04 19:01:35.516] [DEBUG] [0x1f8143240] [Camera] Position changed to (6.830, 6.830, 6.830)
-[2025-06-04 19:01:35.610] [INFO ] [0x1f8143240] Compiling shader program: basic
-[2025-06-04 19:01:35.610] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
-[2025-06-04 19:01:35.610] [DEBUG] [0x1f8143240] Fragment shader source lines: 35
-[2025-06-04 19:01:35.611] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: basic
-[2025-06-04 19:01:35.611] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: basic
-[2025-06-04 19:01:35.612] [INFO ] [0x1f8143240] Successfully created shader program: basic (ID: 3)
-[2025-06-04 19:01:35.612] [INFO ] [0x1f8143240] Compiling shader program: enhanced
-[2025-06-04 19:01:35.612] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
-[2025-06-04 19:01:35.612] [DEBUG] [0x1f8143240] Fragment shader source lines: 109
-[2025-06-04 19:01:35.613] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: enhanced
-[2025-06-04 19:01:35.614] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: enhanced
-[2025-06-04 19:01:35.614] [INFO ] [0x1f8143240] Successfully created shader program: enhanced (ID: 6)
-[2025-06-04 19:01:35.614] [INFO ] [0x1f8143240] Compiling shader program: flat
-[2025-06-04 19:01:35.614] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
-[2025-06-04 19:01:35.614] [DEBUG] [0x1f8143240] Fragment shader source lines: 53
-[2025-06-04 19:01:35.615] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: flat
-[2025-06-04 19:01:35.616] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: flat
-[2025-06-04 19:01:35.616] [INFO ] [0x1f8143240] Successfully created shader program: flat (ID: 9)
-[2025-06-04 19:01:35.616] [INFO ] [0x1f8143240] RenderEngine initialized successfully
-[2025-06-04 19:01:35.616] [INFO ] [0x1f8143240] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
-[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating mesh for resolution: 6, voxel size: 0.64
-[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 0 voxel positions from octree
-[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Found 0 voxels to render
-[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [No vertices generated (empty mesh)] VoxelMeshGenerator
-[2025-06-04 19:01:35.618] [DEBUG] [0x1f8143240] [Application] Mesh update: 0 vertices, 0 indices
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Mouse: screen=(0.0,0.0) window=(1280,720) ndc=(-1.000,1.000)
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [Camera] View matrix updated
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [Camera] Projection matrix updated (FOV: 45.0, Aspect: 1.333, Near: 0.100, Far: 1000.0)
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Camera: pos=(6.83,6.83,6.83) target=(2.50,2.50,2.50)
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Ray: origin=(6.83,6.83,6.83) dir=(-0.936,-0.197,-0.293)
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Raycasting against grid with 0 voxels
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [FaceDetector] Ray: origin=(6.83,6.83,6.83) dir=(-0.936,-0.197,-0.293) hit=0
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [MouseInteraction] Hover update: mousePos=(0.0,0.0) hasHit=0
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 1
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [Application] Rendering frame 0, mesh count: 0
-[2025-06-04 19:01:35.649] [DEBUG] [0x1f8143240] [RenderEngine] End frame 1: 0.07ms, 13698.6 FPS, 0 draws, 0 triangles
-[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 2
-[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
-[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [Application] Rendering frame 1, mesh count: 0
-[2025-06-04 19:01:35.652] [DEBUG] [0x1f8143240] [RenderEngine] End frame 2: 0.04ms, 26315.8 FPS, 0 draws, 0 triangles
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 2, 2): false
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 2, 2): false
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Set voxel at position (2, 2, 2) to true
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating mesh for resolution: 3, voxel size: 0.08
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 1 voxel positions from octree
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Found 1 voxels to render
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Voxel 0 at grid pos (2, 2, 2) -> world pos (0.20, 0.20, 0.20)
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generated mesh with 24 vertices and 36 indices
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Vertex 0: pos(0.162, 0.162, 0.162)
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Vertex 1: pos(0.238, 0.162, 0.162)
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator]   Vertex 2: pos(0.238, 0.238, 0.162)
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [Application] Mesh update: 24 vertices, 36 indices
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [Application] Created render mesh with 24 vertices
-[2025-06-04 19:01:35.662] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating edge mesh for resolution: 3, voxel size: 0.08
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 1 voxel positions from octree
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generated edge mesh with 8 vertices and 24 indices
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application] Created edge mesh with 8 vertices
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 3
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application] Rendering frame 2, mesh count: 1
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application]   Rendering mesh 0 with 24 vertices, 36 indices
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application]     Vertex 0: pos(0.162, 0.162, 0.162)
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [Application]   Shader ID: 6
-[2025-06-04 19:01:35.663] [DEBUG] [0x1f8143240] [RenderEngine] End frame 3: 0.82ms, 1212.1 FPS, 2 draws, 12 triangles
-[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 4
-[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
-[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application] Rendering frame 3, mesh count: 1
-[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application]   Rendering mesh 0 with 24 vertices, 36 indices
-[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application]     Vertex 0: pos(0.162, 0.162, 0.162)
-[2025-06-04 19:01:35.678] [DEBUG] [0x1f8143240] [Application]   Shader ID: 6
-[2025-06-04 19:01:35.679] [DEBUG] [0x1f8143240] [RenderEngine] End frame 4: 0.18ms, 5434.8 FPS, 2 draws, 12 triangles
-[2025-06-04 19:01:35.815] [INFO ] [0x1f8143240] Screenshot saved as test_output/basic_voxel.ppm.ppm (PPM format)
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 5
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application] Rendering frame 4, mesh count: 1
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application]   Rendering mesh 0 with 24 vertices, 36 indices
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application]     Vertex 0: pos(0.162, 0.162, 0.162)
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [Application]   Shader ID: 6
-[2025-06-04 19:01:35.941] [DEBUG] [0x1f8143240] [RenderEngine] End frame 5: 0.17ms, 5882.4 FPS, 2 draws, 12 triangles
-[2025-06-04 19:01:35.951] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 6
-[2025-06-04 19:01:35.951] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
-[2025-06-04 19:01:35.951] [DEBUG] [0x1f8143240] [RenderEngine] End frame 6: 0.13ms, 7812.5 FPS, 2 draws, 12 triangles
-[2025-06-04 19:01:35.959] [INFO ] [0x1f8143240] RenderEngine shut down
+[2025-06-08 16:11:07.852] [DEBUG] [0x1f8143240] [OrbitCamera] View preset: ISOMETRIC (yaw=45.0°, pitch=35.3°, distance=12.0)
+[2025-06-08 16:11:07.852] [DEBUG] [0x1f8143240] [Camera] Position changed to (2.887, 2.886, 2.887)
+[2025-06-08 16:11:07.852] [DEBUG] [0x1f8143240] [Camera] Position changed to (6.929, 6.927, 6.929)
+[2025-06-08 16:11:07.852] [DEBUG] [0x1f8143240] [Camera] Target changed to (2.500, 2.500, 2.500)
+[2025-06-08 16:11:07.853] [DEBUG] [0x1f8143240] [Camera] Position changed to (9.429, 9.427, 9.429)
+[2025-06-08 16:11:07.853] [DEBUG] [0x1f8143240] [Camera] Position changed to (6.830, 6.830, 6.830)
+[2025-06-08 16:11:07.946] [INFO ] [0x1f8143240] RenderEngine: Loading built-in shaders...
+[2025-06-08 16:11:07.946] [INFO ] [0x1f8143240] Found shader directory at: ../../core/rendering/shaders/
+[2025-06-08 16:11:07.946] [INFO ] [0x1f8143240] Compiling shader program: basic
+[2025-06-08 16:11:07.946] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
+[2025-06-08 16:11:07.946] [DEBUG] [0x1f8143240] Fragment shader source lines: 33
+[2025-06-08 16:11:07.947] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: basic
+[2025-06-08 16:11:07.948] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: basic
+[2025-06-08 16:11:07.948] [INFO ] [0x1f8143240] Successfully created shader program: basic (ID: 3)
+[2025-06-08 16:11:07.949] [INFO ] [0x1f8143240] Compiling shader program: enhanced
+[2025-06-08 16:11:07.949] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
+[2025-06-08 16:11:07.949] [DEBUG] [0x1f8143240] Fragment shader source lines: 33
+[2025-06-08 16:11:07.950] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: enhanced
+[2025-06-08 16:11:07.950] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: enhanced
+[2025-06-08 16:11:07.951] [INFO ] [0x1f8143240] Successfully created shader program: enhanced (ID: 6)
+[2025-06-08 16:11:07.951] [INFO ] [0x1f8143240] Compiling shader program: flat
+[2025-06-08 16:11:07.951] [DEBUG] [0x1f8143240] Vertex shader source lines: 21
+[2025-06-08 16:11:07.951] [DEBUG] [0x1f8143240] Fragment shader source lines: 51
+[2025-06-08 16:11:07.952] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: flat
+[2025-06-08 16:11:07.952] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: flat
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] Successfully created shader program: flat (ID: 9)
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] Successfully loaded shaders from files
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] Compiling shader program: ground_plane
+[2025-06-08 16:11:07.953] [DEBUG] [0x1f8143240] Vertex shader source lines: 12
+[2025-06-08 16:11:07.953] [DEBUG] [0x1f8143240] Fragment shader source lines: 22
+[2025-06-08 16:11:07.953] [DEBUG] [0x1f8143240] Successfully compiled vertex shader for: ground_plane
+[2025-06-08 16:11:07.953] [DEBUG] [0x1f8143240] Successfully compiled fragment shader for: ground_plane
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] Ground plane grid renderer initialized
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] RenderEngine initialized successfully
+[2025-06-08 16:11:07.953] [INFO ] [0x1f8143240] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-08 16:11:07.955] [INFO ] [0x1f8143240] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-06-08 16:11:07.955] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Generating mesh for resolution: 6, voxel size: 0.64
+[2025-06-08 16:11:07.955] [DEBUG] [0x1f8143240] [VoxelGrid] Retrieved 0 voxel positions from octree
+[2025-06-08 16:11:07.955] [DEBUG] [0x1f8143240] [VoxelMeshGenerator] Found 0 voxels to render
+[2025-06-08 16:11:07.955] [DEBUG] [0x1f8143240] [No vertices generated (empty mesh)] VoxelMeshGenerator
+[2025-06-08 16:11:07.955] [DEBUG] [0x1f8143240] [Application] Mesh update: 0 vertices, 0 indices
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Mouse: screen=(0.0,0.0) window=(1280,720) ndc=(-1.000,1.000)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [Camera] View matrix updated
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [Camera] Projection matrix updated (FOV: 45.0, Aspect: 1.333, Near: 0.100, Far: 1000.0)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Camera: pos=(6.83,6.83,6.83) target=(2.50,2.50,2.50)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Ray: origin=(6.83,6.83,6.83) dir=(-0.936,-0.197,-0.293)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Raycasting against grid with 0 voxels
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [FaceDetector] Ray: origin=(6.83,6.83,6.83) dir=(-0.936,-0.197,-0.293) hit=0
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Hit face at voxel (-2565,0,-334)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Hover update: mousePos=(0.0,0.0) hasHit=1
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [MouseInteraction] Started hovering over face at -25.65,0.01,-3.34
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -320)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -319)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -318)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -322)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -321)
+[2025-06-08 16:11:07.987] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -322)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -321)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -320)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -319)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -318)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [MouseInteraction] Ground plane placement: hit=-25.65,-0.00,-3.34 snapped=-2560,0,-320 shift=0
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [MouseInteraction] Smart snapping resulted in invalid position -2560,0,-320, using fallback
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelDataManager] wouldOverlapInternal: checking position (0, 0, 0) with resolution 6
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [VoxelDataManager] World bounds: min=(0.000, 0.000, 0.000) max=(0.640, 0.640, 0.640)
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 1
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [Application] Rendering frame 0, mesh count: 0
+[2025-06-08 16:11:07.988] [DEBUG] [0x1f8143240] [GroundPlaneGrid] Rendering grid: shader=12, lines=34, opacity=0.35, minor=(0.71,0.71,0.71), major=(0.78,0.78,0.78)
+[2025-06-08 16:11:07.990] [DEBUG] [0x1f8143240] [RenderEngine] End frame 1: 2.29ms, 437.4 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -322)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -321)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -319)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -318)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [MouseInteraction] Ground plane placement: hit=-25.65,-0.00,-3.34 snapped=-2560,0,-320 shift=0
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [MouseInteraction] Smart snapping resulted in invalid position -2560,0,-320, using fallback
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelDataManager] wouldOverlapInternal: checking position (0, 0, 0) with resolution 5
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [VoxelDataManager] World bounds: min=(0.000, 0.000, 0.000) max=(0.320, 0.320, 0.320)
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 2
+[2025-06-08 16:11:07.993] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:07.994] [DEBUG] [0x1f8143240] [Application] Rendering frame 1, mesh count: 0
+[2025-06-08 16:11:07.994] [DEBUG] [0x1f8143240] [RenderEngine] End frame 2: 0.37ms, 2688.2 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -2, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, -1, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 0, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 1, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2562, 2, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -2, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, -1, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 0, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -320)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -319)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 1, -318)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -322)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -321)
+[2025-06-08 16:11:08.002] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2561, 2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, -1, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 0, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 1, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2560, 2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, -1, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 0, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 1, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2559, 2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, -1, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 0, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 1, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -322)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -321)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -319)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-2558, 2, -318)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [MouseInteraction] Ground plane placement: hit=-25.65,-0.00,-3.34 snapped=-2560,0,-320 shift=0
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [MouseInteraction] Smart snapping resulted in invalid position -2560,0,-320, using fallback
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelDataManager] wouldOverlapInternal: checking position (0, 0, 0) with resolution 5
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [VoxelDataManager] World bounds: min=(0.000, 0.000, 0.000) max=(0.320, 0.320, 0.320)
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 3
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:08.003] [DEBUG] [0x1f8143240] [Application] Rendering frame 2, mesh count: 0
+[2025-06-08 16:11:08.004] [DEBUG] [0x1f8143240] [RenderEngine] End frame 3: 0.96ms, 1036.3 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [OrbitCamera] View preset: ISOMETRIC (yaw=45.0°, pitch=35.3°, distance=12.0)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [Camera] Position changed to (9.429, 9.427, 9.429)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [Camera] Position changed to (4.232, 4.232, 4.232)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [Camera] View matrix updated
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (13, 13, 13): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 13, 13): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 13, 12): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 12, 12): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (11, 12, 12): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (10, 12, 12): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (9, 12, 12): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (9, 12, 11): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (8, 12, 11): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (7, 12, 11): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (7, 11, 11): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (6, 11, 11): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (6, 11, 10): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (5, 11, 10): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (4, 11, 10): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (3, 11, 10): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 11, 10): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 11, 9): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 10, 9): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (1, 10, 9): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (0, 10, 9): false
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -194)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -193)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -192)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -191)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -190)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -194)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -193)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -192)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -191)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -190)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -194)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -193)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -192)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -191)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -190)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -194)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -193)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -192)
+[2025-06-08 16:11:08.018] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -194)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -193)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -192)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -191)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -190)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [MouseInteraction] Ground plane placement: hit=-15.89,0.00,-2.07 snapped=-1600,0,-192 shift=0
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [MouseInteraction] Smart snapping resulted in invalid position -1600,0,-192, using fallback
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelDataManager] wouldOverlapInternal: checking position (0, 0, 0) with resolution 5
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [VoxelDataManager] World bounds: min=(0.000, 0.000, 0.000) max=(0.320, 0.320, 0.320)
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 4
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:08.019] [DEBUG] [0x1f8143240] [Application] Rendering frame 3, mesh count: 0
+[2025-06-08 16:11:08.020] [DEBUG] [0x1f8143240] [RenderEngine] End frame 4: 0.69ms, 1449.3 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:08.021] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 5
+[2025-06-08 16:11:08.021] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:08.021] [DEBUG] [0x1f8143240] [Application] Rendering frame 4, mesh count: 0
+[2025-06-08 16:11:08.022] [DEBUG] [0x1f8143240] [RenderEngine] End frame 5: 0.64ms, 1562.5 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:08.158] [INFO ] [0x1f8143240] Screenshot saved as test_output/resolution_32cm.ppm.ppm (PPM format)
+[2025-06-08 16:11:08.282] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (13, 13, 13): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 13, 13): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 13, 12): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 12, 12): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (11, 12, 12): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (10, 12, 12): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (9, 12, 12): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (9, 12, 11): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (8, 12, 11): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (7, 12, 11): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (7, 11, 11): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (6, 11, 11): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (6, 11, 10): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (5, 11, 10): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (4, 11, 10): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (3, 11, 10): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 11, 10): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 11, 9): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 10, 9): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (1, 10, 9): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (0, 10, 9): false
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -194)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -193)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -192)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -191)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -190)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [MouseInteraction] Ground plane placement: hit=-15.89,0.00,-2.07 snapped=-1600,0,-192 shift=0
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [MouseInteraction] Smart snapping resulted in invalid position -1600,0,-192, using fallback
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelDataManager] wouldOverlapInternal: checking position (0, 0, 0) with resolution 5
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [VoxelDataManager] World bounds: min=(0.000, 0.000, 0.000) max=(0.320, 0.320, 0.320)
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 6
+[2025-06-08 16:11:08.283] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:08.292] [DEBUG] [0x1f8143240] [RenderEngine] End frame 6: 8.86ms, 112.8 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (13, 13, 13): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 13, 13): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 13, 12): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (12, 12, 12): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (11, 12, 12): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (10, 12, 12): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (9, 12, 12): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (9, 12, 11): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (8, 12, 11): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (7, 12, 11): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (7, 11, 11): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (6, 11, 11): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (6, 11, 10): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (5, 11, 10): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (4, 11, 10): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (3, 11, 10): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 11, 10): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 11, 9): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (2, 10, 9): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (1, 10, 9): false
+[2025-06-08 16:11:08.295] [DEBUG] [0x1f8143240] [VoxelGrid] Get voxel at position (0, 10, 9): false
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, -1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 0, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1602, 2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, -1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 0, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1601, 2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, -1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 0, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1600, 2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, -1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 0, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1599, 2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, -1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 0, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 1, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -194)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -193)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -192)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -191)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelGrid] Attempt to get voxel at invalid position (-1598, 2, -190)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [MouseInteraction] Ground plane placement: hit=-15.89,0.00,-2.07 snapped=-1600,0,-192 shift=0
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelDataManager] wouldOverlapInternal: checking position (0, 0, 0) with resolution 5
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [VoxelDataManager] World bounds: min=(0.000, 0.000, 0.000) max=(0.320, 0.320, 0.320)
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [RenderEngine] Begin frame 7
+[2025-06-08 16:11:08.296] [DEBUG] [0x1f8143240] [RenderEngine] Clear: flags=7, color=(0.300,0.300,0.300,1.000), depth=1.000, stencil=0
+[2025-06-08 16:11:08.297] [DEBUG] [0x1f8143240] [RenderEngine] End frame 7: 0.87ms, 1149.4 FPS, 0 draws, 0 triangles
+[2025-06-08 16:11:08.309] [INFO ] [0x1f8143240] RenderEngine shut down

@@ -118,19 +118,10 @@ void GroundPlaneGrid::setOpacityParameters(float baseOpacity, float nearOpacity,
 
 void GroundPlaneGrid::render(const Matrix4f& viewMatrix, 
                              const Matrix4f& projMatrix) {
-    if (!m_initialized || !m_visible || m_lineCount == 0) {
+    if (!m_initialized || !m_visible || m_lineCount == 0 || m_shader == InvalidId) {
         return;
     }
     
-    // Debug log
-    static int frameCount = 0;
-    if (frameCount++ % 60 == 0) {
-        Logging::Logger::getInstance().debugfc("GroundPlaneGrid", 
-            "Rendering grid: shader=%u, lines=%zu, opacity=%.2f, minor=(%.2f,%.2f,%.2f), major=(%.2f,%.2f,%.2f)",
-            m_shader, m_lineCount, m_currentOpacity,
-            MinorLineColor().x, MinorLineColor().y, MinorLineColor().z,
-            MajorLineColor().x, MajorLineColor().y, MajorLineColor().z);
-    }
     
     // Use shader
     m_glRenderer->useProgram(m_shader);
@@ -155,10 +146,21 @@ void GroundPlaneGrid::render(const Matrix4f& viewMatrix,
     m_glRenderer->bindVertexArray(m_vao);
     m_glRenderer->drawArrays(PrimitiveType::Lines, 0, m_lineCount * 2);
     
-    // Check for OpenGL errors
+    // Check for OpenGL errors (only log first few frames to avoid spam)
+    static int errorLogCount = 0;
     GLenum error = glGetError();
-    if (error != GL_NO_ERROR && frameCount < 5) {
-        Logging::Logger::getInstance().error("GroundPlaneGrid GL Error: " + std::to_string(error));
+    if (error != GL_NO_ERROR && errorLogCount < 5) {
+        const char* errorStr = nullptr;
+        switch (error) {
+            case GL_INVALID_ENUM: errorStr = "GL_INVALID_ENUM"; break;
+            case GL_INVALID_VALUE: errorStr = "GL_INVALID_VALUE"; break;
+            case GL_INVALID_OPERATION: errorStr = "GL_INVALID_OPERATION"; break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION: errorStr = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
+            case GL_OUT_OF_MEMORY: errorStr = "GL_OUT_OF_MEMORY"; break;
+            default: errorStr = "Unknown error"; break;
+        }
+        Logging::Logger::getInstance().error("GroundPlaneGrid GL error: " + std::string(errorStr));
+        errorLogCount++;
     }
     
     // Restore state
@@ -232,7 +234,10 @@ void GroundPlaneGrid::generateGridMesh(const Vector3f& workspaceSize) {
     glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(GridVertex),
                          reinterpret_cast<const void*>(offsetof(GridVertex, isMajorLine)));
     
+    // Unbind VAO to preserve state
     m_glRenderer->bindVertexArray(0);
+    // Note: VBO unbinding is done after VAO unbinding to preserve the VAO state
+    m_glRenderer->bindVertexBuffer(0);
     
     Logging::Logger::getInstance().info("Generated ground plane grid mesh: " + 
                                         std::to_string(m_lineCount) + " lines, workspace size: (" +

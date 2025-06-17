@@ -1,13 +1,22 @@
 #include "ShaderManager.h"
 #include "../../foundation/logging/Logger.h"
 #include <algorithm>
+#include <fstream>
+#include <sstream>
 
 namespace VoxelEditor {
 namespace Rendering {
 
 ShaderManager::ShaderManager() 
     : m_nextShaderId(1)
-    , m_hotReloadEnabled(false) {
+    , m_hotReloadEnabled(false)
+    , m_renderer(nullptr) {
+}
+
+ShaderManager::ShaderManager(OpenGLRenderer* renderer)
+    : m_nextShaderId(1)
+    , m_hotReloadEnabled(false)
+    , m_renderer(renderer) {
 }
 
 ShaderManager::~ShaderManager() {
@@ -23,14 +32,43 @@ ShaderId ShaderManager::getShader(const std::string& name) {
 }
 
 ShaderId ShaderManager::loadShaderFromFile(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath) {
-    // TODO: Implement shader loading from files
-    try {
-        Logging::Logger::getInstance().warning("ShaderManager::loadShader not implemented");
-    } catch (...) {}
-    (void)name;
-    (void)vertexPath;
-    (void)fragmentPath;
-    return InvalidId;
+    if (!m_renderer) {
+        try {
+            Logging::Logger::getInstance().error("ShaderManager::loadShaderFromFile - no renderer set");
+        } catch (...) {}
+        return InvalidId;
+    }
+    
+    // Read vertex shader file
+    std::ifstream vertexFile(vertexPath);
+    if (!vertexFile.is_open()) {
+        try {
+            Logging::Logger::getInstance().error("Failed to open vertex shader file: " + vertexPath);
+        } catch (...) {}
+        return InvalidId;
+    }
+    
+    std::stringstream vertexStream;
+    vertexStream << vertexFile.rdbuf();
+    std::string vertexSource = vertexStream.str();
+    vertexFile.close();
+    
+    // Read fragment shader file
+    std::ifstream fragmentFile(fragmentPath);
+    if (!fragmentFile.is_open()) {
+        try {
+            Logging::Logger::getInstance().error("Failed to open fragment shader file: " + fragmentPath);
+        } catch (...) {}
+        return InvalidId;
+    }
+    
+    std::stringstream fragmentStream;
+    fragmentStream << fragmentFile.rdbuf();
+    std::string fragmentSource = fragmentStream.str();
+    fragmentFile.close();
+    
+    // Create shader from sources
+    return createShaderFromSource(name, vertexSource, fragmentSource, m_renderer);
 }
 
 void ShaderManager::reloadAllShaders() {

@@ -1,0 +1,29 @@
+--- a/core/voxel_data/tests/test_VoxelDataManager.cpp
++++ b/core/voxel_data/tests/test_VoxelDataManager.cpp
+@@ -269,11 +269,8 @@ TEST_F(VoxelDataManagerTest, MultipleResolutionVoxels) {
+     for (int i = 0; i < static_cast<int>(VoxelResolution::COUNT); ++i) {
+         VoxelResolution resolution = static_cast<VoxelResolution>(i);
+         
+-        // Calculate center position for this resolution
+-        // Workspace is 5m, center is at world (0, 0, 0)
+-        // Grid center = workspace_size / (2 * voxel_size)
+-        float voxelSize = getVoxelSize(resolution);
+-        int centerGrid = static_cast<int>(2.5f / voxelSize); // Half workspace size
+-        Vector3i pos(centerGrid, 0, centerGrid);
++        // Use safe positions for each resolution to avoid grid bounds issues
++        // Different positions for each resolution to avoid any potential conflicts
++        Vector3i pos(10 + i, 5, 10 + i); // Small offsets ensure all fit in workspace
+         
+         EXPECT_TRUE(manager->setVoxel(pos, resolution, true)) 
+             << "Failed to set voxel for resolution " << static_cast<int>(resolution);
+@@ -285,9 +282,7 @@ TEST_F(VoxelDataManagerTest, MultipleResolutionVoxels) {
+     
+     // Clear specific resolution
+     manager->clearResolution(VoxelResolution::Size_4cm);
+-    float voxelSize4cm = getVoxelSize(VoxelResolution::Size_4cm);
+-    int centerGrid4cm = static_cast<int>(2.5f / voxelSize4cm);
+-    Vector3i pos4cm(centerGrid4cm, 0, centerGrid4cm);
++    Vector3i pos4cm(12, 5, 12); // Position for Size_4cm (i=2, so 10+2=12)
+     EXPECT_FALSE(manager->getVoxel(pos4cm, VoxelResolution::Size_4cm));
+     EXPECT_EQ(manager->getVoxelCount(VoxelResolution::Size_4cm), 0);
+     EXPECT_EQ(manager->getTotalVoxelCount(), static_cast<int>(VoxelResolution::COUNT) - 1);

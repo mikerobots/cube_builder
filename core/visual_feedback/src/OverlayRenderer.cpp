@@ -141,6 +141,15 @@ void OverlayRenderer::renderGrid(VoxelData::VoxelResolution resolution, const Ma
     flushLineBatch(camera);
 }
 
+void OverlayRenderer::renderGroundPlaneGrid(const Math::Vector3f& center, float extent, 
+                                          const Math::Vector3f& cursorPos, bool enableDynamicOpacity,
+                                          const Camera::Camera& camera) {
+    if (!m_frameActive) return;
+    
+    generateGroundPlaneGridLines(center, extent, cursorPos, enableDynamicOpacity);
+    flushLineBatch(camera);
+}
+
 void OverlayRenderer::renderAxes(const Math::Vector3f& origin, float length, const Camera::Camera& camera) {
     if (!m_frameActive) return;
     
@@ -908,6 +917,68 @@ void OverlayRenderer::generateGridLines(VoxelData::VoxelResolution resolution,
             Math::Vector3f(center.x + offset, center.y, center.z - halfExtent),
             Math::Vector3f(center.x + offset, center.y, center.z + halfExtent),
             gridColor
+        );
+    }
+}
+
+void OverlayRenderer::generateGroundPlaneGridLines(const Math::Vector3f& center, float extent, 
+                                                  const Math::Vector3f& cursorPos, bool enableDynamicOpacity) {
+    // REQ-1.1.1: Grid with 32cm squares
+    const float gridSize = 0.32f; // 32cm
+    
+    // REQ-1.1.3: Grid line colors and opacity
+    const Rendering::Color normalGridColor(180.0f/255.0f, 180.0f/255.0f, 180.0f/255.0f, 0.35f);
+    
+    // REQ-1.1.4: Major grid lines every 160cm (5 * 32cm)
+    const float majorGridInterval = 1.60f; // 160cm
+    const Rendering::Color majorGridColor(200.0f/255.0f, 200.0f/255.0f, 200.0f/255.0f, 0.35f);
+    
+    // REQ-1.2.2: Dynamic opacity near cursor
+    const float dynamicOpacityRadius = 2.0f * gridSize; // 2 grid squares = 64cm
+    const float enhancedOpacity = 0.65f;
+    
+    int gridCount = static_cast<int>(extent / gridSize);
+    float halfExtent = gridCount * gridSize * 0.5f;
+    
+    // Generate grid lines in XZ plane at Y=0 (ground plane)
+    for (int i = -gridCount; i <= gridCount; ++i) {
+        float offset = i * gridSize;
+        
+        // Determine if this is a major grid line
+        bool isMajorLine = (std::abs(offset) < 0.001f) || 
+                          (std::abs(std::fmod(offset, majorGridInterval)) < 0.001f);
+        
+        // Calculate distance to cursor for dynamic opacity
+        float distanceToX = enableDynamicOpacity ? 
+            std::abs(cursorPos.x - (center.x + offset)) : std::numeric_limits<float>::max();
+        float distanceToZ = enableDynamicOpacity ? 
+            std::abs(cursorPos.z - (center.z + offset)) : std::numeric_limits<float>::max();
+        
+        // Determine line color and opacity
+        Rendering::Color lineColor = isMajorLine ? majorGridColor : normalGridColor;
+        
+        // REQ-1.2.2: Enhance opacity near cursor
+        if (enableDynamicOpacity) {
+            bool enhanceOpacityX = distanceToX <= dynamicOpacityRadius;
+            bool enhanceOpacityZ = distanceToZ <= dynamicOpacityRadius;
+            
+            if (enhanceOpacityX || enhanceOpacityZ) {
+                lineColor.a = enhancedOpacity;
+            }
+        }
+        
+        // Lines parallel to X axis (running east-west)
+        addLine(
+            Math::Vector3f(center.x - halfExtent, 0.0f, center.z + offset),
+            Math::Vector3f(center.x + halfExtent, 0.0f, center.z + offset),
+            lineColor
+        );
+        
+        // Lines parallel to Z axis (running north-south)  
+        addLine(
+            Math::Vector3f(center.x + offset, 0.0f, center.z - halfExtent),
+            Math::Vector3f(center.x + offset, 0.0f, center.z + halfExtent),
+            lineColor
         );
     }
 }

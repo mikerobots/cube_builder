@@ -87,13 +87,16 @@ TEST_F(SphereSelectorTest, SelectFromSphere_IncludePartialTrue) {
 TEST_F(SphereSelectorTest, SelectFromSphere_IncludePartialFalse) {
     selector->setIncludePartial(false);
     
-    Math::Vector3f center(0.04f, 0.04f, 0.04f);
-    float radius = 0.03f; // Small radius
+    Math::Vector3f center(0.02f, 0.02f, 0.02f);  // Center of voxel at (0,0,0)
+    float radius = 0.025f; // Radius large enough to include the voxel center
     
     SelectionSet result = selector->selectFromSphere(center, radius, VoxelData::VoxelResolution::Size_4cm, false);
     
     // Should only include voxels whose centers are within radius
     EXPECT_GE(result.size(), 1u);
+    
+    // Voxel at (0,0,0) should be selected since its center is at (0.02, 0.02, 0.02)
+    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 // Ray Selection Tests
@@ -110,6 +113,8 @@ TEST_F(SphereSelectorTest, SelectFromRay_Basic) {
 
 // Ellipsoid Selection Tests
 TEST_F(SphereSelectorTest, SelectEllipsoid_Basic) {
+    selector->setIncludePartial(false); // Only select voxels whose centers are inside
+    
     Math::Vector3f center(0.0f, 0.0f, 0.0f);
     Math::Vector3f radii(0.1f, 0.05f, 0.08f);
     Math::Quaternion rotation = Math::Quaternion::identity();

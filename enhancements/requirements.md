@@ -13,6 +13,7 @@
 2. **Rotation**: No rotation - all voxels are axis-aligned
 3. **Default Alignment**: Same-size voxels auto-snap to perfect alignment, Shift key overrides for 1cm increment placement
 
+
 ### Visual Feedback
 1. **Grid Transparency**: 35% opacity default, 65% when placing nearby
 2. **Grid Colors**: 

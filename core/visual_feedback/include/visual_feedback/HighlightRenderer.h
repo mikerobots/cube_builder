@@ -4,8 +4,8 @@
 #include <memory>
 
 #include "FeedbackTypes.h"
-#include "SelectionSet.h"
-#include "Camera.h"
+#include "core/selection/SelectionSet.h"
+#include "core/camera/Camera.h"
 
 namespace VoxelEditor {
 namespace VisualFeedback {

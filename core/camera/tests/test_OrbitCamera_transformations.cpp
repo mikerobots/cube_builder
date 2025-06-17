@@ -95,24 +95,30 @@ TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformsTargetToOrigin) {
     
     Matrix4f viewMatrix = camera->getViewMatrix();
     
-    // Transform target point by view matrix
-    Vector4f targetHomogeneous(target.x, target.y, target.z, 1.0f);
-    Vector4f viewSpaceTarget = viewMatrix * targetHomogeneous;
-    
-    // In view space, the target should be at (0, 0, -distance)
-    // Actually, since we're looking AT the target, it should be at origin in view space
-    // when considering the full camera transform
+    // The view matrix transforms world space to view space
+    // In view space, the camera looks down the negative Z axis
+    // So we need to verify that the target transforms correctly
     
     // For now, let's verify the view matrix is consistent with position
     Vector3f cameraPos = camera->getPosition();
-    Vector3f expectedForward = (target - cameraPos).normalized();
     
-    // Extract forward vector from view matrix (negative Z in view space)
-    Vector3f viewForward(-viewMatrix.m[2], -viewMatrix.m[6], -viewMatrix.m[10]);
+    // Transform the target to view space
+    Vector4f targetHomogeneous(target.x, target.y, target.z, 1.0f);
+    Vector4f targetInView = viewMatrix * targetHomogeneous;
     
-    EXPECT_NEAR(viewForward.x, expectedForward.x, EPSILON) << "View matrix forward X inconsistent";
-    EXPECT_NEAR(viewForward.y, expectedForward.y, EPSILON) << "View matrix forward Y inconsistent";
-    EXPECT_NEAR(viewForward.z, expectedForward.z, EPSILON) << "View matrix forward Z inconsistent";
+    // Transform the camera position to view space (should be at origin)
+    Vector4f camPosHomogeneous(cameraPos.x, cameraPos.y, cameraPos.z, 1.0f);
+    Vector4f camPosInView = viewMatrix * camPosHomogeneous;
+    
+    // Camera position should be at origin in view space
+    EXPECT_NEAR(camPosInView.x, 0.0f, EPSILON) << "Camera X position in view space";
+    EXPECT_NEAR(camPosInView.y, 0.0f, EPSILON) << "Camera Y position in view space";
+    EXPECT_NEAR(camPosInView.z, 0.0f, EPSILON) << "Camera Z position in view space";
+    
+    // The target should be along the negative Z axis in view space
+    // The distance from camera to target should be preserved
+    float expectedDistance = (target - cameraPos).length();
+    EXPECT_NEAR(targetInView.z, -expectedDistance, EPSILON) << "Target should be at -distance along Z in view space";
 }
 
 // Test view matrix for objects at various positions

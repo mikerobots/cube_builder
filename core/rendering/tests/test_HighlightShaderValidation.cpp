@@ -1,0 +1,426 @@
+#include <gtest/gtest.h>
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include "core/visual_feedback/include/visual_feedback/HighlightRenderer.h"
+#include "core/visual_feedback/include/visual_feedback/FeedbackTypes.h"
+#include "../RenderEngine.h"
+#include "../OpenGLRenderer.h"
+#include "foundation/events/EventDispatcher.h"
+#include <iostream>
+
+namespace VoxelEditor {
+namespace Rendering {
+
+class HighlightShaderValidationTest : public ::testing::Test {
+protected:
+    GLFWwindow* window = nullptr;
+    std::unique_ptr<Events::EventDispatcher> eventDispatcher;
+    std::unique_ptr<RenderEngine> renderEngine;
+    
+    void SetUp() override {
+        // Initialize GLFW
+        if (!glfwInit()) {
+            GTEST_SKIP() << "Failed to initialize GLFW";
+        }
+        
+        // Configure GLFW
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        
+#ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+        
+        // Create window
+        window = glfwCreateWindow(800, 600, "Highlight Shader Test", nullptr, nullptr);
+        if (!window) {
+            glfwTerminate();
+            GTEST_SKIP() << "Failed to create GLFW window";
+        }
+        
+        // Make context current
+        glfwMakeContextCurrent(window);
+        
+        // Initialize render engine
+        eventDispatcher = std::make_unique<Events::EventDispatcher>();
+        renderEngine = std::make_unique<RenderEngine>(eventDispatcher.get());
+        
+        RenderConfig config;
+        config.windowWidth = 800;
+        config.windowHeight = 600;
+        
+        if (!renderEngine->initialize(config)) {
+            GTEST_SKIP() << "Failed to initialize render engine";
+        }
+    }
+    
+    void TearDown() override {
+        renderEngine.reset();
+        eventDispatcher.reset();
+        
+        if (window) {
+            glfwDestroyWindow(window);
+        }
+        glfwTerminate();
+    }
+    
+    bool compileShader(GLuint shader, const char* source) {
+        glShaderSource(shader, 1, &source, nullptr);
+        glCompileShader(shader);
+        
+        GLint success;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        
+        if (!success) {
+            GLint logLength;
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
+            if (logLength > 0) {
+                std::vector<char> log(logLength);
+                glGetShaderInfoLog(shader, logLength, nullptr, log.data());
+                std::cerr << "Shader compilation error: " << log.data() << std::endl;
+            }
+            return false;
+        }
+        return true;
+    }
+    
+    bool linkProgram(GLuint program) {
+        glLinkProgram(program);
+        
+        GLint success;
+        glGetProgramiv(program, GL_LINK_STATUS, &success);
+        
+        if (!success) {
+            GLint logLength;
+            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+            if (logLength > 0) {
+                std::vector<char> log(logLength);
+                glGetProgramInfoLog(program, logLength, nullptr, log.data());
+                std::cerr << "Program linking error: " << log.data() << std::endl;
+            }
+            return false;
+        }
+        return true;
+    }
+};
+
+TEST_F(HighlightShaderValidationTest, ValidateHighlightShaderCompilation) {
+    // Test the highlight shader code directly
+    const char* vertexShaderSrc = R"(
+        #version 330 core
+        layout(location = 0) in vec3 a_position;
+        layout(location = 1) in vec3 a_normal;
+        
+        uniform mat4 u_model;
+        uniform mat4 u_view;
+        uniform mat4 u_projection;
+        uniform float u_time;
+        
+        out vec3 v_normal;
+        out vec3 v_worldPos;
+        
+        void main() {
+            vec4 worldPos = u_model * vec4(a_position, 1.0);
+            v_worldPos = worldPos.xyz;
+            v_normal = mat3(u_model) * a_normal;
+            
+            gl_Position = u_projection * u_view * worldPos;
+        }
+    )";
+    
+    const char* fragmentShaderSrc = R"(
+        #version 330 core
+        in vec3 v_normal;
+        in vec3 v_worldPos;
+        
+        uniform vec4 u_color;
+        uniform float u_time;
+        
+        out vec4 FragColor;
+        
+        void main() {
+            vec3 normal = normalize(v_normal);
+            float fresnel = 1.0 - abs(dot(normal, vec3(0.0, 0.0, 1.0)));
+            fresnel = pow(fresnel, 2.0);
+            
+            vec4 color = u_color;
+            color.a *= (0.3 + 0.7 * fresnel);
+            
+            FragColor = color;
+        }
+    )";
+    
+    // Create and compile shaders
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    ASSERT_NE(vertexShader, 0) << "Failed to create vertex shader";
+    
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    ASSERT_NE(fragmentShader, 0) << "Failed to create fragment shader";
+    
+    // Compile shaders
+    ASSERT_TRUE(compileShader(vertexShader, vertexShaderSrc)) << "Failed to compile vertex shader";
+    ASSERT_TRUE(compileShader(fragmentShader, fragmentShaderSrc)) << "Failed to compile fragment shader";
+    
+    // Create and link program
+    GLuint program = glCreateProgram();
+    ASSERT_NE(program, 0) << "Failed to create shader program";
+    
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentShader);
+    
+    ASSERT_TRUE(linkProgram(program)) << "Failed to link shader program";
+    
+    // Validate program
+    glValidateProgram(program);
+    GLint validateStatus;
+    glGetProgramiv(program, GL_VALIDATE_STATUS, &validateStatus);
+    EXPECT_EQ(validateStatus, GL_TRUE) << "Shader program validation failed";
+    
+    // Check uniform locations
+    GLint modelLoc = glGetUniformLocation(program, "u_model");
+    GLint viewLoc = glGetUniformLocation(program, "u_view");
+    GLint projLoc = glGetUniformLocation(program, "u_projection");
+    GLint colorLoc = glGetUniformLocation(program, "u_color");
+    GLint timeLoc = glGetUniformLocation(program, "u_time");
+    
+    EXPECT_NE(modelLoc, -1) << "u_model uniform not found";
+    EXPECT_NE(viewLoc, -1) << "u_view uniform not found";
+    EXPECT_NE(projLoc, -1) << "u_projection uniform not found";
+    EXPECT_NE(colorLoc, -1) << "u_color uniform not found";
+    // Note: u_time may be optimized out by the compiler if not actively used
+    // Clear any accumulated GL errors from previous operations
+    while(glGetError() != GL_NO_ERROR) {}
+    
+    // Check attribute locations
+    GLint posLoc = glGetAttribLocation(program, "a_position");
+    GLint normalLoc = glGetAttribLocation(program, "a_normal");
+    
+    EXPECT_EQ(posLoc, 0) << "a_position should be at location 0";
+    EXPECT_EQ(normalLoc, 1) << "a_normal should be at location 1";
+    
+    // Clean up
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+    glDeleteProgram(program);
+}
+
+TEST_F(HighlightShaderValidationTest, ValidateHighlightRendererCreation) {
+    // Create a HighlightRenderer and ensure it initializes properly
+    auto highlightRenderer = std::make_unique<VisualFeedback::HighlightRenderer>();
+    
+    // The constructor should create the shader without errors
+    // If there were shader compilation errors, we would have seen them in stderr
+    
+    // Create a simple test camera
+    class TestCamera : public Camera::Camera {
+    public:
+        TestCamera() {
+            setPosition(Math::Vector3f(0, 0, 5));
+            setTarget(Math::Vector3f(0, 0, 0));
+            setUp(Math::Vector3f(0, 1, 0));
+            setFieldOfView(45.0f);
+            setAspectRatio(800.0f/600.0f);
+            setNearFarPlanes(0.1f, 100.0f);
+        }
+        
+        void setViewPreset(::VoxelEditor::Camera::ViewPreset preset) override {
+            // Simple implementation for testing
+            switch(preset) {
+                case ::VoxelEditor::Camera::ViewPreset::FRONT:
+                    setPosition(Math::Vector3f(0, 0, 5));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    
+    TestCamera camera;
+    
+    // Clear any GL errors before testing
+    while (glGetError() != GL_NO_ERROR) {}
+    
+    // Update and render (should handle empty state gracefully)
+    highlightRenderer->update(0.016f); // 16ms frame time
+    highlightRenderer->render(camera);
+    
+    // Check for GL errors
+    GLenum error = glGetError();
+    EXPECT_EQ(error, GL_NO_ERROR) << "OpenGL error after empty render: " << error;
+    
+    // Add a test highlight
+    VisualFeedback::HighlightStyle style;
+    style.color = Rendering::Color(1.0f, 1.0f, 0.0f, 0.5f); // Yellow with 50% alpha
+    style.animated = true;
+    style.pulseSpeed = 1.0f;
+    
+    highlightRenderer->renderVoxelHighlight(
+        Math::Vector3i(0, 0, 0),
+        VoxelData::VoxelResolution::Size_4cm,
+        style
+    );
+    
+    // Render with highlight
+    highlightRenderer->render(camera);
+    
+    // Check for GL errors after rendering with highlights
+    error = glGetError();
+    EXPECT_EQ(error, GL_NO_ERROR) << "OpenGL error after highlight render: " << error;
+}
+
+TEST_F(HighlightShaderValidationTest, ValidateShaderWithDifferentStates) {
+    auto highlightRenderer = std::make_unique<VisualFeedback::HighlightRenderer>();
+    
+    // Create test camera
+    class TestCamera : public Camera::Camera {
+    public:
+        TestCamera() {
+            setPosition(Math::Vector3f(0, 0, 5));
+            setTarget(Math::Vector3f(0, 0, 0));
+            setUp(Math::Vector3f(0, 1, 0));
+            setFieldOfView(45.0f);
+            setAspectRatio(800.0f/600.0f);
+            setNearFarPlanes(0.1f, 100.0f);
+        }
+        void setViewPreset(::VoxelEditor::Camera::ViewPreset preset) override { (void)preset; }
+    };
+    
+    TestCamera camera;
+    
+    // Test different highlight styles
+    std::vector<VisualFeedback::HighlightStyle> styles = {
+        // Static opaque highlight
+        {Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f), false, 0.0f},
+        // Animated semi-transparent highlight
+        {Rendering::Color(0.0f, 1.0f, 0.0f, 0.5f), true, 2.0f},
+        // Very transparent highlight
+        {Rendering::Color(0.0f, 0.0f, 1.0f, 0.1f), true, 0.5f}
+    };
+    
+    for (const auto& style : styles) {
+        // Clear previous highlights
+        highlightRenderer->clearAll();
+        
+        // Add highlight with current style
+        highlightRenderer->renderVoxelHighlight(
+            Math::Vector3i(0, 0, 0),
+            VoxelData::VoxelResolution::Size_4cm,
+            style
+        );
+        
+        // Clear GL errors
+        while (glGetError() != GL_NO_ERROR) {}
+        
+        // Render
+        highlightRenderer->render(camera);
+        
+        // Check for errors
+        GLenum error = glGetError();
+        EXPECT_EQ(error, GL_NO_ERROR) 
+            << "OpenGL error with style (r=" << style.color.r 
+            << ", g=" << style.color.g 
+            << ", b=" << style.color.b 
+            << ", a=" << style.color.a 
+            << ", animated=" << style.animated << "): " << error;
+    }
+}
+
+TEST_F(HighlightShaderValidationTest, ValidateMultipleHighlights) {
+    auto highlightRenderer = std::make_unique<VisualFeedback::HighlightRenderer>();
+    
+    // Create test camera
+    class TestCamera : public Camera::Camera {
+    public:
+        TestCamera() {
+            setPosition(Math::Vector3f(0, 0, 10));
+            setTarget(Math::Vector3f(0, 0, 0));
+            setUp(Math::Vector3f(0, 1, 0));
+            setFieldOfView(45.0f);
+            setAspectRatio(800.0f/600.0f);
+            setNearFarPlanes(0.1f, 100.0f);
+        }
+        void setViewPreset(::VoxelEditor::Camera::ViewPreset preset) override { (void)preset; }
+    };
+    
+    TestCamera camera;
+    
+    VisualFeedback::HighlightStyle style;
+    style.color = Rendering::Color(1.0f, 0.5f, 0.0f, 0.6f);
+    style.animated = true;
+    style.pulseSpeed = 1.5f;
+    
+    // Add multiple highlights
+    for (int x = -2; x <= 2; ++x) {
+        for (int y = -2; y <= 2; ++y) {
+            for (int z = -2; z <= 2; ++z) {
+                highlightRenderer->renderVoxelHighlight(
+                    Math::Vector3i(x, y, z),
+                    VoxelData::VoxelResolution::Size_4cm,
+                    style
+                );
+            }
+        }
+    }
+    
+    // Clear GL errors
+    while (glGetError() != GL_NO_ERROR) {}
+    
+    // Update animation
+    for (int i = 0; i < 10; ++i) {
+        highlightRenderer->update(0.016f);
+    }
+    
+    // Render all highlights
+    highlightRenderer->render(camera);
+    
+    // Check for errors
+    GLenum error = glGetError();
+    EXPECT_EQ(error, GL_NO_ERROR) << "OpenGL error with multiple highlights: " << error;
+}
+
+TEST_F(HighlightShaderValidationTest, ValidateFaceHighlightRendering) {
+    auto highlightRenderer = std::make_unique<VisualFeedback::HighlightRenderer>();
+    
+    // Create test camera
+    class TestCamera : public Camera::Camera {
+    public:
+        TestCamera() {
+            setPosition(Math::Vector3f(2, 2, 2));
+            setTarget(Math::Vector3f(0, 0, 0));
+            setUp(Math::Vector3f(0, 1, 0));
+            setFieldOfView(45.0f);
+            setAspectRatio(800.0f/600.0f);
+            setNearFarPlanes(0.1f, 100.0f);
+        }
+        void setViewPreset(::VoxelEditor::Camera::ViewPreset preset) override { (void)preset; }
+    };
+    
+    TestCamera camera;
+    
+    VisualFeedback::HighlightStyle style;
+    style.color = Rendering::Color(0.0f, 1.0f, 1.0f, 0.7f);
+    style.animated = false;
+    
+    // Create a test face
+    VisualFeedback::Face testFace(
+        Math::Vector3i(0, 0, 0),
+        VoxelData::VoxelResolution::Size_4cm,
+        VisualFeedback::FaceDirection::PositiveY
+    );
+    
+    // Clear GL errors
+    while (glGetError() != GL_NO_ERROR) {}
+    
+    // Render face highlight
+    highlightRenderer->renderFaceHighlight(testFace, style);
+    highlightRenderer->render(camera);
+    
+    // Check for errors
+    GLenum error = glGetError();
+    EXPECT_EQ(error, GL_NO_ERROR) << "OpenGL error with face highlight: " << error;
+}
+
+} // namespace Rendering
+} // namespace VoxelEditor

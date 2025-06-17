@@ -1,3 +1,6 @@
+# Find GTest package
+find_package(GTest REQUIRED)
+
 # Undo/Redo tests
 add_executable(test_undo_redo
     TestCommand.cpp
@@ -38,3 +41,19 @@ target_link_libraries(test_history_manager
 )
 
 add_test(NAME test_history_manager COMMAND test_history_manager)
+
+# Placement commands tests
+add_executable(test_placement_commands
+    TestPlacementCommands.cpp
+)
+
+target_link_libraries(test_placement_commands
+    PRIVATE
+        VoxelEditor_UndoRedo
+        VoxelEditor_VoxelData
+        VoxelEditor_Math
+        VoxelEditor_Logging
+        GTest::gtest_main
+)
+
+add_test(NAME test_placement_commands COMMAND test_placement_commands)

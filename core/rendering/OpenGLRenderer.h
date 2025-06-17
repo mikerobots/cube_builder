@@ -205,6 +205,9 @@ public:
     float getQueryTime(const std::string& name) const;
     
 private:
+    // Helper methods
+    bool hasValidGLContext() const;
+    
     // Context state
     bool m_contextValid;
     std::string m_rendererInfo;
