@@ -1,7 +1,42 @@
-# Undo/Redo Subsystem - Requirements Validation
+# Undo/Redo Subsystem - TODO
 
-## Overview
-This subsystem manages operation history and state restoration for reversible operations.
+## Current Status (Updated: January 2025)
+The undo/redo subsystem is partially implemented with basic functionality working but several issues identified:
+
+### Working Components ✅
+- **HistoryManager**: Core undo/redo operations with history management
+- **Command Interface**: Base command pattern implementation  
+- **VoxelCommands**: Basic voxel edit and bulk edit commands
+- **SelectionCommands**: Selection modification commands
+- **CompositeCommand**: Command grouping functionality
+- **Transaction**: Command transaction support
+- **PlacementCommands**: Voxel placement/removal with validation (added recently)
+
+### Issues Found 🐛
+1. **Test Infrastructure Problem**: PlacementCommand tests fail with mutex errors
+   - Tests use `reinterpret_cast` from MockVoxelDataManager to VoxelDataManager*
+   - This is undefined behavior and causes crashes when real methods are called
+   - Need proper mock/interface for VoxelDataManager
+
+2. **Missing getWorkspaceSize()**: PlacementCommands expects this method on VoxelDataManager
+   - Used for bounds validation in placement operations
+   - Either mock needs this method or commands need refactoring
+
+3. **Architecture Issues** (from DESIGN.md):
+   - Circular dependencies between commands and managers
+   - Tight coupling without abstraction layer
+   - Missing dependency injection
+   - No proper interfaces for testing
+
+### Not Implemented ❌
+- Camera commands
+- Group commands  
+- Workspace commands
+- Memory optimization/compression
+- Incremental snapshots
+- Command indexing
+
+## Requirements Validation
 **Total Requirements**: 3
 
 ## Requirements to Validate
