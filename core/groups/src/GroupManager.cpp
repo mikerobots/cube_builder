@@ -293,7 +293,7 @@ bool GroupManager::isGroupLocked(GroupId id) const {
 }
 
 bool GroupManager::moveGroup(GroupId id, const Math::Vector3f& offset) {
-    auto operation = createMoveOperation(id, offset);
+    auto operation = createMoveOperation(id, Math::WorldCoordinates(offset));
     if (operation && operation->execute()) {
         dispatchGroupModified(id, GroupModificationType::Moved);
         return true;
@@ -304,7 +304,7 @@ bool GroupManager::moveGroup(GroupId id, const Math::Vector3f& offset) {
 GroupId GroupManager::copyGroup(GroupId id, const std::string& newName, 
                                const Math::Vector3f& offset) {
     std::string name = newName.empty() ? generateUniqueGroupName("Copy") : newName;
-    auto operation = createCopyOperation(id, name, offset);
+    auto operation = createCopyOperation(id, name, Math::WorldCoordinates(offset));
     
     if (operation && operation->execute()) {
         auto copyOp = static_cast<CopyGroupOperation*>(operation.get());
@@ -758,13 +758,13 @@ void GroupManager::dispatchGroupDeleted(GroupId groupId, const std::string& name
 }
 
 std::unique_ptr<GroupOperation> GroupManager::createMoveOperation(GroupId groupId, 
-                                                                const Math::Vector3f& offset) {
+                                                                const Math::WorldCoordinates& offset) {
     return std::make_unique<MoveGroupOperation>(this, m_voxelManager, groupId, offset);
 }
 
 std::unique_ptr<GroupOperation> GroupManager::createCopyOperation(GroupId sourceId,
                                                                 const std::string& newName,
-                                                                const Math::Vector3f& offset) {
+                                                                const Math::WorldCoordinates& offset) {
     return std::make_unique<CopyGroupOperation>(this, m_voxelManager, sourceId, newName, offset);
 }
 

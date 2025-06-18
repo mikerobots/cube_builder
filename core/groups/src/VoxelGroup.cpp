@@ -109,16 +109,18 @@ void VoxelGroup::translate(const Math::Vector3f& offset) {
     std::unordered_set<VoxelId> newVoxels;
     for (const auto& voxel : m_voxels) {
         VoxelId newVoxel = voxel;
-        Math::Vector3f worldPos = Math::Vector3f(voxel.position.x, voxel.position.y, voxel.position.z) * getVoxelSize(voxel.resolution);
+        
+        // Use VoxelId's coordinate conversion method instead of direct multiplication
+        // This ensures we use the centered coordinate system properly
+        Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
+        Math::Vector3f worldPos = worldCoords.value();
         worldPos = worldPos + offset;
         
-        // Convert back to voxel coordinates
-        float voxelSize = getVoxelSize(voxel.resolution);
-        newVoxel.position = Math::Vector3i(
-            static_cast<int>(std::round(worldPos.x / voxelSize)),
-            static_cast<int>(std::round(worldPos.y / voxelSize)),
-            static_cast<int>(std::round(worldPos.z / voxelSize))
-        );
+        // Convert back to increment coordinates using the centralized converter
+        Math::IncrementCoordinates newIncrementCoords = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(worldPos));
+        
+        newVoxel.position = newIncrementCoords;
         
         newVoxels.insert(newVoxel);
     }
@@ -172,17 +174,16 @@ void VoxelGroup::updateBounds() const {
     Math::Vector3f maxBound(std::numeric_limits<float>::lowest());
     
     for (const auto& voxel : m_voxels) {
-        float voxelSize = getVoxelSize(voxel.resolution);
-        Math::Vector3f voxelMin = Math::Vector3f(voxel.position.x, voxel.position.y, voxel.position.z) * voxelSize;
-        Math::Vector3f voxelMax = voxelMin + Math::Vector3f(voxelSize, voxelSize, voxelSize);
+        // Use VoxelId's getBounds() method which properly handles centered coordinate system
+        Math::BoundingBox voxelBounds = voxel.getBounds();
         
-        minBound.x = std::min(minBound.x, voxelMin.x);
-        minBound.y = std::min(minBound.y, voxelMin.y);
-        minBound.z = std::min(minBound.z, voxelMin.z);
+        minBound.x = std::min(minBound.x, voxelBounds.min.x);
+        minBound.y = std::min(minBound.y, voxelBounds.min.y);
+        minBound.z = std::min(minBound.z, voxelBounds.min.z);
         
-        maxBound.x = std::max(maxBound.x, voxelMax.x);
-        maxBound.y = std::max(maxBound.y, voxelMax.y);
-        maxBound.z = std::max(maxBound.z, voxelMax.z);
+        maxBound.x = std::max(maxBound.x, voxelBounds.max.x);
+        maxBound.y = std::max(maxBound.y, voxelBounds.max.y);
+        maxBound.z = std::max(maxBound.z, voxelBounds.max.z);
     }
     
     m_bounds = Math::BoundingBox(minBound, maxBound);

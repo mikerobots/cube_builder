@@ -39,6 +39,10 @@ public:
         return VoxelEditor::Math::BoundingBox(VoxelEditor::Math::Vector3f(-10, -10, -10), VoxelEditor::Math::Vector3f(10, 10, 10));
     }
     
+    VoxelEditor::Math::Vector3f getWorkspaceSize() const {
+        return VoxelEditor::Math::Vector3f(5.0f, 5.0f, 5.0f); // Match VoxelId default workspace size
+    }
+    
     void addTestVoxel(const VoxelId& voxel, const VoxelEditor::Rendering::Color& color) {
         m_voxels[voxel] = color;
     }
@@ -101,7 +105,7 @@ TEST_F(GroupManagerTest, CreateGroupWithVoxels) {
     
     // Add voxels to voxel manager
     for (const auto& voxel : voxels) {
-        voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Red());
+        voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Red());
     }
     
     GroupId id = groupManager->createGroup("Group with Voxels", voxels);
@@ -149,7 +153,7 @@ TEST_F(GroupManagerTest, VoxelMembership) {
     GroupId group2 = groupManager->createGroup("Group 2");
     
     VoxelId voxel(Vector3i(0, 0, 0), VoxelResolution::Size_32cm);
-    voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Red());
+    voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Red());
     
     // Add voxel to group1
     EXPECT_TRUE(groupManager->addVoxelToGroup(group1, voxel));
@@ -269,13 +273,13 @@ TEST_F(GroupManagerTest, GroupStatistics) {
     
     for (int i = 0; i < 5; ++i) {
         VoxelId voxel(Vector3i(i, 0, 0), VoxelResolution::Size_32cm);
-        voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Red());
+        voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Red());
         groupManager->addVoxelToGroup(group1, voxel);
     }
     
     for (int i = 0; i < 3; ++i) {
         VoxelId voxel(Vector3i(0, i, 0), VoxelResolution::Size_32cm);
-        voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Blue());
+        voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Blue());
         groupManager->addVoxelToGroup(group2, voxel);
     }
     
@@ -323,19 +327,33 @@ TEST_F(GroupManagerTest, GroupBounds) {
     };
     
     for (const auto& voxel : voxels) {
-        voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Red());
+        voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Red());
         groupManager->addVoxelToGroup(id, voxel);
     }
     
     auto bounds = groupManager->getGroupBounds(id);
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
     
-    EXPECT_LE(bounds.min.x, 0.0f);
-    EXPECT_LE(bounds.min.y, 0.0f);
-    EXPECT_LE(bounds.min.z, 0.0f);
-    EXPECT_GE(bounds.max.x, 2.0f * voxelSize);
-    EXPECT_GE(bounds.max.y, 2.0f * voxelSize);
-    EXPECT_GE(bounds.max.z, 2.0f * voxelSize);
+    // With centered coordinate system, calculate expected bounds from actual positions
+    Vector3f workspaceSize = voxelManager->getWorkspaceSize();
+    
+    // Calculate expected bounds for voxel at increment (0,0,0)
+    VoxelEditor::Math::WorldCoordinates world1 = VoxelEditor::Math::CoordinateConverter::incrementToWorld(
+        IncrementCoordinates(Vector3i(0, 0, 0)));
+    Vector3f expectedMin = world1.value();
+    
+    // Calculate expected bounds for voxel at increment (2,2,2) plus voxel size
+    VoxelEditor::Math::WorldCoordinates world2 = VoxelEditor::Math::CoordinateConverter::incrementToWorld(
+        IncrementCoordinates(Vector3i(2, 2, 2)));
+    Vector3f expectedMax = world2.value() + Vector3f(voxelSize, voxelSize, voxelSize);
+    
+    // The bounds should encompass both voxels
+    EXPECT_FLOAT_EQ(bounds.min.x, expectedMin.x);
+    EXPECT_FLOAT_EQ(bounds.min.y, expectedMin.y);
+    EXPECT_FLOAT_EQ(bounds.min.z, expectedMin.z);
+    EXPECT_FLOAT_EQ(bounds.max.x, expectedMax.x);
+    EXPECT_FLOAT_EQ(bounds.max.y, expectedMax.y);
+    EXPECT_FLOAT_EQ(bounds.max.z, expectedMax.z);
 }
 
 TEST_F(GroupManagerTest, CleanupEmptyGroups) {
@@ -345,7 +363,7 @@ TEST_F(GroupManagerTest, CleanupEmptyGroups) {
     
     // Add voxel to one group
     VoxelId voxel(Vector3i(0, 0, 0), VoxelResolution::Size_32cm);
-    voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Red());
+    voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Red());
     groupManager->addVoxelToGroup(notEmpty, voxel);
     
     EXPECT_EQ(groupManager->getGroupCount(), 3);
@@ -372,8 +390,8 @@ TEST_F(GroupManagerTest, ExportImport) {
     // Add voxels
     VoxelId voxel1(Vector3i(0, 0, 0), VoxelResolution::Size_32cm);
     VoxelId voxel2(Vector3i(1, 0, 0), VoxelResolution::Size_32cm);
-    voxelManager->setVoxel(voxel1.position, voxel1.resolution, VoxelEditor::Rendering::Color::Red());
-    voxelManager->setVoxel(voxel2.position, voxel2.resolution, VoxelEditor::Rendering::Color::Blue());
+    voxelManager->setVoxel(voxel1.position.value(), voxel1.resolution, VoxelEditor::Rendering::Color::Red());
+    voxelManager->setVoxel(voxel2.position.value(), voxel2.resolution, VoxelEditor::Rendering::Color::Blue());
     
     groupManager->addVoxelToGroup(parent, voxel1);
     groupManager->addVoxelToGroup(child1, voxel2);
@@ -404,7 +422,7 @@ TEST_F(GroupManagerTest, Validation) {
     // Create valid structure
     GroupId group = groupManager->createGroup("Valid Group");
     VoxelId voxel(Vector3i(0, 0, 0), VoxelResolution::Size_32cm);
-    voxelManager->setVoxel(voxel.position, voxel.resolution, VoxelEditor::Rendering::Color::Red());
+    voxelManager->setVoxel(voxel.position.value(), voxel.resolution, VoxelEditor::Rendering::Color::Red());
     groupManager->addVoxelToGroup(group, voxel);
     
     EXPECT_TRUE(groupManager->validateGroups());

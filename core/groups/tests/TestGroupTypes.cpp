@@ -19,7 +19,7 @@ TEST_F(GroupTypesTest, VoxelIdConstruction) {
     
     VoxelId voxel(position, resolution);
     
-    EXPECT_EQ(voxel.position, position);
+    EXPECT_EQ(voxel.position.value(), position);
     EXPECT_EQ(voxel.resolution, resolution);
 }
 

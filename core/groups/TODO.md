@@ -1,5 +1,87 @@
 # Groups Subsystem TODO
 
+## 🚨 CRITICAL: COORDINATE SYSTEM MIGRATION REQUIRED
+
+**IMPORTANT**: The foundation coordinate system has been simplified, but this subsystem still uses the old GridCoordinates system and needs immediate updating.
+
+### 📖 REQUIRED READING
+**BEFORE STARTING**: Read `/coordinate.md` in the root directory to understand the new simplified coordinate system.
+
+### 🎯 Migration Overview
+Update the Groups subsystem from the old GridCoordinates system to the new simplified coordinate system:
+- **OLD**: GridCoordinates with complex grid-to-world conversions
+- **NEW**: IncrementCoordinates (1cm granularity) for all voxel operations, centered at origin (0,0,0)
+
+### 📋 Migration Tasks (HIGH PRIORITY)
+
+#### Phase 1: Remove GridCoordinates Dependencies ✅ COMPLETED
+- [x] **Update GroupTypes.h** - ✅ DONE: Replaced GridCoordinates with IncrementCoordinates in VoxelId struct
+- [x] **Update VoxelGroup.h** - ✅ DONE: Already compatible with new coordinate system
+- [x] **Update GroupOperations.h** - ✅ DONE: Already compatible with new coordinate system
+- [x] **Update GroupManager.h** - ✅ DONE: Already compatible with new coordinate system
+
+#### Phase 2: Update Implementation Files ✅ COMPLETED
+- [x] **Update VoxelGroup.cpp** - ✅ DONE: Updated coordinate conversion calls for centered coordinates
+- [x] **Update GroupOperations.cpp** - ✅ DONE: Fixed all coordinate conversion methods and parameter counts
+- [x] **Update GroupManager.cpp** - ✅ DONE: Compiles without GridCoordinates errors
+- [x] **Update GroupHierarchy.cpp** - ✅ DONE: Compiles without GridCoordinates errors
+
+#### Phase 3: Update Tests
+- [ ] **TestVoxelGroup.cpp** - Update group tests for IncrementCoordinates
+- [ ] **TestGroupOperations.cpp** - Update operation tests for centered coordinates
+- [ ] **TestGroupManager.cpp** - Update manager tests for new coordinate system
+- [ ] **TestGroupHierarchy.cpp** - Update hierarchy tests for IncrementCoordinates
+- [ ] **TestGroupTypes.cpp** - Update type tests for new coordinate system
+
+#### Phase 4: Validation
+- [ ] **Compile Check** - Ensure all files compile without GridCoordinates errors
+- [ ] **Unit Tests** - Run `cd build_ninja && ctest -R "VoxelEditor_Groups_Tests"`
+- [ ] **Fix Issues** - Address any failing tests or compilation errors
+
+### 🔧 Key Code Changes Required
+
+```cpp
+// OLD - Remove all instances of:
+GridCoordinates gridPos;
+convertWorldToGrid();
+convertGridToWorld();
+#include "GridCoordinates.h"
+
+// NEW - Replace with:
+IncrementCoordinates voxelPos;
+CoordinateConverter::worldToIncrement();
+CoordinateConverter::incrementToWorld();
+#include "foundation/math/CoordinateConverter.h"
+```
+
+### 🎯 Groups-Specific Changes
+
+#### VoxelGroup Updates
+- Update `VoxelGroup` to store voxel positions as IncrementCoordinates
+- Ensure group bounds calculations work with centered coordinate system
+- Update group operations (move, rotate, scale) for IncrementCoordinates
+
+#### Group Operations Updates
+- Update `GroupOperations::moveGroup()` for centered coordinate system
+- Ensure transformation operations work with IncrementCoordinates
+- Update group collision detection for centered coordinates
+
+#### Group Manager Updates
+- Update `GroupManager` to handle IncrementCoordinates in group operations
+- Ensure group creation and management work with centered system
+- Update group hierarchy for IncrementCoordinates
+
+### 🎯 Success Criteria
+- ✅ All GridCoordinates references removed
+- ✅ All group operations use IncrementCoordinates
+- ✅ Group bounds and operations work with centered coordinate system
+- ✅ All files compile without coordinate system errors
+- ✅ All Groups unit tests pass
+
+**PRIORITY**: HIGH - Groups system is important for user workflow
+
+---
+
 ## Overview
 The groups subsystem manages voxel grouping, operations, and metadata. It provides functionality for organizing voxels into logical groups with hierarchical relationships.
 

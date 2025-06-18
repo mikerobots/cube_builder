@@ -11,7 +11,7 @@ namespace Groups {
 // MoveGroupOperation implementation
 MoveGroupOperation::MoveGroupOperation(GroupManager* groupManager, 
                                      VoxelData::VoxelDataManager* voxelManager,
-                                     GroupId groupId, const Math::Vector3f& offset)
+                                     GroupId groupId, const Math::WorldCoordinates& offset)
     : m_groupManager(groupManager)
     , m_voxelManager(voxelManager)
     , m_groupId(groupId)
@@ -30,25 +30,19 @@ bool MoveGroupOperation::execute() {
     m_voxelMoves.reserve(voxelList.size());
     
     // Calculate new positions for all voxels
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    
     for (const auto& voxel : voxelList) {
-        float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-        Math::Vector3f worldPos(
-            voxel.position.x * voxelSize,
-            voxel.position.y * voxelSize,
-            voxel.position.z * voxelSize
-        );
+        // Use VoxelId's getWorldPosition() method which handles centered coordinate system
+        Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
+        Math::Vector3f worldPos = worldCoords.value();
+        Math::Vector3f newWorldPos = worldPos + m_offset.value();
         
-        Math::Vector3f newWorldPos = worldPos + m_offset;
+        // Convert back to grid coordinates using the centralized converter
+        Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(newWorldPos));
         
-        // Convert back to voxel coordinates
-        VoxelId newVoxel;
-        newVoxel.resolution = voxel.resolution;
-        newVoxel.position = Math::Vector3i(
-            static_cast<int>(std::round(newWorldPos.x / voxelSize)),
-            static_cast<int>(std::round(newWorldPos.y / voxelSize)),
-            static_cast<int>(std::round(newWorldPos.z / voxelSize))
-        );
-        
+        VoxelId newVoxel(newGridCoords, voxel.resolution);
         m_voxelMoves.emplace_back(voxel, newVoxel);
     }
     
@@ -58,9 +52,11 @@ bool MoveGroupOperation::execute() {
         newPositions.push_back(newPos);
     }
     
-    // Create workspace bounds from size
-    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
-    Math::BoundingBox workspaceBounds(Math::Vector3f(0, 0, 0), workspaceSize);
+    // Create workspace bounds using centered coordinate system
+    Math::BoundingBox workspaceBounds(
+        Math::Vector3f(-workspaceSize.x/2, 0.0f, -workspaceSize.z/2),
+        Math::Vector3f(workspaceSize.x/2, workspaceSize.y, workspaceSize.z/2)
+    );
     if (!GroupOperationUtils::validateVoxelPositions(newPositions, workspaceBounds)) {
         m_voxelMoves.clear();
         return false;
@@ -68,7 +64,10 @@ bool MoveGroupOperation::execute() {
     
     // Check for collisions with existing voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        if (m_voxelManager->hasVoxel(newPos.position, newPos.resolution)) {
+        // Position is already in IncrementCoordinates, no conversion needed
+        Math::IncrementCoordinates newIncrement = newPos.position;
+        
+        if (m_voxelManager->hasVoxel(newIncrement, newPos.resolution)) {
             // Check if it's not the same voxel we're moving
             bool isSameVoxel = false;
             for (const auto& [checkOld, checkNew] : m_voxelMoves) {
@@ -89,8 +88,12 @@ bool MoveGroupOperation::execute() {
     
     // Remove old voxels from VoxelDataManager and add new ones
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, false);
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates oldIncrement = oldPos.position;
+        Math::IncrementCoordinates newIncrement = newPos.position;
+        
+        m_voxelManager->setVoxel(oldIncrement, oldPos.resolution, false);
+        m_voxelManager->setVoxel(newIncrement, newPos.resolution, true);
         group->addVoxel(newPos);
     }
     
@@ -108,9 +111,14 @@ bool MoveGroupOperation::undo() {
     group->clearVoxels();
     
     // Remove new voxels from VoxelDataManager and restore old ones
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, false);
-        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, true);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates oldIncrement = oldPos.position;
+        Math::IncrementCoordinates newIncrement = newPos.position;
+        
+        m_voxelManager->setVoxel(newIncrement, newPos.resolution, false);
+        m_voxelManager->setVoxel(oldIncrement, oldPos.resolution, true);
         group->addVoxel(oldPos);
     }
     
@@ -121,7 +129,7 @@ bool MoveGroupOperation::undo() {
 std::string MoveGroupOperation::getDescription() const {
     std::stringstream ss;
     ss << "Move group " << m_groupId << " by (" 
-       << m_offset.x << ", " << m_offset.y << ", " << m_offset.z << ")";
+       << m_offset.x() << ", " << m_offset.y() << ", " << m_offset.z() << ")";
     return ss.str();
 }
 
@@ -129,7 +137,7 @@ std::string MoveGroupOperation::getDescription() const {
 CopyGroupOperation::CopyGroupOperation(GroupManager* groupManager,
                                      VoxelData::VoxelDataManager* voxelManager,
                                      GroupId sourceId, const std::string& newName,
-                                     const Math::Vector3f& offset)
+                                     const Math::WorldCoordinates& offset)
     : m_groupManager(groupManager)
     , m_voxelManager(voxelManager)
     , m_sourceId(sourceId)
@@ -163,34 +171,27 @@ bool CopyGroupOperation::execute() {
     m_createdVoxels.clear();
     m_createdVoxels.reserve(sourceVoxels.size());
     
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    
+    
     for (const auto& voxel : sourceVoxels) {
-        float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-        Math::Vector3f worldPos(
-            voxel.position.x * voxelSize,
-            voxel.position.y * voxelSize,
-            voxel.position.z * voxelSize
-        );
+        // Use VoxelId's getWorldPosition() method which handles centered coordinate system
+        Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
+        Math::Vector3f worldPos = worldCoords.value();
+        Math::Vector3f newWorldPos = worldPos + m_offset.value();
         
-        Math::Vector3f newWorldPos = worldPos + m_offset;
+        // Convert back to grid coordinates using the centralized converter
+        Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(newWorldPos));
         
-        VoxelId newVoxel;
-        newVoxel.resolution = voxel.resolution;
-        newVoxel.position = Math::Vector3i(
-            static_cast<int>(std::round(newWorldPos.x / voxelSize)),
-            static_cast<int>(std::round(newWorldPos.y / voxelSize)),
-            static_cast<int>(std::round(newWorldPos.z / voxelSize))
-        );
+        VoxelId newVoxel(newGridCoords, voxel.resolution);
         
-        // Check if position is valid and empty
-        if (!m_voxelManager->hasVoxel(newVoxel.position, newVoxel.resolution)) {
-            // Note: VoxelDataManager doesn't store color, only existence
-            bool hasVoxel = m_voxelManager->getVoxel(voxel.position, voxel.resolution);
-            if (hasVoxel) {
-                m_voxelManager->setVoxel(newVoxel.position, newVoxel.resolution, true);
-            }
-            newGroup->addVoxel(newVoxel);
-            m_createdVoxels.push_back(newVoxel);
-        }
+        // Always create the copied voxel (even if there's a collision)
+        // Position is already in IncrementCoordinates, no conversion needed
+        Math::IncrementCoordinates newIncrement = newVoxel.position;
+        m_voxelManager->setVoxel(newIncrement, newVoxel.resolution, true);
+        newGroup->addVoxel(newVoxel);
+        m_createdVoxels.push_back(newVoxel);
     }
     
     m_executed = true;
@@ -201,8 +202,11 @@ bool CopyGroupOperation::undo() {
     if (!m_executed) return false;
     
     // Remove all created voxels
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
     for (const auto& voxel : m_createdVoxels) {
-        m_voxelManager->setVoxel(voxel.position, voxel.resolution, false);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates increment = voxel.position;
+        m_voxelManager->setVoxel(increment, voxel.resolution, false);
     }
     
     // Delete the created group
@@ -217,8 +221,8 @@ bool CopyGroupOperation::undo() {
 std::string CopyGroupOperation::getDescription() const {
     std::stringstream ss;
     ss << "Copy group " << m_sourceId << " as \"" << m_newName << "\"";
-    if (m_offset.length() > 0) {
-        ss << " with offset (" << m_offset.x << ", " << m_offset.y << ", " << m_offset.z << ")";
+    if (m_offset.value().length() > 0) {
+        ss << " with offset (" << m_offset.x() << ", " << m_offset.y() << ", " << m_offset.z() << ")";
     }
     return ss.str();
 }
@@ -255,13 +259,12 @@ bool RotateGroupOperation::execute() {
     float sz = std::sin(m_eulerAngles.z);
     
     // Calculate new positions for all voxels
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    
     for (const auto& voxel : voxelList) {
-        float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-        Math::Vector3f worldPos(
-            voxel.position.x * voxelSize,
-            voxel.position.y * voxelSize,
-            voxel.position.z * voxelSize
-        );
+        // Use the proper coordinate conversion
+        Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
+        Math::Vector3f worldPos = worldCoords.value();
         
         // Translate to pivot
         Math::Vector3f relPos = worldPos - m_pivot;
@@ -289,14 +292,11 @@ bool RotateGroupOperation::execute() {
         // Translate back from pivot
         Math::Vector3f newWorldPos = relPos + m_pivot;
         
-        // Convert back to voxel coordinates
-        VoxelId newVoxel;
-        newVoxel.resolution = voxel.resolution;
-        newVoxel.position = Math::Vector3i(
-            static_cast<int>(std::round(newWorldPos.x / voxelSize)),
-            static_cast<int>(std::round(newWorldPos.y / voxelSize)),
-            static_cast<int>(std::round(newWorldPos.z / voxelSize))
-        );
+        // Convert back to grid coordinates using the centralized converter
+        Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(newWorldPos));
+        
+        VoxelId newVoxel(newGridCoords, voxel.resolution);
         
         m_voxelMoves.emplace_back(voxel, newVoxel);
     }
@@ -313,14 +313,17 @@ bool RotateGroupOperation::execute() {
     
     // Remove old voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, false);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates oldIncrement = oldPos.position;
+        m_voxelManager->setVoxel(oldIncrement, oldPos.resolution, false);
         group->removeVoxel(oldPos);
     }
     
     // Add new voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        // Note: VoxelDataManager doesn't store color, only existence
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
+        // Position is already in IncrementCoordinates, no conversion needed
+        Math::IncrementCoordinates newIncrement = newPos.position;
+        m_voxelManager->setVoxel(newIncrement, newPos.resolution, true);
         group->addVoxel(newPos);
     }
     
@@ -334,16 +337,22 @@ bool RotateGroupOperation::undo() {
     auto group = m_groupManager->getGroup(m_groupId);
     if (!group) return false;
     
+    // Get workspace size for coordinate conversion
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    
     // Remove rotated voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, false);
+        // Position is already in IncrementCoordinates, no conversion needed
+        Math::IncrementCoordinates newIncrement = newPos.position;
+        m_voxelManager->setVoxel(newIncrement, newPos.resolution, false);
         group->removeVoxel(newPos);
     }
     
     // Restore original voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        // Note: VoxelDataManager doesn't store color, only existence
-        m_voxelManager->setVoxel(oldPos.position, oldPos.resolution, true);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates oldIncrement = oldPos.position;
+        m_voxelManager->setVoxel(oldIncrement, oldPos.resolution, true);
         group->addVoxel(oldPos);
     }
     
@@ -394,15 +403,18 @@ bool ScaleGroupOperation::execute() {
     
     int scale = static_cast<int>(std::round(m_scaleFactor));
     
+    // Get workspace size for coordinate conversions
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    
     if (scale > 1) {
         // Scaling up: each voxel becomes a cube of voxels
+        
         for (const auto& voxel : voxelList) {
+            // Use the centralized coordinate converter
+            Math::WorldCoordinates worldCoords = Math::CoordinateConverter::incrementToWorld(
+                voxel.position);
+            Math::Vector3f worldPos = worldCoords.value();
             float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-            Math::Vector3f worldPos(
-                voxel.position.x * voxelSize,
-                voxel.position.y * voxelSize,
-                voxel.position.z * voxelSize
-            );
             
             Math::Vector3f relPos = worldPos - m_pivot;
             
@@ -413,13 +425,11 @@ bool ScaleGroupOperation::execute() {
                             Math::Vector3f(dx * voxelSize, dy * voxelSize, dz * voxelSize);
                         Math::Vector3f newWorldPos = newRelPos + m_pivot;
                         
-                        VoxelId newVoxel;
-                        newVoxel.resolution = voxel.resolution;
-                        newVoxel.position = Math::Vector3i(
-                            static_cast<int>(std::round(newWorldPos.x / voxelSize)),
-                            static_cast<int>(std::round(newWorldPos.y / voxelSize)),
-                            static_cast<int>(std::round(newWorldPos.z / voxelSize))
-                        );
+                        // Convert back to grid coordinates using the centralized converter
+                        Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
+                            Math::WorldCoordinates(newWorldPos));
+                        
+                        VoxelId newVoxel(newGridCoords, voxel.resolution);
                         
                         m_voxelMoves.emplace_back(voxel, newVoxel);
                     }
@@ -434,14 +444,17 @@ bool ScaleGroupOperation::execute() {
     // Execute the moves
     // First remove all old voxels
     for (const auto& voxel : voxelList) {
-        m_voxelManager->setVoxel(voxel.position, voxel.resolution, false);
+        // Position is already in IncrementCoordinates, no conversion needed
+        Math::IncrementCoordinates oldIncrement = voxel.position;
+        m_voxelManager->setVoxel(oldIncrement, voxel.resolution, false);
         group->removeVoxel(voxel);
     }
     
     // Add new voxels
     for (const auto& [oldPos, newPos] : m_voxelMoves) {
-        // Note: VoxelDataManager doesn't store color, only existence
-        m_voxelManager->setVoxel(newPos.position, newPos.resolution, true);
+        // Position is already in IncrementCoordinates, no conversion needed
+        Math::IncrementCoordinates newIncrement = newPos.position;
+        m_voxelManager->setVoxel(newIncrement, newPos.resolution, true);
         group->addVoxel(newPos);
     }
     
@@ -461,8 +474,13 @@ bool ScaleGroupOperation::undo() {
         uniqueNewPositions.insert(newPos);
     }
     
+    // Get workspace size for coordinate conversion
+    Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+    
     for (const auto& voxel : uniqueNewPositions) {
-        m_voxelManager->setVoxel(voxel.position, voxel.resolution, false);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates increment = voxel.position;
+        m_voxelManager->setVoxel(increment, voxel.resolution, false);
         group->removeVoxel(voxel);
     }
     
@@ -473,8 +491,9 @@ bool ScaleGroupOperation::undo() {
     }
     
     for (const auto& voxel : uniqueOldPositions) {
-        // Note: VoxelDataManager doesn't store color, only existence
-        m_voxelManager->setVoxel(voxel.position, voxel.resolution, true);
+        // Convert grid coordinates to increment coordinates for VoxelDataManager
+        Math::IncrementCoordinates increment = voxel.position;
+        m_voxelManager->setVoxel(increment, voxel.resolution, true);
         group->addVoxel(voxel);
     }
     
@@ -667,29 +686,22 @@ std::string SplitGroupOperation::getDescription() const {
 namespace GroupOperationUtils {
 
 VoxelId transformVoxel(const VoxelId& voxel, const GroupTransform& transform) {
-    float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
+    // Use default workspace size if not provided
+    Math::Vector3f workspaceSize(5.0f, 5.0f, 5.0f);
     
-    // Convert to world space
-    Math::Vector3f worldPos(
-        voxel.position.x * voxelSize,
-        voxel.position.y * voxelSize,
-        voxel.position.z * voxelSize
-    );
+    // Use VoxelId's getWorldPosition() method which handles centered coordinate system
+    Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
+    Math::Vector3f worldPos = worldCoords.value();
     
     // Apply transformation
     worldPos = worldPos + transform.translation;
     // TODO: Apply rotation and scale
     
-    // Convert back to voxel space
-    VoxelId result;
-    result.resolution = voxel.resolution;
-    result.position = Math::Vector3i(
-        static_cast<int>(std::round(worldPos.x / voxelSize)),
-        static_cast<int>(std::round(worldPos.y / voxelSize)),
-        static_cast<int>(std::round(worldPos.z / voxelSize))
-    );
+    // Convert back to grid coordinates using the centralized converter
+    Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(worldPos));
     
-    return result;
+    return VoxelId(newGridCoords, voxel.resolution);
 }
 
 Math::BoundingBox calculateBounds(const std::vector<VoxelId>& voxels) {
@@ -700,17 +712,13 @@ Math::BoundingBox calculateBounds(const std::vector<VoxelId>& voxels) {
     Math::Vector3f minPos(std::numeric_limits<float>::max());
     Math::Vector3f maxPos(std::numeric_limits<float>::lowest());
     
+    Math::Vector3f workspaceSize(5.0f, 5.0f, 5.0f); // Default workspace size
+    
     for (const auto& voxel : voxels) {
-        float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-        Math::Vector3f worldMin(
-            voxel.position.x * voxelSize,
-            voxel.position.y * voxelSize,
-            voxel.position.z * voxelSize
-        );
-        Math::Vector3f worldMax = worldMin + Math::Vector3f(voxelSize, voxelSize, voxelSize);
+        Math::BoundingBox voxelBounds = voxel.getBounds();
         
-        minPos = Math::Vector3f::min(minPos, worldMin);
-        maxPos = Math::Vector3f::max(maxPos, worldMax);
+        minPos = Math::Vector3f::min(minPos, voxelBounds.min);
+        maxPos = Math::Vector3f::max(maxPos, voxelBounds.max);
     }
     
     return Math::BoundingBox(minPos, maxPos);
@@ -724,15 +732,17 @@ Math::Vector3f calculateOptimalPivot(const std::vector<VoxelId>& voxels) {
     Math::Vector3f center(0, 0, 0);
     float totalWeight = 0;
     
+    Math::Vector3f workspaceSize(5.0f, 5.0f, 5.0f); // Default workspace size
+    
     for (const auto& voxel : voxels) {
-        float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-        Math::Vector3f worldPos(
-            (voxel.position.x + 0.5f) * voxelSize,
-            (voxel.position.y + 0.5f) * voxelSize,
-            (voxel.position.z + 0.5f) * voxelSize
-        );
+        Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
+        Math::Vector3f worldPos = worldCoords.value();
         
-        center = center + worldPos;
+        // Get the center of the voxel
+        float voxelSize = voxel.getVoxelSize();
+        Math::Vector3f voxelCenter = worldPos + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+        
+        center = center + voxelCenter;
         totalWeight += 1.0f;
     }
     
@@ -741,16 +751,14 @@ Math::Vector3f calculateOptimalPivot(const std::vector<VoxelId>& voxels) {
 
 bool validateVoxelPositions(const std::vector<VoxelId>& voxels,
                            const Math::BoundingBox& workspaceBounds) {
+    // Calculate workspace size from the bounds
+    Math::Vector3f workspaceSize = workspaceBounds.max - workspaceBounds.min;
+    
     for (const auto& voxel : voxels) {
-        float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
-        Math::Vector3f worldMin(
-            voxel.position.x * voxelSize,
-            voxel.position.y * voxelSize,
-            voxel.position.z * voxelSize
-        );
-        Math::Vector3f worldMax = worldMin + Math::Vector3f(voxelSize, voxelSize, voxelSize);
+        // Get voxel bounds in world space using the correct workspace size
+        Math::BoundingBox voxelBounds = voxel.getBounds();
         
-        if (!workspaceBounds.contains(worldMin) || !workspaceBounds.contains(worldMax)) {
+        if (!workspaceBounds.contains(voxelBounds.min) || !workspaceBounds.contains(voxelBounds.max)) {
             return false;
         }
     }

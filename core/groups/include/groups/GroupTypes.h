@@ -3,6 +3,8 @@
 #include "math/Vector3f.h"
 #include "math/Vector3i.h"
 #include "math/BoundingBox.h"
+#include "math/CoordinateTypes.h"
+#include "math/CoordinateConverter.h"
 #include "rendering/RenderTypes.h"
 #include "voxel_data/VoxelTypes.h"
 #include <cstdint>
@@ -19,12 +21,14 @@ constexpr GroupId INVALID_GROUP_ID = 0;
 
 // VoxelId structure for group membership
 struct VoxelId {
-    Math::Vector3i position;
+    Math::IncrementCoordinates position;
     VoxelData::VoxelResolution resolution;
     
     VoxelId() = default;
-    VoxelId(const Math::Vector3i& pos, VoxelData::VoxelResolution res)
+    VoxelId(const Math::IncrementCoordinates& pos, VoxelData::VoxelResolution res)
         : position(pos), resolution(res) {}
+    VoxelId(const Math::Vector3i& pos, VoxelData::VoxelResolution res)
+        : position(Math::IncrementCoordinates(pos)), resolution(res) {}
     
     bool operator==(const VoxelId& other) const {
         return position == other.position && resolution == other.resolution;
@@ -35,13 +39,33 @@ struct VoxelId {
     }
     
     size_t hash() const {
-        size_t h1 = std::hash<int>{}(position.x);
-        size_t h2 = std::hash<int>{}(position.y);
-        size_t h3 = std::hash<int>{}(position.z);
+        const Math::Vector3i& pos = position.value();
+        size_t h1 = std::hash<int>{}(pos.x);
+        size_t h2 = std::hash<int>{}(pos.y);
+        size_t h3 = std::hash<int>{}(pos.z);
         size_t h4 = std::hash<int>{}(static_cast<int>(resolution));
         
         // Combine hashes
         return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
+    }
+    
+    // Convert to world position 
+    Math::WorldCoordinates getWorldPosition() const {
+        // With the new coordinate system, IncrementCoordinates can be directly converted to world coordinates
+        return Math::CoordinateConverter::incrementToWorld(position);
+    }
+    
+    // Get voxel size
+    float getVoxelSize() const {
+        return VoxelData::getVoxelSize(resolution);
+    }
+    
+    // Get bounding box in world space
+    Math::BoundingBox getBounds() const {
+        Math::WorldCoordinates worldPos = getWorldPosition();
+        Math::Vector3f pos = worldPos.value();
+        float voxelSize = getVoxelSize();
+        return Math::BoundingBox(pos, pos + Math::Vector3f(voxelSize, voxelSize, voxelSize));
     }
 };
 

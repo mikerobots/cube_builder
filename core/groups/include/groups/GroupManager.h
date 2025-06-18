@@ -156,9 +156,9 @@ private:
                              const std::vector<VoxelId>& voxels);
     
     // Operation execution
-    std::unique_ptr<GroupOperation> createMoveOperation(GroupId groupId, const Math::Vector3f& offset);
+    std::unique_ptr<GroupOperation> createMoveOperation(GroupId groupId, const Math::WorldCoordinates& offset);
     std::unique_ptr<GroupOperation> createCopyOperation(GroupId sourceId, const std::string& newName,
-                                                       const Math::Vector3f& offset);
+                                                       const Math::WorldCoordinates& offset);
     std::unique_ptr<GroupOperation> createRotateOperation(GroupId groupId, 
                                                          const Math::Vector3f& eulerAngles,
                                                          const Math::Vector3f& pivot);

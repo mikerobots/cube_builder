@@ -3,6 +3,7 @@
 #include "GroupTypes.h"
 #include "../../voxel_data/VoxelDataManager.h"
 #include "../../foundation/math/Vector3f.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include "../../foundation/math/BoundingBox.h"
 #include <vector>
 #include <memory>
@@ -29,7 +30,7 @@ public:
 class MoveGroupOperation : public GroupOperation {
 public:
     MoveGroupOperation(GroupManager* groupManager, VoxelData::VoxelDataManager* voxelManager,
-                      GroupId groupId, const Math::Vector3f& offset);
+                      GroupId groupId, const Math::WorldCoordinates& offset);
     
     bool execute() override;
     bool undo() override;
@@ -40,7 +41,7 @@ private:
     GroupManager* m_groupManager;
     VoxelData::VoxelDataManager* m_voxelManager;
     GroupId m_groupId;
-    Math::Vector3f m_offset;
+    Math::WorldCoordinates m_offset;
     std::vector<std::pair<VoxelId, VoxelId>> m_voxelMoves; // old -> new positions
     bool m_executed = false;
 };
@@ -50,7 +51,7 @@ class CopyGroupOperation : public GroupOperation {
 public:
     CopyGroupOperation(GroupManager* groupManager, VoxelData::VoxelDataManager* voxelManager,
                       GroupId sourceId, const std::string& newName, 
-                      const Math::Vector3f& offset = Math::Vector3f(0, 0, 0));
+                      const Math::WorldCoordinates& offset = Math::WorldCoordinates(Math::Vector3f(0, 0, 0)));
     
     bool execute() override;
     bool undo() override;
@@ -65,7 +66,7 @@ private:
     GroupId m_sourceId;
     GroupId m_createdGroupId = INVALID_GROUP_ID;
     std::string m_newName;
-    Math::Vector3f m_offset;
+    Math::WorldCoordinates m_offset;
     std::vector<VoxelId> m_createdVoxels;
     bool m_executed = false;
 };
