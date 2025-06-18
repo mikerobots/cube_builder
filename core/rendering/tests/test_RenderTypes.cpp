@@ -48,7 +48,7 @@ TEST_F(RenderTypesTest, ColorConstruction) {
 TEST_F(RenderTypesTest, VertexConstruction) {
     // Default construction
     Vertex defaultVertex;
-    EXPECT_EQ(defaultVertex.position, Vector3f::Zero());
+    EXPECT_EQ(defaultVertex.position.value(), Vector3f::Zero());
     EXPECT_EQ(defaultVertex.normal, Vector3f::UnitZ());
     EXPECT_EQ(defaultVertex.texCoords, Vector2f::zero());
     EXPECT_FLOAT_EQ(defaultVertex.color.r, 1.0f);
@@ -63,7 +63,7 @@ TEST_F(RenderTypesTest, VertexConstruction) {
     Color col(0.8f, 0.6f, 0.4f, 0.9f);
     
     Vertex vertex(pos, norm, tex, col);
-    EXPECT_EQ(vertex.position, pos);
+    EXPECT_EQ(vertex.position.value(), pos);
     EXPECT_EQ(vertex.normal, norm);
     EXPECT_EQ(vertex.texCoords, tex);
     EXPECT_FLOAT_EQ(vertex.color.r, col.r);
@@ -109,7 +109,7 @@ TEST_F(RenderTypesTest, MeshOperations) {
 TEST_F(RenderTypesTest, TransformConstruction) {
     // Default construction
     Transform defaultTransform;
-    EXPECT_EQ(defaultTransform.position, Vector3f::Zero());
+    EXPECT_EQ(defaultTransform.position.value(), Vector3f::Zero());
     EXPECT_EQ(defaultTransform.rotation, Vector3f::Zero());
     EXPECT_EQ(defaultTransform.scale, Vector3f::One());
     
@@ -119,7 +119,7 @@ TEST_F(RenderTypesTest, TransformConstruction) {
     Vector3f scl(2.0f, 1.5f, 0.5f);
     
     Transform transform(pos, rot, scl);
-    EXPECT_EQ(transform.position, pos);
+    EXPECT_EQ(transform.position.value(), pos);
     EXPECT_EQ(transform.rotation, rot);
     EXPECT_EQ(transform.scale, scl);
 }

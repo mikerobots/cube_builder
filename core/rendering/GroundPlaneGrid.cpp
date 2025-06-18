@@ -34,7 +34,7 @@ GroundPlaneGrid::GroundPlaneGrid(ShaderManager* shaderManager, OpenGLRenderer* g
     , m_nearOpacity(0.65f)
     , m_transitionSpeed(5.0f)
     , m_cursorPosition(0.0f, 0.0f, 0.0f)
-    , m_smoothedCursorPosition(0.0f, 0.0f, 0.0f)
+    , m_smoothedCursorPosition(WorldCoordinates::zero())
     , m_currentOpacity(0.35f)
     , m_targetOpacity(0.35f) {
 }
@@ -82,18 +82,18 @@ void GroundPlaneGrid::updateGridMesh(const Vector3f& workspaceSize) {
 
 void GroundPlaneGrid::update(float deltaTime) {
     // Smooth cursor position for less jittery transitions
-    m_smoothedCursorPosition = m_smoothedCursorPosition + 
-                               (m_cursorPosition - m_smoothedCursorPosition) * 
-                               std::min(CursorSmoothingFactor * deltaTime, 1.0f);
+    Vector3f cursorDelta = (m_cursorPosition.value() - m_smoothedCursorPosition.value()) * 
+                          std::min(CursorSmoothingFactor * deltaTime, 1.0f);
+    m_smoothedCursorPosition = WorldCoordinates(m_smoothedCursorPosition.value() + cursorDelta);
     
     // Calculate target opacity based on smoothed cursor distance to grid
     // We only care about XZ distance since grid is at Y=0
-    float distanceToGrid = std::abs(m_smoothedCursorPosition.y);
+    float distanceToGrid = std::abs(m_smoothedCursorPosition.y());
     
     // Also consider XZ position - if cursor is over the grid area
     const float gridRadius = std::max(m_currentWorkspaceSize.x, m_currentWorkspaceSize.z) * 0.5f;
-    float xzDistance = std::sqrt(m_smoothedCursorPosition.x * m_smoothedCursorPosition.x + 
-                                 m_smoothedCursorPosition.z * m_smoothedCursorPosition.z);
+    float xzDistance = std::sqrt(m_smoothedCursorPosition.x() * m_smoothedCursorPosition.x() + 
+                                 m_smoothedCursorPosition.z() * m_smoothedCursorPosition.z());
     
     // Calculate opacity based on proximity
     if (distanceToGrid < ProximityRadius * getGridCellSize() && xzDistance <= gridRadius) {
@@ -109,7 +109,7 @@ void GroundPlaneGrid::update(float deltaTime) {
     m_currentOpacity += opacityDelta * std::min(m_transitionSpeed * deltaTime, 1.0f);
 }
 
-void GroundPlaneGrid::setCursorPosition(const Vector3f& cursorWorldPos) {
+void GroundPlaneGrid::setCursorPosition(const WorldCoordinates& cursorWorldPos) {
     m_cursorPosition = cursorWorldPos;
 }
 

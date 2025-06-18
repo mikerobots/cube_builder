@@ -141,7 +141,7 @@ TEST_F(CameraCubeVisibilityTest, SingleVoxelAtOrigin_FrontCamera) {
     // Set camera to front view
     // Set camera to front view
     camera->setPosition(Math::Vector3f(5.0f, 5.0f, 15.0f));
-    camera->setTarget(Math::Vector3f(5.0f, 5.0f, 5.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(5.0f, 5.0f, 5.0f));
     camera->setDistance(5.0f);
     
     // Get voxel world position
@@ -172,7 +172,7 @@ TEST_F(CameraCubeVisibilityTest, VoxelGrid3x3x3_IsometricCamera) {
     // Set camera to isometric view
     float angle = 45.0f * M_PI / 180.0f;
     camera->setPosition(Math::Vector3f(10.0f, 10.0f, 10.0f));
-    camera->setTarget(Math::Vector3f(4.0f, 4.0f, 4.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(4.0f, 4.0f, 4.0f));
     
     // Check center voxel
     Math::Vector3f centerVoxelPos = getVoxelWorldPos(4, 4, 4, resolution);
@@ -228,7 +228,7 @@ TEST_F(CameraCubeVisibilityTest, VoxelBehindCamera) {
     
     // Set camera looking away from voxel
     camera->setPosition(Math::Vector3f(5.0f, 5.0f, 5.0f));
-    camera->setTarget(Math::Vector3f(0.0f, 0.0f, 0.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
     
     Math::Vector3f voxelPos = getVoxelWorldPos(80, 80, 80, resolution);
     float voxelSize = VoxelData::getVoxelSize(resolution);
@@ -303,7 +303,7 @@ TEST_F(CameraCubeVisibilityTest, MultipleVoxelsScreenCoverage) {
     // Set camera to front view
     // Set camera to front view
     camera->setPosition(Math::Vector3f(5.0f, 5.0f, 15.0f));
-    camera->setTarget(Math::Vector3f(5.0f, 5.0f, 5.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(5.0f, 5.0f, 5.0f));
     camera->setDistance(5.0f);
     
     std::cout << "\n=== Multiple Voxels Screen Coverage ===" << std::endl;

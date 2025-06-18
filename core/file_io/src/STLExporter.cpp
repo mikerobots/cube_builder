@@ -140,9 +140,9 @@ bool STLExporter::exportBinarySTL(const std::string& filename, const Rendering::
     
     // Write triangles
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position;
-        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position;
-        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position;
+        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position.value();
+        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position.value();
+        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position.value();
         
         writeBinaryTriangle(file, v0, v1, v2);
     }
@@ -164,9 +164,9 @@ bool STLExporter::exportASCIISTL(const std::string& filename, const Rendering::M
     
     // Write triangles
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position;
-        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position;
-        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position;
+        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position.value();
+        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position.value();
+        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position.value();
         
         writeASCIITriangle(file, v0, v1, v2);
     }
@@ -213,7 +213,7 @@ Rendering::Mesh STLExporter::translateMesh(const Rendering::Mesh& mesh, const Ma
     Rendering::Mesh translatedMesh = mesh;
     
     for (auto& vertex : translatedMesh.vertices) {
-        vertex.position += translation;
+        vertex.position += Math::WorldCoordinates(translation);
     }
     
     return translatedMesh;
@@ -381,9 +381,9 @@ bool STLExporter::hasDegenerateTriangles(const Rendering::Mesh& mesh) const {
     const float epsilon = 1e-6f;
     
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position;
-        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position;
-        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position;
+        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position.value();
+        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position.value();
+        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position.value();
         
         float area = calculateTriangleArea(v0, v1, v2);
         if (area < epsilon) {

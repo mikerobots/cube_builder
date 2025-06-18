@@ -156,26 +156,6 @@ open docs/latex/refman.pdf     # PDF docs
 - **tests.md**: Comprehensive testing framework documentation
 - **apps/cli/CLI_GUIDE.md**: CLI command reference
 
-## Subsystem Status (All Complete & Tested)
-
-**Core Subsystems** (All 895+ tests passing):
-- ✅ **VoxelData** (107/107 tests) - Multi-resolution storage, workspace management
-- ✅ **Rendering** (159/159 tests) - OpenGL pipeline, shaders, ground plane
-- ✅ **Camera** (108/108 tests) - Orbit camera, view presets, transformations
-- ✅ **Selection** (128/128 tests) - Box, sphere, flood-fill selection tools
-- ✅ **Input** (128/128 tests) - Mouse, keyboard, touch, VR input handling
-- ✅ **Groups** (75/75 tests) - Hierarchical voxel grouping system
-- ✅ **VisualFeedback** (32+ tests) - Face highlighting, outline previews
-- ✅ **FileIO** (121/121 tests) - Project save/load, STL export, compression
-- ✅ **SurfaceGen** (61/61 tests) - Dual contouring mesh generation
-- ✅ **UndoRedo** (9/9 tests) - Command pattern history management
-
-**Foundation Layer** (All tests passing):
-- ✅ **Math** - Vector3f, Matrix4f operations, transformations
-- ✅ **Events** - Type-safe event dispatcher system
-- ✅ **Memory** - Object pooling, allocation tracking
-- ✅ **Config** - Hierarchical configuration management
-- ✅ **Logging** - Multi-level logging with performance profiling
 
 ## Development Guidelines
 
@@ -197,3 +177,13 @@ open docs/latex/refman.pdf     # PDF docs
 - **`./run_integration_tests.sh core`** - Integration testing after changes
 - **`cd tests/cli_validation && ./run_all_tests.sh`** - Visual validation for rendering changes
 - **Full test suite** - Before major commits or releases
+
+
+MOST IMPORTANT!!!!!!: If you are working on a shared todo list captured in a
+.md file, please make sure you set the item to be "In progress" in the
+file. And update the md file when done.
+
+If you are working on fixing unit tests, there is a good chance that
+they were written for not 0,0 being the center, and we will most
+likely need to rewrite for the current coordinate system where 0,0 is
+the center.

@@ -1,5 +1,90 @@
 # Rendering Subsystem - TODO
 
+## 🚨 CRITICAL: COORDINATE SYSTEM MIGRATION REQUIRED
+
+**IMPORTANT**: The foundation coordinate system has been simplified, but this subsystem still uses the old GridCoordinates system and needs immediate updating.
+
+### 📖 REQUIRED READING
+**BEFORE STARTING**: Read `/coordinate.md` in the root directory to understand the new simplified coordinate system.
+
+### 🎯 Migration Overview
+Update the Rendering subsystem from the old GridCoordinates system to the new simplified coordinate system:
+- **OLD**: GridCoordinates with complex grid-to-world conversions
+- **NEW**: IncrementCoordinates (1cm granularity) for all voxel operations, centered at origin (0,0,0)
+
+### 📋 Migration Tasks (HIGH PRIORITY)
+
+#### Phase 1: Remove GridCoordinates Dependencies
+- [ ] **Update RenderTypes.h** - Replace GridCoordinates with IncrementCoordinates in render structures
+- [ ] **Update GroundPlaneGrid.h** - Use IncrementCoordinates for grid positioning
+- [ ] **Update RenderEngine.h** - Remove GridCoordinates from rendering interface
+- [ ] **Update OpenGLRenderer.h** - Use IncrementCoordinates for mesh positioning
+
+#### Phase 2: Update Implementation Files
+- [ ] **Update RenderTypes.cpp** - Use IncrementCoordinates in render data structures
+- [ ] **Update GroundPlaneGrid.cpp** - Update grid rendering for centered coordinate system
+- [ ] **Update RenderEngine.cpp** - Use IncrementCoordinates for mesh rendering
+- [ ] **Update OpenGLRenderer.cpp** - Update low-level rendering for centered coordinates
+
+#### Phase 3: Update Tests
+- [ ] **test_RenderTypes.cpp** - Update render type tests for IncrementCoordinates
+- [ ] **test_GroundPlaneGrid.cpp** - Update grid tests for centered coordinate system
+- [ ] **test_RenderEngine.cpp** - Update engine tests for new coordinate system
+- [ ] **test_OpenGLRenderer.cpp** - Update renderer tests for IncrementCoordinates
+- [ ] **Grid dynamics tests** - Update all grid positioning tests for centered coordinates
+
+#### Phase 4: Validation
+- [ ] **Compile Check** - Ensure all files compile without GridCoordinates errors
+- [ ] **Unit Tests** - Run `cd build_ninja && ctest -R "VoxelEditor_Rendering_Tests"`
+- [ ] **Fix Issues** - Address any failing tests or compilation errors
+
+### 🔧 Key Code Changes Required
+
+```cpp
+// OLD - Remove all instances of:
+GridCoordinates gridPos;
+convertWorldToGrid();
+convertGridToWorld();
+#include "GridCoordinates.h"
+
+// NEW - Replace with:
+IncrementCoordinates voxelPos;
+CoordinateConverter::worldToIncrement();
+CoordinateConverter::incrementToWorld();
+#include "foundation/math/CoordinateConverter.h"
+```
+
+### 🎯 Rendering-Specific Changes
+
+#### Ground Plane Grid Updates
+- Update `GroundPlaneGrid` to render grid centered at origin (0,0,0)
+- Ensure grid extends correctly in negative X/Z directions
+- Update grid spacing calculations for centered coordinate system
+- Validate grid positioning with new workspace bounds
+
+#### Mesh Rendering Updates
+- Update voxel mesh positioning to use IncrementCoordinates
+- Ensure mesh transformations work with centered coordinate system
+- Update mesh generation for centered voxel positions
+- Validate rendering from all camera angles
+
+#### Coordinate Transformations
+- Update model matrices for centered coordinate system
+- Ensure proper transformation from IncrementCoordinates to world space
+- Update camera matrix calculations for centered workspace
+
+### 🎯 Success Criteria
+- ✅ All GridCoordinates references removed
+- ✅ All rendering uses IncrementCoordinates
+- ✅ Grid rendering works with centered coordinate system
+- ✅ Voxel rendering works with centered coordinates
+- ✅ All files compile without coordinate system errors
+- ✅ All Rendering unit tests pass
+
+**PRIORITY**: HIGH - Rendering is essential for visual feedback
+
+---
+
 ## Current Status (Updated: January 2025)
 All rendering subsystem tests are passing. The subsystem provides a comprehensive OpenGL-based rendering pipeline with the following components:
 - **RenderEngine**: Main rendering orchestration and frame management

@@ -6,6 +6,7 @@
 #include "Viewport.h"
 #include "../../foundation/math/Vector2i.h"
 #include "../../foundation/math/Ray.h"
+#include "../../foundation/math/CoordinateTypes.h"
 
 namespace VoxelEditor {
 namespace Camera {
@@ -144,11 +145,11 @@ public:
     }
 
     // Frame objects
-    void frameAll(const Math::Vector3f& minBounds, const Math::Vector3f& maxBounds) {
+    void frameAll(const Math::WorldCoordinates& minBounds, const Math::WorldCoordinates& maxBounds) {
         m_camera->frameBox(minBounds, maxBounds);
     }
 
-    void focusOn(const Math::Vector3f& point, float distance = -1.0f) {
+    void focusOn(const Math::WorldCoordinates& point, float distance = -1.0f) {
         m_camera->focusOn(point, distance);
     }
 

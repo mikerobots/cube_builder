@@ -1,5 +1,91 @@
 # Input Subsystem - TODO
 
+## 🚨 CRITICAL: COORDINATE SYSTEM MIGRATION REQUIRED
+
+**IMPORTANT**: The foundation coordinate system has been simplified, but this subsystem still uses the old GridCoordinates system and needs immediate updating.
+
+### 📖 REQUIRED READING
+**BEFORE STARTING**: Read `/coordinate.md` in the root directory to understand the new simplified coordinate system.
+
+### 🎯 Migration Overview
+Update the Input subsystem from the old GridCoordinates system to the new simplified coordinate system:
+- **OLD**: GridCoordinates with complex grid-to-world conversions
+- **NEW**: IncrementCoordinates (1cm granularity) for all voxel operations, centered at origin (0,0,0)
+
+### 📋 Migration Tasks (HIGH PRIORITY)
+
+#### Phase 1: Remove GridCoordinates Dependencies
+- [ ] **Update PlacementValidation.h** - Replace GridCoordinates with IncrementCoordinates
+- [ ] **Update PlaneDetector.h** - Use IncrementCoordinates for plane detection
+- [ ] **Update InputTypes.h** - Replace GridCoordinates in input event structures
+- [ ] **Update mouse/touch handlers** - Use IncrementCoordinates for position tracking
+
+#### Phase 2: Update Implementation Files
+- [ ] **Update PlacementValidation.cpp** - Use IncrementCoordinates for voxel placement validation
+- [ ] **Update PlaneDetector.cpp** - Use IncrementCoordinates for plane detection algorithms
+- [ ] **Update InputTypes.cpp** - Update coordinate handling in input events
+- [ ] **Update MouseHandler.cpp** - Use IncrementCoordinates for mouse position tracking
+- [ ] **Update TouchHandler.cpp** - Use IncrementCoordinates for touch position tracking
+- [ ] **Update VRInputHandler.cpp** - Use IncrementCoordinates for VR spatial tracking
+
+#### Phase 3: Update Tests
+- [ ] **test_PlacementValidation.cpp** - Update placement tests for centered coordinates
+- [ ] **test_PlaneDetector.cpp** - Update plane detection tests for IncrementCoordinates
+- [ ] **test_InputTypes.cpp** - Update input type tests for new coordinate system
+- [ ] **test_MouseHandler.cpp** - Update mouse handler tests for centered coordinates
+- [ ] **test_TouchHandler.cpp** - Update touch handler tests for IncrementCoordinates
+- [ ] **test_VRInputHandler.cpp** - Update VR input tests for new coordinate system
+
+#### Phase 4: Validation
+- [ ] **Compile Check** - Ensure all files compile without GridCoordinates errors
+- [ ] **Unit Tests** - Run `cd build_ninja && ctest -R "VoxelEditor_Input_Tests"`
+- [ ] **Fix Issues** - Address any failing tests or compilation errors
+
+### 🔧 Key Code Changes Required
+
+```cpp
+// OLD - Remove all instances of:
+GridCoordinates gridPos;
+convertWorldToGrid();
+convertGridToWorld();
+#include "GridCoordinates.h"
+
+// NEW - Replace with:
+IncrementCoordinates voxelPos;
+CoordinateConverter::worldToIncrement();
+CoordinateConverter::incrementToWorld();
+#include "foundation/math/CoordinateConverter.h"
+```
+
+### 🎯 Input-Specific Changes
+
+#### Placement Validation Updates
+- Update `PlacementValidation` to use IncrementCoordinates for voxel placement
+- Ensure placement validation works with centered coordinate system
+- Update workspace bounds checking for centered coordinates
+
+#### Plane Detection Updates
+- Update `PlaneDetector` to use IncrementCoordinates for plane tracking
+- Ensure plane detection works with centered coordinate system
+- Update plane persistence for IncrementCoordinates
+
+#### Input Event Updates
+- Update all input events to use IncrementCoordinates for position data
+- Ensure ray casting works with centered coordinate system
+- Update input validation for centered coordinates
+
+### 🎯 Success Criteria
+- ✅ All GridCoordinates references removed
+- ✅ All input processing uses IncrementCoordinates
+- ✅ Placement validation works with centered coordinate system
+- ✅ Plane detection works with centered coordinates
+- ✅ All files compile without coordinate system errors
+- ✅ All Input unit tests pass
+
+**PRIORITY**: HIGH - Input system is critical for user interaction
+
+---
+
 ## Current Status (Updated: January 2025)
 All input subsystem tests are passing. The subsystem is fully implemented with the following components:
 - **InputManager**: Main input coordination with thread-safe event injection

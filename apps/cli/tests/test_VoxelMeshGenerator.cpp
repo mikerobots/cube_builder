@@ -257,14 +257,13 @@ TEST_F(VoxelMeshGeneratorTest, CoordinateSystemAlignment) {
     
     auto mesh = meshGenerator->generateCubeMesh(*voxelManager);
     
-    // Calculate expected world center
-    // worldPos = gridPos * voxelSize + voxelSize * 0.5
-    float voxelSize = 0.08f;
-    Math::Vector3f expectedCenter(
-        2 * voxelSize + voxelSize * 0.5f,
-        3 * voxelSize + voxelSize * 0.5f,
-        4 * voxelSize + voxelSize * 0.5f
+    // Calculate expected world center using proper coordinate conversion
+    // With the centered coordinate system, we need to convert grid to world coordinates properly
+    Math::Vector3f workspaceSize = voxelManager->getWorkspaceSize();
+    Math::WorldCoordinates worldCoord = Math::CoordinateConverter::gridToWorld(
+        Math::GridCoordinates(gridPos), VoxelData::VoxelResolution::Size_8cm, workspaceSize
     );
+    Math::Vector3f expectedCenter = worldCoord.value();
     
     // Verify the mesh is centered at the expected position
     Math::Vector3f actualCenter(0.0f, 0.0f, 0.0f);

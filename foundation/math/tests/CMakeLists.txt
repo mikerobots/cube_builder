@@ -3,6 +3,8 @@ find_package(GTest REQUIRED)
 set(MATH_TEST_SOURCES
     test_Vector3f.cpp
     test_Matrix4f.cpp
+    test_CoordinateTypes.cpp
+    test_CoordinateConverter.cpp
 )
 
 add_executable(VoxelEditor_Math_Tests ${MATH_TEST_SOURCES})

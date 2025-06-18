@@ -29,6 +29,7 @@
 #include "math/BoundingBox.h"
 #include "logging/Logger.h"
 #include "camera/OrbitCamera.h"
+#include "math/CoordinateTypes.h"
 
 namespace VoxelEditor {
 
@@ -131,8 +132,8 @@ void MouseInteraction::onMouseMove(float x, float y) {
             if ((targetAfter - targetBefore).length() > 0.001f) {
                 Logging::Logger::getInstance().warningfc("MouseInteraction",
                     "Target moved during orbit! Before: (%.2f,%.2f,%.2f) After: (%.2f,%.2f,%.2f)",
-                    targetBefore.x, targetBefore.y, targetBefore.z,
-                    targetAfter.x, targetAfter.y, targetAfter.z);
+                    targetBefore.x(), targetBefore.y(), targetBefore.z(),
+                    targetAfter.x(), targetAfter.y(), targetAfter.z());
             }
         }
         
@@ -147,7 +148,7 @@ void MouseInteraction::onMouseMove(float x, float y) {
             
             Logging::Logger::getInstance().debugfc("MouseInteraction",
                 "Orbit: yaw=%.1f° pitch=%.1f° dist=%.2f target=(%.2f,%.2f,%.2f) pos=(%.2f,%.2f,%.2f)",
-                yaw, pitch, distance, target.x, target.y, target.z, pos.x, pos.y, pos.z);
+                yaw, pitch, distance, target.x(), target.y(), target.z(), pos.x(), pos.y(), pos.z());
         }
     } else if (m_panMode) {
         // Pan mode (Shift+left mouse)
@@ -175,7 +176,7 @@ void MouseInteraction::onMouseMove(float x, float y) {
                 auto target = orbitCamera->getTarget();
                 Logging::Logger::getInstance().debugfc("MouseInteraction",
                     "Pan: delta=(%.1f,%.1f) target=(%.2f,%.2f,%.2f)",
-                    delta.x, delta.y, target.x, target.y, target.z);
+                    delta.x, delta.y, target.x(), target.y(), target.z());
             }
         }
     }
@@ -207,8 +208,8 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
         // Also print camera info for context
         auto camPos = m_cameraController->getCamera()->getPosition();
         auto camTarget = m_cameraController->getCamera()->getTarget();
-        std::cout << "Camera Position: (" << camPos.x << ", " << camPos.y << ", " << camPos.z << ")" << std::endl;
-        std::cout << "Camera Target: (" << camTarget.x << ", " << camTarget.y << ", " << camTarget.z << ")" << std::endl;
+        std::cout << "Camera Position: (" << camPos.x() << ", " << camPos.y() << ", " << camPos.z() << ")" << std::endl;
+        std::cout << "Camera Target: (" << camTarget.x() << ", " << camTarget.y() << ", " << camTarget.z() << ")" << std::endl;
         std::cout << "===========================" << std::endl;
     }
     
@@ -355,7 +356,7 @@ Math::Ray MouseInteraction::getMouseRay(float x, float y) const {
     }
     
     // Get camera position as ray origin
-    Math::Vector3f camPosVec = m_cameraController->getCamera()->getPosition();
+    Math::Vector3f camPosVec = m_cameraController->getCamera()->getPosition().value();
     glm::vec3 cameraPos(camPosVec.x, camPosVec.y, camPosVec.z);
     
     // Unproject a point on the far plane to get ray direction
@@ -374,7 +375,7 @@ Math::Ray MouseInteraction::getMouseRay(float x, float y) const {
         auto camTarget = m_cameraController->getCamera()->getTarget();
         Logging::Logger::getInstance().debugfc("MouseInteraction",
             "Camera: pos=(%.2f,%.2f,%.2f) target=(%.2f,%.2f,%.2f)",
-            camPos.x, camPos.y, camPos.z, camTarget.x, camTarget.y, camTarget.z);
+            camPos.x(), camPos.y(), camPos.z(), camTarget.x(), camTarget.y(), camTarget.z());
         Logging::Logger::getInstance().debugfc("MouseInteraction",
             "Ray: origin=(%.2f,%.2f,%.2f) dir=(%.3f,%.3f,%.3f)",
             origin.x, origin.y, origin.z, direction.x, direction.y, direction.z);
@@ -414,7 +415,7 @@ bool MouseInteraction::performRaycast(const Math::Ray& ray, VisualFeedback::Face
         if (hitFace.isValid()) {
             auto voxelPos = hitFace.getVoxelPosition();
             Logging::Logger::getInstance().debugfc("MouseInteraction",
-                "Hit face at voxel (%d,%d,%d)", voxelPos.x, voxelPos.y, voxelPos.z);
+                "Hit face at voxel (%d,%d,%d)", voxelPos.x(), voxelPos.y(), voxelPos.z());
         }
     }
     
@@ -435,10 +436,10 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
     // Get the hit point on the face for smart snapping
     Math::Vector3f hitPoint;
     if (face.isGroundPlane()) {
-        hitPoint = face.getGroundPlaneHitPoint();
+        hitPoint = face.getGroundPlaneHitPoint().value();
     } else {
         // For voxel faces, calculate hit point based on face center
-        Math::Vector3i voxelPos = face.getVoxelPosition();
+        Math::Vector3i voxelPos = face.getVoxelPosition().value();
         Math::Vector3f voxelWorldPos = PlacementUtils::incrementGridToWorld(voxelPos);
         float voxelSize = getVoxelSize(resolution);
         
@@ -477,7 +478,7 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
             hitPoint.x, hitPoint.y, hitPoint.z, snappedPos.x, snappedPos.y, snappedPos.z, shiftPressed);
     } else {
         // For voxel faces, use surface face grid snapping
-        Math::Vector3i surfaceFaceVoxelPos = face.getVoxelPosition();
+        Math::Vector3i surfaceFaceVoxelPos = face.getVoxelPosition().value();
         VoxelResolution surfaceFaceVoxelRes = face.getResolution();
         
         Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
@@ -510,7 +511,7 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
             snappedPos.x = std::max(0, std::min(snappedPos.x, static_cast<int>(workspaceSize.x / getVoxelSize(resolution)) - 1));
             snappedPos.z = std::max(0, std::min(snappedPos.z, static_cast<int>(workspaceSize.z / getVoxelSize(resolution)) - 1));
         } else {
-            Math::Vector3i clickedVoxel = face.getVoxelPosition();
+            Math::Vector3i clickedVoxel = face.getVoxelPosition().value();
             Math::Vector3i newPos = m_voxelManager->getAdjacentPosition(
                 clickedVoxel, surfaceFaceDir, face.getResolution(), resolution);
             snappedPos = newPos;
@@ -547,7 +548,7 @@ void MouseInteraction::updateHoverState() {
     
     if (hasHit) {
         if (!m_hasHoverFace) {
-            auto center = newHoverFace.getCenter();
+            auto center = newHoverFace.getCenter().value();
             Logging::Logger::getInstance().debugfc("MouseInteraction",
                 "Started hovering over face at %.2f,%.2f,%.2f", center.x, center.y, center.z);
         }
@@ -619,7 +620,7 @@ void MouseInteraction::removeVoxel() {
     if (!m_hasHoverFace) return;
     
     // Get the voxel position from the face
-    Math::Vector3i voxelPos = m_hoverFace.getVoxelPosition();
+    Math::Vector3i voxelPos = m_hoverFace.getVoxelPosition().value();
     
     // Use PlacementCommandFactory to create removal command with validation
     auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
@@ -656,9 +657,9 @@ void MouseInteraction::centerCameraOnVoxels() {
         for (const auto& voxel : allVoxels) {
             // Convert grid position to world position (center of voxel)
             Math::Vector3f voxelCenter(
-                (voxel.gridPos.x + 0.5f) * voxelSize,
-                (voxel.gridPos.y + 0.5f) * voxelSize,
-                (voxel.gridPos.z + 0.5f) * voxelSize
+                (voxel.gridPos.x() + 0.5f) * voxelSize,
+                (voxel.gridPos.y() + 0.5f) * voxelSize,
+                (voxel.gridPos.z() + 0.5f) * voxelSize
             );
             
             if (!hasVoxels) {
@@ -674,7 +675,7 @@ void MouseInteraction::centerCameraOnVoxels() {
         Math::Vector3f center = bounds.getCenter();
         auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
         if (orbitCamera) {
-            orbitCamera->setTarget(center);
+            orbitCamera->setTarget(Math::WorldCoordinates(center));
             
             // Optionally adjust distance based on bounds size
             Math::Vector3f size = bounds.max - bounds.min;

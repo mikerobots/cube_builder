@@ -22,13 +22,16 @@ void Mesh::calculateNormals() {
             continue;
         }
         
-        const Math::Vector3f& v0 = vertices[i0];
-        const Math::Vector3f& v1 = vertices[i1];
-        const Math::Vector3f& v2 = vertices[i2];
+        const Math::WorldCoordinates& v0 = vertices[i0];
+        const Math::WorldCoordinates& v1 = vertices[i1];
+        const Math::WorldCoordinates& v2 = vertices[i2];
         
-        Math::Vector3f edge1 = v1 - v0;
-        Math::Vector3f edge2 = v2 - v0;
-        Math::Vector3f faceNormal = edge1.cross(edge2);
+        // Calculate edge vectors in world space
+        Math::WorldCoordinates edge1 = v1 - v0;
+        Math::WorldCoordinates edge2 = v2 - v0;
+        
+        // Cross product gives face normal (convert to direction vector)
+        Math::Vector3f faceNormal = edge1.value().cross(edge2.value());
         
         normals[i0] = normals[i0] + faceNormal;
         normals[i1] = normals[i1] + faceNormal;
@@ -52,16 +55,17 @@ void Mesh::calculateBounds() {
         return;
     }
     
-    bounds.min = bounds.max = vertices[0];
+    bounds.min = bounds.max = vertices[0].value();
     
     for (const auto& vertex : vertices) {
-        bounds.min.x = std::min(bounds.min.x, vertex.x);
-        bounds.min.y = std::min(bounds.min.y, vertex.y);
-        bounds.min.z = std::min(bounds.min.z, vertex.z);
+        const Math::Vector3f& pos = vertex.value();
+        bounds.min.x = std::min(bounds.min.x, pos.x);
+        bounds.min.y = std::min(bounds.min.y, pos.y);
+        bounds.min.z = std::min(bounds.min.z, pos.z);
         
-        bounds.max.x = std::max(bounds.max.x, vertex.x);
-        bounds.max.y = std::max(bounds.max.y, vertex.y);
-        bounds.max.z = std::max(bounds.max.z, vertex.z);
+        bounds.max.x = std::max(bounds.max.x, pos.x);
+        bounds.max.y = std::max(bounds.max.y, pos.y);
+        bounds.max.z = std::max(bounds.max.z, pos.z);
     }
 }
 
@@ -104,7 +108,7 @@ bool Mesh::isValid() const {
 
 size_t Mesh::getMemoryUsage() const {
     size_t usage = sizeof(*this);
-    usage += vertices.capacity() * sizeof(Math::Vector3f);
+    usage += vertices.capacity() * sizeof(Math::WorldCoordinates);
     usage += normals.capacity() * sizeof(Math::Vector3f);
     usage += uvCoords.capacity() * sizeof(Math::Vector2f);
     usage += indices.capacity() * sizeof(uint32_t);
@@ -130,9 +134,10 @@ void Mesh::reserve(size_t vertexCount, size_t indexCount) {
 void Mesh::transform(const Math::Matrix4f& matrix) {
     // Transform vertices
     for (auto& vertex : vertices) {
-        Math::Vector4f v4(vertex.x, vertex.y, vertex.z, 1.0f);
+        const Math::Vector3f& pos = vertex.value();
+        Math::Vector4f v4(pos.x, pos.y, pos.z, 1.0f);
         Math::Vector4f transformed = matrix * v4;
-        vertex = Math::Vector3f(transformed.x, transformed.y, transformed.z);
+        vertex = Math::WorldCoordinates(Math::Vector3f(transformed.x, transformed.y, transformed.z));
     }
     
     // Transform normals (use inverse transpose for correct normal transformation)

@@ -429,7 +429,7 @@ private:
         m_camera->setYaw(45.0f);     // Rotated to see corner
         m_camera->setFieldOfView(45.0f);
         m_camera->setAspectRatio((float)m_width / m_height);
-        m_camera->setTarget(Math::Vector3f(0, 0, 0));
+        m_camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0, 0, 0));
     }
     
     ImageData captureFrame() {

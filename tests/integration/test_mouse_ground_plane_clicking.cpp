@@ -43,7 +43,7 @@ protected:
         camera = std::make_unique<Camera::OrbitCamera>();
         camera->setOrbitAngles(45.0f, 35.26f); // Isometric-like view
         camera->setDistance(10.0f);
-        camera->setTarget(Math::Vector3f(0.0f, 0.0f, 0.0f));
+        camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
         camera->setAspectRatio(1.0f);
         
         // Start with empty workspace

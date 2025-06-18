@@ -19,7 +19,7 @@ TEST_F(FeedbackTypesTest, FaceConstruction) {
     VoxelEditor::VisualFeedback::Face face(voxelPos, resolution, direction);
     
     EXPECT_TRUE(face.isValid());
-    EXPECT_EQ(face.getVoxelPosition(), voxelPos);
+    EXPECT_EQ(face.getVoxelPosition(), IncrementCoordinates(voxelPos));
     EXPECT_EQ(face.getResolution(), resolution);
     EXPECT_EQ(face.getDirection(), direction);
 }
@@ -36,12 +36,16 @@ TEST_F(FeedbackTypesTest, FaceId) {
 TEST_F(FeedbackTypesTest, FaceWorldPosition) {
     VoxelEditor::VisualFeedback::Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
-    Vector3f worldPos = face.getWorldPosition();
+    Vector3f worldPos = face.getWorldPosition().value();
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
     
-    EXPECT_FLOAT_EQ(worldPos.x, voxelSize);
+    // With centered coordinate system, grid (0,0,0) is at world (-2.5, 0, -2.5) + face offset
+    float workspaceSize = 5.0f; // Default workspace size
+    float halfWorkspace = workspaceSize * 0.5f;
+    
+    EXPECT_FLOAT_EQ(worldPos.x, -halfWorkspace + voxelSize);  // PositiveX face
     EXPECT_FLOAT_EQ(worldPos.y, voxelSize * 0.5f);
-    EXPECT_FLOAT_EQ(worldPos.z, voxelSize * 0.5f);
+    EXPECT_FLOAT_EQ(worldPos.z, -halfWorkspace + voxelSize * 0.5f);
 }
 
 TEST_F(FeedbackTypesTest, FaceNormal) {
@@ -62,10 +66,14 @@ TEST_F(FeedbackTypesTest, FaceCorners) {
     EXPECT_EQ(corners.size(), 4);
     
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
+    float workspaceSize = 5.0f; // Default workspace size
+    float halfWorkspace = workspaceSize * 0.5f;
     
     // All corners should have same X coordinate (face on positive X)
+    // With centered coordinate system, grid (0,0,0) base pos is at (-2.5, 0, -2.5)
+    float expectedX = -halfWorkspace + voxelSize;
     for (const auto& corner : corners) {
-        EXPECT_FLOAT_EQ(corner.x, voxelSize);
+        EXPECT_FLOAT_EQ(corner.x(), expectedX);
     }
 }
 
@@ -94,14 +102,14 @@ TEST_F(FeedbackTypesTest, RayConstruction) {
     
     VoxelEditor::VisualFeedback::Ray ray(origin, direction);
     
-    EXPECT_EQ(ray.origin, origin);
+    EXPECT_EQ(ray.origin.value(), origin);
     EXPECT_FLOAT_EQ(ray.direction.length(), 1.0f); // Should be normalized
 }
 
 TEST_F(FeedbackTypesTest, RayPointAt) {
     VoxelEditor::VisualFeedback::Ray ray(Vector3f(0, 0, 0), Vector3f(1, 0, 0));
     
-    Vector3f point = ray.pointAt(5.0f);
+    Vector3f point = ray.pointAt(5.0f).value();
     
     EXPECT_FLOAT_EQ(point.x, 5.0f);
     EXPECT_FLOAT_EQ(point.y, 0.0f);
@@ -110,7 +118,7 @@ TEST_F(FeedbackTypesTest, RayPointAt) {
 
 TEST_F(FeedbackTypesTest, TransformMatrix) {
     VoxelEditor::VisualFeedback::Transform transform;
-    transform.position = Vector3f(1, 2, 3);
+    transform.position = WorldCoordinates(Vector3f(1, 2, 3));
     transform.scale = Vector3f(2, 2, 2);
     
     Matrix4f matrix = transform.toMatrix();

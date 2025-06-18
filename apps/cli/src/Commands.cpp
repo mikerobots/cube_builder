@@ -8,6 +8,7 @@
 #include <memory>
 #include <algorithm>
 #include <thread>
+#include <cstdlib>
 #include <chrono>
 #include <ctime>
 
@@ -39,6 +40,7 @@
 #include "undo_redo/PlacementCommands.h"
 #include "visual_feedback/FeedbackRenderer.h"
 #include "math/BoundingBox.h"
+#include "math/CoordinateTypes.h"
 
 namespace VoxelEditor {
 
@@ -84,6 +86,36 @@ void Application::registerCommands() {
             FileIO::LoadOptions options;
             auto result = m_fileManager->loadProject(filename, project, options);
             if (result.success) {
+                // Clear current voxel data
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                    auto voxels = m_voxelManager->getAllVoxels(resolution);
+                    for (const auto& voxelPos : voxels) {
+                        m_voxelManager->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, false);
+                    }
+                }
+                
+                // Copy loaded voxel data to app's voxel manager
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                    auto voxels = project.voxelData->getAllVoxels(resolution);
+                    for (const auto& voxelPos : voxels) {
+                        m_voxelManager->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, true);
+                    }
+                }
+                
+                // Restore workspace settings
+                m_voxelManager->resizeWorkspace(project.workspace.size);
+                m_voxelManager->setActiveResolution(project.workspace.defaultResolution);
+                
+                // Restore camera state
+                if (m_cameraController && m_cameraController->getCamera() && project.camera) {
+                    auto appCamera = m_cameraController->getCamera();
+                    appCamera->setPosition(project.camera->getPosition());
+                    appCamera->setTarget(project.camera->getTarget());
+                    appCamera->setDistance(project.camera->getDistance());
+                }
+                
                 m_currentProject = filename;
                 return CommandResult::Success("Project loaded: " + filename);
             }
@@ -105,8 +137,33 @@ void Application::registerCommands() {
             
             // Create project from current state
             FileIO::Project project;
-            // TODO: Project needs to be populated with current data
-            // For now, FileManager should handle serialization internally
+            project.initializeDefaults();
+            
+            // Populate project with current application state
+            // Copy voxel data
+            for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                auto voxels = m_voxelManager->getAllVoxels(resolution);
+                for (const auto& voxelPos : voxels) {
+                    project.voxelData->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, true);
+                }
+            }
+            
+            // Set workspace size
+            project.workspace.size = m_voxelManager->getWorkspaceSize();
+            project.workspace.defaultResolution = m_voxelManager->getActiveResolution();
+            
+            // Copy camera state
+            if (m_cameraController && m_cameraController->getCamera()) {
+                auto appCamera = m_cameraController->getCamera();
+                project.camera->setPosition(appCamera->getPosition());
+                project.camera->setTarget(appCamera->getTarget());
+                project.camera->setDistance(appCamera->getDistance());
+            }
+            
+            // Set metadata
+            project.setName("Voxel Editor Project");
+            project.setAuthor(std::getenv("USER") ? std::getenv("USER") : "Unknown");
             
             FileIO::SaveOptions options;
             auto result = m_fileManager->saveProject(filename, project, options);
@@ -132,8 +189,33 @@ void Application::registerCommands() {
             
             // Create project from current state
             FileIO::Project project;
-            // TODO: Project needs to be populated with current data
-            // For now, FileManager should handle serialization internally
+            project.initializeDefaults();
+            
+            // Populate project with current application state
+            // Copy voxel data
+            for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                auto voxels = m_voxelManager->getAllVoxels(resolution);
+                for (const auto& voxelPos : voxels) {
+                    project.voxelData->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, true);
+                }
+            }
+            
+            // Set workspace size
+            project.workspace.size = m_voxelManager->getWorkspaceSize();
+            project.workspace.defaultResolution = m_voxelManager->getActiveResolution();
+            
+            // Copy camera state
+            if (m_cameraController && m_cameraController->getCamera()) {
+                auto appCamera = m_cameraController->getCamera();
+                project.camera->setPosition(appCamera->getPosition());
+                project.camera->setTarget(appCamera->getTarget());
+                project.camera->setDistance(appCamera->getDistance());
+            }
+            
+            // Set metadata
+            project.setName("Voxel Editor Project");
+            project.setAuthor(std::getenv("USER") ? std::getenv("USER") : "Unknown");
             
             FileIO::SaveOptions options;
             auto result = m_fileManager->saveProject(filename, project, options);
@@ -399,11 +481,11 @@ void Application::registerCommands() {
         [this](const CommandContext& ctx) {
             std::string target = ctx.getArgCount() > 0 ? ctx.getArg(0) : "voxels";
             
-            Math::Vector3f focusPoint;
+            Math::WorldCoordinates focusPoint;
             
             if (target == "origin") {
                 // Focus on world origin
-                focusPoint = Math::Vector3f(0.0f, 0.0f, 0.0f);
+                focusPoint = Math::WorldCoordinates(0.0f, 0.0f, 0.0f);
             } else if (target == "voxels") {
                 // Calculate center of all voxels
                 Math::BoundingBox bounds;
@@ -413,35 +495,29 @@ void Application::registerCommands() {
                 if (grid) {
                     float voxelSize = VoxelData::getVoxelSize(m_voxelManager->getActiveResolution());
                     
-                    // Find bounds of all voxels
-                    for (int x = 0; x < 100; x++) {
-                        for (int y = 0; y < 100; y++) {
-                            for (int z = 0; z < 100; z++) {
-                                if (m_voxelManager->hasVoxel(Math::Vector3i(x, y, z), m_voxelManager->getActiveResolution())) {
-                                    Math::Vector3f voxelCenter(
-                                        (x + 0.5f) * voxelSize,
-                                        (y + 0.5f) * voxelSize,
-                                        (z + 0.5f) * voxelSize
-                                    );
-                                    
-                                    if (!hasVoxels) {
-                                        bounds.min = bounds.max = voxelCenter;
-                                        hasVoxels = true;
-                                    } else {
-                                        bounds.expand(voxelCenter);
-                                    }
-                                }
-                            }
+                    // Use VoxelDataManager's getAllVoxels() for proper coordinate handling
+                    auto allVoxels = m_voxelManager->getAllVoxels();
+                    for (const auto& voxel : allVoxels) {
+                        // Use grid->gridToWorld() for proper coordinate conversion
+                        Math::Vector3f voxelCenter = grid->gridToWorld(voxel.gridPos).value();
+                        // Add half voxel size to get center
+                        voxelCenter += Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+                        
+                        if (!hasVoxels) {
+                            bounds.min = bounds.max = voxelCenter;
+                            hasVoxels = true;
+                        } else {
+                            bounds.expand(voxelCenter);
                         }
                     }
                 }
                 
                 if (hasVoxels) {
-                    focusPoint = bounds.getCenter();
+                    focusPoint = Math::WorldCoordinates(bounds.getCenter());
                 } else {
                     // No voxels, focus on workspace center
                     auto workspaceSize = m_voxelManager->getWorkspaceSize();
-                    focusPoint = workspaceSize * 0.5f;
+                    focusPoint = Math::WorldCoordinates(workspaceSize * 0.5f);
                 }
             } else {
                 // Try to parse as coordinates
@@ -460,7 +536,7 @@ void Application::registerCommands() {
                     return CommandResult::Error("Expected 3 coordinates (x,y,z) or 'origin' or 'voxels'");
                 }
                 
-                focusPoint = Math::Vector3f(coords[0], coords[1], coords[2]);
+                focusPoint = Math::WorldCoordinates(coords[0], coords[1], coords[2]);
             }
             
             // Set camera target to focus point
@@ -494,8 +570,8 @@ void Application::registerCommands() {
                 std::stringstream ss;
                 ss << "Camera Info:\n";
                 ss << "  Position: (" << std::fixed << std::setprecision(2) 
-                   << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
-                ss << "  Target: (" << target.x << ", " << target.y << ", " << target.z << ")\n";
+                   << pos.x() << ", " << pos.y() << ", " << pos.z() << ")\n";
+                ss << "  Target: (" << target.x() << ", " << target.y() << ", " << target.z() << ")\n";
                 ss << "  Distance: " << distance << "\n";
                 ss << "  Yaw: " << yaw << "°\n";
                 ss << "  Pitch: " << pitch << "°\n";
@@ -1119,9 +1195,9 @@ void Application::registerCommands() {
                 auto target = camera->getTarget();
                 auto up = camera->getUp();
                 
-                ss << "Position: (" << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
-                ss << "Target: (" << target.x << ", " << target.y << ", " << target.z << ")\n";
-                ss << "Up: (" << up.x << ", " << up.y << ", " << up.z << ")\n";
+                ss << "Position: (" << pos.x() << ", " << pos.y() << ", " << pos.z() << ")\n";
+                ss << "Target: (" << target.x() << ", " << target.y() << ", " << target.z() << ")\n";
+                ss << "Up: (" << up.x() << ", " << up.y() << ", " << up.z() << ")\n";
                 
                 // Try to cast to OrbitCamera to get distance
                 if (auto orbitCamera = dynamic_cast<const Camera::OrbitCamera*>(camera)) {
@@ -1180,16 +1256,13 @@ void Application::registerCommands() {
                     for (size_t i = 0; i < displayCount; i++) {
                         const auto& voxelPos = allVoxels[i];
                         
-                        // Convert grid to world position
-                        Math::Vector3f worldPos(
-                            voxelPos.gridPos.x * voxelSize,
-                            voxelPos.gridPos.y * voxelSize,
-                            voxelPos.gridPos.z * voxelSize
-                        );
+                        // Use grid->gridToWorld() for proper coordinate conversion
+                        const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(voxelPos.resolution);
+                        Math::WorldCoordinates worldPos = grid ? grid->gridToWorld(voxelPos.gridPos) : Math::WorldCoordinates::zero();
                         
-                        ss << "  [" << i << "] Grid(" << voxelPos.gridPos.x << "," << voxelPos.gridPos.y 
-                           << "," << voxelPos.gridPos.z << ") -> World(" 
-                           << worldPos.x << "," << worldPos.y << "," << worldPos.z << ")\n";
+                        ss << "  [" << i << "] Grid(" << voxelPos.gridPos.x() << "," << voxelPos.gridPos.y() 
+                           << "," << voxelPos.gridPos.z() << ") -> World(" 
+                           << worldPos.x() << "," << worldPos.y() << "," << worldPos.z() << ")\n";
                     }
                 }
                 
@@ -1259,16 +1332,14 @@ void Application::registerCommands() {
                         const auto& voxelPos = allVoxels[0];
                         float voxelSize = VoxelData::getVoxelSize(voxelPos.resolution);
                         
-                        Math::Vector3f worldPos(
-                            voxelPos.gridPos.x * voxelSize,
-                            voxelPos.gridPos.y * voxelSize,
-                            voxelPos.gridPos.z * voxelSize
-                        );
-                        Math::Vector4f clipPos = viewProj * Math::Vector4f(worldPos.x, worldPos.y, worldPos.z, 1.0f);
+                        // Use grid->gridToWorld() for proper coordinate conversion
+                        const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(voxelPos.resolution);
+                        Math::WorldCoordinates worldPos = grid ? grid->gridToWorld(voxelPos.gridPos) : Math::WorldCoordinates::zero();
+                        Math::Vector4f clipPos = viewProj * Math::Vector4f(worldPos.x(), worldPos.y(), worldPos.z(), 1.0f);
                         
-                        ss << "\nFirst voxel at grid(" << voxelPos.gridPos.x << "," << voxelPos.gridPos.y 
-                           << "," << voxelPos.gridPos.z << ")\n";
-                        ss << "  World: (" << worldPos.x << "," << worldPos.y << "," << worldPos.z << ")\n";
+                        ss << "\nFirst voxel at grid(" << voxelPos.gridPos.x() << "," << voxelPos.gridPos.y() 
+                           << "," << voxelPos.gridPos.z() << ")\n";
+                        ss << "  World: (" << worldPos.x() << "," << worldPos.y() << "," << worldPos.z() << ")\n";
                         ss << "  Clip: (" << clipPos.x << "," << clipPos.y << "," << clipPos.z << "," << clipPos.w << ")\n";
                         
                         if (clipPos.w != 0) {
@@ -1302,11 +1373,11 @@ void Application::registerCommands() {
                 
                 // Add vertices
                 triangleMesh.vertices.resize(3);
-                triangleMesh.vertices[0].position = Math::Vector3f(-0.5f, -0.5f, 0.0f);
+                triangleMesh.vertices[0].position = Math::WorldCoordinates(-0.5f, -0.5f, 0.0f);
                 triangleMesh.vertices[0].color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red
-                triangleMesh.vertices[1].position = Math::Vector3f(0.5f, -0.5f, 0.0f);
+                triangleMesh.vertices[1].position = Math::WorldCoordinates(0.5f, -0.5f, 0.0f);
                 triangleMesh.vertices[1].color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f);
-                triangleMesh.vertices[2].position = Math::Vector3f(0.0f, 0.5f, 0.0f);
+                triangleMesh.vertices[2].position = Math::WorldCoordinates(0.0f, 0.5f, 0.0f);
                 triangleMesh.vertices[2].color = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f);
                 
                 // Add indices

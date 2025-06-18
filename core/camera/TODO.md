@@ -1,5 +1,87 @@
 # Camera Subsystem - Requirements Validation
 
+## 🚨 CRITICAL: COORDINATE SYSTEM MIGRATION REQUIRED
+
+**IMPORTANT**: The foundation coordinate system has been simplified, but this subsystem still uses the old GridCoordinates system and needs immediate updating.
+
+### 📖 REQUIRED READING
+**BEFORE STARTING**: Read `/coordinate.md` in the root directory to understand the new simplified coordinate system.
+
+### 🎯 Migration Overview
+Update the Camera subsystem from the old GridCoordinates system to the new simplified coordinate system:
+- **OLD**: GridCoordinates with complex grid-to-world conversions
+- **NEW**: IncrementCoordinates (1cm granularity) for all voxel operations, centered at origin (0,0,0)
+
+### 📋 Migration Tasks (MEDIUM PRIORITY)
+
+#### Phase 1: Remove GridCoordinates Dependencies
+- [ ] **Update Camera.h** - Remove GridCoordinates if used in camera calculations
+- [ ] **Update CameraController.h** - Use IncrementCoordinates for camera positioning
+- [ ] **Update OrbitCamera.h** - Ensure orbit center works with centered coordinate system
+- [ ] **Update Viewport.h** - Remove GridCoordinates from viewport calculations
+
+#### Phase 2: Update Implementation Files
+- [ ] **Update camera implementations** - Use IncrementCoordinates for any voxel-related positioning
+- [ ] **Update ray generation** - Ensure screen-to-world rays work with centered coordinate system
+- [ ] **Update view presets** - Validate view positioning with centered coordinates
+
+#### Phase 3: Update Tests
+- [ ] **test_Camera.cpp** - Update camera tests for centered coordinate system
+- [ ] **test_CameraController.cpp** - Update controller tests for IncrementCoordinates
+- [ ] **test_OrbitCamera.cpp** - Update orbit tests for centered coordinates
+- [ ] **test_Viewport.cpp** - Update viewport tests for new coordinate system
+- [ ] **Ray generation tests** - Update screen-to-world ray tests
+
+#### Phase 4: Validation
+- [ ] **Compile Check** - Ensure all files compile without GridCoordinates errors
+- [ ] **Unit Tests** - Run `cd build_ninja && ctest -R "VoxelEditor_Camera_Tests"`
+- [ ] **Fix Issues** - Address any failing tests or compilation errors
+
+### 🔧 Key Code Changes Required
+
+```cpp
+// OLD - Remove all instances of:
+GridCoordinates gridPos;
+convertWorldToGrid();
+convertGridToWorld();
+#include "GridCoordinates.h"
+
+// NEW - Replace with:
+IncrementCoordinates voxelPos;
+CoordinateConverter::worldToIncrement();
+CoordinateConverter::incrementToWorld();
+#include "foundation/math/CoordinateConverter.h"
+```
+
+### 🎯 Camera-Specific Changes
+
+#### View Matrix Updates
+- Ensure camera view matrices work with centered coordinate system
+- Validate that Y=0 ground plane is correctly positioned at origin
+- Update camera positioning for centered workspace bounds
+
+#### Ray Generation Updates
+- Update `screenToWorldRay()` to work with centered coordinate system
+- Ensure ray intersection calculations work with IncrementCoordinates
+- Validate ray generation with negative coordinate values
+
+#### View Preset Updates
+- Update all view presets to work with centered coordinate system
+- Ensure orbit center is properly positioned at (0,0,0)
+- Validate camera positioning relative to centered workspace
+
+### 🎯 Success Criteria
+- ✅ All GridCoordinates references removed (if any)
+- ✅ Camera works correctly with centered coordinate system
+- ✅ Ray generation works with centered coordinates
+- ✅ View presets work with centered workspace
+- ✅ All files compile without coordinate system errors
+- ✅ All Camera unit tests pass
+
+**PRIORITY**: MEDIUM - Camera system works with world coordinates but needs validation with centered system
+
+---
+
 ## Overview
 This subsystem manages 3D camera movement, view presets, and ray generation for input.
 **Total Requirements**: 3

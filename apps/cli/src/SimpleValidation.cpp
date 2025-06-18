@@ -5,6 +5,7 @@
 #include "camera/CameraController.h"
 #include "camera/Camera.h"
 #include "logging/Logger.h"
+#include "math/CoordinateTypes.h"
 #include <sstream>
 #include <iomanip>
 
@@ -118,8 +119,8 @@ CommandResult executeSimpleValidateCommand(const CommandContext& ctx) {
         auto pos = camera->getPosition();
         auto target = camera->getTarget();
         ss << "  Position: (" << std::fixed << std::setprecision(2)
-           << pos.x << ", " << pos.y << ", " << pos.z << ")\n";
-        ss << "  Target: (" << target.x << ", " << target.y << ", " << target.z << ")\n";
+           << pos.x() << ", " << pos.y() << ", " << pos.z() << ")\n";
+        ss << "  Target: (" << target.x() << ", " << target.y() << ", " << target.z() << ")\n";
         ss << "  Distance: " << (pos - target).length() << "\n";
     }
     

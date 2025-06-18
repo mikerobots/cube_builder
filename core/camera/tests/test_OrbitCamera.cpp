@@ -21,13 +21,13 @@ TEST_F(OrbitCameraTest, DefaultConstruction) {
     EXPECT_FLOAT_EQ(camera->getDistance(), 5.0f);
     EXPECT_FLOAT_EQ(camera->getYaw(), 0.0f);
     EXPECT_FLOAT_EQ(camera->getPitch(), 0.0f);
-    EXPECT_EQ(camera->getTarget(), Vector3f(0.0f, 0.0f, 0.0f));
+    EXPECT_EQ(camera->getTarget(), WorldCoordinates(0.0f, 0.0f, 0.0f));
     
     // Position should be calculated based on distance and angles
     Vector3f expectedPos(0.0f, 0.0f, 5.0f);
-    EXPECT_NEAR(camera->getPosition().x, expectedPos.x, 0.001f);
-    EXPECT_NEAR(camera->getPosition().y, expectedPos.y, 0.001f);
-    EXPECT_NEAR(camera->getPosition().z, expectedPos.z, 0.001f);
+    EXPECT_NEAR(camera->getPosition().x(), expectedPos.x, 0.001f);
+    EXPECT_NEAR(camera->getPosition().y(), expectedPos.y, 0.001f);
+    EXPECT_NEAR(camera->getPosition().z(), expectedPos.z, 0.001f);
 }
 
 TEST_F(OrbitCameraTest, DistanceControl) {
@@ -36,9 +36,9 @@ TEST_F(OrbitCameraTest, DistanceControl) {
     
     // Position should update based on new distance
     Vector3f expectedPos(0.0f, 0.0f, 10.0f);
-    EXPECT_NEAR(camera->getPosition().x, expectedPos.x, 0.001f);
-    EXPECT_NEAR(camera->getPosition().y, expectedPos.y, 0.001f);
-    EXPECT_NEAR(camera->getPosition().z, expectedPos.z, 0.001f);
+    EXPECT_NEAR(camera->getPosition().x(), expectedPos.x, 0.001f);
+    EXPECT_NEAR(camera->getPosition().y(), expectedPos.y, 0.001f);
+    EXPECT_NEAR(camera->getPosition().z(), expectedPos.z, 0.001f);
 }
 
 TEST_F(OrbitCameraTest, DistanceConstraints) {
@@ -87,22 +87,22 @@ TEST_F(OrbitCameraTest, PitchConstraints) {
 }
 
 TEST_F(OrbitCameraTest, OrbitControl) {
-    Vector3f initialPos = camera->getPosition();
+    WorldCoordinates initialPos = camera->getPosition();
     
     // Orbit horizontally (yaw)
     camera->orbit(45.0f, 0.0f);
-    Vector3f afterYaw = camera->getPosition();
+    WorldCoordinates afterYaw = camera->getPosition();
     
     // X should change, Y should stay same, Z might change
-    EXPECT_NE(initialPos.x, afterYaw.x);
-    EXPECT_EQ(initialPos.y, afterYaw.y);
+    EXPECT_NE(initialPos.x(), afterYaw.x());
+    EXPECT_EQ(initialPos.y(), afterYaw.y());
     
     // Orbit vertically (pitch)
     camera->orbit(0.0f, 30.0f);
-    Vector3f afterPitch = camera->getPosition();
+    WorldCoordinates afterPitch = camera->getPosition();
     
     // Y should change after pitch
-    EXPECT_NE(afterYaw.y, afterPitch.y);
+    EXPECT_NE(afterYaw.y(), afterPitch.y());
 }
 
 TEST_F(OrbitCameraTest, ZoomControl) {
@@ -116,11 +116,11 @@ TEST_F(OrbitCameraTest, ZoomControl) {
 }
 
 TEST_F(OrbitCameraTest, PanControl) {
-    Vector3f initialTarget = camera->getTarget();
+    WorldCoordinates initialTarget = camera->getTarget();
     
     // Pan right and up
     camera->pan(Vector3f(1.0f, 1.0f, 0.0f));
-    Vector3f newTarget = camera->getTarget();
+    WorldCoordinates newTarget = camera->getTarget();
     
     EXPECT_NE(initialTarget, newTarget);
     
@@ -162,7 +162,7 @@ TEST_F(OrbitCameraTest, ViewPresets) {
 TEST_F(OrbitCameraTest, IsometricViewMatrixValidation) {
     // Set isometric view preset
     camera->setViewPreset(ViewPreset::ISOMETRIC);
-    camera->setTarget(Vector3f(0, 0, 0));
+    camera->setTarget(WorldCoordinates(0, 0, 0));
     camera->setDistance(10.0f);
     
     // Get the view matrix
@@ -184,10 +184,10 @@ TEST_F(OrbitCameraTest, IsometricViewMatrixValidation) {
         distance * cosf(pitchRad) * cosf(yawRad)
     );
     
-    Vector3f actualPos = camera->getPosition();
-    EXPECT_NEAR(actualPos.x, expectedPos.x, 0.01f);
-    EXPECT_NEAR(actualPos.y, expectedPos.y, 0.01f);
-    EXPECT_NEAR(actualPos.z, expectedPos.z, 0.01f);
+    WorldCoordinates actualPos = camera->getPosition();
+    EXPECT_NEAR(actualPos.x(), expectedPos.x, 0.01f);
+    EXPECT_NEAR(actualPos.y(), expectedPos.y, 0.01f);
+    EXPECT_NEAR(actualPos.z(), expectedPos.z, 0.01f);
     
     // Test that parallel lines remain parallel (orthographic property)
     // Transform two parallel edges of a cube
@@ -232,15 +232,15 @@ TEST_F(OrbitCameraTest, IsometricViewMatrixValidation) {
 }
 
 TEST_F(OrbitCameraTest, FocusOnPoint) {
-    Vector3f focusPoint(10.0f, 5.0f, 15.0f);
+    WorldCoordinates focusPoint(10.0f, 5.0f, 15.0f);
     camera->focusOn(focusPoint, 8.0f);
     
     EXPECT_EQ(camera->getTarget(), focusPoint);
     EXPECT_FLOAT_EQ(camera->getDistance(), 8.0f);
     
     // Test focus without specifying distance
-    camera->focusOn(Vector3f(0.0f, 0.0f, 0.0f));
-    EXPECT_EQ(camera->getTarget(), Vector3f(0.0f, 0.0f, 0.0f));
+    camera->focusOn(WorldCoordinates(0.0f, 0.0f, 0.0f));
+    EXPECT_EQ(camera->getTarget(), WorldCoordinates(0.0f, 0.0f, 0.0f));
     EXPECT_FLOAT_EQ(camera->getDistance(), 8.0f); // Should maintain current distance
 }
 
@@ -248,11 +248,12 @@ TEST_F(OrbitCameraTest, FrameBox) {
     Vector3f minBounds(-5.0f, -3.0f, -2.0f);
     Vector3f maxBounds(5.0f, 3.0f, 2.0f);
     
-    camera->frameBox(minBounds, maxBounds);
+    camera->frameBox(WorldCoordinates(minBounds.x, minBounds.y, minBounds.z), 
+                     WorldCoordinates(maxBounds.x, maxBounds.y, maxBounds.z));
     
     // Target should be at center of box
     Vector3f expectedCenter = (minBounds + maxBounds) * 0.5f;
-    EXPECT_EQ(camera->getTarget(), expectedCenter);
+    EXPECT_EQ(camera->getTarget(), WorldCoordinates(expectedCenter.x, expectedCenter.y, expectedCenter.z));
     
     // Distance should be calculated to frame the entire box
     EXPECT_GT(camera->getDistance(), 0.0f);
@@ -268,12 +269,14 @@ TEST_F(OrbitCameraTest, SensitivitySettings) {
     EXPECT_FLOAT_EQ(camera->getZoomSensitivity(), 1.5f);
     
     // Test that sensitivity affects operations
-    Vector3f initialTarget = camera->getTarget();
+    WorldCoordinates initialTarget = camera->getTarget();
     camera->pan(Vector3f(1.0f, 0.0f, 0.0f));
-    Vector3f targetAfterPan = camera->getTarget();
+    WorldCoordinates targetAfterPan = camera->getTarget();
     
     // Pan amount should be scaled by sensitivity
-    Vector3f panDelta = targetAfterPan - initialTarget;
+    Vector3f panDelta = Vector3f(targetAfterPan.x() - initialTarget.x(), 
+                                  targetAfterPan.y() - initialTarget.y(), 
+                                  targetAfterPan.z() - initialTarget.z());
     EXPECT_LT(panDelta.length(), 1.0f); // Should be less than 1.0 due to 0.5 sensitivity
 }
 
@@ -330,29 +333,29 @@ TEST_F(OrbitCameraTest, PositionCalculation) {
     camera->setOrbitAngles(90.0f, 0.0f); // Looking from +X axis
     camera->setDistance(10.0f);
     
-    Vector3f pos = camera->getPosition();
-    EXPECT_NEAR(pos.x, 10.0f, 0.001f);
-    EXPECT_NEAR(pos.y, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.z, 0.0f, 0.001f);
+    WorldCoordinates pos = camera->getPosition();
+    EXPECT_NEAR(pos.x(), 10.0f, 0.001f);
+    EXPECT_NEAR(pos.y(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.z(), 0.0f, 0.001f);
     
     camera->setOrbitAngles(0.0f, 90.0f); // Looking from +Y axis
     pos = camera->getPosition();
-    EXPECT_NEAR(pos.x, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.y, 10.0f, 0.001f);
-    EXPECT_NEAR(pos.z, 0.0f, 0.001f);
+    EXPECT_NEAR(pos.x(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.y(), 10.0f, 0.001f);
+    EXPECT_NEAR(pos.z(), 0.0f, 0.001f);
 }
 
 TEST_F(OrbitCameraTest, TargetOverride) {
-    Vector3f originalTarget = camera->getTarget();
-    Vector3f newTarget(5.0f, 5.0f, 5.0f);
+    WorldCoordinates originalTarget = camera->getTarget();
+    WorldCoordinates newTarget(5.0f, 5.0f, 5.0f);
     
     camera->setTarget(newTarget);
     
     EXPECT_EQ(camera->getTarget(), newTarget);
     
     // Position should be recalculated relative to new target
-    Vector3f pos = camera->getPosition();
-    Vector3f offset = pos - newTarget;
+    WorldCoordinates pos = camera->getPosition();
+    Vector3f offset(pos.x() - newTarget.x(), pos.y() - newTarget.y(), pos.z() - newTarget.z());
     EXPECT_NEAR(offset.length(), camera->getDistance(), 0.001f);
 }
 

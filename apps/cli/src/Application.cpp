@@ -52,6 +52,7 @@
 #include "math/Vector2f.h"
 #include "math/Vector3f.h"
 #include "math/Vector4f.h"
+#include "math/CoordinateTypes.h"
 
 namespace VoxelEditor {
 
@@ -230,7 +231,7 @@ bool Application::initializeCoreSystem() {
         // with Y slightly up to see the workspace better
         Math::Vector3f workspaceCenter(0.0f, workspaceSize.y * 0.5f, 0.0f);
         
-        m_cameraController->getCamera()->setTarget(workspaceCenter);
+        m_cameraController->getCamera()->setTarget(Math::WorldCoordinates(workspaceCenter));
         
         // Set distance based on workspace size
         float maxDimension = std::max({workspaceSize.x, workspaceSize.y, workspaceSize.z});
@@ -455,9 +456,9 @@ void Application::render() {
                 for (size_t v = 0; v < std::min(size_t(3), mesh.vertices.size()); v += 24) {
                     Logging::Logger::getInstance().debugfc("Application",
                         "    Vertex %zu: pos(%.3f, %.3f, %.3f)", v,
-                        mesh.vertices[v].position.x,
-                        mesh.vertices[v].position.y,
-                        mesh.vertices[v].position.z);
+                        mesh.vertices[v].position.x(),
+                        mesh.vertices[v].position.y(),
+                        mesh.vertices[v].position.z());
                 }
             }
             
@@ -511,9 +512,9 @@ void Application::render() {
         Math::Vector3f cursorWorldPos(0.0f, 0.0f, 0.0f);
         if (m_mouseInteraction && m_mouseInteraction->hasHoverFace()) {
             auto hoverFace = m_mouseInteraction->getHoverFace();
-            cursorWorldPos = hoverFace.getCenter();
+            cursorWorldPos = hoverFace.getCenter().value();
         }
-        m_renderEngine->renderGroundPlaneGrid(cursorWorldPos);
+        m_renderEngine->renderGroundPlaneGrid(Math::WorldCoordinates(cursorWorldPos));
     }
     
     // Render visual feedback (highlights, outlines, previews)

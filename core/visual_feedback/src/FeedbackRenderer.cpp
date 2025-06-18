@@ -26,10 +26,12 @@ FeedbackRenderer::FeedbackRenderer(Rendering::RenderEngine* renderEngine)
     m_overlay = std::make_unique<OverlayRenderer>();
     m_faceDetector = std::make_unique<FaceDetector>();
     
-    // Initialize workspace bounds
+    // Initialize workspace bounds with centered coordinate system
+    // Default 5m workspace: X,Z centered [-2.5, 2.5], Y from [0, 5]
+    float defaultSize = 5.0f;
     m_workspaceBounds = Math::BoundingBox(
-        Math::Vector3f(0, 0, 0),
-        Math::Vector3f(10, 10, 10)
+        Math::Vector3f(-defaultSize/2, 0, -defaultSize/2),
+        Math::Vector3f(defaultSize/2, defaultSize, defaultSize/2)
     );
 }
 

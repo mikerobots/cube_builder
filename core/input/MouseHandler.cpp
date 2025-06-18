@@ -114,7 +114,7 @@ Math::Ray MouseHandler::createRayFromMouse(const Math::Vector2f& mousePos,
     float y = 1.0f - (2.0f * mousePos.y) / viewportSize.y;
     
     // Create ray in world space
-    Math::Vector3f rayStart = camera.getPosition();
+    Math::Vector3f rayStart = camera.getPosition().value();
     // For now, create a simple ray from camera position through the screen point
     // This is a simplified implementation - a full implementation would use
     // the camera's projection and view matrices
@@ -122,7 +122,7 @@ Math::Ray MouseHandler::createRayFromMouse(const Math::Vector2f& mousePos,
     
     // Add some offset based on screen coordinates
     Math::Vector3f right = camera.getRight() * x;
-    Math::Vector3f up = camera.getUp() * y;
+    Math::Vector3f up = camera.getUp().value() * y;
     
     rayDirection = (rayDirection + right + up).normalized();
     

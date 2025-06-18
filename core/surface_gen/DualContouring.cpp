@@ -7,21 +7,21 @@ namespace VoxelEditor {
 namespace SurfaceGen {
 
 // Static member definitions
-const std::array<Math::Vector3i, 8> DualContouring::CUBE_VERTICES = {{
-    {0, 0, 0}, {1, 0, 0}, {1, 1, 0}, {0, 1, 0},
-    {0, 0, 1}, {1, 0, 1}, {1, 1, 1}, {0, 1, 1}
+const std::array<Math::IncrementCoordinates, 8> DualContouring::CUBE_VERTICES = {{
+    Math::IncrementCoordinates(0, 0, 0), Math::IncrementCoordinates(1, 0, 0), Math::IncrementCoordinates(1, 1, 0), Math::IncrementCoordinates(0, 1, 0),
+    Math::IncrementCoordinates(0, 0, 1), Math::IncrementCoordinates(1, 0, 1), Math::IncrementCoordinates(1, 1, 1), Math::IncrementCoordinates(0, 1, 1)
 }};
 
-const std::array<Math::Vector3i, 12> DualContouring::EDGE_VERTICES = {{
-    {0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, 0, 0},  // Bottom edges
-    {0, 0, 1}, {1, 0, 1}, {0, 1, 1}, {0, 0, 1},  // Top edges
-    {0, 0, 0}, {0, 1, 0}, {1, 0, 0}, {0, 0, 0}   // Vertical edges
+const std::array<Math::IncrementCoordinates, DualContouring::EDGE_COUNT> DualContouring::EDGE_VERTICES = {{
+    Math::IncrementCoordinates(0, 0, 0), Math::IncrementCoordinates(1, 0, 0), Math::IncrementCoordinates(0, 1, 0), Math::IncrementCoordinates(0, 0, 0),  // Bottom edges
+    Math::IncrementCoordinates(0, 0, 1), Math::IncrementCoordinates(1, 0, 1), Math::IncrementCoordinates(0, 1, 1), Math::IncrementCoordinates(0, 0, 1),  // Top edges
+    Math::IncrementCoordinates(0, 0, 0), Math::IncrementCoordinates(0, 1, 0), Math::IncrementCoordinates(1, 0, 0), Math::IncrementCoordinates(0, 0, 0)   // Vertical edges
 }};
 
-const std::array<Math::Vector3i, 12> DualContouring::EDGE_DIRECTIONS = {{
-    {1, 0, 0}, {0, 1, 0}, {-1, 0, 0}, {0, -1, 0},  // Bottom edges
-    {1, 0, 0}, {0, 1, 0}, {-1, 0, 0}, {0, -1, 0},  // Top edges
-    {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1}     // Vertical edges
+const std::array<Math::IncrementCoordinates, DualContouring::EDGE_COUNT> DualContouring::EDGE_DIRECTIONS = {{
+    Math::IncrementCoordinates(1, 0, 0), Math::IncrementCoordinates(0, 1, 0), Math::IncrementCoordinates(-1, 0, 0), Math::IncrementCoordinates(0, -1, 0),  // Bottom edges
+    Math::IncrementCoordinates(1, 0, 0), Math::IncrementCoordinates(0, 1, 0), Math::IncrementCoordinates(-1, 0, 0), Math::IncrementCoordinates(0, -1, 0),  // Top edges
+    Math::IncrementCoordinates(0, 0, 1), Math::IncrementCoordinates(0, 0, 1), Math::IncrementCoordinates(0, 0, 1), Math::IncrementCoordinates(0, 0, 1)     // Vertical edges
 }};
 
 const std::array<std::array<int, 4>, 6> DualContouring::FACE_EDGES = {{
@@ -33,21 +33,22 @@ const std::array<std::array<int, 4>, 6> DualContouring::FACE_EDGES = {{
     {1, 8, 5, 10}    // Right face
 }};
 
-const std::array<Math::Vector3i, 6> DualContouring::FACE_NORMALS = {{
-    {0, 0, -1}, {0, 0, 1},   // Bottom, Top
-    {0, -1, 0}, {0, 1, 0},   // Front, Back
-    {-1, 0, 0}, {1, 0, 0}    // Left, Right
+const std::array<Math::IncrementCoordinates, 6> DualContouring::FACE_NORMALS = {{
+    Math::IncrementCoordinates(0, 0, -1), Math::IncrementCoordinates(0, 0, 1),   // Bottom, Top
+    Math::IncrementCoordinates(0, -1, 0), Math::IncrementCoordinates(0, 1, 0),   // Front, Back
+    Math::IncrementCoordinates(-1, 0, 0), Math::IncrementCoordinates(1, 0, 0)    // Left, Right
 }};
 
 // GridSampler implementation
-float DualContouring::GridSampler::sample(const Math::Vector3i& pos) const {
+float DualContouring::GridSampler::sample(const Math::IncrementCoordinates& pos) const {
     if (!grid) return 0.0f;
     
     // Check if position is in bounds
-    if (pos.x < 0 || pos.y < 0 || pos.z < 0 ||
-        pos.x >= grid->getGridDimensions().x ||
-        pos.y >= grid->getGridDimensions().y ||
-        pos.z >= grid->getGridDimensions().z) {
+    const Math::Vector3i& gridPos = pos.value();
+    if (gridPos.x < 0 || gridPos.y < 0 || gridPos.z < 0 ||
+        gridPos.x >= grid->getGridDimensions().x ||
+        gridPos.y >= grid->getGridDimensions().y ||
+        gridPos.z >= grid->getGridDimensions().z) {
         return 0.0f;
     }
     
@@ -56,15 +57,22 @@ float DualContouring::GridSampler::sample(const Math::Vector3i& pos) const {
     return hasVoxel ? 1.0f : 0.0f;
 }
 
-bool DualContouring::GridSampler::isInside(const Math::Vector3i& pos) const {
+bool DualContouring::GridSampler::isInside(const Math::IncrementCoordinates& pos) const {
     return sample(pos) > isoValue;
 }
 
-Math::Vector3f DualContouring::GridSampler::gradient(const Math::Vector3i& pos) const {
+Math::Vector3f DualContouring::GridSampler::gradient(const Math::IncrementCoordinates& pos) const {
     // Compute gradient using central differences
-    float dx = sample(pos + Math::Vector3i(1, 0, 0)) - sample(pos - Math::Vector3i(1, 0, 0));
-    float dy = sample(pos + Math::Vector3i(0, 1, 0)) - sample(pos - Math::Vector3i(0, 1, 0));
-    float dz = sample(pos + Math::Vector3i(0, 0, 1)) - sample(pos - Math::Vector3i(0, 0, 1));
+    Math::IncrementCoordinates offsetX(pos.value() + Math::Vector3i(1, 0, 0));
+    Math::IncrementCoordinates negOffsetX(pos.value() - Math::Vector3i(1, 0, 0));
+    Math::IncrementCoordinates offsetY(pos.value() + Math::Vector3i(0, 1, 0));
+    Math::IncrementCoordinates negOffsetY(pos.value() - Math::Vector3i(0, 1, 0));
+    Math::IncrementCoordinates offsetZ(pos.value() + Math::Vector3i(0, 0, 1));
+    Math::IncrementCoordinates negOffsetZ(pos.value() - Math::Vector3i(0, 0, 1));
+    
+    float dx = sample(offsetX) - sample(negOffsetX);
+    float dy = sample(offsetY) - sample(negOffsetY);
+    float dz = sample(offsetZ) - sample(negOffsetZ);
     
     Math::Vector3f grad(dx, dy, dz);
     grad = grad * 0.5f; // Scale by 1/2h where h=1
@@ -79,14 +87,14 @@ Math::Vector3f DualContouring::GridSampler::gradient(const Math::Vector3i& pos) 
 }
 
 // QEFSolver implementation
-void DualContouring::QEFSolver::add(const Math::Vector3f& pos, const Math::Vector3f& normal) {
+void DualContouring::QEFSolver::add(const Math::WorldCoordinates& pos, const Math::Vector3f& normal) {
     positions.push_back(pos);
     normals.push_back(normal);
 }
 
-Math::Vector3f DualContouring::QEFSolver::solve() const {
+Math::WorldCoordinates DualContouring::QEFSolver::solve() const {
     if (positions.empty()) {
-        return Math::Vector3f(0, 0, 0);
+        return Math::WorldCoordinates(0, 0, 0);
     }
     
     // Build the system ATA * x = ATb
@@ -94,7 +102,8 @@ Math::Vector3f DualContouring::QEFSolver::solve() const {
     float ATb[3] = {0};
     
     for (size_t i = 0; i < positions.size(); ++i) {
-        const Math::Vector3f& p = positions[i];
+        const Math::WorldCoordinates& worldPos = positions[i];
+        const Math::Vector3f& p = worldPos.value();
         const Math::Vector3f& n = normals[i];
         
         // ATA accumulation
@@ -115,24 +124,24 @@ Math::Vector3f DualContouring::QEFSolver::solve() const {
     // Solve the system
     float x[3];
     if (solveSystem(ATA, ATb, x)) {
-        return Math::Vector3f(x[0], x[1], x[2]);
+        return Math::WorldCoordinates(Math::Vector3f(x[0], x[1], x[2]));
     }
     
     // Fallback to mass point
     return computeMassPoint();
 }
 
-Math::Vector3f DualContouring::QEFSolver::computeMassPoint() const {
+Math::WorldCoordinates DualContouring::QEFSolver::computeMassPoint() const {
     if (positions.empty()) {
-        return Math::Vector3f(0, 0, 0);
+        return Math::WorldCoordinates(0, 0, 0);
     }
     
     Math::Vector3f sum(0, 0, 0);
     for (const auto& pos : positions) {
-        sum = sum + pos;
+        sum = sum + pos.value();
     }
     
-    return sum / static_cast<float>(positions.size());
+    return Math::WorldCoordinates(sum / static_cast<float>(positions.size()));
 }
 
 bool DualContouring::QEFSolver::solveSystem(float ATA[6], float ATb[3], float x[3]) const {
@@ -226,10 +235,26 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     MeshBuilder builder;
     builder.beginMesh();
     
-    // Convert vertices from grid coordinates to world coordinates
+    // Convert vertices from grid coordinates to world coordinates using VoxelGrid's coordinate system
+    // This properly handles the centered workspace coordinate system
     for (const auto& vertex : m_vertices) {
-        Math::Vector3f worldVertex = vertex * voxelSize;
-        builder.addVertex(worldVertex);
+        // Convert float vertex coordinates to grid position, then use gridToWorld
+        Math::Vector3i gridPos(
+            static_cast<int>(std::round(vertex.x())),
+            static_cast<int>(std::round(vertex.y())),
+            static_cast<int>(std::round(vertex.z()))
+        );
+        Math::Vector3f worldVertex = grid.gridToWorld(gridPos);
+        
+        // Add fractional offset for sub-grid precision
+        Math::Vector3f fractionalOffset(
+            (vertex.x() - gridPos.x) * voxelSize,
+            (vertex.y() - gridPos.y) * voxelSize,
+            (vertex.z() - gridPos.z) * voxelSize
+        );
+        worldVertex = worldVertex + fractionalOffset;
+        
+        builder.addVertex(Math::WorldCoordinates(worldVertex));
     }
     
     for (size_t i = 0; i < m_indices.size(); i += 4) {
@@ -261,14 +286,14 @@ void DualContouring::extractEdgeIntersections(const VoxelData::VoxelGrid& grid) 
             for (int x = 0; x < dims.x - 1; ++x) {
                 if (m_cancelled) return;
                 
-                Math::Vector3i cellPos(x, y, z);
+                Math::IncrementCoordinates cellPos(x, y, z);
                 CellData& cell = m_cellData[cellKey(cellPos)];
                 cell.position = cellPos;
                 
                 // Check all 12 edges of the cell
                 for (int e = 0; e < EDGE_COUNT; ++e) {
-                    Math::Vector3i v0 = cellPos + EDGE_VERTICES[e];
-                    Math::Vector3i v1 = v0 + EDGE_DIRECTIONS[e];
+                    Math::IncrementCoordinates v0(cellPos.value() + EDGE_VERTICES[e].value());
+                    Math::IncrementCoordinates v1(v0.value() + EDGE_DIRECTIONS[e].value());
                     
                     // Check for sign change
                     bool inside0 = m_sampler.isInside(v0);
@@ -283,7 +308,7 @@ void DualContouring::extractEdgeIntersections(const VoxelData::VoxelGrid& grid) 
     }
 }
 
-bool DualContouring::findEdgeIntersection(const Math::Vector3i& v0, const Math::Vector3i& v1, 
+bool DualContouring::findEdgeIntersection(const Math::IncrementCoordinates& v0, const Math::IncrementCoordinates& v1, 
                                          HermiteData& hermite) {
     float val0 = m_sampler.sample(v0);
     float val1 = m_sampler.sample(v1);
@@ -294,9 +319,9 @@ bool DualContouring::findEdgeIntersection(const Math::Vector3i& v0, const Math::
         return false;
     }
     
-    // Interpolate position
-    Math::Vector3f p0(v0.x, v0.y, v0.z);
-    Math::Vector3f p1(v1.x, v1.y, v1.z);
+    // Interpolate position - convert grid to world coordinates
+    Math::WorldCoordinates p0(Math::Vector3f(v0.x(), v0.y(), v0.z()));
+    Math::WorldCoordinates p1(Math::Vector3f(v1.x(), v1.y(), v1.z()));
     hermite.position = interpolateEdge(val0, val1, p0, p1);
     
     // Compute normal at intersection
@@ -317,8 +342,8 @@ bool DualContouring::findEdgeIntersection(const Math::Vector3i& v0, const Math::
     return true;
 }
 
-Math::Vector3f DualContouring::interpolateEdge(float val0, float val1, 
-                                              const Math::Vector3f& p0, const Math::Vector3f& p1) {
+Math::WorldCoordinates DualContouring::interpolateEdge(float val0, float val1, 
+                                                      const Math::WorldCoordinates& p0, const Math::WorldCoordinates& p1) {
     float t = (m_sampler.isoValue - val0) / (val1 - val0);
     t = std::max(0.0f, std::min(1.0f, t)); // Clamp to [0, 1]
     return p0 + (p1 - p0) * t;
@@ -360,20 +385,22 @@ void DualContouring::generateCellVertex(CellData& cell) {
     }
     
     // Solve for vertex position
-    Math::Vector3f vertex = qef.solve();
+    Math::WorldCoordinates vertex = qef.solve();
     
     // Constrain vertex to cell bounds
-    Math::Vector3f cellMin(cell.position.x, cell.position.y, cell.position.z);
+    Math::Vector3f cellMin(cell.position.x(), cell.position.y(), cell.position.z());
     Math::Vector3f cellMax = cellMin + Math::Vector3f(1, 1, 1);
     
-    vertex.x = std::max(cellMin.x, std::min(cellMax.x, vertex.x));
-    vertex.y = std::max(cellMin.y, std::min(cellMax.y, vertex.y));
-    vertex.z = std::max(cellMin.z, std::min(cellMax.z, vertex.z));
+    Math::Vector3f vertexPos = vertex.value();
+    vertexPos.x = std::max(cellMin.x, std::min(cellMax.x, vertexPos.x));
+    vertexPos.y = std::max(cellMin.y, std::min(cellMax.y, vertexPos.y));
+    vertexPos.z = std::max(cellMin.z, std::min(cellMax.z, vertexPos.z));
+    vertex = Math::WorldCoordinates(vertexPos);
     
     // Check for sharp features
     if (m_settings.preserveSharpFeatures && isSharpFeature(activeEdges)) {
         // For sharp features, bias toward edge intersections
-        Math::Vector3f edgeCenter(0, 0, 0);
+        Math::WorldCoordinates edgeCenter(0, 0, 0);
         for (const auto& edge : activeEdges) {
             edgeCenter = edgeCenter + edge.position;
         }
@@ -419,7 +446,7 @@ void DualContouring::generateQuads() {
             for (int x = 0; x < dims.x - 1; ++x) {
                 if (m_cancelled) return;
                 
-                Math::Vector3i base(x, y, z);
+                Math::IncrementCoordinates base(x, y, z);
                 
                 // Check all 6 face directions
                 for (int face = 0; face < 6; ++face) {
@@ -430,46 +457,46 @@ void DualContouring::generateQuads() {
     }
 }
 
-void DualContouring::generateFaceQuad(const Math::Vector3i& base, int faceIndex) {
+void DualContouring::generateFaceQuad(const Math::IncrementCoordinates& base, int faceIndex) {
     // Determine the four cells that share this face
-    Math::Vector3i cells[4];
+    Math::IncrementCoordinates cells[4];
     
     switch (faceIndex) {
         case 0: // Bottom face (XY plane, Z-)
             cells[0] = base;
-            cells[1] = base + Math::Vector3i(1, 0, 0);
-            cells[2] = base + Math::Vector3i(1, 1, 0);
-            cells[3] = base + Math::Vector3i(0, 1, 0);
+            cells[1] = base + Math::IncrementCoordinates(1, 0, 0);
+            cells[2] = base + Math::IncrementCoordinates(1, 1, 0);
+            cells[3] = base + Math::IncrementCoordinates(0, 1, 0);
             break;
         case 1: // Top face (XY plane, Z+)
-            cells[0] = base + Math::Vector3i(0, 0, 1);
-            cells[1] = base + Math::Vector3i(1, 0, 1);
-            cells[2] = base + Math::Vector3i(1, 1, 1);
-            cells[3] = base + Math::Vector3i(0, 1, 1);
+            cells[0] = base + Math::IncrementCoordinates(0, 0, 1);
+            cells[1] = base + Math::IncrementCoordinates(1, 0, 1);
+            cells[2] = base + Math::IncrementCoordinates(1, 1, 1);
+            cells[3] = base + Math::IncrementCoordinates(0, 1, 1);
             break;
         case 2: // Front face (XZ plane, Y-)
             cells[0] = base;
-            cells[1] = base + Math::Vector3i(1, 0, 0);
-            cells[2] = base + Math::Vector3i(1, 0, 1);
-            cells[3] = base + Math::Vector3i(0, 0, 1);
+            cells[1] = base + Math::IncrementCoordinates(1, 0, 0);
+            cells[2] = base + Math::IncrementCoordinates(1, 0, 1);
+            cells[3] = base + Math::IncrementCoordinates(0, 0, 1);
             break;
         case 3: // Back face (XZ plane, Y+)
-            cells[0] = base + Math::Vector3i(0, 1, 0);
-            cells[1] = base + Math::Vector3i(1, 1, 0);
-            cells[2] = base + Math::Vector3i(1, 1, 1);
-            cells[3] = base + Math::Vector3i(0, 1, 1);
+            cells[0] = base + Math::IncrementCoordinates(0, 1, 0);
+            cells[1] = base + Math::IncrementCoordinates(1, 1, 0);
+            cells[2] = base + Math::IncrementCoordinates(1, 1, 1);
+            cells[3] = base + Math::IncrementCoordinates(0, 1, 1);
             break;
         case 4: // Left face (YZ plane, X-)
             cells[0] = base;
-            cells[1] = base + Math::Vector3i(0, 1, 0);
-            cells[2] = base + Math::Vector3i(0, 1, 1);
-            cells[3] = base + Math::Vector3i(0, 0, 1);
+            cells[1] = base + Math::IncrementCoordinates(0, 1, 0);
+            cells[2] = base + Math::IncrementCoordinates(0, 1, 1);
+            cells[3] = base + Math::IncrementCoordinates(0, 0, 1);
             break;
         case 5: // Right face (YZ plane, X+)
-            cells[0] = base + Math::Vector3i(1, 0, 0);
-            cells[1] = base + Math::Vector3i(1, 1, 0);
-            cells[2] = base + Math::Vector3i(1, 1, 1);
-            cells[3] = base + Math::Vector3i(1, 0, 1);
+            cells[0] = base + Math::IncrementCoordinates(1, 0, 0);
+            cells[1] = base + Math::IncrementCoordinates(1, 1, 0);
+            cells[2] = base + Math::IncrementCoordinates(1, 1, 1);
+            cells[3] = base + Math::IncrementCoordinates(1, 0, 1);
             break;
     }
     
@@ -500,8 +527,8 @@ void DualContouring::generateFaceQuad(const Math::Vector3i& base, int faceIndex)
     }
 }
 
-bool DualContouring::canGenerateQuad(const Math::Vector3i& v0, const Math::Vector3i& v1,
-                                    const Math::Vector3i& v2, const Math::Vector3i& v3) const {
+bool DualContouring::canGenerateQuad(const Math::IncrementCoordinates& v0, const Math::IncrementCoordinates& v1,
+                                    const Math::IncrementCoordinates& v2, const Math::IncrementCoordinates& v3) const {
     // Check if the face has a sign change
     // This is a simplified check - a more robust version would check the actual edge
     
@@ -518,21 +545,22 @@ bool DualContouring::canGenerateQuad(const Math::Vector3i& v0, const Math::Vecto
     return c0->hasVertex || c1->hasVertex || c2->hasVertex || c3->hasVertex;
 }
 
-uint64_t DualContouring::cellKey(const Math::Vector3i& pos) const {
+uint64_t DualContouring::cellKey(const Math::IncrementCoordinates& pos) const {
     // Pack 3D position into 64-bit key
     uint64_t key = 0;
-    key |= (uint64_t(pos.x) & 0xFFFFF) << 0;
-    key |= (uint64_t(pos.y) & 0xFFFFF) << 20;
-    key |= (uint64_t(pos.z) & 0xFFFFF) << 40;
+    const Math::Vector3i& v = pos.value();
+    key |= (uint64_t(v.x) & 0xFFFFF) << 0;
+    key |= (uint64_t(v.y) & 0xFFFFF) << 20;
+    key |= (uint64_t(v.z) & 0xFFFFF) << 40;
     return key;
 }
 
-DualContouring::CellData* DualContouring::getCell(const Math::Vector3i& pos) {
+DualContouring::CellData* DualContouring::getCell(const Math::IncrementCoordinates& pos) {
     auto it = m_cellData.find(cellKey(pos));
     return (it != m_cellData.end()) ? &it->second : nullptr;
 }
 
-const DualContouring::CellData* DualContouring::getCell(const Math::Vector3i& pos) const {
+const DualContouring::CellData* DualContouring::getCell(const Math::IncrementCoordinates& pos) const {
     auto it = m_cellData.find(cellKey(pos));
     return (it != m_cellData.end()) ? &it->second : nullptr;
 }

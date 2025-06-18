@@ -37,19 +37,20 @@ TEST_F(FaceDetectorTest, RayMiss) {
 
 TEST_F(FaceDetectorTest, RayHit) {
     // Ray that hits the test voxel
-    // Grid position (5,5,5) maps to world position (-3.4, 1.6, -3.4)
-    Vector3f voxelWorldPos = testGrid->gridToWorld(Vector3i(5, 5, 5));
+    // Increment position (5,5,5) represents 5cm offset from origin
+    IncrementCoordinates incrementPos(5, 5, 5);
+    Vector3f voxelWorldPos = testGrid->incrementToWorld(incrementPos);
     float voxelSize = getVoxelSize(resolution);
-    Vector3f voxelCenter = voxelWorldPos + Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+    // incrementToWorld returns the voxel center, so use it directly
     
     // Ray from in front of the voxel looking in +Z direction
-    Vector3f rayOrigin = Vector3f(voxelCenter.x, voxelCenter.y, voxelCenter.z - 2.0f);
+    Vector3f rayOrigin = Vector3f(voxelWorldPos.x, voxelWorldPos.y, voxelWorldPos.z - 2.0f);
     VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
     EXPECT_TRUE(face.isValid());
-    EXPECT_EQ(face.getVoxelPosition(), Vector3i(5, 5, 5));
+    EXPECT_EQ(face.getVoxelPosition().value(), Vector3i(5, 5, 5));
     EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ);
 }
 
@@ -63,9 +64,9 @@ TEST_F(FaceDetectorTest, GroundPlaneDetection) {
     EXPECT_TRUE(face.isValid());
     EXPECT_TRUE(face.isGroundPlane());
     EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::PositiveY);
-    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().y, 0.0f);
-    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().x, 2.5f);
-    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().z, 3.5f);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().y(), 0.0f);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().x(), 2.5f);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().z(), 3.5f);
 }
 
 TEST_F(FaceDetectorTest, GroundPlaneNoHit_ParallelRay) {
@@ -88,19 +89,20 @@ TEST_F(FaceDetectorTest, GroundPlaneNoHit_UpwardRay) {
 
 TEST_F(FaceDetectorTest, DetectFaceOrGround_HitsVoxel) {
     // Ray that hits a voxel
-    Vector3f voxelWorldPos = testGrid->gridToWorld(Vector3i(5, 5, 5));
+    IncrementCoordinates incrementPos(5, 5, 5);
+    Vector3f voxelWorldPos = testGrid->incrementToWorld(incrementPos);
     float voxelSize = getVoxelSize(resolution);
-    Vector3f voxelCenter = voxelWorldPos + Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+    // incrementToWorld returns the voxel center, so use it directly
     
     // Ray from in front of the voxel looking in +Z direction
-    Vector3f rayOrigin = Vector3f(voxelCenter.x, voxelCenter.y, voxelCenter.z - 2.0f);
+    Vector3f rayOrigin = Vector3f(voxelWorldPos.x, voxelWorldPos.y, voxelWorldPos.z - 2.0f);
     VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1));
     
     Face face = detector->detectFaceOrGround(ray, *testGrid, resolution);
     
     EXPECT_TRUE(face.isValid());
     EXPECT_FALSE(face.isGroundPlane());
-    EXPECT_EQ(face.getVoxelPosition(), Vector3i(5, 5, 5));
+    EXPECT_EQ(face.getVoxelPosition().value(), Vector3i(5, 5, 5));
 }
 
 TEST_F(FaceDetectorTest, DetectFaceOrGround_HitsGround) {
@@ -111,19 +113,19 @@ TEST_F(FaceDetectorTest, DetectFaceOrGround_HitsGround) {
     
     EXPECT_TRUE(face.isValid());
     EXPECT_TRUE(face.isGroundPlane());
-    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().y, 0.0f);
+    EXPECT_FLOAT_EQ(face.getGroundPlaneHitPoint().y(), 0.0f);
 }
 
 TEST_F(FaceDetectorTest, CalculatePlacementPosition_GroundPlane) {
     // Create a ground plane face
     Face groundFace = Face::GroundPlane(Vector3f(1.234f, 0.0f, 2.567f));
     
-    Vector3i placementPos = detector->calculatePlacementPosition(groundFace);
+    IncrementCoordinates placementPos = detector->calculatePlacementPosition(groundFace);
     
     // Should snap to nearest 1cm increment
-    EXPECT_EQ(placementPos.x, 123); // 1.234m = 123.4cm, rounds to 123
-    EXPECT_EQ(placementPos.y, 0);
-    EXPECT_EQ(placementPos.z, 257); // 2.567m = 256.7cm, rounds to 257
+    EXPECT_EQ(placementPos.x(), 123); // 1.234m = 123.4cm, rounds to 123
+    EXPECT_EQ(placementPos.y(), 0);
+    EXPECT_EQ(placementPos.z(), 257); // 2.567m = 256.7cm, rounds to 257
 }
 
 TEST_F(FaceDetectorTest, FaceDirection_AllDirections) {
@@ -138,16 +140,17 @@ TEST_F(FaceDetectorTest, FaceDirection_AllDirections) {
     };
     
     float voxelSize = getVoxelSize(resolution);
-    Vector3f voxelWorldPos = testGrid->gridToWorld(Vector3i(10, 10, 10));
-    Vector3f voxelCenter = voxelWorldPos + Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+    IncrementCoordinates incrementPos(10, 10, 10);
+    Vector3f voxelWorldPos = testGrid->incrementToWorld(incrementPos);
+    // incrementToWorld returns the voxel center, so use it directly
     
     TestCase testCases[] = {
-        {voxelCenter + Vector3f(-2 * voxelSize, 0, 0), Vector3f(1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeX},
-        {voxelCenter + Vector3f(2 * voxelSize, 0, 0), Vector3f(-1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveX},
-        {voxelCenter + Vector3f(0, -2 * voxelSize, 0), Vector3f(0, 1, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeY},
-        {voxelCenter + Vector3f(0, 2 * voxelSize, 0), Vector3f(0, -1, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveY},
-        {voxelCenter + Vector3f(0, 0, -2 * voxelSize), Vector3f(0, 0, 1), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ},
-        {voxelCenter + Vector3f(0, 0, 2 * voxelSize), Vector3f(0, 0, -1), VoxelEditor::VisualFeedback::FaceDirection::PositiveZ}
+        {voxelWorldPos + Vector3f(-2 * voxelSize, 0, 0), Vector3f(1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeX},
+        {voxelWorldPos + Vector3f(2 * voxelSize, 0, 0), Vector3f(-1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveX},
+        {voxelWorldPos + Vector3f(0, -2 * voxelSize, 0), Vector3f(0, 1, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeY},
+        {voxelWorldPos + Vector3f(0, 2 * voxelSize, 0), Vector3f(0, -1, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveY},
+        {voxelWorldPos + Vector3f(0, 0, -2 * voxelSize), Vector3f(0, 0, 1), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ},
+        {voxelWorldPos + Vector3f(0, 0, 2 * voxelSize), Vector3f(0, 0, -1), VoxelEditor::VisualFeedback::FaceDirection::PositiveZ}
     };
     
     for (const auto& test : testCases) {
@@ -178,9 +181,9 @@ TEST_F(FaceDetectorTest, InvalidFaceForPlacement) {
 TEST_F(FaceDetectorTest, PlacementPosition) {
     Face face(Vector3i(5, 5, 5), resolution, VoxelEditor::VisualFeedback::FaceDirection::PositiveZ);
     
-    Vector3i placementPos = detector->calculatePlacementPosition(face);
+    IncrementCoordinates placementPos = detector->calculatePlacementPosition(face);
     
-    EXPECT_EQ(placementPos, Vector3i(5, 5, 6));
+    EXPECT_EQ(placementPos.value(), Vector3i(5, 5, 6));
 }
 
 TEST_F(FaceDetectorTest, FacesInRegion) {
@@ -214,7 +217,8 @@ TEST_F(FaceDetectorTest, MaxRayDistance) {
 TEST_F(FaceDetectorTest, RayFromInside) {
     // Ray starting inside a voxel
     float voxelSize = getVoxelSize(resolution);
-    Vector3f voxelWorldPos = testGrid->gridToWorld(Vector3i(5, 5, 5));
+    IncrementCoordinates incrementPos(5, 5, 5);
+    Vector3f voxelWorldPos = testGrid->incrementToWorld(incrementPos);
     Vector3f rayOrigin = voxelWorldPos + Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
     VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(1, 0, 0));
     
@@ -259,16 +263,17 @@ TEST_F(FaceDetectorTest, MultipleVoxelRay) {
     
     // Ray that passes through multiple voxels
     float voxelSize = getVoxelSize(resolution);
-    Vector3f voxelWorldPos = testGrid->gridToWorld(Vector3i(5, 5, 5));
-    Vector3f voxelCenter = voxelWorldPos + Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+    IncrementCoordinates incrementPos(5, 5, 5);
+    Vector3f voxelWorldPos = testGrid->incrementToWorld(incrementPos);
     
     // Ray from left of the voxels looking right
-    Vector3f rayOrigin = Vector3f(voxelCenter.x - 2.0f, voxelCenter.y, voxelCenter.z);
+    // incrementToWorld returns voxel center, so use it directly  
+    Vector3f rayOrigin = Vector3f(voxelWorldPos.x - 2.0f, voxelWorldPos.y, voxelWorldPos.z);
     VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(1, 0, 0));
     
     Face face = detector->detectFace(ray, *testGrid, resolution);
     
     EXPECT_TRUE(face.isValid());
-    EXPECT_EQ(face.getVoxelPosition(), Vector3i(5, 5, 5)); // Should hit first voxel
+    EXPECT_EQ(face.getVoxelPosition().value(), Vector3i(5, 5, 5)); // Should hit first voxel
     EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::NegativeX);
 }

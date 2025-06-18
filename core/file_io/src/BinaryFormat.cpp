@@ -419,9 +419,9 @@ bool BinaryFormat::writeVoxelDataChunk(BinaryWriter& writer, const ::VoxelEditor
                 
                 // Write each voxel position
                 for (const auto& voxelPos : voxels) {
-                    w.writeInt32(voxelPos.gridPos.x);
-                    w.writeInt32(voxelPos.gridPos.y);
-                    w.writeInt32(voxelPos.gridPos.z);
+                    w.writeInt32(voxelPos.gridPos.x());
+                    w.writeInt32(voxelPos.gridPos.y());
+                    w.writeInt32(voxelPos.gridPos.z());
                 }
             } else {
                 // Write resolution level with 0 voxels
@@ -477,17 +477,22 @@ bool BinaryFormat::readVoxelDataChunk(BinaryReader& reader, ::VoxelEditor::Voxel
         
         // Read voxel positions and set them
         for (uint32_t j = 0; j < voxelCount; ++j) {
-            Math::Vector3i pos;
-            pos.x = reader.readInt32();
-            pos.y = reader.readInt32();
-            pos.z = reader.readInt32();
+            Math::GridCoordinates pos(
+                reader.readInt32(),
+                reader.readInt32(),
+                reader.readInt32()
+            );
             
             if (!reader.isValid()) {
                 LOG_ERROR("Failed to read voxel position " + std::to_string(j) + " of " + std::to_string(voxelCount));
                 return false;
             }
             
-            voxelData.setVoxel(pos, resolution, true);
+            // Convert grid coordinates to increment coordinates
+            Math::IncrementCoordinates incPos = Math::CoordinateConverter::gridToIncrement(
+                pos, resolution, voxelData.getWorkspaceSize()
+            );
+            voxelData.setVoxel(incPos, resolution, true);
         }
     }
     
@@ -529,9 +534,9 @@ bool BinaryFormat::writeGroupDataChunk(BinaryWriter& writer, const Groups::Group
             auto voxels = group->getVoxels();
             w.writeUInt32(static_cast<uint32_t>(voxels.size()));
             for (const auto& voxelId : voxels) {
-                w.writeInt32(voxelId.position.x);
-                w.writeInt32(voxelId.position.y);
-                w.writeInt32(voxelId.position.z);
+                w.writeInt32(voxelId.position.x());
+                w.writeInt32(voxelId.position.y());
+                w.writeInt32(voxelId.position.z());
                 w.writeUInt8(static_cast<uint8_t>(voxelId.resolution));
             }
             
@@ -577,9 +582,11 @@ bool BinaryFormat::readGroupDataChunk(BinaryReader& reader, Groups::GroupManager
         std::vector<Groups::VoxelId> voxels;
         for (uint32_t j = 0; j < voxelCount; ++j) {
             Groups::VoxelId voxelId;
-            voxelId.position.x = reader.readInt32();
-            voxelId.position.y = reader.readInt32();
-            voxelId.position.z = reader.readInt32();
+            voxelId.position = Math::GridCoordinates(
+                reader.readInt32(),
+                reader.readInt32(),
+                reader.readInt32()
+            );
             voxelId.resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
             voxels.push_back(voxelId);
         }
@@ -627,21 +634,21 @@ bool BinaryFormat::writeCameraStateChunk(BinaryWriter& writer, const Camera::Orb
         
         // Write position
         auto position = camera.getPosition();
-        w.writeFloat(position.x);
-        w.writeFloat(position.y);
-        w.writeFloat(position.z);
+        w.writeFloat(position.x());
+        w.writeFloat(position.y());
+        w.writeFloat(position.z());
         
         // Write target
         auto target = camera.getTarget();
-        w.writeFloat(target.x);
-        w.writeFloat(target.y);
-        w.writeFloat(target.z);
+        w.writeFloat(target.x());
+        w.writeFloat(target.y());
+        w.writeFloat(target.z());
         
         // Write up vector
         auto up = camera.getUp();
-        w.writeFloat(up.x);
-        w.writeFloat(up.y);
-        w.writeFloat(up.z);
+        w.writeFloat(up.x());
+        w.writeFloat(up.y());
+        w.writeFloat(up.z());
         
         // Write projection parameters
         w.writeFloat(camera.getFieldOfView());
@@ -681,22 +688,25 @@ bool BinaryFormat::readCameraStateChunk(BinaryReader& reader, Camera::OrbitCamer
     }
     
     // Read position
-    Math::Vector3f position;
-    position.x = reader.readFloat();
-    position.y = reader.readFloat();
-    position.z = reader.readFloat();
+    Math::Vector3f position(
+        reader.readFloat(),
+        reader.readFloat(),
+        reader.readFloat()
+    );
     
     // Read target
-    Math::Vector3f target;
-    target.x = reader.readFloat();
-    target.y = reader.readFloat();
-    target.z = reader.readFloat();
+    Math::Vector3f target(
+        reader.readFloat(),
+        reader.readFloat(),
+        reader.readFloat()
+    );
     
     // Read up vector
-    Math::Vector3f up;
-    up.x = reader.readFloat();
-    up.y = reader.readFloat();
-    up.z = reader.readFloat();
+    Math::Vector3f up(
+        reader.readFloat(),
+        reader.readFloat(),
+        reader.readFloat()
+    );
     
     // Read projection parameters
     float fov = reader.readFloat();
@@ -724,8 +734,8 @@ bool BinaryFormat::readCameraStateChunk(BinaryReader& reader, Camera::OrbitCamer
     float smoothFactor = reader.readFloat();
     
     // Apply settings to camera
-    camera.setTarget(target);
-    camera.setUp(up);
+    camera.setTarget(Math::WorldCoordinates(target));
+    camera.setUp(Math::WorldCoordinates(up));
     camera.setFieldOfView(fov);
     camera.setNearFarPlanes(nearPlane, farPlane);
     
@@ -758,9 +768,9 @@ bool BinaryFormat::writeSelectionDataChunk(BinaryWriter& writer, const Project& 
             
             // Write each selected voxel
             for (const auto& voxelId : selectedVoxels) {
-                w.writeInt32(voxelId.position.x);
-                w.writeInt32(voxelId.position.y);
-                w.writeInt32(voxelId.position.z);
+                w.writeInt32(voxelId.position.x());
+                w.writeInt32(voxelId.position.y());
+                w.writeInt32(voxelId.position.z());
                 w.writeUInt8(static_cast<uint8_t>(voxelId.resolution));
             }
             
@@ -787,9 +797,11 @@ bool BinaryFormat::readSelectionDataChunk(BinaryReader& reader, Project& project
         
         for (uint32_t i = 0; i < voxelCount; ++i) {
             Selection::VoxelId voxelId;
-            voxelId.position.x = reader.readInt32();
-            voxelId.position.y = reader.readInt32();
-            voxelId.position.z = reader.readInt32();
+            voxelId.position = Math::GridCoordinates(
+                reader.readInt32(),
+                reader.readInt32(),
+                reader.readInt32()
+            );
             voxelId.resolution = static_cast<::VoxelEditor::VoxelData::VoxelResolution>(reader.readUInt8());
             selectedVoxels.push_back(voxelId);
         }

@@ -31,25 +31,30 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
                                         bool checkExistence) {
     SelectionSet result;
     
-    float voxelSize = VoxelId(Math::Vector3i::Zero(), resolution).getVoxelSize();
+    // Get workspace size for coordinate conversion
+    Math::Vector3f workspaceSize(5.0f, 5.0f, 5.0f); // Default workspace size
+    if (m_voxelManager) {
+        workspaceSize = m_voxelManager->getWorkspaceSize();
+    }
     
-    // Calculate grid range
-    Math::Vector3i minGrid(
-        static_cast<int>(std::floor(worldBox.min.x / voxelSize)),
-        static_cast<int>(std::floor(worldBox.min.y / voxelSize)),
-        static_cast<int>(std::floor(worldBox.min.z / voxelSize))
-    );
+    // Convert world box corners to increment coordinates using the coordinate converter
+    Math::WorldCoordinates minWorld(worldBox.min);
+    Math::WorldCoordinates maxWorld(worldBox.max);
     
-    Math::Vector3i maxGrid(
-        static_cast<int>(std::ceil(worldBox.max.x / voxelSize)),
-        static_cast<int>(std::ceil(worldBox.max.y / voxelSize)),
-        static_cast<int>(std::ceil(worldBox.max.z / voxelSize))
-    );
+    Math::IncrementCoordinates minIncrementCoord = Math::CoordinateConverter::worldToIncrement(minWorld);
+    Math::IncrementCoordinates maxIncrementCoord = Math::CoordinateConverter::worldToIncrement(maxWorld);
+    
+    Math::Vector3i minGrid = minIncrementCoord.value();
+    Math::Vector3i maxGrid = maxIncrementCoord.value();
+    
+    // Ensure proper ordering (min <= max)
+    Math::Vector3i actualMin = Math::Vector3i::min(minGrid, maxGrid);
+    Math::Vector3i actualMax = Math::Vector3i::max(minGrid, maxGrid);
     
     // Select voxels in range
-    for (int x = minGrid.x; x <= maxGrid.x; ++x) {
-        for (int y = minGrid.y; y <= maxGrid.y; ++y) {
-            for (int z = minGrid.z; z <= maxGrid.z; ++z) {
+    for (int x = actualMin.x; x <= actualMax.x; ++x) {
+        for (int y = actualMin.y; y <= actualMax.y; ++y) {
+            for (int z = actualMin.z; z <= actualMax.z; ++z) {
                 VoxelId voxel(Math::Vector3i(x, y, z), resolution);
                 
                 if (isVoxelInBox(voxel, worldBox)) {
@@ -68,19 +73,20 @@ SelectionSet BoxSelector::selectFromRays(const Math::Ray& startRay,
                                        const Math::Ray& endRay,
                                        float maxDistance,
                                        VoxelData::VoxelResolution resolution) {
-    // Get workspace bounds from voxel manager
+    // Get workspace bounds from voxel manager with centered coordinate system
     Math::BoundingBox workspaceBounds;
     if (m_voxelManager) {
         Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+        // Use centered coordinate system: X,Z centered [-size/2, size/2], Y from [0, size]
         workspaceBounds = Math::BoundingBox(
-            Math::Vector3f(0.0f, 0.0f, 0.0f),
-            workspaceSize
+            Math::Vector3f(-workspaceSize.x/2, 0.0f, -workspaceSize.z/2),
+            Math::Vector3f(workspaceSize.x/2, workspaceSize.y, workspaceSize.z/2)
         );
     } else {
-        // Default workspace bounds if no manager
+        // Default workspace bounds if no manager (5m workspace)
         workspaceBounds = Math::BoundingBox(
-            Math::Vector3f(-5.0f, -5.0f, -5.0f),
-            Math::Vector3f(5.0f, 5.0f, 5.0f)
+            Math::Vector3f(-2.5f, 0.0f, -2.5f),
+            Math::Vector3f(2.5f, 5.0f, 2.5f)
         );
     }
     
@@ -211,6 +217,7 @@ bool BoxSelector::isVoxelInBox(const VoxelId& voxel, const Math::BoundingBox& bo
 bool BoxSelector::voxelExists(const VoxelId& voxel) const {
     if (!m_voxelManager) return true; // For testing: assume all voxels exist when no manager
     
+    // VoxelId.position is already IncrementCoordinates, so no conversion needed
     return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 

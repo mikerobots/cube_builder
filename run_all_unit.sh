@@ -3,6 +3,8 @@
 # Voxel Editor - Run All Unit Tests Only
 # This script runs ONLY unit tests (Google Test) across all core subsystems
 # Excludes integration tests, CLI tests, and visual validation tests
+# STOPS AT FIRST FAILURE
+# Automatically discovers all unit tests
 
 set -e  # Exit on any error
 
@@ -37,6 +39,7 @@ if [[ ! -f "CMakeLists.txt" ]] || [[ ! -f "ARCHITECTURE.md" ]]; then
 fi
 
 print_status "Starting Voxel Editor Unit Test Suite (Unit Tests Only)"
+print_warning "WILL STOP AT FIRST FAILURE"
 echo "========================================================="
 
 # Check if build directory exists
@@ -56,117 +59,114 @@ fi
 # Change to build directory
 cd build_ninja
 
-print_status "Running unit tests by subsystem..."
-echo
+print_status "Discovering unit tests..."
 
-# Track overall results
-FOUNDATION_FAILED=0
-CORE_FAILED=0
-TOTAL_FOUNDATION=0
-TOTAL_CORE=0
+# Get all test names and filter out integration tests, CLI tests, and visual tests
+ALL_TESTS=$(ctest -N 2>/dev/null | grep -E "Test\s+#" | awk '{print $3}' | sed 's/://g')
 
-# Foundation Layer Tests
-echo
-print_status "🏗️  FOUNDATION LAYER TESTS"
-echo "=================================="
-
-# Foundation subsystems
-FOUNDATION_SYSTEMS=("Math" "Memory" "Events" "Config" "Logging")
-
-for system in "${FOUNDATION_SYSTEMS[@]}"; do
-    echo
-    print_status "Testing Foundation/${system}..."
-    
-    # Convert to test name pattern
-    case $system in
-        "Math") pattern="Matrix4fTest|Vector3fTest" ;;
-        "Memory") pattern="MemoryPoolTest|MemoryTrackerTest|MemoryOptimizerTest" ;;
-        "Events") pattern="EventDispatcherTest" ;;
-        "Config") pattern="ConfigManagerTest|ConfigSectionTest|ConfigValueTest" ;;
-        "Logging") pattern="LoggerTest|PerformanceProfilerTest" ;;
-    esac
-    
-    if ctest -R "$pattern" --output-on-failure --timeout 60; then
-        print_success "✅ Foundation/${system} tests passed"
-    else
-        print_error "❌ Foundation/${system} tests failed"
-        FOUNDATION_FAILED=$((FOUNDATION_FAILED + 1))
-    fi
-    TOTAL_FOUNDATION=$((TOTAL_FOUNDATION + 1))
-done
-
-# Core Library Tests
-echo
-echo
-print_status "⚙️  CORE LIBRARY TESTS"
-echo "========================"
-
-# Core subsystems with their test patterns
-CORE_SYSTEMS=(
-    "Camera:CameraTest|OrbitCameraTest|ViewportTest|CameraControllerTest|ZoomFunctionalityTest|SetDistanceTest"
-    "VoxelData:VoxelTypesTest|SparseOctreeTest|VoxelGridTest|WorkspaceManagerTest|VoxelDataManagerTest|CollisionSimple|VoxelDataRequirementsTest"
-    "Selection:SelectionTypesTest|SelectionSetTest|SelectionManagerTest|BoxSelectorTest|SphereSelectorTest|FloodFillSelectorTest"
-    "Input:InputTypesTest|InputMappingTest|MouseHandlerTest|KeyboardHandlerTest|TouchHandlerTest|VRInputHandlerTest|ModifierKeyTrackingTest|PlacementValidationTest|SmartSnappingTest|PlaneDetectorTest"
-    "Groups:groups_unit_tests"
-    "FileIO:file_io_unit_tests"
-    "SurfaceGen:test_surface_gen"
-    "UndoRedo:test_undo_redo|test_simple_command|test_history_manager"
-    "Rendering:RenderTypesTest|RenderConfigTest|RenderSettingsTest|RenderStatsTest|RenderTimerTest|RenderStateTest"
-    "VisualFeedback:FeedbackTest|HighlightTest|OutlineTest|OverlayTest"
+# Define patterns to exclude (integration tests, CLI tests, visual validation)
+EXCLUDE_PATTERNS=(
+    "Integration"
+    "CLI" 
+    "ShaderVisualTest"
+    "CoreFunctionalityTest"
+    "MouseInteractionTest"
+    "VoxelPlacementTest"
+    "FileIOWorkflowTest"
+    "SelectionWorkflowTest"
+    "MultiResolutionSupportTest"
+    "CameraControlWorkflowTest"
+    "VoxelMeshGeneratorTest"
+    "SimpleValidationTest"
 )
 
-for entry in "${CORE_SYSTEMS[@]}"; do
-    system="${entry%%:*}"
-    pattern="${entry#*:}"
-    
-    echo
-    print_status "Testing Core/${system}..."
-    
-    if ctest -R "$pattern" --output-on-failure --timeout 60; then
-        print_success "✅ Core/${system} tests passed"
-    else
-        print_error "❌ Core/${system} tests failed"
-        CORE_FAILED=$((CORE_FAILED + 1))
+# Function to check if a test should be excluded
+should_exclude() {
+    local test_name="$1"
+    for pattern in "${EXCLUDE_PATTERNS[@]}"; do
+        if [[ "$test_name" == *"$pattern"* ]]; then
+            return 0  # Should exclude
+        fi
+    done
+    return 1  # Should include
+}
+
+# Filter tests to only include unit tests
+UNIT_TESTS=()
+while IFS= read -r test_name; do
+    if [[ -n "$test_name" ]] && ! should_exclude "$test_name"; then
+        UNIT_TESTS+=("$test_name")
     fi
-    TOTAL_CORE=$((TOTAL_CORE + 1))
+done <<< "$ALL_TESTS"
+
+print_status "Found ${#UNIT_TESTS[@]} unit tests to run"
+echo
+
+# Group tests by subsystem using simpler approach (compatible with older bash)
+# Create temp files to store test groups
+tmp_dir=$(mktemp -d)
+trap "rm -rf $tmp_dir" EXIT
+
+for test in "${UNIT_TESTS[@]}"; do
+    # Extract the test suite name (everything before the first dot)
+    if [[ "$test" =~ ^([^.]+)\. ]]; then
+        suite="${BASH_REMATCH[1]}"
+        echo "$test" >> "$tmp_dir/$suite"
+    else
+        # Handle tests without dots (like groups_unit_tests)
+        echo "$test" >> "$tmp_dir/$test"
+    fi
 done
 
-# Final Results
-echo
-echo
-print_status "📊 FINAL RESULTS"
-echo "=================="
+# Get sorted list of test suites
+test_suites=($(ls "$tmp_dir" | sort))
 
-if [[ $FOUNDATION_FAILED -eq 0 ]] && [[ $CORE_FAILED -eq 0 ]]; then
-    print_success "🎉 All unit tests passed!"
-    echo
-    print_status "Foundation Layer: ${TOTAL_FOUNDATION}/${TOTAL_FOUNDATION} subsystems passed"
-    print_status "Core Library: ${TOTAL_CORE}/${TOTAL_CORE} subsystems passed"
+print_status "Running tests by subsystem..."
+echo
+
+# Track progress
+total_suites=${#test_suites[@]}
+current_suite=0
+
+# Run each test suite
+for suite in "${test_suites[@]}"; do
+    ((current_suite++))
+    
+    # Read tests for this suite and create pattern
+    pattern=""
+    while IFS= read -r test_name; do
+        if [[ -z "$pattern" ]]; then
+            pattern="$test_name"
+        else
+            pattern="$pattern|$test_name"
+        fi
+    done < "$tmp_dir/$suite"
     
     echo
-    print_success "Unit test suite completed successfully!"
+    print_status "[$current_suite/$total_suites] Testing $suite..."
     
-else
-    echo
-    print_error "Some unit tests failed!"
-    echo
-    print_status "Foundation Layer: $((TOTAL_FOUNDATION - FOUNDATION_FAILED))/${TOTAL_FOUNDATION} subsystems passed"
-    print_status "Core Library: $((TOTAL_CORE - CORE_FAILED))/${TOTAL_CORE} subsystems passed"
-    echo
-    print_status "Failed subsystems:"
-    if [[ $FOUNDATION_FAILED -gt 0 ]]; then
-        echo "  Foundation: ${FOUNDATION_FAILED} subsystem(s)"
+    # Run tests for this suite
+    if ! ctest -R "^($pattern)$" --output-on-failure --timeout 60; then
+        print_error "❌ $suite tests FAILED"
+        print_error "STOPPING AT FIRST FAILURE as requested"
+        echo
+        print_status "To debug this failure:"
+        echo "  cd build_ninja && ctest -R '^($pattern)$' --output-on-failure --verbose"
+        echo
+        print_status "To run just the failing test:"
+        echo "  cd build_ninja && ctest -R '<specific_test_name>' --output-on-failure --verbose"
+        exit 1
     fi
-    if [[ $CORE_FAILED -gt 0 ]]; then
-        echo "  Core: ${CORE_FAILED} subsystem(s)"
-    fi
     
-    echo
-    print_status "To debug failures:"
-    echo "  cd build_ninja && ctest -R '<pattern>' --output-on-failure --verbose"
-    
-    exit 1
-fi
+    print_success "✅ $suite tests passed"
+done
+
+# If we get here, all tests passed!
+echo
+echo
+print_success "🎉 ALL UNIT TESTS PASSED!"
+echo "================================"
+print_status "All ${#UNIT_TESTS[@]} unit tests across ${total_suites} subsystems completed successfully"
 
 # Return to project root
 cd ..

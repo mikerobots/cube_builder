@@ -3,6 +3,7 @@
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Matrix4f.h"
 #include "../../foundation/math/MathUtils.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
 #include "../../foundation/logging/Logger.h"
@@ -37,27 +38,27 @@ public:
     virtual ~Camera() = default;
 
     // Camera positioning
-    virtual void setPosition(const Math::Vector3f& position) {
+    virtual void setPosition(const Math::WorldCoordinates& position) {
         if (m_position != position) {
             m_position = position;
             m_viewMatrixDirty = true;
             Logging::Logger::getInstance().debugfc("Camera", "Position changed to (%.3f, %.3f, %.3f)", 
-                position.x, position.y, position.z);
+                position.x(), position.y(), position.z());
             dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::POSITION);
         }
     }
 
-    virtual void setTarget(const Math::Vector3f& target) {
+    virtual void setTarget(const Math::WorldCoordinates& target) {
         if (m_target != target) {
             m_target = target;
             m_viewMatrixDirty = true;
             Logging::Logger::getInstance().debugfc("Camera", "Target changed to (%.3f, %.3f, %.3f)", 
-                target.x, target.y, target.z);
+                target.x(), target.y(), target.z());
             dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::POSITION);
         }
     }
 
-    virtual void setUp(const Math::Vector3f& up) {
+    virtual void setUp(const Math::WorldCoordinates& up) {
         if (m_up != up) {
             m_up = up;
             m_viewMatrixDirty = true;
@@ -111,9 +112,9 @@ public:
     }
 
     // Getters
-    const Math::Vector3f& getPosition() const { return m_position; }
-    const Math::Vector3f& getTarget() const { return m_target; }
-    const Math::Vector3f& getUp() const { return m_up; }
+    const Math::WorldCoordinates& getPosition() const { return m_position; }
+    const Math::WorldCoordinates& getTarget() const { return m_target; }
+    const Math::WorldCoordinates& getUp() const { return m_up; }
     float getFieldOfView() const { return m_fov; }
     float getAspectRatio() const { return m_aspectRatio; }
     float getNearPlane() const { return m_nearPlane; }
@@ -121,15 +122,18 @@ public:
 
     // Direction vectors
     Math::Vector3f getForward() const {
-        return (m_target - m_position).normalized();
+        return ((m_target - m_position).normalized()).value();
     }
 
     Math::Vector3f getRight() const {
-        return getForward().cross(m_up).normalized();
+        Math::WorldCoordinates forward(getForward());
+        return (forward.cross(m_up).normalized()).value();
     }
 
     Math::Vector3f getActualUp() const {
-        return getRight().cross(getForward()).normalized();
+        Math::WorldCoordinates right(getRight());
+        Math::WorldCoordinates forward(getForward());
+        return (right.cross(forward).normalized()).value();
     }
 
     // View presets
@@ -142,7 +146,7 @@ public:
 
 protected:
     void updateViewMatrix() const {
-        m_viewMatrix = Math::Matrix4f::lookAt(m_position, m_target, m_up);
+        m_viewMatrix = Math::Matrix4f::lookAt(m_position.value(), m_target.value(), m_up.value());
         Logging::Logger::getInstance().debug("View matrix updated", "Camera");
     }
 
@@ -161,9 +165,9 @@ protected:
 
     Events::EventDispatcher* m_eventDispatcher;
 
-    Math::Vector3f m_position;
-    Math::Vector3f m_target;
-    Math::Vector3f m_up;
+    Math::WorldCoordinates m_position;
+    Math::WorldCoordinates m_target;
+    Math::WorldCoordinates m_up;
 
     float m_fov;
     float m_nearPlane;

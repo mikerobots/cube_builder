@@ -133,7 +133,7 @@ TEST_F(VoxelFaceClickingTest, ClickOnDifferentFacesAddsVoxelsCorrectly) {
     ASSERT_NE(camera, nullptr);
     
     // View from front - click to add voxel on front face
-    camera->setTarget(Math::Vector3f(3.52f, 3.52f, 3.52f));  // Center of voxel at (5,5,5) with 64cm size
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(3.52f, 3.52f, 3.52f)));  // Center of voxel at (5,5,5) with 64cm size
     camera->setDistance(5.0f);
     camera->setOrbitAngles(0.0f, 0.0f);  // Front view
     
@@ -158,7 +158,7 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     // Position camera to see the voxel
     auto camera = dynamic_cast<Camera::OrbitCamera*>(cameraController->getCamera());
     ASSERT_NE(camera, nullptr);
-    camera->setTarget(Math::Vector3f(0.32f, 3.52f, 0.32f));  // Center of voxel at (0,5,0)
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.32f, 3.52f, 0.32f)));  // Center of voxel at (0,5,0)
     camera->setDistance(5.0f);
     
     app->updateVoxelMeshes();
@@ -184,7 +184,7 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
     EXPECT_EQ(countVoxels(), 1);
     
-    camera->setTarget(Math::Vector3f(0.32f, 0.32f, 0.32f));  // Center of voxel at (0,0,0)
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.32f, 0.32f, 0.32f)));  // Center of voxel at (0,0,0)
     app->updateVoxelMeshes();
     
     simulateClick(0.0f, 0.0f);
@@ -202,7 +202,7 @@ TEST_F(VoxelFaceClickingTest, ClosestVoxelIsSelected) {
     // Position camera so that (1,0,0) is closer than (0,0,0)
     auto camera = dynamic_cast<Camera::OrbitCamera*>(cameraController->getCamera());
     ASSERT_NE(camera, nullptr);
-    camera->setTarget(Math::Vector3f(0.96f, 0.32f, 0.32f));  // Center of voxel (1,0,0)
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.96f, 0.32f, 0.32f)));  // Center of voxel (1,0,0)
     camera->setDistance(3.0f);
     camera->setOrbitAngles(90.0f, 0.0f);  // Look from positive X direction
     

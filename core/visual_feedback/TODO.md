@@ -181,3 +181,87 @@ This subsystem renders visual cues and overlays including grid visualization, pr
 - Some advanced visualization features (compass, text, frustum) are stubs
 - Core functionality appears complete despite these TODOs
 - No critical bugs or hacks found
+
+## 🚨 CRITICAL: COORDINATE SYSTEM MIGRATION REQUIRED
+
+**IMPORTANT**: The foundation coordinate system has been simplified, but this subsystem still uses the old GridCoordinates system and needs immediate updating.
+
+### 📖 REQUIRED READING
+**BEFORE STARTING**: Read `/coordinate.md` in the root directory to understand the new simplified coordinate system.
+
+### 🎯 Migration Overview
+Update the Visual Feedback subsystem from the old GridCoordinates system to the new simplified coordinate system:
+- **OLD**: GridCoordinates with complex grid-to-world conversions
+- **NEW**: IncrementCoordinates (1cm granularity) for all voxel operations, centered at origin (0,0,0)
+
+### 📋 Migration Tasks (HIGH PRIORITY)
+
+#### Phase 1: Remove GridCoordinates Dependencies (✅ COMPLETED)
+- [x] **Update FaceDetector.h** - ✅ DONE: Replaced GridCoordinates with IncrementCoordinates in face detection
+- [x] **Update FeedbackTypes.h** - ✅ DONE: Replaced GridCoordinates with IncrementCoordinates in feedback structures  
+- [x] **Update all renderer headers** - ✅ CHECKED: No GridCoordinates found in other headers
+
+#### Phase 2: Update Implementation Files (✅ COMPLETED)
+- [x] **Update FaceDetector.cpp** - ✅ DONE: Updated face detection and ray intersection for IncrementCoordinates
+- [x] **Update FeedbackTypes.cpp** - ✅ DONE: Updated coordinate handling in feedback types
+- [x] **Update Other Renderer files** - ✅ CHECKED: No GridCoordinates references found in other source files
+
+#### Phase 3: Update Tests (🔄 BLOCKED - Selection Dependencies)
+- [ ] **TestFaceDetector.cpp** - ⚠️ BLOCKED: Compilation blocked by Selection subsystem GridCoordinates dependencies
+- [x] **TestFeedbackTypes.cpp** - ✅ DONE: Updated feedback type tests for IncrementCoordinates
+- [ ] **TestHighlightRenderer.cpp** - ⚠️ BLOCKED: Compilation blocked by Selection subsystem dependencies
+- [ ] **TestOutlineRenderer.cpp** - ⚠️ BLOCKED: Compilation blocked by Selection subsystem dependencies
+- [ ] **TestOverlayRenderer.cpp** - ⚠️ BLOCKED: Compilation blocked by Selection subsystem dependencies  
+- [ ] **TestFeedbackRenderer.cpp** - ⚠️ BLOCKED: Compilation blocked by Selection subsystem dependencies
+
+**NOTE**: Tests are blocked because Selection subsystem still uses GridCoordinates. The build fails with "no type named 'GridCoordinates'" errors from SelectionTypes.h. Selection subsystem migration must be completed first.
+
+#### Phase 4: Validation (🔄 BLOCKED - Dependencies)
+- [x] **Compile Check** - ✅ DONE: Visual Feedback source files compile without GridCoordinates errors
+- [ ] **Unit Tests** - ⚠️ BLOCKED: Build fails due to Groups/FileIO subsystem GridCoordinates dependencies
+- [ ] **Fix Issues** - ⚠️ BLOCKED: Cannot run tests until Groups and FileIO subsystems are migrated
+
+**BLOCKING DEPENDENCIES**: Groups subsystem (GroupTypes.h) and FileIO subsystem still use GridCoordinates, preventing successful builds.
+
+### 🔧 Key Code Changes Required
+
+```cpp
+// OLD - Remove all instances of:
+GridCoordinates gridPos;
+convertWorldToGrid();
+convertGridToWorld();
+#include "GridCoordinates.h"
+
+// NEW - Replace with:
+IncrementCoordinates voxelPos;
+CoordinateConverter::worldToIncrement();
+CoordinateConverter::incrementToWorld();
+#include "foundation/math/CoordinateConverter.h"
+```
+
+### 🎯 Visual Feedback-Specific Changes
+
+#### Face Detection Updates
+- Update `FaceDetector::detectFace()` to work with IncrementCoordinates
+- Ensure ray-voxel intersection uses centered coordinate system
+- Update face normal calculations for centered coordinates
+
+#### Grid Rendering Updates
+- Update `OverlayRenderer::generateGroundPlaneGridLines()` for centered grid
+- Ensure grid extends correctly in negative directions (X/Z)
+- Validate grid positioning with origin at (0,0,0)
+
+#### Preview and Highlight Updates
+- Update all preview positioning to use IncrementCoordinates
+- Ensure highlights work correctly with centered coordinate system
+- Update outline rendering for centered voxel positions
+
+### 🎯 Success Criteria
+- ✅ All GridCoordinates references removed
+- ✅ All visual feedback uses IncrementCoordinates
+- ✅ Grid rendering works with centered coordinate system
+- ✅ Face detection works with centered coordinates
+- ✅ All files compile without coordinate system errors
+- ✅ All VisualFeedback unit tests pass
+
+**PRIORITY**: HIGH - Visual feedback is critical for user interaction

@@ -194,7 +194,7 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
     // Set transform uniforms
     if (m_currentCamera) {
         // Build model matrix from transform
-        Math::Matrix4f modelMatrix = Math::Matrix4f::translation(transform.position);
+        Math::Matrix4f modelMatrix = Math::Matrix4f::translation(transform.position.value());
         
         // Apply rotations (Euler angles)
         if (transform.rotation.x != 0.0f) {
@@ -217,7 +217,7 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
         // Default light position above and to the side of the scene
         Math::Vector3f lightPos(5.0f, 10.0f, 5.0f);
         Math::Vector3f lightColor(1.0f, 1.0f, 1.0f);  // White light
-        Math::Vector3f viewPos = m_currentCamera->getPosition();
+        Math::Vector3f viewPos = m_currentCamera->getPosition().value();
         
         m_glRenderer->setUniform("lightPos", UniformValue(lightPos));
         m_glRenderer->setUniform("lightColor", UniformValue(lightColor));
@@ -230,12 +230,12 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
             const auto& proj = m_currentCamera->getProjectionMatrix();
             
             if (transformCount == 0) {
-                std::cout << "Camera target: " << m_currentCamera->getTarget().x << ", " 
-                          << m_currentCamera->getTarget().y << ", " 
-                          << m_currentCamera->getTarget().z << std::endl;
-                std::cout << "Camera position: " << m_currentCamera->getPosition().x << ", " 
-                          << m_currentCamera->getPosition().y << ", " 
-                          << m_currentCamera->getPosition().z << std::endl;
+                std::cout << "Camera target: " << m_currentCamera->getTarget().x() << ", " 
+                          << m_currentCamera->getTarget().y() << ", " 
+                          << m_currentCamera->getTarget().z() << std::endl;
+                std::cout << "Camera position: " << m_currentCamera->getPosition().x() << ", " 
+                          << m_currentCamera->getPosition().y() << ", " 
+                          << m_currentCamera->getPosition().z() << std::endl;
                           
                 // Print first row of view matrix
                 std::cout << "View matrix first row: " << view.m[0] << ", " << view.m[1] 
@@ -251,9 +251,9 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
                 float minX = 9999, maxX = -9999, minY = 9999, maxY = -9999;
                 
                 for (int i = 0; i < 3; i++) {
-                    Math::Vector4f testPos(mesh.vertices[i].position.x, 
-                                          mesh.vertices[i].position.y,
-                                          mesh.vertices[i].position.z, 1.0f);
+                    Math::Vector4f testPos(mesh.vertices[i].position.x(), 
+                                          mesh.vertices[i].position.y(),
+                                          mesh.vertices[i].position.z(), 1.0f);
                     
                     Math::Vector4f worldPos = modelMatrix * testPos;
                     Math::Vector4f viewPos = view * worldPos;
@@ -364,7 +364,7 @@ void RenderEngine::renderMeshAsLines(const Mesh& mesh, const Transform& transfor
     
     // Set up transform matrices
     Math::Matrix4f modelMatrix = Math::Matrix4f::Identity();
-    modelMatrix = modelMatrix * Math::Matrix4f::translation(transform.position);
+    modelMatrix = modelMatrix * Math::Matrix4f::translation(transform.position.value());
     // For simplicity, we'll skip rotation for lines - could be enhanced later
     // modelMatrix = modelMatrix * Math::Matrix4f::rotation(transform.rotation);
     modelMatrix = modelMatrix * Math::Matrix4f::scale(transform.scale);
@@ -376,7 +376,7 @@ void RenderEngine::renderMeshAsLines(const Mesh& mesh, const Transform& transfor
     // Set lighting uniforms for basic shader
     Math::Vector3f lightPos(5.0f, 10.0f, 5.0f);
     Math::Vector3f lightColor(1.0f, 1.0f, 1.0f);  // White light
-    Math::Vector3f viewPos = m_currentCamera->getPosition();
+    Math::Vector3f viewPos = m_currentCamera->getPosition().value();
     
     m_glRenderer->setUniform("lightPos", UniformValue(lightPos));
     m_glRenderer->setUniform("lightColor", UniformValue(lightColor));
@@ -1137,13 +1137,13 @@ void RenderEngine::updateGroundPlaneGridAnimation(float deltaTime) {
     }
 }
 
-void RenderEngine::renderGroundPlaneGrid(const Math::Vector3f& cursorWorldPos) {
+void RenderEngine::renderGroundPlaneGrid(const Math::WorldCoordinates& cursorWorldPos) {
     if (!m_groundPlaneGrid || !m_currentCamera) {
         return;
     }
     
     // Update cursor position for opacity calculations
-    m_groundPlaneGrid->setCursorPosition(cursorWorldPos);
+    m_groundPlaneGrid->setCursorPosition(cursorWorldPos.value());
     
     // Get camera matrices
     Math::Matrix4f viewMatrix = m_currentCamera->getViewMatrix();

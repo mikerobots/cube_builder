@@ -65,15 +65,16 @@ SelectionSet SphereSelector::selectFromRay(const Math::Ray& ray,
     Math::BoundingBox workspaceBounds;
     if (m_voxelManager) {
         Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
+        // Use centered coordinate system: X,Z centered [-size/2, size/2], Y from [0, size]
         workspaceBounds = Math::BoundingBox(
-            Math::Vector3f(0.0f, 0.0f, 0.0f),
-            workspaceSize
+            Math::Vector3f(-workspaceSize.x/2, 0.0f, -workspaceSize.z/2),
+            Math::Vector3f(workspaceSize.x/2, workspaceSize.y, workspaceSize.z/2)
         );
     } else {
-        // Default workspace bounds if no manager
+        // Default workspace bounds if no manager (5m workspace)
         workspaceBounds = Math::BoundingBox(
-            Math::Vector3f(-5.0f, -5.0f, -5.0f),
-            Math::Vector3f(5.0f, 5.0f, 5.0f)
+            Math::Vector3f(-2.5f, 0.0f, -2.5f),
+            Math::Vector3f(2.5f, 5.0f, 2.5f)
         );
     }
     
@@ -291,6 +292,7 @@ float SphereSelector::getVoxelWeight(const VoxelId& voxel, const Math::Vector3f&
 bool SphereSelector::voxelExists(const VoxelId& voxel) const {
     if (!m_voxelManager) return true; // For testing: assume all voxels exist when no manager
     
+    // VoxelId.position is already IncrementCoordinates, so no conversion needed
     return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 

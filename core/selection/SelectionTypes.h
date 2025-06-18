@@ -3,6 +3,8 @@
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/BoundingBox.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include "../voxel_data/VoxelTypes.h"
 #include "../rendering/RenderTypes.h"
 #include <functional>
@@ -17,13 +19,17 @@ class SelectionManager;
 
 // Unique identifier for a voxel
 struct VoxelId {
-    Math::Vector3i position;
+    Math::IncrementCoordinates position;
     VoxelData::VoxelResolution resolution;
     
-    VoxelId() : position(Math::Vector3i::Zero()), resolution(VoxelData::VoxelResolution::Size_1cm) {}
+    VoxelId() : position(Math::IncrementCoordinates(Math::Vector3i::Zero())), resolution(VoxelData::VoxelResolution::Size_1cm) {}
     
-    VoxelId(const Math::Vector3i& pos, VoxelData::VoxelResolution res)
+    VoxelId(const Math::IncrementCoordinates& pos, VoxelData::VoxelResolution res)
         : position(pos), resolution(res) {}
+    
+    // Backward compatibility constructor
+    VoxelId(const Math::Vector3i& pos, VoxelData::VoxelResolution res)
+        : position(Math::IncrementCoordinates(pos)), resolution(res) {}
     
     bool operator==(const VoxelId& other) const {
         return position == other.position && resolution == other.resolution;
@@ -37,15 +43,15 @@ struct VoxelId {
         if (resolution != other.resolution) {
             return static_cast<int>(resolution) < static_cast<int>(other.resolution);
         }
-        if (position.x != other.position.x) return position.x < other.position.x;
-        if (position.y != other.position.y) return position.y < other.position.y;
-        return position.z < other.position.z;
+        if (position.x() != other.position.x()) return position.x() < other.position.x();
+        if (position.y() != other.position.y()) return position.y() < other.position.y();
+        return position.z() < other.position.z();
     }
     
     size_t hash() const {
-        size_t h1 = std::hash<int>{}(position.x);
-        size_t h2 = std::hash<int>{}(position.y);
-        size_t h3 = std::hash<int>{}(position.z);
+        size_t h1 = std::hash<int>{}(position.x());
+        size_t h2 = std::hash<int>{}(position.y());
+        size_t h3 = std::hash<int>{}(position.z());
         size_t h4 = std::hash<int>{}(static_cast<int>(resolution));
         return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
     }

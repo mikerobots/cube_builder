@@ -25,9 +25,9 @@ public:
 class MockCamera : public Camera::Camera {
 public:
     MockCamera() : Camera::Camera() {
-        setPosition(Math::Vector3f(0.0f, 0.0f, 5.0f));
-        setTarget(Math::Vector3f(0.0f, 0.0f, 0.0f));
-        setUp(Math::Vector3f(0.0f, 1.0f, 0.0f));
+        setPosition(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 5.0f)));
+        setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f)));
+        setUp(Math::WorldCoordinates(Math::Vector3f(0.0f, 1.0f, 0.0f)));
         setFieldOfView(45.0f);
         setAspectRatio(1.0f);
         setNearFarPlanes(0.1f, 1000.0f);
@@ -36,13 +36,13 @@ public:
     void setViewPreset(::VoxelEditor::Camera::ViewPreset preset) override {
         switch(preset) {
             case ::VoxelEditor::Camera::ViewPreset::FRONT:
-                setPosition(Math::Vector3f(0.0f, 0.0f, 5.0f));
+                setPosition(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 5.0f)));
                 break;
             default:
-                setPosition(Math::Vector3f(0.0f, 0.0f, 5.0f));
+                setPosition(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 5.0f)));
                 break;
         }
-        setTarget(Math::Vector3f(0.0f, 0.0f, 0.0f));
+        setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f)));
     }
 };
 
@@ -395,13 +395,13 @@ TEST_F(RenderIncrementalTest, Test3_RenderTriangleKnownCoordinates) {
     material.albedo = Color(1.0f, 1.0f, 1.0f, 1.0f); // White
     
     Transform transform;
-    transform.position = Math::Vector3f(0.0f, 0.0f, 0.0f);
+    transform.position = Math::WorldCoordinates(0.0f, 0.0f, 0.0f);
     transform.rotation = Math::Vector3f(0.0f, 0.0f, 0.0f);
     transform.scale = Math::Vector3f(1.0f, 1.0f, 1.0f);
     
     // Log camera and transform info
-    Math::Vector3f camPos = camera->getPosition();
-    Math::Vector3f camTarget = camera->getTarget();
+    Math::Vector3f camPos = camera->getPosition().value();
+    Math::Vector3f camTarget = camera->getTarget().value();
     Logging::Logger::getInstance().debugfc("RenderTest", 
         "Camera pos: (%.3f,%.3f,%.3f), target: (%.3f,%.3f,%.3f)", 
         camPos.x, camPos.y, camPos.z, camTarget.x, camTarget.y, camTarget.z);
@@ -575,14 +575,14 @@ TEST_F(RenderIncrementalTest, Test5_RenderTriangleFullMVP) {
     transform.scale = Math::Vector3f(1.0f, 1.0f, 1.0f);
     
     // Log all matrices in the pipeline
-    Math::Matrix4f modelMatrix = Math::Matrix4f::translation(transform.position);
+    Math::Matrix4f modelMatrix = Math::Matrix4f::translation(transform.position.value());
     Math::Matrix4f viewMatrix = camera->getViewMatrix();
     Math::Matrix4f projectionMatrix = camera->getProjectionMatrix();
     Math::Matrix4f mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
     
     Logging::Logger::getInstance().debugfc("RenderTest", 
         "Model translation: (%.3f, %.3f, %.3f)", 
-        transform.position.x, transform.position.y, transform.position.z);
+        transform.position.x(), transform.position.y(), transform.position.z());
     
     // Test point transformation through full pipeline
     Math::Vector4f testPoint(v1.x, v1.y, v1.z, 1.0f);
@@ -711,7 +711,7 @@ TEST_F(RenderIncrementalTest, Test6_RenderVoxelAtOrigin) {
     
     // Position voxel at origin
     Transform transform;
-    transform.position = Math::Vector3f(0.0f, 0.0f, 0.0f);
+    transform.position = Math::WorldCoordinates(0.0f, 0.0f, 0.0f);
     transform.rotation = Math::Vector3f(0.0f, 0.0f, 0.0f);
     transform.scale = Math::Vector3f(1.0f, 1.0f, 1.0f);
     
@@ -808,7 +808,7 @@ TEST_F(RenderIncrementalTest, Test7_RenderVoxelAtPosition) {
     // Position voxel away from origin in a visible location
     Math::Vector3f voxelPosition(1.5f, 0.5f, -3.0f);
     Transform transform;
-    transform.position = voxelPosition;
+    transform.position = Math::WorldCoordinates(voxelPosition);
     transform.rotation = Math::Vector3f(15.0f, 30.0f, 0.0f); // Slight rotation for better visibility
     transform.scale = Math::Vector3f(1.2f, 1.2f, 1.2f);     // Slightly larger
     
@@ -818,8 +818,8 @@ TEST_F(RenderIncrementalTest, Test7_RenderVoxelAtPosition) {
         transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.scale.x);
     
     // Log camera info for debugging
-    Math::Vector3f camPos = camera->getPosition();
-    Math::Vector3f camTarget = camera->getTarget();
+    Math::Vector3f camPos = camera->getPosition().value();
+    Math::Vector3f camTarget = camera->getTarget().value();
     Logging::Logger::getInstance().debugfc("RenderTest", 
         "Camera: pos(%.3f,%.3f,%.3f) -> target(%.3f,%.3f,%.3f)", 
         camPos.x, camPos.y, camPos.z, camTarget.x, camTarget.y, camTarget.z);

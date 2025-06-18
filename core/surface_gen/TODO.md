@@ -1,5 +1,86 @@
 # Surface Generation Subsystem - Requirements Validation
 
+## 🚨 CRITICAL: COORDINATE SYSTEM MIGRATION REQUIRED
+
+**IMPORTANT**: The foundation coordinate system has been simplified, but this subsystem still uses the old GridCoordinates system and needs immediate updating.
+
+### 📖 REQUIRED READING
+**BEFORE STARTING**: Read `/coordinate.md` in the root directory to understand the new simplified coordinate system.
+
+### 🎯 Migration Overview
+Update the Surface Generation subsystem from the old GridCoordinates system to the new simplified coordinate system:
+- **OLD**: GridCoordinates with complex grid-to-world conversions
+- **NEW**: IncrementCoordinates (1cm granularity) for all voxel operations, centered at origin (0,0,0)
+
+### 📋 Migration Tasks (HIGH PRIORITY)
+
+#### Phase 1: Remove GridCoordinates Dependencies
+- [ ] **Update SurfaceTypes.h** - Replace GridCoordinates with IncrementCoordinates in surface structures
+- [ ] **Update DualContouring.h** - Use IncrementCoordinates for mesh generation
+- [ ] **Update MeshBuilder.h** - Use IncrementCoordinates for mesh vertex positioning
+- [ ] **Update SurfaceGenerator.h** - Remove GridCoordinates from surface generation interface
+
+#### Phase 2: Update Implementation Files
+- [ ] **Update SurfaceTypes.cpp** - Use IncrementCoordinates in surface data structures
+- [ ] **Update DualContouring.cpp** - Update dual contouring algorithm for centered coordinates
+- [ ] **Update MeshBuilder.cpp** - Use IncrementCoordinates for mesh construction
+- [ ] **Update SurfaceGenerator.cpp** - Update surface generation for centered coordinate system
+
+#### Phase 3: Update Tests
+- [ ] **TestSurfaceTypes.cpp** - Update surface type tests for IncrementCoordinates
+- [ ] **TestDualContouring.cpp** - Update dual contouring tests for centered coordinates
+- [ ] **TestMeshBuilder.cpp** - Update mesh builder tests for new coordinate system
+- [ ] **TestSurfaceGenerator.cpp** - Update surface generator tests for IncrementCoordinates
+
+#### Phase 4: Validation
+- [ ] **Compile Check** - Ensure all files compile without GridCoordinates errors
+- [ ] **Unit Tests** - Run `cd build_ninja && ctest -R "VoxelEditor_SurfaceGen_Tests"`
+- [ ] **Fix Issues** - Address any failing tests or compilation errors
+
+### 🔧 Key Code Changes Required
+
+```cpp
+// OLD - Remove all instances of:
+GridCoordinates gridPos;
+convertWorldToGrid();
+convertGridToWorld();
+#include "GridCoordinates.h"
+
+// NEW - Replace with:
+IncrementCoordinates voxelPos;
+CoordinateConverter::worldToIncrement();
+CoordinateConverter::incrementToWorld();
+#include "foundation/math/CoordinateConverter.h"
+```
+
+### 🎯 Surface Generation-Specific Changes
+
+#### Dual Contouring Updates
+- Update `DualContouring` to process voxels in IncrementCoordinates
+- Ensure vertex positioning works with centered coordinate system
+- Update edge intersection calculations for centered coordinates
+
+#### Mesh Builder Updates
+- Update `MeshBuilder` to generate mesh vertices using IncrementCoordinates
+- Ensure mesh transformations work with centered coordinate system
+- Update vertex deduplication for centered coordinates
+
+#### Surface Generator Updates
+- Update `SurfaceGenerator` to handle IncrementCoordinates input
+- Ensure surface generation works with centered coordinate system
+- Update LOD generation for centered coordinates
+
+### 🎯 Success Criteria
+- ✅ All GridCoordinates references removed
+- ✅ All surface generation uses IncrementCoordinates
+- ✅ Mesh generation works with centered coordinate system
+- ✅ All files compile without coordinate system errors
+- ✅ All SurfaceGen unit tests pass
+
+**PRIORITY**: MEDIUM - Surface generation is important for export functionality
+
+---
+
 ## Overview
 This subsystem handles mesh generation from voxel data for visualization and export purposes.
 **Total Requirements**: Not explicitly defined in requirements.md (internal subsystem)

@@ -5,6 +5,8 @@
 
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include "../voxel_data/VoxelTypes.h"
 
 namespace VoxelEditor {
@@ -19,7 +21,7 @@ namespace Input {
 // Represents a placement plane at a specific height
 struct PlacementPlane {
     float height;                           // World Y coordinate of the plane
-    Math::Vector3i referenceVoxel;         // Position of voxel that defines this plane
+    Math::IncrementCoordinates referenceVoxel; // Position of voxel that defines this plane
     VoxelData::VoxelResolution resolution; // Resolution of the reference voxel
     bool isGroundPlane;                    // True if this is the ground plane (Y=0)
     
@@ -29,7 +31,7 @@ struct PlacementPlane {
         , resolution(VoxelData::VoxelResolution::Size_1cm)
         , isGroundPlane(true) {}
         
-    PlacementPlane(float h, const Math::Vector3i& refVoxel, VoxelData::VoxelResolution res)
+    PlacementPlane(float h, const Math::IncrementCoordinates& refVoxel, VoxelData::VoxelResolution res)
         : height(h)
         , referenceVoxel(refVoxel)
         , resolution(res)
@@ -37,7 +39,7 @@ struct PlacementPlane {
         
     // Create ground plane
     static PlacementPlane GroundPlane() {
-        return PlacementPlane(0.0f, Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm);
+        return PlacementPlane(0.0f, Math::IncrementCoordinates(0, 0, 0), VoxelData::VoxelResolution::Size_1cm);
     }
     
     bool operator==(const PlacementPlane& other) const {
@@ -70,7 +72,7 @@ struct PlaneDetectionContext {
 struct PlaneDetectionResult {
     bool found;                            // True if a valid plane was found
     PlacementPlane plane;                  // The detected plane
-    std::vector<Math::Vector3i> voxelsOnPlane; // Voxels found on this plane
+    std::vector<Math::IncrementCoordinates> voxelsOnPlane; // Voxels found on this plane
     float distanceFromRay;                 // Distance from ray origin to plane
     
     PlaneDetectionResult() : found(false), distanceFromRay(0.0f) {}
@@ -102,10 +104,10 @@ class PlaneDetector {
 public:
     // Structure to track voxel with its resolution
     struct VoxelInfo {
-        Math::Vector3i position;
+        Math::IncrementCoordinates position;
         VoxelData::VoxelResolution resolution;
         
-        VoxelInfo(const Math::Vector3i& pos, VoxelData::VoxelResolution res)
+        VoxelInfo(const Math::IncrementCoordinates& pos, VoxelData::VoxelResolution res)
             : position(pos), resolution(res) {}
     };
     explicit PlaneDetector(VoxelData::VoxelDataManager* voxelManager);
@@ -127,12 +129,12 @@ public:
     std::optional<PlacementPlane> getCurrentPlane() const { return m_currentPlane; }
     
     // Update plane persistence based on preview position
-    void updatePlanePersistence(const Math::Vector3i& previewPosition, 
+    void updatePlanePersistence(const Math::IncrementCoordinates& previewPosition, 
                                VoxelData::VoxelResolution previewResolution,
                                float deltaTime);
     
     // Check if preview overlaps any voxels on current plane
-    bool previewOverlapsCurrentPlane(const Math::Vector3i& previewPosition,
+    bool previewOverlapsCurrentPlane(const Math::IncrementCoordinates& previewPosition,
                                    VoxelData::VoxelResolution previewResolution) const;
     
     // Force set the current plane (for external control)
@@ -145,10 +147,10 @@ public:
     bool shouldTransitionToNewPlane(const PlaneDetectionResult& newPlaneResult) const;
     
     // Get all voxels at a specific height
-    std::vector<Math::Vector3i> getVoxelsAtHeight(float height, float tolerance = 0.001f) const;
+    std::vector<Math::IncrementCoordinates> getVoxelsAtHeight(float height, float tolerance = 0.001f) const;
     
     // Calculate the top face height of a voxel
-    float calculateVoxelTopHeight(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution resolution) const;
+    float calculateVoxelTopHeight(const Math::IncrementCoordinates& voxelPos, VoxelData::VoxelResolution resolution) const;
     
     // Reset to initial state
     void reset();
@@ -167,26 +169,23 @@ private:
     static constexpr float DEFAULT_SEARCH_RADIUS = 5.0f;     // Default radius for area searches
     
     // Search for voxels in a cylindrical area under the cursor
-    std::vector<Math::Vector3i> searchVoxelsInCylinder(const Math::Vector3f& centerPos, 
+    std::vector<Math::IncrementCoordinates> searchVoxelsInCylinder(const Math::Vector3f& centerPos, 
                                                       float radius, 
                                                       float minHeight, 
                                                       float maxHeight) const;
     
     // Find the highest voxel from a collection
-    std::optional<Math::Vector3i> findHighestVoxel(const std::vector<Math::Vector3i>& voxels) const;
+    std::optional<Math::IncrementCoordinates> findHighestVoxel(const std::vector<Math::IncrementCoordinates>& voxels) const;
     
     // Check if a larger voxel would overlap smaller voxels at a position
-    bool wouldLargerVoxelOverlapSmaller(const Math::Vector3i& position,
+    bool wouldLargerVoxelOverlapSmaller(const Math::IncrementCoordinates& position,
                                        VoxelData::VoxelResolution largerResolution) const;
     
     // Get all resolutions to check for conflicts
     std::vector<VoxelData::VoxelResolution> getAllResolutions() const;
     
-    // Convert world position to grid coordinate for a specific resolution
-    Math::Vector3i worldToGrid(const Math::Vector3f& worldPos, VoxelData::VoxelResolution resolution) const;
-    
-    // Convert grid coordinate to world position for a specific resolution  
-    Math::Vector3f gridToWorld(const Math::Vector3i& gridPos, VoxelData::VoxelResolution resolution) const;
+    // Note: These conversion methods are now handled by CoordinateConverter
+    // Use Math::CoordinateConverter::worldToIncrement() and incrementToWorld() instead
 };
 
 }

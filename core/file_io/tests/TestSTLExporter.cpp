@@ -275,7 +275,7 @@ TEST_F(STLExporterTest, ExportMultipleMeshesWithMerge) {
     
     // Translate second mesh
     for (auto& vertex : mesh2.vertices) {
-        vertex.position.x += 2.0f;
+        vertex.position.x() += 2.0f;
     }
     
     std::vector<Rendering::Mesh> meshes = {mesh1, mesh2};

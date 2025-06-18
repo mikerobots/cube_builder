@@ -73,19 +73,19 @@ protected:
         
         Logging::Logger::getInstance().debugfc("ClickTest",
             "Face detected at grid position (%d,%d,%d) with direction %d",
-            face.getVoxelPosition().x, face.getVoxelPosition().y, face.getVoxelPosition().z,
+            face.getVoxelPosition().x(), face.getVoxelPosition().y(), face.getVoxelPosition().z(),
             static_cast<int>(face.getDirection()));
         
         // 2. Calculate placement position using FaceDetector's method
         VisualFeedback::FaceDetector placementDetector;
-        Math::Vector3i placementPos = placementDetector.calculatePlacementPosition(face);
+        Math::GridCoordinates placementPos = placementDetector.calculatePlacementPosition(face);
         
         // 3. Convert grid position back to increment coordinates for VoxelEditCommand
         // The placement position from FaceDetector is in grid coordinates,
         // but VoxelEditCommand expects increment coordinates
-        Math::Vector3f worldPos = grid->gridToWorld(placementPos);
+        Math::WorldCoordinates worldPos = grid->gridToWorld(placementPos);
         float voxelSize = VoxelData::getVoxelSize(voxelManager->getActiveResolution());
-        Math::Vector3f voxelCenter = worldPos + Math::Vector3f(voxelSize * 0.5f);
+        Math::Vector3f voxelCenter = worldPos.value() + Math::Vector3f(voxelSize * 0.5f);
         
         // Convert world position to increment coordinates (1cm grid)
         const float INCREMENT_SIZE = 0.01f;

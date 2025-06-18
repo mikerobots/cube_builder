@@ -28,7 +28,7 @@ public:
         , m_targetDistance(5.0f)
         , m_targetYaw(0.0f)
         , m_targetPitch(0.0f)
-        , m_targetTarget(0.0f, 0.0f, 0.0f) {
+        , m_targetTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f))) {
         updateCameraPosition();
     }
 
@@ -71,7 +71,7 @@ public:
         Math::Vector3f right = getRight();
         Math::Vector3f up = getActualUp();
         
-        Math::Vector3f panOffset = (right * delta.x + up * delta.y) * m_panSensitivity;
+        Math::WorldCoordinates panOffset((right * delta.x + up * delta.y) * m_panSensitivity);
         
         if (m_smoothing) {
             m_targetTarget = m_target + panOffset;
@@ -182,7 +182,7 @@ public:
     }
 
     // Focus on a point
-    void focusOn(const Math::Vector3f& point, float optimalDistance = -1.0f) {
+    void focusOn(const Math::WorldCoordinates& point, float optimalDistance = -1.0f) {
         if (optimalDistance > 0.0f) {
             optimalDistance = Math::clamp(optimalDistance, m_minDistance, m_maxDistance);
         } else {
@@ -199,9 +199,9 @@ public:
     }
 
     // Frame a bounding box
-    void frameBox(const Math::Vector3f& minBounds, const Math::Vector3f& maxBounds) {
-        Math::Vector3f center = (minBounds + maxBounds) * 0.5f;
-        Math::Vector3f size = maxBounds - minBounds;
+    void frameBox(const Math::WorldCoordinates& minBounds, const Math::WorldCoordinates& maxBounds) {
+        Math::WorldCoordinates center = (minBounds + maxBounds) * 0.5f;
+        Math::Vector3f size = (maxBounds - minBounds).value();
         float maxDimension = std::max({size.x, size.y, size.z});
         
         // Calculate distance to frame the entire box
@@ -229,7 +229,7 @@ public:
     float getSmoothFactor() const { return m_smoothFactor; }
 
     // Override setTarget to update internal state
-    void setTarget(const Math::Vector3f& target) override {
+    void setTarget(const Math::WorldCoordinates& target) override {
         Camera::setTarget(target);
         updateCameraPosition();
     }
@@ -250,7 +250,7 @@ private:
             cosYaw * cosPitch
         );
         
-        Math::Vector3f newPosition = m_target + offset * m_distance;
+        Math::WorldCoordinates newPosition = m_target + Math::WorldCoordinates(offset * m_distance);
         Camera::setPosition(newPosition);
     }
 
@@ -278,9 +278,9 @@ private:
         }
         
         // Smooth target position
-        Math::Vector3f targetDelta = m_targetTarget - m_target;
+        Math::WorldCoordinates targetDelta = m_targetTarget - m_target;
         if (targetDelta.length() > 0.001f) {
-            Math::Vector3f newTarget = m_target + targetDelta * lerpFactor;
+            Math::WorldCoordinates newTarget = m_target + Math::WorldCoordinates(targetDelta.value() * lerpFactor);
             Camera::setTarget(newTarget);
             changed = true;
         }
@@ -310,7 +310,7 @@ private:
     float m_targetDistance = 0.0f;
     float m_targetYaw = 0.0f;
     float m_targetPitch = 0.0f;
-    Math::Vector3f m_targetTarget{0.0f, 0.0f, 0.0f};
+    Math::WorldCoordinates m_targetTarget{Math::Vector3f(0.0f, 0.0f, 0.0f)};
 };
 
 }

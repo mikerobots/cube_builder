@@ -111,17 +111,17 @@ TEST_F(SetDistanceTest, UpdatesCameraPosition) {
     
     // At yaw=0, pitch=0, camera should be along positive Z axis
     camera->setDistance(10.0f);
-    Vector3f pos = camera->getPosition();
-    EXPECT_NEAR(pos.x, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.y, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.z, 10.0f, 0.001f);
+    WorldCoordinates pos = camera->getPosition();
+    EXPECT_NEAR(pos.x(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.y(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.z(), 10.0f, 0.001f);
     
     // Change distance
     camera->setDistance(5.0f);
     pos = camera->getPosition();
-    EXPECT_NEAR(pos.x, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.y, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.z, 5.0f, 0.001f);
+    EXPECT_NEAR(pos.x(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.y(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.z(), 5.0f, 0.001f);
 }
 
 // Test setDistance with different camera orientations
@@ -131,17 +131,17 @@ TEST_F(SetDistanceTest, WithDifferentOrientations) {
     camera->setPitch(0.0f);
     camera->setDistance(10.0f);
     
-    Vector3f pos = camera->getPosition();
-    EXPECT_NEAR(pos.x, 10.0f, 0.001f);
-    EXPECT_NEAR(pos.y, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.z, 0.0f, 0.001f);
+    WorldCoordinates pos = camera->getPosition();
+    EXPECT_NEAR(pos.x(), 10.0f, 0.001f);
+    EXPECT_NEAR(pos.y(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.z(), 0.0f, 0.001f);
     
     // Change distance with same orientation
     camera->setDistance(5.0f);
     pos = camera->getPosition();
-    EXPECT_NEAR(pos.x, 5.0f, 0.001f);
-    EXPECT_NEAR(pos.y, 0.0f, 0.001f);
-    EXPECT_NEAR(pos.z, 0.0f, 0.001f);
+    EXPECT_NEAR(pos.x(), 5.0f, 0.001f);
+    EXPECT_NEAR(pos.y(), 0.0f, 0.001f);
+    EXPECT_NEAR(pos.z(), 0.0f, 0.001f);
 }
 
 // Test rapid setDistance calls
@@ -160,11 +160,11 @@ TEST_F(SetDistanceTest, PreservesOtherProperties) {
     // Set specific camera state
     camera->setYaw(45.0f);
     camera->setPitch(30.0f);
-    camera->setTarget(Vector3f(1.0f, 2.0f, 3.0f));
+    camera->setTarget(WorldCoordinates(1.0f, 2.0f, 3.0f));
     
     float originalYaw = camera->getYaw();
     float originalPitch = camera->getPitch();
-    Vector3f originalTarget = camera->getTarget();
+    WorldCoordinates originalTarget = camera->getTarget();
     
     // Change distance
     camera->setDistance(15.0f);

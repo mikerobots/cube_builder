@@ -24,9 +24,9 @@ TEST(MeshTest, IsValid) {
     EXPECT_TRUE(mesh.isValid());
     
     // Add vertices only - still valid
-    mesh.vertices.push_back(Vector3f(0, 0, 0));
-    mesh.vertices.push_back(Vector3f(1, 0, 0));
-    mesh.vertices.push_back(Vector3f(0, 1, 0));
+    mesh.vertices.push_back(WorldCoordinates(Vector3f(0, 0, 0)));
+    mesh.vertices.push_back(WorldCoordinates(Vector3f(1, 0, 0)));
+    mesh.vertices.push_back(WorldCoordinates(Vector3f(0, 1, 0)));
     EXPECT_TRUE(mesh.isValid());
     
     // Add indices
@@ -50,7 +50,7 @@ TEST(MeshTest, Clear) {
     Mesh mesh;
     
     // Add data
-    mesh.vertices = {Vector3f(0, 0, 0), Vector3f(1, 0, 0)};
+    mesh.vertices = {WorldCoordinates(Vector3f(0, 0, 0)), WorldCoordinates(Vector3f(1, 0, 0))};
     mesh.normals = {Vector3f(0, 0, 1), Vector3f(0, 0, 1)};
     mesh.uvCoords = {Vector2f(0, 0), Vector2f(1, 0)};
     mesh.indices = {0, 1, 0};
@@ -95,9 +95,9 @@ TEST(MeshTest, Transform) {
     
     // Create simple triangle
     mesh.vertices = {
-        Vector3f(0, 0, 0),
-        Vector3f(1, 0, 0),
-        Vector3f(0, 1, 0)
+        WorldCoordinates(Vector3f(0, 0, 0)),
+        WorldCoordinates(Vector3f(1, 0, 0)),
+        WorldCoordinates(Vector3f(0, 1, 0))
     };
     mesh.normals = {
         Vector3f(0, 0, 1),
@@ -111,9 +111,9 @@ TEST(MeshTest, Transform) {
     mesh.transform(translation);
     
     // Check vertices are translated
-    EXPECT_EQ(mesh.vertices[0], Vector3f(2, 3, 4));
-    EXPECT_EQ(mesh.vertices[1], Vector3f(3, 3, 4));
-    EXPECT_EQ(mesh.vertices[2], Vector3f(2, 4, 4));
+    EXPECT_EQ(mesh.vertices[0], WorldCoordinates(Vector3f(2, 3, 4)));
+    EXPECT_EQ(mesh.vertices[1], WorldCoordinates(Vector3f(3, 3, 4)));
+    EXPECT_EQ(mesh.vertices[2], WorldCoordinates(Vector3f(2, 4, 4)));
     
     // Normals should not be translated
     EXPECT_EQ(mesh.normals[0], Vector3f(0, 0, 1));

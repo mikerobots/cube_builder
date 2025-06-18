@@ -4,6 +4,7 @@
 #include "../voxel_data/VoxelGrid.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include "../../foundation/logging/Logger.h"
 #include <vector>
 #include <unordered_map>
@@ -31,21 +32,21 @@ public:
 private:
     // Edge directions
     static constexpr int EDGE_COUNT = 12;
-    static const std::array<Math::Vector3i, EDGE_COUNT> EDGE_VERTICES;
-    static const std::array<Math::Vector3i, EDGE_COUNT> EDGE_DIRECTIONS;
+    static const std::array<Math::IncrementCoordinates, EDGE_COUNT> EDGE_VERTICES;
+    static const std::array<Math::IncrementCoordinates, EDGE_COUNT> EDGE_DIRECTIONS;
     
     // Cube vertex offsets
-    static const std::array<Math::Vector3i, 8> CUBE_VERTICES;
+    static const std::array<Math::IncrementCoordinates, 8> CUBE_VERTICES;
     
     // Face data for quad generation
     static const std::array<std::array<int, 4>, 6> FACE_EDGES;
-    static const std::array<Math::Vector3i, 6> FACE_NORMALS;
+    static const std::array<Math::IncrementCoordinates, 6> FACE_NORMALS;
     
     // Internal structures
     struct CellData {
-        Math::Vector3i position;
+        Math::IncrementCoordinates position;
         std::array<HermiteData, EDGE_COUNT> edges;
-        Math::Vector3f vertex;
+        Math::WorldCoordinates vertex;  // Mesh vertex in world coordinates
         uint32_t vertexIndex;
         bool hasVertex;
         
@@ -57,22 +58,22 @@ private:
         const VoxelData::VoxelGrid* grid;
         float isoValue;
         
-        float sample(const Math::Vector3i& pos) const;
-        bool isInside(const Math::Vector3i& pos) const;
-        Math::Vector3f gradient(const Math::Vector3i& pos) const;
+        float sample(const Math::IncrementCoordinates& pos) const;
+        bool isInside(const Math::IncrementCoordinates& pos) const;
+        Math::Vector3f gradient(const Math::IncrementCoordinates& pos) const;
     };
     
     // QEF (Quadratic Error Function) solver
     struct QEFSolver {
-        std::vector<Math::Vector3f> positions;
+        std::vector<Math::WorldCoordinates> positions;
         std::vector<Math::Vector3f> normals;
         
-        void add(const Math::Vector3f& pos, const Math::Vector3f& normal);
-        Math::Vector3f solve() const;
+        void add(const Math::WorldCoordinates& pos, const Math::Vector3f& normal);
+        Math::WorldCoordinates solve() const;
         void clear();
         
     private:
-        Math::Vector3f computeMassPoint() const;
+        Math::WorldCoordinates computeMassPoint() const;
         bool solveSystem(float ATA[6], float ATb[3], float x[3]) const;
     };
     
@@ -84,7 +85,7 @@ private:
     
     // Working data
     std::unordered_map<uint64_t, CellData> m_cellData;
-    std::vector<Math::Vector3f> m_vertices;
+    std::vector<Math::WorldCoordinates> m_vertices;
     std::vector<uint32_t> m_indices;
     const VoxelData::VoxelGrid* m_currentGrid;
     
@@ -94,24 +95,24 @@ private:
     void generateQuads();
     
     // Edge processing
-    bool findEdgeIntersection(const Math::Vector3i& v0, const Math::Vector3i& v1, 
+    bool findEdgeIntersection(const Math::IncrementCoordinates& v0, const Math::IncrementCoordinates& v1, 
                              HermiteData& hermite);
-    Math::Vector3f interpolateEdge(float val0, float val1, 
-                                  const Math::Vector3f& p0, const Math::Vector3f& p1);
+    Math::WorldCoordinates interpolateEdge(float val0, float val1, 
+                                          const Math::WorldCoordinates& p0, const Math::WorldCoordinates& p1);
     
     // Vertex generation
     void generateCellVertex(CellData& cell);
     bool shouldGenerateVertex(const CellData& cell) const;
     
     // Quad generation
-    void generateFaceQuad(const Math::Vector3i& base, int faceIndex);
-    bool canGenerateQuad(const Math::Vector3i& v0, const Math::Vector3i& v1,
-                        const Math::Vector3i& v2, const Math::Vector3i& v3) const;
+    void generateFaceQuad(const Math::IncrementCoordinates& base, int faceIndex);
+    bool canGenerateQuad(const Math::IncrementCoordinates& v0, const Math::IncrementCoordinates& v1,
+                        const Math::IncrementCoordinates& v2, const Math::IncrementCoordinates& v3) const;
     
     // Utility functions
-    uint64_t cellKey(const Math::Vector3i& pos) const;
-    CellData* getCell(const Math::Vector3i& pos);
-    const CellData* getCell(const Math::Vector3i& pos) const;
+    uint64_t cellKey(const Math::IncrementCoordinates& pos) const;
+    CellData* getCell(const Math::IncrementCoordinates& pos);
+    const CellData* getCell(const Math::IncrementCoordinates& pos) const;
     
     // Progress reporting
     void reportProgress(float progress);

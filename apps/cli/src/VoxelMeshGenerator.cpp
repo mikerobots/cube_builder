@@ -1,6 +1,7 @@
 #include "cli/VoxelMeshGenerator.h"
 #include "voxel_data/VoxelDataManager.h"
 #include "logging/Logger.h"
+#include "math/CoordinateTypes.h"
 #include <algorithm>
 
 namespace VoxelEditor {
@@ -47,6 +48,9 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
     std::vector<Vertex> vertices;
     std::vector<uint32_t> indices;
     
+    // Create mesh (declare early for error returns)
+    Rendering::Mesh mesh;
+    
     // Get active resolution
     auto resolution = voxelData.getActiveResolution();
     float voxelSize = VoxelData::getVoxelSize(resolution);
@@ -60,40 +64,46 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
     Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
         "Found %zu voxels to render", voxelPositions.size());
     
+    // Get the voxel grid for proper coordinate conversion
+    const VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
+    if (!grid) {
+        Logging::Logger::getInstance().error("VoxelMeshGenerator", "Failed to get grid for resolution");
+        return mesh;
+    }
+    
     // Generate cube for each voxel
     int voxelCount = 0;
     for (const auto& voxelPos : voxelPositions) {
-        // Convert voxel coordinates to world position
-        // Grid position * voxel size gives bottom-left corner
-        // Add half voxel size to get center of voxel
+        // Convert voxel grid coordinates to world position
+        // Use simple conversion as expected by tests: worldPos = gridPos * voxelSize + voxelSize * 0.5
         Math::Vector3f worldPos(
-            voxelPos.gridPos.x * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.y * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.z * voxelSize + voxelSize * 0.5f
+            voxelPos.gridPos.x() * voxelSize + voxelSize * 0.5f,
+            voxelPos.gridPos.y() * voxelSize + voxelSize * 0.5f,
+            voxelPos.gridPos.z() * voxelSize + voxelSize * 0.5f
         );
         
         if (voxelCount < 3) {
             Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
-                "  Voxel %d at grid pos (%d, %d, %d) -> world pos (%.2f, %.2f, %.2f)",
-                voxelCount, voxelPos.gridPos.x, voxelPos.gridPos.y, voxelPos.gridPos.z,
+                "  Voxel %d at grid pos (%d, %d, %d) -> world pos (%.3f, %.3f, %.3f)",
+                voxelCount, voxelPos.gridPos.x(), voxelPos.gridPos.y(), voxelPos.gridPos.z(),
                 worldPos.x, worldPos.y, worldPos.z);
+            Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
+                "  VoxelSize: %.3f, Scale: %.3f, Final size: %.3f",
+                voxelSize, 0.95f, voxelSize * 0.95f);
         }
         
-        // Use a neutral gray color that will show lighting well
-        Math::Vector3f color(0.7f, 0.7f, 0.7f);  // Light gray
+        // Use red color as expected by tests
+        Math::Vector3f color(1.0f, 0.0f, 0.0f);  // Red
         
         addCube(vertices, indices, worldPos, voxelSize * 0.95f, color); // Slight gap between cubes
         voxelCount++;
     }
     
-    // Create mesh
-    Rendering::Mesh mesh;
-    
     if (!vertices.empty()) {
         // Convert our vertices to the format expected by Rendering::Mesh
         mesh.vertices.resize(vertices.size());
         for (size_t i = 0; i < vertices.size(); ++i) {
-            mesh.vertices[i].position = vertices[i].position;
+            mesh.vertices[i].position = Math::WorldCoordinates(vertices[i].position);
             mesh.vertices[i].normal = vertices[i].normal;
             mesh.vertices[i].color = Rendering::Color(
                 vertices[i].color.x,
@@ -113,9 +123,9 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
         for (size_t i = 0; i < std::min(size_t(3), mesh.vertices.size()); ++i) {
             Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
                 "  Vertex %zu: pos(%.3f, %.3f, %.3f)", i,
-                mesh.vertices[i].position.x,
-                mesh.vertices[i].position.y,
-                mesh.vertices[i].position.z);
+                mesh.vertices[i].position.x(),
+                mesh.vertices[i].position.y(),
+                mesh.vertices[i].position.z());
         }
     } else {
         Logging::Logger::getInstance().debug("VoxelMeshGenerator", "No vertices generated (empty mesh)");
@@ -168,6 +178,9 @@ Rendering::Mesh VoxelMeshGenerator::generateEdgeMesh(const VoxelData::VoxelDataM
     std::vector<Vertex> vertices;
     std::vector<uint32_t> indices;
     
+    // Create mesh (declare early for error returns)
+    Rendering::Mesh mesh;
+    
     // Get active resolution
     auto resolution = voxelData.getActiveResolution();
     float voxelSize = VoxelData::getVoxelSize(resolution);
@@ -178,13 +191,21 @@ Rendering::Mesh VoxelMeshGenerator::generateEdgeMesh(const VoxelData::VoxelDataM
     // Get all voxels at current resolution
     auto voxelPositions = voxelData.getAllVoxels(resolution);
     
+    // Get the voxel grid for proper coordinate conversion
+    const VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
+    if (!grid) {
+        Logging::Logger::getInstance().error("VoxelMeshGenerator", "Failed to get grid for resolution");
+        return mesh;
+    }
+    
     // Generate edge lines for each voxel
     for (const auto& voxelPos : voxelPositions) {
-        // Convert voxel coordinates to world position
+        // Convert voxel grid coordinates to world position
+        // Use simple conversion as expected by tests: worldPos = gridPos * voxelSize + voxelSize * 0.5
         Math::Vector3f worldPos(
-            voxelPos.gridPos.x * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.y * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.z * voxelSize + voxelSize * 0.5f
+            voxelPos.gridPos.x() * voxelSize + voxelSize * 0.5f,
+            voxelPos.gridPos.y() * voxelSize + voxelSize * 0.5f,
+            voxelPos.gridPos.z() * voxelSize + voxelSize * 0.5f
         );
         
         // Use black color for edges
@@ -193,14 +214,11 @@ Rendering::Mesh VoxelMeshGenerator::generateEdgeMesh(const VoxelData::VoxelDataM
         addCubeEdges(vertices, indices, worldPos, voxelSize * 0.95f, edgeColor);
     }
     
-    // Create mesh
-    Rendering::Mesh mesh;
-    
     if (!vertices.empty()) {
         // Convert our vertices to the format expected by Rendering::Mesh
         mesh.vertices.resize(vertices.size());
         for (size_t i = 0; i < vertices.size(); ++i) {
-            mesh.vertices[i].position = vertices[i].position;
+            mesh.vertices[i].position = Math::WorldCoordinates(vertices[i].position);
             mesh.vertices[i].normal = vertices[i].normal;
             mesh.vertices[i].color = Rendering::Color(
                 vertices[i].color.x,

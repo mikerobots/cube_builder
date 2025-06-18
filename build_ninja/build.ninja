@@ -1695,6 +1695,20 @@ build foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Matrix4f.
   OBJECT_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir
   OBJECT_FILE_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir
 
+build foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_CoordinateTypes.cpp.o: CXX_COMPILER__VoxelEditor_Math_Tests_ /Users/michaelhalloran/cube_edit/foundation/math/tests/test_CoordinateTypes.cpp || cmake_object_order_depends_target_VoxelEditor_Math_Tests
+  DEP_FILE = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_CoordinateTypes.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/foundation/math -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir
+  OBJECT_FILE_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir
+
+build foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_CoordinateConverter.cpp.o: CXX_COMPILER__VoxelEditor_Math_Tests_ /Users/michaelhalloran/cube_edit/foundation/math/tests/test_CoordinateConverter.cpp || cmake_object_order_depends_target_VoxelEditor_Math_Tests
+  DEP_FILE = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_CoordinateConverter.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/foundation/math -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir
+  OBJECT_FILE_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target VoxelEditor_Math_Tests
@@ -1703,7 +1717,7 @@ build foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Matrix4f.
 #############################################
 # Link the executable bin/VoxelEditor_Math_Tests
 
-build bin/VoxelEditor_Math_Tests foundation/math/tests/VoxelEditor_Math_Tests[1]_tests.cmake | ${cmake_ninja_workdir}foundation/math/tests/VoxelEditor_Math_Tests[1]_tests.cmake: CXX_EXECUTABLE_LINKER__VoxelEditor_Math_Tests_ foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Vector3f.cpp.o foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Matrix4f.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
+build bin/VoxelEditor_Math_Tests foundation/math/tests/VoxelEditor_Math_Tests[1]_tests.cmake | ${cmake_ninja_workdir}foundation/math/tests/VoxelEditor_Math_Tests[1]_tests.cmake: CXX_EXECUTABLE_LINKER__VoxelEditor_Math_Tests_ foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Vector3f.cpp.o foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_Matrix4f.cpp.o foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_CoordinateTypes.cpp.o foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir/test_CoordinateConverter.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
   FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   LINK_LIBRARIES = lib/libgtest.a  lib/libgtest_main.a  lib/libgtest.a
   OBJECT_DIR = foundation/math/tests/CMakeFiles/VoxelEditor_Math_Tests.dir

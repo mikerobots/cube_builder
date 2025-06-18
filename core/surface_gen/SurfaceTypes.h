@@ -6,6 +6,8 @@
 #include "../../foundation/math/Vector4f.h"
 #include "../../foundation/math/Matrix4f.h"
 #include "../../foundation/math/BoundingBox.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include "../voxel_data/VoxelTypes.h"
 #include <vector>
 #include <cstdint>
@@ -40,11 +42,11 @@ using MaterialId = uint32_t;
 
 // Mesh data structure
 struct Mesh {
-    std::vector<Math::Vector3f> vertices;
-    std::vector<Math::Vector3f> normals;
+    std::vector<Math::WorldCoordinates> vertices;
+    std::vector<Math::Vector3f> normals;  // Normals are direction vectors, not positions
     std::vector<Math::Vector2f> uvCoords;
     std::vector<uint32_t> indices;
-    Math::BoundingBox bounds;
+    Math::BoundingBox bounds;  // Will need to use WorldCoordinates bounds
     MaterialId materialId = 0;
     
     // Utility functions
@@ -88,8 +90,8 @@ struct SurfaceSettings {
 
 // Hermite data for dual contouring
 struct HermiteData {
-    Math::Vector3f position;
-    Math::Vector3f normal;
+    Math::WorldCoordinates position;  // World space position
+    Math::Vector3f normal;            // Direction vector
     float value;
     bool hasIntersection;
     
@@ -98,8 +100,8 @@ struct HermiteData {
 
 // Edge data for dual contouring
 struct EdgeData {
-    Math::Vector3i v0;  // Start voxel position
-    Math::Vector3i v1;  // End voxel position
+    Math::IncrementCoordinates v0;  // Start voxel position in increment space
+    Math::IncrementCoordinates v1;  // End voxel position in increment space
     HermiteData hermite;
     int direction;  // 0=X, 1=Y, 2=Z
     
@@ -164,11 +166,11 @@ struct VoxelGridHash {
 
 // Vertex attributes for advanced rendering
 struct VertexAttributes {
-    Math::Vector3f position;
-    Math::Vector3f normal;
+    Math::WorldCoordinates position;  // World space position
+    Math::Vector3f normal;            // Direction vector
     Math::Vector2f uv;
-    Math::Vector3f tangent;
-    Math::Vector3f bitangent;
+    Math::Vector3f tangent;           // Direction vector
+    Math::Vector3f bitangent;         // Direction vector
     MaterialId material;
 };
 

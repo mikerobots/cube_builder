@@ -136,20 +136,20 @@ std::vector<VoxelId> FloodFillSelector::getNeighbors(const VoxelId& voxel) const
     std::vector<VoxelId> neighbors;
     
     // Face neighbors (6-connectivity)
-    neighbors.emplace_back(Math::Vector3i(voxel.position.x + 1, voxel.position.y, voxel.position.z), voxel.resolution);
-    neighbors.emplace_back(Math::Vector3i(voxel.position.x - 1, voxel.position.y, voxel.position.z), voxel.resolution);
-    neighbors.emplace_back(Math::Vector3i(voxel.position.x, voxel.position.y + 1, voxel.position.z), voxel.resolution);
-    neighbors.emplace_back(Math::Vector3i(voxel.position.x, voxel.position.y - 1, voxel.position.z), voxel.resolution);
-    neighbors.emplace_back(Math::Vector3i(voxel.position.x, voxel.position.y, voxel.position.z + 1), voxel.resolution);
-    neighbors.emplace_back(Math::Vector3i(voxel.position.x, voxel.position.y, voxel.position.z - 1), voxel.resolution);
+    neighbors.emplace_back(Math::Vector3i(voxel.position.x() + 1, voxel.position.y(), voxel.position.z()), voxel.resolution);
+    neighbors.emplace_back(Math::Vector3i(voxel.position.x() - 1, voxel.position.y(), voxel.position.z()), voxel.resolution);
+    neighbors.emplace_back(Math::Vector3i(voxel.position.x(), voxel.position.y() + 1, voxel.position.z()), voxel.resolution);
+    neighbors.emplace_back(Math::Vector3i(voxel.position.x(), voxel.position.y() - 1, voxel.position.z()), voxel.resolution);
+    neighbors.emplace_back(Math::Vector3i(voxel.position.x(), voxel.position.y(), voxel.position.z() + 1), voxel.resolution);
+    neighbors.emplace_back(Math::Vector3i(voxel.position.x(), voxel.position.y(), voxel.position.z() - 1), voxel.resolution);
     
     if (m_connectivityMode == ConnectivityMode::Edge18 || m_connectivityMode == ConnectivityMode::Vertex26) {
         // Edge neighbors (12 additional for 18-connectivity)
         for (int dx = -1; dx <= 1; dx += 2) {
             for (int dy = -1; dy <= 1; dy += 2) {
-                neighbors.emplace_back(Math::Vector3i(voxel.position.x + dx, voxel.position.y + dy, voxel.position.z), voxel.resolution);
-                neighbors.emplace_back(Math::Vector3i(voxel.position.x + dx, voxel.position.y, voxel.position.z + dy), voxel.resolution);
-                neighbors.emplace_back(Math::Vector3i(voxel.position.x, voxel.position.y + dy, voxel.position.z + dx), voxel.resolution);
+                neighbors.emplace_back(Math::Vector3i(voxel.position.x() + dx, voxel.position.y() + dy, voxel.position.z()), voxel.resolution);
+                neighbors.emplace_back(Math::Vector3i(voxel.position.x() + dx, voxel.position.y(), voxel.position.z() + dy), voxel.resolution);
+                neighbors.emplace_back(Math::Vector3i(voxel.position.x(), voxel.position.y() + dy, voxel.position.z() + dx), voxel.resolution);
             }
         }
     }
@@ -159,7 +159,7 @@ std::vector<VoxelId> FloodFillSelector::getNeighbors(const VoxelId& voxel) const
         for (int dx = -1; dx <= 1; dx += 2) {
             for (int dy = -1; dy <= 1; dy += 2) {
                 for (int dz = -1; dz <= 1; dz += 2) {
-                    neighbors.emplace_back(Math::Vector3i(voxel.position.x + dx, voxel.position.y + dy, voxel.position.z + dz), voxel.resolution);
+                    neighbors.emplace_back(Math::Vector3i(voxel.position.x() + dx, voxel.position.y() + dy, voxel.position.z() + dz), voxel.resolution);
                 }
             }
         }
@@ -191,12 +191,13 @@ bool FloodFillSelector::meetsFloodFillCriteria(const VoxelId& current, const Vox
 bool FloodFillSelector::voxelExists(const VoxelId& voxel) const {
     if (!m_voxelManager) return true; // For testing: assume all voxels exist when no manager
     
+    // VoxelId.position is already IncrementCoordinates, so no conversion needed
     return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 
 bool FloodFillSelector::areVoxelsConnected(const VoxelId& voxel1, const VoxelId& voxel2) const {
     // Check if voxels are adjacent
-    Math::Vector3i diff = voxel2.position - voxel1.position;
+    Math::Vector3i diff = voxel2.position.value() - voxel1.position.value();
     int manhattan = std::abs(diff.x) + std::abs(diff.y) + std::abs(diff.z);
     
     switch (m_connectivityMode) {

@@ -4,12 +4,10 @@ namespace VoxelEditor {
 namespace Selection {
 
 Math::Vector3f VoxelId::getWorldPosition() const {
-    float size = getVoxelSize();
-    return Math::Vector3f(
-        position.x * size + size * 0.5f,
-        position.y * size + size * 0.5f,
-        position.z * size + size * 0.5f
-    );
+    // Use the centralized coordinate converter
+    // With the new coordinate system, IncrementCoordinates can be directly converted to world coordinates
+    Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(position);
+    return worldPos.value();
 }
 
 float VoxelId::getVoxelSize() const {
@@ -17,13 +15,14 @@ float VoxelId::getVoxelSize() const {
 }
 
 Math::BoundingBox VoxelId::getBounds() const {
+    // Use the centralized coordinate converter for consistent world position calculation
+    Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(position);
     float size = getVoxelSize();
-    Math::Vector3f min(
-        position.x * size,
-        position.y * size,
-        position.z * size
-    );
-    Math::Vector3f max = min + Math::Vector3f(size, size, size);
+    
+    // The world position is the corner of the voxel, so calculate bounds from it
+    Math::Vector3f corner = worldPos.value();
+    Math::Vector3f min = corner;
+    Math::Vector3f max = corner + Math::Vector3f(size, size, size);
     return Math::BoundingBox(min, max);
 }
 

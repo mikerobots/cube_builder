@@ -78,16 +78,16 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillCustom_PositiveCoordinates) {
     
     // Only select voxels with all positive coordinates
     auto predicate = [](const VoxelId& voxel) {
-        return voxel.position.x >= 0 && voxel.position.y >= 0 && voxel.position.z >= 0;
+        return voxel.position.x() >= 0 && voxel.position.y() >= 0 && voxel.position.z() >= 0;
     };
     
     SelectionSet result = selector->selectFloodFillCustom(originSeed, predicate);
     
     // Check all selected voxels meet criteria
     for (const auto& voxel : result) {
-        EXPECT_GE(voxel.position.x, 0);
-        EXPECT_GE(voxel.position.y, 0);
-        EXPECT_GE(voxel.position.z, 0);
+        EXPECT_GE(voxel.position.x(), 0);
+        EXPECT_GE(voxel.position.y(), 0);
+        EXPECT_GE(voxel.position.z(), 0);
     }
 }
 
@@ -97,7 +97,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillCustom_MaxDistance) {
     
     // Only select voxels within Manhattan distance of 3
     auto predicate = [&originSeed, maxDist](const VoxelId& voxel) {
-        Math::Vector3i diff = voxel.position - originSeed.position;
+        Math::Vector3i diff = voxel.position.value() - originSeed.position.value();
         int manhattan = std::abs(diff.x) + std::abs(diff.y) + std::abs(diff.z);
         return manhattan <= maxDist;
     };
@@ -106,7 +106,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillCustom_MaxDistance) {
     
     // Check all selected voxels are within distance
     for (const auto& voxel : result) {
-        Math::Vector3i diff = voxel.position - originSeed.position;
+        Math::Vector3i diff = voxel.position.value() - originSeed.position.value();
         int manhattan = std::abs(diff.x) + std::abs(diff.y) + std::abs(diff.z);
         EXPECT_LE(manhattan, maxDist);
     }
@@ -134,7 +134,7 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillLimited_MultipleSteps) {
     
     // Check max distance
     for (const auto& voxel : result) {
-        Math::Vector3i diff = voxel.position - originSeed.position;
+        Math::Vector3i diff = voxel.position.value() - originSeed.position.value();
         int manhattan = std::abs(diff.x) + std::abs(diff.y) + std::abs(diff.z);
         EXPECT_LE(manhattan, 3);
     }

@@ -2,6 +2,7 @@
 #include <chrono>
 #include "../include/visual_feedback/OverlayRenderer.h"
 #include "../../camera/OrbitCamera.h"
+#include "../../../foundation/math/CoordinateTypes.h"
 
 using namespace VoxelEditor::VisualFeedback;
 using namespace VoxelEditor::Math;
@@ -214,7 +215,7 @@ TEST_F(OverlayRendererTest, GroundPlaneGridBasic) {
     
     // Create a simple camera for testing
     OrbitCamera camera;
-    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera.setDistance(8.0f);
     camera.setOrbitAngles(45.0f, -30.0f);
     
@@ -233,7 +234,7 @@ TEST_F(OverlayRendererTest, GroundPlaneGridDynamicOpacity) {
     bool enableDynamicOpacity = true;
     
     OrbitCamera camera;
-    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera.setDistance(8.0f);
     camera.setOrbitAngles(45.0f, -30.0f);
     
@@ -252,7 +253,7 @@ TEST_F(OverlayRendererTest, GroundPlaneGridLargeExtent) {
     bool enableDynamicOpacity = false;
     
     OrbitCamera camera;
-    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera.setDistance(15.0f);
     camera.setOrbitAngles(45.0f, -30.0f);
     
@@ -271,7 +272,7 @@ TEST_F(OverlayRendererTest, GroundPlaneGridPerformance) {
     bool enableDynamicOpacity = true;
     
     OrbitCamera camera;
-    camera.setTarget(Vector3f(0, 0, 0));
+    camera.setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera.setDistance(8.0f);
     camera.setOrbitAngles(45.0f, -30.0f);
     

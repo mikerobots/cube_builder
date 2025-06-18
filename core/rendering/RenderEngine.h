@@ -133,7 +133,7 @@ public:
     bool isGroundPlaneGridVisible() const;
     void updateGroundPlaneGrid(const Math::Vector3f& workspaceSize);
     void updateGroundPlaneGridAnimation(float deltaTime);
-    void renderGroundPlaneGrid(const Math::Vector3f& cursorWorldPos);
+    void renderGroundPlaneGrid(const Math::WorldCoordinates& cursorWorldPos);
     
     // Utility functions
     void setupMeshBuffers(Mesh& mesh);

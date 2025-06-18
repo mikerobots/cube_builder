@@ -51,9 +51,9 @@ bool StateSnapshot::captureVoxelData(const VoxelData::VoxelDataManager* voxelMan
             
             // Write voxel positions
             for (const auto& voxel : voxels) {
-                int32_t x = voxel.gridPos.x;
-                int32_t y = voxel.gridPos.y;
-                int32_t z = voxel.gridPos.z;
+                int32_t x = voxel.gridPos.x();
+                int32_t y = voxel.gridPos.y();
+                int32_t z = voxel.gridPos.z();
                 dataStream.write(reinterpret_cast<const char*>(&x), sizeof(x));
                 dataStream.write(reinterpret_cast<const char*>(&y), sizeof(y));
                 dataStream.write(reinterpret_cast<const char*>(&z), sizeof(z));
@@ -115,9 +115,9 @@ bool StateSnapshot::captureCamera(const Camera::OrbitCamera* camera) {
     
     // Capture camera position
     auto position = camera->getPosition();
-    m_camera->position[0] = position.x;
-    m_camera->position[1] = position.y;
-    m_camera->position[2] = position.z;
+    m_camera->position[0] = position.x();
+    m_camera->position[1] = position.y();
+    m_camera->position[2] = position.z();
     
     // For OrbitCamera, we don't have a quaternion rotation directly
     // Instead we store the orbit parameters (yaw, pitch, distance)

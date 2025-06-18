@@ -372,6 +372,7 @@ void SelectionManager::trimHistory() {
 bool SelectionManager::voxelExists(const VoxelId& voxel) const {
     if (!m_voxelManager) return false;
     
+    // VoxelId.position is already IncrementCoordinates, so no conversion needed
     return m_voxelManager->hasVoxel(voxel.position, voxel.resolution);
 }
 
@@ -389,7 +390,7 @@ std::vector<VoxelId> SelectionManager::getAllVoxels() const {
         
         // Convert VoxelPosition to VoxelId
         for (const auto& voxelPos : voxelPositions) {
-            allVoxels.emplace_back(voxelPos.gridPos, voxelPos.resolution);
+            allVoxels.emplace_back(voxelPos.incrementPos, voxelPos.resolution);
         }
     }
     

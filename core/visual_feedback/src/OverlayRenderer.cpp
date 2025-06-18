@@ -122,7 +122,7 @@ void OverlayRenderer::renderCameraInfo(const Camera::Camera& camera, const Math:
     if (!m_frameActive) return;
     
     // Get camera position and rotation from the camera object
-    Math::Vector3f cameraPos = camera.getPosition();
+    Math::Vector3f cameraPos = camera.getPosition().value();
     // Get camera forward direction as rotation representation
     Math::Vector3f forward = camera.getForward();
     Math::Vector3f cameraRot(forward.x, forward.y, forward.z);
@@ -208,8 +208,8 @@ void OverlayRenderer::renderRaycast(const Ray& ray, float length, const Renderin
                                    const Camera::Camera& camera) {
     if (!m_frameActive) return;
     
-    Math::Vector3f end = ray.origin + ray.direction * length;
-    addLine(ray.origin, end, color);
+    Math::Vector3f end = ray.origin.value() + ray.direction * length;
+    addLine(ray.origin.value(), end, color);
     flushLineBatch(camera);
 }
 

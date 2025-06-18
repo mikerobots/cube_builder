@@ -30,7 +30,7 @@ public:
     
     // Placement validation
     bool isValidFaceForPlacement(const Face& face, const VoxelData::VoxelGrid& grid);
-    Math::Vector3i calculatePlacementPosition(const Face& face);
+    Math::IncrementCoordinates calculatePlacementPosition(const Face& face);
     
     // Configuration
     void setMaxRayDistance(float distance) { m_maxRayDistance = distance; }
@@ -53,13 +53,13 @@ private:
     
     // Grid traversal
     struct GridTraversal {
-        Math::Vector3i current;
-        Math::Vector3i step;
+        Math::IncrementCoordinates current;
+        Math::Vector3i step;  // Step remains as Vector3i (just -1, 0, or 1)
         Math::Vector3f tMax;
         Math::Vector3f tDelta;
     };
     
-    void initializeTraversal(const Ray& ray, const Math::Vector3f& gridMin, 
+    void initializeTraversal(const Ray& ray, const Math::WorldCoordinates& gridMin, 
                            float voxelSize, GridTraversal& traversal) const;
     void stepTraversal(GridTraversal& traversal) const;
 };

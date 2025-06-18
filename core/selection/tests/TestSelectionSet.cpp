@@ -290,7 +290,7 @@ TEST_F(SelectionSetTest, FilterInPlace) {
     
     // Filter for positive x coordinates
     auto predicate = [](const VoxelId& v) { 
-        return v.position.x > 0; 
+        return v.position.x() > 0; 
     };
     
     set.filterInPlace(predicate);

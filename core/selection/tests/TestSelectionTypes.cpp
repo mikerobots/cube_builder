@@ -14,7 +14,7 @@ protected:
 // VoxelId Tests
 TEST_F(SelectionTypesTest, VoxelId_DefaultConstruction) {
     VoxelId voxel;
-    EXPECT_EQ(voxel.position, Math::Vector3i::Zero());
+    EXPECT_EQ(voxel.position, Math::IncrementCoordinates(Math::Vector3i::Zero()));
     EXPECT_EQ(voxel.resolution, VoxelData::VoxelResolution::Size_1cm);
 }
 
@@ -23,7 +23,7 @@ TEST_F(SelectionTypesTest, VoxelId_ParameterizedConstruction) {
     VoxelData::VoxelResolution res = VoxelData::VoxelResolution::Size_8cm;
     
     VoxelId voxel(pos, res);
-    EXPECT_EQ(voxel.position, pos);
+    EXPECT_EQ(voxel.position.value(), pos);
     EXPECT_EQ(voxel.resolution, res);
 }
 

@@ -2,6 +2,7 @@
 
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector2f.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include <cstdint>
 #include <vector>
 
@@ -200,17 +201,22 @@ struct Color {
 
 // Vertex structure for rendering
 struct Vertex {
-    Math::Vector3f position;
+    Math::WorldCoordinates position;
     Math::Vector3f normal;
     Math::Vector2f texCoords;
     Color color;
     
-    Vertex() : position(Math::Vector3f::Zero()), normal(Math::Vector3f::UnitZ()), 
+    Vertex() : position(Math::WorldCoordinates::zero()), normal(Math::Vector3f::UnitZ()), 
                texCoords(Math::Vector2f::zero()), color(Color::White()) {}
     
-    Vertex(const Math::Vector3f& pos, const Math::Vector3f& norm = Math::Vector3f::UnitZ(), 
+    Vertex(const Math::WorldCoordinates& pos, const Math::Vector3f& norm = Math::Vector3f::UnitZ(), 
            const Math::Vector2f& tex = Math::Vector2f::zero(), const Color& col = Color::White())
         : position(pos), normal(norm), texCoords(tex), color(col) {}
+    
+    // Backward compatibility constructor
+    Vertex(const Math::Vector3f& pos, const Math::Vector3f& norm = Math::Vector3f::UnitZ(), 
+           const Math::Vector2f& tex = Math::Vector2f::zero(), const Color& col = Color::White())
+        : position(Math::WorldCoordinates(pos)), normal(norm), texCoords(tex), color(col) {}
 };
 
 // Mesh structure
@@ -247,15 +253,20 @@ struct Mesh {
 
 // Transform structure
 struct Transform {
-    Math::Vector3f position = Math::Vector3f::Zero();
+    Math::WorldCoordinates position = Math::WorldCoordinates::zero();
     Math::Vector3f rotation = Math::Vector3f::Zero(); // Euler angles in degrees
     Math::Vector3f scale = Math::Vector3f::One();
     
     Transform() = default;
     
-    Transform(const Math::Vector3f& pos, const Math::Vector3f& rot = Math::Vector3f::Zero(), 
+    Transform(const Math::WorldCoordinates& pos, const Math::Vector3f& rot = Math::Vector3f::Zero(), 
               const Math::Vector3f& scl = Math::Vector3f::One())
         : position(pos), rotation(rot), scale(scl) {}
+    
+    // Backward compatibility constructor
+    Transform(const Math::Vector3f& pos, const Math::Vector3f& rot = Math::Vector3f::Zero(), 
+              const Math::Vector3f& scl = Math::Vector3f::One())
+        : position(Math::WorldCoordinates(pos)), rotation(rot), scale(scl) {}
 };
 
 // Material structure

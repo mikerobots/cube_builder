@@ -269,10 +269,14 @@ void OutlineRenderer::addVoxelEdges(const Math::Vector3i& position,
                                    const Rendering::Color& color) {
     float voxelSize = VoxelData::getVoxelSize(resolution);
     
+    // Convert grid coordinates to world coordinates using centered coordinate system
+    float workspaceSize = 5.0f; // Default workspace size
+    float halfWorkspace = workspaceSize * 0.5f;
+    
     Math::Vector3f basePos(
-        position.x * voxelSize,
+        position.x * voxelSize - halfWorkspace,
         position.y * voxelSize,
-        position.z * voxelSize
+        position.z * voxelSize - halfWorkspace
     );
     
     Math::BoundingBox voxelBox(basePos, basePos + Math::Vector3f(voxelSize, voxelSize, voxelSize));

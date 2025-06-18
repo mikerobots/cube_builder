@@ -3,6 +3,8 @@
 #include <cmath>
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include "../voxel_data/VoxelTypes.h"
 
 // Forward declarations for Phase 3 enhancements
@@ -33,14 +35,14 @@ enum class PlacementValidationResult {
 // Placement context information
 struct PlacementContext {
     Math::Vector3f worldPosition;     // World position from ray cast
-    Math::Vector3i snappedGridPos;    // Snapped grid position (1cm increments)
+    Math::IncrementCoordinates snappedIncrementPos;    // Snapped increment position (1cm increments)
     VoxelData::VoxelResolution resolution;  // Current voxel resolution
     bool shiftPressed;                // Shift key modifier state
     PlacementValidationResult validation; // Validation result
     
     PlacementContext() 
         : worldPosition(0.0f, 0.0f, 0.0f)
-        , snappedGridPos(0, 0, 0)
+        , snappedIncrementPos(0, 0, 0)
         , resolution(VoxelData::VoxelResolution::Size_1cm)
         , shiftPressed(false)
         , validation(PlacementValidationResult::Valid) {}
@@ -50,26 +52,23 @@ struct PlacementContext {
 class PlacementUtils {
 public:
     // Snap a world position to the nearest 1cm increment
-    static Math::Vector3i snapToValidIncrement(const Math::Vector3f& worldPos);
+    static Math::IncrementCoordinates snapToValidIncrement(const Math::Vector3f& worldPos);
     
     // Snap to grid-aligned position for same-size voxels (unless shift is pressed)
-    static Math::Vector3i snapToGridAligned(const Math::Vector3f& worldPos, 
+    static Math::IncrementCoordinates snapToGridAligned(const Math::Vector3f& worldPos, 
                                            VoxelData::VoxelResolution resolution,
                                            bool shiftPressed);
     
     // Validate if a position is valid for placement
-    static PlacementValidationResult validatePlacement(const Math::Vector3i& gridPos,
+    static PlacementValidationResult validatePlacement(const Math::IncrementCoordinates& incrementPos,
                                                       VoxelData::VoxelResolution resolution,
                                                       const Math::Vector3f& workspaceSize);
     
     // Check if position is a valid 1cm increment
-    static bool isValidIncrementPosition(const Math::Vector3i& pos);
+    static bool isValidIncrementPosition(const Math::IncrementCoordinates& pos);
     
-    // Convert world position to 1cm grid coordinates
-    static Math::Vector3i worldToIncrementGrid(const Math::Vector3f& worldPos);
-    
-    // Convert 1cm grid coordinates to world position
-    static Math::Vector3f incrementGridToWorld(const Math::Vector3i& gridPos);
+    // Note: These methods replaced by CoordinateConverter
+    // Use CoordinateConverter::worldToIncrement() and incrementToWorld() instead
     
     // Get the placement context from a world position
     static PlacementContext getPlacementContext(const Math::Vector3f& worldPos,
@@ -78,14 +77,14 @@ public:
                                                const Math::Vector3f& workspaceSize);
     
     // Phase 3 Enhancement: Smart snapping for same-size voxels
-    static Math::Vector3i snapToSameSizeVoxel(const Math::Vector3f& worldPos,
+    static Math::IncrementCoordinates snapToSameSizeVoxel(const Math::Vector3f& worldPos,
                                              VoxelData::VoxelResolution resolution,
                                              const VoxelData::VoxelDataManager& dataManager,
                                              bool shiftPressed);
     
     // Phase 3 Enhancement: Sub-grid positioning for smaller voxels on larger Surface Faces
-    static Math::Vector3i snapToSurfaceFaceGrid(const Math::Vector3f& hitPoint,
-                                               const Math::Vector3i& surfaceFaceVoxelPos,
+    static Math::IncrementCoordinates snapToSurfaceFaceGrid(const Math::Vector3f& hitPoint,
+                                               const Math::IncrementCoordinates& surfaceFaceVoxelPos,
                                                VoxelData::VoxelResolution surfaceFaceVoxelRes,
                                                VoxelData::FaceDirection surfaceFaceDir,
                                                VoxelData::VoxelResolution placementResolution);
@@ -96,7 +95,7 @@ public:
                                                     bool shiftPressed,
                                                     const Math::Vector3f& workspaceSize,
                                                     const VoxelData::VoxelDataManager& dataManager,
-                                                    const Math::Vector3i* surfaceFaceVoxelPos = nullptr,
+                                                    const Math::IncrementCoordinates* surfaceFaceVoxelPos = nullptr,
                                                     VoxelData::VoxelResolution surfaceFaceVoxelRes = VoxelData::VoxelResolution::Size_1cm,
                                                     VoxelData::FaceDirection surfaceFaceDir = VoxelData::FaceDirection::PosY);
     

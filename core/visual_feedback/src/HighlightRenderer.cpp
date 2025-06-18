@@ -419,12 +419,16 @@ Transform HighlightRenderer::calculateVoxelTransform(const Math::Vector3i& posit
     
     float voxelSize = VoxelData::getVoxelSize(resolution);
     
-    // Position at voxel center
-    transform.position = Math::Vector3f(
-        position.x * voxelSize + voxelSize * 0.5f,
+    // Position at voxel center using centered coordinate system
+    // Convert grid coordinates to world coordinates (centered workspace)
+    float workspaceSize = 5.0f; // Default workspace size
+    float halfWorkspace = workspaceSize * 0.5f;
+    
+    transform.position = Math::WorldCoordinates(Math::Vector3f(
+        position.x * voxelSize - halfWorkspace + voxelSize * 0.5f,
         position.y * voxelSize + voxelSize * 0.5f,
-        position.z * voxelSize + voxelSize * 0.5f
-    );
+        position.z * voxelSize - halfWorkspace + voxelSize * 0.5f
+    ));
     
     // Scale to voxel size
     transform.scale = Math::Vector3f(voxelSize, voxelSize, voxelSize);

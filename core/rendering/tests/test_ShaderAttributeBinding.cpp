@@ -35,7 +35,7 @@ TEST_F(ShaderAttributeBindingTest, VertexAttributeOffsets) {
 TEST_F(ShaderAttributeBindingTest, VertexDataPacking) {
     // Test that vertex data is correctly packed
     Vertex v;
-    v.position = Vector3f(1.0f, 2.0f, 3.0f);
+    v.position = WorldCoordinates(Vector3f(1.0f, 2.0f, 3.0f));
     v.normal = Vector3f(0.0f, 1.0f, 0.0f);
     v.texCoords = Vector2f(0.5f, 0.5f);
     v.color = Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
@@ -102,19 +102,19 @@ TEST_F(ShaderAttributeBindingTest, MeshVertexGeneration) {
     testMesh.vertices.resize(3);
     
     // Vertex 0
-    testMesh.vertices[0].position = Vector3f(-0.5f, -0.5f, 0.0f);
+    testMesh.vertices[0].position = WorldCoordinates(Vector3f(-0.5f, -0.5f, 0.0f));
     testMesh.vertices[0].normal = Vector3f(0.0f, 0.0f, 1.0f);
     testMesh.vertices[0].texCoords = Vector2f(0.0f, 0.0f);
     testMesh.vertices[0].color = Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
     
     // Vertex 1
-    testMesh.vertices[1].position = Vector3f(0.5f, -0.5f, 0.0f);
+    testMesh.vertices[1].position = WorldCoordinates(Vector3f(0.5f, -0.5f, 0.0f));
     testMesh.vertices[1].normal = Vector3f(0.0f, 0.0f, 1.0f);
     testMesh.vertices[1].texCoords = Vector2f(1.0f, 0.0f);
     testMesh.vertices[1].color = Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
     
     // Vertex 2
-    testMesh.vertices[2].position = Vector3f(0.0f, 0.5f, 0.0f);
+    testMesh.vertices[2].position = WorldCoordinates(Vector3f(0.0f, 0.5f, 0.0f));
     testMesh.vertices[2].normal = Vector3f(0.0f, 0.0f, 1.0f);
     testMesh.vertices[2].texCoords = Vector2f(0.5f, 1.0f);
     testMesh.vertices[2].color = Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
@@ -129,9 +129,9 @@ TEST_F(ShaderAttributeBindingTest, MeshVertexGeneration) {
     const auto& v0 = testMesh.vertices[0];
     
     // Position
-    EXPECT_FLOAT_EQ(v0.position.x, -0.5f);
-    EXPECT_FLOAT_EQ(v0.position.y, -0.5f);
-    EXPECT_FLOAT_EQ(v0.position.z, 0.0f);
+    EXPECT_FLOAT_EQ(v0.position.x(), -0.5f);
+    EXPECT_FLOAT_EQ(v0.position.y(), -0.5f);
+    EXPECT_FLOAT_EQ(v0.position.z(), 0.0f);
     
     // Normal should be normalized
     float normalLength = v0.normal.length();
@@ -148,17 +148,17 @@ TEST_F(ShaderAttributeBindingTest, VertexBufferLayout) {
     // Test the vertex buffer layout matches OpenGL expectations
     std::vector<Vertex> vertices(3);
     
-    vertices[0].position = Vector3f(0, 0, 0);
+    vertices[0].position = WorldCoordinates(Vector3f(0, 0, 0));
     vertices[0].normal = Vector3f(0, 0, 1);
     vertices[0].texCoords = Vector2f(0, 0);
     vertices[0].color = Color(1, 0, 0, 1);
     
-    vertices[1].position = Vector3f(1, 0, 0);
+    vertices[1].position = WorldCoordinates(Vector3f(1, 0, 0));
     vertices[1].normal = Vector3f(0, 0, 1);
     vertices[1].texCoords = Vector2f(1, 0);
     vertices[1].color = Color(0, 1, 0, 1);
     
-    vertices[2].position = Vector3f(0, 1, 0);
+    vertices[2].position = WorldCoordinates(Vector3f(0, 1, 0));
     vertices[2].normal = Vector3f(0, 0, 1);
     vertices[2].texCoords = Vector2f(0, 1);
     vertices[2].color = Color(0, 0, 1, 1);

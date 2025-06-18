@@ -4,6 +4,7 @@
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector2f.h"
 #include "../../foundation/math/Matrix4f.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include <memory>
 
 namespace VoxelEditor {
@@ -54,7 +55,12 @@ public:
      * @brief Set the cursor position for opacity calculations
      * @param cursorWorldPos Cursor position in world space
      */
-    void setCursorPosition(const Math::Vector3f& cursorWorldPos);
+    void setCursorPosition(const Math::WorldCoordinates& cursorWorldPos);
+    
+    // Backward compatibility overload
+    void setCursorPosition(const Math::Vector3f& cursorWorldPos) {
+        setCursorPosition(Math::WorldCoordinates(cursorWorldPos));
+    }
     
     /**
      * @brief Render the ground plane grid
@@ -99,9 +105,9 @@ public:
     static constexpr float getMajorLineInterval() { return 1.6f; } // 160cm
     
 private:
-    // Grid rendering data
+    // Grid rendering data  
     struct GridVertex {
-        Math::Vector3f position;
+        Math::Vector3f position;  // Keep as Vector3f for OpenGL compatibility
         float isMajorLine; // 0.0 for minor, 1.0 for major
         
         GridVertex(const Math::Vector3f& pos, bool major) 
@@ -129,8 +135,8 @@ private:
     float m_transitionSpeed;
     
     // Dynamic state
-    Math::Vector3f m_cursorPosition;
-    Math::Vector3f m_smoothedCursorPosition;
+    Math::WorldCoordinates m_cursorPosition;
+    Math::WorldCoordinates m_smoothedCursorPosition;
     float m_currentOpacity;
     float m_targetOpacity;
     

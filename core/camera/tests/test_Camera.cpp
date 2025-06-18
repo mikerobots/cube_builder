@@ -16,12 +16,12 @@ public:
         // Simple test implementation
         switch (preset) {
             case ViewPreset::FRONT:
-                setPosition(Vector3f(0, 0, 5));
-                setTarget(Vector3f(0, 0, 0));
+                setPosition(WorldCoordinates(Vector3f(0, 0, 5)));
+                setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
                 break;
             case ViewPreset::TOP:
-                setPosition(Vector3f(0, 5, 0));
-                setTarget(Vector3f(0, 0, 0));
+                setPosition(WorldCoordinates(Vector3f(0, 5, 0)));
+                setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
                 break;
             default:
                 break;
@@ -59,9 +59,9 @@ protected:
 TEST_F(CameraTest, DefaultConstruction) {
     TestCamera defaultCamera;
     
-    EXPECT_EQ(defaultCamera.getPosition(), Vector3f(0.0f, 0.0f, 5.0f));
-    EXPECT_EQ(defaultCamera.getTarget(), Vector3f(0.0f, 0.0f, 0.0f));
-    EXPECT_EQ(defaultCamera.getUp(), Vector3f(0.0f, 1.0f, 0.0f));
+    EXPECT_EQ(defaultCamera.getPosition().value(), Vector3f(0.0f, 0.0f, 5.0f));
+    EXPECT_EQ(defaultCamera.getTarget().value(), Vector3f(0.0f, 0.0f, 0.0f));
+    EXPECT_EQ(defaultCamera.getUp().value(), Vector3f(0.0f, 1.0f, 0.0f));
     EXPECT_FLOAT_EQ(defaultCamera.getFieldOfView(), 45.0f);
     EXPECT_FLOAT_EQ(defaultCamera.getAspectRatio(), 16.0f / 9.0f);
     EXPECT_FLOAT_EQ(defaultCamera.getNearPlane(), 0.1f);
@@ -69,10 +69,10 @@ TEST_F(CameraTest, DefaultConstruction) {
 }
 
 TEST_F(CameraTest, PositionManagement) {
-    Vector3f newPosition(10.0f, 5.0f, 15.0f);
+    WorldCoordinates newPosition(Vector3f(10.0f, 5.0f, 15.0f));
     camera->setPosition(newPosition);
     
-    EXPECT_EQ(camera->getPosition(), newPosition);
+    EXPECT_EQ(camera->getPosition().value(), newPosition.value());
     EXPECT_EQ(eventHandler->eventCount, 1);
     EXPECT_EQ(eventHandler->lastChangeType, CameraChangedEvent::ChangeType::POSITION);
     
@@ -82,19 +82,19 @@ TEST_F(CameraTest, PositionManagement) {
 }
 
 TEST_F(CameraTest, TargetManagement) {
-    Vector3f newTarget(5.0f, 2.0f, 3.0f);
+    WorldCoordinates newTarget(Vector3f(5.0f, 2.0f, 3.0f));
     camera->setTarget(newTarget);
     
-    EXPECT_EQ(camera->getTarget(), newTarget);
+    EXPECT_EQ(camera->getTarget().value(), newTarget.value());
     EXPECT_EQ(eventHandler->eventCount, 1);
     EXPECT_EQ(eventHandler->lastChangeType, CameraChangedEvent::ChangeType::POSITION);
 }
 
 TEST_F(CameraTest, UpVectorManagement) {
-    Vector3f newUp(0.0f, 0.0f, 1.0f);
+    WorldCoordinates newUp(Vector3f(0.0f, 0.0f, 1.0f));
     camera->setUp(newUp);
     
-    EXPECT_EQ(camera->getUp(), newUp);
+    EXPECT_EQ(camera->getUp().value(), newUp.value());
     EXPECT_EQ(eventHandler->eventCount, 1);
     EXPECT_EQ(eventHandler->lastChangeType, CameraChangedEvent::ChangeType::ROTATION);
 }
@@ -117,9 +117,9 @@ TEST_F(CameraTest, ProjectionSettings) {
 }
 
 TEST_F(CameraTest, DirectionVectors) {
-    camera->setPosition(Vector3f(0, 0, 5));
-    camera->setTarget(Vector3f(0, 0, 0));
-    camera->setUp(Vector3f(0, 1, 0));
+    camera->setPosition(WorldCoordinates(Vector3f(0, 0, 5)));
+    camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
+    camera->setUp(WorldCoordinates(Vector3f(0, 1, 0)));
     
     Vector3f forward = camera->getForward();
     Vector3f right = camera->getRight();
@@ -142,9 +142,9 @@ TEST_F(CameraTest, DirectionVectors) {
 }
 
 TEST_F(CameraTest, ViewMatrix) {
-    camera->setPosition(Vector3f(0, 0, 5));
-    camera->setTarget(Vector3f(0, 0, 0));
-    camera->setUp(Vector3f(0, 1, 0));
+    camera->setPosition(WorldCoordinates(Vector3f(0, 0, 5)));
+    camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
+    camera->setUp(WorldCoordinates(Vector3f(0, 1, 0)));
     
     Matrix4f viewMatrix = camera->getViewMatrix();
     
@@ -191,7 +191,7 @@ TEST_F(CameraTest, MatrixCaching) {
     EXPECT_EQ(projMatrix1, projMatrix2);
     
     // Changing position should invalidate view matrix
-    camera->setPosition(Vector3f(1, 1, 1));
+    camera->setPosition(WorldCoordinates(Vector3f(1, 1, 1)));
     Matrix4f viewMatrix3 = camera->getViewMatrix();
     EXPECT_NE(viewMatrix1, viewMatrix3);
     
@@ -203,29 +203,29 @@ TEST_F(CameraTest, MatrixCaching) {
 
 TEST_F(CameraTest, ViewPresets) {
     camera->setViewPreset(ViewPreset::FRONT);
-    EXPECT_EQ(camera->getPosition(), Vector3f(0, 0, 5));
-    EXPECT_EQ(camera->getTarget(), Vector3f(0, 0, 0));
+    EXPECT_EQ(camera->getPosition().value(), Vector3f(0, 0, 5));
+    EXPECT_EQ(camera->getTarget().value(), Vector3f(0, 0, 0));
     
     camera->setViewPreset(ViewPreset::TOP);
-    EXPECT_EQ(camera->getPosition(), Vector3f(0, 5, 0));
-    EXPECT_EQ(camera->getTarget(), Vector3f(0, 0, 0));
+    EXPECT_EQ(camera->getPosition().value(), Vector3f(0, 5, 0));
+    EXPECT_EQ(camera->getTarget().value(), Vector3f(0, 0, 0));
 }
 
 TEST_F(CameraTest, EventDispatcherManagement) {
     // Test with null event dispatcher
     TestCamera cameraNoEvents;
-    cameraNoEvents.setPosition(Vector3f(1, 2, 3));
+    cameraNoEvents.setPosition(WorldCoordinates(Vector3f(1, 2, 3)));
     // Should not crash
     
     // Test changing event dispatcher
     camera->setEventDispatcher(nullptr);
     int eventCountBefore = eventHandler->eventCount;
-    camera->setPosition(Vector3f(5, 5, 5));
+    camera->setPosition(WorldCoordinates(Vector3f(5, 5, 5)));
     EXPECT_EQ(eventHandler->eventCount, eventCountBefore); // No new events
     
     // Restore event dispatcher
     camera->setEventDispatcher(eventDispatcher.get());
-    camera->setPosition(Vector3f(6, 6, 6));
+    camera->setPosition(WorldCoordinates(Vector3f(6, 6, 6)));
     EXPECT_EQ(eventHandler->eventCount, eventCountBefore + 1); // New event dispatched
 }
 
@@ -332,8 +332,8 @@ TEST_F(CameraTest, ProjectionMatrixWithAspectRatio) {
 
 TEST_F(CameraTest, VectorNormalization) {
     // Test that direction vectors are properly normalized
-    camera->setPosition(Vector3f(10, 20, 30));
-    camera->setTarget(Vector3f(5, 15, 25));
+    camera->setPosition(WorldCoordinates(Vector3f(10, 20, 30)));
+    camera->setTarget(WorldCoordinates(Vector3f(5, 15, 25)));
     
     Vector3f forward = camera->getForward();
     Vector3f right = camera->getRight();

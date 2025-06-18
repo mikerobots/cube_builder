@@ -1,6 +1,7 @@
 #include "PlaneDetector.h"
 #include "../voxel_data/VoxelDataManager.h"
 #include "../voxel_data/VoxelTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include <algorithm>
 #include <cmath>
 
@@ -57,12 +58,13 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelUnderCurs
     for (auto resolution : getAllResolutions()) {
         float voxelSize = VoxelData::getVoxelSize(resolution);
         
-        // Convert world position to grid coordinates
-        Math::Vector3i gridPos = worldToGrid(worldPos, resolution);
+        // Convert world position to increment coordinates
+        Math::IncrementCoordinates incrementPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(worldPos));
         
-        // Check a range of Y values
-        for (int dy = -1; dy <= static_cast<int>(maxHeight / voxelSize); dy++) {
-            Math::Vector3i checkPos(gridPos.x, dy, gridPos.z);
+        // Check a range of Y values (in increment coordinates, each unit is 1cm)
+        int maxHeightIncrements = static_cast<int>(maxHeight * 100); // Convert meters to cm
+        for (int dy = -1; dy <= maxHeightIncrements; dy++) {
+            Math::IncrementCoordinates checkPos(incrementPos.x(), dy, incrementPos.z());
             if (m_voxelManager->getVoxel(checkPos, resolution)) {
                 voxelCandidates.emplace_back(checkPos, resolution);
             }
@@ -102,7 +104,7 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelUnderCurs
     return std::nullopt;
 }
 
-void PlaneDetector::updatePlanePersistence(const Math::Vector3i& previewPosition, 
+void PlaneDetector::updatePlanePersistence(const Math::IncrementCoordinates& previewPosition, 
                                           VoxelData::VoxelResolution previewResolution,
                                           float deltaTime) {
     if (!m_currentPlane.has_value()) {
@@ -130,7 +132,7 @@ void PlaneDetector::updatePlanePersistence(const Math::Vector3i& previewPosition
     }
 }
 
-bool PlaneDetector::previewOverlapsCurrentPlane(const Math::Vector3i& previewPosition, 
+bool PlaneDetector::previewOverlapsCurrentPlane(const Math::IncrementCoordinates& previewPosition, 
                                                VoxelData::VoxelResolution previewResolution) const {
     if (!m_currentPlane.has_value() || !m_voxelManager) {
         return false;
@@ -158,38 +160,39 @@ bool PlaneDetector::shouldTransitionToNewPlane(const PlaneDetectionResult& newPl
     return heightDifference > 0.01f; // 1cm threshold
 }
 
-std::vector<Math::Vector3i> PlaneDetector::getVoxelsAtHeight(float height, float tolerance) const {
-    std::vector<Math::Vector3i> voxelsAtHeight;
+std::vector<Math::IncrementCoordinates> PlaneDetector::getVoxelsAtHeight(float height, float tolerance) const {
+    std::vector<Math::IncrementCoordinates> voxelsAtHeight;
     
     if (!m_voxelManager) {
         return voxelsAtHeight;
     }
     
-    // Search in a reasonable area
+    // Search in a reasonable area using increment coordinates
     float searchRadius = DEFAULT_SEARCH_RADIUS;
+    int searchRadiusIncrement = static_cast<int>(searchRadius * 100); // Convert to cm
     
-    for (auto resolution : getAllResolutions()) {
-        float voxelSize = VoxelData::getVoxelSize(resolution);
-        
-        // Calculate which Y grid level we need to check for this resolution
-        int targetYGrid = static_cast<int>(std::round(height / voxelSize)) - 1; // -1 because height is top face
-        
-        // Only check voxels that could have their top face at the target height
-        if (targetYGrid < 0) {
-            continue; // Can't have voxels with negative Y
-        }
-        
-        int searchRangeGrid = static_cast<int>(std::ceil(searchRadius / voxelSize));
-        
-        for (int x = -searchRangeGrid; x <= searchRangeGrid; x++) {
-            for (int z = -searchRangeGrid; z <= searchRangeGrid; z++) {
-                Math::Vector3i pos(x, targetYGrid, z);
+    // For each position in the search area, check all resolutions
+    for (int x = -searchRadiusIncrement; x <= searchRadiusIncrement; x++) {
+        for (int z = -searchRadiusIncrement; z <= searchRadiusIncrement; z++) {
+            // Try different Y positions around the target height
+            for (auto resolution : getAllResolutions()) {
+                float voxelSize = VoxelData::getVoxelSize(resolution);
                 
-                if (m_voxelManager->getVoxel(pos, resolution)) {
-                    float voxelTopHeight = calculateVoxelTopHeight(pos, resolution);
+                // Calculate approximate Y increment position for this resolution
+                // Since voxels can be of different sizes, we need to check a range
+                int baseYIncrement = static_cast<int>(height * 100); // Convert height to cm
+                int voxelSizeIncrement = static_cast<int>(voxelSize * 100); // Convert voxel size to cm
+                
+                // Check a range of Y positions where voxels of this resolution might have their top at target height
+                for (int yOffset = -voxelSizeIncrement; yOffset <= 0; yOffset++) {
+                    Math::IncrementCoordinates pos(x, baseYIncrement + yOffset, z);
                     
-                    if (std::abs(voxelTopHeight - height) <= tolerance) {
-                        voxelsAtHeight.push_back(pos);
+                    if (m_voxelManager->getVoxel(pos, resolution)) {
+                        float voxelTopHeight = calculateVoxelTopHeight(pos, resolution);
+                        
+                        if (std::abs(voxelTopHeight - height) <= tolerance) {
+                            voxelsAtHeight.push_back(pos);
+                        }
                     }
                 }
             }
@@ -199,9 +202,14 @@ std::vector<Math::Vector3i> PlaneDetector::getVoxelsAtHeight(float height, float
     return voxelsAtHeight;
 }
 
-float PlaneDetector::calculateVoxelTopHeight(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution resolution) const {
+float PlaneDetector::calculateVoxelTopHeight(const Math::IncrementCoordinates& voxelPos, VoxelData::VoxelResolution resolution) const {
+    // Convert increment position to world position (this gives us the bottom-left corner)
+    Math::WorldCoordinates worldCoords = Math::CoordinateConverter::incrementToWorld(voxelPos);
+    Math::Vector3f worldPos = worldCoords.value();
+    
+    // Add voxel size to get the top face height
     float voxelSize = VoxelData::getVoxelSize(resolution);
-    return (voxelPos.y + 1) * voxelSize; // +1 because we want the top face
+    return worldPos.y + voxelSize;
 }
 
 
@@ -213,40 +221,43 @@ void PlaneDetector::reset() {
 
 // Private helper methods
 
-std::vector<Math::Vector3i> PlaneDetector::searchVoxelsInCylinder(const Math::Vector3f& centerPos, 
+std::vector<Math::IncrementCoordinates> PlaneDetector::searchVoxelsInCylinder(const Math::Vector3f& centerPos, 
                                                                  float radius, 
                                                                  float minHeight, 
                                                                  float maxHeight) const {
-    std::vector<Math::Vector3i> voxels;
+    std::vector<Math::IncrementCoordinates> voxels;
     
     if (!m_voxelManager) {
         return voxels;
     }
     
-    // Search in all resolutions with proper grid coordinates
-    for (auto resolution : getAllResolutions()) {
-        float voxelSize = VoxelData::getVoxelSize(resolution);
-        
-        // Convert world coordinates to grid coordinates for this resolution
-        int centerXGrid = static_cast<int>(std::floor(centerPos.x / voxelSize));
-        int centerZGrid = static_cast<int>(std::floor(centerPos.z / voxelSize));
-        int minYGrid = static_cast<int>(std::floor(minHeight / voxelSize));
-        int maxYGrid = static_cast<int>(std::ceil(maxHeight / voxelSize));
-        int radiusGrid = static_cast<int>(std::ceil(radius / voxelSize)) + 1; // Add 1 for safety
-        
-        for (int y = minYGrid; y <= maxYGrid; y++) {
-            for (int x = centerXGrid - radiusGrid; x <= centerXGrid + radiusGrid; x++) {
-                for (int z = centerZGrid - radiusGrid; z <= centerZGrid + radiusGrid; z++) {
-                    // Check if within cylinder in world space
-                    Math::Vector3f voxelWorldPos = gridToWorld(Math::Vector3i(x, y, z), resolution);
-                    float dx = voxelWorldPos.x + voxelSize/2.0f - centerPos.x; // Check from voxel center
-                    float dz = voxelWorldPos.z + voxelSize/2.0f - centerPos.z;
-                    float distanceSquared = dx * dx + dz * dz;
-                    
-                    if (distanceSquared <= radius * radius) {
-                        Math::Vector3i gridPos(x, y, z);
-                        if (m_voxelManager->getVoxel(gridPos, resolution)) {
-                            voxels.push_back(gridPos);
+    // Convert to increment coordinates (1cm granularity)
+    Math::IncrementCoordinates centerIncrement = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(centerPos));
+    int minYIncrement = static_cast<int>(minHeight * 100); // Convert to cm
+    int maxYIncrement = static_cast<int>(maxHeight * 100); // Convert to cm
+    int radiusIncrement = static_cast<int>(radius * 100) + 1; // Convert to cm, add 1 for safety
+    
+    // Search in all resolutions at each increment position
+    for (int y = minYIncrement; y <= maxYIncrement; y++) {
+        for (int x = centerIncrement.x() - radiusIncrement; x <= centerIncrement.x() + radiusIncrement; x++) {
+            for (int z = centerIncrement.z() - radiusIncrement; z <= centerIncrement.z() + radiusIncrement; z++) {
+                Math::IncrementCoordinates checkPos(x, y, z);
+                
+                // Convert to world position for distance check
+                Math::WorldCoordinates worldCoords = Math::CoordinateConverter::incrementToWorld(checkPos);
+                Math::Vector3f voxelWorldPos = worldCoords.value();
+                
+                // Check if within cylinder (distance from center in XZ plane)
+                float dx = voxelWorldPos.x - centerPos.x;
+                float dz = voxelWorldPos.z - centerPos.z;
+                float distanceSquared = dx * dx + dz * dz;
+                
+                if (distanceSquared <= radius * radius) {
+                    // Check if there's a voxel at this position in any resolution
+                    for (auto resolution : getAllResolutions()) {
+                        if (m_voxelManager->getVoxel(checkPos, resolution)) {
+                            voxels.push_back(checkPos);
+                            break; // Found one, don't need to check other resolutions
                         }
                     }
                 }
@@ -257,7 +268,7 @@ std::vector<Math::Vector3i> PlaneDetector::searchVoxelsInCylinder(const Math::Ve
     return voxels;
 }
 
-std::optional<Math::Vector3i> PlaneDetector::findHighestVoxel(const std::vector<Math::Vector3i>& voxels) const {
+std::optional<Math::IncrementCoordinates> PlaneDetector::findHighestVoxel(const std::vector<Math::IncrementCoordinates>& voxels) const {
     if (voxels.empty()) {
         return std::nullopt;
     }
@@ -287,7 +298,7 @@ std::optional<Math::Vector3i> PlaneDetector::findHighestVoxel(const std::vector<
     return highestVoxel;
 }
 
-bool PlaneDetector::wouldLargerVoxelOverlapSmaller(const Math::Vector3i& position,
+bool PlaneDetector::wouldLargerVoxelOverlapSmaller(const Math::IncrementCoordinates& position,
                                                   VoxelData::VoxelResolution largerResolution) const {
     if (!m_voxelManager) {
         return false;
@@ -312,23 +323,7 @@ std::vector<VoxelData::VoxelResolution> PlaneDetector::getAllResolutions() const
     };
 }
 
-Math::Vector3i PlaneDetector::worldToGrid(const Math::Vector3f& worldPos, VoxelData::VoxelResolution resolution) const {
-    float voxelSize = VoxelData::getVoxelSize(resolution);
-    return Math::Vector3i(
-        static_cast<int>(std::floor(worldPos.x / voxelSize)),
-        static_cast<int>(std::floor(worldPos.y / voxelSize)),
-        static_cast<int>(std::floor(worldPos.z / voxelSize))
-    );
-}
-
-Math::Vector3f PlaneDetector::gridToWorld(const Math::Vector3i& gridPos, VoxelData::VoxelResolution resolution) const {
-    float voxelSize = VoxelData::getVoxelSize(resolution);
-    return Math::Vector3f(
-        gridPos.x * voxelSize,
-        gridPos.y * voxelSize,
-        gridPos.z * voxelSize
-    );
-}
+// Note: worldToGrid and gridToWorld methods removed - use CoordinateConverter instead
 
 }
 }

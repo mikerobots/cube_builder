@@ -376,9 +376,9 @@ void SelectionSet::serialize(FileIO::BinaryWriter& writer) const {
     // Write each voxel
     for (const auto& voxel : m_voxels) {
         // Write position
-        writer.writeInt32(voxel.position.x);
-        writer.writeInt32(voxel.position.y);
-        writer.writeInt32(voxel.position.z);
+        writer.writeInt32(voxel.position.x());
+        writer.writeInt32(voxel.position.y());
+        writer.writeInt32(voxel.position.z());
         
         // Write resolution
         writer.writeUInt8(static_cast<uint8_t>(voxel.resolution));

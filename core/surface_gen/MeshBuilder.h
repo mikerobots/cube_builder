@@ -3,6 +3,7 @@
 #include "SurfaceTypes.h"
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include <unordered_map>
 #include <memory>
 
@@ -18,9 +19,9 @@ public:
     void beginMesh();
     
     // Add geometry
-    uint32_t addVertex(const Math::Vector3f& position);
-    uint32_t addVertex(const Math::Vector3f& position, const Math::Vector3f& normal);
-    uint32_t addVertex(const Math::Vector3f& position, const Math::Vector3f& normal, const Math::Vector2f& uv);
+    uint32_t addVertex(const Math::WorldCoordinates& position);
+    uint32_t addVertex(const Math::WorldCoordinates& position, const Math::Vector3f& normal);
+    uint32_t addVertex(const Math::WorldCoordinates& position, const Math::Vector3f& normal, const Math::Vector2f& uv);
     
     void addTriangle(uint32_t v0, uint32_t v1, uint32_t v2);
     void addQuad(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3);
@@ -57,7 +58,7 @@ public:
     
 private:
     // Current mesh data
-    std::vector<Math::Vector3f> m_vertices;
+    std::vector<Math::WorldCoordinates> m_vertices;
     std::vector<Math::Vector3f> m_normals;
     std::vector<Math::Vector2f> m_uvCoords;
     std::vector<uint32_t> m_indices;
@@ -65,7 +66,7 @@ private:
     
     // Vertex deduplication
     struct VertexKey {
-        Math::Vector3f position;
+        Math::WorldCoordinates position;
         Math::Vector3f normal;
         Math::Vector2f uv;
         bool hasNormal;
@@ -80,7 +81,7 @@ private:
     // Helper methods
     uint32_t findOrAddVertex(const VertexKey& key, float epsilon);
     void calculateFaceNormal(uint32_t i0, uint32_t i1, uint32_t i2, Math::Vector3f& normal);
-    void laplacianSmooth(std::vector<Math::Vector3f>& vertices, const std::vector<uint32_t>& indices, float factor);
+    void laplacianSmooth(std::vector<Math::WorldCoordinates>& vertices, const std::vector<uint32_t>& indices, float factor);
 };
 
 // Mesh simplification

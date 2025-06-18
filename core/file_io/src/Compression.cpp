@@ -371,21 +371,21 @@ std::vector<uint8_t> Compression::optimizeVoxelDataForCompression(const ::VoxelE
     // Write each voxel position
     for (const auto& voxel : voxels) {
         // X coordinate
-        int32_t x = voxel.gridPos.x;
+        int32_t x = voxel.gridPos.x();
         data.push_back(x & 0xFF);
         data.push_back((x >> 8) & 0xFF);
         data.push_back((x >> 16) & 0xFF);
         data.push_back((x >> 24) & 0xFF);
         
         // Y coordinate
-        int32_t y = voxel.gridPos.y;
+        int32_t y = voxel.gridPos.y();
         data.push_back(y & 0xFF);
         data.push_back((y >> 8) & 0xFF);
         data.push_back((y >> 16) & 0xFF);
         data.push_back((y >> 24) & 0xFF);
         
         // Z coordinate
-        int32_t z = voxel.gridPos.z;
+        int32_t z = voxel.gridPos.z();
         data.push_back(z & 0xFF);
         data.push_back((z >> 8) & 0xFF);
         data.push_back((z >> 16) & 0xFF);

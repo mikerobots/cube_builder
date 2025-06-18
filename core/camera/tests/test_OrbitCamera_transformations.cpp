@@ -25,9 +25,9 @@ TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
         camera->setYaw(45.0f);
         camera->setPitch(45.0f);
         camera->setDistance(10.0f);
-        camera->setTarget(Vector3f(0, 0, 0));
+        camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
         
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
         // At 45° yaw, 45° pitch, distance 10:
         // x = distance * cos(pitch) * sin(yaw)
@@ -37,9 +37,9 @@ TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
         float expectedY = 10.0f * std::sin(Math::toRadians(45.0f));
         float expectedZ = 10.0f * std::cos(Math::toRadians(45.0f)) * std::cos(Math::toRadians(45.0f));
         
-        EXPECT_NEAR(pos.x, expectedX, EPSILON) << "X position incorrect for 45° yaw, 45° pitch";
-        EXPECT_NEAR(pos.y, expectedY, EPSILON) << "Y position incorrect for 45° yaw, 45° pitch";
-        EXPECT_NEAR(pos.z, expectedZ, EPSILON) << "Z position incorrect for 45° yaw, 45° pitch";
+        EXPECT_NEAR(pos.x(), expectedX, EPSILON) << "X position incorrect for 45° yaw, 45° pitch";
+        EXPECT_NEAR(pos.y(), expectedY, EPSILON) << "Y position incorrect for 45° yaw, 45° pitch";
+        EXPECT_NEAR(pos.z(), expectedZ, EPSILON) << "Z position incorrect for 45° yaw, 45° pitch";
     }
     
     // Test 2: Looking straight down from above (0° yaw, 90° pitch)
@@ -47,13 +47,13 @@ TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
         camera->setYaw(0.0f);
         camera->setPitch(90.0f);
         camera->setDistance(5.0f);
-        camera->setTarget(Vector3f(0, 0, 0));
+        camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
         
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
-        EXPECT_NEAR(pos.x, 0.0f, EPSILON) << "X should be 0 when looking straight down";
-        EXPECT_NEAR(pos.y, 5.0f, EPSILON) << "Y should equal distance when pitch=90°";
-        EXPECT_NEAR(pos.z, 0.0f, EPSILON) << "Z should be 0 when looking straight down";
+        EXPECT_NEAR(pos.x(), 0.0f, EPSILON) << "X should be 0 when looking straight down";
+        EXPECT_NEAR(pos.y(), 5.0f, EPSILON) << "Y should equal distance when pitch=90°";
+        EXPECT_NEAR(pos.z(), 0.0f, EPSILON) << "Z should be 0 when looking straight down";
     }
     
     // Test 3: Looking from the front (0° yaw, 0° pitch)
@@ -61,13 +61,13 @@ TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
         camera->setYaw(0.0f);
         camera->setPitch(0.0f);
         camera->setDistance(8.0f);
-        camera->setTarget(Vector3f(0, 0, 0));
+        camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
         
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
-        EXPECT_NEAR(pos.x, 0.0f, EPSILON) << "X should be 0 at yaw=0°";
-        EXPECT_NEAR(pos.y, 0.0f, EPSILON) << "Y should be 0 at pitch=0°";
-        EXPECT_NEAR(pos.z, 8.0f, EPSILON) << "Z should equal distance when yaw=0°, pitch=0°";
+        EXPECT_NEAR(pos.x(), 0.0f, EPSILON) << "X should be 0 at yaw=0°";
+        EXPECT_NEAR(pos.y(), 0.0f, EPSILON) << "Y should be 0 at pitch=0°";
+        EXPECT_NEAR(pos.z(), 8.0f, EPSILON) << "Z should equal distance when yaw=0°, pitch=0°";
     }
     
     // Test 4: Looking from the side (90° yaw, 0° pitch)
@@ -75,19 +75,19 @@ TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
         camera->setYaw(90.0f);
         camera->setPitch(0.0f);
         camera->setDistance(7.0f);
-        camera->setTarget(Vector3f(0, 0, 0));
+        camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
         
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
-        EXPECT_NEAR(pos.x, 7.0f, EPSILON) << "X should equal distance at yaw=90°";
-        EXPECT_NEAR(pos.y, 0.0f, EPSILON) << "Y should be 0 at pitch=0°";
-        EXPECT_NEAR(pos.z, 0.0f, EPSILON) << "Z should be 0 at yaw=90°";
+        EXPECT_NEAR(pos.x(), 7.0f, EPSILON) << "X should equal distance at yaw=90°";
+        EXPECT_NEAR(pos.y(), 0.0f, EPSILON) << "Y should be 0 at pitch=0°";
+        EXPECT_NEAR(pos.z(), 0.0f, EPSILON) << "Z should be 0 at yaw=90°";
     }
 }
 
 // Test that view matrix correctly transforms target to origin in view space
 TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformsTargetToOrigin) {
-    Vector3f target(2.0f, 3.0f, 4.0f);
+    WorldCoordinates target(Vector3f(2.0f, 3.0f, 4.0f));
     camera->setTarget(target);
     camera->setDistance(10.0f);
     camera->setYaw(30.0f);
@@ -100,14 +100,14 @@ TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformsTargetToOrigin) {
     // So we need to verify that the target transforms correctly
     
     // For now, let's verify the view matrix is consistent with position
-    Vector3f cameraPos = camera->getPosition();
+    WorldCoordinates cameraPos = camera->getPosition();
     
     // Transform the target to view space
-    Vector4f targetHomogeneous(target.x, target.y, target.z, 1.0f);
+    Vector4f targetHomogeneous(target.x(), target.y(), target.z(), 1.0f);
     Vector4f targetInView = viewMatrix * targetHomogeneous;
     
     // Transform the camera position to view space (should be at origin)
-    Vector4f camPosHomogeneous(cameraPos.x, cameraPos.y, cameraPos.z, 1.0f);
+    Vector4f camPosHomogeneous(cameraPos.x(), cameraPos.y(), cameraPos.z(), 1.0f);
     Vector4f camPosInView = viewMatrix * camPosHomogeneous;
     
     // Camera position should be at origin in view space
@@ -117,13 +117,13 @@ TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformsTargetToOrigin) {
     
     // The target should be along the negative Z axis in view space
     // The distance from camera to target should be preserved
-    float expectedDistance = (target - cameraPos).length();
+    float expectedDistance = (target.value() - cameraPos.value()).length();
     EXPECT_NEAR(targetInView.z, -expectedDistance, EPSILON) << "Target should be at -distance along Z in view space";
 }
 
 // Test view matrix for objects at various positions
 TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformations) {
-    camera->setTarget(Vector3f(0, 0, 0));
+    camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera->setDistance(5.0f);
     camera->setYaw(0.0f);
     camera->setPitch(0.0f);
@@ -144,8 +144,8 @@ TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformations) {
     
     // Object at camera position should transform to (0, 0, 0)
     {
-        Vector3f camPos = camera->getPosition();
-        Vector4f atCamera(camPos.x, camPos.y, camPos.z, 1);
+        WorldCoordinates camPos = camera->getPosition();
+        Vector4f atCamera(camPos.x(), camPos.y(), camPos.z(), 1);
         Vector4f viewSpace = viewMatrix * atCamera;
         
         EXPECT_NEAR(viewSpace.x, 0.0f, EPSILON) << "Camera position X in view space";
@@ -192,7 +192,7 @@ TEST_F(OrbitCameraTransformationTest, ProjectionMatrixNDC) {
 TEST_F(OrbitCameraTransformationTest, VoxelMVPTransformation) {
     // Set up camera similar to main app
     camera->setViewPreset(ViewPreset::ISOMETRIC);
-    camera->setTarget(Vector3f(0.64f, 0.64f, 0.64f));  // Voxel at (0,0,0) world position
+    camera->setTarget(WorldCoordinates(Vector3f(0.64f, 0.64f, 0.64f)));  // Voxel at (0,0,0) world position
     camera->setDistance(5.0f);
     
     Matrix4f viewMatrix = camera->getViewMatrix();
@@ -253,36 +253,36 @@ TEST_F(OrbitCameraTransformationTest, VoxelMVPTransformation) {
 
 // Test view presets produce expected camera positions
 TEST_F(OrbitCameraTransformationTest, ViewPresetPositions) {
-    camera->setTarget(Vector3f(0, 0, 0));
+    camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera->setDistance(10.0f);
     
     // Test FRONT view
     {
         camera->setViewPreset(ViewPreset::FRONT);
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
-        EXPECT_NEAR(pos.x, 0.0f, EPSILON) << "FRONT view X position";
-        EXPECT_NEAR(pos.y, 0.0f, EPSILON) << "FRONT view Y position";
-        EXPECT_GT(pos.z, 0.0f) << "FRONT view should be in +Z";
+        EXPECT_NEAR(pos.x(), 0.0f, EPSILON) << "FRONT view X position";
+        EXPECT_NEAR(pos.y(), 0.0f, EPSILON) << "FRONT view Y position";
+        EXPECT_GT(pos.z(), 0.0f) << "FRONT view should be in +Z";
     }
     
     // Test TOP view
     {
         camera->setViewPreset(ViewPreset::TOP);
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
-        EXPECT_NEAR(pos.x, 0.0f, EPSILON) << "TOP view X position";
-        EXPECT_GT(pos.y, 0.0f) << "TOP view should be in +Y";
-        EXPECT_NEAR(pos.z, 0.0f, EPSILON) << "TOP view Z position";
+        EXPECT_NEAR(pos.x(), 0.0f, EPSILON) << "TOP view X position";
+        EXPECT_GT(pos.y(), 0.0f) << "TOP view should be in +Y";
+        EXPECT_NEAR(pos.z(), 0.0f, EPSILON) << "TOP view Z position";
     }
     
     // Test RIGHT view
     {
         camera->setViewPreset(ViewPreset::RIGHT);
-        Vector3f pos = camera->getPosition();
+        WorldCoordinates pos = camera->getPosition();
         
-        EXPECT_GT(pos.x, 0.0f) << "RIGHT view should be in +X";
-        EXPECT_NEAR(pos.y, 0.0f, EPSILON) << "RIGHT view Y position";
-        EXPECT_NEAR(pos.z, 0.0f, EPSILON) << "RIGHT view Z position";
+        EXPECT_GT(pos.x(), 0.0f) << "RIGHT view should be in +X";
+        EXPECT_NEAR(pos.y(), 0.0f, EPSILON) << "RIGHT view Y position";
+        EXPECT_NEAR(pos.z(), 0.0f, EPSILON) << "RIGHT view Z position";
     }
 }

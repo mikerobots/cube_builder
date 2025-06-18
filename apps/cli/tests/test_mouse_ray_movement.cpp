@@ -47,7 +47,7 @@ protected:
         }
         
         // Get camera position as ray origin
-        Math::Vector3f camPosVec = camera->getPosition();
+        Math::Vector3f camPosVec = camera->getPosition().value();
         glm::vec3 cameraPos(camPosVec.x, camPosVec.y, camPosVec.z);
         
         // Unproject a point on the far plane to get ray direction
@@ -226,7 +226,7 @@ TEST_F(MouseRayMovementTest, ScreenCenterRayPointsForward) {
 TEST_F(MouseRayMovementTest, MouseAtCornersProducesExpectedRays) {
     // Set camera looking down Z axis
     camera->setPosition(Math::Vector3f(0.0f, 0.0f, 10.0f));
-    camera->setTarget(Math::Vector3f(0.0f, 0.0f, 0.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
     
     // Get rays from corners
     auto topLeft = generateMouseRay(0, 0, 800, 600);

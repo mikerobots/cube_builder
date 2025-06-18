@@ -12,6 +12,8 @@
 #include "foundation/math/BoundingBox.h"
 #include "foundation/math/Quaternion.h"
 #include "foundation/math/Matrix4f.h"
+#include "foundation/math/CoordinateTypes.h"
+#include "foundation/math/CoordinateConverter.h"
 
 namespace VoxelEditor {
 namespace VisualFeedback {
@@ -61,10 +63,10 @@ enum class TextAlignment : uint8_t {
 class Face {
 public:
     Face() = default;
-    Face(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir);
+    Face(const Math::IncrementCoordinates& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir);
     
     // Special constructor for ground plane (Enhancement)
-    static Face GroundPlane(const Math::Vector3f& hitPoint);
+    static Face GroundPlane(const Math::WorldCoordinates& hitPoint);
     
     // Face identification
     FaceId getId() const;
@@ -72,15 +74,15 @@ public:
     bool isGroundPlane() const { return m_isGroundPlane; }
     
     // Properties
-    Math::Vector3i getVoxelPosition() const { return m_voxelPosition; }
+    Math::IncrementCoordinates getVoxelPosition() const { return m_voxelPosition; }
     VoxelData::VoxelResolution getResolution() const { return m_resolution; }
     FaceDirection getDirection() const { return m_direction; }
     
     // Geometric properties
-    Math::Vector3f getWorldPosition() const;
+    Math::WorldCoordinates getWorldPosition() const;
     Math::Vector3f getNormal() const;
-    std::array<Math::Vector3f, 4> getCorners() const;
-    Math::Vector3f getCenter() const;
+    std::array<Math::WorldCoordinates, 4> getCorners() const;
+    Math::WorldCoordinates getCenter() const;
     float getArea() const;
     
     // Comparison
@@ -88,15 +90,25 @@ public:
     bool operator!=(const Face& other) const { return !(*this == other); }
     
     // Ground plane specific (Enhancement)
-    Math::Vector3f getGroundPlaneHitPoint() const { return m_groundHitPoint; }
+    Math::WorldCoordinates getGroundPlaneHitPoint() const { return m_groundHitPoint; }
+    
+    // Backward compatibility wrapper methods (to be removed in Phase 7)
+    Face(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir)
+        : Face(Math::IncrementCoordinates(voxelPos), res, dir) {}
+    static Face GroundPlane(const Math::Vector3f& hitPoint) {
+        return GroundPlane(Math::WorldCoordinates(hitPoint));
+    }
+    Math::Vector3i getVoxelPositionVector() const { return m_voxelPosition.value(); }
+    Math::Vector3f getWorldPositionVector() const { return getWorldPosition().value(); }
+    Math::Vector3f getGroundPlaneHitPointVector() const { return m_groundHitPoint.value(); }
     
 private:
-    Math::Vector3i m_voxelPosition;
+    Math::IncrementCoordinates m_voxelPosition;
     VoxelData::VoxelResolution m_resolution;
     FaceDirection m_direction;
     bool m_valid = false;
     bool m_isGroundPlane = false;  // Enhancement
-    Math::Vector3f m_groundHitPoint;  // Enhancement
+    Math::WorldCoordinates m_groundHitPoint;  // Enhancement
     
     float getVoxelSize() const;
 };
@@ -158,31 +170,35 @@ public:
 
 // Ray for face detection
 struct Ray {
-    Math::Vector3f origin;
-    Math::Vector3f direction;
+    Math::WorldCoordinates origin;
+    Math::Vector3f direction;  // Direction remains as Vector3f (normalized vector)
     
     Ray() = default;
-    Ray(const Math::Vector3f& o, const Math::Vector3f& d) : origin(o), direction(d.normalized()) {}
+    Ray(const Math::WorldCoordinates& o, const Math::Vector3f& d) : origin(o), direction(d.normalized()) {}
     
-    Math::Vector3f pointAt(float t) const { return origin + direction * t; }
+    // Backward compatibility constructors
+    Ray(const Math::Vector3f& o, const Math::Vector3f& d) : origin(Math::WorldCoordinates(o)), direction(d.normalized()) {}
+    
+    Math::WorldCoordinates pointAt(float t) const { return Math::WorldCoordinates(origin.value() + direction * t); }
+    Math::Vector3f pointAtVector(float t) const { return origin.value() + direction * t; }
 };
 
 // Raycast hit information
 struct RaycastHit {
     bool hit = false;
-    Math::Vector3f position;
-    Math::Vector3f normal;
+    Math::WorldCoordinates position;
+    Math::Vector3f normal;  // Normal remains as Vector3f (normalized direction)
     Face face;
     float distance = 0.0f;
 };
 
 // Transform for instances
 struct Transform {
-    Math::Vector3f position;
+    Math::WorldCoordinates position;
     Math::Quaternion rotation;
     Math::Vector3f scale;
     
-    Transform() : scale(1.0f, 1.0f, 1.0f) {}
+    Transform() : position(Math::WorldCoordinates::zero()), scale(1.0f, 1.0f, 1.0f) {}
     
     Math::Matrix4f toMatrix() const;
 };

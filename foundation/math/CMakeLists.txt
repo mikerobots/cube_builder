@@ -5,6 +5,8 @@ set(MATH_SOURCES
     Vector3f.h
     Vector3i.h
     Matrix4f.h
+    CoordinateTypes.h
+    CoordinateConverter.h
 )
 
 add_library(VoxelEditor_Math INTERFACE)

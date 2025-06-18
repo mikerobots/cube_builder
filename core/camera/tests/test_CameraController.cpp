@@ -112,7 +112,7 @@ TEST_F(CameraControllerTest, OrbitControl) {
 
 TEST_F(CameraControllerTest, PanControl) {
     Vector2i startPos(400, 300);
-    Vector3f initialTarget = controller->getCamera()->getTarget();
+    WorldCoordinates initialTarget = controller->getCamera()->getTarget();
     
     // Start pan
     controller->onMouseButtonDown(startPos, 1);
@@ -179,24 +179,24 @@ TEST_F(CameraControllerTest, FrameAll) {
     Vector3f minBounds(-5.0f, -3.0f, -2.0f);
     Vector3f maxBounds(5.0f, 3.0f, 2.0f);
     
-    controller->frameAll(minBounds, maxBounds);
+    controller->frameAll(WorldCoordinates(minBounds), WorldCoordinates(maxBounds));
     
     // Camera should focus on center of bounds
     Vector3f expectedCenter = (minBounds + maxBounds) * 0.5f;
-    EXPECT_EQ(controller->getCamera()->getTarget(), expectedCenter);
+    EXPECT_EQ(controller->getCamera()->getTarget().value(), expectedCenter);
 }
 
 TEST_F(CameraControllerTest, FocusOn) {
     Vector3f focusPoint(10.0f, 5.0f, -3.0f);
     
-    controller->focusOn(focusPoint, 15.0f);
+    controller->focusOn(WorldCoordinates(focusPoint), 15.0f);
     
-    EXPECT_EQ(controller->getCamera()->getTarget(), focusPoint);
+    EXPECT_EQ(controller->getCamera()->getTarget().value(), focusPoint);
     EXPECT_FLOAT_EQ(controller->getCamera()->getDistance(), 15.0f);
     
     // Test focus without distance
-    controller->focusOn(Vector3f(0.0f, 0.0f, 0.0f));
-    EXPECT_EQ(controller->getCamera()->getTarget(), Vector3f(0.0f, 0.0f, 0.0f));
+    controller->focusOn(WorldCoordinates(Vector3f(0.0f, 0.0f, 0.0f)));
+    EXPECT_EQ(controller->getCamera()->getTarget().value(), Vector3f(0.0f, 0.0f, 0.0f));
 }
 
 TEST_F(CameraControllerTest, MouseRayGeneration) {
@@ -213,7 +213,7 @@ TEST_F(CameraControllerTest, MouseRayGeneration) {
 
 TEST_F(CameraControllerTest, WorldToScreen) {
     // Test converting target point to screen coordinates
-    Vector3f targetPoint = controller->getCamera()->getTarget();
+    Vector3f targetPoint = controller->getCamera()->getTarget().value();
     Vector2i screenPos = controller->worldToScreen(targetPoint);
     
     // Target should project near center of viewport

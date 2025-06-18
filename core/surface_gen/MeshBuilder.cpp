@@ -43,9 +43,9 @@ bool MeshBuilder::VertexKey::equals(const VertexKey& other, float epsilon) const
     }
     
     // Compare positions
-    if (std::abs(position.x - other.position.x) > epsilon ||
-        std::abs(position.y - other.position.y) > epsilon ||
-        std::abs(position.z - other.position.z) > epsilon) {
+    if (std::abs(position.x() - other.position.x()) > epsilon ||
+        std::abs(position.y() - other.position.y()) > epsilon ||
+        std::abs(position.z() - other.position.z()) > epsilon) {
         return false;
     }
     
@@ -77,9 +77,9 @@ size_t MeshBuilder::VertexKey::hash() const {
     };
     
     // Hash position (quantized)
-    hashCombine(std::hash<int>{}(static_cast<int>(position.x * 10000)));
-    hashCombine(std::hash<int>{}(static_cast<int>(position.y * 10000)));
-    hashCombine(std::hash<int>{}(static_cast<int>(position.z * 10000)));
+    hashCombine(std::hash<int>{}(static_cast<int>(position.x() * 10000)));
+    hashCombine(std::hash<int>{}(static_cast<int>(position.y() * 10000)));
+    hashCombine(std::hash<int>{}(static_cast<int>(position.z() * 10000)));
     
     return h;
 }
@@ -101,17 +101,17 @@ void MeshBuilder::beginMesh() {
     Logging::Logger::getInstance().debug("Starting new mesh build", "MeshBuilder");
 }
 
-uint32_t MeshBuilder::addVertex(const Math::Vector3f& position) {
+uint32_t MeshBuilder::addVertex(const Math::WorldCoordinates& position) {
     uint32_t index = static_cast<uint32_t>(m_vertices.size());
     m_vertices.push_back(position);
     
     Logging::Logger::getInstance().debugfc("MeshBuilder", 
-        "Added vertex %u: pos(%.3f, %.3f, %.3f)", index, position.x, position.y, position.z);
+        "Added vertex %u: pos(%.3f, %.3f, %.3f)", index, position.x(), position.y(), position.z());
     
     return index;
 }
 
-uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vector3f& normal) {
+uint32_t MeshBuilder::addVertex(const Math::WorldCoordinates& position, const Math::Vector3f& normal) {
     uint32_t index = static_cast<uint32_t>(m_vertices.size());
     m_vertices.push_back(position);
     m_normals.push_back(normal);
@@ -123,12 +123,12 @@ uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vect
     
     Logging::Logger::getInstance().debugfc("MeshBuilder", 
         "Added vertex %u: pos(%.3f, %.3f, %.3f), normal(%.3f, %.3f, %.3f)", 
-        index, position.x, position.y, position.z, normal.x, normal.y, normal.z);
+        index, position.x(), position.y(), position.z(), normal.x, normal.y, normal.z);
     
     return index;
 }
 
-uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vector3f& normal, const Math::Vector2f& uv) {
+uint32_t MeshBuilder::addVertex(const Math::WorldCoordinates& position, const Math::Vector3f& normal, const Math::Vector2f& uv) {
     uint32_t index = static_cast<uint32_t>(m_vertices.size());
     m_vertices.push_back(position);
     m_normals.push_back(normal);
@@ -144,7 +144,7 @@ uint32_t MeshBuilder::addVertex(const Math::Vector3f& position, const Math::Vect
     
     Logging::Logger::getInstance().debugfc("MeshBuilder", 
         "Added vertex %u: pos(%.3f, %.3f, %.3f), normal(%.3f, %.3f, %.3f), uv(%.3f, %.3f)", 
-        index, position.x, position.y, position.z, normal.x, normal.y, normal.z, uv.x, uv.y);
+        index, position.x(), position.y(), position.z(), normal.x, normal.y, normal.z, uv.x, uv.y);
     
     return index;
 }
@@ -193,7 +193,7 @@ Mesh MeshBuilder::endMesh() {
 
 void MeshBuilder::removeDuplicateVertices(float epsilon) {
     std::vector<uint32_t> vertexRemap(m_vertices.size());
-    std::vector<Math::Vector3f> uniqueVertices;
+    std::vector<Math::WorldCoordinates> uniqueVertices;
     std::vector<Math::Vector3f> uniqueNormals;
     std::vector<Math::Vector2f> uniqueUVs;
     
@@ -324,9 +324,9 @@ void MeshBuilder::generateSmoothNormals() {
 }
 
 void MeshBuilder::calculateFaceNormal(uint32_t i0, uint32_t i1, uint32_t i2, Math::Vector3f& normal) {
-    const Math::Vector3f& v0 = m_vertices[i0];
-    const Math::Vector3f& v1 = m_vertices[i1];
-    const Math::Vector3f& v2 = m_vertices[i2];
+    const Math::Vector3f& v0 = m_vertices[i0].value();
+    const Math::Vector3f& v1 = m_vertices[i1].value();
+    const Math::Vector3f& v2 = m_vertices[i2].value();
     
     Math::Vector3f edge1 = v1 - v0;
     Math::Vector3f edge2 = v2 - v0;
@@ -346,22 +346,22 @@ void MeshBuilder::generateBoxUVs(float scale) {
         // Simple box mapping - use the two most significant axes
         Math::Vector2f uv;
         
-        float absX = std::abs(vertex.x);
-        float absY = std::abs(vertex.y);
-        float absZ = std::abs(vertex.z);
+        float absX = std::abs(vertex.x());
+        float absY = std::abs(vertex.y());
+        float absZ = std::abs(vertex.z());
         
         if (absX >= absY && absX >= absZ) {
             // X-axis dominant - use YZ plane
-            uv.x = vertex.y * scale;
-            uv.y = vertex.z * scale;
+            uv.x = vertex.y() * scale;
+            uv.y = vertex.z() * scale;
         } else if (absY >= absX && absY >= absZ) {
             // Y-axis dominant - use XZ plane
-            uv.x = vertex.x * scale;
-            uv.y = vertex.z * scale;
+            uv.x = vertex.x() * scale;
+            uv.y = vertex.z() * scale;
         } else {
             // Z-axis dominant - use XY plane
-            uv.x = vertex.x * scale;
-            uv.y = vertex.y * scale;
+            uv.x = vertex.x() * scale;
+            uv.y = vertex.y() * scale;
         }
         
         m_uvCoords.push_back(uv);
@@ -418,7 +418,7 @@ Mesh MeshBuilder::smoothMesh(const Mesh& mesh, int iterations, float factor) {
     return result;
 }
 
-void MeshBuilder::laplacianSmooth(std::vector<Math::Vector3f>& vertices, 
+void MeshBuilder::laplacianSmooth(std::vector<Math::WorldCoordinates>& vertices, 
                                  const std::vector<uint32_t>& indices, float factor) {
     // Build vertex adjacency
     std::vector<std::unordered_set<uint32_t>> adjacency(vertices.size());
@@ -437,7 +437,7 @@ void MeshBuilder::laplacianSmooth(std::vector<Math::Vector3f>& vertices,
     }
     
     // Apply Laplacian smoothing
-    std::vector<Math::Vector3f> smoothedVertices = vertices;
+    std::vector<Math::WorldCoordinates> smoothedVertices = vertices;
     
     for (size_t i = 0; i < vertices.size(); ++i) {
         if (adjacency[i].empty()) {
@@ -446,11 +446,13 @@ void MeshBuilder::laplacianSmooth(std::vector<Math::Vector3f>& vertices,
         
         Math::Vector3f avg(0, 0, 0);
         for (uint32_t neighbor : adjacency[i]) {
-            avg = avg + vertices[neighbor];
+            avg = avg + vertices[neighbor].value();
         }
         avg = avg / static_cast<float>(adjacency[i].size());
         
-        smoothedVertices[i] = vertices[i] + (avg - vertices[i]) * factor;
+        Math::Vector3f currentPos = vertices[i].value();
+        Math::Vector3f newPos = currentPos + (avg - currentPos) * factor;
+        smoothedVertices[i] = Math::WorldCoordinates(newPos);
     }
     
     vertices = std::move(smoothedVertices);
@@ -487,9 +489,9 @@ float MeshUtils::calculateVolume(const Mesh& mesh) {
     
     // Use divergence theorem: Volume = 1/6 * sum of (v0 . (v1 x v2))
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]];
-        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]];
-        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]];
+        const Math::Vector3f v0 = mesh.vertices[mesh.indices[i]].value();
+        const Math::Vector3f v1 = mesh.vertices[mesh.indices[i + 1]].value();
+        const Math::Vector3f v2 = mesh.vertices[mesh.indices[i + 2]].value();
         
         volume += v0.dot(v1.cross(v2));
     }
@@ -501,9 +503,9 @@ float MeshUtils::calculateSurfaceArea(const Mesh& mesh) {
     float area = 0.0f;
     
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]];
-        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]];
-        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]];
+        const Math::Vector3f v0 = mesh.vertices[mesh.indices[i]].value();
+        const Math::Vector3f v1 = mesh.vertices[mesh.indices[i + 1]].value();
+        const Math::Vector3f v2 = mesh.vertices[mesh.indices[i + 2]].value();
         
         Math::Vector3f edge1 = v1 - v0;
         Math::Vector3f edge2 = v2 - v0;
@@ -523,13 +525,13 @@ void MeshUtils::centerMesh(Mesh& mesh) {
     // Calculate center
     Math::Vector3f center(0, 0, 0);
     for (const auto& vertex : mesh.vertices) {
-        center = center + vertex;
+        center = center + vertex.value();
     }
     center = center / static_cast<float>(mesh.vertices.size());
     
     // Translate to origin
     for (auto& vertex : mesh.vertices) {
-        vertex = vertex - center;
+        vertex = Math::WorldCoordinates(vertex.value() - center);
     }
     
     mesh.calculateBounds();
@@ -537,7 +539,7 @@ void MeshUtils::centerMesh(Mesh& mesh) {
 
 void MeshUtils::scaleMesh(Mesh& mesh, float scale) {
     for (auto& vertex : mesh.vertices) {
-        vertex = vertex * scale;
+        vertex = Math::WorldCoordinates(vertex.value() * scale);
     }
     
     mesh.calculateBounds();
@@ -564,8 +566,8 @@ void MeshBuilder::generateSphericalUVs() {
         // Simple spherical mapping
         float r = vertex.length();
         if (r > 0.0001f) {
-            float theta = std::atan2(vertex.z, vertex.x);
-            float phi = std::acos(vertex.y / r);
+            float theta = std::atan2(vertex.z(), vertex.x());
+            float phi = std::acos(vertex.y() / r);
             uv.x = (theta + M_PI) / (2.0f * M_PI);
             uv.y = phi / M_PI;
         }
@@ -581,9 +583,9 @@ void MeshBuilder::generateCylindricalUVs(const Math::Vector3f& axis) {
     for (const auto& vertex : m_vertices) {
         Math::Vector2f uv;
         // Simple cylindrical mapping along Y axis
-        float theta = std::atan2(vertex.z, vertex.x);
+        float theta = std::atan2(vertex.z(), vertex.x());
         uv.x = (theta + M_PI) / (2.0f * M_PI);
-        uv.y = vertex.y;
+        uv.y = vertex.y();
         m_uvCoords.push_back(uv);
     }
 }
@@ -785,7 +787,7 @@ void MeshSimplifier::buildDataStructures(const Mesh& mesh) {
     m_vertices.reserve(mesh.vertices.size());
     for (const auto& pos : mesh.vertices) {
         auto vertex = std::make_unique<Vertex>();
-        vertex->position = pos;
+        vertex->position = pos.value();
         m_vertices.push_back(std::move(vertex));
     }
     
@@ -1004,7 +1006,7 @@ Mesh MeshSimplifier::extractMesh() {
     // Add non-deleted vertices
     for (auto& vertex : m_vertices) {
         if (!vertex->deleted) {
-            uint32_t index = builder.addVertex(vertex->position);
+            uint32_t index = builder.addVertex(Math::WorldCoordinates(vertex->position));
             vertexMap[vertex.get()] = index;
         }
     }
@@ -1046,9 +1048,9 @@ void MeshUtils::removeDegenerateTriangles(Mesh& mesh, float epsilon) {
     newIndices.reserve(mesh.indices.size());
     
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]];
-        const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]];
-        const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]];
+        const Math::Vector3f v0 = mesh.vertices[mesh.indices[i]].value();
+        const Math::Vector3f v1 = mesh.vertices[mesh.indices[i + 1]].value();
+        const Math::Vector3f v2 = mesh.vertices[mesh.indices[i + 2]].value();
         
         // Check if triangle is degenerate
         Math::Vector3f edge1 = v1 - v0;
@@ -1082,7 +1084,7 @@ Mesh MeshUtils::quadToTriangleMesh(const std::vector<QuadFace>& quads, const std
     
     // Add all vertices
     for (const auto& vertex : vertices) {
-        builder.addVertex(vertex);
+        builder.addVertex(Math::WorldCoordinates(vertex));
     }
     
     // Convert quads to triangles
@@ -1132,7 +1134,7 @@ Mesh MeshUtils::subdivide(const Mesh& mesh, int levels) {
                     return it->second;
                 }
                 
-                Math::Vector3f midpoint = (result.vertices[a] + result.vertices[b]) * 0.5f;
+                Math::WorldCoordinates midpoint = (result.vertices[a] + result.vertices[b]) * 0.5f;
                 uint32_t index = builder.addVertex(midpoint);
                 edgeMidpoints[key] = index;
                 return index;
@@ -1170,7 +1172,7 @@ Mesh MeshUtils::remesh(const Mesh& mesh, float targetEdgeLength) {
 
 void MeshUtils::translateMesh(Mesh& mesh, const Math::Vector3f& translation) {
     for (auto& vertex : mesh.vertices) {
-        vertex = vertex + translation;
+        vertex = Math::WorldCoordinates(vertex.value() + translation);
     }
     mesh.calculateBounds();
 }
