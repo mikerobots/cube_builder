@@ -13,6 +13,8 @@ add_executable(VoxelEditor_Selection_Tests
     TestBoxSelector.cpp
     TestSphereSelector.cpp
     TestFloodFillSelector.cpp
+    test_Selection_requirements.cpp
+    TestSelectionPerformance.cpp
 )
 
 target_link_libraries(VoxelEditor_Selection_Tests

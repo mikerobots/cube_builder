@@ -7,12 +7,12 @@ using namespace VoxelEditor::Selection;
 class SelectionSetTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        // Create some test voxels
-        voxel1 = VoxelId(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm);
-        voxel2 = VoxelId(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_4cm);
-        voxel3 = VoxelId(Math::Vector3i(0, 1, 0), VoxelData::VoxelResolution::Size_4cm);
-        voxel4 = VoxelId(Math::Vector3i(0, 0, 1), VoxelData::VoxelResolution::Size_4cm);
-        voxel5 = VoxelId(Math::Vector3i(1, 1, 1), VoxelData::VoxelResolution::Size_8cm);
+        // Create some test voxels - use 4cm increments for 4cm voxels to ensure they're distinct
+        voxel1 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_4cm);
+        voxel2 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(4, 0, 0)), VoxelData::VoxelResolution::Size_4cm);
+        voxel3 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 4, 0)), VoxelData::VoxelResolution::Size_4cm);
+        voxel4 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 4)), VoxelData::VoxelResolution::Size_4cm);
+        voxel5 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(8, 8, 8)), VoxelData::VoxelResolution::Size_8cm);
     }
     
     VoxelId voxel1, voxel2, voxel3, voxel4, voxel5;
@@ -20,6 +20,7 @@ protected:
 
 // Construction Tests
 TEST_F(SelectionSetTest, DefaultConstruction) {
+    // REQ: SelectionSet manages collections of selected voxels
     SelectionSet set;
     EXPECT_TRUE(set.empty());
     EXPECT_EQ(set.size(), 0u);
@@ -230,25 +231,29 @@ TEST_F(SelectionSetTest, ToVector) {
 }
 
 TEST_F(SelectionSetTest, GetBounds) {
+    // REQ: Support for selection validation and bounds checking
     SelectionSet set = {voxel1, voxel2, voxel3};
     Math::BoundingBox bounds = set.getBounds();
     
-    // With 4cm voxels at (0,0,0), (1,0,0), (0,1,0)
+    // With 4cm voxels:
+    // voxel1 at IncrementCoordinates(0,0,0) -> bounds (0,0,0) to (0.04,0.04,0.04)
+    // voxel2 at IncrementCoordinates(4,0,0) -> bounds (0.04,0,0) to (0.08,0.04,0.04)
+    // voxel3 at IncrementCoordinates(0,4,0) -> bounds (0,0.04,0) to (0.04,0.08,0.04)
+    // Combined bounds encompass all three voxels:
     EXPECT_EQ(bounds.min, Math::Vector3f(0.0f, 0.0f, 0.0f));
     EXPECT_EQ(bounds.max, Math::Vector3f(0.08f, 0.08f, 0.04f));
 }
 
 TEST_F(SelectionSetTest, GetCenter) {
-    // Create set with voxels at (0,0,0) and (-1,0,0) to get center at (-0.5*0.04, 0, 0) + (0.02, 0.02, 0.02) = (0, 0.02, 0.02)
+    // Create set with voxels at (0,0,0) and (-4,0,0) - use 4cm increments for proper alignment
     VoxelId v1(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm);
-    VoxelId v2(Math::Vector3i(-1, 0, 0), VoxelData::VoxelResolution::Size_4cm);
+    VoxelId v2(Math::Vector3i(-4, 0, 0), VoxelData::VoxelResolution::Size_4cm);
     SelectionSet set = {v1, v2};
     
     Math::Vector3f center = set.getCenter();
-    // v1 center: (0 * 0.04 + 0.02, 0 * 0.04 + 0.02, 0 * 0.04 + 0.02) = (0.02, 0.02, 0.02)
-    // v2 center: (-1 * 0.04 + 0.02, 0 * 0.04 + 0.02, 0 * 0.04 + 0.02) = (-0.02, 0.02, 0.02)
-    // average: ((0.02 + (-0.02)) / 2, 0.02, 0.02) = (0, 0.02, 0.02)
-    // Note: Actual value shows 0.02 for x, so expected calculation is wrong. Use actual.
+    // v1 world position: (0,0,0) + half_size(0.02,0.02,0.02) = (0.02, 0.02, 0.02)
+    // v2 world position: (-0.04,0,0) + half_size(0.02,0.02,0.02) = (-0.02, 0.02, 0.02)
+    // average: ((0.02 + (-0.02)) / 2, (0.02 + 0.02) / 2, (0.02 + 0.02) / 2) = (0, 0.02, 0.02)
     EXPECT_NEAR(center.x, 0.0f, 0.001f);
     EXPECT_NEAR(center.y, 0.02f, 0.001f);
     EXPECT_NEAR(center.z, 0.02f, 0.001f);
@@ -269,6 +274,7 @@ TEST_F(SelectionSetTest, GetStats) {
 
 // Filtering Tests
 TEST_F(SelectionSetTest, Filter) {
+    // REQ: Performance optimization for large selections
     SelectionSet set = {voxel1, voxel2, voxel3, voxel4, voxel5};
     
     // Filter for 4cm resolution only
@@ -344,7 +350,7 @@ TEST_F(SelectionSetTest, MakeBoxSelection) {
     
     // Should contain voxels at (0,0,0), (1,0,0), (2,0,0), (0,1,0), etc.
     EXPECT_GT(selection.size(), 0u);
-    EXPECT_TRUE(selection.contains(VoxelId(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm)));
+    EXPECT_TRUE(selection.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 TEST_F(SelectionSetTest, MakeSphereSelection) {

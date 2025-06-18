@@ -10,11 +10,11 @@ protected:
         manager = std::make_unique<SelectionManager>();
         
         // Create test voxels
-        voxel1 = VoxelId(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm);
-        voxel2 = VoxelId(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_4cm);
-        voxel3 = VoxelId(Math::Vector3i(0, 1, 0), VoxelData::VoxelResolution::Size_4cm);
-        voxel4 = VoxelId(Math::Vector3i(0, 0, 1), VoxelData::VoxelResolution::Size_4cm);
-        voxel5 = VoxelId(Math::Vector3i(1, 1, 1), VoxelData::VoxelResolution::Size_8cm);
+        voxel1 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_4cm);
+        voxel2 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(4, 0, 0)), VoxelData::VoxelResolution::Size_4cm);
+        voxel3 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 4, 0)), VoxelData::VoxelResolution::Size_4cm);
+        voxel4 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 4)), VoxelData::VoxelResolution::Size_4cm);
+        voxel5 = VoxelId(Math::IncrementCoordinates(Math::Vector3i(8, 8, 8)), VoxelData::VoxelResolution::Size_8cm);
     }
     
     std::unique_ptr<SelectionManager> manager;
@@ -23,12 +23,14 @@ protected:
 
 // Basic Selection Tests
 TEST_F(SelectionManagerTest, InitialState) {
+    // REQ: SelectionManager coordinates selection operations
     EXPECT_FALSE(manager->hasSelection());
     EXPECT_EQ(manager->getSelectionSize(), 0u);
     EXPECT_TRUE(manager->getSelection().empty());
 }
 
 TEST_F(SelectionManagerTest, SelectVoxel) {
+    // REQ: Support for single and multi-voxel selection
     manager->selectVoxel(voxel1);
     
     EXPECT_TRUE(manager->hasSelection());
@@ -59,6 +61,7 @@ TEST_F(SelectionManagerTest, ToggleVoxel) {
 
 // Multi-Selection Operations Tests
 TEST_F(SelectionManagerTest, SelectNone) {
+    // REQ: Support for single and multi-voxel selection
     manager->selectVoxel(voxel1);
     manager->selectVoxel(voxel2);
     manager->selectVoxel(voxel3);
@@ -168,6 +171,7 @@ TEST_F(SelectionManagerTest, SelectCylinder) {
 
 // Selection History Tests
 TEST_F(SelectionManagerTest, UndoRedo) {
+    // REQ: Integration with undo/redo system for reversible selections
     // Initial state
     EXPECT_FALSE(manager->canUndo());
     EXPECT_FALSE(manager->canRedo());
@@ -235,6 +239,8 @@ TEST_F(SelectionManagerTest, MaxHistorySize) {
 
 // Named Selection Sets Tests
 TEST_F(SelectionManagerTest, SaveAndLoadSelectionSet) {
+    // REQ-8.1.7: Format shall store vertex selection state
+    // REQ: Selection serialization for project files
     manager->selectVoxel(voxel1);
     manager->selectVoxel(voxel2);
     manager->selectVoxel(voxel3);
@@ -412,11 +418,13 @@ TEST_F(SelectionManagerTest, PreviewMode) {
 
 // Bounds and Stats Tests
 TEST_F(SelectionManagerTest, GetSelectionBounds) {
+    // REQ: Support for selection validation and bounds checking
     manager->selectVoxel(voxel1);
     manager->selectVoxel(voxel2);
     manager->selectVoxel(voxel3);
     
     Math::BoundingBox bounds = manager->getSelectionBounds();
+    // With properly spaced voxels at (0,0,0), (4,0,0), and (0,4,0):
     EXPECT_EQ(bounds.min, Math::Vector3f(0.0f, 0.0f, 0.0f));
     EXPECT_EQ(bounds.max, Math::Vector3f(0.08f, 0.08f, 0.04f));
 }

@@ -1,5 +1,6 @@
 #include "SphereSelector.h"
 #include "../../foundation/logging/Logger.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include <algorithm>
 
 namespace VoxelEditor {
@@ -19,6 +20,11 @@ SelectionSet SphereSelector::selectFromSphere(const Math::Vector3f& center,
                                             bool checkExistence) {
     SelectionSet result;
     
+    // Special case: zero radius with includePartial=false should return empty set
+    if (radius == 0.0f && !m_includePartial) {
+        return result;
+    }
+    
     float voxelSize = VoxelId(Math::Vector3i::Zero(), resolution).getVoxelSize();
     float radiusSq = radius * radius;
     
@@ -26,24 +32,27 @@ SelectionSet SphereSelector::selectFromSphere(const Math::Vector3f& center,
     Math::Vector3f radiusVec(radius, radius, radius);
     Math::BoundingBox sphereBounds(center - radiusVec, center + radiusVec);
     
-    // Get voxel range
-    Math::Vector3i minVoxel(
-        static_cast<int>(std::floor(sphereBounds.min.x / voxelSize)),
-        static_cast<int>(std::floor(sphereBounds.min.y / voxelSize)),
-        static_cast<int>(std::floor(sphereBounds.min.z / voxelSize))
+    // Convert world bounds to increment coordinates for iteration
+    Math::IncrementCoordinates minIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(sphereBounds.min)
+    );
+    Math::IncrementCoordinates maxIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(sphereBounds.max)
     );
     
-    Math::Vector3i maxVoxel(
-        static_cast<int>(std::ceil(sphereBounds.max.x / voxelSize)),
-        static_cast<int>(std::ceil(sphereBounds.max.y / voxelSize)),
-        static_cast<int>(std::ceil(sphereBounds.max.z / voxelSize))
-    );
+    // Get the voxel size in centimeters for stepping
+    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
     
-    // Check each voxel in range
-    for (int x = minVoxel.x; x <= maxVoxel.x; ++x) {
-        for (int y = minVoxel.y; y <= maxVoxel.y; ++y) {
-            for (int z = minVoxel.z; z <= maxVoxel.z; ++z) {
-                VoxelId voxel(Math::Vector3i(x, y, z), resolution);
+    // Align to voxel grid boundaries
+    Math::Vector3i minAligned = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution).value();
+    Math::Vector3i maxAligned = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution).value();
+    
+    // Check each voxel in range, stepping by voxel size
+    for (int x = minAligned.x; x <= maxAligned.x; x += voxelSizeCm) {
+        for (int y = minAligned.y; y <= maxAligned.y; y += voxelSizeCm) {
+            for (int z = minAligned.z; z <= maxAligned.z; z += voxelSizeCm) {
+                // Create voxel at this increment position
+                VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
                 
                 if (isVoxelInSphere(voxel, center, radius)) {
                     if (!checkExistence || voxelExists(voxel)) {
@@ -108,24 +117,26 @@ SelectionSet SphereSelector::selectEllipsoid(const Math::Vector3f& center,
     Math::Vector3f radiusVec(maxRadius, maxRadius, maxRadius);
     Math::BoundingBox ellipsoidBounds(center - radiusVec, center + radiusVec);
     
-    // Get voxel range
-    Math::Vector3i minVoxel(
-        static_cast<int>(std::floor(ellipsoidBounds.min.x / voxelSize)),
-        static_cast<int>(std::floor(ellipsoidBounds.min.y / voxelSize)),
-        static_cast<int>(std::floor(ellipsoidBounds.min.z / voxelSize))
+    // Convert world bounds to increment coordinates for iteration
+    Math::IncrementCoordinates minIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(ellipsoidBounds.min)
+    );
+    Math::IncrementCoordinates maxIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(ellipsoidBounds.max)
     );
     
-    Math::Vector3i maxVoxel(
-        static_cast<int>(std::ceil(ellipsoidBounds.max.x / voxelSize)),
-        static_cast<int>(std::ceil(ellipsoidBounds.max.y / voxelSize)),
-        static_cast<int>(std::ceil(ellipsoidBounds.max.z / voxelSize))
-    );
+    // Get the voxel size in centimeters for stepping
+    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
     
-    // Check each voxel in range
-    for (int x = minVoxel.x; x <= maxVoxel.x; ++x) {
-        for (int y = minVoxel.y; y <= maxVoxel.y; ++y) {
-            for (int z = minVoxel.z; z <= maxVoxel.z; ++z) {
-                VoxelId voxel(Math::Vector3i(x, y, z), resolution);
+    // Align to voxel grid boundaries
+    Math::Vector3i minAligned = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution).value();
+    Math::Vector3i maxAligned = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution).value();
+    
+    // Check each voxel in range, stepping by voxel size
+    for (int x = minAligned.x; x <= maxAligned.x; x += voxelSizeCm) {
+        for (int y = minAligned.y; y <= maxAligned.y; y += voxelSizeCm) {
+            for (int z = minAligned.z; z <= maxAligned.z; z += voxelSizeCm) {
+                VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
                 
                 if (isVoxelInEllipsoid(voxel, center, radii, rotation)) {
                     if (!checkExistence || voxelExists(voxel)) {
@@ -153,24 +164,26 @@ SelectionSet SphereSelector::selectHemisphere(const Math::Vector3f& center,
     Math::Vector3f radiusVec(radius, radius, radius);
     Math::BoundingBox hemisphereBounds(center - radiusVec, center + radiusVec);
     
-    // Get voxel range
-    Math::Vector3i minVoxel(
-        static_cast<int>(std::floor(hemisphereBounds.min.x / voxelSize)),
-        static_cast<int>(std::floor(hemisphereBounds.min.y / voxelSize)),
-        static_cast<int>(std::floor(hemisphereBounds.min.z / voxelSize))
+    // Convert world bounds to increment coordinates for iteration
+    Math::IncrementCoordinates minIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(hemisphereBounds.min)
+    );
+    Math::IncrementCoordinates maxIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(hemisphereBounds.max)
     );
     
-    Math::Vector3i maxVoxel(
-        static_cast<int>(std::ceil(hemisphereBounds.max.x / voxelSize)),
-        static_cast<int>(std::ceil(hemisphereBounds.max.y / voxelSize)),
-        static_cast<int>(std::ceil(hemisphereBounds.max.z / voxelSize))
-    );
+    // Get the voxel size in centimeters for stepping
+    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
     
-    // Check each voxel in range
-    for (int x = minVoxel.x; x <= maxVoxel.x; ++x) {
-        for (int y = minVoxel.y; y <= maxVoxel.y; ++y) {
-            for (int z = minVoxel.z; z <= maxVoxel.z; ++z) {
-                VoxelId voxel(Math::Vector3i(x, y, z), resolution);
+    // Align to voxel grid boundaries
+    Math::Vector3i minAligned = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution).value();
+    Math::Vector3i maxAligned = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution).value();
+    
+    // Check each voxel in range, stepping by voxel size
+    for (int x = minAligned.x; x <= maxAligned.x; x += voxelSizeCm) {
+        for (int y = minAligned.y; y <= maxAligned.y; y += voxelSizeCm) {
+            for (int z = minAligned.z; z <= maxAligned.z; z += voxelSizeCm) {
+                VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
                 
                 if (isVoxelInHemisphere(voxel, center, radius, normalizedNormal)) {
                     if (!checkExistence || voxelExists(voxel)) {

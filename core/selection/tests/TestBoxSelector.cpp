@@ -30,27 +30,28 @@ TEST_F(BoxSelectorTest, SetConfiguration) {
 
 // World Selection Tests
 TEST_F(BoxSelectorTest, SelectFromWorld_SmallBox) {
-    // In centered coordinate system, grid (0,0,0) maps to world (-2.48, 0.02, -2.48) with 4cm voxels
-    // 4cm voxel bounds: center ± 0.02m, so from (-2.50, 0.00, -2.50) to (-2.46, 0.04, -2.46)
+    // REQ: BoxSelector for different selection methods
+    // In centered coordinate system, IncrementCoordinates(0,0,0) is at world origin
+    // For 4cm voxels, the voxel at origin spans from (0,0,0) to (0.04,0.04,0.04)
     Math::BoundingBox box(
-        Math::Vector3f(-2.50f, 0.00f, -2.50f),
-        Math::Vector3f(-2.46f, 0.04f, -2.46f)
+        Math::Vector3f(-0.01f, -0.01f, -0.01f),
+        Math::Vector3f(0.01f, 0.01f, 0.01f)
     );
     
     SelectionSet result = selector->selectFromWorld(box, VoxelData::VoxelResolution::Size_4cm, false);
     
     // Should contain at least the voxel at origin
     EXPECT_GT(result.size(), 0u);
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm)));
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 TEST_F(BoxSelectorTest, SelectFromWorld_LargerBox) {
-    // In centered coordinate system, create box that spans from grid (0,0,0) to (2,2,2)
-    // Grid (0,0,0) is at world (-2.48, 0.02, -2.48)
-    // Grid (2,2,2) is at world (-2.40, 0.10, -2.40)
+    // In centered coordinate system, create box that spans multiple 4cm voxels
+    // For 4cm voxels: IncrementCoordinates(0,0,0) snaps to (0,0,0), 
+    // IncrementCoordinates(4,4,4) snaps to (4,4,4), IncrementCoordinates(8,8,8) snaps to (8,8,8)
     Math::BoundingBox box(
-        Math::Vector3f(-2.5f, 0.0f, -2.5f),
-        Math::Vector3f(-2.38f, 0.12f, -2.38f)
+        Math::Vector3f(-0.01f, -0.01f, -0.01f),
+        Math::Vector3f(0.09f, 0.09f, 0.09f)  // Covers 3x3x3 voxels
     );
     
     SelectionSet result = selector->selectFromWorld(box, VoxelData::VoxelResolution::Size_4cm, false);
@@ -58,51 +59,52 @@ TEST_F(BoxSelectorTest, SelectFromWorld_LargerBox) {
     // Should contain 3x3x3 = 27 voxels at minimum
     EXPECT_GE(result.size(), 27u);
     
-    // Check corners
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm)));
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(2, 2, 2), VoxelData::VoxelResolution::Size_4cm)));
+    // Check corners - with 4cm voxels:
+    // (0,0,0) snaps to (0,0,0)
+    // (8,8,8) snaps to (8,8,8) 
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_4cm)));
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(8, 8, 8)), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 TEST_F(BoxSelectorTest, SelectFromWorld_NegativeCoordinates) {
-    // Create box around world origin (0,0,0) which should include several grid positions
-    // In centered system, world (0,0,0) is approximately at grid (62,0,62) for 4cm voxels
+    // In centered system, test selection with negative world coordinates
+    // Create box that spans from negative to positive coordinates
     Math::BoundingBox box(
-        Math::Vector3f(-0.08f, 0.0f, -0.08f),
-        Math::Vector3f(0.08f, 0.08f, 0.08f)
+        Math::Vector3f(-0.06f, -0.02f, -0.06f),
+        Math::Vector3f(0.06f, 0.06f, 0.06f)
     );
     
     SelectionSet result = selector->selectFromWorld(box, VoxelData::VoxelResolution::Size_4cm, false);
     
-    // Should select at least one voxel around world origin
-    EXPECT_GE(result.size(), 1u);
+    // Should select multiple voxels spanning negative and positive coordinates
+    EXPECT_GE(result.size(), 8u);  // At least 2x2x2 voxels
     
-    // Check that the result contains voxels in a reasonable range around center
-    bool hasReasonableVoxels = false;
+    // Check that we have voxels with both negative and positive increment coordinates
+    bool hasNegative = false;
+    bool hasPositive = false;
     for (const auto& voxel : result) {
         Math::Vector3i pos = voxel.position.value();
-        // For 5m workspace and 4cm voxels, center should be around grid (62,0,62)
-        if (pos.x >= 60 && pos.x <= 65 && pos.y >= 0 && pos.y <= 5 && pos.z >= 60 && pos.z <= 65) {
-            hasReasonableVoxels = true;
-            break;
-        }
+        if (pos.x < 0 || pos.z < 0) hasNegative = true;
+        if (pos.x > 0 || pos.z > 0) hasPositive = true;
     }
-    EXPECT_TRUE(hasReasonableVoxels);
+    EXPECT_TRUE(hasNegative);
+    EXPECT_TRUE(hasPositive);
 }
 
 TEST_F(BoxSelectorTest, SelectFromWorld_IncludePartialTrue) {
     selector->setIncludePartial(true);
     
-    // Box that partially overlaps voxel at grid (1,0,0)
-    // Grid (1,0,0) is at world (-2.44, 0.02, -2.48) with 4cm voxels
+    // Box that partially overlaps voxel at IncrementCoordinates(4,0,0)
+    // 4cm voxel at (4,0,0) spans world (0.04,0,0) to (0.08,0.04,0.04)
     Math::BoundingBox box(
-        Math::Vector3f(-2.45f, 0.01f, -2.49f),
-        Math::Vector3f(-2.43f, 0.03f, -2.47f)
+        Math::Vector3f(0.035f, -0.01f, -0.01f),
+        Math::Vector3f(0.045f, 0.01f, 0.01f)
     );
     
     SelectionSet result = selector->selectFromWorld(box, VoxelData::VoxelResolution::Size_4cm, false);
     
-    // Should include voxel at (1,0,0) because it's partially intersected
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_4cm)));
+    // Should include voxel at (4,0,0) because it's partially intersected
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(4, 0, 0)), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 TEST_F(BoxSelectorTest, SelectFromWorld_IncludePartialFalse) {
@@ -117,7 +119,7 @@ TEST_F(BoxSelectorTest, SelectFromWorld_IncludePartialFalse) {
     SelectionSet result = selector->selectFromWorld(box, VoxelData::VoxelResolution::Size_4cm, false);
     
     // Should not include voxel at (1,0,0) because it's not fully contained
-    EXPECT_FALSE(result.contains(VoxelId(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_4cm)));
+    EXPECT_FALSE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(1, 0, 0)), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 // Grid Selection Tests
@@ -128,7 +130,7 @@ TEST_F(BoxSelectorTest, SelectFromGrid_SingleVoxel) {
     SelectionSet result = selector->selectFromGrid(minGrid, maxGrid, VoxelData::VoxelResolution::Size_8cm, false);
     
     EXPECT_EQ(result.size(), 1u);
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(5, 5, 5), VoxelData::VoxelResolution::Size_8cm)));
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(5, 5, 5)), VoxelData::VoxelResolution::Size_8cm)));
 }
 
 TEST_F(BoxSelectorTest, SelectFromGrid_Range) {
@@ -143,7 +145,7 @@ TEST_F(BoxSelectorTest, SelectFromGrid_Range) {
     for (int x = 0; x <= 2; ++x) {
         for (int y = 0; y <= 2; ++y) {
             for (int z = 0; z <= 2; ++z) {
-                EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(x, y, z), VoxelData::VoxelResolution::Size_4cm)));
+                EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), VoxelData::VoxelResolution::Size_4cm)));
             }
         }
     }
@@ -158,8 +160,8 @@ TEST_F(BoxSelectorTest, SelectFromGrid_ReversedMinMax) {
     
     // Should still work correctly
     EXPECT_EQ(result.size(), 27u); // 3x3x3
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(3, 3, 3), VoxelData::VoxelResolution::Size_4cm)));
-    EXPECT_TRUE(result.contains(VoxelId(Math::Vector3i(5, 5, 5), VoxelData::VoxelResolution::Size_4cm)));
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(3, 3, 3)), VoxelData::VoxelResolution::Size_4cm)));
+    EXPECT_TRUE(result.contains(VoxelId(Math::IncrementCoordinates(Math::Vector3i(5, 5, 5)), VoxelData::VoxelResolution::Size_4cm)));
 }
 
 // Ray Selection Tests

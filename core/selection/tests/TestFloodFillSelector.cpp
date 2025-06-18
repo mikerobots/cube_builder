@@ -13,7 +13,7 @@ protected:
         selector->setMaxVoxels(100);
         
         // Create test voxels
-        seed = VoxelId(Math::Vector3i(5, 5, 5), VoxelData::VoxelResolution::Size_4cm);
+        seed = VoxelId(Math::IncrementCoordinates(Math::Vector3i(5, 5, 5)), VoxelData::VoxelResolution::Size_4cm);
     }
     
     std::unique_ptr<FloodFillSelector> selector;
@@ -41,6 +41,7 @@ TEST_F(FloodFillSelectorTest, SetConfiguration) {
 
 // Basic Flood Fill Tests
 TEST_F(FloodFillSelectorTest, SelectFloodFill_SingleVoxel) {
+    // REQ: FloodFillSelector for different selection methods
     // Without voxel manager, assumes all voxels exist
     SelectionSet result = selector->selectFloodFill(seed, FloodFillCriteria::Connected6);
     
@@ -158,13 +159,13 @@ TEST_F(FloodFillSelectorTest, SelectFloodFillBounded_InsideBounds) {
 TEST_F(FloodFillSelectorTest, SelectFloodFillBounded_OutsideBounds) {
     Math::BoundingBox bounds(
         Math::Vector3f(0.0f, 0.0f, 0.0f),
-        Math::Vector3f(0.1f, 0.1f, 0.1f)
+        Math::Vector3f(0.04f, 0.04f, 0.04f)  // Smaller bounds that exclude the seed
     );
     
-    // Seed is outside bounds
+    // Seed is at increment (5,5,5) which is world position ~(0.05, 0.05, 0.05) - outside these bounds
     SelectionSet result = selector->selectFloodFillBounded(seed, FloodFillCriteria::Connected6, bounds);
     
-    // Should be empty
+    // Should be empty since seed is outside bounds
     EXPECT_TRUE(result.empty());
 }
 

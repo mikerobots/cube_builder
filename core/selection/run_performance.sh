@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Selection subsystem test runner
-# Usage: ./run_tests.sh [build_dir]
+# Selection subsystem performance test runner
+# Usage: ./run_performance.sh [build_dir]
 
 set -e
 
@@ -12,7 +12,7 @@ BUILD_DIR="${1:-build_ninja}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-echo "Running Selection subsystem tests..."
+echo "Running Selection subsystem PERFORMANCE tests..."
 echo "Build directory: $BUILD_DIR"
 echo "Project root: $PROJECT_ROOT"
 
@@ -33,14 +33,16 @@ if [ ! -f "$TEST_EXECUTABLE" ]; then
     cmake --build "$BUILD_DIR" --target VoxelEditor_Selection_Tests
 fi
 
-# Run the tests (excluding performance tests)
+# Run only performance tests
 echo ""
-echo "Executing Selection tests (excluding performance tests)..."
+echo "Executing Selection PERFORMANCE tests..."
 echo "==========================================="
+echo "Note: These tests may take longer to run as they test performance with large datasets"
+echo ""
+
+# Run performance-related tests
 "$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" \
-    --gtest_filter="-*Performance*:-*LargeSelection*:-*VeryLargeRadius*:-*Stress*"
+    --gtest_filter="*Performance*:*LargeSelection*:*VeryLargeRadius*:*Stress*"
 
 echo ""
-echo "Selection tests completed successfully!"
-echo ""
-echo "To run performance tests, use: ./run_performance.sh"
+echo "Selection performance tests completed!"

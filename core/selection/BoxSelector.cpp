@@ -51,10 +51,20 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
     Math::Vector3i actualMin = Math::Vector3i::min(minGrid, maxGrid);
     Math::Vector3i actualMax = Math::Vector3i::max(minGrid, maxGrid);
     
-    // Select voxels in range
-    for (int x = actualMin.x; x <= actualMax.x; ++x) {
-        for (int y = actualMin.y; y <= actualMax.y; ++y) {
-            for (int z = actualMin.z; z <= actualMax.z; ++z) {
+    // Get voxel size in centimeters for the given resolution
+    float voxelSizeMeters = VoxelData::getVoxelSize(resolution);
+    int voxelSizeCm = static_cast<int>(voxelSizeMeters * 100.0f);
+    
+    // Snap min/max to voxel boundaries
+    Math::IncrementCoordinates snappedMin = Math::CoordinateConverter::snapToVoxelResolution(
+        Math::IncrementCoordinates(actualMin), resolution);
+    Math::IncrementCoordinates snappedMax = Math::CoordinateConverter::snapToVoxelResolution(
+        Math::IncrementCoordinates(actualMax), resolution);
+    
+    // Select voxels in range, stepping by voxel size
+    for (int x = snappedMin.x(); x <= snappedMax.x(); x += voxelSizeCm) {
+        for (int y = snappedMin.y(); y <= snappedMax.y(); y += voxelSizeCm) {
+            for (int z = snappedMin.z(); z <= snappedMax.z(); z += voxelSizeCm) {
                 VoxelId voxel(Math::Vector3i(x, y, z), resolution);
                 
                 if (isVoxelInBox(voxel, worldBox)) {
