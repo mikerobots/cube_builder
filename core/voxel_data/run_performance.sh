@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Voxel Data subsystem test runner (excluding performance tests)
-# Usage: ./run_tests.sh [build_dir]
+# Voxel Data subsystem performance test runner
+# Usage: ./run_performance.sh [build_dir]
 
 set -e
 
@@ -12,7 +12,7 @@ BUILD_DIR="${1:-build_ninja}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-echo "Running Voxel Data subsystem tests (excluding performance tests)..."
+echo "Running Voxel Data subsystem performance tests..."
 echo "Build directory: $BUILD_DIR"
 echo "Project root: $PROJECT_ROOT"
 
@@ -33,14 +33,25 @@ if [ ! -f "$TEST_EXECUTABLE" ]; then
     cmake --build "$BUILD_DIR" --target VoxelEditor_VoxelData_Tests
 fi
 
-# Run the tests excluding performance/memory/stress tests
+# Run only performance/memory/stress tests
 echo ""
-echo "Executing Voxel Data tests (excluding performance tests)..."
+echo "Executing Voxel Data performance tests..."
 echo "==========================================="
 
-# Exclude performance, memory, and stress tests using gtest filter
-"$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" --gtest_filter="-*Performance*:*Memory*:*Stress*"
+# Include only performance, memory, and stress tests using gtest filter
+"$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" --gtest_filter="*Performance*:*Memory*:*Stress*"
 
 echo ""
-echo "Voxel Data tests completed successfully!"
-echo "Note: Performance tests excluded. Run ./run_performance.sh to run performance tests."
+echo "Voxel Data performance tests completed!"
+echo ""
+echo "Performance tests included:"
+echo "- MemoryPoolOperations"
+echo "- StressTestLargeDataset"
+echo "- MemoryUsageTracking"
+echo "- MemoryManagement"
+echo "- PerformanceMetrics"
+echo "- PerformanceTest_CollisionCheck10000Voxels"
+echo "- SparseStoragePerformance"
+echo "- MemoryOptimization"
+echo "- StressTestLargeGrid"
+echo "- MemoryUsageScaling"
