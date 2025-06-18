@@ -25,6 +25,7 @@ TEST_F(HighlightRendererTest, Construction) {
 }
 
 TEST_F(HighlightRendererTest, FaceHighlight) {
+    // REQ-2.3.1, REQ-2.3.2, REQ-4.2.1: Face highlighting with yellow color
     Face face(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     HighlightStyle style = HighlightStyle::Face();
     
@@ -61,6 +62,7 @@ TEST_F(HighlightRendererTest, MultiSelection) {
 }
 
 TEST_F(HighlightRendererTest, ClearAll) {
+    // REQ-4.2.2: Only one face shall be highlighted at a time (clearing ensures this)
     // Add some highlights
     Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     renderer->renderFaceHighlight(face, HighlightStyle::Face());
@@ -71,6 +73,7 @@ TEST_F(HighlightRendererTest, ClearAll) {
 }
 
 TEST_F(HighlightRendererTest, Animation) {
+    // REQ-6.1.3: Face highlighting shall update within one frame
     // Test animation update
     EXPECT_NO_THROW(renderer->update(0.016f)); // 60 FPS frame time
     

@@ -205,9 +205,11 @@ TEST_F(OverlayRendererTest, DifferentScreenSizes) {
 
 // Enhanced tests for grid visualization requirements
 TEST_F(OverlayRendererTest, GroundPlaneGridBasic) {
+    // REQ-1.1.1: The ground plane shall display a grid with 32cm x 32cm squares
+    // REQ-1.1.3: Grid lines shall use RGB(180, 180, 180) at 35% opacity
+    // REQ-1.1.4: Major grid lines every 160cm shall use RGB(200, 200, 200) and be thicker
     renderer->beginFrame(1920, 1080);
     
-    // REQ-1.1.1, REQ-1.1.3, REQ-1.1.4: Basic grid rendering
     Vector3f center(0.0f, 0.0f, 0.0f);
     float extent = 5.0f; // 5 meter extent
     Vector3f cursorPos(1.0f, 0.0f, 1.0f); 
@@ -225,9 +227,9 @@ TEST_F(OverlayRendererTest, GroundPlaneGridBasic) {
 }
 
 TEST_F(OverlayRendererTest, GroundPlaneGridDynamicOpacity) {
+    // REQ-1.2.2: Grid opacity shall increase to 65% within 2 grid squares of cursor during placement
     renderer->beginFrame(1920, 1080);
     
-    // REQ-1.2.2: Dynamic opacity near cursor
     Vector3f center(0.0f, 0.0f, 0.0f);
     float extent = 5.0f;
     Vector3f cursorPos(0.64f, 0.0f, 0.32f); // Within 2 grid squares (64cm) of origin
@@ -244,9 +246,9 @@ TEST_F(OverlayRendererTest, GroundPlaneGridDynamicOpacity) {
 }
 
 TEST_F(OverlayRendererTest, GroundPlaneGridLargeExtent) {
+    // REQ-6.2.2: Grid size shall scale with workspace (up to 8m x 8m)
     renderer->beginFrame(1920, 1080);
     
-    // REQ-6.2.2: Grid scaling up to 8m x 8m
     Vector3f center(0.0f, 0.0f, 0.0f);
     float extent = 8.0f; // Maximum workspace size
     Vector3f cursorPos(0.0f, 0.0f, 0.0f);
@@ -263,7 +265,7 @@ TEST_F(OverlayRendererTest, GroundPlaneGridLargeExtent) {
 }
 
 TEST_F(OverlayRendererTest, GroundPlaneGridPerformance) {
-    // REQ-6.1.1: Grid rendering performance test
+    // REQ-6.1.1: Grid rendering shall maintain 60 FPS minimum (90+ FPS for VR)
     renderer->beginFrame(1920, 1080);
     
     Vector3f center(0.0f, 0.0f, 0.0f);

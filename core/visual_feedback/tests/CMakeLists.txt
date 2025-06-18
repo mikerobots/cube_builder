@@ -14,6 +14,7 @@ set(TEST_SOURCES
     TestFeedbackRenderer.cpp
     TestPreviewManager.cpp
     TestOutlineRendererPreview.cpp
+    test_VisualFeedback_requirements.cpp
 )
 
 # Create test executable

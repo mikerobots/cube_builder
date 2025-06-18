@@ -15,6 +15,7 @@ protected:
 };
 
 TEST_F(OutlineRendererTest, VoxelOutline) {
+    // REQ-2.2.1, REQ-3.2.1, REQ-4.1.1: Green outline preview rendering
     Vector3i position(1, 2, 3);
     VoxelResolution resolution = VoxelResolution::Size_32cm;
     OutlineStyle style = OutlineStyle::VoxelPreview();
@@ -81,6 +82,7 @@ TEST_F(OutlineRendererTest, PatternSettings) {
 }
 
 TEST_F(OutlineRendererTest, Animation) {
+    // REQ-2.2.3, REQ-4.1.3: Real-time preview updates
     EXPECT_NO_THROW(renderer->update(0.016f));
     
     // Add animated outline
