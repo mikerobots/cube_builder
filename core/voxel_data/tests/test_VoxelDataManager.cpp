@@ -411,7 +411,7 @@ TEST_F(VoxelDataManagerTest, VoxelExport) {
         
         bool found = false;
         for (const auto& expectedPos : expectedPositions) {
-            if (voxelPos.gridPos == GridCoordinates(expectedPos)) {
+            if (voxelPos.incrementPos == VoxelEditor::Math::IncrementCoordinates(expectedPos)) {
                 found = true;
                 break;
             }

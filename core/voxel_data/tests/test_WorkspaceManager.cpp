@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "../WorkspaceManager.h"
 #include "../../foundation/events/EventDispatcher.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 
 using namespace VoxelEditor::VoxelData;
 using namespace VoxelEditor::Math;
@@ -416,4 +418,127 @@ TEST_F(WorkspaceManagerTest, ConstMethodsWithConstManager) {
     
     Vector3f clamped = constManager.clampPosition(Vector3f(100.0f, 100.0f, 100.0f));
     EXPECT_TRUE(constManager.isPositionValid(clamped));
+}
+
+// New tests for coordinate type integration
+TEST_F(WorkspaceManagerTest, WorldCoordinatesIntegration) {
+    manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
+    
+    // Test WorldCoordinates position validation
+    WorldCoordinates validPos(0.0f, 2.0f, 0.0f);
+    EXPECT_TRUE(manager->isPositionValid(validPos));
+    
+    WorldCoordinates invalidPos(5.0f, 7.0f, 10.0f);
+    EXPECT_FALSE(manager->isPositionValid(invalidPos));
+    
+    // Test WorldCoordinates clamping
+    WorldCoordinates outOfBounds(5.0f, 7.0f, 10.0f);
+    WorldCoordinates clamped = manager->clampPosition(outOfBounds);
+    EXPECT_TRUE(manager->isPositionValid(clamped));
+    
+    // Verify clamped values
+    EXPECT_FLOAT_EQ(clamped.x(), 2.0f);   // 4/2 = 2
+    EXPECT_FLOAT_EQ(clamped.y(), 6.0f);   // max Y
+    EXPECT_FLOAT_EQ(clamped.z(), 4.0f);   // 8/2 = 4
+}
+
+TEST_F(WorkspaceManagerTest, WorldCoordinatesBounds) {
+    manager->setSize(Vector3f(5.0f, 8.0f, 5.0f));
+    
+    // Test new WorldCoordinates bounds methods
+    WorldCoordinates minBounds = manager->getMinBoundsWorld();
+    WorldCoordinates maxBounds = manager->getMaxBoundsWorld();
+    WorldCoordinates center = manager->getCenterWorld();
+    
+    // Check min bounds (-2.5, 0, -2.5) - Y starts at 0
+    EXPECT_FLOAT_EQ(minBounds.x(), -2.5f);
+    EXPECT_FLOAT_EQ(minBounds.y(), 0.0f);
+    EXPECT_FLOAT_EQ(minBounds.z(), -2.5f);
+    
+    // Check max bounds (2.5, 8, 2.5)
+    EXPECT_FLOAT_EQ(maxBounds.x(), 2.5f);
+    EXPECT_FLOAT_EQ(maxBounds.y(), 8.0f);
+    EXPECT_FLOAT_EQ(maxBounds.z(), 2.5f);
+    
+    // Check center (0, 4, 0) - Y center is at size/2
+    EXPECT_FLOAT_EQ(center.x(), 0.0f);
+    EXPECT_FLOAT_EQ(center.y(), 4.0f);
+    EXPECT_FLOAT_EQ(center.z(), 0.0f);
+    
+    // Verify legacy methods still work
+    Vector3f legacyMin = manager->getMinBounds();
+    Vector3f legacyMax = manager->getMaxBounds();
+    Vector3f legacyCenter = manager->getCenter();
+    
+    EXPECT_EQ(legacyMin, minBounds.value());
+    EXPECT_EQ(legacyMax, maxBounds.value());
+    EXPECT_EQ(legacyCenter, center.value());
+}
+
+TEST_F(WorkspaceManagerTest, IncrementCoordinatesValidation) {
+    manager->setSize(Vector3f(4.0f, 4.0f, 4.0f));
+    
+    // Test grid position validation with new coordinate types
+    // For 32cm voxels in 4m workspace: 4.0 / 0.32 = 12.5 -> 13 voxels per axis
+    IncrementCoordinates validIncrementPos(5, 5, 5);
+    EXPECT_TRUE(manager->isIncrementPositionValid(validIncrementPos));
+    
+    IncrementCoordinates invalidIncrementPos(1000, 1000, 1000);  // Outside 4m workspace
+    EXPECT_FALSE(manager->isIncrementPositionValid(invalidIncrementPos));
+    
+    // Test with more increment positions
+    // All voxel storage uses 1cm increments now, regardless of visual resolution
+    IncrementCoordinates validSmallIncrement(100, 100, 100);  // 1m from origin
+    EXPECT_TRUE(manager->isIncrementPositionValid(validSmallIncrement));
+    
+    IncrementCoordinates invalidSmallIncrement(500, 500, 500);  // 5m from origin, outside 4m workspace
+    EXPECT_FALSE(manager->isIncrementPositionValid(invalidSmallIncrement));
+}
+
+TEST_F(WorkspaceManagerTest, CoordinateTypeBackwardCompatibility) {
+    manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
+    
+    // Test that legacy Vector3f methods still work
+    Vector3f legacyPos(1.0f, 2.0f, 3.0f);
+    bool legacyValid = manager->isPositionValid(legacyPos);
+    
+    // Test equivalent WorldCoordinates method
+    WorldCoordinates newPos(1.0f, 2.0f, 3.0f);
+    bool newValid = manager->isPositionValid(newPos);
+    
+    EXPECT_EQ(legacyValid, newValid);
+    
+    // Test legacy clamping vs new clamping
+    Vector3f outOfBounds(10.0f, 10.0f, 10.0f);
+    Vector3f legacyClamped = manager->clampPosition(outOfBounds);
+    WorldCoordinates newClamped = manager->clampPosition(WorldCoordinates(outOfBounds));
+    
+    EXPECT_EQ(legacyClamped, newClamped.value());
+    
+    // Test that both methods validate the same
+    EXPECT_TRUE(manager->isPositionValid(legacyClamped));
+    EXPECT_TRUE(manager->isPositionValid(newClamped));
+}
+
+TEST_F(WorkspaceManagerTest, CoordinateConverterIntegration) {
+    manager->setSize(Vector3f(5.0f, 5.0f, 5.0f));
+    
+    // Test integration with CoordinateConverter
+    WorldCoordinates worldPos(1.0f, 2.0f, 1.5f);
+    
+    // Verify position is valid in workspace
+    EXPECT_TRUE(manager->isPositionValid(worldPos));
+    
+    // Convert to increment coordinates and back
+    IncrementCoordinates incCoord = CoordinateConverter::worldToIncrement(worldPos);
+    WorldCoordinates convertedBack = CoordinateConverter::incrementToWorld(incCoord);
+    
+    // Should be very close (within floating point precision)
+    EXPECT_NEAR(worldPos.x(), convertedBack.x(), 0.01f);
+    EXPECT_NEAR(worldPos.y(), convertedBack.y(), 0.01f);
+    EXPECT_NEAR(worldPos.z(), convertedBack.z(), 0.01f);
+    
+    // Both should be valid in workspace
+    EXPECT_TRUE(manager->isPositionValid(worldPos));
+    EXPECT_TRUE(manager->isPositionValid(convertedBack));
 }

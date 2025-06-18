@@ -70,13 +70,8 @@ public:
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
-        // Convert increment coordinates to grid coordinates
-        // Use internal method to avoid recursive mutex lock
-        Math::Vector3f workspaceSize = getWorkspaceSizeInternal();
-        Math::GridCoordinates gridPos = Math::CoordinateConverter::incrementToGrid(
-            pos, resolution, workspaceSize);
-        
-        bool oldValue = grid->getVoxel(gridPos.value());
+        // Use the VoxelGrid to handle coordinate validation and conversion
+        bool oldValue = grid->getVoxel(pos);
         
         // Handle redundant operations (setting same value as current)
         if (oldValue == value) {
@@ -85,37 +80,29 @@ public:
         }
         
         // Check for overlaps if we're setting a voxel (not removing)
-        if (value && wouldOverlapInternal(gridPos.value(), resolution)) {
+        if (value && wouldOverlapInternal(pos, resolution)) {
             return false;
         }
         
-        bool success = grid->setVoxel(gridPos.value(), value);
+        bool success = grid->setVoxel(pos, value);
         
         if (success && oldValue != value) {
-            dispatchVoxelChangedEvent(gridPos.value(), resolution, oldValue, value);
+            dispatchVoxelChangedEvent(pos, resolution, oldValue, value);
         }
         
         return success;
     }
     
     // Overload for backward compatibility with Vector3i
-    // NOTE: This interprets pos as GRID coordinates for the given resolution, not increment coordinates
+    // NOTE: This interprets pos as INCREMENT coordinates for backward compatibility
     bool setVoxel(const Math::Vector3i& pos, VoxelResolution resolution, bool value) {
-        // Convert grid coordinates to increment coordinates
-        Math::GridCoordinates gridPos(pos);
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            gridPos, resolution, getWorkspaceSize());
+        Math::IncrementCoordinates incCoord(pos);
         return setVoxel(incCoord, resolution, value);
     }
     
     bool setVoxel(const VoxelPosition& voxelPos, bool value) {
-        // Convert grid coordinates to increment coordinates
-        // Note: We don't need locking here as we call the main setVoxel which has its own locking
-        // but we need to avoid calling getWorkspaceSize() from an unlocked context since the main
-        // setVoxel will lock and then try to access workspace size
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            voxelPos.gridPos, voxelPos.resolution, getWorkspaceSize());
-        return setVoxel(incCoord, voxelPos.resolution, value);
+        // VoxelPosition now stores increment coordinates directly
+        return setVoxel(voxelPos.incrementPos, voxelPos.resolution, value);
     }
     
     bool getVoxel(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
@@ -124,54 +111,19 @@ public:
         const VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
-        // Convert increment coordinates to grid coordinates
-        // Use internal method to avoid recursive mutex lock
-        Math::Vector3f workspaceSize = getWorkspaceSizeInternal();
-        Math::GridCoordinates gridPos = Math::CoordinateConverter::incrementToGrid(
-            pos, resolution, workspaceSize);
-        
-        return grid->getVoxel(gridPos.value());
+        return grid->getVoxel(pos);
     }
     
     // Overload for backward compatibility with Vector3i
-    // NOTE: This interprets pos as GRID coordinates for the given resolution, not increment coordinates
+    // NOTE: This interprets pos as INCREMENT coordinates for backward compatibility
     bool getVoxel(const Math::Vector3i& pos, VoxelResolution resolution) const {
-        // Lock mutex here and call internal implementation to avoid recursive locking
-        std::lock_guard<std::mutex> lock(m_mutex);
-        
-        const VoxelGrid* grid = getGrid(resolution);
-        if (!grid) return false;
-        
-        // Direct conversion without calling getWorkspaceSize() to avoid deadlock
-        Math::GridCoordinates gridPos(pos);
-        Math::Vector3f workspaceSize = getWorkspaceSizeInternal();
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            gridPos, resolution, workspaceSize);
-        
-        // Convert back to grid coordinates and get voxel directly
-        Math::GridCoordinates finalGridPos = Math::CoordinateConverter::incrementToGrid(
-            incCoord, resolution, workspaceSize);
-        
-        return grid->getVoxel(finalGridPos.value());
+        Math::IncrementCoordinates incCoord(pos);
+        return getVoxel(incCoord, resolution);
     }
     
     bool getVoxel(const VoxelPosition& voxelPos) const {
-        // Lock mutex here and use direct access to avoid recursive locking
-        std::lock_guard<std::mutex> lock(m_mutex);
-        
-        const VoxelGrid* grid = getGrid(voxelPos.resolution);
-        if (!grid) return false;
-        
-        // Direct conversion without calling getWorkspaceSize() to avoid deadlock
-        Math::Vector3f workspaceSize = getWorkspaceSizeInternal();
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            voxelPos.gridPos, voxelPos.resolution, workspaceSize);
-        
-        // Convert back to grid coordinates and get voxel directly
-        Math::GridCoordinates finalGridPos = Math::CoordinateConverter::incrementToGrid(
-            incCoord, voxelPos.resolution, workspaceSize);
-        
-        return grid->getVoxel(finalGridPos.value());
+        // VoxelPosition now stores increment coordinates directly
+        return getVoxel(voxelPos.incrementPos, voxelPos.resolution);
     }
     
     bool hasVoxel(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
@@ -179,11 +131,9 @@ public:
     }
     
     // Overload for backward compatibility with Vector3i  
-    // NOTE: This interprets pos as GRID coordinates for the given resolution, not increment coordinates
+    // NOTE: This interprets pos as INCREMENT coordinates for backward compatibility
     bool hasVoxel(const Math::Vector3i& pos, VoxelResolution resolution) const {
-        Math::GridCoordinates gridPos(pos);
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            gridPos, resolution, getWorkspaceSize());
+        Math::IncrementCoordinates incCoord(pos);
         return hasVoxel(incCoord, resolution);
     }
     
@@ -209,14 +159,14 @@ public:
             return false;
         }
         
-        // Convert world position to grid position using the grid's coordinate system
-        Math::Vector3i gridPos = grid->worldToGrid(worldPos);
-        // Grid position converted
+        // Convert world position to increment coordinates
+        Math::IncrementCoordinates incrementPos = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(worldPos));
         
         // Check for overlaps if we're setting a voxel (not removing)
         if (value) {
             // Check for overlaps
-            if (wouldOverlapInternal(gridPos, resolution)) {
+            if (wouldOverlapInternal(incrementPos, resolution)) {
                 // Overlap detected
                 return false;
             }
@@ -224,15 +174,15 @@ public:
         }
         
         // Get the old value before setting
-        bool oldValue = grid->getVoxel(gridPos);
+        bool oldValue = grid->getVoxel(incrementPos);
         
         // Set the voxel in the grid
-        bool result = grid->setVoxel(gridPos, value);
+        bool result = grid->setVoxel(incrementPos, value);
         
         // Dispatch event if successful and value changed
         if (result && oldValue != value && m_eventDispatcher) {
             Events::VoxelChangedEvent event{
-                gridPos,
+                incrementPos.value(),
                 resolution,
                 oldValue,
                 value
@@ -322,21 +272,13 @@ public:
         const VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
-        // Convert increment coordinates to grid coordinates
-        // Use internal method to avoid recursive mutex lock
-        Math::Vector3f workspaceSize = getWorkspaceSizeInternal();
-        Math::GridCoordinates gridPos = Math::CoordinateConverter::incrementToGrid(
-            pos, resolution, workspaceSize);
-        
-        return grid->isValidGridPosition(gridPos.value());
+        return grid->isValidIncrementPosition(pos);
     }
     
     // Overload for backward compatibility with Vector3i
-    // NOTE: This interprets pos as GRID coordinates for the given resolution, not increment coordinates  
+    // NOTE: This interprets pos as INCREMENT coordinates for backward compatibility  
     bool isValidPosition(const Math::Vector3i& pos, VoxelResolution resolution) const {
-        Math::GridCoordinates gridPos(pos);
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            gridPos, resolution, getWorkspaceSize());
+        Math::IncrementCoordinates incCoord(pos);
         return isValidPosition(incCoord, resolution);
     }
     
@@ -518,110 +460,50 @@ public:
     // Enhancement: Collision detection
     bool wouldOverlap(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
         std::lock_guard<std::mutex> lock(m_mutex);
-        // Convert increment coordinates to grid coordinates
-        // Use internal method to avoid recursive mutex lock
-        Math::Vector3f workspaceSize = getWorkspaceSizeInternal();
-        Math::GridCoordinates gridPos = Math::CoordinateConverter::incrementToGrid(
-            pos, resolution, workspaceSize);
-        return wouldOverlapInternal(gridPos.value(), resolution);
+        return wouldOverlapInternal(pos, resolution);
     }
     
     // Overload for backward compatibility with Vector3i
-    // NOTE: This interprets pos as GRID coordinates for the given resolution, not increment coordinates
+    // NOTE: This interprets pos as INCREMENT coordinates for backward compatibility
     bool wouldOverlap(const Math::Vector3i& pos, VoxelResolution resolution) const {
-        Math::GridCoordinates gridPos(pos);
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            gridPos, resolution, getWorkspaceSize());
+        Math::IncrementCoordinates incCoord(pos);
         return wouldOverlap(incCoord, resolution);
     }
     
     bool wouldOverlap(const VoxelPosition& voxelPos) const {
-        Math::IncrementCoordinates incCoord = Math::CoordinateConverter::gridToIncrement(
-            voxelPos.gridPos, voxelPos.resolution, getWorkspaceSize());
-        return wouldOverlap(incCoord, voxelPos.resolution);
+        return wouldOverlap(voxelPos.incrementPos, voxelPos.resolution);
     }
     
     // Enhancement: Adjacent position calculation
     Math::IncrementCoordinates getAdjacentPosition(const Math::IncrementCoordinates& pos, FaceDirection face, 
                                      VoxelResolution sourceRes, VoxelResolution targetRes) const {
-        // Calculate the position for placing a voxel of targetRes adjacent to a voxel at pos with sourceRes
+        // In the new coordinate system, all voxels are stored at 1cm increment granularity
+        // Adjacent voxels are always 1 increment apart regardless of resolution
+        // The resolution only affects rendering and collision detection
         
         std::lock_guard<std::mutex> lock(m_mutex);
         
-        // For same-size voxels, just offset by the voxel size in increments
-        if (sourceRes == targetRes) {
-            int voxelSizeInIncrements = static_cast<int>(getVoxelSize(sourceRes) * 100.0f); // Convert to cm
-            Math::IncrementCoordinates offset(0, 0, 0);
-            switch (face) {
-                case FaceDirection::PosX: offset = Math::IncrementCoordinates(voxelSizeInIncrements, 0, 0); break;
-                case FaceDirection::NegX: offset = Math::IncrementCoordinates(-voxelSizeInIncrements, 0, 0); break;
-                case FaceDirection::PosY: offset = Math::IncrementCoordinates(0, voxelSizeInIncrements, 0); break;
-                case FaceDirection::NegY: offset = Math::IncrementCoordinates(0, -voxelSizeInIncrements, 0); break;
-                case FaceDirection::PosZ: offset = Math::IncrementCoordinates(0, 0, voxelSizeInIncrements); break;
-                case FaceDirection::NegZ: offset = Math::IncrementCoordinates(0, 0, -voxelSizeInIncrements); break;
-            }
-            return pos + offset;
-        }
-        
-        // For different sizes, convert to world space
-        if (!getGrid(sourceRes) || !getGrid(targetRes)) {
-            return pos; // Fallback
-        }
-        
-        float sourceSize = getVoxelSize(sourceRes);
-        float targetSize = getVoxelSize(targetRes);
-        
-        // Convert increment position to world space
-        Math::WorldCoordinates sourceWorldPos = Math::CoordinateConverter::incrementToWorld(pos);
-        
-        // Calculate offset based on face direction
-        Math::Vector3f offset(0, 0, 0);
+        Math::IncrementCoordinates offset(0, 0, 0);
         switch (face) {
-            case FaceDirection::PosX:
-                offset.x = sourceSize;
-                break;
-            case FaceDirection::NegX:
-                offset.x = -targetSize;
-                break;
-            case FaceDirection::PosY:
-                offset.y = sourceSize;
-                break;
-            case FaceDirection::NegY:
-                offset.y = -targetSize;
-                break;
-            case FaceDirection::PosZ:
-                offset.z = sourceSize;
-                break;
-            case FaceDirection::NegZ:
-                offset.z = -targetSize;
-                break;
+            case FaceDirection::PosX: offset = Math::IncrementCoordinates(1, 0, 0); break;
+            case FaceDirection::NegX: offset = Math::IncrementCoordinates(-1, 0, 0); break;
+            case FaceDirection::PosY: offset = Math::IncrementCoordinates(0, 1, 0); break;
+            case FaceDirection::NegY: offset = Math::IncrementCoordinates(0, -1, 0); break;
+            case FaceDirection::PosZ: offset = Math::IncrementCoordinates(0, 0, 1); break;
+            case FaceDirection::NegZ: offset = Math::IncrementCoordinates(0, 0, -1); break;
         }
         
-        // Calculate target world position
-        Math::WorldCoordinates targetWorldPos = sourceWorldPos + Math::WorldCoordinates(offset);
-        
-        // Convert back to increment coordinates
-        return Math::CoordinateConverter::worldToIncrement(targetWorldPos);
+        return pos + offset;
     }
     
     // Overload for backward compatibility with Vector3i
-    // NOTE: This interprets pos as GRID coordinates for sourceRes, returns GRID coordinates for targetRes
+    // NOTE: This interprets pos as INCREMENT coordinates for backward compatibility
     Math::Vector3i getAdjacentPosition(const Math::Vector3i& pos, FaceDirection face,
                                      VoxelResolution sourceRes, VoxelResolution targetRes) const {
-        // Convert input grid coordinates to increment coordinates
-        Math::GridCoordinates sourceGridPos(pos);
-        Math::IncrementCoordinates sourceIncCoord = Math::CoordinateConverter::gridToIncrement(
-            sourceGridPos, sourceRes, getWorkspaceSize());
-        
-        // Get adjacent position in increment coordinates
+        Math::IncrementCoordinates sourceIncCoord(pos);
         Math::IncrementCoordinates targetIncCoord = getAdjacentPosition(
             sourceIncCoord, face, sourceRes, targetRes);
-        
-        // Convert back to grid coordinates for target resolution
-        Math::GridCoordinates targetGridCoord = Math::CoordinateConverter::incrementToGrid(
-            targetIncCoord, targetRes, getWorkspaceSize());
-        
-        return targetGridCoord.value();
+        return targetIncCoord.value();
     }
     
     // Event dispatcher
@@ -698,34 +580,30 @@ private:
     }
     
     
-    void dispatchVoxelChangedEvent(const Math::Vector3i& position, VoxelResolution resolution, 
+    void dispatchVoxelChangedEvent(const Math::IncrementCoordinates& position, VoxelResolution resolution, 
                                  bool oldValue, bool newValue) {
         if (m_eventDispatcher) {
-            Events::VoxelChangedEvent event(position, resolution, oldValue, newValue);
+            Events::VoxelChangedEvent event(position.value(), resolution, oldValue, newValue);
             m_eventDispatcher->dispatch(event);
         }
     }
     
     // Internal collision detection without lock (must be called with lock already held)
-    // Note: pos parameter is expected to be in VoxelGrid coordinates (not increment coordinates)
-    bool wouldOverlapInternal(const Math::Vector3i& pos, VoxelResolution resolution) const {
+    // Note: pos parameter is expected to be in IncrementCoordinates
+    bool wouldOverlapInternal(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
         // Check if placing a voxel at this position would overlap with existing voxels
         // Optimized version that uses spatial queries to reduce checks
         
         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-            "wouldOverlapInternal: checking grid position (%d, %d, %d) with resolution %d",
-            pos.x, pos.y, pos.z, static_cast<int>(resolution));
+            "wouldOverlapInternal: checking increment position (%d, %d, %d) with resolution %d",
+            pos.x(), pos.y(), pos.z(), static_cast<int>(resolution));
         
-        // Get the grid for this resolution to convert to world space correctly
-        const VoxelGrid* targetGrid = getGrid(resolution);
-        if (!targetGrid) return false;
-        
-        // Convert grid position to world space using the grid's coordinate system
-        Math::Vector3f worldCenter = targetGrid->gridToWorld(pos);
+        // Convert increment position to world space
+        Math::WorldCoordinates worldCenter = Math::CoordinateConverter::incrementToWorld(pos);
         float voxelSize = getVoxelSize(resolution);
         float halfSize = voxelSize * 0.5f;
-        Math::Vector3f worldMin = worldCenter - Math::Vector3f(halfSize, halfSize, halfSize);
-        Math::Vector3f worldMax = worldCenter + Math::Vector3f(halfSize, halfSize, halfSize);
+        Math::Vector3f worldMin = worldCenter.value() - Math::Vector3f(halfSize, halfSize, halfSize);
+        Math::Vector3f worldMax = worldCenter.value() + Math::Vector3f(halfSize, halfSize, halfSize);
         
         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
             "World bounds: min=(%.3f, %.3f, %.3f) max=(%.3f, %.3f, %.3f)",
@@ -743,36 +621,27 @@ private:
             
             float checkVoxelSize = getVoxelSize(checkRes);
             
-            // Convert world bounds to grid coordinates for this resolution
-            // to limit our search space
-            Math::Vector3i minGridCheck = grid->worldToGrid(worldMin);
-            Math::Vector3i maxGridCheck = grid->worldToGrid(worldMax);
-            
-            // Adjust max bounds to be inclusive (ceil behavior)
-            maxGridCheck.x = std::min(maxGridCheck.x + 1, grid->getGridDimensions().x);
-            maxGridCheck.y = std::min(maxGridCheck.y + 1, grid->getGridDimensions().y);
-            maxGridCheck.z = std::min(maxGridCheck.z + 1, grid->getGridDimensions().z);
+            // Convert world bounds to increment coordinates for this resolution
+            Math::IncrementCoordinates minIncCheck = Math::CoordinateConverter::worldToIncrement(
+                Math::WorldCoordinates(worldMin));
+            Math::IncrementCoordinates maxIncCheck = Math::CoordinateConverter::worldToIncrement(
+                Math::WorldCoordinates(worldMax));
             
             Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                "Grid check bounds: min=(%d, %d, %d) max=(%d, %d, %d)",
-                minGridCheck.x, minGridCheck.y, minGridCheck.z,
-                maxGridCheck.x, maxGridCheck.y, maxGridCheck.z);
-            
-            // Clamp bounds to valid grid range
-            minGridCheck.x = std::max(0, minGridCheck.x);
-            minGridCheck.y = std::max(0, minGridCheck.y);
-            minGridCheck.z = std::max(0, minGridCheck.z);
+                "Increment check bounds: min=(%d, %d, %d) max=(%d, %d, %d)",
+                minIncCheck.x(), minIncCheck.y(), minIncCheck.z(),
+                maxIncCheck.x(), maxIncCheck.y(), maxIncCheck.z());
             
             // Quick check: if the search range is too large, use getAllVoxels instead
-            int searchVolume = (maxGridCheck.x - minGridCheck.x) * 
-                              (maxGridCheck.y - minGridCheck.y) * 
-                              (maxGridCheck.z - minGridCheck.z);
+            int searchVolume = (maxIncCheck.x() - minIncCheck.x()) * 
+                              (maxIncCheck.y() - minIncCheck.y()) * 
+                              (maxIncCheck.z() - minIncCheck.z());
             
             if (searchVolume > COLLISION_SEARCH_VOLUME_THRESHOLD || grid->getVoxelCount() < searchVolume / 2) {
                 // More efficient to check all voxels directly
                 auto voxels = grid->getAllVoxels();
                 for (const auto& voxelPos : voxels) {
-                    Math::Vector3f voxelCenter = grid->gridToWorld(voxelPos.gridPos.value());
+                    Math::Vector3f voxelCenter = voxelPos.toWorldSpace();
                     float checkHalfSize = checkVoxelSize * 0.5f;
                     Math::Vector3f voxelMin = voxelCenter - Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
                     Math::Vector3f voxelMax = voxelCenter + Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
@@ -787,13 +656,16 @@ private:
                 continue; // Next resolution
             }
             
-            // Check only the voxels that could potentially overlap
-            for (int x = minGridCheck.x; x < maxGridCheck.x; ++x) {
-                for (int y = minGridCheck.y; y < maxGridCheck.y; ++y) {
-                    for (int z = minGridCheck.z; z < maxGridCheck.z; ++z) {
-                        if (grid->getVoxel(Math::Vector3i(x, y, z))) {
+            // For the detailed search, iterate through the region in increment coordinates
+            // Step by the voxel resolution to check each potential voxel position
+            int checkVoxelSize_cm = static_cast<int>(checkVoxelSize * 100.0f);
+            for (int x = minIncCheck.x(); x <= maxIncCheck.x(); x += checkVoxelSize_cm) {
+                for (int y = minIncCheck.y(); y <= maxIncCheck.y(); y += checkVoxelSize_cm) {
+                    for (int z = minIncCheck.z(); z <= maxIncCheck.z(); z += checkVoxelSize_cm) {
+                        Math::IncrementCoordinates checkPos(x, y, z);
+                        if (grid->getVoxel(checkPos)) {
                             // Found a voxel that might overlap
-                            Math::Vector3f voxelCenter = grid->gridToWorld(Math::Vector3i(x, y, z));
+                            Math::Vector3f voxelCenter = Math::CoordinateConverter::incrementToWorld(checkPos).value();
                             float checkHalfSize = checkVoxelSize * 0.5f;
                             Math::Vector3f voxelMin = voxelCenter - Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
                             Math::Vector3f voxelMax = voxelCenter + Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);

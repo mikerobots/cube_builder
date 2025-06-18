@@ -5,6 +5,8 @@
 
 #include "VoxelTypes.h"
 #include "../../foundation/math/Vector3f.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
 
@@ -73,50 +75,72 @@ public:
         return (m_size.x == m_size.y) && (m_size.y == m_size.z);
     }
     
-    // Get workspace bounds (centered at origin)
+    // Get workspace bounds using strong coordinate types (centered at origin)
+    Math::WorldCoordinates getMinBoundsWorld() const {
+        return Math::WorldCoordinates(-m_size.x * 0.5f, 0.0f, -m_size.z * 0.5f);
+    }
+    
+    Math::WorldCoordinates getMaxBoundsWorld() const {
+        return Math::WorldCoordinates(m_size.x * 0.5f, m_size.y, m_size.z * 0.5f);
+    }
+    
+    Math::WorldCoordinates getCenterWorld() const {
+        return Math::WorldCoordinates(0.0f, m_size.y * 0.5f, 0.0f);
+    }
+    
+    // Legacy bounds methods for backward compatibility
     Math::Vector3f getMinBounds() const {
-        return Math::Vector3f(-m_size.x * 0.5f, 0.0f, -m_size.z * 0.5f);
+        return getMinBoundsWorld().value();
     }
     
     Math::Vector3f getMaxBounds() const {
-        return Math::Vector3f(m_size.x * 0.5f, m_size.y, m_size.z * 0.5f);
+        return getMaxBoundsWorld().value();
     }
     
     Math::Vector3f getCenter() const {
-        return Math::Vector3f(0.0f, m_size.y * 0.5f, 0.0f);
+        return getCenterWorld().value();
     }
     
-    // Position validation (centered workspace, Y >= 0)
+    // Position validation using strong coordinate types (centered workspace, Y >= 0)
+    bool isPositionValid(const Math::WorldCoordinates& position) const {
+        return Math::CoordinateConverter::isValidWorldCoordinate(position, m_size);
+    }
+    
+    // Legacy position validation for backward compatibility
     bool isPositionValid(const Math::Vector3f& position) const {
-        float halfX = m_size.x * 0.5f;
-        float halfZ = m_size.z * 0.5f;
-        return position.x >= -halfX && position.x <= halfX &&
-               position.y >= 0 && position.y <= m_size.y &&
-               position.z >= -halfZ && position.z <= halfZ;
+        return isPositionValid(Math::WorldCoordinates(position));
     }
     
     bool isVoxelPositionValid(const VoxelPosition& voxelPos) const {
-        Math::Vector3f worldPos = voxelPos.toWorldSpace(m_size);
+        Math::Vector3f worldPos = voxelPos.toWorldSpace();
         return isPositionValid(worldPos);
     }
     
-    // Grid position validation (for specific resolution)
-    bool isGridPositionValid(const Math::Vector3i& gridPos, VoxelResolution resolution) const {
-        Math::Vector3i maxDims = getMaxGridDimensions(resolution);
-        return gridPos.x >= 0 && gridPos.x < maxDims.x &&
-               gridPos.y >= 0 && gridPos.y < maxDims.y &&
-               gridPos.z >= 0 && gridPos.z < maxDims.z;
+    // Increment position validation using strong coordinate types
+    bool isIncrementPositionValid(const Math::IncrementCoordinates& incrementPos) const {
+        return Math::CoordinateConverter::isValidIncrementCoordinate(incrementPos, m_size);
     }
     
-    // Clamp position to workspace bounds
-    Math::Vector3f clampPosition(const Math::Vector3f& position) const {
+    // Legacy increment position validation for backward compatibility
+    bool isGridPositionValid(const Math::Vector3i& incrementPos, VoxelResolution resolution) const {
+        return isIncrementPositionValid(Math::IncrementCoordinates(incrementPos));
+    }
+    
+    // Clamp position to workspace bounds using strong coordinate types
+    Math::WorldCoordinates clampPosition(const Math::WorldCoordinates& position) const {
         float halfX = m_size.x * 0.5f;
         float halfZ = m_size.z * 0.5f;
-        return Math::Vector3f(
-            std::clamp(position.x, -halfX, halfX),
-            std::clamp(position.y, 0.0f, m_size.y),
-            std::clamp(position.z, -halfZ, halfZ)
-        );
+        const Math::Vector3f& pos = position.value();
+        return Math::WorldCoordinates(Math::Vector3f(
+            std::clamp(pos.x, -halfX, halfX),
+            std::clamp(pos.y, 0.0f, m_size.y),
+            std::clamp(pos.z, -halfZ, halfZ)
+        ));
+    }
+    
+    // Legacy clamp position for backward compatibility
+    Math::Vector3f clampPosition(const Math::Vector3f& position) const {
+        return clampPosition(Math::WorldCoordinates(position)).value();
     }
     
     // Get maximum voxel counts for each resolution
@@ -223,6 +247,7 @@ private:
     Math::Vector3f m_size;
     Events::EventDispatcher* m_eventDispatcher;
     SizeChangeCallback m_sizeChangeCallback;
+    
 };
 
 }
