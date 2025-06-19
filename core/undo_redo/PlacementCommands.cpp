@@ -2,6 +2,7 @@
 #include "../../foundation/logging/Logger.h"
 #include "../input/PlacementValidation.h"
 #include "../../foundation/math/CoordinateConverter.h"
+#include "../voxel_data/VoxelTypes.h"
 #include <sstream>
 #include <cmath>
 
@@ -28,7 +29,7 @@ std::unique_ptr<Command> PlacementCommandFactory::createPlacementCommand(
     if (!validation.valid) {
         std::stringstream ss;
         ss << "Invalid placement at (" << position.x << ", " << position.y << ", " << position.z 
-           << ") resolution " << static_cast<int>(resolution) << ": "
+           << ") resolution " << VoxelData::getVoxelSizeName(resolution) << ": "
            << (validation.errors.empty() ? "Unknown error" : validation.errors[0]);
         Logger::getInstance().warning(ss.str());
         return nullptr;
@@ -52,7 +53,7 @@ std::unique_ptr<Command> PlacementCommandFactory::createRemovalCommand(
     if (!validation.valid) {
         std::stringstream ss;
         ss << "Invalid removal at (" << position.x << ", " << position.y << ", " << position.z 
-           << ") resolution " << static_cast<int>(resolution) << ": "
+           << ") resolution " << VoxelData::getVoxelSizeName(resolution) << ": "
            << (validation.errors.empty() ? "Unknown error" : validation.errors[0]);
         Logger::getInstance().warning(ss.str());
         return nullptr;
@@ -188,7 +189,7 @@ bool VoxelPlacementCommand::execute() {
         m_executed = true;
         std::stringstream ss;
         ss << "Placed voxel at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << static_cast<int>(m_resolution);
+           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -205,7 +206,7 @@ bool VoxelPlacementCommand::undo() {
         m_executed = false;
         std::stringstream ss;
         ss << "Undid voxel placement at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << static_cast<int>(m_resolution);
+           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -218,7 +219,7 @@ bool VoxelPlacementCommand::canUndo() const {
 
 std::string VoxelPlacementCommand::getDescription() const {
     std::stringstream ss;
-    ss << "Place " << static_cast<int>(m_resolution) << "cm voxel at (" 
+    ss << "Place " << VoxelData::getVoxelSizeName(m_resolution) << " voxel at (" 
        << m_position.x << ", " << m_position.y << ", " << m_position.z << ")";
     return ss.str();
 }
@@ -300,7 +301,7 @@ bool VoxelRemovalCommand::execute() {
         m_executed = true;
         std::stringstream ss;
         ss << "Removed voxel at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << static_cast<int>(m_resolution);
+           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -317,7 +318,7 @@ bool VoxelRemovalCommand::undo() {
         m_executed = false;
         std::stringstream ss;
         ss << "Undid voxel removal at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << static_cast<int>(m_resolution);
+           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -330,7 +331,7 @@ bool VoxelRemovalCommand::canUndo() const {
 
 std::string VoxelRemovalCommand::getDescription() const {
     std::stringstream ss;
-    ss << "Remove " << static_cast<int>(m_resolution) << "cm voxel at (" 
+    ss << "Remove " << VoxelData::getVoxelSizeName(m_resolution) << " voxel at (" 
        << m_position.x << ", " << m_position.y << ", " << m_position.z << ")";
     return ss.str();
 }

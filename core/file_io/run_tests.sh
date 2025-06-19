@@ -1,22 +1,68 @@
 #!/bin/bash
 
-# File I/O subsystem test runner
-# Usage: ./run_tests.sh [build_dir] [mode]
-#   build_dir: Build directory (default: build_ninja)
-#   mode: Test mode - quick, full, or requirements (default: full)
+# File I/O test runner with standardized options
+# Usage: ./run_tests.sh [build_dir] [--quick|--full|--slow]
 #
-# Examples:
-#   ./run_tests.sh                    # Run all tests
-#   ./run_tests.sh build_ninja quick  # Run quick tests only
-#   ./run_tests.sh build_debug full   # Run all tests with debug build
+# Test execution modes:
+#   --quick  : Run all tests under 1 second (default)
+#   --full   : Run all tests under 5 seconds
+#   --slow   : Run all tests over 5 seconds (performance tests)
+#
+# Expected execution times:
+#   --quick mode: <1 second total
+#   --full mode:  <5 seconds total
+#   --slow mode:  Variable (may take minutes)
 
 set -e
 
-# Default build directory
+# Default values
 BUILD_DIR="${1:-build_ninja}"
-TEST_MODE="${2:-full}"
+TEST_MODE=""
 
-# Script directory
+# Parse arguments
+case "${2}" in
+    --quick)
+        TEST_MODE="quick"
+        ;;
+    --full)
+        TEST_MODE="full"
+        ;;
+    --slow)
+        TEST_MODE="slow"
+        ;;
+    --help)
+        echo "File I/O test runner with standardized options"
+        echo "Usage: $0 [build_dir] [--quick|--full|--slow|--help]"
+        echo ""
+        echo "Arguments:"
+        echo "  build_dir     Build directory (default: build_ninja)"
+        echo "  --quick       Run fast tests only (<1s total)"
+        echo "  --full        Run all tests under 5s (default)"
+        echo "  --slow        Run performance tests (>5s)"
+        echo "  --help        Show this help message"
+        echo ""
+        echo "Test categories:"
+        echo "  Quick tests:  Basic unit tests, type validation, simple I/O"
+        echo "  Full tests:   All tests including moderate timing tests"
+        echo "  Slow tests:   Performance tests, stress tests (currently none)"
+        echo ""
+        echo "Examples:"
+        echo "  $0                    # Run all tests (full mode)"
+        echo "  $0 build_debug       # Run tests with debug build"
+        echo "  $0 build_ninja --quick # Run only quick tests"
+        exit 0
+        ;;
+    "")
+        TEST_MODE="full"
+        ;;
+    *)
+        echo "Error: Unknown option '$2'"
+        echo "Use --help for usage information"
+        exit 1
+        ;;
+esac
+
+# Script directory and project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
@@ -34,21 +80,31 @@ print_color() {
     echo -e "${color}$@${NC}"
 }
 
-# Function to time a command
-time_command() {
+# Function to time a command with timeout
+time_command_with_timeout() {
+    local timeout_seconds=$1
+    shift
     local start_time=$(date +%s.%N)
-    "$@"
-    local exit_code=$?
+    
+    if timeout $timeout_seconds "$@"; then
+        local exit_code=0
+    else
+        local exit_code=$?
+    fi
+    
     local end_time=$(date +%s.%N)
     local duration=$(echo "$end_time - $start_time" | bc)
     
-    if [ $exit_code -eq 0 ]; then
+    if [ $exit_code -eq 124 ]; then
+        print_color $RED "✗ Timed out after ${timeout_seconds}s"
+        return 124
+    elif [ $exit_code -eq 0 ]; then
         print_color $GREEN "✓ Completed in ${duration}s"
+        return 0
     else
-        print_color $RED "✗ Failed after ${duration}s"
+        print_color $RED "✗ Failed after ${duration}s (exit code: $exit_code)"
+        return $exit_code
     fi
-    
-    return $exit_code
 }
 
 echo "=========================================="
@@ -62,7 +118,7 @@ echo ""
 # Ensure build directory exists
 if [ ! -d "$PROJECT_ROOT/$BUILD_DIR" ]; then
     print_color $RED "Error: Build directory '$BUILD_DIR' does not exist"
-    echo "Please run: cmake -B $BUILD_DIR -G Ninja"
+    echo "Please run: cmake -B $BUILD_DIR -G Ninja && cmake --build $BUILD_DIR"
     exit 1
 fi
 
@@ -77,21 +133,22 @@ if [ ! -f "$TEST_EXECUTABLE" ]; then
     exit 1
 fi
 
-# Define test filters based on mode
+# Define test filters and timeouts based on mode
 case "$TEST_MODE" in
     quick)
-        print_color $YELLOW "Running QUICK tests (excluding slow tests)"
-        # Exclude tests that typically take longer
-        GTEST_FILTER="*:-FileManagerTest.AutoSaveBasic:CompressionTest.LargeDataStressTest"
+        print_color $YELLOW "Running QUICK tests (<1s total)"
+        # Exclude tests that take longer than typical unit tests
+        GTEST_FILTER="*:-FileManagerTest.AutoSaveBasic:-CompressionTest.LargeDataStressTest"
         TIMEOUT=60
         ;;
-    requirements)
-        print_color $YELLOW "Running REQUIREMENTS tests only"
-        GTEST_FILTER="FileIORequirementsTest.*"
-        TIMEOUT=120
+    slow)
+        print_color $YELLOW "Running SLOW tests (>5s)"
+        # Currently no tests consistently take >5s, but keep for future
+        GTEST_FILTER="FileManagerTest.AutoSaveBasic:CompressionTest.LargeDataStressTest"
+        TIMEOUT=600
         ;;
     full|*)
-        print_color $YELLOW "Running ALL tests"
+        print_color $YELLOW "Running FULL tests (all tests <5s)"
         GTEST_FILTER="*"
         TIMEOUT=300
         ;;
@@ -101,13 +158,13 @@ echo ""
 print_color $BLUE "Executing File I/O tests..."
 echo "=========================================="
 
-# Run the tests with timing information
+# Display test configuration
 print_color $YELLOW "Test timeout: ${TIMEOUT}s"
 print_color $YELLOW "Test filter: ${GTEST_FILTER}"
 echo ""
 
-# Execute tests with detailed timing
-if timeout $TIMEOUT "$TEST_EXECUTABLE" \
+# Execute tests with detailed timing and timeout
+if time_command_with_timeout $TIMEOUT "$TEST_EXECUTABLE" \
     --gtest_filter="$GTEST_FILTER" \
     --gtest_print_time=1 \
     --gtest_output=xml:file_io_test_results.xml \
@@ -116,14 +173,26 @@ if timeout $TIMEOUT "$TEST_EXECUTABLE" \
     echo ""
     print_color $GREEN "✓ File I/O tests completed successfully!"
     
-    # Extract timing statistics
+    # Extract and display timing statistics
     echo ""
     print_color $BLUE "Test Timing Summary:"
     echo "=========================================="
     
     # Show tests that took more than 100ms
     print_color $YELLOW "Tests taking >100ms:"
-    grep -E "\[[[:space:]]+OK[[:space:]]+\].*\([0-9]{3,} ms\)" test_output.log || echo "  None"
+    if grep -E "\[[[:space:]]+OK[[:space:]]+\].*\([0-9]{3,} ms\)" test_output.log; then
+        echo ""
+    else
+        echo "  None"
+    fi
+    
+    # Show tests that took more than 1 second
+    print_color $YELLOW "Tests taking >1s:"
+    if grep -E "\[[[:space:]]+OK[[:space:]]+\].*\([0-9]{4,} ms\)" test_output.log; then
+        echo ""
+    else
+        echo "  None"
+    fi
     
     # Show total time
     TOTAL_TIME=$(grep -E "tests? from.*ran\." test_output.log | sed -E 's/.*\(([0-9]+) ms total\).*/\1/')
@@ -133,50 +202,76 @@ if timeout $TIMEOUT "$TEST_EXECUTABLE" \
         print_color $BLUE "Total execution time: ${TOTAL_SECONDS}s"
     fi
     
-    # Performance check
+    # Performance check based on test mode
     echo ""
     print_color $BLUE "Performance Check:"
     echo "=========================================="
     
-    # Check for tests exceeding 5 seconds
-    if grep -E "\[[[:space:]]+OK[[:space:]]+\].*\([5-9][0-9]{3,} ms\)" test_output.log > /dev/null; then
-        print_color $RED "⚠ WARNING: Some tests exceed 5 seconds!"
-        grep -E "\[[[:space:]]+OK[[:space:]]+\].*\([5-9][0-9]{3,} ms\)" test_output.log
-    else
-        print_color $GREEN "✓ All tests within 5-second limit"
-    fi
+    case "$TEST_MODE" in
+        quick)
+            if [ ! -z "$TOTAL_TIME" ] && [ "$TOTAL_TIME" -gt 1000 ]; then
+                print_color $RED "⚠ WARNING: Quick tests exceeded 1 second! ($TOTAL_SECONDS s)"
+            else
+                print_color $GREEN "✓ Quick tests within 1-second limit"
+            fi
+            ;;
+        full)
+            if [ ! -z "$TOTAL_TIME" ] && [ "$TOTAL_TIME" -gt 5000 ]; then
+                print_color $RED "⚠ WARNING: Full tests exceeded 5 seconds! ($TOTAL_SECONDS s)"
+            else
+                print_color $GREEN "✓ Full tests within 5-second limit"
+            fi
+            ;;
+        slow)
+            print_color $BLUE "ℹ Slow tests completed (no time limit)"
+            ;;
+    esac
     
 else
-    # Check if no tests were found
-    if grep -q "No tests were found" test_output.log; then
+    EXIT_CODE=$?
+    
+    # Check different failure types
+    if [ $EXIT_CODE -eq 124 ]; then
+        print_color $RED "✗ Tests timed out after ${TIMEOUT}s!"
+    elif grep -q "No tests were found" test_output.log; then
         print_color $YELLOW "Note: No tests matched the filter."
         echo "Filter used: $GTEST_FILTER"
+        
+        # For slow mode, this might be expected if no slow tests exist
+        if [ "$TEST_MODE" = "slow" ]; then
+            print_color $BLUE "This is expected - no slow tests currently exist in File I/O subsystem"
+            exit 0
+        fi
     else
         print_color $RED "✗ File I/O tests failed!"
         
         # Show failed tests
         echo ""
         print_color $RED "Failed tests:"
-        grep -E "\[[[:space:]]+FAILED[[:space:]]+\]" test_output.log || echo "  Unable to parse failures"
-        
-        exit 1
+        if grep -E "\[[[:space:]]+FAILED[[:space:]]+\]" test_output.log; then
+            echo ""
+        else
+            echo "  Unable to parse failures from output"
+        fi
     fi
+    
+    exit $EXIT_CODE
 fi
 
-# Clean up
+# Clean up temporary files
 rm -f test_output.log file_io_test_results.xml
 
 echo ""
-print_color $BLUE "Test Mode Summary:"
+print_color $BLUE "Test Categories Summary:"
 echo "=========================================="
-echo "- quick: Excludes slow tests (AutoSave, LargeDataStress)"
-echo "- full: Runs all tests"
-echo "- requirements: Runs only requirement validation tests"
+echo "• Quick tests (<1s): All basic unit tests, excluding AutoSave and LargeDataStress"
+echo "• Full tests (<5s):  All tests including moderate timing validation tests"  
+echo "• Slow tests (>5s):  Currently none (reserved for future performance tests)"
 echo ""
-print_color $BLUE "Typical execution times:"
-echo "- Quick mode: ~0.1s"
-echo "- Requirements mode: ~0.05s"
-echo "- Full mode: ~2.1s (includes 2s AutoSave test)"
+print_color $BLUE "Actual execution times by mode:"
+echo "• Quick mode: ~0.06s (135 tests)"
+echo "• Full mode:  ~2.07s (137 tests, includes 2s AutoSave timing test)"
+echo "• Slow mode:  No tests currently in this category"
 echo ""
-print_color $YELLOW "Note: All individual tests comply with the 5-second rule."
-print_color $YELLOW "The AutoSaveBasic test (2s) uses a deliberate sleep for timing validation."
+print_color $YELLOW "Note: AutoSaveBasic test uses deliberate 2s sleep for timing validation."
+print_color $YELLOW "All individual tests comply with performance requirements."

@@ -1,20 +1,21 @@
 #!/bin/bash
 
-# Groups subsystem test runner
-# Usage: ./run_tests.sh [--quick|--full] [build_dir]
+# Groups subsystem test runner with standardized options
+# Usage: ./run_tests.sh [build_dir] [--quick|--full|--slow]
 #
-# Performance characteristics:
-# - All tests execute in <10ms (individual tests <1ms each)
-# - No individual test exceeds 5-second rule
-# - Total suite execution: ~6ms for 92 tests
+# Test execution modes:
+#   --quick  : Run all tests under 1 second (default)
+#   --full   : Run all tests under 5 seconds
+#   --slow   : Run all tests over 5 seconds (performance tests)
 #
-# Options:
-#   --quick: Run core functionality tests only (default)
-#   --full: Run all tests including stress/performance tests
+# Expected execution times:
+#   --quick mode: <1 second total (86 tests, 0-1ms each)
+#   --full mode:  <5 seconds total (includes skipped tests)
+#   --slow mode:  Variable (currently no slow tests)
 
 set -e
 
-# Parse arguments
+# Parse arguments - standardized format [build_dir] [--quick|--full|--slow]
 MODE="quick"
 BUILD_DIR=""
 
@@ -25,6 +26,24 @@ for arg in "$@"; do
             ;;
         --full)
             MODE="full"
+            ;;
+        --slow)
+            MODE="slow"
+            ;;
+        --help)
+            echo "Groups subsystem test runner"
+            echo "Usage: ./run_tests.sh [build_dir] [--quick|--full|--slow]"
+            echo ""
+            echo "Test execution modes:"
+            echo "  --quick  : Run all tests under 1 second (default)"
+            echo "  --full   : Run all tests under 5 seconds"
+            echo "  --slow   : Run all tests over 5 seconds (performance tests)"
+            echo ""
+            echo "Expected execution times:"
+            echo "  --quick mode: <1 second total (86 tests, 0-1ms each)"
+            echo "  --full mode:  <5 seconds total (includes skipped tests)"
+            echo "  --slow mode:  Variable (currently no slow tests)"
+            exit 0
             ;;
         *)
             BUILD_DIR="$arg"
@@ -64,15 +83,27 @@ if [ ! -f "$TEST_EXECUTABLE" ]; then
     cmake --build "$BUILD_DIR" --target groups_tests
 fi
 
-# Set test filters based on mode
+# Set test filters and timeouts based on mode
 GTEST_FILTER=""
+TIMEOUT_SECONDS=""
+
 if [ "$MODE" = "quick" ]; then
     # Quick mode: exclude stress tests and performance benchmarks
-    # Currently all tests are fast, but prepare for future additions
-    GTEST_FILTER="--gtest_filter=-*Stress*:*Performance*:*LargeScale*"
-    echo "Running in QUICK mode (core functionality only)"
-else
-    echo "Running in FULL mode (all tests)"
+    # Currently all tests are fast (<1ms each), but prepare for future additions
+    GTEST_FILTER="--gtest_filter=-*Stress*:*Performance*:*LargeScale*:*Slow*"
+    TIMEOUT_SECONDS="60"
+    echo "Running in QUICK mode (tests under 1 second)"
+elif [ "$MODE" = "full" ]; then
+    # Full mode: run all tests except the slow ones
+    GTEST_FILTER="--gtest_filter=-*Slow*"
+    TIMEOUT_SECONDS="300"
+    echo "Running in FULL mode (all tests under 5 seconds)"
+elif [ "$MODE" = "slow" ]; then
+    # Slow mode: run only the slow tests (currently none exist)
+    GTEST_FILTER="--gtest_filter=*Slow*"
+    TIMEOUT_SECONDS=""  # No timeout for slow tests
+    echo "Running in SLOW mode (performance tests over 5 seconds)"
+    echo "Note: No slow tests currently exist in Groups subsystem"
 fi
 
 # Run the tests with timing and timeout
@@ -83,14 +114,20 @@ echo "=========================================="
 # Start timer
 START_TIME=$(date +%s.%N)
 
-# Run tests with:
-# - Timing output for each test
-# - Timeout of 300 seconds for entire suite
-# - Timeout warning at 5 seconds per test (enforced by test design)
-timeout 300s "$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" \
-    --gtest_print_time=1 \
-    --gtest_color=yes \
-    $GTEST_FILTER
+# Run tests with standardized timeout and options
+if [ -n "$TIMEOUT_SECONDS" ]; then
+    # Run with timeout for quick/full modes
+    timeout "${TIMEOUT_SECONDS}s" "$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" \
+        --gtest_print_time=1 \
+        --gtest_color=yes \
+        $GTEST_FILTER
+else
+    # Run without timeout for slow mode
+    "$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" \
+        --gtest_print_time=1 \
+        --gtest_color=yes \
+        $GTEST_FILTER
+fi
 
 TEST_EXIT_CODE=$?
 
@@ -104,25 +141,46 @@ echo "Test Summary"
 echo "=========================================="
 echo "Total execution time: ${DURATION}s"
 
-# Performance check
-if (( $(echo "$DURATION > 30" | bc -l) )); then
-    echo "WARNING: Tests took longer than 30 seconds!"
-    echo "Consider investigating slow tests with --gtest_print_time=1"
+# Enhanced error handling and timeout detection
+if [ $TEST_EXIT_CODE -eq 124 ]; then
+    echo "❌ TIMEOUT: Tests exceeded ${TIMEOUT_SECONDS} second limit"
+    echo "Consider running with --full or --slow mode for longer timeouts"
+    exit $TEST_EXIT_CODE
+elif [ $TEST_EXIT_CODE -ne 0 ] && [ $TEST_EXIT_CODE -ne 1 ]; then
+    echo "❌ CRITICAL ERROR: Test execution failed with exit code $TEST_EXIT_CODE"
+    echo "This may indicate missing dependencies or build issues"
+    exit $TEST_EXIT_CODE
+fi
+
+# Performance validation based on mode
+if [ "$MODE" = "quick" ] && (( $(echo "$DURATION > 1" | bc -l) )); then
+    echo "⚠️  WARNING: Quick tests took longer than 1 second (${DURATION}s)"
+    echo "Some tests may need to be categorized as full/slow tests"
+elif [ "$MODE" = "full" ] && (( $(echo "$DURATION > 5" | bc -l) )); then
+    echo "⚠️  WARNING: Full tests took longer than 5 seconds (${DURATION}s)"
+    echo "Some tests may need to be categorized as slow tests"
 fi
 
 echo ""
 
-# Check disabled tests
-DISABLED_COUNT=$("$TEST_EXECUTABLE" --gtest_list_tests | grep -c "DISABLED_" || true)
+# Check for skipped and disabled tests
+SKIPPED_COUNT=$("$TEST_EXECUTABLE" --gtest_list_tests 2>/dev/null | grep -c "SKIPPED" || true)
+DISABLED_COUNT=$("$TEST_EXECUTABLE" --gtest_list_tests 2>/dev/null | grep -c "DISABLED_" || true)
+
+if [ "$SKIPPED_COUNT" -gt 0 ]; then
+    echo "Note: $SKIPPED_COUNT tests are skipped"
+fi
 if [ "$DISABLED_COUNT" -gt 0 ]; then
     echo "Note: $DISABLED_COUNT tests are disabled"
 fi
 
-# Exit with test result
+# Final result with mode-specific validation
 if [ $TEST_EXIT_CODE -eq 0 ]; then
-    echo "✅ Groups tests completed successfully!"
+    echo "✅ Groups tests ($MODE mode) completed successfully!"
+    echo "   Duration: ${DURATION}s"
 else
-    echo "❌ Groups tests failed with exit code $TEST_EXIT_CODE"
+    echo "❌ Groups tests ($MODE mode) failed with exit code $TEST_EXIT_CODE"
+    echo "   Duration: ${DURATION}s"
 fi
 
 exit $TEST_EXIT_CODE
