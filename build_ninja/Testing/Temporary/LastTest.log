@@ -1,19 +1,30 @@
-Start testing: Jun 18 07:52 EDT
+Start testing: Jun 19 17:09 EDT
 ----------------------------------------------------------
-Unable to find executable: VoxelEditor_Input_Tests_NOT_BUILT
-306/332 Testing: VoxelEditor_Input_Tests_NOT_BUILT
-306/332 Test: VoxelEditor_Input_Tests_NOT_BUILT
-Command: ""
+751/958 Testing: PlaneDetectorTest.ComplexStackingScenario
+751/958 Test: PlaneDetectorTest.ComplexStackingScenario
+Command: "/Users/michaelhalloran/cube_edit/build_ninja/bin/VoxelEditor_Input_Tests" "--gtest_filter=PlaneDetectorTest.ComplexStackingScenario" "--gtest_also_run_disabled_tests"
 Directory: /Users/michaelhalloran/cube_edit/build_ninja/core/input/tests
-"VoxelEditor_Input_Tests_NOT_BUILT" start time: 
+"PlaneDetectorTest.ComplexStackingScenario" start time: Jun 19 17:09 EDT
 Output:
 ----------------------------------------------------------
+Running main() from /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = PlaneDetectorTest.ComplexStackingScenario
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PlaneDetectorTest
+[ RUN      ] PlaneDetectorTest.ComplexStackingScenario
+[       OK ] PlaneDetectorTest.ComplexStackingScenario (4 ms)
+[----------] 1 test from PlaneDetectorTest (4 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (4 ms total)
+[  PASSED  ] 1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"VoxelEditor_Input_Tests_NOT_BUILT" end time: Jun 18 07:52 EDT
-"VoxelEditor_Input_Tests_NOT_BUILT" time elapsed: 00:00:00
+"PlaneDetectorTest.ComplexStackingScenario" end time: Jun 19 17:09 EDT
+"PlaneDetectorTest.ComplexStackingScenario" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jun 18 07:52 EDT
+End testing: Jun 19 17:09 EDT

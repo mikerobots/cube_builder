@@ -45,8 +45,19 @@ for arg in "$@"; do
             echo "  --slow mode:  Variable (currently no slow tests)"
             exit 0
             ;;
+        --*)
+            echo "Error: Unknown option $arg"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
         *)
-            BUILD_DIR="$arg"
+            if [[ -z "$BUILD_DIR" ]]; then
+                BUILD_DIR="$arg"
+            else
+                echo "Error: Unexpected argument $arg"
+                echo "Use --help for usage information"
+                exit 1
+            fi
             ;;
     esac
 done

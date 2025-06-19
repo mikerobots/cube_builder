@@ -103,8 +103,53 @@ target_link_libraries(test_workspace_boundary_placement
 # Add test
 add_test(NAME WorkspaceBoundaryPlacement COMMAND test_workspace_boundary_placement)
 
+# Visual Feedback Integration Tests (OpenGL-dependent)
+add_executable(test_overlay_renderer_integration
+    visual_feedback/test_overlay_renderer_integration.cpp
+)
+
+target_link_libraries(test_overlay_renderer_integration
+    VoxelEditor_VisualFeedback
+    VoxelEditor_Camera
+    VoxelEditor_Math
+    gtest
+    gtest_main
+)
+
+add_test(NAME OverlayRendererIntegration COMMAND test_overlay_renderer_integration)
+
+add_executable(test_feedback_renderer_integration
+    visual_feedback/test_feedback_renderer_integration.cpp
+)
+
+target_link_libraries(test_feedback_renderer_integration
+    VoxelEditor_VisualFeedback
+    VoxelEditor_Rendering
+    VoxelEditor_VoxelData
+    VoxelEditor_Math
+    gtest
+    gtest_main
+)
+
+add_test(NAME FeedbackRendererIntegration COMMAND test_feedback_renderer_integration)
+
+add_executable(test_visual_feedback_requirements_integration
+    visual_feedback/test_visual_feedback_requirements_integration.cpp
+)
+
+target_link_libraries(test_visual_feedback_requirements_integration
+    VoxelEditor_VisualFeedback
+    VoxelEditor_VoxelData
+    VoxelEditor_Math
+    gtest
+    gtest_main
+)
+
+add_test(NAME VisualFeedbackRequirementsIntegration COMMAND test_visual_feedback_requirements_integration)
+
 # Set working directory for tests
 set_tests_properties(CameraCubeVisibility CameraCubeVisibilitySimple GroundPlaneVoxelPlacement 
-    MouseGroundPlaneClicking MouseBoundaryClicking WorkspaceBoundaryPlacement PROPERTIES
+    MouseGroundPlaneClicking MouseBoundaryClicking WorkspaceBoundaryPlacement
+    OverlayRendererIntegration FeedbackRendererIntegration VisualFeedbackRequirementsIntegration PROPERTIES
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )

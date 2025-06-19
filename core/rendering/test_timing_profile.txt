@@ -1,0 +1,1043 @@
+OpenGLRenderer::useProgram: Program ID 9999 not found in map
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderEngine.cpp:80: Skipped
+Skipping test that requires OpenGL context
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderEngine.cpp:192: Skipped
+Skipping test that requires OpenGL context
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderEngine.cpp:207: Skipped
+Skipping test that requires OpenGL context
+[2025-06-19 11:44:14.564] [INFO ] Compiling shader program: test_shader
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: test_shader (ID: 100)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: shader1
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: shader1 (ID: 101)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: shader2
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: shader2 (ID: 102)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: shader3
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: shader3 (ID: 103)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: replaceable
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: replaceable (ID: 104)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: replaceable
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: replaceable (ID: 105)
+[2025-06-19 11:44:14.565] [ERROR] ShaderManager::loadShaderFromFile - no renderer set
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: shader1
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: shader1 (ID: 106)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: shader2
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: shader2 (ID: 107)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: shader3
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: shader3 (ID: 108)
+[2025-06-19 11:44:14.565] [WARN ] ShaderManager::reloadAllShaders not implemented
+[2025-06-19 11:44:14.565] [ERROR] ShaderManager::createShaderFromSource - null renderer provided
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: minimal_shader
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: minimal_shader (ID: 109)
+[2025-06-19 11:44:14.565] [INFO ] Compiling shader program: basic_lit_shader
+[2025-06-19 11:44:14.565] [INFO ] Successfully created shader program: basic_lit_shader (ID: 110)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: textured_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: textured_shader (ID: 111)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: pass_through_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: pass_through_shader (ID: 112)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: error_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: error_shader (ID: 113)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: link_error_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: link_error_shader (ID: 114)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: constant_color_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: constant_color_shader (ID: 115)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: red_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: red_shader (ID: 116)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: green_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: green_shader (ID: 117)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: blue_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: blue_shader (ID: 118)
+[2025-06-19 11:44:14.566] [INFO ] Compiling shader program: explicit_location_shader
+[2025-06-19 11:44:14.566] [INFO ] Successfully created shader program: explicit_location_shader (ID: 119)
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.665] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.665] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.665] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.668] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.668] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.670] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.670] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.671] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.671] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.671] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.671] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.672] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.672] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.672] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.672] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.672] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.672] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.684] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.684] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.684] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.686] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.686] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.688] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.688] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.690] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.690] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.690] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.690] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.690] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.690] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.690] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.690] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.690] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 3 for Other at offset 24
+Attribute 0: size=3, type=1406, stride=48, offset=0
+Attribute 1: size=3, type=1406, stride=48, offset=12
+Attribute 2: size=4, type=1406, stride=48, offset=32
+[2025-06-19 11:44:14.690] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.701] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.701] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.701] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.703] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.703] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.704] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.704] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.706] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.706] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.706] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.706] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.707] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.707] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.707] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.707] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.707] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.707] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.716] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.716] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.716] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.718] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.718] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.720] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.720] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.722] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.722] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.722] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.722] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.722] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.722] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.722] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.722] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.722] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 3 for Other at offset 24
+bindMaterial: Using shader ID 3 (material shader: 3)
+Drawing mesh with 3 indices (1 triangles)
+drawElements called: count=3, type=4, offset=0 (expected 1 triangles)
+  Current program: 3
+  Program validation: PASSED
+  Program linked: YES
+  VAO=3, VBO=1, IBO=2
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Attrib 3: enabled, size=2, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
+[2025-06-19 11:44:14.723] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.732] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.732] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.732] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.734] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.734] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.736] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.736] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.738] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.738] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.738] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.738] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.738] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.738] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.738] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.738] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.738] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.739] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.748] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.748] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.748] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.750] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.750] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.751] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.752] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.753] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.753] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.753] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.753] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.754] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.754] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.754] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.754] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.754] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.755] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.764] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.764] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.764] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.766] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.766] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.768] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.768] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.770] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.770] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.770] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.770] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.770] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.770] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.770] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.770] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.770] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.771] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.780] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.780] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.780] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.782] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.782] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.784] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.784] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.786] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.786] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.786] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.786] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.786] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.786] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.786] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.786] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.786] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.787] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.796] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.796] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.796] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.798] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.798] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.800] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.800] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.801] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.801] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.801] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.801] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.802] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.802] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.802] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.802] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.802] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.803] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+Warning: Uniform 'lightDir' not found in program 3
+Warning: Uniform 'useTexture' not found in program 3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+Warning: Uniform 'nonExistentUniform' not found in program 3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.857] [INFO ] Direct logging test
+[2025-06-19 11:44:14.857] [INFO ] Testing with string: test
+[2025-06-19 11:44:14.857] [INFO ] Count: 42
+[2025-06-19 11:44:14.857] [INFO ] Line count: 3
+[2025-06-19 11:44:14.857] [INFO ] Compiling shader program: test
+[2025-06-19 11:44:14.857] [INFO ] Successfully created shader program: test (ID: 100)
+[2025-06-19 11:44:14.857] [INFO ] Test message from simple test
+[2025-06-19 11:44:14.857] [INFO ] Compiling shader program: test_shader
+[2025-06-19 11:44:14.857] [INFO ] ShaderManager created successfully
+[2025-06-19 11:44:14.857] [INFO ] Compiling shader program: test_shader
+[2025-06-19 11:44:14.857] [INFO ] Successfully created shader program: test_shader (ID: 100)
+Testing Logger basic functionality...
+[2025-06-19 11:44:14.857] [INFO ] Logger test message
+✓ Logger basic functionality works
+Testing Logger with string operations...
+[2025-06-19 11:44:14.857] [INFO ] Compiling shader program: test_shader
+✓ Logger string operations work
+Testing MockOpenGLRenderer creation...
+✓ MockOpenGLRenderer creation works
+✓ MockOpenGLRenderer basic operations work
+Testing ShaderManager creation...
+✓ ShaderManager creation works
+✓ ShaderManager basic operations work
+Testing combined functionality step by step...
+✓ Step 1: ShaderManager created
+✓ Step 2: Simple renderer created
+[2025-06-19 11:44:14.857] [INFO ] Testing logging in combined context
+✓ Step 3: Logging works in combined context
+✓ Combined functionality works with simple renderer
+Testing the problematic combination that causes crashes...
+Creating ShaderManager...
+✓ ShaderManager created
+Creating MockOpenGLRenderer...
+MockOpenGLRenderer constructor called
+✓ MockOpenGLRenderer created
+Testing logging before createShaderFromSource...
+[2025-06-19 11:44:14.857] [INFO ] About to call createShaderFromSource
+✓ Logging works before createShaderFromSource
+Calling createShaderFromSource...
+[2025-06-19 11:44:14.857] [INFO ] Compiling shader program: debug_test_shader
+MockOpenGLRenderer::createShader called
+MockOpenGLRenderer::createShader called
+MockOpenGLRenderer::createProgram called
+MockOpenGLRenderer::deleteShader called
+MockOpenGLRenderer::deleteShader called
+[2025-06-19 11:44:14.857] [INFO ] Successfully created shader program: debug_test_shader (ID: 100)
+✓ createShaderFromSource completed successfully
+MockOpenGLRenderer destructor called
+[INFO] Compiling shader program: test_shader
+[DEBUG] Vertex shader source lines: 6
+[DEBUG] Fragment shader source lines: 5
+[DEBUG] Successfully compiled vertex shader for: test_shader
+[DEBUG] Successfully compiled fragment shader for: test_shader
+[INFO] Successfully created shader program: test_shader (ID: 100)
+[2025-06-19 11:44:14.857] [INFO ] Compiling shader program: production_test_shader
+[2025-06-19 11:44:14.857] [INFO ] Successfully created shader program: production_test_shader (ID: 101)
+[INFO] Compiling shader program: shader1
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: shader1
+[DEBUG] Successfully compiled fragment shader for: shader1
+[INFO] Successfully created shader program: shader1 (ID: 102)
+[INFO] Compiling shader program: shader2
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: shader2
+[DEBUG] Successfully compiled fragment shader for: shader2
+[INFO] Successfully created shader program: shader2 (ID: 103)
+[INFO] Compiling shader program: shader3
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: shader3
+[DEBUG] Successfully compiled fragment shader for: shader3
+[INFO] Successfully created shader program: shader3 (ID: 104)
+[ERROR] TestableShaderManager::createShaderFromSource - null renderer provided
+[INFO] Compiling shader program: basic_lit_shader
+[DEBUG] Vertex shader source lines: 26
+[DEBUG] Fragment shader source lines: 17
+[DEBUG] Successfully compiled vertex shader for: basic_lit_shader
+[DEBUG] Successfully compiled fragment shader for: basic_lit_shader
+[INFO] Successfully created shader program: basic_lit_shader (ID: 105)
+
+=== Testing Different Logging Approaches ===
+Testing Approach 1: Dependency injection with TestLogger...
+[INFO] Compiling shader program: approach1_shader
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: approach1_shader
+[DEBUG] Successfully compiled fragment shader for: approach1_shader
+[INFO] Successfully created shader program: approach1_shader (ID: 106)
+✓ Approach 1 SUCCESS: Dependency injection works
+Testing Approach 2: Original with try-catch...
+[2025-06-19 11:44:14.858] [INFO ] Compiling shader program: approach2_shader
+[2025-06-19 11:44:14.858] [INFO ] Successfully created shader program: approach2_shader (ID: 107)
+✓ Approach 2 SUCCESS: Try-catch protection works
+=== Comparison Complete ===
+[INFO] Compiling shader program: test_shader
+[DEBUG] Vertex shader source lines: 6
+[DEBUG] Fragment shader source lines: 5
+[DEBUG] Successfully compiled vertex shader for: test_shader
+[DEBUG] Successfully compiled fragment shader for: test_shader
+[INFO] Successfully created shader program: test_shader (ID: 100)
+[2025-06-19 11:44:14.858] [INFO ] Compiling shader program: production_test_shader
+[2025-06-19 11:44:14.858] [INFO ] Successfully created shader program: production_test_shader (ID: 101)
+[INFO] Compiling shader program: shader1
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: shader1
+[DEBUG] Successfully compiled fragment shader for: shader1
+[INFO] Successfully created shader program: shader1 (ID: 102)
+[INFO] Compiling shader program: shader2
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: shader2
+[DEBUG] Successfully compiled fragment shader for: shader2
+[INFO] Successfully created shader program: shader2 (ID: 103)
+[INFO] Compiling shader program: shader3
+[DEBUG] Vertex shader source lines: 1
+[DEBUG] Fragment shader source lines: 1
+[DEBUG] Successfully compiled vertex shader for: shader3
+[DEBUG] Successfully compiled fragment shader for: shader3
+[INFO] Successfully created shader program: shader3 (ID: 104)
+[ERROR] ShaderManagerSafe::createShaderFromSource - null renderer provided
+[INFO] Compiling shader program: basic_lit_shader
+[DEBUG] Vertex shader source lines: 26
+[DEBUG] Fragment shader source lines: 17
+[DEBUG] Successfully compiled vertex shader for: basic_lit_shader
+[DEBUG] Successfully compiled fragment shader for: basic_lit_shader
+[INFO] Successfully created shader program: basic_lit_shader (ID: 105)
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_RenderState.cpp:37: Skipped
+No OpenGL context available for testing
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_EnhancedShaderValidation.cpp:131: Skipped
+Could not read shader files
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_EnhancedShaderValidation.cpp:196: Skipped
+Could not read shader files
+/Users/michaelhalloran/cube_edit/core/rendering/tests/test_EnhancedShaderValidation.cpp:222: Skipped
+Could not read GL21 shader files
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.884] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.884] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.884] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.886] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.886] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.888] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.888] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.890] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.890] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.890] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.890] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.890] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.890] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.890] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.890] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.890] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.890] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.897] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.897] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.897] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.899] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.899] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.901] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.901] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.903] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.903] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.903] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.903] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.904] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.904] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.904] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.904] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.904] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.904] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.914] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.914] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.914] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.916] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.916] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.918] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.918] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.920] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.920] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.920] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.920] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.920] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.920] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.920] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.920] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.920] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 3 for Other at offset 24
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 3 for Other at offset 24
+bindMaterial: Using shader ID 6 (material shader: 6)
+Camera target: 5, 5, 5
+Camera position: 5, 5, 25
+View matrix first row: 1, -0, 0, -5
+Workspace: 0,0,0 to 10,10,10
+Vertex 0 transform: world(-0.5,0.5,-0.5) -> clip(-9.95863,-10.864,25.3508,25.5) -> NDC(-0.390535,-0.426038,0.994151) -> Screen(390.058,513.374) [VISIBLE]
+  Triangle bounds: (390.058,513.374) to (435.502,547.457) Size: 45.444 x 34.083 pixels
+Drawing mesh with 36 indices (12 triangles)
+drawElements called: count=36, type=4, offset=0 (expected 12 triangles)
+  Current program: 4
+  Program validation: PASSED
+  Program linked: YES
+  VAO=3, VBO=3, IBO=2
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Attrib 3: enabled, size=2, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
+bindMaterial: Using shader ID 6 (material shader: 6)
+Vertex 0 transform: world(-0.5,0.5,-0.5) -> clip(-9.95863,-10.864,25.3508,25.5) -> NDC(-0.390535,-0.426038,0.994151) -> Screen(390.058,513.374) [VISIBLE]
+  Triangle bounds: (390.058,513.374) to (435.502,547.457) Size: 45.444 x 34.083 pixels
+Drawing mesh with 36 indices (12 triangles)
+drawElements called: count=36, type=4, offset=0 (expected 12 triangles)
+  Current program: 4
+  Program validation: PASSED
+  Program linked: YES
+  VAO=3, VBO=3, IBO=2
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Attrib 3: enabled, size=2, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
+Warning: Uniform 'albedo' not found in program 3
+drawElements called: count=24, type=1, offset=0 (expected 8 triangles)
+  Current program: 3
+  Program validation: PASSED
+  Program linked: YES
+  VAO=4, VBO=3, IBO=4
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Attrib 3: enabled, size=2, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
+GL Error after drawElements: 1281
+EdgeRenderingTest: Edge mesh has 8 vertices and 24 indices. Rendering completed successfully.
+[2025-06-19 11:44:14.956] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.966] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.966] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.966] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.968] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.969] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.970] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.971] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.972] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.972] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.972] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.972] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.973] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.973] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.973] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.973] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.973] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 3 for Other at offset 24
+bindMaterial: Using shader ID 6 (material shader: 6)
+Vertex 0 transform: world(-1,-1,1) -> clip(-10.864,-14.4853,23.8478,24) -> NDC(-0.452665,-0.603553,0.99366) -> Screen(350.294,577.279) [VISIBLE]
+  Triangle bounds: (350.294,504.853) to (446.863,577.279) Size: 96.5685 x 72.4264 pixels
+Drawing mesh with 12 indices (4 triangles)
+drawElements called: count=12, type=4, offset=0 (expected 4 triangles)
+  Current program: 4
+  Program validation: PASSED
+  Program linked: YES
+  VAO=3, VBO=1, IBO=2
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Attrib 3: enabled, size=2, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
+[2025-06-19 11:44:14.974] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:14.984] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:14.984] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:14.984] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.986] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:14.986] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.988] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:14.988] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:14.990] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:14.990] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:14.990] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:14.990] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:14.991] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:14.991] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:14.991] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:14.991] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:14.991] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:14.991] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.000] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.000] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.001] [INFO ] Successfully created shader program: ground_plane (ID: 3)
+[2025-06-19 11:44:15.001] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 3
+[2025-06-19 11:44:15.001] [INFO ] Ground plane grid renderer initialized
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Shader files found at: core/rendering/shaders
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Looking for shaders in: /Users/michaelhalloran/cube_edit/core/rendering/shaders
+Looking for shaders in: /Users/michaelhalloran/cube_edit/core/rendering/shaders
+Looking for shaders in: /Users/michaelhalloran/cube_edit/core/rendering/shaders
+Looking for shaders in: /Users/michaelhalloran/cube_edit/core/rendering/shaders
+Looking for shaders in: /Users/michaelhalloran/cube_edit/core/rendering/shaders
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Shader program created: 3
+Drawing completed successfully
+Current program after draw: 3 (expected 3)
+Viewport: 0,0 256x256
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.124] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.124] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.125] [INFO ] Successfully created shader program: ground_plane (ID: 3)
+[2025-06-19 11:44:15.125] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 3
+[2025-06-19 11:44:15.125] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.125] [INFO ] Generated ground plane grid mesh: 66 lines, workspace size: (10.000000, 1.000000, 10.000000)
+Camera position: (0, 10, -4.37114e-07)
+Test point projections:
+  World (0,0,0) -> Screen (0,-6.86161e-15,0.980198)
+  World (1,0,0) -> Screen (-0.241421,-6.86161e-15,0.980198)
+  World (0,0,1) -> Screen (0,0.241421,0.980198)
+  World (-1,0,0) -> Screen (0.241421,-6.86161e-15,0.980198)
+  World (0,0,-1) -> Screen (0,-0.241421,0.980198)
+Non-black pixels: 24975 / 262144 (9.52721%)
+Max brightness: 0.521569
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.233] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.233] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.234] [INFO ] Successfully created shader program: ground_plane (ID: 3)
+[2025-06-19 11:44:15.234] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 3
+[2025-06-19 11:44:15.234] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.234] [INFO ] Generated ground plane grid mesh: 66 lines, workspace size: (10.000000, 1.000000, 10.000000)
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.273] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.273] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.273] [INFO ] Successfully created shader program: ground_plane (ID: 3)
+[2025-06-19 11:44:15.273] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 3
+[2025-06-19 11:44:15.273] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.273] [INFO ] Generated ground plane grid mesh: 66 lines, workspace size: (10.000000, 1.000000, 10.000000)
+Successfully loaded OpenGL VAO functions
+OpenGL Version: 4.1 Metal - 89.3
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.310] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.310] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.310] [INFO ] Successfully created shader program: ground_plane (ID: 3)
+[2025-06-19 11:44:15.310] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 3
+[2025-06-19 11:44:15.310] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.310] [INFO ] Generated ground plane grid mesh: 66 lines, workspace size: (10.000000, 1.000000, 10.000000)
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.526] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.526] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.526] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.528] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.529] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.531] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.531] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.532] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.532] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.532] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.533] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.533] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.533] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.533] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.533] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.533] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.533] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-06-19 11:44:15.533] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.543] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.543] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.543] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.545] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.545] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.547] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.547] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.549] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.549] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.549] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.549] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.549] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.549] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.549] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.549] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.549] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.550] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-06-19 11:44:15.550] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.564] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.564] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.564] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.566] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.566] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.568] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.568] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.570] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.570] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.570] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.570] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.570] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.570] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.570] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.570] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.570] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.570] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-06-19 11:44:15.570] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.579] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.579] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.579] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.581] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.581] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.583] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.583] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.585] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.585] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.585] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.585] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.586] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.586] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.586] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.586] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.586] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.586] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-06-19 11:44:15.586] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.597] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.597] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.597] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.599] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.599] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.601] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.601] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.603] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.603] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.603] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.603] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.603] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.603] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.603] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.603] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.603] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.603] [INFO ] Generated ground plane grid mesh: 18 lines, workspace size: (2.000000, 2.000000, 2.000000)
+[2025-06-19 11:44:15.603] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-06-19 11:44:15.603] [INFO ] Generated ground plane grid mesh: 54 lines, workspace size: (8.000000, 8.000000, 8.000000)
+[2025-06-19 11:44:15.603] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.612] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.612] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.612] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.614] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.614] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.616] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.616] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.618] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.618] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.618] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.618] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.618] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.618] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.618] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.618] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.618] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.618] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.626] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.626] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.626] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.628] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.628] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.630] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.630] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.632] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.632] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.632] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.632] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.633] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.633] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.633] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.633] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.633] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.633] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.642] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.642] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.642] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.644] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.644] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.646] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.646] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.648] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.648] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.648] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.648] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.648] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.648] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.648] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.648] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.648] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.648] [INFO ] Generated ground plane grid mesh: 54 lines, workspace size: (8.000000, 8.000000, 8.000000)
+[2025-06-19 11:44:15.648] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.657] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.657] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.658] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.660] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.660] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.662] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.662] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.663] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.663] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.663] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.663] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.664] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.664] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.664] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.664] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.664] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.664] [INFO ] Generated ground plane grid mesh: 54 lines, workspace size: (8.000000, 8.000000, 8.000000)
+[2025-06-19 11:44:15.664] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.673] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.673] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.673] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.675] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.675] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.677] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.677] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.679] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.679] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.679] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.679] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.680] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.680] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.680] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.680] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.680] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.680] [INFO ] Generated ground plane grid mesh: 54 lines, workspace size: (8.000000, 8.000000, 8.000000)
+[2025-06-19 11:44:15.680] [INFO ] RenderEngine shut down
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+[2025-06-19 11:44:15.689] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 11:44:15.689] [INFO ] Found shader directory at: core/rendering/shaders/
+[2025-06-19 11:44:15.689] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.691] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 11:44:15.691] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.693] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 11:44:15.693] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 11:44:15.695] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 11:44:15.695] [INFO ] Successfully loaded shaders from files
+[2025-06-19 11:44:15.695] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 11:44:15.695] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 11:44:15.695] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 11:44:15.695] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 11:44:15.695] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 11:44:15.695] [INFO ] RenderEngine initialized successfully
+[2025-06-19 11:44:15.695] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 11:44:15.695] [INFO ] RenderEngine shut down
+[==========] 176 tests from 28 test suites ran. (1156 ms total)
+[  PASSED  ] 169 tests.
+[  SKIPPED ] 7 tests.
+
+  YOU HAVE 11 DISABLED TESTS
+

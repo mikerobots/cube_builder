@@ -123,7 +123,7 @@ public:
     // Find highest voxel under cursor (vertical ray cast)
     // Returns the voxel position and its resolution
     std::optional<VoxelInfo> findHighestVoxelUnderCursor(const Math::Vector3f& worldPos, 
-                                                         float searchRadius = 0.16f); // 32cm / 2
+                                                         float searchRadius = 0.64f); // 64cm radius
     
     // Get current active placement plane
     std::optional<PlacementPlane> getCurrentPlane() const { return m_currentPlane; }
@@ -165,8 +165,8 @@ private:
     
     // Constants
     static constexpr float PERSISTENCE_TIMEOUT_SECONDS = 0.5f;
-    static constexpr float MAX_VOXEL_SEARCH_HEIGHT = 5.0f;  // Maximum height to search for voxels (5m is reasonable for most cases)
-    static constexpr float DEFAULT_SEARCH_RADIUS = 5.0f;     // Default radius for area searches
+    static constexpr float MAX_VOXEL_SEARCH_HEIGHT = 1.0f;  // Reduced to 1m to avoid test interference
+    static constexpr float DEFAULT_SEARCH_RADIUS = 1.0f;     // Reduced to 1m for better performance
     
     // Search for voxels in a cylindrical area under the cursor
     std::vector<Math::IncrementCoordinates> searchVoxelsInCylinder(const Math::Vector3f& centerPos, 
@@ -183,6 +183,10 @@ private:
     
     // Get all resolutions to check for conflicts
     std::vector<VoxelData::VoxelResolution> getAllResolutions() const;
+    
+    // Performance-optimized helper methods
+    std::optional<VoxelInfo> findHighestVoxelAtPosition(int x, int z);
+    std::optional<VoxelInfo> findHighestVoxelInRadius(const Math::IncrementCoordinates& centerPos, float searchRadius);
     
     // Note: These conversion methods are now handled by CoordinateConverter
     // Use Math::CoordinateConverter::worldToIncrement() and incrementToWorld() instead

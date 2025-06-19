@@ -15,52 +15,62 @@
 
 set -e
 
-# Default values
-BUILD_DIR="${1:-build_ninja}"
-TEST_MODE=""
+# Parse command line arguments
+BUILD_DIR=""
+TEST_MODE="full"
 
-# Parse arguments
-case "${2}" in
-    --quick)
-        TEST_MODE="quick"
-        ;;
-    --full)
-        TEST_MODE="full"
-        ;;
-    --slow)
-        TEST_MODE="slow"
-        ;;
-    --help)
-        echo "File I/O test runner with standardized options"
-        echo "Usage: $0 [build_dir] [--quick|--full|--slow|--help]"
-        echo ""
-        echo "Arguments:"
-        echo "  build_dir     Build directory (default: build_ninja)"
-        echo "  --quick       Run fast tests only (<1s total)"
-        echo "  --full        Run all tests under 5s (default)"
-        echo "  --slow        Run performance tests (>5s)"
-        echo "  --help        Show this help message"
-        echo ""
-        echo "Test categories:"
-        echo "  Quick tests:  Basic unit tests, type validation, simple I/O"
-        echo "  Full tests:   All tests including moderate timing tests"
-        echo "  Slow tests:   Performance tests, stress tests (currently none)"
-        echo ""
-        echo "Examples:"
-        echo "  $0                    # Run all tests (full mode)"
-        echo "  $0 build_debug       # Run tests with debug build"
-        echo "  $0 build_ninja --quick # Run only quick tests"
-        exit 0
-        ;;
-    "")
-        TEST_MODE="full"
-        ;;
-    *)
-        echo "Error: Unknown option '$2'"
-        echo "Use --help for usage information"
-        exit 1
-        ;;
-esac
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --quick)
+            TEST_MODE="quick"
+            shift
+            ;;
+        --full)
+            TEST_MODE="full"
+            shift
+            ;;
+        --slow)
+            TEST_MODE="slow"
+            shift
+            ;;
+        --help)
+            echo "File I/O test runner with standardized options"
+            echo ""
+            echo "Usage: $0 [build_dir] [--quick|--full|--slow|--help]"
+            echo ""
+            echo "Test modes:"
+            echo "  --quick  Run fast tests (<1s) - Basic unit tests, type validation"
+            echo "  --full   Run all tests (<5s) - DEFAULT - All tests including moderate timing"
+            echo "  --slow   Run performance tests (>5s) - Performance and stress tests"
+            echo "  --help   Show this help message"
+            echo ""
+            echo "Examples:"
+            echo "  $0                          # Run full tests with build_ninja"
+            echo "  $0 build_debug             # Run full tests with build_debug"
+            echo "  $0 --quick                 # Run quick tests with build_ninja"
+            echo "  $0 build_ninja --slow      # Run slow tests with build_ninja"
+            exit 0
+            ;;
+        -*)
+            echo "Error: Unknown option $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+        *)
+            if [[ -z "$BUILD_DIR" ]]; then
+                BUILD_DIR="$1"
+            else
+                echo "Error: Unexpected argument $1"
+                echo "Use --help for usage information"
+                exit 1
+            fi
+            shift
+            ;;
+    esac
+done
+
+# Default build directory
+BUILD_DIR="${BUILD_DIR:-build_ninja}"
 
 # Script directory and project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

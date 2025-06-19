@@ -6,6 +6,10 @@
 #include <cmath>
 #include <set>
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 namespace VoxelEditor {
 namespace Input {
 
@@ -52,95 +56,14 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelUnderCurs
     // Convert world position to increment coordinates
     Math::IncrementCoordinates basePos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(worldPos));
     
-    // Search for voxels in a vertical column from the given position
-    std::optional<VoxelInfo> highestVoxel;
-    float highestTopHeight = -1.0f;
-    
-    // Define a reasonable search height
-    float maxHeight = MAX_VOXEL_SEARCH_HEIGHT;
-    int maxHeightIncrements = static_cast<int>(maxHeight * 100);
-    
-    // Check all positions in a vertical column up to max height
-    // Optimize by checking larger voxels first and using their size as step
-    auto resolutions = getAllResolutions();
-    std::reverse(resolutions.begin(), resolutions.end()); // Start with largest
-    
-    for (auto resolution : resolutions) {
-        float voxelSize = VoxelData::getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
-        
-        // Use voxel size as step for efficiency
-        int step = std::max(1, voxelSizeIncrements);
-        
-        // Check from ground up to max height
-        for (int y = 0; y <= maxHeightIncrements; y += step) {
-            Math::IncrementCoordinates checkPos(basePos.x(), y, basePos.z());
-            
-            if (m_voxelManager->getVoxel(checkPos, resolution)) {
-                float topHeight = calculateVoxelTopHeight(checkPos, resolution);
-                if (topHeight > highestTopHeight) {
-                    highestTopHeight = topHeight;
-                    highestVoxel = VoxelInfo(checkPos, resolution);
-                }
-                
-                // Also check just below the top of this voxel for overlapping voxels
-                if (y + voxelSizeIncrements - 1 <= maxHeightIncrements) {
-                    Math::IncrementCoordinates topPos(basePos.x(), y + voxelSizeIncrements - 1, basePos.z());
-                    if (m_voxelManager->getVoxel(topPos, resolution)) {
-                        float topHeightAtTop = calculateVoxelTopHeight(topPos, resolution);
-                        if (topHeightAtTop > highestTopHeight) {
-                            highestTopHeight = topHeightAtTop;
-                            highestVoxel = VoxelInfo(topPos, resolution);
-                        }
-                    }
-                }
-            }
-        }
+    // First, try direct vertical search at cursor position
+    auto directHit = findHighestVoxelAtPosition(basePos.x(), basePos.z());
+    if (directHit.has_value()) {
+        return directHit;
     }
     
-    if (highestVoxel.has_value()) {
-        return highestVoxel;
-    }
-    
-    // If no direct hit, search in a small radius around the position
-    // This is much more expensive, so we only do it if necessary
-    int radiusIncrements = static_cast<int>(searchRadius * 100);
-    
-    std::optional<VoxelInfo> bestVoxel;
-    float highestHeight = -1.0f;
-    
-    // Search in a small area around the cursor
-    for (int dx = -radiusIncrements; dx <= radiusIncrements; dx += 4) { // Step by 4cm for efficiency
-        for (int dz = -radiusIncrements; dz <= radiusIncrements; dz += 4) {
-            // Check if within circular radius
-            if (dx * dx + dz * dz > radiusIncrements * radiusIncrements) {
-                continue;
-            }
-            
-            Math::IncrementCoordinates searchPos(basePos.x() + dx, 0, basePos.z() + dz);
-            
-            // For this column, find the highest voxel
-            for (auto resolution : getAllResolutions()) {
-                float voxelSize = VoxelData::getVoxelSize(resolution);
-                int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
-                
-                // Check at reasonable intervals
-                for (int y = 0; y <= maxHeightIncrements; y += std::max(4, voxelSizeIncrements / 4)) {
-                    searchPos = Math::IncrementCoordinates(basePos.x() + dx, y, basePos.z() + dz);
-                    
-                    if (m_voxelManager->getVoxel(searchPos, resolution)) {
-                        float topHeight = calculateVoxelTopHeight(searchPos, resolution);
-                        if (topHeight > highestHeight && topHeight <= worldPos.y + 0.5f) { // Don't find voxels way above cursor
-                            highestHeight = topHeight;
-                            bestVoxel = VoxelInfo(searchPos, resolution);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    return bestVoxel;
+    // If no direct hit, do a limited spiral search
+    return findHighestVoxelInRadius(basePos, searchRadius);
 }
 
 void PlaneDetector::updatePlanePersistence(const Math::IncrementCoordinates& previewPosition, 
@@ -206,25 +129,30 @@ std::vector<Math::IncrementCoordinates> PlaneDetector::getVoxelsAtHeight(float h
         return voxelsAtHeight;
     }
     
-    // Search in a reasonable area using increment coordinates
-    float searchRadius = DEFAULT_SEARCH_RADIUS;
-    int searchRadiusIncrement = static_cast<int>(searchRadius * 100); // Convert to cm
+    // Use much smaller search area and adaptive resolution checking
+    float searchRadius = std::min(DEFAULT_SEARCH_RADIUS, 2.0f); // Max 2m search
+    int searchRadiusIncrement = static_cast<int>(searchRadius * 100);
     
-    // For each position in the search area, check all resolutions
-    for (int x = -searchRadiusIncrement; x <= searchRadiusIncrement; x++) {
-        for (int z = -searchRadiusIncrement; z <= searchRadiusIncrement; z++) {
-            // Try different Y positions around the target height
+    // Use coarser grid for initial search
+    int step = 8; // 8cm steps instead of 1cm
+    
+    for (int x = -searchRadiusIncrement; x <= searchRadiusIncrement; x += step) {
+        for (int z = -searchRadiusIncrement; z <= searchRadiusIncrement; z += step) {
+            // Calculate distance for early culling
+            if (x * x + z * z > searchRadiusIncrement * searchRadiusIncrement) {
+                continue;
+            }
+            
+            // Only check resolutions that could realistically have their top at this height
             for (auto resolution : getAllResolutions()) {
                 float voxelSize = VoxelData::getVoxelSize(resolution);
                 
-                // Calculate approximate Y increment position for this resolution
-                // Since voxels can be of different sizes, we need to check a range
-                int baseYIncrement = static_cast<int>(height * 100); // Convert height to cm
-                int voxelSizeIncrement = static_cast<int>(voxelSize * 100); // Convert voxel size to cm
+                // Calculate the Y position where a voxel would need to start to have its top at target height
+                int targetY = static_cast<int>((height - voxelSize) * 100);
                 
-                // Check a range of Y positions where voxels of this resolution might have their top at target height
-                for (int yOffset = -voxelSizeIncrement; yOffset <= 0; yOffset++) {
-                    Math::IncrementCoordinates pos(x, baseYIncrement + yOffset, z);
+                // Only check a small range around this position
+                for (int yOffset = -4; yOffset <= 4; yOffset += 2) { // ±4cm range, 2cm steps
+                    Math::IncrementCoordinates pos(x, targetY + yOffset, z);
                     
                     if (m_voxelManager->getVoxel(pos, resolution)) {
                         float voxelTopHeight = calculateVoxelTopHeight(pos, resolution);
@@ -371,6 +299,71 @@ bool PlaneDetector::wouldLargerVoxelOverlapSmaller(const Math::IncrementCoordina
     
     // Check if placing a larger voxel would overlap with smaller voxels
     return m_voxelManager->wouldOverlap(position, largerResolution);
+}
+
+std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelAtPosition(int x, int z) {
+    std::optional<VoxelInfo> highestVoxel;
+    float highestTopHeight = -1.0f;
+    
+    // Use adaptive height search based on existing voxels
+    int maxHeightIncrements = static_cast<int>(MAX_VOXEL_SEARCH_HEIGHT * 100);
+    
+    // Check all resolutions to find the highest voxel at this exact position
+    auto resolutions = getAllResolutions();
+    
+    for (auto resolution : resolutions) {
+        float voxelSize = VoxelData::getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
+        
+        // Calculate which grid cell this position would be in for this resolution
+        int gridX = (x / voxelSizeIncrements) * voxelSizeIncrements;
+        int gridZ = (z / voxelSizeIncrements) * voxelSizeIncrements;
+        
+        // Search vertically for voxels at this grid position
+        for (int y = 0; y <= maxHeightIncrements; y += voxelSizeIncrements) {
+            Math::IncrementCoordinates checkPos(gridX, y, gridZ);
+            
+            // Check if there's a voxel placed at this exact grid-aligned position
+            if (m_voxelManager->getVoxel(checkPos, resolution)) {
+                float topHeight = calculateVoxelTopHeight(checkPos, resolution);
+                if (topHeight > highestTopHeight) {
+                    highestTopHeight = topHeight;
+                    highestVoxel = VoxelInfo(checkPos, resolution);
+                }
+            }
+        }
+    }
+    
+    return highestVoxel;
+}
+
+std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelInRadius(const Math::IncrementCoordinates& centerPos, float searchRadius) {
+    std::optional<VoxelInfo> bestVoxel;
+    float highestHeight = -1.0f;
+    
+    // Use much smaller search radius to avoid finding distant voxels
+    int radiusIncrements = std::min(static_cast<int>(searchRadius * 100), 16); // Max 16cm search instead of 64cm
+    
+    // Grid search pattern with smaller steps for accuracy  
+    for (int dx = -radiusIncrements; dx <= radiusIncrements; dx += 2) { // 2cm steps instead of 4cm
+        for (int dz = -radiusIncrements; dz <= radiusIncrements; dz += 2) {
+            // Check if within circular radius
+            if (dx * dx + dz * dz > radiusIncrements * radiusIncrements) {
+                continue;
+            }
+            
+            auto voxel = findHighestVoxelAtPosition(centerPos.x() + dx, centerPos.z() + dz);
+            if (voxel.has_value()) {
+                float topHeight = calculateVoxelTopHeight(voxel->position, voxel->resolution);
+                if (topHeight > highestHeight) {
+                    highestHeight = topHeight;
+                    bestVoxel = voxel;
+                }
+            }
+        }
+    }
+    
+    return bestVoxel;
 }
 
 std::vector<VoxelData::VoxelResolution> PlaneDetector::getAllResolutions() const {
