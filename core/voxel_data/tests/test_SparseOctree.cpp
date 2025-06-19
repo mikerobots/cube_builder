@@ -95,6 +95,7 @@ TEST_F(SparseOctreeTest, MultipleVoxelOperations) {
     EXPECT_TRUE(octree.getVoxel(positions[4]));
 }
 
+// REQ-2.1.4: No voxels shall be placed below Y=0
 TEST_F(SparseOctreeTest, NegativeCoordinates) {
     SparseOctree octree;
     
@@ -270,6 +271,7 @@ TEST_F(SparseOctreeTest, NonCopyableDesign) {
     }
 }
 
+// REQ-6.2.1: System shall handle 10,000+ voxels without degradation
 TEST_F(SparseOctreeTest, StressTestLargeDataset) {
     SparseOctree octree;
     
@@ -301,6 +303,7 @@ TEST_F(SparseOctreeTest, StressTestLargeDataset) {
     }
 }
 
+// REQ-6.3.2: Voxel data storage shall not exceed 2GB
 TEST_F(SparseOctreeTest, MemoryUsageTracking) {
     SparseOctree octree;
     
@@ -326,6 +329,7 @@ TEST_F(SparseOctreeTest, MemoryUsageTracking) {
     EXPECT_LE(memoryAfterClear, initialMemory);
 }
 
+// REQ-6.3.5: System shall detect and respond to memory pressure
 TEST_F(SparseOctreeTest, ClusteringEfficiency) {
     SparseOctree octree;
     

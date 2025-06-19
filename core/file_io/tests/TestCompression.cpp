@@ -44,6 +44,8 @@ protected:
 };
 
 TEST_F(CompressionTest, CompressDecompressSmallData) {
+    // REQ-8.2.3: System shall use LZ4 compression for efficient storage
+    // REQ-7.3.4: System shall use LZ4 compression for file storage
     std::vector<uint8_t> originalData = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     std::vector<uint8_t> compressedData;
     std::vector<uint8_t> decompressedData;
@@ -62,6 +64,8 @@ TEST_F(CompressionTest, CompressDecompressSmallData) {
 }
 
 TEST_F(CompressionTest, CompressDecompressLargeData) {
+    // REQ-8.2.3: System shall use LZ4 compression for efficient storage
+    // REQ-7.3.4: System shall use LZ4 compression for file storage
     std::vector<uint8_t> originalData = generateTestData(10000, true);
     std::vector<uint8_t> compressedData;
     std::vector<uint8_t> decompressedData;
@@ -79,6 +83,7 @@ TEST_F(CompressionTest, CompressDecompressLargeData) {
 }
 
 TEST_F(CompressionTest, CompressionLevels) {
+    // REQ-8.2.3: System shall use LZ4 compression for efficient storage
     std::vector<uint8_t> originalData = generateTestData(1000, true);
     std::vector<uint8_t> compressedLow;
     std::vector<uint8_t> compressedHigh;
@@ -155,6 +160,8 @@ TEST_F(CompressionTest, CompressionRatio) {
 }
 
 TEST_F(CompressionTest, StreamCompression) {
+    // REQ-8.2.3: System shall use LZ4 compression for efficient storage
+    // REQ-7.3.4: System shall use LZ4 compression for file storage
     std::vector<uint8_t> originalData = generateTestData(5000, true);
     
     // Create streams
@@ -212,6 +219,8 @@ TEST_F(CompressionTest, WrongExpectedSize) {
 }
 
 TEST_F(CompressionTest, VoxelDataCompression) {
+    // REQ-8.1.3: Format shall store multi-resolution voxel data for all 10 levels
+    // REQ-8.2.3: System shall use LZ4 compression for efficient storage
     // Since VoxelGrid is forward declared in Compression.h and has no default constructor,
     // we'll test the basic compression functionality instead
     
@@ -260,6 +269,8 @@ TEST_F(CompressionTest, VoxelDataCompression) {
 }
 
 TEST_F(CompressionTest, LargeDataStressTest) {
+    // REQ-8.2.3: System shall use LZ4 compression for efficient storage
+    // REQ-6.3.4: Application overhead shall not exceed 1GB (memory efficiency test)
     // Test with various sizes
     std::vector<size_t> testSizes = {100, 1000, 10000, 100000};
     

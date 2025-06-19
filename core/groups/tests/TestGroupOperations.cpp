@@ -14,17 +14,17 @@ class MockVoxelDataManager {
 public:
     MockVoxelDataManager() : m_workspaceSize(20.0f, 20.0f, 20.0f) {}
     
-    bool hasVoxel(const GridCoordinates& position, VoxelResolution resolution) const {
+    bool hasVoxel(const IncrementCoordinates& position, VoxelResolution resolution) const {
         VoxelId id{position, resolution};
         return m_voxels.find(id) != m_voxels.end();
     }
     
-    bool getVoxel(const GridCoordinates& position, VoxelResolution resolution) const {
+    bool getVoxel(const IncrementCoordinates& position, VoxelResolution resolution) const {
         VoxelId id{position, resolution};
         return m_voxels.find(id) != m_voxels.end();
     }
     
-    bool setVoxel(const GridCoordinates& position, VoxelResolution resolution, bool value) {
+    bool setVoxel(const IncrementCoordinates& position, VoxelResolution resolution, bool value) {
         VoxelId id{position, resolution};
         if (value) {
             m_voxels.insert(id);
@@ -60,7 +60,7 @@ protected:
             VoxelResolution res = VoxelResolution::Size_32cm;
             
             // Create VoxelId using grid coordinates for the group
-            VoxelEditor::Math::GridCoordinates gridPos(VoxelEditor::Math::Vector3i(i, 0, 0));
+            VoxelEditor::Math::IncrementCoordinates gridPos(VoxelEditor::Math::Vector3i(i, 0, 0));
             VoxelId voxel(gridPos, res);
             
             // Add directly to group without real VoxelDataManager
@@ -74,26 +74,31 @@ protected:
 };
 
 TEST_F(GroupOperationsTest, MoveGroupOperation) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
     // Skip this test for now due to hanging issue in VoxelDataManager integration
     GTEST_SKIP() << "Skipping test due to infinite loop in VoxelDataManager integration";
 }
 
 TEST_F(GroupOperationsTest, CopyGroupOperation) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
     // Skip this test for now due to hanging issue in VoxelDataManager integration
     GTEST_SKIP() << "Skipping test due to infinite loop in VoxelDataManager integration";
 }
 
 TEST_F(GroupOperationsTest, RotateGroupOperation) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
     // Skip this test for now due to hanging issue in VoxelDataManager integration
     GTEST_SKIP() << "Skipping test due to infinite loop in VoxelDataManager integration";
 }
 
 TEST_F(GroupOperationsTest, ScaleGroupOperation) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
     // Skip this test for now due to hanging issue in VoxelDataManager integration
     GTEST_SKIP() << "Skipping test due to infinite loop in VoxelDataManager integration";
 }
 
 TEST_F(GroupOperationsTest, MergeGroupsOperation) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
     // Skip this test for now due to hanging issue in VoxelDataManager integration
     GTEST_SKIP() << "Skipping test due to infinite loop in VoxelDataManager integration";
 }
@@ -104,13 +109,15 @@ TEST_F(GroupOperationsTest, SplitGroupOperation) {
 }
 
 TEST_F(GroupOperationsTest, GroupOperationUtils_TransformVoxel) {
-    VoxelId voxel(GridCoordinates(Vector3i(1, 0, 0)), VoxelResolution::Size_32cm);
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
+    VoxelId voxel(IncrementCoordinates(1, 0, 0), VoxelResolution::Size_32cm);
     GroupTransform transform(Vector3f(1.0f, 0.0f, 0.0f));
     
     VoxelId transformed = GroupOperationUtils::transformVoxel(voxel, transform);
     
-    // Should be moved by the translation
-    EXPECT_EQ(transformed.position.x(), 4); // 1 + (1.0 / 0.32)
+    // The translation is 1.0 meter (100cm) in world coordinates
+    // This should translate to 100 increment units (at 1cm per increment)
+    EXPECT_EQ(transformed.position.x(), 101); // 1 + 100
     EXPECT_EQ(transformed.position.y(), 0);
     EXPECT_EQ(transformed.position.z(), 0);
     EXPECT_EQ(transformed.resolution, voxel.resolution);
@@ -118,9 +125,9 @@ TEST_F(GroupOperationsTest, GroupOperationUtils_TransformVoxel) {
 
 TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateBounds) {
     std::vector<VoxelId> voxels = {
-        VoxelId(GridCoordinates(Vector3i(0, 0, 0)), VoxelResolution::Size_32cm),
-        VoxelId(GridCoordinates(Vector3i(2, 2, 2)), VoxelResolution::Size_32cm),
-        VoxelId(GridCoordinates(Vector3i(-1, -1, -1)), VoxelResolution::Size_32cm)
+        VoxelId(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_32cm),
+        VoxelId(IncrementCoordinates(2, 2, 2), VoxelResolution::Size_32cm),
+        VoxelId(IncrementCoordinates(-1, -1, -1), VoxelResolution::Size_32cm)
     };
     
     auto bounds = GroupOperationUtils::calculateBounds(voxels);
@@ -130,13 +137,13 @@ TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateBounds) {
     Vector3f workspaceSize(5.0f, 5.0f, 5.0f); // Default workspace size in utils
     
     // Calculate expected min position (from voxel at grid (-1, -1, -1))
-    VoxelEditor::Math::WorldCoordinates worldMin = VoxelEditor::Math::CoordinateConverter::gridToWorld(
-        GridCoordinates(Vector3i(-1, -1, -1)), VoxelResolution::Size_32cm, workspaceSize);
+    VoxelEditor::Math::WorldCoordinates worldMin = VoxelEditor::Math::CoordinateConverter::incrementToWorld(
+        IncrementCoordinates(-1, -1, -1));
     Vector3f expectedMin = worldMin.value();
     
     // Calculate expected max position (from voxel at grid (2, 2, 2) plus voxel size)
-    VoxelEditor::Math::WorldCoordinates worldMax = VoxelEditor::Math::CoordinateConverter::gridToWorld(
-        GridCoordinates(Vector3i(2, 2, 2)), VoxelResolution::Size_32cm, workspaceSize);
+    VoxelEditor::Math::WorldCoordinates worldMax = VoxelEditor::Math::CoordinateConverter::incrementToWorld(
+        IncrementCoordinates(2, 2, 2));
     Vector3f expectedMax = worldMax.value() + Vector3f(voxelSize, voxelSize, voxelSize);
     
     EXPECT_FLOAT_EQ(bounds.min.x, expectedMin.x);
@@ -149,9 +156,9 @@ TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateBounds) {
 
 TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateOptimalPivot) {
     std::vector<VoxelId> voxels = {
-        VoxelId(GridCoordinates(Vector3i(0, 0, 0)), VoxelResolution::Size_32cm),
-        VoxelId(GridCoordinates(Vector3i(2, 0, 0)), VoxelResolution::Size_32cm),
-        VoxelId(GridCoordinates(Vector3i(1, 0, 0)), VoxelResolution::Size_32cm)
+        VoxelId(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_32cm),
+        VoxelId(IncrementCoordinates(2, 0, 0), VoxelResolution::Size_32cm),
+        VoxelId(IncrementCoordinates(1, 0, 0), VoxelResolution::Size_32cm)
     };
     
     auto pivot = GroupOperationUtils::calculateOptimalPivot(voxels);
@@ -162,8 +169,8 @@ TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateOptimalPivot) {
     
     Vector3f expectedPivot(0, 0, 0);
     for (const auto& voxel : voxels) {
-        VoxelEditor::Math::WorldCoordinates worldPos = VoxelEditor::Math::CoordinateConverter::gridToWorld(
-            voxel.position, voxel.resolution, workspaceSize);
+        VoxelEditor::Math::WorldCoordinates worldPos = VoxelEditor::Math::CoordinateConverter::incrementToWorld(
+            voxel.position);
         Vector3f voxelCenter = worldPos.value() + Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
         expectedPivot = expectedPivot + voxelCenter;
     }
@@ -175,16 +182,17 @@ TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateOptimalPivot) {
 }
 
 TEST_F(GroupOperationsTest, GroupOperationUtils_ValidateVoxelPositions) {
+    // REQ-6.3.2: Voxel data storage shall not exceed 2GB
     VoxelEditor::Math::BoundingBox workspaceBounds(VoxelEditor::Math::Vector3f(-5, -5, -5), VoxelEditor::Math::Vector3f(5, 5, 5));
     
     std::vector<VoxelId> validVoxels = {
-        VoxelId(GridCoordinates(Vector3i(0, 0, 0)), VoxelResolution::Size_32cm),
-        VoxelId(GridCoordinates(Vector3i(1, 1, 1)), VoxelResolution::Size_32cm)
+        VoxelId(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_32cm),
+        VoxelId(IncrementCoordinates(10, 10, 10), VoxelResolution::Size_32cm)  // 10cm = 0.1m, well within bounds
     };
     
     std::vector<VoxelId> invalidVoxels = {
-        VoxelId(GridCoordinates(Vector3i(100, 0, 0)), VoxelResolution::Size_32cm), // Outside bounds
-        VoxelId(GridCoordinates(Vector3i(0, 0, 0)), VoxelResolution::Size_32cm)
+        VoxelId(IncrementCoordinates(600, 0, 0), VoxelResolution::Size_32cm), // 600cm = 6m, outside bounds
+        VoxelId(IncrementCoordinates(0, -600, 0), VoxelResolution::Size_32cm) // -600cm = -6m, outside bounds
     };
     
     EXPECT_TRUE(GroupOperationUtils::validateVoxelPositions(validVoxels, workspaceBounds));

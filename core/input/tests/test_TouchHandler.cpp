@@ -33,6 +33,7 @@ TEST_F(TouchHandlerTest, DefaultState) {
 }
 
 TEST_F(TouchHandlerTest, SingleTouchBeginEnd) {
+    // REQ-7.3.1: System shall use Qt6 for desktop GUI application
     Vector2f touchPos(100.0f, 200.0f);
     
     // Touch begin

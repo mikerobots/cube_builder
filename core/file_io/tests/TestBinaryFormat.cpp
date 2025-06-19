@@ -33,6 +33,7 @@ protected:
 };
 
 TEST_F(BinaryFormatTest, FileHeaderValidation) {
+    // REQ-8.1.1: Custom binary format shall include file header with version and metadata
     FileHeader header;
     
     // Check default magic number
@@ -53,6 +54,8 @@ TEST_F(BinaryFormatTest, FileHeaderValidation) {
 }
 
 TEST_F(BinaryFormatTest, HeaderWriteRead) {
+    // REQ-8.1.1: Custom binary format shall include file header with version and metadata
+    // REQ-8.2.2: System shall support format versioning for backward compatibility
     // Test header through public project write/read interface
     Project project = createTestProject();
     SaveOptions saveOptions = SaveOptions::Default();
@@ -76,6 +79,8 @@ TEST_F(BinaryFormatTest, HeaderWriteRead) {
 }
 
 TEST_F(BinaryFormatTest, InvalidMagicNumber) {
+    // REQ-8.1.1: Custom binary format shall include file header with version and metadata
+    // Test header validation with invalid magic number
     BinaryWriter writer(m_stream);
     
     // Write invalid header

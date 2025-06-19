@@ -77,6 +77,7 @@ protected:
 };
 
 TEST_F(STLExporterTest, ExportBinarySTL) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
     Rendering::Mesh mesh = createTestMesh();
     STLExportOptions options = STLExportOptions::Default();
     options.format = STLFormat::Binary;
@@ -100,6 +101,7 @@ TEST_F(STLExporterTest, ExportBinarySTL) {
 }
 
 TEST_F(STLExporterTest, ExportASCIISTL) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
     Rendering::Mesh mesh = createTestMesh();
     STLExportOptions options = STLExportOptions::Default();
     options.format = STLFormat::ASCII;
@@ -133,6 +135,7 @@ TEST_F(STLExporterTest, ExportASCIISTL) {
 }
 
 TEST_F(STLExporterTest, ExportCubeMesh) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
     Rendering::Mesh mesh = createCubeMesh();
     STLExportOptions options = STLExportOptions::Default();
     
@@ -172,6 +175,7 @@ TEST_F(STLExporterTest, ExportWithTranslation) {
 }
 
 TEST_F(STLExporterTest, ExportMultipleMeshes) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
     std::vector<Rendering::Mesh> meshes;
     meshes.push_back(createTestMesh());
     meshes.push_back(createCubeMesh());
@@ -198,6 +202,7 @@ TEST_F(STLExporterTest, ExportEmptyMesh) {
 }
 
 TEST_F(STLExporterTest, ExportPrinting3DOptions) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
     Rendering::Mesh mesh = createCubeMesh();
     STLExportOptions options = STLExportOptions::Printing3D();
     options.validateWatertight = false;  // Disable for test
@@ -213,6 +218,7 @@ TEST_F(STLExporterTest, ExportPrinting3DOptions) {
 }
 
 TEST_F(STLExporterTest, ExportCADOptions) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
     Rendering::Mesh mesh = createCubeMesh();
     STLExportOptions options = STLExportOptions::CAD();
     options.validateWatertight = false;  // Disable for test

@@ -51,6 +51,8 @@ TEST_F(MouseHandlerTest, DefaultState) {
 }
 
 TEST_F(MouseHandlerTest, ButtonPressRelease) {
+    // REQ-5.1.1: Left-click shall place a voxel at the current preview position
+    // REQ-5.1.2: Right-click on a voxel shall remove that voxel
     Vector2f clickPos(100.0f, 200.0f);
     
     // Press left button
@@ -77,6 +79,8 @@ TEST_F(MouseHandlerTest, ButtonPressRelease) {
 }
 
 TEST_F(MouseHandlerTest, MouseMovement) {
+    // REQ-5.1.3: Mouse movement shall update preview position in real-time
+    // REQ-1.2.2: Grid opacity shall increase to 65% within 2 grid squares of cursor during placement
     Vector2f startPos(50.0f, 50.0f);
     Vector2f endPos(100.0f, 150.0f);
     Vector2f expectedDelta = endPos - startPos;
@@ -96,6 +100,7 @@ TEST_F(MouseHandlerTest, MouseMovement) {
 }
 
 TEST_F(MouseHandlerTest, MouseWheel) {
+    // REQ-9.2.2: CLI shall support camera commands (zoom, view, rotate, reset)
     Vector2f pos(200.0f, 300.0f);
     float wheelDelta = 120.0f;
     
@@ -111,6 +116,8 @@ TEST_F(MouseHandlerTest, MouseWheel) {
 }
 
 TEST_F(MouseHandlerTest, ClickDetection) {
+    // REQ-1.2.1: The grid shall be clickable for voxel placement
+    // REQ-2.3.3: Clicking on a highlighted face shall place the new voxel adjacent to that face
     Vector2f clickPos(150.0f, 250.0f);
     
     // Single click
@@ -275,6 +282,7 @@ TEST_F(MouseHandlerTest, MouseButtonUtilities) {
 }
 
 TEST_F(MouseHandlerTest, RayCasting) {
+    // REQ-5.1.4: Ray-casting shall determine face/position under cursor
     // This is a basic test for ray creation interface
     // Full ray casting would require camera implementation
     Vector2f mousePos(400.0f, 300.0f);

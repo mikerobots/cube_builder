@@ -5,6 +5,7 @@
 #include "../../foundation/math/Vector3f.h"
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include "../../foundation/logging/Logger.h"
 #include <vector>
 #include <unordered_map>

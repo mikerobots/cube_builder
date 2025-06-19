@@ -18,15 +18,24 @@ This is a **multi-platform voxel editor** with a sophisticated 3-layer architect
 **CRITICAL**: USE NINJA FOR ALL BUILDING!
 
 ### Configure and Build
-```bash
-# Configure with Ninja (ALWAYS use this)
-cmake -B build_ninja -G Ninja
 
-# Build with Ninja
+**IMPORTANT**: For development and debugging, use Debug builds to maximize compile speed and debuggability. Only use Release/RelWithDebInfo for final performance testing.
+
+```bash
+# Debug Build (RECOMMENDED FOR DEVELOPMENT)
+# Fastest compilation, best debugging experience, no optimizations
+cmake -B build_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
+cmake --build build_debug
+
+# Release Build (ONLY for performance testing)
+# Slowest compilation, no debug info, maximum optimizations
+cmake -B build_ninja -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build_ninja
 
-# Or directly with ninja
-ninja -C build_ninja
+# RelWithDebInfo Build (For debugging performance issues)
+# Slower compilation, debug symbols with optimizations
+cmake -B build_relwithdebinfo -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build build_relwithdebinfo
 ```
 
 ## Testing
@@ -39,7 +48,6 @@ ninja -C build_ninja
 # Run specific subsystem tests
 cd build_ninja
 ctest -R "VoxelEditor_Rendering_Tests"
-ctest -R "VoxelEditor_Camera_Tests" 
 ctest -R "VoxelEditor_VoxelData_Tests"
 ```
 
@@ -187,3 +195,6 @@ If you are working on fixing unit tests, there is a good chance that
 they were written for not 0,0 being the center, and we will most
 likely need to rewrite for the current coordinate system where 0,0 is
 the center.
+
+
+If you are updating requirements documents, don't change the IDs!!!

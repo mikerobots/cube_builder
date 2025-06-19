@@ -49,6 +49,8 @@ TEST_F(GroupTypesTest, VoxelIdHash) {
 }
 
 TEST_F(GroupTypesTest, GroupMetadataConstruction) {
+    // REQ-8.1.8: Format shall store group definitions and metadata
+    // REQ: Group metadata storage in file format
     GroupMetadata metadata;
     
     EXPECT_TRUE(metadata.name.empty());
@@ -63,6 +65,7 @@ TEST_F(GroupTypesTest, GroupMetadataConstruction) {
 }
 
 TEST_F(GroupTypesTest, GroupMetadataUpdateModified) {
+    // REQ: Group metadata storage in file format
     GroupMetadata metadata;
     auto initialModified = metadata.modified;
     
@@ -75,6 +78,7 @@ TEST_F(GroupTypesTest, GroupMetadataUpdateModified) {
 }
 
 TEST_F(GroupTypesTest, GroupInfoConstruction) {
+    // REQ-9.2.5: CLI shall support group commands (group create/hide/show/list)
     GroupId id = 123;
     GroupMetadata metadata;
     metadata.name = "Test Group";
@@ -127,6 +131,7 @@ TEST_F(GroupTypesTest, GroupTransformIdentity) {
 }
 
 TEST_F(GroupTypesTest, GroupColorPalette) {
+    // REQ: Visual group indicators (color coding, outlines)
     const auto& palette = GroupColorPalette::getDefaultPalette();
     
     EXPECT_FALSE(palette.empty());

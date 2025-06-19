@@ -14,6 +14,7 @@ protected:
     Math::Vector3f workspaceSize;
 };
 
+// REQ-5.3.3: Available resolutions: 1cm, 2cm, 4cm, 8cm, 16cm, 32cm, 64cm, 128cm, 256cm, 512cm
 TEST_F(VoxelTypesTest, VoxelResolutionValues) {
     EXPECT_FLOAT_EQ(getVoxelSize(VoxelResolution::Size_1cm), 0.01f);
     EXPECT_FLOAT_EQ(getVoxelSize(VoxelResolution::Size_2cm), 0.02f);
@@ -48,6 +49,7 @@ TEST_F(VoxelTypesTest, VoxelPositionConstruction) {
     EXPECT_EQ(pos3.resolution, VoxelResolution::Size_8cm);
 }
 
+// REQ-2.2.4: All voxel sizes (1cm to 512cm) shall be placeable at any valid 1cm increment position on the ground plane
 TEST_F(VoxelTypesTest, WorldSpaceConversion) {
     VoxelPosition voxelPos(Math::Vector3i(10, 10, 10), VoxelResolution::Size_1cm);
     Math::Vector3f worldPos = voxelPos.toWorldSpace();
@@ -123,6 +125,7 @@ TEST_F(VoxelTypesTest, WorkspaceConstraints) {
     EXPECT_FLOAT_EQ(clamped.z, 8.0f);
 }
 
+// REQ-6.2.2: Grid size shall scale with workspace (up to 8m x 8m)
 TEST_F(VoxelTypesTest, GridDimensionCalculation) {
     Math::Vector3i dims1cm = calculateMaxGridDimensions(VoxelResolution::Size_1cm, workspaceSize);
     EXPECT_EQ(dims1cm.x, 500); // 5.0m / 0.01m = 500

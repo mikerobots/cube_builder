@@ -18,6 +18,8 @@ protected:
 };
 
 TEST_F(OrbitCameraTest, DefaultConstruction) {
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system (centered at 0,0,0)
     EXPECT_FLOAT_EQ(camera->getDistance(), 5.0f);
     EXPECT_FLOAT_EQ(camera->getYaw(), 0.0f);
     EXPECT_FLOAT_EQ(camera->getPitch(), 0.0f);
@@ -87,6 +89,8 @@ TEST_F(OrbitCameraTest, PitchConstraints) {
 }
 
 TEST_F(OrbitCameraTest, OrbitControl) {
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
+    // REQ-9.2.2: CLI shall support camera commands (rotate)
     WorldCoordinates initialPos = camera->getPosition();
     
     // Orbit horizontally (yaw)
@@ -106,6 +110,7 @@ TEST_F(OrbitCameraTest, OrbitControl) {
 }
 
 TEST_F(OrbitCameraTest, ZoomControl) {
+    // REQ-9.2.2: CLI shall support camera commands (zoom)
     float initialDistance = camera->getDistance();
     
     camera->zoom(1.0f); // Zoom in
@@ -129,6 +134,8 @@ TEST_F(OrbitCameraTest, PanControl) {
 }
 
 TEST_F(OrbitCameraTest, ViewPresets) {
+    // REQ-CAM-4: Camera shall provide standard view presets
+    // REQ-9.2.2: CLI shall support camera commands (view)
     // Test each view preset
     camera->setViewPreset(ViewPreset::FRONT);
     EXPECT_FLOAT_EQ(camera->getYaw(), 0.0f);
@@ -232,6 +239,7 @@ TEST_F(OrbitCameraTest, IsometricViewMatrixValidation) {
 }
 
 TEST_F(OrbitCameraTest, FocusOnPoint) {
+    // REQ-8.1.5: Format shall store camera position and view settings
     WorldCoordinates focusPoint(10.0f, 5.0f, 15.0f);
     camera->focusOn(focusPoint, 8.0f);
     
@@ -296,6 +304,8 @@ TEST_F(OrbitCameraTest, SmoothingSystem) {
 }
 
 TEST_F(OrbitCameraTest, SmoothingBehavior) {
+    // REQ-CAM-5: View transitions shall be smooth
+    // REQ-CAM-7: Camera operations shall be performant (smooth movement at 60+ FPS)
     camera->setSmoothing(true);
     camera->setSmoothFactor(0.1f); // Slow smoothing
     

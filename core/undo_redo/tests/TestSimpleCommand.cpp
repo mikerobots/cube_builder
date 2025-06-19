@@ -38,6 +38,7 @@ private:
     int m_oldValue;
 };
 
+// Command pattern implementation for reversible operations
 TEST(SimpleCommandTest, ExecuteAndUndo) {
     int value = 0;
     auto cmd = std::make_unique<SimpleCommand>(value, 42);
@@ -49,6 +50,7 @@ TEST(SimpleCommandTest, ExecuteAndUndo) {
     EXPECT_EQ(value, 0);
 }
 
+// State management for complex operations
 TEST(CompositeCommandTest, ExecuteMultiple) {
     int value1 = 0;
     int value2 = 0;
@@ -66,6 +68,7 @@ TEST(CompositeCommandTest, ExecuteMultiple) {
     EXPECT_EQ(value2, 0);
 }
 
+// Transaction support for atomic operations - commit behavior
 TEST(TransactionTest, CommitTransaction) {
     int value = 0;
     
@@ -82,6 +85,7 @@ TEST(TransactionTest, CommitTransaction) {
     EXPECT_EQ(value, 5); // Value remains after commit
 }
 
+// Transaction support for atomic operations - rollback behavior
 TEST(TransactionTest, RollbackTransaction) {
     int value = 0;
     

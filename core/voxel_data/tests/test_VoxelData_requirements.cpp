@@ -306,32 +306,38 @@ TEST_F(VoxelDataRequirementsTest, SameSizeVoxelAlignment) {
     EXPECT_NE(adjacentPos, VoxelEditor::Math::Vector3i(0, 0, 0));
 }
 
-// Performance test for REQ-6.2.1: Sparse storage for 10,000+ voxels
+// Performance test for REQ-6.2.1: Sparse storage for 10,000+ voxels  
 TEST_F(VoxelDataRequirementsTest, SparseStoragePerformance) {
     const int TARGET_VOXELS = 10000;
     
     // Use a larger workspace to avoid running out of space
     ASSERT_TRUE(manager->resizeWorkspace(8.0f));
     
-    // For performance testing, we need to optimize placement
-    // The collision detection becomes O(n²) as we add more voxels
-    // Let's measure just the sparse storage performance, not collision detection
-    
-    // First, let's test direct octree performance without collision checks
-    VoxelGrid* grid = manager->getGrid(VoxelResolution::Size_1cm);
-    ASSERT_NE(grid, nullptr);
+    // Clear any existing voxels
+    manager->clearAll();
     
     auto start = std::chrono::high_resolution_clock::now();
     
     int placed = 0;
-    const int GRID_SIZE = 100; // 100x100 = 10,000 voxels
-    const int SPACING = 3; // 3cm spacing to ensure no overlaps even with centered coords
+    // Place voxels in a 3D grid using world coordinates
+    // 8m workspace gives us -4m to +4m range
+    const float SPACING = 0.05f; // 5cm spacing in world coordinates
+    const int DIM = 22; // 22^3 = 10,648 > 10,000
     
-    for (int x = 0; x < GRID_SIZE; ++x) {
-        for (int z = 0; z < GRID_SIZE; ++z) {
-            // Use the grid directly to bypass collision detection for this performance test
-            if (grid->setVoxel(VoxelEditor::Math::Vector3i(x * SPACING, 0, z * SPACING), true)) {
-                placed++;
+    for (int x = 0; x < DIM && placed < TARGET_VOXELS; ++x) {
+        for (int y = 0; y < DIM && placed < TARGET_VOXELS; ++y) {
+            for (int z = 0; z < DIM && placed < TARGET_VOXELS; ++z) {
+                // Calculate world position starting from near origin
+                float worldX = -0.5f + (x * SPACING);
+                float worldY = 0.0f + (y * SPACING);
+                float worldZ = -0.5f + (z * SPACING);
+                
+                // Place voxel bypassing collision detection
+                VoxelEditor::Math::Vector3f worldPos(worldX, worldY, worldZ);
+                VoxelGrid* grid = manager->getGrid(VoxelResolution::Size_1cm);
+                if (grid && grid->setVoxelAtWorldPos(worldPos, true)) {
+                    placed++;
+                }
             }
         }
     }
@@ -373,3 +379,134 @@ TEST_F(VoxelDataRequirementsTest, CoordinateSystemConversions) {
     EXPECT_EQ(incrementFromWorld.y, 0);
     EXPECT_EQ(incrementFromWorld.z, 0);
 }
+
+// REQ-2.1.2: 32 valid positions per axis in 32cm cell
+TEST_F(VoxelDataRequirementsTest, ValidPositionsIn32cmCell_REQ_2_1_2) {
+    // In a 32cm cell, there should be exactly 32 valid 1cm increment positions per axis
+    // Test that positions 0-31cm are valid, but 32cm starts a new cell
+    
+    // Test X axis positions within a 32cm cell
+    for (int i = 0; i < 32; ++i) {
+        float xPos = i * 0.01f; // Convert to meters
+        VoxelEditor::Math::Vector3f pos(xPos, 0.0f, 0.0f);
+        EXPECT_TRUE(manager->isValidIncrementPosition(pos)) 
+            << "Position " << xPos << "m should be valid within 32cm cell";
+    }
+    
+    // Verify the pattern repeats in the next cell
+    for (int i = 32; i < 64; ++i) {
+        float xPos = i * 0.01f;
+        VoxelEditor::Math::Vector3f pos(xPos, 0.0f, 0.0f);
+        EXPECT_TRUE(manager->isValidIncrementPosition(pos)) 
+            << "Position " << xPos << "m should be valid in next 32cm cell";
+    }
+}
+
+// REQ-5.2.1 & REQ-5.2.2: Overlap prevention and validation
+TEST_F(VoxelDataRequirementsTest, OverlapPreventionAndValidation_REQ_5_2_1_REQ_5_2_2) {
+    // Place a voxel
+    VoxelEditor::Math::Vector3f pos1(0.0f, 0.0f, 0.0f);
+    ASSERT_TRUE(manager->setVoxelAtWorldPos(pos1, VoxelResolution::Size_16cm, true));
+    
+    // REQ-5.2.2: System shall validate placement before allowing it
+    // Check validation detects overlap
+    EXPECT_TRUE(manager->wouldOverlap(VoxelEditor::Math::Vector3i(0, 0, 0), VoxelResolution::Size_1cm));
+    
+    // REQ-5.2.1: Voxels shall not overlap with existing voxels
+    // Try to place overlapping voxel - should fail
+    EXPECT_FALSE(manager->setVoxelAtWorldPos(pos1, VoxelResolution::Size_1cm, true));
+    EXPECT_FALSE(manager->setVoxelAtWorldPos(pos1, VoxelResolution::Size_16cm, true));
+    
+    // Place non-overlapping voxel - should succeed
+    VoxelEditor::Math::Vector3f pos2(0.5f, 0.0f, 0.0f);
+    EXPECT_TRUE(manager->setVoxelAtWorldPos(pos2, VoxelResolution::Size_1cm, true));
+}
+
+// REQ-6.1.4: Resolution switching performance
+TEST_F(VoxelDataRequirementsTest, ResolutionSwitchingPerformance_REQ_6_1_4) {
+    // Place some voxels at different resolutions
+    manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.0f), VoxelResolution::Size_1cm, true);
+    manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(1.0f, 0.0f, 0.0f), VoxelResolution::Size_32cm, true);
+    
+    // Test resolution switching performance
+    auto start = std::chrono::high_resolution_clock::now();
+    
+    // Switch through all resolutions
+    for (int i = 0; i < static_cast<int>(VoxelResolution::COUNT); ++i) {
+        VoxelResolution res = static_cast<VoxelResolution>(i);
+        manager->setActiveResolution(res);
+        EXPECT_EQ(manager->getActiveResolution(), res);
+    }
+    
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    
+    // Should complete within 100ms
+    EXPECT_LT(duration.count(), 100) << "Resolution switching took " << duration.count() << "ms";
+}
+
+// REQ-6.3.2: Voxel data storage limit
+TEST_F(VoxelDataRequirementsTest, VoxelDataStorageLimit_REQ_6_3_2) {
+    // This test verifies memory usage stays under 2GB
+    // Note: This is a representative test, not exhaustive
+    
+    // Get baseline memory
+    size_t baselineMemory = manager->getMemoryUsage();
+    
+    // Place a reasonable number of voxels
+    const int VOXEL_COUNT = 1000;
+    for (int i = 0; i < VOXEL_COUNT; ++i) {
+        float x = (i % 100) * 0.05f;
+        float y = ((i / 100) % 10) * 0.05f;
+        float z = (i / 1000) * 0.05f;
+        manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(x, y, z), VoxelResolution::Size_1cm, true);
+    }
+    
+    size_t currentMemory = manager->getMemoryUsage();
+    size_t memoryUsed = currentMemory - baselineMemory;
+    
+    // Verify memory usage is reasonable
+    EXPECT_LT(memoryUsed, 10 * 1024 * 1024) << "1000 voxels should use less than 10MB";
+    
+    // Extrapolate to verify 2GB limit won't be exceeded
+    // With sparse storage, we should be able to store millions of voxels
+    size_t bytesPerVoxel = memoryUsed / VOXEL_COUNT;
+    size_t maxVoxelsIn2GB = (2ULL * 1024 * 1024 * 1024) / bytesPerVoxel;
+    EXPECT_GT(maxVoxelsIn2GB, 1000000) << "Should support at least 1M voxels in 2GB";
+}
+
+// REQ-6.3.5: Memory pressure detection
+TEST_F(VoxelDataRequirementsTest, MemoryPressureDetection_REQ_6_3_5) {
+    // Test basic memory reporting
+    size_t baselineMemory = manager->getMemoryUsage();
+    EXPECT_GT(baselineMemory, 0) << "Should report some baseline memory usage";
+    
+    // Place voxels and verify memory usage increases
+    const int VOXEL_COUNT = 100;
+    for (int i = 0; i < VOXEL_COUNT; ++i) {
+        manager->setVoxelAtWorldPos(
+            VoxelEditor::Math::Vector3f(i * 0.01f, 0.0f, 0.0f), 
+            VoxelResolution::Size_1cm, true);
+    }
+    
+    size_t afterMemory = manager->getMemoryUsage();
+    EXPECT_GT(afterMemory, baselineMemory) << "Memory usage should increase after placing voxels";
+    
+    // Clear voxels and verify memory usage decreases
+    manager->clearAll();
+    size_t clearedMemory = manager->getMemoryUsage();
+    EXPECT_LT(clearedMemory, afterMemory) << "Memory usage should decrease after clearing voxels";
+    
+    // Note: Full memory pressure detection and response would require
+    // integration with the Memory subsystem's MemoryPool, which tracks
+    // system-wide memory pressure and triggers cleanup callbacks
+}
+
+// Additional requirement coverage notes:
+// REQ-2.1.3: Voxels always axis-aligned - no rotation support in system, so always true
+// REQ-3.1.3: Aligned placement edges match - tested via adjacent position calculations
+// REQ-3.2.2: Placement respects 1cm increments on target face - covered by increment validation
+// REQ-6.3.1: Total memory < 4GB - tested in SparseOctree memory tests
+// REQ-8.1.x: File format requirements - belong in file_io subsystem tests
+// REQ-9.2.3: CLI commands - belong in CLI application tests
+// UI-related requirements (REQ-4.1.2, REQ-4.3.2, REQ-4.3.3) - belong in input/visual_feedback subsystems

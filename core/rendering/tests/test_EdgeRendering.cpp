@@ -5,7 +5,6 @@
 #include "rendering/ShaderManager.h"
 #include "voxel_data/VoxelDataManager.h"
 #include "camera/OrbitCamera.h"
-#include "cli/VoxelMeshGenerator.h"
 #include "foundation/logging/Logger.h"
 #include <fstream>
 #include <sstream>
@@ -14,12 +13,177 @@ namespace VoxelEditor {
 namespace Rendering {
 namespace Tests {
 
+// Simple local mesh generator for testing
+class TestVoxelMeshGenerator {
+public:
+    Mesh generateVoxelMesh(const Math::Vector3i& gridPos, VoxelData::VoxelResolution resolution) {
+        Mesh mesh;
+        
+        // Get voxel size in meters
+        float voxelSize = getVoxelSizeInMeters(resolution);
+        
+        // Calculate world position (centered)
+        Math::Vector3f worldPos(
+            gridPos.x * voxelSize,
+            gridPos.y * voxelSize, 
+            gridPos.z * voxelSize
+        );
+        
+        // Create a simple cube mesh
+        createCubeMesh(mesh, worldPos, voxelSize);
+        
+        return mesh;
+    }
+    
+    Mesh generateCubeMesh(const VoxelData::VoxelDataManager& voxelManager) {
+        Mesh mesh;
+        // Simple implementation - create a basic cube mesh
+        createCubeMesh(mesh, Math::Vector3f(0.0f, 0.0f, 0.0f), 1.0f);
+        return mesh;
+    }
+    
+    Mesh generateEdgeMesh(const VoxelData::VoxelDataManager& voxelManager) {
+        Mesh mesh;
+        
+        // Get all voxel positions from the voxel manager
+        auto voxelPositions = voxelManager.getAllVoxels();
+        
+        for (const auto& voxelPos : voxelPositions) {
+            // Get voxel size in meters
+            float voxelSize = getVoxelSizeInMeters(voxelPos.resolution);
+            
+            // Calculate world position (centered)
+            Math::Vector3f worldPos(
+                voxelPos.incrementPos.x() * voxelSize,
+                voxelPos.incrementPos.y() * voxelSize, 
+                voxelPos.incrementPos.z() * voxelSize
+            );
+            
+            // Create edge mesh for this voxel and append to main mesh
+            createEdgeMesh(mesh, worldPos, voxelSize);
+        }
+        
+        return mesh;
+    }
+    
+private:
+    float getVoxelSizeInMeters(VoxelData::VoxelResolution resolution) {
+        switch (resolution) {
+            case VoxelData::VoxelResolution::Size_1cm: return 0.01f;
+            case VoxelData::VoxelResolution::Size_2cm: return 0.02f;
+            case VoxelData::VoxelResolution::Size_4cm: return 0.04f;
+            case VoxelData::VoxelResolution::Size_8cm: return 0.08f;
+            case VoxelData::VoxelResolution::Size_16cm: return 0.16f;
+            case VoxelData::VoxelResolution::Size_32cm: return 0.32f;
+            case VoxelData::VoxelResolution::Size_64cm: return 0.64f;
+            case VoxelData::VoxelResolution::Size_128cm: return 1.28f;
+            case VoxelData::VoxelResolution::Size_256cm: return 2.56f;
+            case VoxelData::VoxelResolution::Size_512cm: return 5.12f;
+            default: return 0.08f;
+        }
+    }
+    
+    void createCubeMesh(Mesh& mesh, const Math::Vector3f& center, float size) {
+        float halfSize = size * 0.5f;
+        
+        // Cube vertices
+        Math::Vector3f vertices[8] = {
+            center + Math::Vector3f(-halfSize, -halfSize, -halfSize), // 0
+            center + Math::Vector3f( halfSize, -halfSize, -halfSize), // 1
+            center + Math::Vector3f( halfSize,  halfSize, -halfSize), // 2
+            center + Math::Vector3f(-halfSize,  halfSize, -halfSize), // 3
+            center + Math::Vector3f(-halfSize, -halfSize,  halfSize), // 4
+            center + Math::Vector3f( halfSize, -halfSize,  halfSize), // 5
+            center + Math::Vector3f( halfSize,  halfSize,  halfSize), // 6
+            center + Math::Vector3f(-halfSize,  halfSize,  halfSize)  // 7
+        };
+        
+        // Face definitions (indices and normals)
+        struct Face {
+            uint32_t indices[4];
+            Math::Vector3f normal;
+        };
+        
+        Face faces[6] = {
+            {{3, 2, 1, 0}, Math::Vector3f( 0, 0, -1)}, // Back
+            {{4, 5, 6, 7}, Math::Vector3f( 0, 0,  1)}, // Front
+            {{7, 3, 0, 4}, Math::Vector3f(-1, 0,  0)}, // Left
+            {{1, 2, 6, 5}, Math::Vector3f( 1, 0,  0)}, // Right
+            {{0, 1, 5, 4}, Math::Vector3f( 0,-1,  0)}, // Bottom
+            {{7, 6, 2, 3}, Math::Vector3f( 0, 1,  0)}  // Top
+        };
+        
+        // Build mesh
+        for (int f = 0; f < 6; ++f) {
+            uint32_t baseIndex = static_cast<uint32_t>(mesh.vertices.size());
+            
+            // Add 4 vertices for this face
+            for (int i = 0; i < 4; ++i) {
+                mesh.vertices.push_back(Vertex(
+                    vertices[faces[f].indices[i]], 
+                    faces[f].normal, 
+                    Math::Vector2f(0.0f, 0.0f), 
+                    Color(0.1f, 0.1f, 0.1f, 1.0f) // Dark edge color for consistency
+                ));
+            }
+            
+            // Add triangles (0,1,2) and (0,2,3)
+            mesh.indices.insert(mesh.indices.end(), {
+                baseIndex + 0, baseIndex + 1, baseIndex + 2,
+                baseIndex + 0, baseIndex + 2, baseIndex + 3
+            });
+        }
+    }
+    
+    void createEdgeMesh(Mesh& mesh, const Math::Vector3f& center, float size) {
+        float halfSize = size * 0.5f;
+        
+        // Get the current vertex count for proper indexing
+        uint32_t baseIndex = static_cast<uint32_t>(mesh.vertices.size());
+        
+        // Cube vertices for edge rendering
+        Math::Vector3f vertices[8] = {
+            center + Math::Vector3f(-halfSize, -halfSize, -halfSize), // 0
+            center + Math::Vector3f( halfSize, -halfSize, -halfSize), // 1
+            center + Math::Vector3f( halfSize,  halfSize, -halfSize), // 2
+            center + Math::Vector3f(-halfSize,  halfSize, -halfSize), // 3
+            center + Math::Vector3f(-halfSize, -halfSize,  halfSize), // 4
+            center + Math::Vector3f( halfSize, -halfSize,  halfSize), // 5
+            center + Math::Vector3f( halfSize,  halfSize,  halfSize), // 6
+            center + Math::Vector3f(-halfSize,  halfSize,  halfSize)  // 7
+        };
+        
+        // Add vertices to mesh
+        for (int i = 0; i < 8; ++i) {
+            mesh.vertices.push_back(Vertex(
+                vertices[i], 
+                Math::Vector3f(0.0f, 1.0f, 0.0f), // Dummy normal
+                Math::Vector2f(0.0f, 0.0f), 
+                Color(0.1f, 0.1f, 0.1f, 1.0f) // Dark edge color
+            ));
+        }
+        
+        // Edge indices (lines connecting cube vertices)
+        uint32_t edges[12][2] = {
+            {0, 1}, {1, 2}, {2, 3}, {3, 0}, // Bottom face
+            {4, 5}, {5, 6}, {6, 7}, {7, 4}, // Top face
+            {0, 4}, {1, 5}, {2, 6}, {3, 7}  // Vertical edges
+        };
+        
+        // Add line indices (render as lines, not triangles) with proper offset
+        for (int i = 0; i < 12; ++i) {
+            mesh.indices.push_back(baseIndex + edges[i][0]);
+            mesh.indices.push_back(baseIndex + edges[i][1]);
+        }
+    }
+};
+
 class EdgeRenderingTest : public OpenGLTestFixture {
 protected:
     std::unique_ptr<RenderEngine> renderEngine;
     std::unique_ptr<Camera::OrbitCamera> camera;
     std::unique_ptr<VoxelData::VoxelDataManager> voxelManager;
-    std::unique_ptr<VoxelMeshGenerator> meshGenerator;
+    std::unique_ptr<TestVoxelMeshGenerator> meshGenerator;
     
     void SetUp() override {
         OpenGLTestFixture::SetUp();
@@ -46,7 +210,7 @@ protected:
         // Create voxel manager and mesh generator
         voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
         voxelManager->resizeWorkspace(Math::Vector3f(10, 10, 10));
-        meshGenerator = std::make_unique<VoxelMeshGenerator>();
+        meshGenerator = std::make_unique<TestVoxelMeshGenerator>();
     }
     
     void TearDown() override {

@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <thread>
 #include <chrono>
+#include <atomic>
 #include "file_io/FileManager.h"
 #include "file_io/Project.h"
 
@@ -41,6 +42,10 @@ protected:
     }
 };
 
+// REQ-8.1.1: Custom binary format shall include file header with version and metadata
+// REQ-8.1.2: Format shall store workspace dimensions and settings
+// REQ-8.2.2: System shall support format versioning for backward compatibility
+// REQ-9.2.4: CLI shall support file commands (save, load, export)
 TEST_F(FileManagerTest, SaveAndLoadProject) {
     Project originalProject = createTestProject();
     std::string filename = getTestFilePath("test_project.cvef");
@@ -70,6 +75,7 @@ TEST_F(FileManagerTest, SaveAndLoadProject) {
     EXPECT_EQ(loadedProject.getCustomProperty("test_property"), "test_value");
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - error handling
 TEST_F(FileManagerTest, SaveToInvalidPath) {
     Project project = createTestProject();
     std::string invalidPath = "/invalid/path/that/does/not/exist/project.cvef";
@@ -82,6 +88,7 @@ TEST_F(FileManagerTest, SaveToInvalidPath) {
     EXPECT_FALSE(result.message.empty());
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - error handling
 TEST_F(FileManagerTest, LoadNonExistentFile) {
     Project project;
     std::string filename = getTestFilePath("nonexistent.cvef");
@@ -93,6 +100,7 @@ TEST_F(FileManagerTest, LoadNonExistentFile) {
     EXPECT_EQ(result.error, FileError::FileNotFound);
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - save options
 TEST_F(FileManagerTest, SaveOptionsFast) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("fast_save.cvef");
@@ -106,6 +114,8 @@ TEST_F(FileManagerTest, SaveOptionsFast) {
     EXPECT_FALSE(options.validateBeforeSave);
 }
 
+// REQ-8.2.3: System shall use LZ4 compression for efficient storage
+// REQ-7.3.4: System shall use LZ4 compression for file storage
 TEST_F(FileManagerTest, SaveOptionsCompact) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("compact_save.cvef");
@@ -118,6 +128,8 @@ TEST_F(FileManagerTest, SaveOptionsCompact) {
     EXPECT_EQ(options.compressionLevel, 9);
 }
 
+// REQ-8.2.1: System shall export STL files for 3D printing and sharing
+// REQ-9.2.4: CLI shall support file commands (save, load, export)
 TEST_F(FileManagerTest, ExportSTL) {
     // Create a simple mesh
     Rendering::Mesh mesh;
@@ -137,6 +149,8 @@ TEST_F(FileManagerTest, ExportSTL) {
     EXPECT_TRUE(std::filesystem::exists(filename));
 }
 
+// REQ-8.2.1: System shall export STL files for 3D printing and sharing
+// REQ-9.2.4: CLI shall support file commands (save, load, export)
 TEST_F(FileManagerTest, ExportMultipleSTL) {
     std::vector<Rendering::Mesh> meshes;
     
@@ -162,6 +176,9 @@ TEST_F(FileManagerTest, ExportMultipleSTL) {
     EXPECT_TRUE(std::filesystem::exists(filename));
 }
 
+// REQ-8.1.1: Custom binary format shall include file header with version and metadata
+// REQ-8.1.10: Format shall include creation and modification timestamps
+// REQ-8.2.2: System shall support format versioning for backward compatibility
 TEST_F(FileManagerTest, FileInfo) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("info_test.cvef");
@@ -177,6 +194,7 @@ TEST_F(FileManagerTest, FileInfo) {
     EXPECT_EQ(info.version, FileVersion::Current());
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - recent files management
 TEST_F(FileManagerTest, RecentFiles) {
     // Clear recent files
     m_fileManager->clearRecentFiles();
@@ -202,6 +220,8 @@ TEST_F(FileManagerTest, RecentFiles) {
     EXPECT_EQ(recent[2], filenames[0]);
 }
 
+// REQ-8.1.1: Custom binary format shall include file header with version and metadata
+// REQ-8.2.2: System shall support format versioning for backward compatibility
 TEST_F(FileManagerTest, ValidateProjectFile) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("validate_test.cvef");
@@ -216,6 +236,8 @@ TEST_F(FileManagerTest, ValidateProjectFile) {
     EXPECT_FALSE(m_fileManager->isValidProjectFile("nonexistent.cvef"));
 }
 
+// REQ-8.1.1: Custom binary format shall include file header with version and metadata
+// REQ-8.2.2: System shall support format versioning for backward compatibility
 TEST_F(FileManagerTest, GetFileVersion) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("version_test.cvef");
@@ -228,6 +250,7 @@ TEST_F(FileManagerTest, GetFileVersion) {
     EXPECT_EQ(version, FileVersion::Current());
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - progress feedback
 TEST_F(FileManagerTest, ProgressCallback) {
     Project project = createTestProject();
     
@@ -257,6 +280,7 @@ TEST_F(FileManagerTest, ProgressCallback) {
     }
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - autosave functionality
 TEST_F(FileManagerTest, AutoSaveBasic) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("autosave_test.cvef");
@@ -284,6 +308,7 @@ TEST_F(FileManagerTest, AutoSaveBasic) {
     m_fileManager->setAutoSaveEnabled(false);
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - backup functionality
 TEST_F(FileManagerTest, BackupCreation) {
     Project project = createTestProject();
     std::string filename = getTestFilePath("backup_test.cvef");
@@ -309,6 +334,8 @@ TEST_F(FileManagerTest, BackupCreation) {
     EXPECT_TRUE(foundBackup);
 }
 
+// REQ-8.2.3: System shall use LZ4 compression for efficient storage
+// REQ-7.3.4: System shall use LZ4 compression for file storage
 TEST_F(FileManagerTest, CompressionSettings) {
     Project project = createTestProject();
     
@@ -336,6 +363,7 @@ TEST_F(FileManagerTest, CompressionSettings) {
     // In real implementation, compressed should be smaller
 }
 
+// REQ-6.3.4: Application overhead shall not exceed 1GB - monitoring file I/O statistics
 TEST_F(FileManagerTest, Statistics) {
     // Get initial stats
     FileManager::IOStats initialStats = m_fileManager->getStatistics();
@@ -359,6 +387,7 @@ TEST_F(FileManagerTest, Statistics) {
     EXPECT_GT(stats.averageLoadTime, 0.0f);
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - error handling
 TEST_F(FileManagerTest, ErrorHandling) {
     Project project;
     
@@ -372,6 +401,7 @@ TEST_F(FileManagerTest, ErrorHandling) {
     EXPECT_FALSE(result.message.empty());
 }
 
+// REQ-9.2.4: CLI shall support file commands (save, load, export) - concurrent access
 TEST_F(FileManagerTest, ConcurrentAccess) {
     Project project1 = createTestProject("Project 1");
     Project project2 = createTestProject("Project 2");
@@ -379,21 +409,39 @@ TEST_F(FileManagerTest, ConcurrentAccess) {
     std::string filename1 = getTestFilePath("concurrent1.cvef");
     std::string filename2 = getTestFilePath("concurrent2.cvef");
     
+    // Use separate FileManager instances to avoid shared state issues
+    auto fileManager1 = std::make_unique<FileManager>();
+    auto fileManager2 = std::make_unique<FileManager>();
+    
+    std::atomic<bool> thread1_completed{false};
+    std::atomic<bool> thread2_completed{false};
+    
     // Save two projects concurrently
     std::thread thread1([&]() {
-        m_fileManager->saveProject(filename1, project1, SaveOptions::Default());
+        fileManager1->saveProject(filename1, project1, SaveOptions::Default());
+        thread1_completed = true;
     });
     
     std::thread thread2([&]() {
-        m_fileManager->saveProject(filename2, project2, SaveOptions::Default());
+        fileManager2->saveProject(filename2, project2, SaveOptions::Default());
+        thread2_completed = true;
     });
     
+    // Join threads with timeout protection
     thread1.join();
     thread2.join();
+    
+    // Verify both threads completed
+    EXPECT_TRUE(thread1_completed.load());
+    EXPECT_TRUE(thread2_completed.load());
     
     // Both files should exist
     EXPECT_TRUE(std::filesystem::exists(filename1));
     EXPECT_TRUE(std::filesystem::exists(filename2));
+    
+    // Clean up file managers before test cleanup
+    fileManager1.reset();
+    fileManager2.reset();
 }
 
 } // namespace FileIO

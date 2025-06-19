@@ -57,6 +57,8 @@ protected:
 };
 
 TEST_F(CameraTest, DefaultConstruction) {
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system
     TestCamera defaultCamera;
     
     EXPECT_EQ(defaultCamera.getPosition().value(), Vector3f(0.0f, 0.0f, 5.0f));
@@ -100,6 +102,7 @@ TEST_F(CameraTest, UpVectorManagement) {
 }
 
 TEST_F(CameraTest, ProjectionSettings) {
+    // REQ-CAM-2: Camera shall support multiple view projections
     // Test field of view
     camera->setFieldOfView(60.0f);
     EXPECT_FLOAT_EQ(camera->getFieldOfView(), 60.0f);
@@ -117,6 +120,7 @@ TEST_F(CameraTest, ProjectionSettings) {
 }
 
 TEST_F(CameraTest, DirectionVectors) {
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system (Y-up orientation)
     camera->setPosition(WorldCoordinates(Vector3f(0, 0, 5)));
     camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera->setUp(WorldCoordinates(Vector3f(0, 1, 0)));
@@ -202,6 +206,8 @@ TEST_F(CameraTest, MatrixCaching) {
 }
 
 TEST_F(CameraTest, ViewPresets) {
+    // REQ-CAM-4: Camera shall provide standard view presets
+    // REQ-9.2.2: CLI shall support camera commands (view)
     camera->setViewPreset(ViewPreset::FRONT);
     EXPECT_EQ(camera->getPosition().value(), Vector3f(0, 0, 5));
     EXPECT_EQ(camera->getTarget().value(), Vector3f(0, 0, 0));
@@ -212,6 +218,7 @@ TEST_F(CameraTest, ViewPresets) {
 }
 
 TEST_F(CameraTest, EventDispatcherManagement) {
+    // REQ-CAM-8: Camera shall integrate with other subsystems (event system)
     // Test with null event dispatcher
     TestCamera cameraNoEvents;
     cameraNoEvents.setPosition(WorldCoordinates(Vector3f(1, 2, 3)));

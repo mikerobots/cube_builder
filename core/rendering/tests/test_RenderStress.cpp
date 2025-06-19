@@ -93,6 +93,7 @@ protected:
 };
 
 // Test maximum voxel count before performance degradation
+// REQ-6.2.1: System shall handle 10,000+ voxels without degradation
 TEST_F(RenderStressTest, FindMaximumVoxelCount) {
     const double targetFrameTime = 33.3; // 30 FPS minimum
     int maxVoxels = 0;

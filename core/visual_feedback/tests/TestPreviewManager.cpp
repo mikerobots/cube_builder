@@ -18,7 +18,7 @@ protected:
     std::unique_ptr<PreviewManager> m_previewManager;
 };
 
-// Test initial state
+// REQ-2.2.1: When hovering over the ground plane, a green outline preview shall be displayed
 TEST_F(PreviewManagerTest, InitialState) {
     EXPECT_FALSE(m_previewManager->hasPreview());
     EXPECT_TRUE(m_previewManager->isValid());
@@ -26,7 +26,7 @@ TEST_F(PreviewManagerTest, InitialState) {
     EXPECT_EQ(m_previewManager->getPreviewResolution(), VoxelData::VoxelResolution::Size_1cm);
 }
 
-// Test setting preview position
+// REQ-2.2.2: The preview shall snap to the nearest valid 1cm increment position
 TEST_F(PreviewManagerTest, SetPreviewPosition) {
     Vector3i position(10, 20, 30);
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_32cm;
@@ -38,7 +38,8 @@ TEST_F(PreviewManagerTest, SetPreviewPosition) {
     EXPECT_EQ(m_previewManager->getPreviewResolution(), resolution);
 }
 
-// Test validation result handling
+// REQ-4.1.1: All placement previews shall use green outline rendering
+// REQ-4.1.2: Invalid placements shall show red outline preview
 TEST_F(PreviewManagerTest, ValidationResultHandling) {
     // Set valid result
     m_previewManager->setValidationResult(Input::PlacementValidationResult::Valid);
@@ -57,7 +58,7 @@ TEST_F(PreviewManagerTest, ValidationResultHandling) {
     EXPECT_FALSE(m_previewManager->isValid());
 }
 
-// Test clearing preview
+// REQ-2.2.3: The preview shall update in real-time as the mouse moves
 TEST_F(PreviewManagerTest, ClearPreview) {
     // Set a preview
     m_previewManager->setPreviewPosition(Vector3i(5, 5, 5), VoxelData::VoxelResolution::Size_16cm);
@@ -68,7 +69,8 @@ TEST_F(PreviewManagerTest, ClearPreview) {
     EXPECT_FALSE(m_previewManager->hasPreview());
 }
 
-// Test color configuration
+// REQ-4.3.2: Invalid placement attempts shall show red preview
+// REQ-4.3.3: Valid placements shall show green preview
 TEST_F(PreviewManagerTest, ColorConfiguration) {
     Rendering::Color customValid(0.5f, 1.0f, 0.5f, 1.0f);
     Rendering::Color customInvalid(1.0f, 0.5f, 0.5f, 1.0f);
@@ -82,7 +84,8 @@ TEST_F(PreviewManagerTest, ColorConfiguration) {
     EXPECT_NO_THROW(m_previewManager->setInvalidColor(customInvalid));
 }
 
-// Test animation settings
+// REQ-4.1.3: Preview updates shall be smooth and responsive (< 16ms)
+// REQ-6.1.2: Preview updates shall complete within 16ms
 TEST_F(PreviewManagerTest, AnimationSettings) {
     m_previewManager->setAnimated(true);
     m_previewManager->setAnimationSpeed(2.0f);
@@ -109,7 +112,8 @@ TEST_F(PreviewManagerTest, AutoClear) {
     EXPECT_FALSE(m_previewManager->hasPreview());
 }
 
-// Test mouse position tracking
+// REQ-2.2.3: The preview shall update in real-time as the mouse moves
+// REQ-5.1.3: Mouse movement shall update preview position in real-time
 TEST_F(PreviewManagerTest, MousePositionTracking) {
     // Set a preview
     m_previewManager->setPreviewPosition(Vector3i(1, 1, 1), VoxelData::VoxelResolution::Size_1cm);
@@ -127,7 +131,7 @@ TEST_F(PreviewManagerTest, MousePositionTracking) {
     EXPECT_FALSE(m_previewManager->hasPreview());
 }
 
-// Test multiple resolution preview positions
+// REQ-2.2.4: All voxel sizes (1cm to 512cm) shall be placeable at any valid 1cm increment position on the ground plane
 TEST_F(PreviewManagerTest, MultipleResolutions) {
     struct TestCase {
         VoxelData::VoxelResolution resolution;

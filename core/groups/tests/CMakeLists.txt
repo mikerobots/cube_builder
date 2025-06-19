@@ -10,6 +10,7 @@ set(TEST_SOURCES
     TestGroupHierarchy.cpp
     TestGroupOperations.cpp
     TestGroupManager.cpp
+    test_Groups_requirements.cpp
 )
 
 # Create test executable

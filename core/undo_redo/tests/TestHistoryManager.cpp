@@ -36,12 +36,14 @@ private:
     int m_oldValue;
 };
 
+// Basic HistoryManager initialization
 TEST(HistoryManagerTest, CreateAndDestroy) {
     HistoryManager history;
     EXPECT_FALSE(history.canUndo());
     EXPECT_FALSE(history.canRedo());
 }
 
+// Command pattern implementation for reversible operations
 TEST(HistoryManagerTest, SingleCommand) {
     HistoryManager history;
     int value = 0;
@@ -56,6 +58,7 @@ TEST(HistoryManagerTest, SingleCommand) {
     EXPECT_FALSE(history.canRedo());
 }
 
+// History Management: Support for undo/redo operations
 TEST(HistoryManagerTest, UndoSingleCommand) {
     HistoryManager history;
     int value = 0;
@@ -72,6 +75,7 @@ TEST(HistoryManagerTest, UndoSingleCommand) {
     EXPECT_TRUE(history.canRedo());
 }
 
+// History Management: Support for undo/redo operations - redo functionality
 TEST(HistoryManagerTest, RedoSingleCommand) {
     HistoryManager history;
     int value = 0;
@@ -88,6 +92,7 @@ TEST(HistoryManagerTest, RedoSingleCommand) {
     EXPECT_FALSE(history.canRedo());
 }
 
+// State management for complex operations - multiple command sequences
 TEST(HistoryManagerTest, MultipleCommands) {
     HistoryManager history;
     int value = 0;

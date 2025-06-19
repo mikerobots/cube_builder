@@ -5,6 +5,8 @@ using namespace VoxelEditor::VoxelData;
 // Don't import Math namespace to avoid VoxelResolution ambiguity
 // using namespace VoxelEditor::Math;
 
+// REQ-5.2.1: Voxels shall not overlap with existing voxels
+// REQ-4.3.1: System shall prevent overlapping voxel placements
 TEST(CollisionSimple, BasicOverlap) {
     VoxelDataManager manager;
     
@@ -20,6 +22,8 @@ TEST(CollisionSimple, BasicOverlap) {
     EXPECT_TRUE(manager.setVoxelAtWorldPos(pos2, VoxelResolution::Size_1cm, true));
 }
 
+// REQ-5.2.1: Voxels shall not overlap with existing voxels
+// REQ-4.3.1: System shall prevent overlapping voxel placements
 TEST(CollisionSimple, DifferentSizeOverlap) {
     VoxelDataManager manager;
     

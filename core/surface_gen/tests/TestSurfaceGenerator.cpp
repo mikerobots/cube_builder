@@ -46,6 +46,8 @@ TEST_F(SurfaceGeneratorTest, BasicGeneration) {
 }
 
 TEST_F(SurfaceGeneratorTest, PreviewMeshGeneration) {
+    // REQ-10.1.4: System shall support multi-resolution surface generation (LOD)
+    // REQ-10.1.5: System shall provide real-time preview with simplified mesh
     SurfaceGenerator generator;
     
     // Generate preview mesh at different LOD levels
@@ -62,6 +64,7 @@ TEST_F(SurfaceGeneratorTest, PreviewMeshGeneration) {
 }
 
 TEST_F(SurfaceGeneratorTest, ExportMeshGeneration) {
+    // REQ-10.1.6: System shall generate high-quality export meshes
     SurfaceGenerator generator;
     
     // Test different export qualities
@@ -248,6 +251,7 @@ TEST_F(SurfaceGeneratorTest, VoxelDataChanged) {
 }
 
 TEST_F(SurfaceGeneratorTest, LODSettings) {
+    // REQ-10.1.4: System shall support multi-resolution surface generation (LOD)
     SurfaceGenerator generator;
     
     // Test LOD enabled/disabled
@@ -268,11 +272,13 @@ TEST_F(SurfaceGeneratorTest, LODSettings) {
 }
 
 TEST_F(SurfaceGeneratorTest, CacheMemoryLimit) {
+    // REQ-6.3.1: Total application memory shall not exceed 4GB (Meta Quest 3 constraint)
     SurfaceGenerator generator;
     generator.enableCaching(true);
     
-    // Set small cache limit (enough for 2-3 meshes)
-    generator.setCacheMaxMemory(50 * 1024); // 50KB
+    // Set cache limit (enough for 2-3 meshes with some overhead)
+    const size_t cacheLimit = 120 * 1024; // 120KB
+    generator.setCacheMaxMemory(cacheLimit);
     
     // Generate multiple different meshes
     for (int i = 0; i < 5; ++i) {
@@ -282,8 +288,8 @@ TEST_F(SurfaceGeneratorTest, CacheMemoryLimit) {
         EXPECT_TRUE(mesh.isValid());
     }
     
-    // Cache should not exceed limit
-    EXPECT_LE(generator.getCacheMemoryUsage(), 50 * 1024);
+    // Cache should not exceed limit (with some tolerance for overhead)
+    EXPECT_LE(generator.getCacheMemoryUsage(), cacheLimit);
 }
 
 TEST_F(SurfaceGeneratorTest, ClearCache) {

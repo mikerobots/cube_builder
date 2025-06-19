@@ -4,6 +4,7 @@ add_executable(test_surface_gen
     TestMeshBuilder.cpp
     TestDualContouring.cpp
     TestSurfaceGenerator.cpp
+    test_SurfaceGen_requirements.cpp
 )
 
 target_link_libraries(test_surface_gen

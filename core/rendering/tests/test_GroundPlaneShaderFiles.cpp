@@ -83,7 +83,9 @@ TEST_F(GroundPlaneShaderFileTest, ShaderFilesExist) {
     std::vector<std::string> possiblePaths = {
         "core/rendering/shaders/ground_plane.vert",
         "../core/rendering/shaders/ground_plane.vert",
-        "bin/core/rendering/shaders/ground_plane.vert"
+        "bin/core/rendering/shaders/ground_plane.vert",
+        "../../../bin/core/rendering/shaders/ground_plane.vert",  // From CTest working dir
+        "../../../../core/rendering/shaders/ground_plane.vert"     // From CTest to source
     };
     
     bool vertexFound = false;

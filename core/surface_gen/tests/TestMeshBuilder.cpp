@@ -10,13 +10,15 @@ using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::Math;
 
 TEST(MeshBuilderTest, CreateSimpleTriangle) {
+    // REQ-10.1.1: System shall use Dual Contouring algorithm for surface generation
+    // MeshBuilder is used by DualContouring to construct output meshes
     MeshBuilder builder;
     builder.beginMesh();
     
     // Add vertices
-    uint32_t v0 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0)));
-    uint32_t v1 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0)));
-    uint32_t v2 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 0)));
+    uint32_t v0 = builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0)));
+    uint32_t v1 = builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0)));
+    uint32_t v2 = builder.addVertex(WorldCoordinates(Vector3f(0, 1, 0)));
     
     // Add triangle
     builder.addTriangle(v0, v1, v2);
@@ -30,14 +32,16 @@ TEST(MeshBuilderTest, CreateSimpleTriangle) {
 }
 
 TEST(MeshBuilderTest, CreateQuad) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
+    // MeshBuilder creates triangulated meshes suitable for STL export
     MeshBuilder builder;
     builder.beginMesh();
     
     // Add vertices for a square
-    uint32_t v0 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0)));
-    uint32_t v1 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0)));
-    uint32_t v2 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 1, 0)));
-    uint32_t v3 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 0)));
+    uint32_t v0 = builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0)));
+    uint32_t v1 = builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0)));
+    uint32_t v2 = builder.addVertex(WorldCoordinates(Vector3f(1, 1, 0)));
+    uint32_t v3 = builder.addVertex(WorldCoordinates(Vector3f(0, 1, 0)));
     
     // Add quad (will be converted to 2 triangles)
     builder.addQuad(v0, v1, v2, v3);
@@ -50,14 +54,16 @@ TEST(MeshBuilderTest, CreateQuad) {
 }
 
 TEST(MeshBuilderTest, RemoveDuplicateVertices) {
+    // REQ-10.1.6: System shall generate high-quality export meshes
+    // Removing duplicate vertices improves mesh quality and reduces file size
     MeshBuilder builder;
     builder.beginMesh();
     
     // Add duplicate vertices
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0)));
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0)));
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0))); // Duplicate
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0))); // Duplicate
+    builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0)));
+    builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0)));
+    builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0))); // Duplicate
+    builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0))); // Duplicate
     
     // Add triangles using duplicates
     builder.addTriangle(0, 1, 2);
@@ -74,13 +80,15 @@ TEST(MeshBuilderTest, RemoveDuplicateVertices) {
 }
 
 TEST(MeshBuilderTest, GenerateNormals) {
+    // REQ-10.1.6: System shall generate high-quality export meshes
+    // Normal generation is essential for high-quality rendering and export
     MeshBuilder builder;
     builder.beginMesh();
     
     // Create a simple triangle
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0)));
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0)));
-    builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 0)));
+    builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0)));
+    builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0)));
+    builder.addVertex(WorldCoordinates(Vector3f(0, 1, 0)));
     builder.addTriangle(0, 1, 2);
     
     // Generate normals
@@ -101,18 +109,18 @@ TEST(MeshBuilderTest, CombineMeshes) {
     // Create first mesh (triangle)
     MeshBuilder builder1;
     builder1.beginMesh();
-    builder1.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0)));
-    builder1.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0)));
-    builder1.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 0)));
+    builder1.addVertex(WorldCoordinates(Vector3f(0, 0, 0)));
+    builder1.addVertex(WorldCoordinates(Vector3f(1, 0, 0)));
+    builder1.addVertex(WorldCoordinates(Vector3f(0, 1, 0)));
     builder1.addTriangle(0, 1, 2);
     Mesh mesh1 = builder1.endMesh();
     
     // Create second mesh (another triangle)
     MeshBuilder builder2;
     builder2.beginMesh();
-    builder2.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(2, 0, 0)));
-    builder2.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(3, 0, 0)));
-    builder2.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(2, 1, 0)));
+    builder2.addVertex(WorldCoordinates(Vector3f(2, 0, 0)));
+    builder2.addVertex(WorldCoordinates(Vector3f(3, 0, 0)));
+    builder2.addVertex(WorldCoordinates(Vector3f(2, 1, 0)));
     builder2.addTriangle(0, 1, 2);
     Mesh mesh2 = builder2.endMesh();
     
@@ -134,16 +142,16 @@ TEST(MeshBuilderTest, CreateCubeMesh) {
     
     // Define cube vertices (8 corners of a unit cube)
     // Bottom face (z = 0)
-    uint32_t v0 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0))); // 0: bottom-left-front
-    uint32_t v1 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0))); // 1: bottom-right-front
-    uint32_t v2 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 1, 0))); // 2: bottom-right-back
-    uint32_t v3 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 0))); // 3: bottom-left-back
+    uint32_t v0 = builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0))); // 0: bottom-left-front
+    uint32_t v1 = builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0))); // 1: bottom-right-front
+    uint32_t v2 = builder.addVertex(WorldCoordinates(Vector3f(1, 1, 0))); // 2: bottom-right-back
+    uint32_t v3 = builder.addVertex(WorldCoordinates(Vector3f(0, 1, 0))); // 3: bottom-left-back
     
     // Top face (z = 1)
-    uint32_t v4 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 1))); // 4: top-left-front
-    uint32_t v5 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 1))); // 5: top-right-front
-    uint32_t v6 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 1, 1))); // 6: top-right-back
-    uint32_t v7 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 1))); // 7: top-left-back
+    uint32_t v4 = builder.addVertex(WorldCoordinates(Vector3f(0, 0, 1))); // 4: top-left-front
+    uint32_t v5 = builder.addVertex(WorldCoordinates(Vector3f(1, 0, 1))); // 5: top-right-front
+    uint32_t v6 = builder.addVertex(WorldCoordinates(Vector3f(1, 1, 1))); // 6: top-right-back
+    uint32_t v7 = builder.addVertex(WorldCoordinates(Vector3f(0, 1, 1))); // 7: top-left-back
     
     // Add faces with counter-clockwise winding when viewed from outside
     // Front face (y = 0)
@@ -172,14 +180,14 @@ TEST(MeshBuilderTest, CreateCubeMesh) {
     EXPECT_TRUE(mesh.isValid());
     
     // Verify vertex positions
-    EXPECT_EQ(mesh.vertices[0], Vector3f(0, 0, 0));
-    EXPECT_EQ(mesh.vertices[1], Vector3f(1, 0, 0));
-    EXPECT_EQ(mesh.vertices[2], Vector3f(1, 1, 0));
-    EXPECT_EQ(mesh.vertices[3], Vector3f(0, 1, 0));
-    EXPECT_EQ(mesh.vertices[4], Vector3f(0, 0, 1));
-    EXPECT_EQ(mesh.vertices[5], Vector3f(1, 0, 1));
-    EXPECT_EQ(mesh.vertices[6], Vector3f(1, 1, 1));
-    EXPECT_EQ(mesh.vertices[7], Vector3f(0, 1, 1));
+    EXPECT_EQ(mesh.vertices[0], WorldCoordinates(Vector3f(0, 0, 0)));
+    EXPECT_EQ(mesh.vertices[1], WorldCoordinates(Vector3f(1, 0, 0)));
+    EXPECT_EQ(mesh.vertices[2], WorldCoordinates(Vector3f(1, 1, 0)));
+    EXPECT_EQ(mesh.vertices[3], WorldCoordinates(Vector3f(0, 1, 0)));
+    EXPECT_EQ(mesh.vertices[4], WorldCoordinates(Vector3f(0, 0, 1)));
+    EXPECT_EQ(mesh.vertices[5], WorldCoordinates(Vector3f(1, 0, 1)));
+    EXPECT_EQ(mesh.vertices[6], WorldCoordinates(Vector3f(1, 1, 1)));
+    EXPECT_EQ(mesh.vertices[7], WorldCoordinates(Vector3f(0, 1, 1)));
     
     // Calculate bounds
     mesh.calculateBounds();
@@ -194,10 +202,10 @@ TEST(MeshBuilderTest, CubeWindingOrder) {
     builder.beginMesh();
     
     // Create a simple quad to test winding order
-    uint32_t v0 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 0)));
-    uint32_t v1 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 0)));
-    uint32_t v2 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 1, 0)));
-    uint32_t v3 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 0)));
+    uint32_t v0 = builder.addVertex(WorldCoordinates(Vector3f(0, 0, 0)));
+    uint32_t v1 = builder.addVertex(WorldCoordinates(Vector3f(1, 0, 0)));
+    uint32_t v2 = builder.addVertex(WorldCoordinates(Vector3f(1, 1, 0)));
+    uint32_t v3 = builder.addVertex(WorldCoordinates(Vector3f(0, 1, 0)));
     
     // Add quad with CCW winding
     builder.addQuad(v0, v1, v2, v3);
@@ -247,9 +255,9 @@ TEST(MeshTest, CalculateNormals) {
     Mesh mesh;
     
     // Create a triangle in XY plane
-    mesh.vertices.push_back(Vector3f(0, 0, 0));
-    mesh.vertices.push_back(Vector3f(1, 0, 0));
-    mesh.vertices.push_back(Vector3f(0, 1, 0));
+    mesh.vertices.push_back(WorldCoordinates(Vector3f(0, 0, 0)));
+    mesh.vertices.push_back(WorldCoordinates(Vector3f(1, 0, 0)));
+    mesh.vertices.push_back(WorldCoordinates(Vector3f(0, 1, 0)));
     mesh.indices = {0, 1, 2};
     
     mesh.calculateNormals();
@@ -275,10 +283,10 @@ TEST(MeshBuilderTest, VertexWindingOrderValidation) {
     // We'll verify each face has CCW winding when viewed from outside
     
     // Front face vertices (facing +Z)
-    uint32_t f0 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 0, 1)));
-    uint32_t f1 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 0, 1)));
-    uint32_t f2 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(1, 1, 1)));
-    uint32_t f3 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(0, 1, 1)));
+    uint32_t f0 = builder.addVertex(WorldCoordinates(Vector3f(0, 0, 1)));
+    uint32_t f1 = builder.addVertex(WorldCoordinates(Vector3f(1, 0, 1)));
+    uint32_t f2 = builder.addVertex(WorldCoordinates(Vector3f(1, 1, 1)));
+    uint32_t f3 = builder.addVertex(WorldCoordinates(Vector3f(0, 1, 1)));
     
     // Add front face with CCW winding
     builder.addQuad(f0, f1, f2, f3);
@@ -286,9 +294,9 @@ TEST(MeshBuilderTest, VertexWindingOrderValidation) {
     Mesh mesh = builder.endMesh();
     
     // Verify winding order by calculating face normal
-    Vector3f v0 = mesh.vertices[mesh.indices[0]];
-    Vector3f v1 = mesh.vertices[mesh.indices[1]];
-    Vector3f v2 = mesh.vertices[mesh.indices[2]];
+    Vector3f v0 = mesh.vertices[mesh.indices[0]].value();
+    Vector3f v1 = mesh.vertices[mesh.indices[1]].value();
+    Vector3f v2 = mesh.vertices[mesh.indices[2]].value();
     
     Vector3f edge1 = v1 - v0;
     Vector3f edge2 = v2 - v0;
@@ -320,7 +328,7 @@ TEST(MeshBuilderTest, NormalDirectionValidation) {
     
     std::vector<uint32_t> vertexIds;
     for (const auto& pos : positions) {
-        vertexIds.push_back(builder.addVertex(VoxelEditor::Math::WorldCoordinates(pos)));
+        vertexIds.push_back(builder.addVertex(WorldCoordinates(pos)));
     }
     
     // Add all 6 faces with proper CCW winding
@@ -347,7 +355,7 @@ TEST(MeshBuilderTest, NormalDirectionValidation) {
     
     // Check several vertices and their normals
     for (size_t i = 0; i < mesh.vertices.size() && i < mesh.normals.size(); ++i) {
-        Vector3f toVertex = (mesh.vertices[i] - center).normalized();
+        Vector3f toVertex = (mesh.vertices[i].value() - center).normalized();
         float dot = mesh.normals[i].dot(toVertex);
         
         // Normal should point in same general direction as vector from center to vertex
@@ -364,10 +372,10 @@ TEST(MeshBuilderTest, ConsistentTriangulation) {
     // Create multiple quads to ensure triangulation is consistent
     for (int i = 0; i < 3; ++i) {
         float offset = i * 2.0f;
-        uint32_t v0 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(offset, 0, 0)));
-        uint32_t v1 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(offset + 1, 0, 0)));
-        uint32_t v2 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(offset + 1, 1, 0)));
-        uint32_t v3 = builder.addVertex(VoxelEditor::Math::WorldCoordinates(Vector3f(offset, 1, 0)));
+        uint32_t v0 = builder.addVertex(WorldCoordinates(Vector3f(offset, 0, 0)));
+        uint32_t v1 = builder.addVertex(WorldCoordinates(Vector3f(offset + 1, 0, 0)));
+        uint32_t v2 = builder.addVertex(WorldCoordinates(Vector3f(offset + 1, 1, 0)));
+        uint32_t v3 = builder.addVertex(WorldCoordinates(Vector3f(offset, 1, 0)));
         
         builder.addQuad(v0, v1, v2, v3);
     }
@@ -379,9 +387,9 @@ TEST(MeshBuilderTest, ConsistentTriangulation) {
     
     // Check that all triangles have positive area (CCW winding)
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
-        Vector3f v0 = mesh.vertices[mesh.indices[i]];
-        Vector3f v1 = mesh.vertices[mesh.indices[i + 1]];
-        Vector3f v2 = mesh.vertices[mesh.indices[i + 2]];
+        Vector3f v0 = mesh.vertices[mesh.indices[i]].value();
+        Vector3f v1 = mesh.vertices[mesh.indices[i + 1]].value();
+        Vector3f v2 = mesh.vertices[mesh.indices[i + 2]].value();
         
         // Calculate 2D cross product (assuming Z=0 plane)
         float crossZ = (v1.x - v0.x) * (v2.y - v0.y) - (v1.y - v0.y) * (v2.x - v0.x);
@@ -397,10 +405,10 @@ TEST(MeshUtilsTest, CalculateVolume) {
     
     // 8 vertices
     cube.vertices = {
-        Vector3f(0, 0, 0), Vector3f(1, 0, 0),
-        Vector3f(1, 1, 0), Vector3f(0, 1, 0),
-        Vector3f(0, 0, 1), Vector3f(1, 0, 1),
-        Vector3f(1, 1, 1), Vector3f(0, 1, 1)
+        WorldCoordinates(Vector3f(0, 0, 0)), WorldCoordinates(Vector3f(1, 0, 0)),
+        WorldCoordinates(Vector3f(1, 1, 0)), WorldCoordinates(Vector3f(0, 1, 0)),
+        WorldCoordinates(Vector3f(0, 0, 1)), WorldCoordinates(Vector3f(1, 0, 1)),
+        WorldCoordinates(Vector3f(1, 1, 1)), WorldCoordinates(Vector3f(0, 1, 1))
     };
     
     // 12 triangles (6 faces * 2 triangles each)
@@ -422,8 +430,8 @@ TEST(MeshUtilsTest, CalculateSurfaceArea) {
     // Create a unit square
     Mesh square;
     square.vertices = {
-        Vector3f(0, 0, 0), Vector3f(1, 0, 0),
-        Vector3f(1, 1, 0), Vector3f(0, 1, 0)
+        WorldCoordinates(Vector3f(0, 0, 0)), WorldCoordinates(Vector3f(1, 0, 0)),
+        WorldCoordinates(Vector3f(1, 1, 0)), WorldCoordinates(Vector3f(0, 1, 0))
     };
     square.indices = {0, 1, 2, 0, 2, 3};
     
@@ -484,6 +492,7 @@ TEST(MeshCacheTest, BasicCaching) {
 }
 
 TEST(MeshCacheTest, LRUEviction) {
+    // REQ-6.3.1: Total application memory shall not exceed 4GB (Meta Quest 3 constraint)
     MeshCache cache;
     cache.setMaxMemoryUsage(1000); // Very small cache
     
@@ -492,7 +501,7 @@ TEST(MeshCacheTest, LRUEviction) {
         Mesh mesh;
         // Add enough vertices to exceed cache size
         for (int j = 0; j < 10; ++j) {
-            mesh.vertices.push_back(Vector3f(i, j, 0));
+            mesh.vertices.push_back(WorldCoordinates(Vector3f(i, j, 0)));
         }
         mesh.calculateBounds();
         
@@ -537,6 +546,7 @@ TEST(MeshCacheTest, RegionInvalidation) {
 }
 
 TEST(LODManagerTest, LODCalculation) {
+    // REQ-10.1.4: System shall support multi-resolution surface generation (LOD)
     LODManager lodManager;
     
     BoundingBox bounds;

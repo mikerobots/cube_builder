@@ -158,6 +158,7 @@ protected:
 };
 
 // Test 60 FPS with varying voxel counts
+// REQ-6.1.1: Grid rendering shall maintain 60 FPS minimum (90+ FPS for VR)
 TEST_F(RenderPerformanceTest, Maintain60FPSWithVaryingVoxelCounts) {
     const double targetFrameTime = 16.67; // 60 FPS = 16.67ms per frame
     
@@ -192,6 +193,8 @@ TEST_F(RenderPerformanceTest, Maintain60FPSWithVaryingVoxelCounts) {
 }
 
 // Test frame time stays under 16ms
+// REQ-6.1.2: Preview updates shall complete within 16ms
+// REQ-4.1.3: Preview updates shall be smooth and responsive (< 16ms)
 TEST_F(RenderPerformanceTest, FrameTimeUnder16ms) {
     const double maxFrameTime = 16.0; // Slightly stricter than 16.67
     
@@ -208,6 +211,7 @@ TEST_F(RenderPerformanceTest, FrameTimeUnder16ms) {
 }
 
 // Test performance with 10,000+ voxels
+// REQ-6.2.1: System shall handle 10,000+ voxels without degradation
 TEST_F(RenderPerformanceTest, HandleLargeVoxelCountsWithoutDegradation) {
     struct LargeScaleTest {
         int voxelCount;

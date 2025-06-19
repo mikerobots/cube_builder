@@ -1,6 +1,7 @@
 #include "PlacementCommands.h"
 #include "../../foundation/logging/Logger.h"
 #include "../input/PlacementValidation.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include <sstream>
 #include <cmath>
 
@@ -75,9 +76,12 @@ ValidationResult PlacementCommandFactory::validatePlacement(
     // Get workspace size for bounds checking
     Math::Vector3f workspaceSize = voxelManager->getWorkspaceSize();
     
+    // Convert Vector3i to IncrementCoordinates for validation
+    Math::IncrementCoordinates incrementPos(position);
+    
     // Use proper placement validation from Input module
     Input::PlacementValidationResult placementResult = 
-        Input::PlacementUtils::validatePlacement(position, resolution, workspaceSize);
+        Input::PlacementUtils::validatePlacement(incrementPos, resolution, workspaceSize);
     
     switch (placementResult) {
         case Input::PlacementValidationResult::InvalidPosition:
@@ -88,6 +92,9 @@ ValidationResult PlacementCommandFactory::validatePlacement(
             break;
         case Input::PlacementValidationResult::InvalidOutOfBounds:
             result.addError("Position is outside workspace bounds");
+            break;
+        case Input::PlacementValidationResult::InvalidOverlap:
+            result.addError("Position would overlap with existing voxel");
             break;
         case Input::PlacementValidationResult::Valid:
             // Continue with additional checks
@@ -100,7 +107,8 @@ ValidationResult PlacementCommandFactory::validatePlacement(
     }
     
     // Check grid alignment for voxel resolution
-    Math::Vector3f worldPos = Input::PlacementUtils::incrementGridToWorld(position);
+    Math::WorldCoordinates worldCoord = Math::CoordinateConverter::incrementToWorld(incrementPos);
+    Math::Vector3f worldPos = worldCoord.value();
     float voxelSize = VoxelData::getVoxelSize(resolution);
     
     // Validate grid alignment (position must be multiple of voxel size)

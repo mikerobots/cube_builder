@@ -40,6 +40,9 @@ TEST_F(VRInputHandlerTest, DefaultState) {
 }
 
 TEST_F(VRInputHandlerTest, HandTracking) {
+    // REQ-7.1.2: System shall support Meta Quest 3 VR platform
+    // REQ-7.3.2: System shall use OpenXR SDK for VR interface
+    // REQ-7.3.3: System shall use Meta Hand Tracking SDK for hand tracking
     // Test hand tracking enable/disable
     EXPECT_TRUE(handler->isHandTrackingEnabled());
     

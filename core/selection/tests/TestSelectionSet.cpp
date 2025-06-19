@@ -27,6 +27,7 @@ TEST_F(SelectionSetTest, DefaultConstruction) {
 }
 
 TEST_F(SelectionSetTest, VectorConstruction) {
+    // REQ: SelectionSet manages collections of selected voxels
     std::vector<VoxelId> voxels = {voxel1, voxel2, voxel3};
     SelectionSet set(voxels);
     
@@ -38,6 +39,7 @@ TEST_F(SelectionSetTest, VectorConstruction) {
 }
 
 TEST_F(SelectionSetTest, InitializerListConstruction) {
+    // REQ: SelectionSet manages collections of selected voxels
     SelectionSet set = {voxel1, voxel2, voxel3};
     
     EXPECT_EQ(set.size(), 3u);
@@ -48,6 +50,7 @@ TEST_F(SelectionSetTest, InitializerListConstruction) {
 
 // Basic Operations Tests
 TEST_F(SelectionSetTest, AddAndContains) {
+    // REQ: SelectionSet manages collections of selected voxels
     SelectionSet set;
     
     set.add(voxel1);
@@ -80,6 +83,7 @@ TEST_F(SelectionSetTest, Remove) {
 }
 
 TEST_F(SelectionSetTest, Clear) {
+    // REQ: SelectionSet manages collections of selected voxels
     SelectionSet set = {voxel1, voxel2, voxel3};
     EXPECT_FALSE(set.empty());
     

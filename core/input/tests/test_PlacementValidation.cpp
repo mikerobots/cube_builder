@@ -21,6 +21,8 @@ protected:
 
 // Test position snapping to 1cm increments
 TEST_F(PlacementValidationTest, SnapToValidIncrement) {
+    // REQ-2.1.1: Voxels shall be placeable only at 1cm increment positions
+    // REQ-2.2.2: The preview shall snap to the nearest valid 1cm increment position
     // Test exact positions
     {
         Vector3f worldPos(0.0f, 0.0f, 0.0f);
@@ -60,6 +62,8 @@ TEST_F(PlacementValidationTest, SnapToValidIncrement) {
 
 // Test grid-aligned snapping for same-size voxels
 TEST_F(PlacementValidationTest, SnapToGridAligned) {
+    // REQ-3.1.1: Same-size voxels shall auto-snap to perfect alignment by default
+    // REQ-3.1.2: Holding Shift shall allow placement at any valid 1cm increment
     // Test 32cm voxel without shift (should snap to 32cm grid)
     {
         Vector3f worldPos(0.15f, 0.15f, 0.15f);
@@ -85,14 +89,16 @@ TEST_F(PlacementValidationTest, SnapToGridAligned) {
         Vector3f worldPos(0.25f, 0.25f, 0.25f);
         IncrementCoordinates snapped = PlacementUtils::snapToGridAligned(worldPos, 
             VoxelData::VoxelResolution::Size_16cm, false);
-        EXPECT_EQ(snapped.x(), 32);  // Snaps to 0.32m = 32cm
-        EXPECT_EQ(snapped.y(), 32);
-        EXPECT_EQ(snapped.z(), 32);
+        EXPECT_EQ(snapped.x(), 16);  // Floor(25/16)*16 = 1*16 = 16cm
+        EXPECT_EQ(snapped.y(), 16);
+        EXPECT_EQ(snapped.z(), 16);
     }
 }
 
 // Test Y >= 0 constraint validation
 TEST_F(PlacementValidationTest, ValidateYBelowZero) {
+    // REQ-2.1.4: No voxels shall be placed below Y=0
+    // REQ-5.2.3: Only positions with Y ≥ 0 shall be valid
     // Test position below ground
     {
         IncrementCoordinates gridPos(10, -5, 10);
@@ -120,6 +126,7 @@ TEST_F(PlacementValidationTest, ValidateYBelowZero) {
 
 // Test workspace bounds validation
 TEST_F(PlacementValidationTest, ValidateWorkspaceBounds) {
+    // REQ-5.2.2: System shall validate placement before allowing it
     // Test position within bounds (workspace is 5m centered at origin)
     {
         IncrementCoordinates gridPos(100, 100, 100); // 1m, 1m, 1m
@@ -170,8 +177,8 @@ TEST_F(PlacementValidationTest, WorldToIncrementCoordinate) {
         WorldCoordinates worldCoords(worldPos);
         IncrementCoordinates incCoords = Math::CoordinateConverter::worldToIncrement(worldCoords);
         EXPECT_EQ(incCoords.x(), 123); // 1.234m = 123.4cm -> 123
-        EXPECT_EQ(incCoords.y(), 234); // 2.345m = 234.5cm -> 234
-        EXPECT_EQ(incCoords.z(), 345); // 3.456m = 345.6cm -> 345
+        EXPECT_EQ(incCoords.y(), 235); // 2.345m = 234.5cm -> round to 235
+        EXPECT_EQ(incCoords.z(), 346); // 3.456m = 345.6cm -> round to 346
     }
     
     // Test negative positions
@@ -179,9 +186,9 @@ TEST_F(PlacementValidationTest, WorldToIncrementCoordinate) {
         Vector3f worldPos(-1.234f, -2.345f, -3.456f);
         WorldCoordinates worldCoords(worldPos);
         IncrementCoordinates incCoords = Math::CoordinateConverter::worldToIncrement(worldCoords);
-        EXPECT_EQ(incCoords.x(), -124); // floor(-123.4) = -124
-        EXPECT_EQ(incCoords.y(), -235); // floor(-234.5) = -235
-        EXPECT_EQ(incCoords.z(), -346); // floor(-345.6) = -346
+        EXPECT_EQ(incCoords.x(), -123); // round(-123.4) = -123
+        EXPECT_EQ(incCoords.y(), -235); // round(-234.5) = -235 (already half)
+        EXPECT_EQ(incCoords.z(), -346); // round(-345.6) = -346
     }
 }
 
@@ -216,10 +223,10 @@ TEST_F(PlacementValidationTest, GetPlacementContext) {
         PlacementContext context = PlacementUtils::getPlacementContext(
             worldPos, VoxelData::VoxelResolution::Size_32cm, false, m_workspaceSize);
         
-        // 1.15m rounds to 1.28m (4*32cm) = 128cm
-        EXPECT_EQ(context.snappedIncrementPos.x(), 128);  // Snaps to 1.28m (4*32cm)
-        EXPECT_EQ(context.snappedIncrementPos.y(), 64);   // Snaps to 0.64m (2*32cm)
-        EXPECT_EQ(context.snappedIncrementPos.z(), 128);  // Snaps to 1.28m (4*32cm)
+        // 1.15m = 115cm, Floor(115/32) = 3, 3*32 = 96cm
+        EXPECT_EQ(context.snappedIncrementPos.x(), 96);   // Floor(115/32)*32 = 96cm
+        EXPECT_EQ(context.snappedIncrementPos.y(), 32);   // Floor(50/32)*32 = 32cm
+        EXPECT_EQ(context.snappedIncrementPos.z(), 96);   // Floor(115/32)*32 = 96cm
         EXPECT_EQ(context.validation, PlacementValidationResult::Valid);
         EXPECT_FALSE(context.shiftPressed);
     }
@@ -258,6 +265,8 @@ TEST_F(PlacementValidationTest, GetPlacementContext) {
 
 // Test snap override with Shift key for all resolutions
 TEST_F(PlacementValidationTest, ShiftKeyOverrideAllResolutions) {
+    // REQ-3.1.2: Holding Shift shall allow placement at any valid 1cm increment
+    // REQ-5.4.1: Shift key shall override auto-snap for same-size voxels
     Vector3f testPos(0.123f, 0.234f, 0.345f);
     
     // Test all resolutions
@@ -300,6 +309,7 @@ protected:
 
 // Test same-size voxel auto-snapping
 TEST_F(SmartSnappingTest, SameSizeVoxelSnapping) {
+    // REQ-3.1.1: Same-size voxels shall auto-snap to perfect alignment by default
     using namespace VoxelData;
     
     // Test snapping to 32cm grid when placing 32cm voxel near existing 32cm voxels
@@ -316,6 +326,8 @@ TEST_F(SmartSnappingTest, SameSizeVoxelSnapping) {
 
 // Test same-size snapping with Shift override
 TEST_F(SmartSnappingTest, SameSizeSnappingShiftOverride) {
+    // REQ-3.1.2: Holding Shift shall allow placement at any valid 1cm increment
+    // REQ-5.4.1: Shift key shall override auto-snap for same-size voxels
     using namespace VoxelData;
     
     Vector3f worldPos(3.35f, 0.0f, 3.35f);
@@ -336,7 +348,8 @@ TEST_F(SmartSnappingTest, NoNearbyVoxelsSnapping) {
     IncrementCoordinates snapped = PlacementUtils::snapToSameSizeVoxel(worldPos, VoxelResolution::Size_32cm, *m_dataManager, false);
     
     // Should still snap to grid (no special behavior when no nearby voxels)
-    IncrementCoordinates expected(704, 192, 704); // Grid-aligned for 32cm
+    // 7.0m = 700cm, Floor(700/32) = 21, 21*32 = 672cm
+    IncrementCoordinates expected(672, 192, 672); // Grid-aligned for 32cm
     EXPECT_EQ(snapped.x(), expected.x());
     EXPECT_EQ(snapped.y(), expected.y());
     EXPECT_EQ(snapped.z(), expected.z());
@@ -344,6 +357,8 @@ TEST_F(SmartSnappingTest, NoNearbyVoxelsSnapping) {
 
 // Test sub-grid positioning on larger voxel surface faces
 TEST_F(SmartSnappingTest, SurfaceFaceGridSnapping) {
+    // REQ-3.2.2: Placement shall respect 1cm increment positions on the target face
+    // REQ-3.2.3: The preview shall snap to nearest valid position
     using namespace VoxelData;
     
     // Test placing 1cm voxel on positive X surface face of 32cm voxel
@@ -485,6 +500,7 @@ TEST_F(SmartSnappingTest, SurfaceFaceEdgeCases) {
 
 // Test REQ-2.2.4: All voxel sizes placeable at 1cm increments on ground plane
 TEST_F(PlacementValidationTest, AllVoxelSizesOnGroundPlane1cmIncrements) {
+    // REQ-2.2.4: All voxel sizes (1cm to 512cm) shall be placeable at any valid 1cm increment position on the ground plane
     // Test all resolutions from 1cm to 512cm
     std::vector<VoxelData::VoxelResolution> resolutions = {
         VoxelData::VoxelResolution::Size_1cm,

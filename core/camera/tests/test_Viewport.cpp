@@ -142,6 +142,8 @@ TEST_F(ViewportTest, ContainsPoint) {
 }
 
 TEST_F(ViewportTest, ScreenToWorldRay) {
+    // REQ-5.1.4: Ray-casting shall determine face/position under cursor
+    // REQ-CAM-6: Camera shall provide accurate ray generation
     // Create test matrices
     Matrix4f viewMatrix = Matrix4f::lookAt(
         Vector3f(0, 0, 5),  // Eye
@@ -231,6 +233,7 @@ TEST_F(ViewportTest, ZoomFactor) {
 }
 
 TEST_F(ViewportTest, AspectRatioUpdates) {
+    // REQ-CAM-2: Camera shall support multiple view projections (proper aspect ratio handling)
     // Square viewport
     viewport->setSize(600, 600);
     EXPECT_FLOAT_EQ(viewport->getAspectRatio(), 1.0f);

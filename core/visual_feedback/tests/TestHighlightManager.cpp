@@ -19,7 +19,7 @@ protected:
     std::unique_ptr<HighlightManager> m_manager;
 };
 
-// Test single face highlighting constraint
+// REQ-4.2.2: Only one face shall be highlighted at a time
 TEST_F(HighlightManagerTest, SingleFaceHighlight) {
     // Create two different faces
     Face face1(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VisualFeedback::FaceDirection::PositiveY);
@@ -79,7 +79,7 @@ TEST_F(HighlightManagerTest, InvalidFace) {
     EXPECT_FALSE(m_manager->hasFaceHighlight());
 }
 
-// Test animation update
+// REQ-6.1.3: Face highlighting shall update within one frame
 TEST_F(HighlightManagerTest, AnimationUpdate) {
     Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VisualFeedback::FaceDirection::PositiveY);
     
@@ -105,7 +105,7 @@ TEST_F(HighlightManagerTest, AnimationControl) {
     m_manager->update(0.016f);
 }
 
-// Test face transitions
+// REQ-2.3.1, REQ-2.3.2: Face highlighting when hovering over voxel
 TEST_F(HighlightManagerTest, FaceTransitions) {
     Face face1(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VisualFeedback::FaceDirection::PositiveY);
     Face face2(Vector3i(1, 0, 0), VoxelResolution::Size_32cm, VisualFeedback::FaceDirection::PositiveY);

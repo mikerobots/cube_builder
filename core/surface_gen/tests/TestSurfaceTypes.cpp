@@ -7,6 +7,8 @@ using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::Math;
 
 TEST(MeshTest, DefaultConstruction) {
+    // REQ-10.1.1: System shall use Dual Contouring algorithm for surface generation
+    // Mesh is the output data structure for the dual contouring algorithm
     Mesh mesh;
     
     EXPECT_EQ(mesh.vertices.size(), 0);
@@ -18,6 +20,8 @@ TEST(MeshTest, DefaultConstruction) {
 }
 
 TEST(MeshTest, IsValid) {
+    // REQ-8.2.1: System shall export STL files for 3D printing and sharing
+    // This test ensures mesh validity which is required for STL export
     Mesh mesh;
     
     // Empty mesh is valid
@@ -47,6 +51,8 @@ TEST(MeshTest, IsValid) {
 }
 
 TEST(MeshTest, Clear) {
+    // REQ-10.1.5: System shall provide real-time preview with simplified mesh
+    // Clear is used when regenerating preview meshes
     Mesh mesh;
     
     // Add data
@@ -69,6 +75,7 @@ TEST(MeshTest, Clear) {
 }
 
 TEST(MeshTest, GetMemoryUsage) {
+    // REQ-6.3.1: Total application memory shall not exceed 4GB (Meta Quest 3 constraint)
     Mesh mesh;
     
     // Empty mesh

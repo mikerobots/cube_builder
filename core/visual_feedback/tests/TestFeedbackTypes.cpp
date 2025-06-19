@@ -11,6 +11,7 @@ protected:
     }
 };
 
+// REQ-2.3.1, REQ-2.3.2: Face highlighting when hovering over voxel
 TEST_F(FeedbackTypesTest, FaceConstruction) {
     Vector3i voxelPos(1, 2, 3);
     VoxelResolution resolution = VoxelResolution::Size_32cm;
@@ -24,6 +25,7 @@ TEST_F(FeedbackTypesTest, FaceConstruction) {
     EXPECT_EQ(face.getDirection(), direction);
 }
 
+// REQ-4.2.2: Only one face shall be highlighted at a time
 TEST_F(FeedbackTypesTest, FaceId) {
     VoxelEditor::VisualFeedback::Face face1(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     VoxelEditor::VisualFeedback::Face face2(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
@@ -33,19 +35,20 @@ TEST_F(FeedbackTypesTest, FaceId) {
     EXPECT_NE(face1.getId(), face3.getId());
 }
 
+// REQ-4.2.3: Highlighting shall be visible from all camera angles
 TEST_F(FeedbackTypesTest, FaceWorldPosition) {
     VoxelEditor::VisualFeedback::Face face(Vector3i(0, 0, 0), VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
     Vector3f worldPos = face.getWorldPosition().value();
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
     
-    // With centered coordinate system, grid (0,0,0) is at world (-2.5, 0, -2.5) + face offset
-    float workspaceSize = 5.0f; // Default workspace size
-    float halfWorkspace = workspaceSize * 0.5f;
+    // With centered coordinate system, increment (0,0,0) is at world (0,0,0)
+    // The face position is offset from the voxel center based on face direction
+    // For PositiveX face, it's at voxelSize offset in X direction
     
-    EXPECT_FLOAT_EQ(worldPos.x, -halfWorkspace + voxelSize);  // PositiveX face
-    EXPECT_FLOAT_EQ(worldPos.y, voxelSize * 0.5f);
-    EXPECT_FLOAT_EQ(worldPos.z, -halfWorkspace + voxelSize * 0.5f);
+    EXPECT_FLOAT_EQ(worldPos.x, voxelSize);  // PositiveX face at voxel size offset
+    EXPECT_FLOAT_EQ(worldPos.y, voxelSize * 0.5f);  // Center of face in Y
+    EXPECT_FLOAT_EQ(worldPos.z, voxelSize * 0.5f);  // Center of face in Z
 }
 
 TEST_F(FeedbackTypesTest, FaceNormal) {
@@ -66,12 +69,11 @@ TEST_F(FeedbackTypesTest, FaceCorners) {
     EXPECT_EQ(corners.size(), 4);
     
     float voxelSize = getVoxelSize(VoxelResolution::Size_32cm);
-    float workspaceSize = 5.0f; // Default workspace size
-    float halfWorkspace = workspaceSize * 0.5f;
     
     // All corners should have same X coordinate (face on positive X)
-    // With centered coordinate system, grid (0,0,0) base pos is at (-2.5, 0, -2.5)
-    float expectedX = -halfWorkspace + voxelSize;
+    // With centered coordinate system, increment (0,0,0) is at world (0,0,0)
+    // For PositiveX face, all corners are at X = voxelSize
+    float expectedX = voxelSize;
     for (const auto& corner : corners) {
         EXPECT_FLOAT_EQ(corner.x(), expectedX);
     }
@@ -129,6 +131,7 @@ TEST_F(FeedbackTypesTest, TransformMatrix) {
     EXPECT_FLOAT_EQ(matrix.m[14], 3.0f);
 }
 
+// REQ-4.2.1: Face highlighting shall use yellow color
 TEST_F(FeedbackTypesTest, HighlightStyleFactories) {
     auto faceStyle = VoxelEditor::VisualFeedback::HighlightStyle::Face();
     auto selectionStyle = VoxelEditor::VisualFeedback::HighlightStyle::Selection();
@@ -145,6 +148,7 @@ TEST_F(FeedbackTypesTest, HighlightStyleFactories) {
     EXPECT_TRUE(previewStyle.wireframe);
 }
 
+// REQ-4.1.1, REQ-4.1.2: Green outline for valid placements, red for invalid
 TEST_F(FeedbackTypesTest, OutlineStyleFactories) {
     auto voxelStyle = VoxelEditor::VisualFeedback::OutlineStyle::VoxelPreview();
     auto groupStyle = VoxelEditor::VisualFeedback::OutlineStyle::GroupBoundary();

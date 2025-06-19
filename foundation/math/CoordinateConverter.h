@@ -191,6 +191,11 @@ public:
      * @param incrementCoord Any increment coordinate within the voxel
      * @param resolution Voxel resolution
      * @return Center increment coordinate of the voxel
+     * 
+     * Note: For voxels smaller than 2cm, the center cannot be exactly represented
+     * in integer increment coordinates. In these cases, the function returns the
+     * increment coordinate itself, and the half-voxel offset should be applied
+     * during world coordinate conversion.
      */
     static IncrementCoordinates getVoxelCenterIncrement(
         const IncrementCoordinates& incrementCoord,
@@ -198,14 +203,23 @@ public:
     ) {
         const Vector3i& increment = incrementCoord.value();
         float voxelSize = getVoxelSizeMeters(resolution);
-        int voxelSize_cm = static_cast<int>(voxelSize * METERS_TO_CM);
-        int halfVoxel_cm = voxelSize_cm / 2;
+        float voxelSize_cm = voxelSize * METERS_TO_CM;
+        
+        // For 1cm voxels, we can't represent the 0.5cm offset in integer coordinates
+        // So we just return the snapped position
+        if (resolution == VoxelEditor::VoxelData::VoxelResolution::Size_1cm) {
+            return IncrementCoordinates(increment);
+        }
+        
+        // For larger voxels, calculate the center offset
+        int voxelSize_cm_int = static_cast<int>(voxelSize_cm);
+        int halfVoxel_cm = voxelSize_cm_int / 2;
         
         // Use floating point floor division for proper negative handling
         Vector3i center(
-            static_cast<int>(std::floor(static_cast<float>(increment.x) / voxelSize_cm)) * voxelSize_cm + halfVoxel_cm,
-            static_cast<int>(std::floor(static_cast<float>(increment.y) / voxelSize_cm)) * voxelSize_cm + halfVoxel_cm,
-            static_cast<int>(std::floor(static_cast<float>(increment.z) / voxelSize_cm)) * voxelSize_cm + halfVoxel_cm
+            static_cast<int>(std::floor(static_cast<float>(increment.x) / voxelSize_cm_int)) * voxelSize_cm_int + halfVoxel_cm,
+            static_cast<int>(std::floor(static_cast<float>(increment.y) / voxelSize_cm_int)) * voxelSize_cm_int + halfVoxel_cm,
+            static_cast<int>(std::floor(static_cast<float>(increment.z) / voxelSize_cm_int)) * voxelSize_cm_int + halfVoxel_cm
         );
         
         return IncrementCoordinates(center);

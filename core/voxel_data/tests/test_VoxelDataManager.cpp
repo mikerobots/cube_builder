@@ -194,6 +194,8 @@ TEST_F(VoxelDataManagerTest, WorldSpaceOperations) {
     }
 }
 
+// REQ-5.3.1: Current voxel size controlled by active resolution setting
+// REQ-6.1.4: Resolution switching shall complete within 100ms
 TEST_F(VoxelDataManagerTest, ResolutionManagement) {
     VoxelResolution originalResolution = manager->getActiveResolution();
     VoxelResolution newResolution = VoxelResolution::Size_8cm;
@@ -273,6 +275,7 @@ TEST_F(VoxelDataManagerTest, PositionValidation) {
     EXPECT_FALSE(manager->isValidWorldPosition(invalidWorldPos));
 }
 
+// REQ-5.3.3: Available resolutions: 1cm, 2cm, 4cm, 8cm, 16cm, 32cm, 64cm, 128cm, 256cm, 512cm
 TEST_F(VoxelDataManagerTest, MultipleResolutionVoxels) {
     // Set voxels at different resolutions - use different positions to avoid conflicts
     Vector3i positions[10] = {
@@ -618,6 +621,7 @@ TEST_F(VoxelDataManagerTest, LargeScaleOperations) {
 
 // ===== Enhancement Tests =====
 
+// REQ-2.1.1: Voxels shall be placeable only at 1cm increment positions
 TEST_F(VoxelDataManagerTest, IncrementValidation_ValidPositions) {
     // Test valid integer grid positions (all should be valid 1cm increments)
     EXPECT_TRUE(manager->isValidIncrementPosition(Vector3i(0, 0, 0)));
@@ -633,6 +637,7 @@ TEST_F(VoxelDataManagerTest, IncrementValidation_ValidPositions) {
     EXPECT_TRUE(manager->isValidIncrementPosition(Vector3f(1.23f, 0.45f, 0.67f)));
 }
 
+// REQ-2.1.4: No voxels shall be placed below Y=0
 TEST_F(VoxelDataManagerTest, IncrementValidation_YConstraint) {
     // Test Y >= 0 constraint for grid positions
     EXPECT_FALSE(manager->isValidIncrementPosition(Vector3i(0, -1, 0)));
@@ -653,6 +658,7 @@ TEST_F(VoxelDataManagerTest, IncrementValidation_InvalidWorldPositions) {
     EXPECT_FALSE(manager->isValidIncrementPosition(Vector3f(0.111f, 0.0f, 0.0f))); // 11.1cm
 }
 
+// REQ-5.2.1: Voxels shall not overlap with existing voxels
 TEST_F(VoxelDataManagerTest, CollisionDetection_NoOverlap) {
     // Place a 1cm voxel at a known position
     Vector3i pos1(250, 50, 250);  // Using known working coordinates
@@ -723,6 +729,7 @@ TEST_F(VoxelDataManagerTest, CollisionDetection_MultipleResolutions) {
     EXPECT_FALSE(manager->wouldOverlap(Vector3i(50, 0, 50), VoxelResolution::Size_1cm));
 }
 
+// REQ-3.1.1: Same-size voxels shall auto-snap to perfect alignment by default
 TEST_F(VoxelDataManagerTest, AdjacentPositionCalculation_SameSize) {
     Vector3i sourcePos(10, 5, 10);
     VoxelResolution resolution = VoxelResolution::Size_2cm;
@@ -836,6 +843,7 @@ TEST_F(VoxelDataManagerTest, PerformanceTest_CollisionCheck10000Voxels) {
     EXPECT_LT(duration.count(), 1500); // Relaxed to 15ms per check (1.5s for 100 checks)
 }
 
+// REQ-5.2.2: System shall validate placement before allowing it
 TEST_F(VoxelDataManagerTest, SetVoxel_ValidatesIncrement) {
     // Should succeed - valid position
     EXPECT_TRUE(manager->setVoxel(Vector3i(10, 0, 10), VoxelResolution::Size_1cm, true));

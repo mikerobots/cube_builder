@@ -43,6 +43,8 @@ TEST_F(CameraControllerTest, ViewportManagement) {
 }
 
 TEST_F(CameraControllerTest, MouseButtonInteraction) {
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
+    // REQ-9.2.2: CLI shall support camera commands (rotate, zoom)
     Vector2i mousePos(400, 300);
     
     // Test left button (orbit mode)
@@ -162,6 +164,8 @@ TEST_F(CameraControllerTest, MouseWheelOutsideViewport) {
 }
 
 TEST_F(CameraControllerTest, ViewPresets) {
+    // REQ-CAM-4: Camera shall provide standard view presets
+    // REQ-9.2.2: CLI shall support camera commands (view)
     controller->setViewPreset(ViewPreset::FRONT);
     EXPECT_FLOAT_EQ(controller->getCamera()->getYaw(), 0.0f);
     EXPECT_FLOAT_EQ(controller->getCamera()->getPitch(), 0.0f);
@@ -200,6 +204,8 @@ TEST_F(CameraControllerTest, FocusOn) {
 }
 
 TEST_F(CameraControllerTest, MouseRayGeneration) {
+    // REQ-5.1.4: Ray-casting shall determine face/position under cursor
+    // REQ-CAM-6: Camera shall provide accurate ray generation
     Vector2i mousePos(400, 300); // Center of default viewport
     
     Ray mouseRay = controller->getMouseRay(mousePos);
@@ -227,6 +233,8 @@ TEST_F(CameraControllerTest, WorldToScreen) {
 }
 
 TEST_F(CameraControllerTest, UpdateAnimation) {
+    // REQ-CAM-5: View transitions shall be smooth
+    // REQ-CAM-7: Camera operations shall be performant (smooth at 60+ FPS)
     // Enable smoothing
     controller->setCameraSmoothing(true, 0.1f);
     

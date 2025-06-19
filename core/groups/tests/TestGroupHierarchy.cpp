@@ -21,6 +21,7 @@ TEST_F(GroupHierarchyTest, EmptyHierarchy) {
 }
 
 TEST_F(GroupHierarchyTest, AddChild) {
+    // REQ: Group hierarchy support (nested groups)
     GroupId parent = 1;
     GroupId child = 2;
     
@@ -43,6 +44,7 @@ TEST_F(GroupHierarchyTest, RemoveChild) {
 }
 
 TEST_F(GroupHierarchyTest, SetParent) {
+    // REQ: Group hierarchy support (nested groups)
     GroupId child = 1;
     GroupId parent1 = 2;
     GroupId parent2 = 3;
@@ -64,6 +66,7 @@ TEST_F(GroupHierarchyTest, SetParent) {
 }
 
 TEST_F(GroupHierarchyTest, CycleDetection) {
+    // REQ: Group hierarchy support (nested groups)
     GroupId group1 = 1;
     GroupId group2 = 2;
     GroupId group3 = 3;
@@ -81,6 +84,7 @@ TEST_F(GroupHierarchyTest, CycleDetection) {
 }
 
 TEST_F(GroupHierarchyTest, GetAllDescendants) {
+    // REQ: Group hierarchy support (nested groups)
     GroupId root = 1;
     GroupId child1 = 2;
     GroupId child2 = 3;
@@ -103,6 +107,7 @@ TEST_F(GroupHierarchyTest, GetAllDescendants) {
 }
 
 TEST_F(GroupHierarchyTest, GetAllAncestors) {
+    // REQ: Group hierarchy support (nested groups)
     GroupId root = 1;
     GroupId parent = 2;
     GroupId child = 3;
@@ -122,6 +127,8 @@ TEST_F(GroupHierarchyTest, GetAllAncestors) {
 }
 
 TEST_F(GroupHierarchyTest, GetRootGroups) {
+    // REQ: Group hierarchy support (nested groups)
+    // REQ-9.2.5: CLI shall support group commands (group create/hide/show/list)
     GroupId root1 = 1;
     GroupId root2 = 2;
     GroupId child1 = 3;
@@ -298,6 +305,8 @@ TEST_F(GroupHierarchyTest, FindCycles) {
 }
 
 TEST_F(GroupHierarchyTest, ExportImport) {
+    // REQ-8.1.8: Format shall store group definitions and metadata
+    // REQ: Group persistence across save/load operations
     // Create a complex hierarchy
     hierarchy->addChild(1, 2);
     hierarchy->addChild(1, 3);

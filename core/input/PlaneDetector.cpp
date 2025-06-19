@@ -4,6 +4,7 @@
 #include "../../foundation/math/CoordinateConverter.h"
 #include <algorithm>
 #include <cmath>
+#include <set>
 
 namespace VoxelEditor {
 namespace Input {
@@ -48,60 +49,98 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelUnderCurs
         return std::nullopt;
     }
     
-    // Search in a cylinder from ground to reasonable height
+    // Convert world position to increment coordinates
+    Math::IncrementCoordinates basePos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(worldPos));
+    
+    // Search for voxels in a vertical column from the given position
+    std::optional<VoxelInfo> highestVoxel;
+    float highestTopHeight = -1.0f;
+    
+    // Define a reasonable search height
     float maxHeight = MAX_VOXEL_SEARCH_HEIGHT;
+    int maxHeightIncrements = static_cast<int>(maxHeight * 100);
     
-    // Store voxel candidates with their resolutions for proper height calculation
-    std::vector<VoxelInfo> voxelCandidates;
+    // Check all positions in a vertical column up to max height
+    // Optimize by checking larger voxels first and using their size as step
+    auto resolutions = getAllResolutions();
+    std::reverse(resolutions.begin(), resolutions.end()); // Start with largest
     
-    // Check all resolutions
-    for (auto resolution : getAllResolutions()) {
+    for (auto resolution : resolutions) {
         float voxelSize = VoxelData::getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
         
-        // Convert world position to increment coordinates
-        Math::IncrementCoordinates incrementPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(worldPos));
+        // Use voxel size as step for efficiency
+        int step = std::max(1, voxelSizeIncrements);
         
-        // Check a range of Y values (in increment coordinates, each unit is 1cm)
-        int maxHeightIncrements = static_cast<int>(maxHeight * 100); // Convert meters to cm
-        for (int dy = -1; dy <= maxHeightIncrements; dy++) {
-            Math::IncrementCoordinates checkPos(incrementPos.x(), dy, incrementPos.z());
+        // Check from ground up to max height
+        for (int y = 0; y <= maxHeightIncrements; y += step) {
+            Math::IncrementCoordinates checkPos(basePos.x(), y, basePos.z());
+            
             if (m_voxelManager->getVoxel(checkPos, resolution)) {
-                voxelCandidates.emplace_back(checkPos, resolution);
-            }
-        }
-    }
-    
-    // Find the highest voxel by calculating actual top heights
-    if (!voxelCandidates.empty()) {
-        auto highestIt = voxelCandidates.begin();
-        float highestHeight = calculateVoxelTopHeight(highestIt->position, highestIt->resolution);
-        
-        for (auto it = voxelCandidates.begin(); it != voxelCandidates.end(); ++it) {
-            float height = calculateVoxelTopHeight(it->position, it->resolution);
-            if (height > highestHeight) {
-                highestHeight = height;
-                highestIt = it;
-            }
-        }
-        
-        return *highestIt;
-    }
-    
-    // If no voxel directly under cursor, search in a wider area
-    auto voxelsInCylinder = searchVoxelsInCylinder(worldPos, searchRadius, 0.0f, maxHeight);
-    if (!voxelsInCylinder.empty()) {
-        auto highestVoxel = findHighestVoxel(voxelsInCylinder);
-        if (highestVoxel.has_value()) {
-            // Need to determine resolution for this voxel
-            for (auto resolution : getAllResolutions()) {
-                if (m_voxelManager->getVoxel(highestVoxel.value(), resolution)) {
-                    return VoxelInfo(highestVoxel.value(), resolution);
+                float topHeight = calculateVoxelTopHeight(checkPos, resolution);
+                if (topHeight > highestTopHeight) {
+                    highestTopHeight = topHeight;
+                    highestVoxel = VoxelInfo(checkPos, resolution);
+                }
+                
+                // Also check just below the top of this voxel for overlapping voxels
+                if (y + voxelSizeIncrements - 1 <= maxHeightIncrements) {
+                    Math::IncrementCoordinates topPos(basePos.x(), y + voxelSizeIncrements - 1, basePos.z());
+                    if (m_voxelManager->getVoxel(topPos, resolution)) {
+                        float topHeightAtTop = calculateVoxelTopHeight(topPos, resolution);
+                        if (topHeightAtTop > highestTopHeight) {
+                            highestTopHeight = topHeightAtTop;
+                            highestVoxel = VoxelInfo(topPos, resolution);
+                        }
+                    }
                 }
             }
         }
     }
     
-    return std::nullopt;
+    if (highestVoxel.has_value()) {
+        return highestVoxel;
+    }
+    
+    // If no direct hit, search in a small radius around the position
+    // This is much more expensive, so we only do it if necessary
+    int radiusIncrements = static_cast<int>(searchRadius * 100);
+    
+    std::optional<VoxelInfo> bestVoxel;
+    float highestHeight = -1.0f;
+    
+    // Search in a small area around the cursor
+    for (int dx = -radiusIncrements; dx <= radiusIncrements; dx += 4) { // Step by 4cm for efficiency
+        for (int dz = -radiusIncrements; dz <= radiusIncrements; dz += 4) {
+            // Check if within circular radius
+            if (dx * dx + dz * dz > radiusIncrements * radiusIncrements) {
+                continue;
+            }
+            
+            Math::IncrementCoordinates searchPos(basePos.x() + dx, 0, basePos.z() + dz);
+            
+            // For this column, find the highest voxel
+            for (auto resolution : getAllResolutions()) {
+                float voxelSize = VoxelData::getVoxelSize(resolution);
+                int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
+                
+                // Check at reasonable intervals
+                for (int y = 0; y <= maxHeightIncrements; y += std::max(4, voxelSizeIncrements / 4)) {
+                    searchPos = Math::IncrementCoordinates(basePos.x() + dx, y, basePos.z() + dz);
+                    
+                    if (m_voxelManager->getVoxel(searchPos, resolution)) {
+                        float topHeight = calculateVoxelTopHeight(searchPos, resolution);
+                        if (topHeight > highestHeight && topHeight <= worldPos.y + 0.5f) { // Don't find voxels way above cursor
+                            highestHeight = topHeight;
+                            bestVoxel = VoxelInfo(searchPos, resolution);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    return bestVoxel;
 }
 
 void PlaneDetector::updatePlanePersistence(const Math::IncrementCoordinates& previewPosition, 
@@ -237,27 +276,51 @@ std::vector<Math::IncrementCoordinates> PlaneDetector::searchVoxelsInCylinder(co
     int maxYIncrement = static_cast<int>(maxHeight * 100); // Convert to cm
     int radiusIncrement = static_cast<int>(radius * 100) + 1; // Convert to cm, add 1 for safety
     
-    // Search in all resolutions at each increment position
-    for (int y = minYIncrement; y <= maxYIncrement; y++) {
-        for (int x = centerIncrement.x() - radiusIncrement; x <= centerIncrement.x() + radiusIncrement; x++) {
-            for (int z = centerIncrement.z() - radiusIncrement; z <= centerIncrement.z() + radiusIncrement; z++) {
-                Math::IncrementCoordinates checkPos(x, y, z);
-                
-                // Convert to world position for distance check
-                Math::WorldCoordinates worldCoords = Math::CoordinateConverter::incrementToWorld(checkPos);
-                Math::Vector3f voxelWorldPos = worldCoords.value();
-                
-                // Check if within cylinder (distance from center in XZ plane)
-                float dx = voxelWorldPos.x - centerPos.x;
-                float dz = voxelWorldPos.z - centerPos.z;
-                float distanceSquared = dx * dx + dz * dz;
-                
-                if (distanceSquared <= radius * radius) {
-                    // Check if there's a voxel at this position in any resolution
-                    for (auto resolution : getAllResolutions()) {
-                        if (m_voxelManager->getVoxel(checkPos, resolution)) {
-                            voxels.push_back(checkPos);
-                            break; // Found one, don't need to check other resolutions
+    // Use a more efficient search strategy - check larger voxels first since they're more likely to be found
+    auto resolutions = getAllResolutions();
+    std::reverse(resolutions.begin(), resolutions.end()); // Start with largest resolution
+    
+    // Use a set to avoid duplicate positions
+    std::set<Math::IncrementCoordinates> uniqueVoxels;
+    
+    for (auto resolution : resolutions) {
+        float voxelSize = VoxelData::getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
+        
+        // Search at intervals appropriate for this voxel size
+        int stepSize = std::max(1, voxelSizeIncrements / 2);
+        
+        for (int y = minYIncrement; y <= maxYIncrement; y += stepSize) {
+            for (int x = centerIncrement.x() - radiusIncrement; x <= centerIncrement.x() + radiusIncrement; x += stepSize) {
+                for (int z = centerIncrement.z() - radiusIncrement; z <= centerIncrement.z() + radiusIncrement; z += stepSize) {
+                    // Quick distance check before coordinate conversion
+                    int dx = x - centerIncrement.x();
+                    int dz = z - centerIncrement.z();
+                    if (dx * dx + dz * dz > radiusIncrement * radiusIncrement) {
+                        continue; // Outside cylinder
+                    }
+                    
+                    Math::IncrementCoordinates checkPos(x, y, z);
+                    
+                    if (m_voxelManager->getVoxel(checkPos, resolution)) {
+                        uniqueVoxels.insert(checkPos);
+                        
+                        // Also check the actual voxel bounds more precisely
+                        for (int dy = 0; dy < voxelSizeIncrements; dy += stepSize) {
+                            for (int dx = 0; dx < voxelSizeIncrements; dx += stepSize) {
+                                for (int dz = 0; dz < voxelSizeIncrements; dz += stepSize) {
+                                    Math::IncrementCoordinates boundPos(x + dx, y + dy, z + dz);
+                                    
+                                    // Check distance for this position too
+                                    int bdx = boundPos.x() - centerIncrement.x();
+                                    int bdz = boundPos.z() - centerIncrement.z();
+                                    if (bdx * bdx + bdz * bdz <= radiusIncrement * radiusIncrement) {
+                                        if (m_voxelManager->getVoxel(boundPos, resolution)) {
+                                            uniqueVoxels.insert(boundPos);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -265,6 +328,8 @@ std::vector<Math::IncrementCoordinates> PlaneDetector::searchVoxelsInCylinder(co
         }
     }
     
+    // Convert set to vector
+    voxels.assign(uniqueVoxels.begin(), uniqueVoxels.end());
     return voxels;
 }
 

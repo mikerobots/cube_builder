@@ -26,6 +26,8 @@ protected:
 
 // Test basic modifier key state tracking
 TEST_F(ModifierKeyTrackingTest, BasicModifierKeyStates) {
+    // REQ-3.1.2: Holding Shift shall allow placement at any valid 1cm increment
+    // REQ-5.4.1: Shift key shall override auto-snap for same-size voxels
     // Initially no modifiers should be pressed
     EXPECT_FALSE(m_inputManager->isShiftPressed());
     EXPECT_FALSE(m_inputManager->isCtrlPressed());

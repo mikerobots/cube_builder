@@ -27,6 +27,7 @@ protected:
     VoxelEditor::VoxelData::VoxelResolution resolution;
 };
 
+// REQ-1.2.3: The grid shall extend to cover the entire workspace area
 TEST_F(VoxelGridTest, ConstructionWithValidParameters) {
     VoxelGrid grid(resolution, workspaceSize);
     
@@ -90,6 +91,7 @@ TEST_F(VoxelGridTest, WorldSpaceOperations) {
     EXPECT_EQ(grid.getVoxelCount(), 0);
 }
 
+// REQ-1.1.5: The grid origin (0,0,0) shall be at the center of the workspace
 TEST_F(VoxelGridTest, GridWorldCoordinateConversion) {
     VoxelGrid grid(resolution, workspaceSize);
     
@@ -136,6 +138,7 @@ TEST_F(VoxelGridTest, GridWorldCoordinateConversion) {
     EXPECT_LT(abs(roundTripWorldPos.z - originalWorldPos.z), voxelSize);
 }
 
+// REQ-2.1.4: No voxels shall be placed below Y=0
 TEST_F(VoxelGridTest, PositionValidation) {
     VoxelGrid grid(resolution, workspaceSize);
     
@@ -169,6 +172,7 @@ TEST_F(VoxelGridTest, PositionValidation) {
     EXPECT_FALSE(grid.isValidWorldPosition(Vector3f(0.0f, 0.0f, 2.6f))); // Beyond max Z
 }
 
+// REQ-2.1.4: No voxels shall be placed below Y=0
 TEST_F(VoxelGridTest, OutOfBoundsOperations) {
     VoxelGrid grid(resolution, workspaceSize);
     
@@ -250,6 +254,8 @@ TEST_F(VoxelGridTest, ClearOperation) {
     }
 }
 
+// REQ-6.3.2: Voxel data storage shall not exceed 2GB
+// REQ-6.3.5: System shall detect and respond to memory pressure
 TEST_F(VoxelGridTest, MemoryOptimization) {
     VoxelGrid grid(resolution, workspaceSize);
     
@@ -377,6 +383,7 @@ TEST_F(VoxelGridTest, StressTestLargeGrid) {
     }
 }
 
+// REQ-6.3.2: Voxel data storage shall not exceed 2GB
 TEST_F(VoxelGridTest, MemoryUsageScaling) {
     VoxelGrid grid(resolution, workspaceSize);
     
@@ -436,6 +443,7 @@ TEST_F(VoxelGridTest, ThreadSafetyPreparation) {
     }
 }
 
+// REQ-2.1.1: Voxels shall be placeable only at 1cm increment positions
 TEST_F(VoxelGridTest, VoxelWorldPositionVerification) {
     // Test that voxel world positions match expected coordinates
     // This is critical for rendering - ensures voxels appear where we expect them

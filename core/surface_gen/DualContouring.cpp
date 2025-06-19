@@ -235,26 +235,9 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     MeshBuilder builder;
     builder.beginMesh();
     
-    // Convert vertices from grid coordinates to world coordinates using VoxelGrid's coordinate system
-    // This properly handles the centered workspace coordinate system
+    // Add vertices directly - they're already in world coordinates
     for (const auto& vertex : m_vertices) {
-        // Convert float vertex coordinates to grid position, then use gridToWorld
-        Math::Vector3i gridPos(
-            static_cast<int>(std::round(vertex.x())),
-            static_cast<int>(std::round(vertex.y())),
-            static_cast<int>(std::round(vertex.z()))
-        );
-        Math::Vector3f worldVertex = grid.gridToWorld(gridPos);
-        
-        // Add fractional offset for sub-grid precision
-        Math::Vector3f fractionalOffset(
-            (vertex.x() - gridPos.x) * voxelSize,
-            (vertex.y() - gridPos.y) * voxelSize,
-            (vertex.z() - gridPos.z) * voxelSize
-        );
-        worldVertex = worldVertex + fractionalOffset;
-        
-        builder.addVertex(Math::WorldCoordinates(worldVertex));
+        builder.addVertex(vertex);
     }
     
     for (size_t i = 0; i < m_indices.size(); i += 4) {
@@ -319,9 +302,9 @@ bool DualContouring::findEdgeIntersection(const Math::IncrementCoordinates& v0, 
         return false;
     }
     
-    // Interpolate position - convert grid to world coordinates
-    Math::WorldCoordinates p0(Math::Vector3f(v0.x(), v0.y(), v0.z()));
-    Math::WorldCoordinates p1(Math::Vector3f(v1.x(), v1.y(), v1.z()));
+    // Interpolate position - convert grid to world coordinates using proper converter
+    Math::WorldCoordinates p0 = Math::CoordinateConverter::incrementToWorld(v0);
+    Math::WorldCoordinates p1 = Math::CoordinateConverter::incrementToWorld(v1);
     hermite.position = interpolateEdge(val0, val1, p0, p1);
     
     // Compute normal at intersection

@@ -74,30 +74,27 @@ std::vector<Face> FaceDetector::detectFacesInRegion(const Math::BoundingBox& reg
     std::vector<Face> faces;
     
     float voxelSize = VoxelData::getVoxelSize(resolution);
+    int voxelSize_cm = static_cast<int>(voxelSize * 100.0f);
     
-    // Convert region to voxel coordinates
-    Math::Vector3i minVoxel(
-        static_cast<int>(std::floor(region.min.x / voxelSize)),
-        static_cast<int>(std::floor(region.min.y / voxelSize)),
-        static_cast<int>(std::floor(region.min.z / voxelSize))
-    );
+    // Convert region bounds to increment coordinates (centimeters)
+    Math::IncrementCoordinates minIncrement = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(region.min));
+    Math::IncrementCoordinates maxIncrement = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(region.max));
     
-    Math::Vector3i maxVoxel(
-        static_cast<int>(std::ceil(region.max.x / voxelSize)),
-        static_cast<int>(std::ceil(region.max.y / voxelSize)),
-        static_cast<int>(std::ceil(region.max.z / voxelSize))
-    );
+    // Snap to voxel grid boundaries for this resolution
+    Math::IncrementCoordinates minVoxel = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution);
+    Math::IncrementCoordinates maxVoxel = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution);
     
-    // Check all voxels in region
-    for (int z = minVoxel.z; z <= maxVoxel.z; ++z) {
-        for (int y = minVoxel.y; y <= maxVoxel.y; ++y) {
-            for (int x = minVoxel.x; x <= maxVoxel.x; ++x) {
-                Math::Vector3i pos(x, y, z);
+    // Check all voxels in region at this resolution
+    for (int z = minVoxel.z(); z <= maxVoxel.z(); z += voxelSize_cm) {
+        for (int y = minVoxel.y(); y <= maxVoxel.y(); y += voxelSize_cm) {
+            for (int x = minVoxel.x(); x <= maxVoxel.x(); x += voxelSize_cm) {
+                Math::IncrementCoordinates voxelPos(x, y, z);
                 
-                if (grid.getVoxel(pos)) {
+                // Check if this voxel exists
+                if (grid.isValidIncrementPosition(voxelPos) && grid.getVoxel(voxelPos)) {
                     // Check all 6 faces
                     for (int dir = 0; dir < 6; ++dir) {
-                        Face face(pos, resolution, static_cast<FaceDirection>(dir));
+                        Face face(voxelPos, resolution, static_cast<FaceDirection>(dir));
                         if (isValidFaceForPlacement(face, grid)) {
                             faces.push_back(face);
                         }
@@ -133,13 +130,16 @@ Math::IncrementCoordinates FaceDetector::calculatePlacementPosition(const Face& 
     Math::IncrementCoordinates pos = face.getVoxelPosition();
     Math::Vector3i offset(0, 0, 0);
     
+    // Calculate the voxel size in centimeters for proper offset
+    int voxelSize_cm = static_cast<int>(VoxelData::getVoxelSize(face.getResolution()) * 100.0f);
+    
     switch (face.getDirection()) {
-        case FaceDirection::PositiveX: offset.x = 1; break;
-        case FaceDirection::NegativeX: offset.x = -1; break;
-        case FaceDirection::PositiveY: offset.y = 1; break;
-        case FaceDirection::NegativeY: offset.y = -1; break;
-        case FaceDirection::PositiveZ: offset.z = 1; break;
-        case FaceDirection::NegativeZ: offset.z = -1; break;
+        case FaceDirection::PositiveX: offset.x = voxelSize_cm; break;
+        case FaceDirection::NegativeX: offset.x = -voxelSize_cm; break;
+        case FaceDirection::PositiveY: offset.y = voxelSize_cm; break;
+        case FaceDirection::NegativeY: offset.y = -voxelSize_cm; break;
+        case FaceDirection::PositiveZ: offset.z = voxelSize_cm; break;
+        case FaceDirection::NegativeZ: offset.z = -voxelSize_cm; break;
     }
     
     return Math::IncrementCoordinates(pos.value() + offset);
@@ -173,7 +173,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     
     // Create a ray from the entry point
     VoxelEditor::VisualFeedback::Ray entryRay(entryPoint, ray.direction);
-    initializeTraversal(entryRay, Math::WorldCoordinates(gridMin), voxelSize, traversal);
+    initializeTraversal(entryRay, Math::WorldCoordinates(gridMin), voxelSize, resolution, traversal);
     
     
     // Traverse grid
@@ -194,10 +194,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     bool startedInsideVoxel = false;
     
     // Check if we start inside a voxel
-    if (traversal.current.x() >= 0 && traversal.current.y() >= 0 && traversal.current.z() >= 0 &&
-        traversal.current.x() < grid.getGridDimensions().x &&
-        traversal.current.y() < grid.getGridDimensions().y &&
-        traversal.current.z() < grid.getGridDimensions().z) {
+    if (grid.isValidIncrementPosition(traversal.current)) {
         startedInsideVoxel = grid.getVoxel(traversal.current);
     }
     
@@ -208,7 +205,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     int stepCount = 0;
     while (currentDistance < maxDistance && stepCount < 50) { // Add step limit to prevent infinite loops
         // Check current voxel
-        if (traversal.current.x() >= 0 && traversal.current.y() >= 0 && traversal.current.z() >= 0) {
+        if (grid.isValidIncrementPosition(traversal.current)) {
             bool isCurrentVoxel = grid.getVoxel(traversal.current);
             
             if (isCurrentVoxel) {
@@ -448,35 +445,29 @@ bool FaceDetector::rayIntersectsBox(const Ray& ray, const Math::BoundingBox& box
 }
 
 void FaceDetector::initializeTraversal(const Ray& ray, const Math::WorldCoordinates& gridMin, 
-                                      float voxelSize, GridTraversal& traversal) const {
-    // Starting voxel - convert from world to grid coordinates
-    // Add small epsilon to handle edge cases where ray origin is exactly on voxel boundary
-    const float nudge = 0.0001f;
+                                      float voxelSize, VoxelData::VoxelResolution resolution, GridTraversal& traversal) const {
+    // Convert ray origin to increment coordinates
+    Math::IncrementCoordinates rayIncrement = Math::CoordinateConverter::worldToIncrement(ray.origin);
     
-    // Debug the coordinate conversion
-    float gridX = (ray.origin.x() - gridMin.x()) / voxelSize + nudge;
-    float gridY = (ray.origin.y() - gridMin.y()) / voxelSize + nudge;
-    float gridZ = (ray.origin.z() - gridMin.z()) / voxelSize + nudge;
+    // Snap to the voxel grid for this resolution
+    traversal.current = Math::CoordinateConverter::snapToVoxelResolution(rayIncrement, resolution);
     
-    
-    traversal.current = Math::IncrementCoordinates(
-        static_cast<int>(std::floor(gridX)),
-        static_cast<int>(std::floor(gridY)),
-        static_cast<int>(std::floor(gridZ))
-    );
-    
-    // Step direction
+    // Step direction in increment coordinates (voxel size in cm)
+    int voxelSize_cm = static_cast<int>(voxelSize * 100.0f);
     traversal.step = Math::Vector3i(
-        ray.direction.x > 0 ? 1 : -1,
-        ray.direction.y > 0 ? 1 : -1,
-        ray.direction.z > 0 ? 1 : -1
+        ray.direction.x > 0 ? voxelSize_cm : -voxelSize_cm,
+        ray.direction.y > 0 ? voxelSize_cm : -voxelSize_cm,
+        ray.direction.z > 0 ? voxelSize_cm : -voxelSize_cm
     );
     
     // Calculate tMax and tDelta
     const float epsilon = 0.0001f;
     
+    // Convert current position to world coordinates for tMax calculation
+    Math::WorldCoordinates currentWorld = Math::CoordinateConverter::incrementToWorld(traversal.current);
+    
     if (std::abs(ray.direction.x) > epsilon) {
-        float nextX = gridMin.x() + (traversal.current.x() + (ray.direction.x > 0 ? 1 : 0)) * voxelSize;
+        float nextX = currentWorld.x() + (ray.direction.x > 0 ? voxelSize : -voxelSize * 0.5f);
         traversal.tMax.x = (nextX - ray.origin.x()) / ray.direction.x;
         traversal.tDelta.x = voxelSize / std::abs(ray.direction.x);
     } else {
@@ -485,7 +476,7 @@ void FaceDetector::initializeTraversal(const Ray& ray, const Math::WorldCoordina
     }
     
     if (std::abs(ray.direction.y) > epsilon) {
-        float nextY = gridMin.y() + (traversal.current.y() + (ray.direction.y > 0 ? 1 : 0)) * voxelSize;
+        float nextY = currentWorld.y() + (ray.direction.y > 0 ? voxelSize : -voxelSize * 0.5f);
         traversal.tMax.y = (nextY - ray.origin.y()) / ray.direction.y;
         traversal.tDelta.y = voxelSize / std::abs(ray.direction.y);
     } else {
@@ -494,7 +485,7 @@ void FaceDetector::initializeTraversal(const Ray& ray, const Math::WorldCoordina
     }
     
     if (std::abs(ray.direction.z) > epsilon) {
-        float nextZ = gridMin.z() + (traversal.current.z() + (ray.direction.z > 0 ? 1 : 0)) * voxelSize;
+        float nextZ = currentWorld.z() + (ray.direction.z > 0 ? voxelSize : -voxelSize * 0.5f);
         traversal.tMax.z = (nextZ - ray.origin.z()) / ray.direction.z;
         traversal.tDelta.z = voxelSize / std::abs(ray.direction.z);
     } else {

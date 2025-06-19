@@ -13,6 +13,7 @@ set(TEST_SOURCES
     TestCompression.cpp
     TestFileVersioning.cpp
     TestFileManager.cpp
+    test_FileIO_requirements.cpp
 )
 
 # Create test executable

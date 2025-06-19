@@ -234,6 +234,30 @@ TEST_F(CoordinateConverterTest, SnapToVoxelResolution_16cmAlignment) {
     EXPECT_EQ(snapped.z(), -64);
 }
 
+TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_1cmVoxels) {
+    // Test getting voxel center for 1cm voxels
+    // For 1cm voxels, we can't represent the 0.5cm offset in integer coordinates
+    // So the function should return the input position unchanged
+    IncrementCoordinates voxelPos(0, 0, 0);
+    IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(
+        voxelPos, VoxelEditor::VoxelData::VoxelResolution::Size_1cm);
+    
+    // For 1cm voxels, the function returns the position unchanged
+    EXPECT_EQ(center.x(), 0);
+    EXPECT_EQ(center.y(), 0);
+    EXPECT_EQ(center.z(), 0);
+    
+    // Test another position
+    IncrementCoordinates voxelPos2(5, 10, -3);
+    IncrementCoordinates center2 = CoordinateConverter::getVoxelCenterIncrement(
+        voxelPos2, VoxelEditor::VoxelData::VoxelResolution::Size_1cm);
+    
+    // Should return unchanged
+    EXPECT_EQ(center2.x(), 5);
+    EXPECT_EQ(center2.y(), 10);
+    EXPECT_EQ(center2.z(), -3);
+}
+
 TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_4cmVoxels) {
     // Test getting voxel center for 4cm voxels
     IncrementCoordinates voxelPos(107, 215, -33);

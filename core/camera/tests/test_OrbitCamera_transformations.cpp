@@ -20,6 +20,8 @@ protected:
 
 // Test that camera position is calculated correctly from angles
 TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
     // Test 1: Default position (45° yaw, 45° pitch)
     {
         camera->setYaw(45.0f);
@@ -87,6 +89,8 @@ TEST_F(OrbitCameraTransformationTest, CameraPositionFromAngles) {
 
 // Test that view matrix correctly transforms target to origin in view space
 TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformsTargetToOrigin) {
+    // REQ-1.1.2: The grid shall be positioned at Y=0 (ground level)
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system
     WorldCoordinates target(Vector3f(2.0f, 3.0f, 4.0f));
     camera->setTarget(target);
     camera->setDistance(10.0f);
@@ -156,6 +160,7 @@ TEST_F(OrbitCameraTransformationTest, ViewMatrixTransformations) {
 
 // Test that projection matrix produces correct NDC coordinates
 TEST_F(OrbitCameraTransformationTest, ProjectionMatrixNDC) {
+    // REQ-CAM-2: Camera shall support multiple view projections
     // These are in the base Camera class
     camera->setAspectRatio(1.0f);  // Square for easier calculation
     
@@ -190,6 +195,8 @@ TEST_F(OrbitCameraTransformationTest, ProjectionMatrixNDC) {
 
 // Test complete MVP transformation for a voxel
 TEST_F(OrbitCameraTransformationTest, VoxelMVPTransformation) {
+    // REQ-4.2.3: Highlighting shall be visible from all camera angles
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system
     // Set up camera similar to main app
     camera->setViewPreset(ViewPreset::ISOMETRIC);
     camera->setTarget(WorldCoordinates(Vector3f(0.64f, 0.64f, 0.64f)));  // Voxel at (0,0,0) world position
@@ -253,6 +260,8 @@ TEST_F(OrbitCameraTransformationTest, VoxelMVPTransformation) {
 
 // Test view presets produce expected camera positions
 TEST_F(OrbitCameraTransformationTest, ViewPresetPositions) {
+    // REQ-CAM-4: Camera shall provide standard view presets
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system (centered at 0,0,0)
     camera->setTarget(WorldCoordinates(Vector3f(0, 0, 0)));
     camera->setDistance(10.0f);
     

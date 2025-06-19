@@ -257,7 +257,10 @@ bool GroundPlaneGrid::loadShader() {
     std::vector<std::string> possibleVertPaths = {
         "core/rendering/shaders/ground_plane.vert",           // From build directory
         "../core/rendering/shaders/ground_plane.vert",       // From one level up
-        "../../core/rendering/shaders/ground_plane.vert"     // From test directories
+        "../../core/rendering/shaders/ground_plane.vert",    // From test directories
+        "bin/core/rendering/shaders/ground_plane.vert",       // Direct bin path
+        "../../../bin/core/rendering/shaders/ground_plane.vert",  // From CTest working dir
+        "../../../../core/rendering/shaders/ground_plane.vert"     // From CTest to source
     };
     
     std::string vertPath, fragPath;
@@ -315,6 +318,8 @@ uniform vec3 majorLineColor;
 uniform float opacity;
 
 out vec4 fragColor;
+
+const float MajorLineVisibilityMultiplier = 1.2;
 
 void main() {
     // Select color based on line type

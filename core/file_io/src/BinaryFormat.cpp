@@ -419,9 +419,9 @@ bool BinaryFormat::writeVoxelDataChunk(BinaryWriter& writer, const ::VoxelEditor
                 
                 // Write each voxel position
                 for (const auto& voxelPos : voxels) {
-                    w.writeInt32(voxelPos.gridPos.x());
-                    w.writeInt32(voxelPos.gridPos.y());
-                    w.writeInt32(voxelPos.gridPos.z());
+                    w.writeInt32(voxelPos.incrementPos.x());
+                    w.writeInt32(voxelPos.incrementPos.y());
+                    w.writeInt32(voxelPos.incrementPos.z());
                 }
             } else {
                 // Write resolution level with 0 voxels
@@ -477,7 +477,7 @@ bool BinaryFormat::readVoxelDataChunk(BinaryReader& reader, ::VoxelEditor::Voxel
         
         // Read voxel positions and set them
         for (uint32_t j = 0; j < voxelCount; ++j) {
-            Math::GridCoordinates pos(
+            Math::IncrementCoordinates incPos(
                 reader.readInt32(),
                 reader.readInt32(),
                 reader.readInt32()
@@ -487,11 +487,6 @@ bool BinaryFormat::readVoxelDataChunk(BinaryReader& reader, ::VoxelEditor::Voxel
                 LOG_ERROR("Failed to read voxel position " + std::to_string(j) + " of " + std::to_string(voxelCount));
                 return false;
             }
-            
-            // Convert grid coordinates to increment coordinates
-            Math::IncrementCoordinates incPos = Math::CoordinateConverter::gridToIncrement(
-                pos, resolution, voxelData.getWorkspaceSize()
-            );
             voxelData.setVoxel(incPos, resolution, true);
         }
     }
@@ -582,7 +577,7 @@ bool BinaryFormat::readGroupDataChunk(BinaryReader& reader, Groups::GroupManager
         std::vector<Groups::VoxelId> voxels;
         for (uint32_t j = 0; j < voxelCount; ++j) {
             Groups::VoxelId voxelId;
-            voxelId.position = Math::GridCoordinates(
+            voxelId.position = Math::IncrementCoordinates(
                 reader.readInt32(),
                 reader.readInt32(),
                 reader.readInt32()
@@ -797,7 +792,7 @@ bool BinaryFormat::readSelectionDataChunk(BinaryReader& reader, Project& project
         
         for (uint32_t i = 0; i < voxelCount; ++i) {
             Selection::VoxelId voxelId;
-            voxelId.position = Math::GridCoordinates(
+            voxelId.position = Math::IncrementCoordinates(
                 reader.readInt32(),
                 reader.readInt32(),
                 reader.readInt32()

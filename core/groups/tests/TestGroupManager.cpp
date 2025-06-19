@@ -83,6 +83,8 @@ protected:
 };
 
 TEST_F(GroupManagerTest, CreateGroup) {
+    // REQ: Create groups from selected voxels
+    // REQ: Group management (list, rename, delete)
     std::string groupName = "Test Group";
     GroupId id = groupManager->createGroup(groupName);
     
@@ -98,6 +100,7 @@ TEST_F(GroupManagerTest, CreateGroup) {
 }
 
 TEST_F(GroupManagerTest, CreateGroupWithVoxels) {
+    // REQ: Create groups from selected voxels
     std::vector<VoxelId> voxels = {
         VoxelId(Vector3i(0, 0, 0), VoxelResolution::Size_32cm),
         VoxelId(Vector3i(1, 0, 0), VoxelResolution::Size_32cm)
@@ -121,6 +124,7 @@ TEST_F(GroupManagerTest, CreateGroupWithVoxels) {
 }
 
 TEST_F(GroupManagerTest, DeleteGroup) {
+    // REQ: Group management (list, rename, delete)
     GroupId id = groupManager->createGroup("To Delete");
     EXPECT_TRUE(groupManager->groupExists(id));
     
@@ -136,6 +140,7 @@ TEST_F(GroupManagerTest, DeleteGroup) {
 }
 
 TEST_F(GroupManagerTest, RenameGroup) {
+    // REQ: Group management (list, rename, delete)
     GroupId id = groupManager->createGroup("Original Name");
     std::string newName = "New Name";
     
@@ -173,6 +178,8 @@ TEST_F(GroupManagerTest, VoxelMembership) {
 }
 
 TEST_F(GroupManagerTest, GroupVisibility) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
+    // REQ-8.1.9: Format shall store group visibility states
     GroupId id = groupManager->createGroup("Visible Group");
     
     // Default should be visible
@@ -191,6 +198,7 @@ TEST_F(GroupManagerTest, GroupVisibility) {
 }
 
 TEST_F(GroupManagerTest, GroupOpacity) {
+    // REQ: Visual group indicators (color coding, outlines)
     GroupId id = groupManager->createGroup("Opaque Group");
     
     // Default should be opaque
@@ -201,6 +209,7 @@ TEST_F(GroupManagerTest, GroupOpacity) {
 }
 
 TEST_F(GroupManagerTest, GroupColor) {
+    // REQ: Visual group indicators (color coding, outlines)
     GroupId id = groupManager->createGroup("Colored Group");
     
     auto initialColor = groupManager->getGroupColor(id);
@@ -212,6 +221,7 @@ TEST_F(GroupManagerTest, GroupColor) {
 }
 
 TEST_F(GroupManagerTest, GroupLocking) {
+    // REQ: Group operations: move, hide/show, lock, copy/duplicate
     GroupId id = groupManager->createGroup("Lockable Group");
     
     // Default should be unlocked
@@ -225,6 +235,7 @@ TEST_F(GroupManagerTest, GroupLocking) {
 }
 
 TEST_F(GroupManagerTest, GroupHierarchy) {
+    // REQ: Group hierarchy support (nested groups)
     GroupId parent = groupManager->createGroup("Parent");
     GroupId child1 = groupManager->createGroup("Child 1");
     GroupId child2 = groupManager->createGroup("Child 2");
@@ -246,6 +257,7 @@ TEST_F(GroupManagerTest, GroupHierarchy) {
 }
 
 TEST_F(GroupManagerTest, GroupQueries) {
+    // REQ: Group management (list, rename, delete)
     groupManager->createGroup("Alpha Group");
     groupManager->createGroup("Beta Group");
     groupManager->createGroup("Alpha Test");
@@ -267,6 +279,7 @@ TEST_F(GroupManagerTest, GroupQueries) {
 }
 
 TEST_F(GroupManagerTest, GroupStatistics) {
+    // REQ-6.3.2: Voxel data storage shall not exceed 2GB
     // Create groups with voxels
     GroupId group1 = groupManager->createGroup("Group 1");
     GroupId group2 = groupManager->createGroup("Group 2");
@@ -377,6 +390,8 @@ TEST_F(GroupManagerTest, CleanupEmptyGroups) {
 }
 
 TEST_F(GroupManagerTest, ExportImport) {
+    // REQ-8.1.8: Format shall store group definitions and metadata
+    // REQ: Group persistence across save/load operations
     // Create complex group structure
     GroupId parent = groupManager->createGroup("Parent");
     GroupId child1 = groupManager->createGroup("Child 1");

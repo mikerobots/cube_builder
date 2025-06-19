@@ -70,6 +70,7 @@ private:
     bool m_failOnUndo;
 };
 
+// Command pattern implementation for reversible operations
 TEST(CommandTest, BasicExecuteUndo) {
     int value = 0;
     auto command = std::make_unique<TestCommand>("Set to 5", value, 5);
@@ -81,6 +82,7 @@ TEST(CommandTest, BasicExecuteUndo) {
     EXPECT_EQ(value, 0);
 }
 
+// History Management: Support for undo/redo operations
 TEST(HistoryManagerTest, BasicUndoRedo) {
     HistoryManager history;
     history.setSnapshotInterval(0); // Disable snapshots
@@ -132,6 +134,7 @@ TEST(HistoryManagerTest, RedoStackClear) {
     EXPECT_FALSE(history.canRedo());
 }
 
+// History Management: Support for undo/redo operations with 5-10 operation limit
 TEST(HistoryManagerTest, HistoryLimit) {
     HistoryManager history;
     history.setMaxHistorySize(2);
@@ -148,6 +151,7 @@ TEST(HistoryManagerTest, HistoryLimit) {
     EXPECT_FALSE(history.canUndo());
 }
 
+// State management for complex operations
 TEST(CompositeCommandTest, BasicComposite) {
     int value1 = 0;
     int value2 = 0;
@@ -176,6 +180,7 @@ TEST(CompositeCommandTest, PartialFailure) {
     EXPECT_EQ(value, 0); // Should be rolled back
 }
 
+// Transaction support for atomic operations
 TEST(TransactionTest, BasicTransaction) {
     int value = 0;
     Transaction transaction("Test Transaction");
@@ -191,6 +196,7 @@ TEST(TransactionTest, BasicTransaction) {
     EXPECT_EQ(composite->getCommandCount(), 2);
 }
 
+// Transaction support for atomic operations - auto rollback
 TEST(TransactionTest, AutoRollback) {
     int value = 0;
     

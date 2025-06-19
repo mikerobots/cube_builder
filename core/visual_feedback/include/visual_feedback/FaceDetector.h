@@ -60,7 +60,7 @@ private:
     };
     
     void initializeTraversal(const Ray& ray, const Math::WorldCoordinates& gridMin, 
-                           float voxelSize, GridTraversal& traversal) const;
+                           float voxelSize, VoxelData::VoxelResolution resolution, GridTraversal& traversal) const;
     void stepTraversal(GridTraversal& traversal) const;
 };
 

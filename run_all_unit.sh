@@ -61,23 +61,36 @@ cd build_ninja
 
 print_status "Discovering unit tests..."
 
-# Get all test names and filter out integration tests, CLI tests, and visual tests
+# Get all test names from core and foundation folders only
 ALL_TESTS=$(ctest -N 2>/dev/null | grep -E "Test\s+#" | awk '{print $3}' | sed 's/://g')
 
-# Define patterns to exclude (integration tests, CLI tests, visual validation)
+# Function to check if test is from core or foundation
+is_core_or_foundation_test() {
+    local test_name="$1"
+    # Check if the test executable path contains core/ or foundation/
+    local test_info=$(ctest -N -V 2>/dev/null | grep -A2 "Test #[0-9]*: $test_name")
+    if echo "$test_info" | grep -qE "(core/|foundation/)"; then
+        return 0  # Is core or foundation test
+    fi
+    return 1  # Not core or foundation test
+}
+
+# Additional patterns to exclude (even from core/foundation)
 EXCLUDE_PATTERNS=(
     "Integration"
     "CLI" 
     "ShaderVisualTest"
-    "CoreFunctionalityTest"
-    "MouseInteractionTest"
-    "VoxelPlacementTest"
-    "FileIOWorkflowTest"
-    "SelectionWorkflowTest"
-    "MultiResolutionSupportTest"
-    "CameraControlWorkflowTest"
-    "VoxelMeshGeneratorTest"
-    "SimpleValidationTest"
+    "EdgeRenderingTest"  # Requires OpenGL context
+    "InlineShaderTest"   # Requires OpenGL context
+    "ShaderTest"         # Requires OpenGL context
+    "RendererTest"       # Requires OpenGL context
+    "HighlightShaderValidationTest"  # Requires OpenGL context
+    "GroundPlaneShaderFileTest"      # Requires OpenGL context
+    "ShaderProgram"      # Requires OpenGL context
+    "OpenGL"             # Requires OpenGL context
+    "NOT_BUILT"          # Tests that haven't been built
+    "Visual"             # Visual tests require display
+    "Workflow"           # Workflow tests are integration tests
 )
 
 # Function to check if a test should be excluded
@@ -91,11 +104,15 @@ should_exclude() {
     return 1  # Should include
 }
 
-# Filter tests to only include unit tests
+# Filter tests to only include unit tests from core and foundation
 UNIT_TESTS=()
 while IFS= read -r test_name; do
     if [[ -n "$test_name" ]] && ! should_exclude "$test_name"; then
-        UNIT_TESTS+=("$test_name")
+        # For now, let's use a simpler approach - just check test name patterns
+        # Tests from core/foundation typically have specific patterns
+        if [[ "$test_name" =~ ^(VoxelDataTest|VoxelGridTest|SparseOctreeTest|WorkspaceManagerTest|GroupTest|GroupManagerTest|GroupHierarchyTest|SelectionTest|BoxSelectorTest|FloodFillSelectorTest|SphereSelectionTest|CameraTest|OrbitCameraTest|ViewPresetsTest|CameraControllerTest|RenderEngineTest|GroundPlaneGridTest|FeedbackTest|HighlightTest|OutlineTest|OverlayTest|FaceDetectorTest|InputTest|MouseHandlerTest|KeyboardHandlerTest|PlacementValidationTest|PlaneDetectorTest|FileManagerTest|BinaryFormatTest|STLExporterTest|CompressionTest|CommandTest|HistoryManagerTest|PlacementCommandsTest|SurfaceGeneratorTest|DualContouringTest|MeshBuilderTest|Vector3Test|Matrix4Test|QuaternionTest|RayTest|PlaneTest|IntersectionTest|EventDispatcherTest|EventHandlerTest|MemoryPoolTest|MemoryTrackerTest|LoggerTest|ConfigManagerTest|CoordinateConverterTest|CoordinateTypesTest|ModifierKeyTrackingTest|InputRequirementsTest|UndoRedoRequirementsTest|FileIORequirementsTest|groups_unit_tests|surface_gen_tests).*$ ]]; then
+            UNIT_TESTS+=("$test_name")
+        fi
     fi
 done <<< "$ALL_TESTS"
 

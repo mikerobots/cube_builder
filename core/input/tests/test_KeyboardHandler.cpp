@@ -195,6 +195,8 @@ TEST_F(KeyboardHandlerTest, ClearAllBindings) {
 }
 
 TEST_F(KeyboardHandlerTest, TextInput) {
+    // REQ-9.1.1: CLI shall provide interactive command prompt with auto-completion
+    // REQ-5.3.2: Resolution changed via `resolution <size>` command
     // Enable text input
     handler->setTextInputEnabled(true);
     EXPECT_TRUE(handler->isTextInputEnabled());

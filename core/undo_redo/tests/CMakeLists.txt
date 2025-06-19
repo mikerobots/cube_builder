@@ -57,3 +57,20 @@ target_link_libraries(test_placement_commands
 )
 
 add_test(NAME test_placement_commands COMMAND test_placement_commands)
+
+# Requirements tests
+add_executable(test_undo_redo_requirements
+    test_UndoRedo_requirements.cpp
+)
+
+target_link_libraries(test_undo_redo_requirements
+    PRIVATE
+        VoxelEditor_UndoRedo
+        VoxelEditor_VoxelData
+        VoxelEditor_Math
+        VoxelEditor_Events
+        VoxelEditor_Logging
+        GTest::gtest_main
+)
+
+add_test(NAME test_undo_redo_requirements COMMAND test_undo_redo_requirements)

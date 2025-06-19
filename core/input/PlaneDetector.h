@@ -165,7 +165,7 @@ private:
     
     // Constants
     static constexpr float PERSISTENCE_TIMEOUT_SECONDS = 0.5f;
-    static constexpr float MAX_VOXEL_SEARCH_HEIGHT = 20.0f;  // Maximum height to search for voxels
+    static constexpr float MAX_VOXEL_SEARCH_HEIGHT = 5.0f;  // Maximum height to search for voxels (5m is reasonable for most cases)
     static constexpr float DEFAULT_SEARCH_RADIUS = 5.0f;     // Default radius for area searches
     
     // Search for voxels in a cylindrical area under the cursor

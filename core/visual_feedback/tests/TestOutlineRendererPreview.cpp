@@ -17,7 +17,8 @@ protected:
     std::unique_ptr<OutlineRenderer> m_renderer;
 };
 
-// Test voxel outline generation for different sizes
+// REQ-2.2.4: All voxel sizes (1cm to 512cm) shall be placeable at any valid 1cm increment position
+// REQ-4.1.1: All placement previews shall use green outline rendering
 TEST_F(OutlineRendererPreviewTest, VoxelOutlineGeneration) {
     // Test all voxel resolutions
     VoxelData::VoxelResolution resolutions[] = {
@@ -58,7 +59,8 @@ TEST_F(OutlineRendererPreviewTest, VoxelOutlineGeneration) {
     }
 }
 
-// Test outline style creation
+// REQ-4.1.1: All placement previews shall use green outline rendering
+// REQ-4.1.2: Invalid placements shall show red outline preview
 TEST_F(OutlineRendererPreviewTest, OutlineStyleCreation) {
     // Test valid preview style
     OutlineStyle validStyle = OutlineStyle::VoxelPreview();
@@ -87,7 +89,7 @@ TEST_F(OutlineRendererPreviewTest, OutlineStyleCreation) {
     EXPECT_TRUE(invalidStyle.animated);
 }
 
-// Test batch rendering setup
+// REQ-6.2.1: System shall handle 10,000+ voxels without degradation
 TEST_F(OutlineRendererPreviewTest, BatchRendering) {
     OutlineStyle style = OutlineStyle::VoxelPreview();
     
@@ -106,7 +108,7 @@ TEST_F(OutlineRendererPreviewTest, BatchRendering) {
     EXPECT_NO_THROW(m_renderer->clearBatch());
 }
 
-// Test animation update
+// REQ-4.1.3: Preview updates shall be smooth and responsive (< 16ms)
 TEST_F(OutlineRendererPreviewTest, AnimationUpdate) {
     // Set pattern scale and offset
     m_renderer->setPatternScale(2.0f);

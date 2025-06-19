@@ -24,6 +24,8 @@ protected:
 
 // Test basic setDistance functionality
 TEST_F(SetDistanceTest, BasicSetDistance) {
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
+    // REQ-8.1.5: Format shall store camera position and view settings
     // Default distance should be 5.0
     EXPECT_FLOAT_EQ(camera->getDistance(), 5.0f);
     
@@ -105,6 +107,7 @@ TEST_F(SetDistanceTest, EdgeCases) {
 
 // Test that setDistance updates camera position
 TEST_F(SetDistanceTest, UpdatesCameraPosition) {
+    // REQ-CAM-3: Camera shall maintain consistent coordinate system
     // Set initial angles
     camera->setYaw(0.0f);
     camera->setPitch(0.0f);
@@ -222,6 +225,7 @@ TEST_F(SetDistanceTest, ThroughCameraController) {
 
 // Test setDistance impact on view matrix
 TEST_F(SetDistanceTest, ViewMatrixUpdate) {
+    // REQ-CAM-8: Camera shall integrate with other subsystems (provide view matrices)
     // Get initial view matrix
     camera->setDistance(5.0f);
     Matrix4f viewMatrix1 = camera->getViewMatrix();

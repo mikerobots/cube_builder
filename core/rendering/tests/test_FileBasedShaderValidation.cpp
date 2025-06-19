@@ -43,13 +43,30 @@ protected:
         }
         
         // Find shader directory relative to build directory
-        // Tests run from the project root, so shaders are in core/rendering/shaders
+        // CTest runs from build_ninja/core/rendering/tests, so we need to navigate up
         std::filesystem::path currentPath = std::filesystem::current_path();
-        shaderDir = currentPath / "core" / "rendering" / "shaders";
         
-        // Check if shader directory exists, if not try from build_ninja
+        // First try: ../../../bin/core/rendering/shaders (from CTest working dir)
+        shaderDir = currentPath / ".." / ".." / ".." / "bin" / "core" / "rendering" / "shaders";
+        
+        // Second try: bin/core/rendering/shaders (from build_ninja root)
         if (!std::filesystem::exists(shaderDir)) {
-            shaderDir = currentPath.parent_path() / "core" / "rendering" / "shaders";
+            shaderDir = currentPath / "bin" / "core" / "rendering" / "shaders";
+        }
+        
+        // Third try: ../../../../bin/core/rendering/shaders (extra level up)
+        if (!std::filesystem::exists(shaderDir)) {
+            shaderDir = currentPath / ".." / ".." / ".." / ".." / "bin" / "core" / "rendering" / "shaders";
+        }
+        
+        // Fourth try: ./core/rendering/shaders (original location)
+        if (!std::filesystem::exists(shaderDir)) {
+            shaderDir = currentPath / "core" / "rendering" / "shaders";
+        }
+        
+        // Normalize the path to remove .. components if it exists
+        if (std::filesystem::exists(shaderDir)) {
+            shaderDir = std::filesystem::canonical(shaderDir);
         }
         
         std::cout << "Looking for shaders in: " << shaderDir << std::endl;

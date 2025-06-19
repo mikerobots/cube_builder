@@ -24,6 +24,8 @@ protected:
 
 // Test basic zoom functionality
 TEST_F(ZoomFunctionalityTest, BasicZoomIn) {
+    // REQ-9.2.2: CLI shall support camera commands (zoom)
+    // REQ-CAM-1: Camera system shall provide orbit-style controls
     float initialDistance = camera->getDistance();
     EXPECT_FLOAT_EQ(initialDistance, 5.0f); // Default distance
     
@@ -69,6 +71,7 @@ TEST_F(ZoomFunctionalityTest, MultipleZoomOperations) {
 
 // Test zoom behavior similar to CLI command
 TEST_F(ZoomFunctionalityTest, CLIZoomBehavior) {
+    // REQ-9.2.2: CLI shall support camera commands (zoom)
     // This simulates the CLI zoom command behavior
     float initialDistance = camera->getDistance();
     
@@ -203,6 +206,8 @@ TEST_F(ZoomFunctionalityTest, ControllerZoomBehavior) {
 
 // Test zoom with smoothing enabled
 TEST_F(ZoomFunctionalityTest, SmoothZoom) {
+    // REQ-CAM-5: View transitions shall be smooth
+    // REQ-CAM-7: Camera operations shall be performant (smooth movement at 60+ FPS)
     camera->setSmoothing(true);
     camera->setSmoothFactor(0.1f);
     

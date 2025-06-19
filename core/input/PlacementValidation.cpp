@@ -31,22 +31,27 @@ PlacementValidationResult PlacementUtils::validatePlacement(const Math::Incremen
         return PlacementValidationResult::InvalidPosition;
     }
     
-    // Use centralized coordinate validation
-    if (!Math::CoordinateConverter::isValidIncrementCoordinate(incrementPos, workspaceSize)) {
-        return PlacementValidationResult::InvalidOutOfBounds;
-    }
-    
-    // Convert to world position to check specific constraints
-    Math::WorldCoordinates worldCoords = Math::CoordinateConverter::incrementToWorld(incrementPos);
-    Math::Vector3f worldPos = worldCoords.value();
-    float voxelSize = VoxelData::getVoxelSize(resolution);
-    
-    // Additional constraint: No voxels below ground plane (Y < 0)
-    if (worldPos.y < 0.0f) {
+    // Check Y >= 0 constraint first (before general bounds check)
+    if (incrementPos.y() < 0) {
         return PlacementValidationResult::InvalidYBelowZero;
     }
     
-    // Note: Workspace bounds already checked by isValidIncrementCoordinate above
+    // Check if the voxel (including its size) fits within workspace bounds
+    float voxelSize = VoxelData::getVoxelSize(resolution);
+    int voxelSize_cm = static_cast<int>(voxelSize * 100.0f);
+    
+    // Get workspace bounds
+    int halfX_cm = static_cast<int>(workspaceSize.x * 100.0f * 0.5f);
+    int halfZ_cm = static_cast<int>(workspaceSize.z * 100.0f * 0.5f);
+    int height_cm = static_cast<int>(workspaceSize.y * 100.0f);
+    
+    // Check if voxel extends outside bounds (voxel origin + size must fit)
+    if (incrementPos.x() < -halfX_cm || incrementPos.x() + voxelSize_cm > halfX_cm ||
+        incrementPos.y() < 0 || incrementPos.y() + voxelSize_cm > height_cm ||
+        incrementPos.z() < -halfZ_cm || incrementPos.z() + voxelSize_cm > halfZ_cm) {
+        return PlacementValidationResult::InvalidOutOfBounds;
+    }
+    
     // Note: Overlap checking would be done by VoxelDataManager
     // This validation only checks basic constraints
     

@@ -78,6 +78,7 @@ TEST_F(WorkspaceManagerTest, ConstructionWithEventDispatcher) {
     EXPECT_EQ(resizeEventCount, 0); // No events on construction
 }
 
+// REQ-6.2.2: Grid size shall scale with workspace (up to 8m x 8m)
 TEST_F(WorkspaceManagerTest, ValidSizeChanges) {
     Vector3f originalSize = manager->getSize();
     
@@ -145,6 +146,7 @@ TEST_F(WorkspaceManagerTest, CubicSizeShorthand) {
     EXPECT_FALSE(manager->setSize(-1.0f)); // Negative
 }
 
+// REQ-2.1.4: No voxels shall be placed below Y=0
 TEST_F(WorkspaceManagerTest, PositionBoundsChecking) {
     manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
     
@@ -215,6 +217,7 @@ TEST_F(WorkspaceManagerTest, PositionClamping) {
     }
 }
 
+// REQ-1.1.5: The grid origin (0,0,0) shall be at the center of the workspace
 TEST_F(WorkspaceManagerTest, BoundsRetrievalMethods) {
     manager->setSize(Vector3f(4.0f, 6.0f, 8.0f));
     
@@ -351,6 +354,7 @@ TEST_F(WorkspaceManagerTest, MultipleSizeChanges) {
     EXPECT_EQ(resizeEventCount, sizes.size());
 }
 
+// REQ-2.1.4: No voxels shall be placed below Y=0
 TEST_F(WorkspaceManagerTest, EdgeCaseBounds) {
     // Test workspace at minimum size
     manager->setSize(Vector3f(2.0f, 2.0f, 2.0f));

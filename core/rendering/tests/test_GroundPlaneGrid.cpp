@@ -102,11 +102,13 @@ TEST_F(GroundPlaneGridTest, DISABLED_Initialize) {
 }
 
 // Test grid cell size constant
+// REQ-1.1.1: The ground plane shall display a grid with 32cm x 32cm squares
 TEST_F(GroundPlaneGridTest, GridCellSize) {
     EXPECT_FLOAT_EQ(GroundPlaneGrid::getGridCellSize(), 0.32f); // 32cm
 }
 
 // Test major line interval constant
+// REQ-1.1.4: Major grid lines every 160cm shall use RGB(200, 200, 200) and be thicker
 TEST_F(GroundPlaneGridTest, MajorLineInterval) {
     EXPECT_FLOAT_EQ(GroundPlaneGrid::getMajorLineInterval(), 1.6f); // 160cm = 5 cells
 }
@@ -250,6 +252,7 @@ TEST_F(GroundPlaneGridTest, DISABLED_NoRenderWhenInvisible) {
 }
 
 // Test grid centered at origin - Skip as it requires initialization
+// REQ-1.1.5: The grid origin (0,0,0) shall be at the center of the workspace
 TEST_F(GroundPlaneGridTest, DISABLED_GridCenteredAtOrigin) {
     ASSERT_TRUE(m_grid->initialize());
     

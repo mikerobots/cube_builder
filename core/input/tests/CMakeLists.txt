@@ -10,6 +10,7 @@ set(INPUT_TEST_SOURCES
     test_PlacementValidation.cpp
     test_ModifierKeyTracking.cpp
     test_PlaneDetector.cpp
+    test_Input_requirements.cpp
     # test_InputManager.cpp     # When full implementation is added
 )
 

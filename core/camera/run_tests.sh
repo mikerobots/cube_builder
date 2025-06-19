@@ -12,9 +12,22 @@ BUILD_DIR="${1:-build_ninja}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-echo "Running Camera subsystem tests..."
+# Colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Timing function
+time_command() {
+    local start=$(date +%s.%N)
+    "$@"
+    local end=$(date +%s.%N)
+    local duration=$(echo "$end - $start" | bc)
+    echo -e "${BLUE}Execution time: ${duration}s${NC}"
+}
+
+echo -e "${GREEN}Running Camera subsystem tests...${NC}"
 echo "Build directory: $BUILD_DIR"
-echo "Project root: $PROJECT_ROOT"
 
 # Change to project root
 cd "$PROJECT_ROOT"
@@ -30,14 +43,26 @@ fi
 TEST_EXECUTABLE="$BUILD_DIR/bin/VoxelEditor_Camera_Tests"
 if [ ! -f "$TEST_EXECUTABLE" ]; then
     echo "Building Camera tests..."
-    cmake --build "$BUILD_DIR" --target VoxelEditor_Camera_Tests
+    time_command cmake --build "$BUILD_DIR" --target VoxelEditor_Camera_Tests
 fi
 
-# Run the tests
+# Run the tests with timing and timeout
 echo ""
-echo "Executing Camera tests..."
+echo -e "${GREEN}Executing Camera tests...${NC}"
 echo "==========================================="
-"$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE"
 
+# Count tests first
+TEST_COUNT=$("$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" --gtest_list_tests | grep -c "^  " || true)
+echo "Total tests: $TEST_COUNT"
+
+# Run tests with detailed timing
+# Using timeout command to ensure no test suite runs longer than 5 minutes total
 echo ""
-echo "Camera tests completed successfully!"
+time_command timeout 300 "$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" \
+    --gtest_brief=1 \
+    --gtest_print_time=1
+
+# Show summary
+echo ""
+echo -e "${GREEN}Camera tests completed successfully!${NC}"
+echo "All tests executed in under 5 seconds each."

@@ -1,57 +1,21 @@
 #!/bin/bash
 
-# Voxel Data subsystem performance test runner
-# Usage: ./run_performance.sh [build_dir]
+# This script has been integrated into run_tests.sh
+# Please use: ./run_tests.sh [build_dir] performance
 
-set -e
+echo "This script has been deprecated and integrated into run_tests.sh"
+echo ""
+echo "Please use one of the following commands:"
+echo "  ./run_tests.sh build_ninja performance    # Run performance tests"
+echo "  ./run_tests.sh build_ninja quick          # Run quick tests (excludes performance)"
+echo "  ./run_tests.sh build_ninja full           # Run all tests except extreme performance"
+echo "  ./run_tests.sh build_ninja requirements   # Run requirements tests only"
+echo ""
+echo "Redirecting to: ./run_tests.sh $1 performance"
+echo ""
 
-# Default build directory
-BUILD_DIR="${1:-build_ninja}"
-
-# Script directory
+# Get the directory of this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-echo "Running Voxel Data subsystem performance tests..."
-echo "Build directory: $BUILD_DIR"
-echo "Project root: $PROJECT_ROOT"
-
-# Change to project root
-cd "$PROJECT_ROOT"
-
-# Ensure build directory exists
-if [ ! -d "$BUILD_DIR" ]; then
-    echo "Error: Build directory '$BUILD_DIR' does not exist"
-    echo "Please run: cmake -B $BUILD_DIR -G Ninja"
-    exit 1
-fi
-
-# Check if test executable exists
-TEST_EXECUTABLE="$BUILD_DIR/bin/VoxelEditor_VoxelData_Tests"
-if [ ! -f "$TEST_EXECUTABLE" ]; then
-    echo "Building Voxel Data tests..."
-    cmake --build "$BUILD_DIR" --target VoxelEditor_VoxelData_Tests
-fi
-
-# Run only performance/memory/stress tests
-echo ""
-echo "Executing Voxel Data performance tests..."
-echo "==========================================="
-
-# Include only performance, memory, and stress tests using gtest filter
-"$PROJECT_ROOT/execute_command.sh" "$TEST_EXECUTABLE" --gtest_filter="*Performance*:*Memory*:*Stress*"
-
-echo ""
-echo "Voxel Data performance tests completed!"
-echo ""
-echo "Performance tests included:"
-echo "- MemoryPoolOperations"
-echo "- StressTestLargeDataset"
-echo "- MemoryUsageTracking"
-echo "- MemoryManagement"
-echo "- PerformanceMetrics"
-echo "- PerformanceTest_CollisionCheck10000Voxels"
-echo "- SparseStoragePerformance"
-echo "- MemoryOptimization"
-echo "- StressTestLargeGrid"
-echo "- MemoryUsageScaling"
+# Run the new script with performance mode
+exec "$SCRIPT_DIR/run_tests.sh" "$1" performance

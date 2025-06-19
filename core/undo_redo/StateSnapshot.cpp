@@ -51,9 +51,9 @@ bool StateSnapshot::captureVoxelData(const VoxelData::VoxelDataManager* voxelMan
             
             // Write voxel positions
             for (const auto& voxel : voxels) {
-                int32_t x = voxel.gridPos.x();
-                int32_t y = voxel.gridPos.y();
-                int32_t z = voxel.gridPos.z();
+                int32_t x = voxel.incrementPos.x();
+                int32_t y = voxel.incrementPos.y();
+                int32_t z = voxel.incrementPos.z();
                 dataStream.write(reinterpret_cast<const char*>(&x), sizeof(x));
                 dataStream.write(reinterpret_cast<const char*>(&y), sizeof(y));
                 dataStream.write(reinterpret_cast<const char*>(&z), sizeof(z));

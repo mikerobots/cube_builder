@@ -1,1 +1,1 @@
-Replace the master todo.md file with instructions based off of the following: #
+Replace the master todo.md file with instructions based off of the following: #$ARGUMENTS
