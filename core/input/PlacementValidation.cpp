@@ -59,9 +59,9 @@ PlacementValidationResult PlacementUtils::validatePlacement(const Math::Incremen
 }
 
 bool PlacementUtils::isValidIncrementPosition(const Math::IncrementCoordinates& pos) {
-    // Defer to centralized coordinate validation - this is just a convenience wrapper
-    // Workspace bounds check requires workspace size, so this method doesn't do much
-    return true; // Let caller handle workspace-specific validation
+    // Basic validation: Y must be >= 0 (ground plane constraint)
+    // Workspace bounds check requires workspace size, so this method only checks the basic constraint
+    return pos.y() >= 0;
 }
 
 PlacementContext PlacementUtils::getPlacementContext(const Math::Vector3f& worldPos,

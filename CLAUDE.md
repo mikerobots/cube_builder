@@ -210,5 +210,9 @@ the center.
 
 If you are updating requirements documents, don't change the IDs!!!
 
+If you are in charge of making a test work, that most likely means the
+underlying code is broken, not the test. Sometimes it can be the
+test. Challenge all assumptions.
+
 DON'T BE A YES MAN! CHALLENGE ME IF I AM ASKING YOU TO DO SOMETHING
 THAT IS SUBPAR OR DOESN'T MAKE SENSE!

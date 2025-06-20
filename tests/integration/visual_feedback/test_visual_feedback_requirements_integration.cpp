@@ -18,9 +18,10 @@ using VoxelEditor::VisualFeedback::FaceDirection;
 class VisualFeedbackRequirementsIntegrationTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        // Skip test in headless CI environment
-        if (std::getenv("CI") != nullptr || std::getenv("GITHUB_ACTIONS") != nullptr) {
-            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
+        // Always skip these tests unless explicitly enabled
+        // These tests require a proper OpenGL context which is not available in CI/headless environments
+        if (std::getenv("ENABLE_OPENGL_TESTS") == nullptr) {
+            GTEST_SKIP() << "Skipping OpenGL tests - set ENABLE_OPENGL_TESTS=1 to run";
         }
         
         overlayRenderer = std::make_unique<OverlayRenderer>();

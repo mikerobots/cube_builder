@@ -146,17 +146,23 @@ TEST_F(ZoomBehaviorTest, IdenticalConsecutiveZooms) {
 
 // Test zoom with different starting distances
 TEST_F(ZoomBehaviorTest, ZoomFromDifferentDistances) {
-    std::vector<float> startDistances = {1.0f, 5.0f, 10.0f, 50.0f, 90.0f};
+    // Note: Camera clamps distance between min and max values
+    // Test with values that won't hit the clamp limits
+    std::vector<float> startDistances = {5.0f, 10.0f, 20.0f, 30.0f, 45.0f};
     
     for (float startDist : startDistances) {
         controller->getCamera()->setDistance(startDist);
+        float actualStart = controller->getCamera()->getDistance();
         
-        // Apply same zoom sequence
+        // Apply first zoom
         executeZoomCommand(1.5f);
-        EXPECT_FLOAT_EQ(controller->getCamera()->getDistance(), startDist / 1.5f);
+        float afterFirstZoom = controller->getCamera()->getDistance();
+        EXPECT_NEAR(afterFirstZoom, actualStart / 1.5f, 0.001f);
         
+        // Apply second zoom
         executeZoomCommand(1.5f);
-        EXPECT_FLOAT_EQ(controller->getCamera()->getDistance(), startDist / (1.5f * 1.5f));
+        float afterSecondZoom = controller->getCamera()->getDistance();
+        EXPECT_NEAR(afterSecondZoom, actualStart / (1.5f * 1.5f), 0.001f);
     }
 }
 

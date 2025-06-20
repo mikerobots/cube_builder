@@ -82,10 +82,7 @@ protected:
     }
     
     CommandProcessor* getCommandProcessor() {
-        // This is a bit of a hack, but we need access to the command processor
-        // In a real scenario, Application would expose this or provide a command execution method
-        // For now, we'll use the fact that commands are registered during initialization
-        return nullptr; // TODO: Need to expose this from Application
+        return m_app->getCommandProcessor();
     }
     
     std::unique_ptr<Application> m_app;
@@ -268,9 +265,9 @@ TEST_F(CoreFunctionalityTest, UndoRedoOperational) {
     EXPECT_TRUE(historyManager->redo());
     EXPECT_TRUE(voxelManager->hasVoxel(pos1, resolution));
     
-    // Test with multiple commands - use positions aligned to 16cm grid (16 increments)
-    Vector3i pos2(16, 0, 0);  // 16cm in X direction
-    Vector3i pos3(32, 0, 0);  // 32cm in X direction
+    // Test with multiple commands - use positions aligned to 32cm grid (32 increments)
+    Vector3i pos2(32, 0, 0);  // 32cm in X direction (aligned to 32cm grid)
+    Vector3i pos3(64, 0, 0);  // 64cm in X direction (aligned to 32cm grid)
     
     // Use VoxelEditCommand directly for simplicity
     auto cmd2 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, pos2, resolution, true);

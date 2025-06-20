@@ -3,6 +3,7 @@
 #include "../../foundation/logging/Logger.h"
 #include <algorithm>
 #include <limits>
+#include <string>
 
 namespace VoxelEditor {
 namespace Selection {
@@ -37,9 +38,31 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
         workspaceSize = m_voxelManager->getWorkspaceSize();
     }
     
-    // Convert world box corners to increment coordinates using the coordinate converter
-    Math::WorldCoordinates minWorld(worldBox.min);
-    Math::WorldCoordinates maxWorld(worldBox.max);
+    // Calculate workspace bounds in world coordinates (centered coordinate system)
+    Math::BoundingBox workspaceBounds(
+        Math::Vector3f(-workspaceSize.x/2, 0.0f, -workspaceSize.z/2),
+        Math::Vector3f(workspaceSize.x/2, workspaceSize.y, workspaceSize.z/2)
+    );
+    
+    // Clamp the selection box to workspace bounds to prevent excessive iteration
+    Math::BoundingBox clampedBox;
+    clampedBox.min.x = std::max(worldBox.min.x, workspaceBounds.min.x);
+    clampedBox.min.y = std::max(worldBox.min.y, workspaceBounds.min.y);
+    clampedBox.min.z = std::max(worldBox.min.z, workspaceBounds.min.z);
+    clampedBox.max.x = std::min(worldBox.max.x, workspaceBounds.max.x);
+    clampedBox.max.y = std::min(worldBox.max.y, workspaceBounds.max.y);
+    clampedBox.max.z = std::min(worldBox.max.z, workspaceBounds.max.z);
+    
+    // Early exit if clamped box is invalid (min > max)
+    if (clampedBox.min.x > clampedBox.max.x || 
+        clampedBox.min.y > clampedBox.max.y || 
+        clampedBox.min.z > clampedBox.max.z) {
+        return result; // Return empty selection
+    }
+    
+    // Convert clamped world box corners to increment coordinates using the coordinate converter
+    Math::WorldCoordinates minWorld(clampedBox.min);
+    Math::WorldCoordinates maxWorld(clampedBox.max);
     
     Math::IncrementCoordinates minIncrementCoord = Math::CoordinateConverter::worldToIncrement(minWorld);
     Math::IncrementCoordinates maxIncrementCoord = Math::CoordinateConverter::worldToIncrement(maxWorld);
@@ -60,6 +83,39 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
         Math::IncrementCoordinates(actualMin), resolution);
     Math::IncrementCoordinates snappedMax = Math::CoordinateConverter::snapToVoxelResolution(
         Math::IncrementCoordinates(actualMax), resolution);
+    
+    // Additional safety check: limit maximum iterations to prevent hanging
+    const int maxIterationsPerAxis = 1000; // Reasonable limit for any axis
+    int xRange = (snappedMax.x() - snappedMin.x()) / voxelSizeCm + 1;
+    int yRange = (snappedMax.y() - snappedMin.y()) / voxelSizeCm + 1;
+    int zRange = (snappedMax.z() - snappedMin.z()) / voxelSizeCm + 1;
+    
+    if (xRange > maxIterationsPerAxis || yRange > maxIterationsPerAxis || zRange > maxIterationsPerAxis) {
+        std::string warningMsg = "BoxSelector: Selection range too large (" + 
+            std::to_string(xRange) + "x" + std::to_string(yRange) + "x" + 
+            std::to_string(zRange) + " voxels), clamping to prevent excessive computation";
+        Logging::Logger::getInstance().warning(warningMsg);
+        
+        // Clamp the range to maximum iterations
+        if (xRange > maxIterationsPerAxis) {
+            int centerX = (snappedMin.x() + snappedMax.x()) / 2;
+            int halfRange = (maxIterationsPerAxis * voxelSizeCm) / 2;
+            snappedMin = Math::IncrementCoordinates(centerX - halfRange, snappedMin.y(), snappedMin.z());
+            snappedMax = Math::IncrementCoordinates(centerX + halfRange, snappedMax.y(), snappedMax.z());
+        }
+        if (yRange > maxIterationsPerAxis) {
+            int centerY = (snappedMin.y() + snappedMax.y()) / 2;
+            int halfRange = (maxIterationsPerAxis * voxelSizeCm) / 2;
+            snappedMin = Math::IncrementCoordinates(snappedMin.x(), centerY - halfRange, snappedMin.z());
+            snappedMax = Math::IncrementCoordinates(snappedMax.x(), centerY + halfRange, snappedMax.z());
+        }
+        if (zRange > maxIterationsPerAxis) {
+            int centerZ = (snappedMin.z() + snappedMax.z()) / 2;
+            int halfRange = (maxIterationsPerAxis * voxelSizeCm) / 2;
+            snappedMin = Math::IncrementCoordinates(snappedMin.x(), snappedMin.y(), centerZ - halfRange);
+            snappedMax = Math::IncrementCoordinates(snappedMax.x(), snappedMax.y(), centerZ + halfRange);
+        }
+    }
     
     // Select voxels in range, stepping by voxel size
     for (int x = snappedMin.x(); x <= snappedMax.x(); x += voxelSizeCm) {
