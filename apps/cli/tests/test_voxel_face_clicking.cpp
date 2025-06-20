@@ -23,8 +23,8 @@ protected:
     Camera::CameraController* cameraController = nullptr;
     
     void SetUp() override {
-        // Initialize logging - suppress output for tests
-        Logging::Logger::getInstance().setLevel(Logging::Logger::Level::Warning);
+        // Initialize logging - enable debug output for debugging
+        Logging::Logger::getInstance().setLevel(Logging::Logger::Level::Debug);
         
         // Skip test in headless CI environment
         if (std::getenv("CI") != nullptr || std::getenv("GITHUB_ACTIONS") != nullptr) {
@@ -86,6 +86,9 @@ protected:
         
         // Update mouse position
         mouseInteraction->onMouseMove(screenX, screenY);
+        
+        // IMPORTANT: Update hover state after moving mouse
+        mouseInteraction->update();
         
         // Simulate left click
         mouseInteraction->onMouseClick(GLFW_MOUSE_BUTTON_LEFT, true, screenX, screenY);

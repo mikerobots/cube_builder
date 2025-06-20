@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <chrono>
+#include <cstdlib>
 #include "../../../core/visual_feedback/include/visual_feedback/FeedbackRenderer.h"
 #include "../../../core/visual_feedback/include/visual_feedback/OverlayRenderer.h"
 #include "../../../core/visual_feedback/include/visual_feedback/FaceDetector.h"
@@ -17,6 +18,11 @@ using VoxelEditor::VisualFeedback::FaceDirection;
 class VisualFeedbackRequirementsIntegrationTest : public ::testing::Test {
 protected:
     void SetUp() override {
+        // Skip test in headless CI environment
+        if (std::getenv("CI") != nullptr || std::getenv("GITHUB_ACTIONS") != nullptr) {
+            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
+        }
+        
         overlayRenderer = std::make_unique<OverlayRenderer>();
         feedbackRenderer = std::make_unique<FeedbackRenderer>(nullptr);
         camera = std::make_unique<VoxelEditor::Camera::OrbitCamera>(nullptr);

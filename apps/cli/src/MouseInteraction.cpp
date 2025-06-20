@@ -449,8 +449,14 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
     using namespace VoxelData;
     
     // Check Shift key state for snapping override
-    bool shiftPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
-                        glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    bool shiftPressed = false;
+    
+    // Only query key state if we have a valid GLFW context (not in headless mode)
+    GLFWwindow* currentWindow = glfwGetCurrentContext();
+    if (currentWindow != nullptr) {
+        shiftPressed = glfwGetKey(currentWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                       glfwGetKey(currentWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    }
     
     VoxelResolution resolution = m_voxelManager->getActiveResolution();
     Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceManager()->getSize();

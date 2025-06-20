@@ -96,6 +96,8 @@ list_groups() {
     printf "  ${BOLD}cli-cpp${NC}       - CLI application integration tests (C++)\n"
     printf "  ${BOLD}interaction${NC}   - Mouse and keyboard interaction tests\n"
     printf "  ${BOLD}shader${NC}        - Shader integration tests\n"
+    printf "  ${BOLD}rendering${NC}     - Rendering pipeline and shader validation tests\n"
+    printf "  ${BOLD}visual${NC}        - Visual validation tests (captures and analyzes output)\n"
     printf "  ${BOLD}visual-feedback${NC} - Visual feedback system integration\n"
     printf "  ${BOLD}verification${NC}  - Core functionality verification tests\n"
     printf "\n"
@@ -144,19 +146,16 @@ run_cli_cpp_tests() {
     # Build CLI tests if needed
     if [ -d "build_ninja" ]; then
         print_color "$CYAN" "Building CLI integration tests..."
-        # Build individual CLI test targets
+        # Build the combined CLI test executable and individual test targets
+        cmake --build build_ninja --target VoxelEditor_CLI_Tests 2>/dev/null || true
+        
+        # Build individual CLI test targets that exist separately
         local cli_targets=(
-            test_cli_commands
-            test_cli_error_handling
-            test_cli_headless
-            test_cli_rendering
-            test_cli_rendering_basic
             test_click_voxel_placement
             test_face_clicking
             test_mouse_ray_movement
             test_voxel_face_clicking
             test_voxel_face_clicking_simple
-            test_zoom_behavior
         )
         
         for target in "${cli_targets[@]}"; do
@@ -166,17 +165,12 @@ run_cli_cpp_tests() {
     
     # Run CLI test executables from bin directory
     local test_executables=(
-        "build_ninja/bin/test_cli_commands"
-        "build_ninja/bin/test_cli_error_handling"
-        "build_ninja/bin/test_cli_headless"
-        "build_ninja/bin/test_cli_rendering"
-        "build_ninja/bin/test_cli_rendering_basic"
+        "build_ninja/bin/VoxelEditor_CLI_Tests"
         "build_ninja/bin/test_click_voxel_placement"
         "build_ninja/bin/test_face_clicking"
         "build_ninja/bin/test_mouse_ray_movement"
         "build_ninja/bin/test_voxel_face_clicking"
         "build_ninja/bin/test_voxel_face_clicking_simple"
-        "build_ninja/bin/test_zoom_behavior"
     )
     
     for test in "${test_executables[@]}"; do
@@ -221,6 +215,76 @@ run_shader_tests() {
     local test_executable="build_ninja/bin/ShaderTest"
     if [ -x "$test_executable" ]; then
         run_cpp_test "$test_executable"
+    fi
+}
+
+# Function to run rendering pipeline tests
+run_rendering_tests() {
+    print_header "Rendering Pipeline Integration Tests"
+    
+    # Build rendering integration tests if needed
+    if [ -d "build_ninja" ]; then
+        print_color "$CYAN" "Building rendering integration tests..."
+        local render_targets=(
+            test_enhanced_shader_validation_integration
+            test_shader_pipeline_integration
+            test_shader_vao_integration
+            test_real_shader_pipeline
+            test_shader_real_usage
+            test_shader_usage_validation
+            test_shader_visual_validation
+        )
+        
+        for target in "${render_targets[@]}"; do
+            cmake --build build_ninja --target "$target" 2>/dev/null || true
+        done
+    fi
+    
+    # Run rendering test executables
+    local test_executables=(
+        "build_ninja/bin/test_enhanced_shader_validation_integration"
+        "build_ninja/bin/test_shader_pipeline_integration"
+        "build_ninja/bin/test_shader_vao_integration"
+        "build_ninja/bin/test_real_shader_pipeline"
+        "build_ninja/bin/test_shader_real_usage"
+        "build_ninja/bin/test_shader_usage_validation"
+        "build_ninja/bin/test_shader_visual_validation"
+    )
+    
+    # Create test output directory for visual validation tests
+    mkdir -p test_output
+    
+    for test in "${test_executables[@]}"; do
+        if [ -x "$test" ]; then
+            run_cpp_test "$test"
+        fi
+    done
+}
+
+# Function to run visual validation tests
+run_visual_tests() {
+    print_header "Visual Validation Tests"
+    
+    # Build visual validation test if needed
+    if [ -d "build_ninja" ]; then
+        print_color "$CYAN" "Building visual validation test..."
+        cmake --build build_ninja --target test_shader_visual_validation 2>/dev/null || true
+    fi
+    
+    # Create test output directory for PPM files
+    mkdir -p test_output
+    
+    local test_executable="build_ninja/bin/test_shader_visual_validation"
+    if [ -x "$test_executable" ]; then
+        run_cpp_test "$test_executable"
+        
+        # List generated PPM files if test passed
+        if [ -d "test_output" ]; then
+            local ppm_files=$(ls -1 test_output/*.ppm 2>/dev/null | wc -l)
+            if [ $ppm_files -gt 0 ]; then
+                print_color "$CYAN" "  Generated $ppm_files PPM files in test_output/"
+            fi
+        fi
     fi
 }
 
@@ -340,6 +404,12 @@ main() {
             shader)
                 run_shader_tests
                 ;;
+            rendering)
+                run_rendering_tests
+                ;;
+            visual)
+                run_visual_tests
+                ;;
             visual-feedback)
                 run_visual_feedback_tests
                 ;;
@@ -354,6 +424,8 @@ main() {
                 run_cli_cpp_tests
                 run_interaction_tests
                 run_shader_tests
+                run_rendering_tests
+                run_visual_tests
                 run_visual_feedback_tests
                 run_verification_tests
                 ;;

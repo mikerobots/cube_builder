@@ -80,7 +80,16 @@ ShaderId ShaderManagerSafe::createShaderFromSource(const std::string& name,
     
     // Create vertex shader
     ShaderId vertexShader = renderer->createShader(ShaderType::Vertex, vertexSource);
-    if (vertexShader == InvalidId) {
+    const ShaderInfo* vertexInfo = renderer->getShaderInfo(vertexShader);
+    
+    // Debug: Always log compilation status
+    m_logger->logInfo("Vertex shader " + name + " - ID: " + std::to_string(vertexShader) + 
+                     " compiled: " + (vertexInfo && vertexInfo->compiled ? "true" : "false"));
+    if (vertexInfo && !vertexInfo->errorLog.empty()) {
+        m_logger->logError("Vertex shader " + name + " error: " + vertexInfo->errorLog);
+    }
+    
+    if (vertexShader == InvalidId || !vertexInfo || !vertexInfo->compiled) {
         m_logger->logError("Failed to compile vertex shader: " + name);
         m_logger->logDebug("Vertex shader source:\n" + vertexSource);
         return InvalidId;
@@ -89,9 +98,13 @@ ShaderId ShaderManagerSafe::createShaderFromSource(const std::string& name,
     
     // Create fragment shader
     ShaderId fragmentShader = renderer->createShader(ShaderType::Fragment, fragmentSource);
-    if (fragmentShader == InvalidId) {
+    const ShaderInfo* fragmentInfo = renderer->getShaderInfo(fragmentShader);
+    if (fragmentShader == InvalidId || !fragmentInfo || !fragmentInfo->compiled) {
         m_logger->logError("Failed to compile fragment shader: " + name);
         m_logger->logDebug("Fragment shader source:\n" + fragmentSource);
+        if (fragmentInfo && !fragmentInfo->errorLog.empty()) {
+            m_logger->logError("Fragment shader error: " + fragmentInfo->errorLog);
+        }
         renderer->deleteShader(vertexShader);
         return InvalidId;
     }
