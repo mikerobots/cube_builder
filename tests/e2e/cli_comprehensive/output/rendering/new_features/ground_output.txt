@@ -1,0 +1,71 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Camera set to view workspace center at (0, 2.5, 0)
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 1
+Successfully loaded OpenGL VAO functions
+Successfully created and bound default VAO: 2
+[2025-06-19 21:21:17.212] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-06-19 21:21:17.212] [INFO ] Found shader directory at: ../../core/rendering/shaders/
+[2025-06-19 21:21:17.212] [INFO ] Compiling shader program: basic
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 21:21:17.215] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-06-19 21:21:17.215] [INFO ] Compiling shader program: enhanced
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 21:21:17.217] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-06-19 21:21:17.217] [INFO ] Compiling shader program: flat
+Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
+
+Shader attribute locations after linking: pos=0 normal=1 color=2
+[2025-06-19 21:21:17.218] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-06-19 21:21:17.218] [INFO ] Successfully loaded shaders from files
+[2025-06-19 21:21:17.218] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-06-19 21:21:17.219] [INFO ] Compiling shader program: ground_plane
+Shader attribute locations after linking: pos=-1 normal=-1 color=-1
+[2025-06-19 21:21:17.219] [INFO ] Successfully created shader program: ground_plane (ID: 12)
+[2025-06-19 21:21:17.219] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-06-19 21:21:17.219] [INFO ] Ground plane grid renderer initialized
+[2025-06-19 21:21:17.219] [INFO ] RenderEngine initialized successfully
+[2025-06-19 21:21:17.219] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-06-19 21:21:17.219] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+Creating scene...
+Scene created successfully!
+Initialization complete!
+Type 'help' for available commands.
+
+2025-06-19 21:21:17.239 VoxelEditor_CLI[9516:10712030] +[IMKClient subclass]: chose IMKClient_Legacy
+2025-06-19 21:21:17.239 VoxelEditor_CLI[9516:10712030] +[IMKInputSession subclass]: chose IMKInputSession_Legacy
+> Workspace resized to 5.000000x5.000000x5.000000 meters
+> Resolution set to 32cm
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+> [2025-06-19 21:21:17.269] [WARN ] Invalid placement at (100, -10, 100) resolution 32cm: Cannot place voxels below ground plane (Y < 0)
+Cannot place voxel: Cannot place voxels below ground plane (Y < 0)
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+> [2025-06-19 21:21:17.282] [WARN ] Invalid placement at (100, 0, 100) resolution 32cm: Position (1, 0, 1) is not aligned to 32cm grid
+Cannot place voxel: Position (1, 0, 1) is not aligned to 32cm grid
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+> [2025-06-19 21:21:17.297] [WARN ] Invalid placement at (100, 10, 100) resolution 32cm: Position (1, 0.1, 1) is not aligned to 32cm grid
+Cannot place voxel: Position (1, 0.1, 1) is not aligned to 32cm grid
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 32cm
+Workspace: 5x5x5 meters
+Voxels: 0
+Selected: 0 voxels
+Groups: 0
+Memory: 0.000541687 MB
+
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+> OpenGL Error in drawArrays: GL_INVALID_OPERATION
+[2025-06-19 21:21:17.452] [INFO ] Screenshot saved as output/rendering/new_features/ground_constraint.ppm.ppm (PPM format)
+Screenshot saved: output/rendering/new_features/ground_constraint.ppm.png
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+> Goodbye!
+OpenGL Error in drawArrays: GL_INVALID_OPERATION
+
+Shutting down...
+[2025-06-19 21:21:17.603] [INFO ] RenderEngine shut down

@@ -1,0 +1,4 @@
+grid on
+grid off
+grid toggle
+quit

@@ -1,0 +1,18 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (0, 2.5, 0)
+Initialization complete!
+Type 'help' for available commands.
+
+> Failed to load project: /nonexistent/path/file.vox
+> Failed to save project
+> Failed to export STL
+> Workspace resized to 5.000000x5.000000x5.000000 meters
+> Voxel placed at (0, 0, 0)
+> Command failed: mutex lock failed: Invalid argument
+> Goodbye!
+
+Shutting down...

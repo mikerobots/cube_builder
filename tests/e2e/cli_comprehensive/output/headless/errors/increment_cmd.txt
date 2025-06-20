@@ -1,0 +1,8 @@
+workspace 5 5 5
+resolution 8cm
+place 0cm 0cm 0cm
+place 8cm 8cm 8cm
+place 4.5cm 4.5cm 4.5cm
+place 16cm 16cm 16cm
+status
+quit

@@ -1,0 +1,29 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (0, 2.5, 0)
+Initialization complete!
+Type 'help' for available commands.
+
+> Workspace resized to 5.000000x5.000000x5.000000 meters
+> Resolution set to 32cm
+> Cannot place voxel: Cannot place voxels below ground plane (Y < 0)
+> Cannot place voxel: Position (0.97, 0, 0.96) is not aligned to 32cm grid
+> Voxel placed at (96, 0, 96)
+> Cannot place voxel: Position would overlap with existing voxel
+> Voxel placed at (128, 0, 128)
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 32cm
+Workspace: 5x5x5 meters
+Voxels: 2
+Selected: 0 voxels
+Groups: 0
+Memory: 0.00107574 MB
+
+> Goodbye!
+
+Shutting down...

@@ -59,7 +59,10 @@ Three distinct applications sharing the core library:
 
 ### Technology Stack
 - **Build System**: CMake for cross-platform compatibility
-- **Graphics**: OpenGL 3.3+ for broad hardware support
+- **Graphics**: OpenGL 3.3 Core Profile (consolidated standard)
+  - All shaders use GLSL version 330 core
+  - No legacy OpenGL 2.1 support
+  - Forward-compatible context on macOS
 - **Desktop GUI**: Qt6 for modern, native interfaces
 - **VR Platform**: OpenXR for future-proof VR support
 - **Testing**: Google Test for comprehensive unit testing

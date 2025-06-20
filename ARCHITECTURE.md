@@ -207,15 +207,19 @@ private:
 
 ### 6. Rendering Engine (`RenderEngine`)
 
-**Purpose**: OpenGL abstraction and high-performance rendering pipeline
+**Purpose**: OpenGL 3.3 Core Profile abstraction and high-performance rendering pipeline
 **Dependencies**: Camera System, Visual Feedback System
 
 #### Components:
-- `OpenGLRenderer` - Low-level OpenGL wrapper with performance optimization
-- `ShaderManager` - Shader compilation and management
-- `RenderState` - OpenGL state management
-- `FrameBuffer` - Render target management
+- `OpenGLRenderer` - OpenGL 3.3 Core Profile wrapper with performance optimization
+- `ShaderManager` - GLSL 330 shader compilation and management
+- `RenderState` - Modern OpenGL state management (no fixed function)
+- `FrameBuffer` - Render target management with FBO support
 - `GroundPlaneGrid` - Grid mesh generation and rendering
+- **OpenGL Version**: 3.3 Core Profile exclusively
+  - GLSL version 330 core for all shaders
+  - Forward-compatible context on macOS
+  - No legacy GL 2.1 or fixed-function pipeline
 - **Performance**: 60+ FPS minimum, optimized for 10,000+ voxels
 - **Grid Support**: Dynamic grid scaling with workspace bounds
 
@@ -446,7 +450,10 @@ Each subsystem includes:
 ## Dependencies and Build
 
 ### External Dependencies
-- **OpenGL 3.3+**: Core rendering API
+- **OpenGL 3.3 Core Profile**: Core rendering API (consolidated standard)
+  - GLFW 3.3.8: Window and context creation
+  - GLAD: OpenGL function loading
+  - GLM 0.9.9.8: OpenGL Mathematics library
 - **Qt6**: Desktop application framework (desktop app only)
 - **OpenXR SDK**: VR platform abstraction (VR app only)
 - **Meta Hand Tracking SDK**: Hand tracking support (VR app only)

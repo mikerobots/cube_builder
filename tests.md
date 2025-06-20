@@ -66,9 +66,15 @@ The test suite is organized into a comprehensive multi-tiered architecture:
 
 ### 5. Shader Tests
 
-**Location**: `apps/shader_test/`
-**Framework**: Custom OpenGL shader testing framework
-**Capabilities**: Compilation validation, visual output verification, performance measurement
+**Location**: `apps/shader_test/` and `tests/integration/rendering/`
+**Framework**: Custom OpenGL shader testing framework + Google Test integration tests
+**OpenGL Version**: Consolidated on OpenGL 3.3 Core Profile (GLSL 330)
+**Capabilities**: 
+- Shader compilation and linking validation
+- VAO setup and attribute binding verification
+- Uniform setting and matrix transformation testing
+- Real rendering pipeline validation
+- Visual output verification through screenshot analysis
 
 ### 6. Visual Validation Tests
 
@@ -274,6 +280,23 @@ The test suite is organized into a comprehensive multi-tiered architecture:
 **Location**: `tests/integration/visual_feedback/`
 - **`test_visual_feedback_requirements_integration.cpp`** - Visual feedback requirements validation
 - **`test_feedback_renderer_integration.cpp`** - Feedback renderer integration tests
+- **`test_overlay_renderer_integration.cpp`** - Overlay renderer integration tests
+
+#### Shader and Rendering Pipeline Integration Tests
+**Location**: `tests/integration/rendering/`
+- **`test_enhanced_shader_validation_integration.cpp`** - Validates shader compilation and linking for all shader types (basic, enhanced, ground plane)
+- **`test_shader_pipeline_integration.cpp`** - Tests complete VAO setup with vertex attributes and rendering pipeline
+- **`test_shader_vao_integration.cpp`** - Simplified VAO testing focusing on OpenGL 3.3 Core Profile compliance
+- **`test_real_shader_pipeline.cpp`** - Tests actual RenderEngine usage patterns with mesh buffer setup
+- **`test_shader_real_usage.cpp`** - Tests real-world shader usage with complete rendering components
+- **`test_shader_usage_validation.cpp`** - Validates VAO switching, ground plane rendering, and attribute locations
+- **`test_shader_visual_validation.cpp`** - **Visual validation tests** that capture framebuffer contents and validate shader rendering output:
+  - Renders colored triangles and validates pixel color distribution
+  - Tests voxel cube shading with lighting calculations
+  - Validates ground plane grid rendering appearance
+  - Tests multiple objects with different shaders
+  - Verifies shader error handling and fallback rendering
+  - Outputs PPM files to `test_output/` for visual debugging
 
 ### End-to-End Tests (Shell Scripts)
 **Runner**: `./run_e2e_tests.sh`
@@ -422,10 +445,13 @@ cd tests/cli_comprehensive
 - Cross-platform visual consistency testing
 
 **Comprehensive Shader Testing:**
-- Compilation validation across multiple OpenGL versions
-- Visual output verification using offscreen rendering
-- Performance measurement and validation criteria
-- Shader attribute and uniform validation
+- Compilation validation for OpenGL 3.3 Core Profile (consolidated standard)
+- VAO (Vertex Array Object) setup and management validation
+- Real-world shader usage patterns with complete rendering pipeline
+- Shader attribute locations and uniform binding verification
+- Multiple VAO switching and state management
+- Ground plane and enhanced shader rendering validation
+- Visual output verification using automated screenshot analysis
 
 **Multi-layered Integration:**
 - Unit tests for individual components

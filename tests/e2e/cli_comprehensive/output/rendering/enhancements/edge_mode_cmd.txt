@@ -1,0 +1,11 @@
+workspace 5 5 5
+resolution 32cm
+view iso
+place 96cm 0cm 96cm
+place 128cm 0cm 96cm
+place 96cm 0cm 128cm
+edges on
+screenshot output/rendering/enhancements/edges_on.ppm
+edges off
+screenshot output/rendering/enhancements/edges_off.ppm
+quit

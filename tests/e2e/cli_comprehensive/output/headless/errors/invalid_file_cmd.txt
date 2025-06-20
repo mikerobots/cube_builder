@@ -1,0 +1,7 @@
+load /nonexistent/path/file.vox
+save /root/cannot_write_here.vox
+export /dev/null/cannot_write.stl
+workspace 5 5 5
+place 0cm 0cm 0cm
+save output/headless/errors/valid_save.vox
+quit

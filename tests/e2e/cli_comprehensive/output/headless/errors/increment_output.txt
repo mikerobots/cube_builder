@@ -1,0 +1,28 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at (0, 2.5, 0)
+Initialization complete!
+Type 'help' for available commands.
+
+> Workspace resized to 5.000000x5.000000x5.000000 meters
+> Resolution set to 8cm
+> Voxel placed at (0, 0, 0)
+> Voxel placed at (8, 8, 8)
+> Cannot place voxel: Position (0.05, 0.05, 0.05) is not aligned to 8cm grid
+> Voxel placed at (16, 16, 16)
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 8cm
+Workspace: 5x5x5 meters
+Voxels: 3
+Selected: 0 voxels
+Groups: 0
+Memory: 0.0016861 MB
+
+> Goodbye!
+
+Shutting down...

@@ -142,7 +142,8 @@ TEST_F(CoreFunctionalityTest, OneCmIncrementPlacement) {
     
     for (const auto& pos : testPositions) {
         // Verify position is valid 1cm increment
-        EXPECT_TRUE(Input::PlacementUtils::isValidIncrementPosition(pos))
+        Math::IncrementCoordinates incPos(pos);
+        EXPECT_TRUE(Input::PlacementUtils::isValidIncrementPosition(incPos))
             << "Position (" << pos.x << "," << pos.y << "," << pos.z << ") should be valid";
         
         // Try to place voxel
@@ -156,7 +157,8 @@ TEST_F(CoreFunctionalityTest, OneCmIncrementPlacement) {
     // Test invalid Y position (below ground)
     Vector3i invalidPos(0, -1, 0);
     // For Y < 0, the position is invalid according to PlacementUtils
-    EXPECT_FALSE(Input::PlacementUtils::isValidIncrementPosition(invalidPos));
+    Math::IncrementCoordinates invalidIncPos(invalidPos);
+    EXPECT_FALSE(Input::PlacementUtils::isValidIncrementPosition(invalidIncPos));
     EXPECT_FALSE(voxelManager->setVoxel(invalidPos, VoxelData::VoxelResolution::Size_1cm, true));
 }
 

@@ -7396,6 +7396,40 @@ build bin/test_enhanced_shader_validation_integration: CXX_EXECUTABLE_LINKER__te
   TARGET_FILE = bin/test_enhanced_shader_validation_integration
   TARGET_PDB = test_enhanced_shader_validation_integration.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target test_shader_visual_validation
+
+
+#############################################
+# Order-only phony target for test_shader_visual_validation
+
+build cmake_object_order_depends_target_test_shader_visual_validation: phony || cmake_object_order_depends_target_VoxelEditor_Rendering cmake_object_order_depends_target_VoxelEditor_VoxelData cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_gtest cmake_object_order_depends_target_gtest_main
+
+build tests/integration/CMakeFiles/test_shader_visual_validation.dir/rendering/test_shader_visual_validation.cpp.o: CXX_COMPILER__test_shader_visual_validation_ /Users/michaelhalloran/cube_edit/tests/integration/rendering/test_shader_visual_validation.cpp || cmake_object_order_depends_target_test_shader_visual_validation
+  DEFINES = -DVOXEL_ASSERT_ON_MISSING_SHADERS=1
+  DEP_FILE = tests/integration/CMakeFiles/test_shader_visual_validation.dir/rendering/test_shader_visual_validation.cpp.o.d
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -std=c++20
+  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/core/rendering -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/core/voxel_data -I/Users/michaelhalloran/cube_edit/foundation/memory -I/Users/michaelhalloran/cube_edit/foundation/logging -I/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-src/include -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest
+  OBJECT_DIR = tests/integration/CMakeFiles/test_shader_visual_validation.dir
+  OBJECT_FILE_DIR = tests/integration/CMakeFiles/test_shader_visual_validation.dir/rendering
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_shader_visual_validation
+
+
+#############################################
+# Link the executable bin/test_shader_visual_validation
+
+build bin/test_shader_visual_validation: CXX_EXECUTABLE_LINKER__test_shader_visual_validation_ tests/integration/CMakeFiles/test_shader_visual_validation.dir/rendering/test_shader_visual_validation.cpp.o | lib/libVoxelEditor_Rendering.a lib/libglfw3.a lib/libglad.a /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd lib/libgtest.a lib/libgtest_main.a lib/libVoxelEditor_VoxelData.a lib/libgtest.a || lib/libVoxelEditor_Rendering.a lib/libVoxelEditor_VoxelData.a lib/libglad.a lib/libglfw3.a lib/libgtest.a lib/libgtest_main.a
+  FLAGS = -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  LINK_LIBRARIES = lib/libVoxelEditor_Rendering.a  lib/libglfw3.a  lib/libglad.a  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd  lib/libgtest.a  lib/libgtest_main.a  lib/libVoxelEditor_VoxelData.a  -Xlinker -framework -Xlinker OpenGL  -framework Cocoa  -framework IOKit  -framework CoreFoundation  lib/libgtest.a
+  OBJECT_DIR = tests/integration/CMakeFiles/test_shader_visual_validation.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = bin/test_shader_visual_validation
+  TARGET_PDB = test_shader_visual_validation.dbg
+
 
 #############################################
 # Utility command for test
@@ -7725,6 +7759,8 @@ build test_mouse_ray_movement: phony bin/test_mouse_ray_movement
 build test_overlay_renderer_integration: phony bin/test_overlay_renderer_integration
 
 build test_placement_commands: phony bin/test_placement_commands
+
+build test_shader_visual_validation: phony bin/test_shader_visual_validation
 
 build test_simple_command: phony bin/test_simple_command
 
@@ -8064,7 +8100,7 @@ build foundation/memory/tests/all: phony bin/VoxelEditor_Memory_Tests
 #############################################
 # Folder: /Users/michaelhalloran/cube_edit/build_ninja/tests/integration
 
-build tests/integration/all: phony bin/test_camera_cube_visibility bin/test_camera_cube_visibility_simple bin/test_ground_plane_voxel_placement bin/test_mouse_ground_plane_clicking bin/test_mouse_boundary_clicking bin/test_workspace_boundary_placement bin/test_overlay_renderer_integration bin/test_feedback_renderer_integration bin/test_visual_feedback_requirements_integration bin/test_enhanced_shader_validation_integration
+build tests/integration/all: phony bin/test_camera_cube_visibility bin/test_camera_cube_visibility_simple bin/test_ground_plane_voxel_placement bin/test_mouse_ground_plane_clicking bin/test_mouse_boundary_clicking bin/test_workspace_boundary_placement bin/test_overlay_renderer_integration bin/test_feedback_renderer_integration bin/test_visual_feedback_requirements_integration bin/test_enhanced_shader_validation_integration bin/test_shader_visual_validation
 
 # =============================================================================
 

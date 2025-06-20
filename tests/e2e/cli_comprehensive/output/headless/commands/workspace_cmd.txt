@@ -1,0 +1,5 @@
+workspace 3 3 3
+status
+workspace 8 8 8
+status
+quit

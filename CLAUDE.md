@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Context
 
 This is a **multi-platform voxel editor** with a sophisticated 3-layer architecture:
@@ -45,11 +43,6 @@ cmake --build build_relwithdebinfo
 # Run all unit tests only (excludes integration/e2e tests)
 ./run_all_unit.sh
 
-# Run specific subsystem tests
-cd build_ninja
-ctest -R "VoxelEditor_Rendering_Tests"
-ctest -R "VoxelEditor_VoxelData_Tests"
-```
 
 ### Integration Tests (C++)
 ```bash
@@ -215,5 +208,7 @@ they were written for not 0,0 being the center, and we will most
 likely need to rewrite for the current coordinate system where 0,0 is
 the center.
 
-
 If you are updating requirements documents, don't change the IDs!!!
+
+DON'T BE A YES MAN! CHALLENGE ME IF I AM ASKING YOU TO DO SOMETHING
+THAT IS SUBPAR OR DOESN'T MAKE SENSE!

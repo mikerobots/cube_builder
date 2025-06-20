@@ -1,0 +1,5 @@
+workspace 8 8 8
+resolution 1cm
+place {0..200..10}cm {0..200..10}cm {0..200..10}cm
+status
+quit

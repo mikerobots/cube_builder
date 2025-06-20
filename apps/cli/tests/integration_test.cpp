@@ -52,12 +52,15 @@ TEST_F(CLIIntegrationTest, BasicInitialization) {
     // Verify all systems are created
     ASSERT_NE(app->getVoxelManager(), nullptr);
     ASSERT_NE(app->getCameraController(), nullptr);
-    // ASSERT_NE(app->getRenderEngine(), nullptr); // Method may not exist
     ASSERT_NE(app->getInputManager(), nullptr);
     ASSERT_NE(app->getSelectionManager(), nullptr);
     ASSERT_NE(app->getHistoryManager(), nullptr);
     ASSERT_NE(app->getSurfaceGenerator(), nullptr);
-    ASSERT_NE(app->getFeedbackRenderer(), nullptr);
+    // In headless mode, feedback renderer and render engine are not created
+    if (!app->isHeadless()) {
+        ASSERT_NE(app->getFeedbackRenderer(), nullptr);
+        // ASSERT_NE(app->getRenderEngine(), nullptr); // Method may not exist
+    }
     ASSERT_NE(app->getGroupManager(), nullptr);
     ASSERT_NE(app->getFileManager(), nullptr);
 }
@@ -72,10 +75,10 @@ TEST_F(CLIIntegrationTest, VoxelPlacementWorkflow) {
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
     EXPECT_EQ(voxelManager->getActiveResolution(), VoxelData::VoxelResolution::Size_8cm);
     
-    // Place voxels
-    Math::Vector3i pos1(0, 0, 0);
-    Math::Vector3i pos2(1, 0, 0);
-    Math::Vector3i pos3(0, 1, 0);
+    // Place voxels - for 8cm resolution, coordinates must be multiples of 8
+    Math::Vector3i pos1(0, 0, 0);    // Origin
+    Math::Vector3i pos2(8, 0, 0);    // 8cm to the right
+    Math::Vector3i pos3(0, 8, 0);    // 8cm up
     
     EXPECT_TRUE(voxelManager->setVoxel(pos1, VoxelData::VoxelResolution::Size_8cm, true));
     EXPECT_TRUE(voxelManager->setVoxel(pos2, VoxelData::VoxelResolution::Size_8cm, true));
@@ -96,19 +99,20 @@ TEST_F(CLIIntegrationTest, SelectionWorkflow) {
     auto voxelManager = app->getVoxelManager();
     auto selectionManager = app->getSelectionManager();
     
-    // Create some voxels (centered around origin)
+    // Create some voxels (centered around origin) - for 8cm voxels, use multiples of 8
     for (int x = -2; x <= 2; ++x) {
         for (int y = 0; y < 5; ++y) {
-            voxelManager->setVoxel(Math::Vector3i(x, y, 0), VoxelData::VoxelResolution::Size_8cm, true);
+            Math::Vector3i pos(x * 8, y * 8, 0);  // Convert to 8cm increments
+            voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
         }
     }
     
-    // Select a subset of voxels instead of using box selection
-    // The box selection behavior appears to have changed with the coordinate system
-    // For now, let's test by selecting individual voxels (centered around origin)
+    // Select a subset of voxels
+    // For 8cm voxels, coordinates must be multiples of 8
     for (int x = -1; x <= 1; ++x) {
         for (int y = 0; y < 3; ++y) {
-            Selection::VoxelId voxelId(Math::Vector3i(x, y, 0), VoxelData::VoxelResolution::Size_8cm);
+            Math::Vector3i pos(x * 8, y * 8, 0);  // Convert to 8cm increments
+            Selection::VoxelId voxelId(pos, VoxelData::VoxelResolution::Size_8cm);
             selectionManager->selectVoxel(voxelId);
         }
     }
@@ -135,7 +139,7 @@ TEST_F(CLIIntegrationTest, GroupManagementWorkflow) {
     // Create voxels and select them (centered around origin)
     std::vector<Groups::VoxelId> groupVoxelIds;
     for (int i = -2; i <= 2; ++i) {
-        Math::Vector3i pos(i, 0, 0);
+        Math::Vector3i pos(i * 8, 0, 0);  // Convert to 8cm increments
         voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
         // Create proper voxel IDs for selection
         Selection::VoxelId selectionId(pos, VoxelData::VoxelResolution::Size_8cm);
@@ -267,22 +271,23 @@ TEST_F(CLIIntegrationTest, MultiResolutionSupport) {
     auto voxelManager = app->getVoxelManager();
     
     // Place voxels at different resolutions
+    // Each voxel position must be aligned to its resolution
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_1cm);
     voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm, true);
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
-    voxelManager->setVoxel(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);
+    voxelManager->setVoxel(Math::Vector3i(8, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);  // 8cm aligned
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_64cm);
-    voxelManager->setVoxel(Math::Vector3i(2, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
+    voxelManager->setVoxel(Math::Vector3i(64, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);  // 64cm aligned
     
     // Verify each resolution has its voxel
     EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm));
-    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_8cm));
-    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(2, 0, 0), VoxelData::VoxelResolution::Size_64cm));
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(8, 0, 0), VoxelData::VoxelResolution::Size_8cm));
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(64, 0, 0), VoxelData::VoxelResolution::Size_64cm));
     
     // Verify total count across all resolutions
-    EXPECT_EQ(voxelManager->getVoxelCount(), 3);
+    EXPECT_EQ(voxelManager->getTotalVoxelCount(), 3);
 }
 
 } // namespace Tests
