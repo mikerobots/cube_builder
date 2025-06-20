@@ -46,6 +46,11 @@ void MouseInteraction::initialize() {
     m_historyManager = m_app->getHistoryManager();
     m_renderWindow = m_app->getRenderWindow();
     
+    // Debug: Log whether we're in headless mode
+    if (!m_renderWindow) {
+        Logging::Logger::getInstance().info("MouseInteraction", "Initializing in headless mode (no render window)");
+    }
+    
     // Set up mouse callbacks (only if render window exists - not in headless mode)
     if (m_renderWindow) {
         m_renderWindow->setMouseCallback([this](const MouseEvent& event) {
@@ -84,15 +89,17 @@ void MouseInteraction::update() {
 
 void MouseInteraction::onMouseMove(float x, float y) {
     // Check if mouse position is within window bounds
-    if (x < 0 || y < 0 || x >= m_renderWindow->getWidth() || y >= m_renderWindow->getHeight()) {
-        // Mouse is outside window - clear hover state
-        if (m_hasHoverFace) {
-            m_hasHoverFace = false;
-            m_feedbackRenderer->clearFaceHighlight();
-            m_feedbackRenderer->clearVoxelPreview();
-            Logging::Logger::getInstance().debug("MouseInteraction", "Mouse left window bounds - clearing hover state");
+    if (m_renderWindow) {
+        if (x < 0 || y < 0 || x >= m_renderWindow->getWidth() || y >= m_renderWindow->getHeight()) {
+            // Mouse is outside window - clear hover state
+            if (m_hasHoverFace) {
+                m_hasHoverFace = false;
+                m_feedbackRenderer->clearFaceHighlight();
+                m_feedbackRenderer->clearVoxelPreview();
+                Logging::Logger::getInstance().debug("MouseInteraction", "Mouse left window bounds - clearing hover state");
+            }
+            return;
         }
-        return;
     }
     
     glm::vec2 oldPos = m_mousePos;
@@ -193,13 +200,21 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
     if (pressed) {
         Math::Ray ray = getMouseRay(x, y);
         
+        // Get window dimensions, use default size if headless
+        int width = 800;
+        int height = 600;
+        if (m_renderWindow) {
+            width = m_renderWindow->getWidth();
+            height = m_renderWindow->getHeight();
+        }
+        
         // Calculate NDC for debug
-        float ndcX = (2.0f * x) / m_renderWindow->getWidth() - 1.0f;
-        float ndcY = 1.0f - (2.0f * y) / m_renderWindow->getHeight();
+        float ndcX = (2.0f * x) / width - 1.0f;
+        float ndcY = 1.0f - (2.0f * y) / height;
         
         std::cout << "\n=== Mouse Click Ray Info ===" << std::endl;
         std::cout << "Mouse Position: (" << x << ", " << y << ")" << std::endl;
-        std::cout << "Window Size: " << m_renderWindow->getWidth() << " x " << m_renderWindow->getHeight() << std::endl;
+        std::cout << "Window Size: " << width << " x " << height << std::endl;
         std::cout << "NDC: (" << ndcX << ", " << ndcY << ")" << std::endl;
         std::cout << "Ray Origin: (" << ray.origin.x << ", " << ray.origin.y << ", " << ray.origin.z << ")" << std::endl;
         std::cout << "Ray Direction: (" << ray.direction.x << ", " << ray.direction.y << ", " << ray.direction.z << ")" << std::endl;
@@ -213,15 +228,14 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
         std::cout << "===========================" << std::endl;
     }
     
-    // Get modifier keys
-    bool ctrlPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
-                       glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
-    bool cmdPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_SUPER) == GLFW_PRESS ||
-                      glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS;
+    // Get modifier keys (safely handle headless mode)
+    bool ctrlPressed = false;
+    bool cmdPressed = false;
+    bool shiftPressed = false;
     
-    // Get shift key state for panning
-    bool shiftPressed = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
-                        glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    // In headless mode, we can't query key states, so we'll assume no modifiers
+    // Note: we cannot call ANY GLFW functions if GLFW is not initialized
+    // In headless mode, GLFW is not initialized at all, so we skip key state queries entirely
     
     // On macOS, treat Cmd as Ctrl for consistency
     bool modifierPressed = ctrlPressed || cmdPressed;
@@ -328,16 +342,24 @@ void MouseInteraction::onMouseScroll(float deltaX, float deltaY, bool ctrlPresse
 }
 
 Math::Ray MouseInteraction::getMouseRay(float x, float y) const {
+    // Get window dimensions, use default size if headless
+    int width = 800;
+    int height = 600;
+    if (m_renderWindow) {
+        width = m_renderWindow->getWidth();
+        height = m_renderWindow->getHeight();
+    }
+    
     // Get normalized device coordinates
-    float ndcX = (2.0f * x) / m_renderWindow->getWidth() - 1.0f;
-    float ndcY = 1.0f - (2.0f * y) / m_renderWindow->getHeight();
+    float ndcX = (2.0f * x) / width - 1.0f;
+    float ndcY = 1.0f - (2.0f * y) / height;
     
     // Debug log the mouse position and NDC
     static int debugCount = 0;
     if (debugCount++ % 30 == 0) {
         Logging::Logger::getInstance().debugfc("MouseInteraction",
             "Mouse: screen=(%.1f,%.1f) window=(%d,%d) ndc=(%.3f,%.3f)",
-            x, y, m_renderWindow->getWidth(), m_renderWindow->getHeight(), ndcX, ndcY);
+            x, y, width, height, ndcX, ndcY);
     }
     
     // Get camera matrices
@@ -440,7 +462,7 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
     } else {
         // For voxel faces, calculate hit point based on face center
         Math::Vector3i voxelPos = face.getVoxelPosition().value();
-        Math::Vector3f voxelWorldPos = PlacementUtils::incrementGridToWorld(voxelPos);
+        Math::Vector3f voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(voxelPos)).value();
         float voxelSize = getVoxelSize(resolution);
         
         // Get face center position
@@ -471,24 +493,24 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
         // For ground plane, use smart context snapping (no specific surface face)
         Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
             hitPoint, resolution, shiftPressed, workspaceSize, *m_voxelManager, nullptr);
-        snappedPos = context.snappedGridPos;
+        snappedPos = context.snappedIncrementPos.value();
         
         Logging::Logger::getInstance().debugfc("MouseInteraction",
             "Ground plane placement: hit=%.2f,%.2f,%.2f snapped=%d,%d,%d shift=%d",
             hitPoint.x, hitPoint.y, hitPoint.z, snappedPos.x, snappedPos.y, snappedPos.z, shiftPressed);
     } else {
         // For voxel faces, use surface face grid snapping
-        Math::Vector3i surfaceFaceVoxelPos = face.getVoxelPosition().value();
+        Math::IncrementCoordinates surfaceFaceVoxelPos = face.getVoxelPosition();
         VoxelResolution surfaceFaceVoxelRes = face.getResolution();
         
         Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
             hitPoint, resolution, shiftPressed, workspaceSize, *m_voxelManager,
             &surfaceFaceVoxelPos, surfaceFaceVoxelRes, surfaceFaceDir);
-        snappedPos = context.snappedGridPos;
+        snappedPos = context.snappedIncrementPos.value();
         
         Logging::Logger::getInstance().debugfc("MouseInteraction",
             "Surface face placement: voxel=%d,%d,%d dir=%d hit=%.2f,%.2f,%.2f snapped=%d,%d,%d shift=%d",
-            surfaceFaceVoxelPos.x, surfaceFaceVoxelPos.y, surfaceFaceVoxelPos.z, static_cast<int>(surfaceFaceDir),
+            surfaceFaceVoxelPos.x(), surfaceFaceVoxelPos.y(), surfaceFaceVoxelPos.z(), static_cast<int>(surfaceFaceDir),
             hitPoint.x, hitPoint.y, hitPoint.z, snappedPos.x, snappedPos.y, snappedPos.z, shiftPressed);
     }
     
@@ -506,10 +528,12 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
         if (face.isGroundPlane()) {
             // For ground plane, just use the snapped position with Y=0
             snappedPos.y = 0;
-            // Clamp to workspace bounds
-            Math::Vector3f halfSize = workspaceSize * 0.5f;
-            snappedPos.x = std::max(0, std::min(snappedPos.x, static_cast<int>(workspaceSize.x / getVoxelSize(resolution)) - 1));
-            snappedPos.z = std::max(0, std::min(snappedPos.z, static_cast<int>(workspaceSize.z / getVoxelSize(resolution)) - 1));
+            // Clamp to workspace bounds (centered coordinate system)
+            float voxelSizeF = getVoxelSize(resolution);
+            int maxIncrement = static_cast<int>(workspaceSize.x / voxelSizeF) / 2;
+            int minIncrement = -maxIncrement;
+            snappedPos.x = std::max(minIncrement, std::min(snappedPos.x, maxIncrement - 1));
+            snappedPos.z = std::max(minIncrement, std::min(snappedPos.z, maxIncrement - 1));
         } else {
             Math::Vector3i clickedVoxel = face.getVoxelPosition().value();
             Math::Vector3i newPos = m_voxelManager->getAdjacentPosition(
@@ -656,11 +680,9 @@ void MouseInteraction::centerCameraOnVoxels() {
         
         for (const auto& voxel : allVoxels) {
             // Convert grid position to world position (center of voxel)
-            Math::Vector3f voxelCenter(
-                (voxel.gridPos.x() + 0.5f) * voxelSize,
-                (voxel.gridPos.y() + 0.5f) * voxelSize,
-                (voxel.gridPos.z() + 0.5f) * voxelSize
-            );
+            // Use CoordinateConverter for proper centered coordinate system
+            Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(voxel.incrementPos);
+            Math::Vector3f voxelCenter = worldPos.value();
             
             if (!hasVoxels) {
                 bounds.min = bounds.max = voxelCenter;
