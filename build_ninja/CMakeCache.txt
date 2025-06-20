@@ -414,6 +414,9 @@ PKG_CONFIG_EXECUTABLE:FILEPATH=/opt/homebrew/bin/pkg-config
 //Name of the computer/site where compile is being run
 SITE:STRING=michaels-MacBook-Air.local
 
+//Assert and exit when shader files are not found
+VOXEL_ASSERT_ON_MISSING_SHADERS:BOOL=ON
+
 //Value Computed by CMake
 VoxelEditor_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja
 

@@ -74,18 +74,14 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
     // Generate cube for each voxel
     int voxelCount = 0;
     for (const auto& voxelPos : voxelPositions) {
-        // Convert voxel grid coordinates to world position
-        // Use simple conversion as expected by tests: worldPos = gridPos * voxelSize + voxelSize * 0.5
-        Math::Vector3f worldPos(
-            voxelPos.gridPos.x() * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.y() * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.z() * voxelSize + voxelSize * 0.5f
-        );
+        // Convert voxel grid coordinates to world position using grid's coordinate system
+        Math::WorldCoordinates worldCoords = grid->incrementToWorld(voxelPos.incrementPos);
+        Math::Vector3f worldPos(worldCoords.x(), worldCoords.y(), worldCoords.z());
         
         if (voxelCount < 3) {
             Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
                 "  Voxel %d at grid pos (%d, %d, %d) -> world pos (%.3f, %.3f, %.3f)",
-                voxelCount, voxelPos.gridPos.x(), voxelPos.gridPos.y(), voxelPos.gridPos.z(),
+                voxelCount, voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
                 worldPos.x, worldPos.y, worldPos.z);
             Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
                 "  VoxelSize: %.3f, Scale: %.3f, Final size: %.3f",
@@ -200,13 +196,9 @@ Rendering::Mesh VoxelMeshGenerator::generateEdgeMesh(const VoxelData::VoxelDataM
     
     // Generate edge lines for each voxel
     for (const auto& voxelPos : voxelPositions) {
-        // Convert voxel grid coordinates to world position
-        // Use simple conversion as expected by tests: worldPos = gridPos * voxelSize + voxelSize * 0.5
-        Math::Vector3f worldPos(
-            voxelPos.gridPos.x() * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.y() * voxelSize + voxelSize * 0.5f,
-            voxelPos.gridPos.z() * voxelSize + voxelSize * 0.5f
-        );
+        // Convert voxel grid coordinates to world position using grid's coordinate system
+        Math::WorldCoordinates worldCoords = grid->incrementToWorld(voxelPos.incrementPos);
+        Math::Vector3f worldPos(worldCoords.x(), worldCoords.y(), worldCoords.z());
         
         // Use black color for edges
         Math::Vector3f edgeColor(0.1f, 0.1f, 0.1f);  // Very dark gray

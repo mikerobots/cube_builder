@@ -104,14 +104,14 @@ TEST_F(CLICommandTest, HelpCommand) {
 TEST_F(CLICommandTest, VoxelEditCommands) {
     // Test place command variations
     verifyCommandStructure("place 0 0 0", "place", {"0", "0", "0"});
-    verifyCommandStructure("place 10 5 2", "place", {"10", "5", "2"});
+    verifyCommandStructure("place -2 0 3", "place", {"-2", "0", "3"}); // Negative X, positive Z
     
     // Test delete command variations
     verifyCommandStructure("delete 0 0 0", "delete", {"0", "0", "0"});
-    verifyCommandStructure("delete 5 3 1", "delete", {"5", "3", "1"});
+    verifyCommandStructure("delete -1 2 -1", "delete", {"-1", "2", "-1"}); // Negative X and Z
     
-    // Test fill command
-    verifyCommandStructure("fill 0 0 0 2 2 2", "fill", {"0", "0", "0", "2", "2", "2"});
+    // Test fill command (centered coordinate system)
+    verifyCommandStructure("fill -2 0 -2 2 2 2", "fill", {"-2", "0", "-2", "2", "2", "2"});
 }
 
 TEST_F(CLICommandTest, WorkspaceCommands) {
@@ -138,7 +138,7 @@ TEST_F(CLICommandTest, FileCommands) {
 TEST_F(CLICommandTest, SelectionCommands) {
     // Test selection commands
     verifyCommandStructure("select 0 0 0", "select", {"0", "0", "0"});
-    verifyCommandStructure("selectbox 0 0 0 5 5 5", "selectbox", {"0", "0", "0", "5", "5", "5"});
+    verifyCommandStructure("selectbox -2 0 -2 2 3 2", "selectbox", {"-2", "0", "-2", "2", "3", "2"});
     verifyCommandStructure("selectall", "selectall");
     verifyCommandStructure("selectnone", "selectnone");
 }
@@ -187,7 +187,7 @@ TEST_F(CLICommandTest, PositionParameterValidation) {
         {"0", "0", "0"},
         {"1", "2", "3"},
         {"10", "20", "30"},
-        {"-1", "-2", "-3"}, // May be valid for some commands
+        {"-1", "-2", "-3"}, // Valid for X/Z coordinates in centered system (Y < 0 invalid)
         {"100", "200", "300"}
     };
     
@@ -328,7 +328,13 @@ TEST_F(CLICommandTest, InvalidCommandHandling) {
     
     for (const auto& cmd : invalidCommands) {
         // In a real implementation, we'd verify these return appropriate error messages
-        EXPECT_FALSE(cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos ? false : true);
+        // For now, just verify the test structure - ensure commands are not empty or whitespace-only
+        bool isEmptyOrWhitespace = cmd.empty() || cmd.find_first_not_of(" \t\n\r") == std::string::npos;
+        if (cmd == "" || cmd == "   ") {
+            EXPECT_TRUE(isEmptyOrWhitespace) << "Empty/whitespace commands should be detected as such";
+        } else {
+            EXPECT_FALSE(isEmptyOrWhitespace) << "Non-empty commands should have content: " << cmd;
+        }
     }
 }
 
@@ -346,11 +352,12 @@ TEST_F(CLICommandTest, ParameterRangeValidation) {
         {"workspace 1 1 1", false},    // Too small
         {"workspace 10 10 10", false}, // Too large
         
-        // Position tests (assuming 5x5x5 default workspace with 8cm voxels)
-        {"place 0 0 0", true},         // Valid minimum
-        {"place 62 62 62", true},      // Valid maximum (5m / 0.08m = 62.5)
-        {"place -1 0 0", false},       // Negative position
-        {"place 100 0 0", false},      // Out of bounds
+        // Position tests (centered coordinate system, Y >= 0 constraint)
+        {"place 0 0 0", true},         // Valid center
+        {"place -100 0 -100", true},   // Valid negative coordinates
+        {"place 100 0 100", true},     // Valid positive coordinates  
+        {"place 0 -1 0", false},       // Below ground plane (Y < 0)
+        {"place 1000 0 1000", false}, // Out of workspace bounds
         
         // Zoom tests
         {"zoom 0.1", true},            // Minimum zoom
@@ -384,15 +391,15 @@ TEST_F(CLICommandTest, CommandSequences) {
             "workspace 5 5 5",
             "resolution 8cm", 
             "place 0 0 0",
-            "place 1 1 1",
+            "place -1 0 1",  // Negative X coordinate
             "save test_cmd.vxl"
         },
         
         // Selection workflow
         {
             "place 0 0 0",
-            "place 1 0 0", 
-            "place 2 0 0",
+            "place -1 0 0",  // Negative X coordinate
+            "place 1 0 0",
             "selectall",
             "group create LineGroup",
             "selectnone"

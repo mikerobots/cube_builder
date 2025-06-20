@@ -209,7 +209,7 @@ protected:
         
         // Create voxel manager and mesh generator
         voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
-        voxelManager->resizeWorkspace(Math::Vector3f(10, 10, 10));
+        voxelManager->resizeWorkspace(Math::Vector3f(10.0f, 10.0f, 10.0f)); // 10 meters in each dimension
         meshGenerator = std::make_unique<TestVoxelMeshGenerator>();
     }
     

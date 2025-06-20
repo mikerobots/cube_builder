@@ -78,14 +78,13 @@ protected:
         
         // 2. Calculate placement position using FaceDetector's method
         VisualFeedback::FaceDetector placementDetector;
-        Math::GridCoordinates placementPos = placementDetector.calculatePlacementPosition(face);
+        Math::IncrementCoordinates placementPos = placementDetector.calculatePlacementPosition(face);
         
-        // 3. Convert grid position back to increment coordinates for VoxelEditCommand
-        // The placement position from FaceDetector is in grid coordinates,
-        // but VoxelEditCommand expects increment coordinates
-        Math::WorldCoordinates worldPos = grid->gridToWorld(placementPos);
+        // 3. Convert increment position to world coordinates
+        // The placement position from FaceDetector is in increment coordinates
+        Math::WorldCoordinates worldPos = grid->incrementToWorld(placementPos);
         float voxelSize = VoxelData::getVoxelSize(voxelManager->getActiveResolution());
-        Math::Vector3f voxelCenter = worldPos.value() + Math::Vector3f(voxelSize * 0.5f);
+        Math::Vector3f voxelCenter = worldPos.value(); // No offset needed - coordinate system is centered
         
         // Convert world position to increment coordinates (1cm grid)
         const float INCREMENT_SIZE = 0.01f;
@@ -129,7 +128,7 @@ TEST_F(ClickVoxelPlacementTest, TestClickingTwoFacesAddsTwoVoxels) {
     float voxelSize = 0.64f;
     // For 64cm voxels with centered coordinate system:
     // Increment position (0,0,0) should be at world position (0,0,0)
-    Math::Vector3f voxelCenter(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
+    Math::Vector3f voxelCenter(0.0f, 0.0f, 0.0f); // Voxel at origin in centered coordinate system
     
     // Test 1: Click on the positive X face (right side)
     {
@@ -180,8 +179,8 @@ TEST_F(ClickVoxelPlacementTest, TestClickingTwoFacesAddsTwoVoxels) {
     // Test 2: Click on the positive Y face (top)  
     {
         // For the second test, let's click on the original voxel's top face
-        Math::Vector3f rayOrigin(voxelSize * 0.5f, 2.0f, voxelSize * 0.5f);
-        Math::Vector3f rayTarget(voxelSize * 0.5f, voxelSize, voxelSize * 0.5f);
+        Math::Vector3f rayOrigin = voxelCenter + Math::Vector3f(0, 2.0f, 0);
+        Math::Vector3f rayTarget = voxelCenter + Math::Vector3f(0, 0.5f * voxelSize, 0);
         Math::Vector3f direction = (rayTarget - rayOrigin).normalized();
         Math::Ray ray(rayOrigin, direction);
         
@@ -212,9 +211,9 @@ TEST_F(ClickVoxelPlacementTest, TestSequentialClicking) {
     
     for (int i = 0; i < 3; i++) {
         // Simple approach: click somewhere to place voxels
-        // Don't worry about exact positions due to coordinate system complexities
-        Math::Vector3f rayOrigin(2.0f + i * voxelSize, voxelSize * 0.5f, voxelSize * 0.5f);
-        Math::Vector3f rayTarget(0.0f, voxelSize * 0.5f, voxelSize * 0.5f);
+        // Use relative positioning from centered coordinate system
+        Math::Vector3f rayOrigin(2.0f + i * voxelSize, 0.0f, 0.0f);
+        Math::Vector3f rayTarget(0.0f, 0.0f, 0.0f);
         Math::Vector3f direction = (rayTarget - rayOrigin).normalized();
         Math::Ray ray(rayOrigin, direction);
         
@@ -242,8 +241,8 @@ TEST_F(ClickVoxelPlacementTest, TestClickingNewlyPlacedVoxel) {
     
     // Step 1: Click to place a second voxel
     {
-        Math::Vector3f rayOrigin(2.0f, voxelSize * 0.5f, voxelSize * 0.5f);
-        Math::Vector3f rayTarget(0.0f, voxelSize * 0.5f, voxelSize * 0.5f);
+        Math::Vector3f rayOrigin(2.0f, 0.0f, 0.0f);
+        Math::Vector3f rayTarget(0.0f, 0.0f, 0.0f);
         Math::Vector3f direction = (rayTarget - rayOrigin).normalized();
         Math::Ray ray(rayOrigin, direction);
         
@@ -255,8 +254,8 @@ TEST_F(ClickVoxelPlacementTest, TestClickingNewlyPlacedVoxel) {
     // Step 2: Click again to interact with the newly placed voxel
     {
         // Try clicking from a different angle
-        Math::Vector3f rayOrigin(3.0f, voxelSize * 0.5f, voxelSize * 0.5f);
-        Math::Vector3f rayTarget(0.0f, voxelSize * 0.5f, voxelSize * 0.5f);
+        Math::Vector3f rayOrigin(3.0f, 0.0f, 0.0f);
+        Math::Vector3f rayTarget(0.0f, 0.0f, 0.0f);
         Math::Vector3f direction = (rayTarget - rayOrigin).normalized();
         Math::Ray ray(rayOrigin, direction);
         

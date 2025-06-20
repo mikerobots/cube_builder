@@ -147,9 +147,12 @@ protected:
     
     void createVoxelCube(int size = 3) {
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
-        for (int x = 0; x < size; ++x) {
-            for (int y = 0; y < size; ++y) {
-                for (int z = 0; z < size; ++z) {
+        
+        // Center the cube around the origin for the new coordinate system
+        int halfSize = size / 2;
+        for (int x = -halfSize; x < size - halfSize; ++x) {
+            for (int y = 0; y < size; ++y) { // Keep Y >= 0 (ground plane constraint)
+                for (int z = -halfSize; z < size - halfSize; ++z) {
                     voxelManager->setVoxel(Math::Vector3i(x, y, z), 
                                          VoxelData::VoxelResolution::Size_8cm, true);
                 }

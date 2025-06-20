@@ -23,10 +23,10 @@ echo "Running screenshot validation test..."
 (
     echo "workspace 5 5 5"
     echo "resolution 8cm" 
-    echo "place 10 10 10"  # Center voxel
-    echo "place 11 10 10"
-    echo "place 10 11 10"
-    echo "place 10 10 11"
+    echo "place 0 1 0"  # Center voxel (Y must be >= 0)
+    echo "place 1 1 0"
+    echo "place 0 2 0"
+    echo "place 0 1 1"
     echo "camera iso"
     sleep 1
     echo "screenshot $TEST_OUTPUT/test_scene.ppm"
@@ -99,6 +99,21 @@ EOF
         echo "quit"
     ) | "$VOXEL_CLI"
     
+    # Test negative coordinates (centered system)
+    echo -e "\nTesting centered coordinate system with negative coordinates..."
+    (
+        echo "workspace 8 8 8"
+        echo "resolution 16cm"
+        echo "place -1 0 -1"  # Negative X and Z coordinates
+        echo "place 0 0 0"    # Origin
+        echo "place 1 0 1"    # Positive coordinates
+        echo "camera iso"
+        sleep 1
+        echo "screenshot $TEST_OUTPUT/test_centered.ppm"
+        sleep 1
+        echo "quit"
+    ) | "$VOXEL_CLI"
+    
     if [ -f "$TEST_OUTPUT/test_clear.ppm" ]; then
         echo "✓ Clear color screenshot created"
         python3 - <<EOF
@@ -118,6 +133,33 @@ with open('$TEST_OUTPUT/test_clear.ppm', 'rb') as f:
     else:
         print("  ✗ Clear color is not the expected gray")
         print(f"    First few pixels: {list(pixels[:30])}")
+EOF
+    fi
+    
+    # Check centered coordinate screenshot
+    if [ -f "$TEST_OUTPUT/test_centered.ppm" ]; then
+        echo "✓ Centered coordinate screenshot created"
+        python3 - <<EOF
+with open('$TEST_OUTPUT/test_centered.ppm', 'rb') as f:
+    # Skip header
+    magic = f.readline()
+    dimensions = f.readline()
+    maxval = f.readline()
+    
+    width, height = map(int, dimensions.decode('ascii').strip().split())
+    pixels = f.read(width * height * 3)
+    
+    # Calculate average color
+    total_pixels = width * height
+    avg_r = sum(pixels[i] for i in range(0, len(pixels), 3)) / total_pixels
+    avg_g = sum(pixels[i] for i in range(1, len(pixels), 3)) / total_pixels
+    avg_b = sum(pixels[i] for i in range(2, len(pixels), 3)) / total_pixels
+    
+    # Check if image contains visible voxels (should be brighter than background)
+    if avg_r > 20 or avg_g > 20 or avg_b > 20:
+        print("  ✓ Centered coordinate voxels are visible")
+    else:
+        print("  ✗ Centered coordinate voxels are not visible")
 EOF
     fi
     

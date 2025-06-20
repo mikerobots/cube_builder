@@ -91,7 +91,7 @@ void Application::registerCommands() {
                     auto resolution = static_cast<VoxelData::VoxelResolution>(i);
                     auto voxels = m_voxelManager->getAllVoxels(resolution);
                     for (const auto& voxelPos : voxels) {
-                        m_voxelManager->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, false);
+                        m_voxelManager->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, false);
                     }
                 }
                 
@@ -100,7 +100,7 @@ void Application::registerCommands() {
                     auto resolution = static_cast<VoxelData::VoxelResolution>(i);
                     auto voxels = project.voxelData->getAllVoxels(resolution);
                     for (const auto& voxelPos : voxels) {
-                        m_voxelManager->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, true);
+                        m_voxelManager->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
                     }
                 }
                 
@@ -145,7 +145,7 @@ void Application::registerCommands() {
                 auto resolution = static_cast<VoxelData::VoxelResolution>(i);
                 auto voxels = m_voxelManager->getAllVoxels(resolution);
                 for (const auto& voxelPos : voxels) {
-                    project.voxelData->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, true);
+                    project.voxelData->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
                 }
             }
             
@@ -197,7 +197,7 @@ void Application::registerCommands() {
                 auto resolution = static_cast<VoxelData::VoxelResolution>(i);
                 auto voxels = m_voxelManager->getAllVoxels(resolution);
                 for (const auto& voxelPos : voxels) {
-                    project.voxelData->setVoxel(voxelPos.gridPos.value(), voxelPos.resolution, true);
+                    project.voxelData->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
                 }
             }
             
@@ -499,7 +499,7 @@ void Application::registerCommands() {
                     auto allVoxels = m_voxelManager->getAllVoxels();
                     for (const auto& voxel : allVoxels) {
                         // Use grid->gridToWorld() for proper coordinate conversion
-                        Math::Vector3f voxelCenter = grid->gridToWorld(voxel.gridPos).value();
+                        Math::Vector3f voxelCenter = grid->incrementToWorld(voxel.incrementPos).value();
                         // Add half voxel size to get center
                         voxelCenter += Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
                         
@@ -515,9 +515,8 @@ void Application::registerCommands() {
                 if (hasVoxels) {
                     focusPoint = Math::WorldCoordinates(bounds.getCenter());
                 } else {
-                    // No voxels, focus on workspace center
-                    auto workspaceSize = m_voxelManager->getWorkspaceSize();
-                    focusPoint = Math::WorldCoordinates(workspaceSize * 0.5f);
+                    // No voxels, focus on workspace center (origin in centered coordinate system)
+                    focusPoint = Math::WorldCoordinates(0.0f, 0.0f, 0.0f);
                 }
             } else {
                 // Try to parse as coordinates
@@ -1258,10 +1257,10 @@ void Application::registerCommands() {
                         
                         // Use grid->gridToWorld() for proper coordinate conversion
                         const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(voxelPos.resolution);
-                        Math::WorldCoordinates worldPos = grid ? grid->gridToWorld(voxelPos.gridPos) : Math::WorldCoordinates::zero();
+                        Math::WorldCoordinates worldPos = grid ? grid->incrementToWorld(voxelPos.incrementPos) : Math::WorldCoordinates::zero();
                         
-                        ss << "  [" << i << "] Grid(" << voxelPos.gridPos.x() << "," << voxelPos.gridPos.y() 
-                           << "," << voxelPos.gridPos.z() << ") -> World(" 
+                        ss << "  [" << i << "] Grid(" << voxelPos.incrementPos.x() << "," << voxelPos.incrementPos.y() 
+                           << "," << voxelPos.incrementPos.z() << ") -> World(" 
                            << worldPos.x() << "," << worldPos.y() << "," << worldPos.z() << ")\n";
                     }
                 }
@@ -1304,9 +1303,8 @@ void Application::registerCommands() {
                 auto camera = m_cameraController->getCamera();
                 auto viewProj = camera->getViewProjectionMatrix();
                 
-                // Test if workspace center is visible
-                auto wsSize = m_voxelManager->getWorkspaceSize();
-                Math::Vector3f center = wsSize * 0.5f;
+                // Test if workspace center is visible (origin in centered coordinate system)
+                Math::Vector3f center(0.0f, 0.0f, 0.0f);
                 Math::Vector4f centerClip = viewProj * Math::Vector4f(center.x, center.y, center.z, 1.0f);
                 
                 ss << "Workspace center (" << center.x << "," << center.y << "," << center.z << ")\n";
@@ -1334,11 +1332,11 @@ void Application::registerCommands() {
                         
                         // Use grid->gridToWorld() for proper coordinate conversion
                         const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(voxelPos.resolution);
-                        Math::WorldCoordinates worldPos = grid ? grid->gridToWorld(voxelPos.gridPos) : Math::WorldCoordinates::zero();
+                        Math::WorldCoordinates worldPos = grid ? grid->incrementToWorld(voxelPos.incrementPos) : Math::WorldCoordinates::zero();
                         Math::Vector4f clipPos = viewProj * Math::Vector4f(worldPos.x(), worldPos.y(), worldPos.z(), 1.0f);
                         
-                        ss << "\nFirst voxel at grid(" << voxelPos.gridPos.x() << "," << voxelPos.gridPos.y() 
-                           << "," << voxelPos.gridPos.z() << ")\n";
+                        ss << "\nFirst voxel at grid(" << voxelPos.incrementPos.x() << "," << voxelPos.incrementPos.y() 
+                           << "," << voxelPos.incrementPos.z() << ")\n";
                         ss << "  World: (" << worldPos.x() << "," << worldPos.y() << "," << worldPos.z() << ")\n";
                         ss << "  Clip: (" << clipPos.x << "," << clipPos.y << "," << clipPos.z << "," << clipPos.w << ")\n";
                         

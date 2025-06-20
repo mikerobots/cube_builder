@@ -83,6 +83,41 @@ The system extracts:
 - Useful for testing changes to coverage approach
 - Quick execution for development iteration
 
+### **Static Coverage Analysis Script**
+```bash
+# Analyze requirement coverage without running tests
+./tools/analyze_requirement_coverage_static.sh
+```
+
+**Features**:
+- **Instant analysis** - no test execution required
+- Scans all test files for REQ-X.X.X patterns
+- Identifies which tests validate which requirements
+- Generates CSV report with test-to-requirement mapping
+- Shows coverage by subsystem and requirement category
+- **Exclusion support** - honors `requirements_exclusions.txt`
+- Perfect for quick coverage checks during development
+
+### **Requirement Exclusions**
+```bash
+# Define non-testable requirements
+requirements_exclusions.txt
+```
+
+**Purpose**:
+- Documents requirements that cannot or should not have unit tests
+- Provides transparency about coverage gaps
+- Prevents false negatives in coverage reporting
+
+**Exclusion Categories**:
+- **Visual validation** - Requirements tested via CLI screenshot tests
+- **Infrastructure** - Build system and framework requirements
+- **Architecture** - Design constraints and non-functional requirements
+- **Foundation layer** - Requirements tested in foundation subsystem
+- **Other subsystems** - Requirements tested in file_io, surface_gen, etc.
+- **Performance targets** - Constraints rather than testable behaviors
+- **Redundant** - Duplicate requirements
+
 ### **Quick Coverage Check**
 ```bash
 # Run just requirement tests for fast validation
@@ -100,11 +135,13 @@ ctest -R "REQ_[0-9_]*" --verbose
 ## Coverage Analysis Results
 
 ### **Current Status** (as of June 19, 2025)
-- **39 requirement tests** discovered and validated automatically
-- **100% pass rate** for discovered requirements
-- **5 VoxelData requirements**: REQ-2.1.2, REQ-5.2.1/5.2.2, REQ-6.1.4, REQ-6.3.2, REQ-6.3.5
-- **34 Input requirements**: REQ-1.2.1 through REQ-9.2.2
-- **Cross-subsystem coverage**: Requirements validated across multiple components
+- **82 requirement tests** discovered across all subsystems
+- **75 unique requirements** covered by tests
+- **176 total requirements** in specification
+- **76 excluded requirements** (documented in `requirements_exclusions.txt`)
+- **100 testable requirements** after exclusions
+- **75% coverage** of testable requirements (75/100)
+- **44 missing requirements** that should have tests
 
 ### **Coverage by Test Type**
 - **Unit Tests**: 145+ requirements (estimated from subsystem analysis)
@@ -225,17 +262,20 @@ ctest -R "REQ_[0-9_]*" --verbose
 ### **File Structure**
 ```
 tools/
-├── requirement_coverage.sh           # Main coverage analysis script
-├── test_simple_coverage.sh          # Quick test validation script  
-├── test_requirement_coverage.sh     # Single subsystem demo script
-└── (other analysis tools)           # PPM analyzers, etc.
+├── requirement_coverage.sh                # Main coverage analysis script (runs tests)
+├── analyze_requirement_coverage_static.sh # Static analysis (no test execution)
+├── test_simple_coverage.sh               # Quick test validation script  
+├── test_requirement_coverage.sh          # Single subsystem demo script
+└── (other analysis tools)                # PPM analyzers, etc.
 
 coverage_reports/
-├── YYYYMMDD_HHMMSS/                 # Timestamped reports
-│   ├── all_requirements.csv        # Complete coverage data
-│   ├── coverage_report.html        # Visual report
-│   ├── unit_tests.log              # Unit test execution log
-│   └── integration_tests.log       # Integration test execution log
+├── YYYYMMDD_HHMMSS/                      # Timestamped reports from test runs
+│   ├── all_requirements.csv             # Complete coverage data
+│   ├── coverage_report.html             # Visual report
+│   ├── unit_tests.log                   # Unit test execution log
+│   └── integration_tests.log            # Integration test execution log
+
+requirement_coverage_static_report.csv     # Static analysis output
 ```
 
 ### **Output Formats**

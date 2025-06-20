@@ -71,7 +71,8 @@ protected:
     void createTestVoxelData(int count = 10) {
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
         for (int i = 0; i < count; ++i) {
-            Math::Vector3i pos(i % 5, (i / 5) % 5, i / 25);
+            // Use centered coordinates (-2 to +2 range)
+            Math::Vector3i pos((i % 5) - 2, (i / 5) % 5, (i / 25) - 2);
             voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
         }
     }
@@ -81,15 +82,15 @@ protected:
         auto workspaceSize = voxelManager->getWorkspaceSize();
         auto resolution = voxelManager->getActiveResolution();
         
-        // Calculate max grid dimensions for current resolution
+        // Calculate max grid dimensions for current resolution (centered coordinate system)
         float voxelSize = VoxelData::getVoxelSize(resolution);
-        int maxX = static_cast<int>(workspaceSize.x / voxelSize);
-        int maxY = static_cast<int>(workspaceSize.y / voxelSize);
-        int maxZ = static_cast<int>(workspaceSize.z / voxelSize);
+        int maxGridSize = static_cast<int>(workspaceSize.x / voxelSize);
+        int halfGrid = maxGridSize / 2;
         
-        return pos.x >= 0 && pos.x < maxX &&
-               pos.y >= 0 && pos.y < maxY &&
-               pos.z >= 0 && pos.z < maxZ;
+        // For centered coordinates: range is [-halfGrid, halfGrid), Y is still >= 0
+        return pos.x >= -halfGrid && pos.x < halfGrid &&
+               pos.y >= 0 && pos.y < static_cast<int>(workspaceSize.y / voxelSize) &&
+               pos.z >= -halfGrid && pos.z < halfGrid;
     }
 
     std::unique_ptr<Application> app;
@@ -128,10 +129,10 @@ TEST_F(CLIHeadlessTest, HeadlessVoxelOperations) {
     // Test basic voxel operations without rendering
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
     
-    // Place voxels
-    Math::Vector3i pos1(0, 0, 0);
-    Math::Vector3i pos2(1, 1, 1);
-    Math::Vector3i pos3(2, 2, 2);
+    // Place voxels at centered coordinates
+    Math::Vector3i pos1(0, 0, 0);   // Origin
+    Math::Vector3i pos2(-1, 1, 1);  // Negative X coordinate
+    Math::Vector3i pos3(1, 1, -1);  // Negative Z coordinate
     
     EXPECT_TRUE(voxelManager->setVoxel(pos1, VoxelData::VoxelResolution::Size_8cm, true));
     EXPECT_TRUE(voxelManager->setVoxel(pos2, VoxelData::VoxelResolution::Size_8cm, true));
@@ -187,14 +188,17 @@ TEST_F(CLIHeadlessTest, WorkspaceBoundaryVoxelPlacement) {
     
     // Calculate max grid dimensions: 4m / 0.08m = 50 voxels per axis
     int maxGrid = 50;
+    int halfGrid = maxGrid / 2;  // For centered coordinates
     
-    // Test corner positions
+    // Test corner positions (centered coordinate system)
     std::vector<Math::Vector3i> corners = {
-        {0, 0, 0},           // Origin
-        {maxGrid-1, 0, 0},   // X edge
-        {0, maxGrid-1, 0},   // Y edge  
-        {0, 0, maxGrid-1},   // Z edge
-        {maxGrid-1, maxGrid-1, maxGrid-1} // Far corner
+        {0, 0, 0},                    // Origin
+        {halfGrid-1, 0, 0},           // Positive X edge
+        {-halfGrid, 0, 0},            // Negative X edge
+        {0, maxGrid-1, 0},            // Y edge (Y is still >= 0)
+        {0, 0, halfGrid-1},           // Positive Z edge
+        {0, 0, -halfGrid},            // Negative Z edge
+        {halfGrid-1, maxGrid-1, halfGrid-1} // Far positive corner
     };
     
     for (const auto& pos : corners) {
@@ -203,14 +207,14 @@ TEST_F(CLIHeadlessTest, WorkspaceBoundaryVoxelPlacement) {
             << "Should be able to place voxel at " << pos.x << "," << pos.y << "," << pos.z;
     }
     
-    // Test out-of-bounds positions
+    // Test out-of-bounds positions (centered coordinate system)
     std::vector<Math::Vector3i> outOfBounds = {
-        {maxGrid, 0, 0},     // X out of bounds
-        {0, maxGrid, 0},     // Y out of bounds
-        {0, 0, maxGrid},     // Z out of bounds
-        {-1, 0, 0},          // Negative X
-        {0, -1, 0},          // Negative Y
-        {0, 0, -1}           // Negative Z
+        {halfGrid, 0, 0},     // X out of bounds (positive)
+        {-halfGrid-1, 0, 0},  // X out of bounds (negative)
+        {0, maxGrid, 0},      // Y out of bounds
+        {0, 0, halfGrid},     // Z out of bounds (positive)
+        {0, 0, -halfGrid-1},  // Z out of bounds (negative)
+        {0, -1, 0}            // Negative Y (still invalid as Y >= 0)
     };
     
     for (const auto& pos : outOfBounds) {
@@ -272,15 +276,15 @@ TEST_F(CLIHeadlessTest, MultiResolutionSupport) {
 TEST_F(CLIHeadlessTest, ResolutionSwitching) {
     // Test switching between resolutions doesn't affect other resolutions
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
-    Math::Vector3i pos8cm(5, 5, 5);
+    Math::Vector3i pos8cm(-1, 1, -1);  // Use centered coordinates
     voxelManager->setVoxel(pos8cm, VoxelData::VoxelResolution::Size_8cm, true);
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_16cm);
-    Math::Vector3i pos16cm(3, 3, 3);
+    Math::Vector3i pos16cm(0, 1, 1);   // Use centered coordinates
     voxelManager->setVoxel(pos16cm, VoxelData::VoxelResolution::Size_16cm, true);
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_32cm);
-    Math::Vector3i pos32cm(1, 1, 1);
+    Math::Vector3i pos32cm(1, 1, 0);   // Use centered coordinates
     voxelManager->setVoxel(pos32cm, VoxelData::VoxelResolution::Size_32cm, true);
     
     // Verify all voxels still exist

@@ -168,7 +168,7 @@ TEST_F(VoxelTypesTest, Resolution8cmValidation) {
 
 TEST_F(VoxelTypesTest, PositionBoundsChecking) {
     Math::Vector3i validPos(10, 10, 10);  // 10cm from origin
-    Math::Vector3i invalidPos(1000, 10, 10);  // 10m from origin, outside 5m workspace
+    Math::Vector3i invalidPos(260, 10, 10);  // 2.6m from origin, outside 2.5m X boundary in 5m workspace
     
     EXPECT_TRUE(isPositionInBounds(validPos, workspaceSize));
     EXPECT_FALSE(isPositionInBounds(invalidPos, workspaceSize));

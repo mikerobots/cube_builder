@@ -168,6 +168,7 @@ target_include_directories(test_mouse_ray_movement PRIVATE
 target_link_libraries(test_mouse_ray_movement PRIVATE
     VoxelEditor_CLI_Lib
     GTest::gtest_main
+    glm::glm
 )
 
 target_compile_features(test_mouse_ray_movement PRIVATE cxx_std_20)

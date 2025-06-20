@@ -228,8 +228,8 @@ bool Application::initializeCoreSystem() {
         // Get workspace size to center camera
         Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceSize();
         // Camera should look at origin (0,0,0) for centered coordinate system
-        // with Y slightly up to see the workspace better
-        Math::Vector3f workspaceCenter(0.0f, workspaceSize.y * 0.5f, 0.0f);
+        // The workspace is already centered at origin, so target is (0,0,0)
+        Math::Vector3f workspaceCenter(0.0f, 0.0f, 0.0f);
         
         m_cameraController->getCamera()->setTarget(Math::WorldCoordinates(workspaceCenter));
         
@@ -237,7 +237,7 @@ bool Application::initializeCoreSystem() {
         float maxDimension = std::max({workspaceSize.x, workspaceSize.y, workspaceSize.z});
         m_cameraController->getCamera()->setDistance(maxDimension * 1.5f);
         
-        std::cout << "Camera set to view workspace center at (" 
+        std::cout << "Camera set to view workspace center at origin (" 
                   << workspaceCenter.x << ", " << workspaceCenter.y << ", " << workspaceCenter.z << ")" << std::endl;
         
         // Input manager

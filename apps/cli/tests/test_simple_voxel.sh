@@ -16,7 +16,7 @@ echo "Simple voxel rendering test..."
 (
     echo "workspace 4 4 4"    # Smaller workspace
     echo "resolution 32cm"    # Larger voxels (32cm)
-    echo "place 6 6 6"        # Place in visible area
+    echo "place 0cm 0cm 0cm"  # Place at origin (centered coordinate system)
     echo "camera front"
     echo "zoom 3.0"           # Zoom in closer
     sleep 2                   # Give more time to render

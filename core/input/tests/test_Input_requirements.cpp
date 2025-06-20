@@ -383,7 +383,7 @@ TEST_F(InputRequirementsTest, PlaneChangesWhenPreviewClears_REQ_3_3_4) {
     m_planeDetector->setCurrentPlane(plane);
     
     // Move preview away
-    IncrementCoordinates farPos(500, 0, 500);
+    IncrementCoordinates farPos(240, 0, 240);  // Near workspace edge but within bounds
     
     // Simulate time passing with preview away
     for (int i = 0; i < 60; ++i) {

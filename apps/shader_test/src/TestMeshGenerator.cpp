@@ -26,7 +26,7 @@ void TestMeshGenerator::addCubeFace(std::vector<Rendering::Vertex>& vertices,
         float x = (i == 0 || i == 3) ? -halfSize : halfSize;
         float y = (i == 0 || i == 1) ? -halfSize : halfSize;
         
-        v.position = center + right * x + up * y;
+        v.position = Math::WorldCoordinates(center + right * x + up * y);
         v.normal = normal;
         v.color = Rendering::Color(color.x, color.y, color.z, 1.0f);
         v.texCoords = Math::Vector2f((x + halfSize) / size, (y + halfSize) / size);
@@ -119,8 +119,8 @@ Rendering::Mesh TestMeshGenerator::createGrid(int divisions, float spacing, int 
         bool isMajor = (i % majorInterval) == 0;
         
         Rendering::Vertex v1, v2;
-        v1.position = Math::Vector3f(-halfSize, 0, z);
-        v2.position = Math::Vector3f(halfSize, 0, z);
+        v1.position = Math::WorldCoordinates(-halfSize, 0, z);
+        v2.position = Math::WorldCoordinates(halfSize, 0, z);
         
         // Use color alpha to indicate major/minor lines
         float alpha = isMajor ? 1.0f : 0.5f;
@@ -139,8 +139,8 @@ Rendering::Mesh TestMeshGenerator::createGrid(int divisions, float spacing, int 
         bool isMajor = (i % majorInterval) == 0;
         
         Rendering::Vertex v1, v2;
-        v1.position = Math::Vector3f(x, 0, -halfSize);
-        v2.position = Math::Vector3f(x, 0, halfSize);
+        v1.position = Math::WorldCoordinates(x, 0, -halfSize);
+        v2.position = Math::WorldCoordinates(x, 0, halfSize);
         
         float alpha = isMajor ? 1.0f : 0.5f;
         v1.color = v2.color = Rendering::Color(0.7f, 0.7f, 0.7f, alpha);
@@ -180,7 +180,7 @@ Rendering::Mesh TestMeshGenerator::createWireframeCube(float size, const Math::V
     // Add vertices
     for (int i = 0; i < 8; ++i) {
         Rendering::Vertex v;
-        v.position = corners[i];
+        v.position = Math::WorldCoordinates(corners[i]);
         v.normal = Math::Vector3f(0, 1, 0); // Dummy normal
         v.color = Rendering::Color(color.x, color.y, color.z, 1.0f);
         vertices.push_back(v);
@@ -233,7 +233,7 @@ Rendering::Mesh TestMeshGenerator::createQuad(float size, const Math::Vector3f& 
         float x = (i == 0 || i == 3) ? -halfSize : halfSize;
         float y = (i == 0 || i == 1) ? -halfSize : halfSize;
         
-        v.position = right * x + up * y;
+        v.position = Math::WorldCoordinates(right * x + up * y);
         v.normal = normal;
         v.color = Rendering::Color(0.8f, 0.8f, 0.8f, 1.0f);
         v.texCoords = Math::Vector2f((x + halfSize) / size, (y + halfSize) / size);
@@ -271,7 +271,7 @@ Rendering::Mesh TestMeshGenerator::createVoxelCluster(int xCount, int yCount, in
                 unsigned int indexOffset = allVertices.size();
                 
                 for (auto& vertex : cubeMesh.vertices) {
-                    vertex.position = vertex.position + offset;
+                    vertex.position = Math::WorldCoordinates(vertex.position.value() + offset);
                     allVertices.push_back(vertex);
                 }
                 
@@ -307,12 +307,12 @@ Rendering::Mesh TestMeshGenerator::createSphere(float radius, int segments, int 
             float cosTheta = std::cos(theta);
             
             Rendering::Vertex v;
-            v.position = Math::Vector3f(
+            v.position = Math::WorldCoordinates(
                 radius * sinPhi * cosTheta,
                 radius * cosPhi,
                 radius * sinPhi * sinTheta
             );
-            v.normal = v.position.normalized();
+            v.normal = v.position.value().normalized();
             v.color = Rendering::Color(0.7f, 0.7f, 0.7f, 1.0f);
             v.texCoords = Math::Vector2f(
                 static_cast<float>(seg) / segments,

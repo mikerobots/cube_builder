@@ -64,10 +64,11 @@ bool isCubeInFrustum(const Camera::Camera& camera, const Math::Vector3f& center,
 // Helper to get world position of a voxel
 Math::Vector3f getVoxelWorldPos(int x, int y, int z, VoxelData::VoxelResolution resolution) {
     float voxelSize = VoxelData::getVoxelSize(resolution);
+    // Centered coordinate system: 0,0,0 is at the center
     return Math::Vector3f(
-        x * voxelSize + voxelSize * 0.5f,
-        y * voxelSize + voxelSize * 0.5f,
-        z * voxelSize + voxelSize * 0.5f
+        x * voxelSize,
+        y * voxelSize,
+        z * voxelSize
     );
 }
 
@@ -75,10 +76,10 @@ Math::Vector3f getVoxelWorldPos(int x, int y, int z, VoxelData::VoxelResolution 
 void printDebugInfo(const std::string& testName, const Camera::Camera& camera, 
                    const Math::Vector3f& cubePos, float cubeSize) {
     std::cout << "\n=== " << testName << " ===" << std::endl;
-    std::cout << "Camera position: (" << camera.getPosition().x << ", " 
-              << camera.getPosition().y << ", " << camera.getPosition().z << ")" << std::endl;
-    std::cout << "Camera target: (" << camera.getTarget().x << ", " 
-              << camera.getTarget().y << ", " << camera.getTarget().z << ")" << std::endl;
+    std::cout << "Camera position: (" << camera.getPosition().x() << ", " 
+              << camera.getPosition().y() << ", " << camera.getPosition().z() << ")" << std::endl;
+    std::cout << "Camera target: (" << camera.getTarget().x() << ", " 
+              << camera.getTarget().y() << ", " << camera.getTarget().z() << ")" << std::endl;
     std::cout << "Camera forward: (" << camera.getForward().x << ", " 
               << camera.getForward().y << ", " << camera.getForward().z << ")" << std::endl;
     std::cout << "Cube position: (" << cubePos.x << ", " << cubePos.y << ", " << cubePos.z << ")" << std::endl;
@@ -212,7 +213,7 @@ void test_LargeVoxel_CloseCamera() {
     
     // Position camera very close
     Math::Vector3f voxelPos = getVoxelWorldPos(5, 5, 5, resolution);
-    camera.setTarget(voxelPos);
+    camera.setTarget(Math::WorldCoordinates(voxelPos));
     camera.setDistance(1.0f);
     camera.setYaw(0.0f);
     camera.setPitch(0.0f);
@@ -247,8 +248,8 @@ void test_ExplicitMatrixCalculations() {
     camera.setNearFarPlanes(0.1f, 100.0f);
     
     // Manually set camera parameters
-    Math::Vector3f cameraPos(10.0f, 10.0f, 10.0f);
-    Math::Vector3f targetPos(5.0f, 5.0f, 5.0f);
+    Math::WorldCoordinates cameraPos(10.0f, 10.0f, 10.0f);
+    Math::WorldCoordinates targetPos(5.0f, 5.0f, 5.0f);
     camera.setPosition(cameraPos);
     camera.setTarget(targetPos);
     
@@ -257,7 +258,7 @@ void test_ExplicitMatrixCalculations() {
     std::cout << "=== Explicit Matrix Calculations ===" << std::endl;
     
     // Manually calculate view matrix components
-    Math::Vector3f forward = (targetPos - cameraPos).normalized();
+    Math::Vector3f forward = (targetPos - cameraPos).value().normalized();
     Math::Vector3f right = Math::Vector3f(0, 1, 0).cross(forward).normalized();
     Math::Vector3f up = forward.cross(right);
     

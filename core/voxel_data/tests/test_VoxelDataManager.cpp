@@ -549,8 +549,8 @@ TEST_F(VoxelDataManagerTest, RedundantOperations) {
 }
 
 TEST_F(VoxelDataManagerTest, OutOfBoundsOperations) {
-    Vector3i outOfBoundsPos(10000, 10000, 10000);
-    Vector3f outOfBoundsWorldPos(100.0f, 100.0f, 100.0f);
+    Vector3i outOfBoundsPos(1000, 1000, 1000);  // 10m, outside 5m workspace
+    Vector3f outOfBoundsWorldPos(10.0f, 10.0f, 10.0f);  // 10m, outside 5m workspace
     
     // Grid operations should fail gracefully
     EXPECT_FALSE(manager->setVoxel(outOfBoundsPos, VoxelResolution::Size_1cm, true));
@@ -661,13 +661,13 @@ TEST_F(VoxelDataManagerTest, IncrementValidation_InvalidWorldPositions) {
 // REQ-5.2.1: Voxels shall not overlap with existing voxels
 TEST_F(VoxelDataManagerTest, CollisionDetection_NoOverlap) {
     // Place a 1cm voxel at a known position
-    Vector3i pos1(250, 50, 250);  // Using known working coordinates
+    Vector3i pos1(150, 50, 150);  // Within 5m workspace bounds
     manager->setVoxel(pos1, VoxelResolution::Size_1cm, true);
     
     // Test positions that should NOT overlap (sufficiently far away)
-    EXPECT_FALSE(manager->wouldOverlap(Vector3i(300, 50, 250), VoxelResolution::Size_1cm)); // Far in X
-    EXPECT_FALSE(manager->wouldOverlap(Vector3i(250, 100, 250), VoxelResolution::Size_1cm)); // Far in Y
-    EXPECT_FALSE(manager->wouldOverlap(Vector3i(250, 50, 300), VoxelResolution::Size_1cm)); // Far in Z
+    EXPECT_FALSE(manager->wouldOverlap(Vector3i(200, 50, 150), VoxelResolution::Size_1cm)); // Far in X
+    EXPECT_FALSE(manager->wouldOverlap(Vector3i(150, 100, 150), VoxelResolution::Size_1cm)); // Far in Y
+    EXPECT_FALSE(manager->wouldOverlap(Vector3i(150, 50, 200), VoxelResolution::Size_1cm)); // Far in Z
     EXPECT_FALSE(manager->wouldOverlap(Vector3i(100, 25, 100), VoxelResolution::Size_1cm)); // Far in all directions
 }
 
@@ -774,7 +774,7 @@ TEST_F(VoxelDataManagerTest, AdjacentPositionCalculation_DifferentSizes) {
     EXPECT_NE(smallPosX, smallPosZ);    // +X and +Z should be different
     
     // Test reverse: placing larger voxel next to smaller voxel
-    Vector3i smallPos(250, 50, 250); // 1cm voxel using known working coordinates
+    Vector3i smallPos(150, 50, 150); // 1cm voxel within workspace bounds
     Vector3i largePosX = manager->getAdjacentPosition(smallPos, FaceDirection::PosX, smallRes, largeRes);
     Vector3i largePosNegX = manager->getAdjacentPosition(smallPos, FaceDirection::NegX, smallRes, largeRes);
     

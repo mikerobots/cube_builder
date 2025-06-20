@@ -42,7 +42,7 @@ cmake --build build_relwithdebinfo
 
 ### Unit Tests (Recommended)
 ```bash
-# Run all unit tests only (excludes integration/CLI/visual tests)
+# Run all unit tests only (excludes integration/e2e tests)
 ./run_all_unit.sh
 
 # Run specific subsystem tests
@@ -51,23 +51,38 @@ ctest -R "VoxelEditor_Rendering_Tests"
 ctest -R "VoxelEditor_VoxelData_Tests"
 ```
 
+### Integration Tests (C++)
+```bash
+# Integration test runner for C++ cross-component tests
+./run_integration_tests.sh all        # All integration tests
+./run_integration_tests.sh core       # Core integration tests
+./run_integration_tests.sh cli-cpp    # CLI C++ integration tests
+./run_integration_tests.sh quick      # Quick integration tests only
+```
+
+### End-to-End Tests (Shell)
+```bash
+# End-to-end test runner for CLI workflow validation
+./run_e2e_tests.sh all                # All e2e tests
+./run_e2e_tests.sh cli-validation     # Basic CLI validation tests
+./run_e2e_tests.sh cli-comprehensive  # Complex CLI workflow tests
+./run_e2e_tests.sh visual            # Visual validation tests
+./run_e2e_tests.sh quick             # Quick smoke tests only
+```
+
 ### Comprehensive Testing
 ```bash
-# Integration test runner with groups
-./run_integration_tests.sh all        # All tests
-./run_integration_tests.sh core       # Core integration tests
-./run_integration_tests.sh visual     # Visual validation tests
-
-# CLI validation (screenshot-based)
-cd tests/cli_validation && ./run_all_tests.sh
-
 # All unit tests with CTest
 cd build_ninja && ctest --output-on-failure
+
+# Run specific test suites directly
+cd tests/e2e/cli_validation && ./run_all_tests.sh
+cd tests/e2e/cli_comprehensive && ./run_all_tests.sh
 ```
 
 ### Visual Validation Test Suite
 
-**Location**: `tests/cli_validation/`
+**Location**: `tests/e2e/cli_validation/`
 
 Screenshot-based automated test suite using PPM color analysis:
 - **`test_basic_voxel_placement.sh`** - Single voxel placement validation
@@ -132,6 +147,9 @@ save project.vox     # Save project
 ```bash
 ./execute_command.sh ./build_ninja/path/to/executable
 ./execute_command.sh ./script.sh
+
+**CRITICAL**: When running executables in root directory or local scripts, ALWAYS cd to the root directory first and use ./execute_command.sh
+
 ```
 
 ### Testing Requirements
@@ -182,8 +200,9 @@ open docs/latex/refman.pdf     # PDF docs
 
 ### When to Run Different Test Types
 - **`./run_all_unit.sh`** - Fast unit tests during development
-- **`./run_integration_tests.sh core`** - Integration testing after changes
-- **`cd tests/cli_validation && ./run_all_tests.sh`** - Visual validation for rendering changes
+- **`./run_integration_tests.sh core`** - C++ integration testing after changes
+- **`./run_e2e_tests.sh cli-validation`** - Visual validation for rendering changes
+- **`./run_e2e_tests.sh cli-comprehensive`** - Complex workflow validation
 - **Full test suite** - Before major commits or releases
 
 

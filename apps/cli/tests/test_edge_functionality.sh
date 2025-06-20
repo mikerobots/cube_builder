@@ -43,7 +43,7 @@ EOF
 # Test 1: Basic edge rendering
 run_test "basic edge rendering" \
 "edges on
-place 0 0 0" \
+place 0cm 0cm 0cm" \
 "Edge rendering enabled"
 
 # Test 2: Edge toggle
@@ -56,15 +56,15 @@ edges toggle" \
 # Test 3: Multiple voxels with edges
 run_test "multiple voxels" \
 "edges on
-place 0 0 0
-place 1 0 0
-place 0 1 0
-place 0 0 1" \
-"Voxel placed at (0, 0, 1)"
+place 0cm 0cm 0cm
+place 1cm 0cm 0cm
+place 0cm 1cm 0cm
+place 0cm 0cm 1cm" \
+"Voxel placed at (0cm, 0cm, 1cm)"
 
 # Test 4: Shader switching
 run_test "shader switching" \
-"place 0 0 0
+"place 0cm 0cm 0cm
 shader basic
 shader enhanced
 shader flat" \
@@ -74,26 +74,26 @@ shader flat" \
 run_test "edges with shaders" \
 "edges on
 shader basic
-place 0 0 0
+place 0cm 0cm 0cm
 shader enhanced
-place 1 0 0
+place 1cm 0cm 0cm
 shader flat
-place 2 0 0" \
-"Voxel placed at (2, 0, 0)"
+place 2cm 0cm 0cm" \
+"Voxel placed at (2cm, 0cm, 0cm)"
 
 # Test 6: Large scene with edges
 run_test "large scene" \
 "edges on
-place 0 0 0
-place 1 0 0
-place 2 0 0
-place 0 1 0
-place 1 1 0
-place 2 1 0
-place 0 2 0
-place 1 2 0
-place 2 2 0
-place 1 1 1
+place 0cm 0cm 0cm
+place 1cm 0cm 0cm
+place 2cm 0cm 0cm
+place 0cm 1cm 0cm
+place 1cm 1cm 0cm
+place 2cm 1cm 0cm
+place 0cm 2cm 0cm
+place 1cm 2cm 0cm
+place 2cm 2cm 0cm
+place 1cm 1cm 1cm
 info" \
 "Voxels: 10"
 

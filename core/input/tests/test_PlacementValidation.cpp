@@ -137,7 +137,7 @@ TEST_F(PlacementValidationTest, ValidateWorkspaceBounds) {
     
     // Test position outside X bounds (negative)
     {
-        IncrementCoordinates gridPos(-300, 100, 100); // -3m (outside -2.5m bound)
+        IncrementCoordinates gridPos(-260, 100, 100); // -2.6m (outside -2.5m bound)
         auto result = PlacementUtils::validatePlacement(gridPos, 
             VoxelData::VoxelResolution::Size_1cm, m_workspaceSize);
         EXPECT_EQ(result, PlacementValidationResult::InvalidOutOfBounds);
@@ -145,7 +145,7 @@ TEST_F(PlacementValidationTest, ValidateWorkspaceBounds) {
     
     // Test position outside X bounds (positive)
     {
-        IncrementCoordinates gridPos(300, 100, 100); // 3m (outside 2.5m bound)
+        IncrementCoordinates gridPos(260, 100, 100); // 2.6m (outside 2.5m bound)
         auto result = PlacementUtils::validatePlacement(gridPos, 
             VoxelData::VoxelResolution::Size_1cm, m_workspaceSize);
         EXPECT_EQ(result, PlacementValidationResult::InvalidOutOfBounds);
@@ -153,7 +153,7 @@ TEST_F(PlacementValidationTest, ValidateWorkspaceBounds) {
     
     // Test position outside Y bounds (too high)
     {
-        IncrementCoordinates gridPos(100, 600, 100); // 6m (outside 5m height)
+        IncrementCoordinates gridPos(100, 510, 100); // 5.1m (outside 5m height)
         auto result = PlacementUtils::validatePlacement(gridPos, 
             VoxelData::VoxelResolution::Size_1cm, m_workspaceSize);
         EXPECT_EQ(result, PlacementValidationResult::InvalidOutOfBounds);

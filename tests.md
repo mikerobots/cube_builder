@@ -228,15 +228,21 @@ The test suite is organized into a comprehensive multi-tiered architecture:
 - **`apps/cli/tests/test_voxel_face_clicking_simple.cpp`** - Simple voxel face clicking tests
 - **`apps/cli/tests/test_zoom_behavior.cpp`** - Tests camera zoom functionality
 
-### CLI Shell Test Scripts
-- **`apps/cli/tests/test_edge_functionality.sh`** - Tests edge rendering functionality
-- **`apps/cli/tests/test_edge_minimal.sh`** - Minimal edge rendering test
-- **`apps/cli/tests/test_edge_rendering.sh`** - Comprehensive edge rendering tests
-- **`apps/cli/tests/test_edge_simple.sh`** - Simple edge rendering validation
-- **`apps/cli/tests/test_large_voxels.sh`** - Tests rendering of large voxel sizes
-- **`apps/cli/tests/test_screenshot_validation.sh`** - Screenshot-based validation tests
-- **`apps/cli/tests/test_simple_voxel.sh`** - Basic single voxel rendering test
-- **`apps/cli/tests/test_voxel_rendering.sh`** - Comprehensive voxel rendering tests
+### Test Runner Scripts
+
+#### Master Test Runners
+- **`./run_all_unit.sh`** - Runs all unit tests across all subsystems
+- **`./run_integration_tests.sh`** - Runs C++ integration tests with group selection
+- **`./run_e2e_tests.sh`** - Runs end-to-end shell script tests with group selection
+
+#### Test Runner Features
+- Group-based test execution for targeted testing
+- Help command to show available groups
+- List command to enumerate all tests
+- Colored output with clear pass/fail indicators
+- Timeout handling (30s default, 60s for visual tests)
+- Summary statistics and failure reporting
+- Proper error handling and exit codes
 
 ### Shader Test Application
 - **`apps/shader_test/src/main.cpp`** - Main entry point for shader testing framework
@@ -252,30 +258,48 @@ The test suite is organized into a comprehensive multi-tiered architecture:
 
 ## Integration and Validation Tests
 
-### Core Integration Tests
-- **`tests/integration/test_camera_cube_visibility.cpp`** - Tests camera and cube rendering integration
-- **`tests/integration/test_camera_cube_visibility_simple.cpp`** - Simplified camera-cube visibility tests
-- **`tests/integration/test_ground_plane_voxel_placement.cpp`** - Tests ground plane voxel placement integration
-- **`tests/integration/test_mouse_boundary_clicking.cpp`** - Tests mouse interaction boundary conditions
-- **`tests/integration/test_mouse_ground_plane_clicking.cpp`** - Tests mouse clicking on ground plane
-- **`tests/integration/test_workspace_boundary_placement.cpp`** - Tests workspace boundary constraint validation
+### C++ Integration Tests
+**Location**: `tests/integration/`
+**Runner**: `./run_integration_tests.sh`
 
-### CLI Validation Tests (Screenshot-based)
-- **`tests/cli_validation/test_basic_voxel_placement.sh`** - Single voxel placement and visibility validation
-- **`tests/cli_validation/test_camera_views.sh`** - All camera view presets (front, back, top, bottom, left, right, iso)
-- **`tests/cli_validation/test_multiple_voxels.sh`** - Multiple voxel placement in patterns
-- **`tests/cli_validation/test_render_modes.sh`** - Basic rendering functionality validation
-- **`tests/cli_validation/test_resolution_switching.sh`** - Multiple voxel resolutions (1cm, 4cm, 8cm, 16cm, 32cm)
-- **`tests/cli_validation/run_all_tests.sh`** - Execute all validation tests with summary report
+#### Core Integration Tests
+- **`test_camera_cube_visibility.cpp`** - Tests camera and cube rendering integration
+- **`test_camera_cube_visibility_simple.cpp`** - Simplified camera-cube visibility tests
+- **`test_ground_plane_voxel_placement.cpp`** - Tests ground plane voxel placement integration
+- **`test_mouse_boundary_clicking.cpp`** - Tests mouse interaction boundary conditions
+- **`test_mouse_ground_plane_clicking.cpp`** - Tests mouse clicking on ground plane
+- **`test_workspace_boundary_placement.cpp`** - Tests workspace boundary constraint validation
 
-### Comprehensive CLI Tests
-**Location**: `tests/cli_comprehensive/`
-- Extensive end-to-end workflow testing
-- Save/load project validation
-- Enhancement and feature validation
-- Error handling and edge case testing
-- Visual enhancement validation
-- Integration workflow testing
+#### Visual Feedback Integration Tests
+**Location**: `tests/integration/visual_feedback/`
+- **`test_visual_feedback_requirements_integration.cpp`** - Visual feedback requirements validation
+- **`test_feedback_renderer_integration.cpp`** - Feedback renderer integration tests
+
+### End-to-End Tests (Shell Scripts)
+**Runner**: `./run_e2e_tests.sh`
+
+#### CLI Validation Tests
+**Location**: `tests/e2e/cli_validation/`
+- **`test_basic_voxel_placement.sh`** - Single voxel placement and visibility validation
+- **`test_camera_views.sh`** - All camera view presets (front, back, top, bottom, left, right, iso)
+- **`test_multiple_voxels.sh`** - Multiple voxel placement in patterns
+- **`test_render_modes.sh`** - Basic rendering functionality validation
+- **`test_resolution_switching.sh`** - Multiple voxel resolutions (1cm, 4cm, 8cm, 16cm, 32cm)
+- **`run_all_tests.sh`** - Execute all validation tests with summary report
+
+#### Comprehensive CLI Tests
+**Location**: `tests/e2e/cli_comprehensive/`
+- **`test_basic_smoke.sh`** - Basic smoke testing for CLI functionality
+- **`test_commands_headless.sh`** - Headless command testing
+- **`test_constraints_only.sh`** - Constraint validation testing
+- **`test_enhancement_validation.sh`** - Feature enhancement validation
+- **`test_error_handling.sh`** - Error handling and edge case testing
+- **`test_integration.sh`** - Integration workflow testing
+- **`test_new_features.sh`** - New feature validation
+- **`test_visual_enhancements.sh`** - Visual enhancement testing
+- **`run_all_tests.sh`** - Execute all comprehensive tests
+- **`run_headless_tests.sh`** - Run only headless tests
+- **`run_rendering_tests.sh`** - Run only rendering tests
 
 ### Verification Tests
 - **`tests/verification/test_core_functionality.cpp`** - Verifies core system functionality
@@ -352,12 +376,19 @@ cd tests/cli_comprehensive
 ### Test Execution Features
 
 **Test Runner Capabilities:**
-- Colored output with status indicators
+- Colored output with status indicators (✓ for pass, ✗ for fail)
 - Test execution timing and performance metrics
 - Automatic test discovery and organization
-- Group-based test execution (core, cli, rendering, visual, etc.)
+- Group-based test execution with flexible filtering
 - Failed test reporting with detailed error logs
+- Timeout handling to prevent hanging tests
+- Help and list commands for test discovery
+- Summary statistics (passed/failed/total)
 - CI/CD friendly output with proper exit codes
+
+**Test Groups Available:**
+- **Integration Tests**: `core`, `cli-cpp`, `interaction`, `shader`, `visual-feedback`, `verification`, `quick`, `all`
+- **E2E Tests**: `cli-validation`, `cli-comprehensive`, `visual`, `rendering`, `workflow`, `boundary`, `quick`, `smoke`, `all`
 
 **Visual Validation Features:**
 - Screenshots captured as PPM files
@@ -428,5 +459,31 @@ cd tests/cli_comprehensive
 - Automated validation reduces manual testing burden
 - CI/CD friendly with proper reporting and exit codes
 - Well-documented test structure for developer onboarding
+
+## Test Organization Summary
+
+The reorganized test structure provides:
+
+1. **Clear Separation of Concerns**
+   - Unit tests in `core/*/tests/` for individual components
+   - C++ integration tests in `tests/integration/` for cross-component testing
+   - Shell-based E2E tests in `tests/e2e/` for workflow validation
+
+2. **Flexible Test Execution**
+   - Three master test runners for different test types
+   - Group-based execution for targeted testing
+   - Quick/smoke test options for rapid validation
+
+3. **Comprehensive Coverage**
+   - 900+ unit tests across all subsystems
+   - Integration tests for critical interactions
+   - Visual validation through screenshot analysis
+   - End-to-end workflow testing
+
+4. **Developer-Friendly Features**
+   - Help and list commands for test discovery
+   - Colored output with clear indicators
+   - Timeout handling to prevent hanging
+   - Detailed failure reporting
 
 This test structure demonstrates a mature, production-ready testing approach that combines traditional software testing with innovative graphics validation techniques, making it particularly well-suited for a complex graphics-intensive voxel editing application.

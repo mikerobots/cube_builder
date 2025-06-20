@@ -72,11 +72,11 @@ protected:
         // 3. Calculate placement position using PlacementValidation
         Math::Vector3f hitPoint;
         if (face.isGroundPlane()) {
-            hitPoint = face.getGroundPlaneHitPoint();
+            hitPoint = face.getGroundPlaneHitPoint().value();
         } else {
             // For voxel faces, use face center
-            Math::Vector3i voxelPos = face.getVoxelPosition();
-            hitPoint = Input::PlacementUtils::incrementGridToWorld(voxelPos);
+            Math::IncrementCoordinates voxelPos = face.getVoxelPosition();
+            hitPoint = Math::CoordinateConverter::incrementToWorld(voxelPos).value();
         }
         
         Math::Vector3f workspaceSize = Math::Vector3f(8.0f, 8.0f, 8.0f);
@@ -98,7 +98,7 @@ protected:
         // 4. Place the voxel using the command system
         auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
             voxelManager.get(),
-            context.snappedGridPos,
+            context.snappedIncrementPos.value(),
             voxelManager->getActiveResolution(),
             true  // Place voxel
         );

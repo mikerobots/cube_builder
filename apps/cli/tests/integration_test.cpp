@@ -96,8 +96,8 @@ TEST_F(CLIIntegrationTest, SelectionWorkflow) {
     auto voxelManager = app->getVoxelManager();
     auto selectionManager = app->getSelectionManager();
     
-    // Create some voxels
-    for (int x = 0; x < 5; ++x) {
+    // Create some voxels (centered around origin)
+    for (int x = -2; x <= 2; ++x) {
         for (int y = 0; y < 5; ++y) {
             voxelManager->setVoxel(Math::Vector3i(x, y, 0), VoxelData::VoxelResolution::Size_8cm, true);
         }
@@ -105,8 +105,8 @@ TEST_F(CLIIntegrationTest, SelectionWorkflow) {
     
     // Select a subset of voxels instead of using box selection
     // The box selection behavior appears to have changed with the coordinate system
-    // For now, let's test by selecting individual voxels
-    for (int x = 0; x < 3; ++x) {
+    // For now, let's test by selecting individual voxels (centered around origin)
+    for (int x = -1; x <= 1; ++x) {
         for (int y = 0; y < 3; ++y) {
             Selection::VoxelId voxelId(Math::Vector3i(x, y, 0), VoxelData::VoxelResolution::Size_8cm);
             selectionManager->selectVoxel(voxelId);
@@ -132,9 +132,9 @@ TEST_F(CLIIntegrationTest, GroupManagementWorkflow) {
     auto selectionManager = app->getSelectionManager();
     auto groupManager = app->getGroupManager();
     
-    // Create voxels and select them
+    // Create voxels and select them (centered around origin)
     std::vector<Groups::VoxelId> groupVoxelIds;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = -2; i <= 2; ++i) {
         Math::Vector3i pos(i, 0, 0);
         voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
         // Create proper voxel IDs for selection

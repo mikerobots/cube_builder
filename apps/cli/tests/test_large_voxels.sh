@@ -17,10 +17,10 @@ echo -e "\n=== Test with 64cm voxels ==="
 (
     echo "workspace 5 5 5"
     echo "resolution 64cm"  # Much larger voxels
-    echo "place 3 3 3"      # Center of 5m workspace with 64cm voxels
-    echo "place 4 3 3"
-    echo "place 3 4 3"
-    echo "place 3 3 4"
+    echo "place 0cm 0cm 0cm"      # Center of workspace (origin)
+    echo "place 64cm 0cm 0cm"      # Adjacent voxel in +X
+    echo "place 0cm 64cm 0cm"      # Adjacent voxel in +Y
+    echo "place 0cm 0cm 64cm"      # Adjacent voxel in +Z
     echo "camera front"
     echo "zoom 2.0"  # Zoom in
     sleep 1
@@ -37,7 +37,7 @@ echo -e "\n=== Test with filled area ==="
 (
     echo "workspace 5 5 5"
     echo "resolution 32cm"  # 32cm voxels
-    echo "fill 5 5 5 10 10 10"  # 6x6x6 cube
+    echo "fill -96cm -96cm -96cm 96cm 96cm 96cm"  # 6x6x6 cube centered at origin
     echo "camera iso"
     echo "zoom 1.5"
     sleep 1

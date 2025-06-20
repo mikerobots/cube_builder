@@ -195,10 +195,12 @@ protected:
     
     void createVoxelCube(int size = 3) {
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
+        // Center the cube around the origin
+        int offset = size / 2;
         for (int x = 0; x < size; ++x) {
             for (int y = 0; y < size; ++y) {
                 for (int z = 0; z < size; ++z) {
-                    voxelManager->setVoxel(Math::Vector3i(x, y, z), 
+                    voxelManager->setVoxel(Math::Vector3i(x - offset, y, z - offset), 
                                          VoxelData::VoxelResolution::Size_8cm, true);
                 }
             }
@@ -208,9 +210,12 @@ protected:
     
     void createVoxelPlane(int width = 5, int depth = 5) {
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
+        // Center the plane around the origin
+        int offsetX = width / 2;
+        int offsetZ = depth / 2;
         for (int x = 0; x < width; ++x) {
             for (int z = 0; z < depth; ++z) {
-                voxelManager->setVoxel(Math::Vector3i(x, 0, z), 
+                voxelManager->setVoxel(Math::Vector3i(x - offsetX, 0, z - offsetZ), 
                                      VoxelData::VoxelResolution::Size_8cm, true);
             }
         }
@@ -318,13 +323,13 @@ TEST_F(CLIRenderingTest, SingleVoxelRendering) {
 TEST_F(CLIRenderingTest, MultipleVoxelPositions) {
     renderEngine->setClearColor(Rendering::Color(0.1f, 0.1f, 0.1f, 1.0f));
     
-    // Create voxels at different positions
+    // Create voxels at different positions (centered around origin)
     std::vector<Math::Vector3i> positions = {
-        {0, 0, 0},
-        {2, 0, 0},
-        {0, 2, 0},
-        {0, 0, 2},
-        {1, 1, 1}
+        {0, 0, 0},    // Center
+        {-1, 0, 1},   // Negative X, positive Z
+        {1, 1, 0},    // Positive X and Y
+        {0, 0, -1},   // Negative Z
+        {-1, 2, -1}   // Mixed negative coordinates
     };
     
     for (const auto& pos : positions) {
@@ -438,10 +443,10 @@ TEST_F(CLIRenderingTest, SelectedVoxelHighlight) {
 TEST_F(CLIRenderingTest, BoxSelectionOutline) {
     createVoxelPlane(5, 5);
     
-    // Select box region
+    // Select box region (centered around origin)
     Math::BoundingBox box(
-        Math::Vector3f(0.0f, 0.0f, 0.0f),
-        Math::Vector3f(0.24f, 0.08f, 0.24f) // 3x1x3 voxels
+        Math::Vector3f(-0.12f, 0.0f, -0.12f),   // Start from centered position
+        Math::Vector3f(0.12f, 0.08f, 0.12f)     // 3x1x3 voxels centered
     );
     
     app->getSelectionManager()->selectBox(box, VoxelData::VoxelResolution::Size_8cm);
@@ -495,14 +500,14 @@ TEST_F(CLIRenderingTest, LargeVoxelCount) {
 }
 
 TEST_F(CLIRenderingTest, MixedResolutionScene) {
-    // Create voxels of different sizes
+    // Create voxels of different sizes (centered around origin)
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
-    for (int i = 0; i < 5; ++i) {
+    for (int i = -2; i <= 2; ++i) {
         voxelManager->setVoxel(Math::Vector3i(i, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);
     }
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_16cm);
-    for (int i = 0; i < 3; ++i) {
+    for (int i = -1; i <= 1; ++i) {
         voxelManager->setVoxel(Math::Vector3i(i, 1, 0), VoxelData::VoxelResolution::Size_16cm, true);
     }
     

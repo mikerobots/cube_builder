@@ -8,6 +8,7 @@
 #include "math/Ray.h"
 #include "math/Vector3f.h"
 #include "math/Matrix4f.h"
+#include "math/CoordinateTypes.h"
 #include "camera/OrbitCamera.h"
 #include "foundation/events/EventDispatcher.h"
 
@@ -69,7 +70,7 @@ protected:
 TEST_F(MouseRayMovementTest, RayOriginMatchesCameraPosition) {
     // Set up camera at a known position
     Math::Vector3f cameraPos(5.0f, 10.0f, 15.0f);
-    camera->setPosition(cameraPos);
+    camera->setPosition(Math::WorldCoordinates(cameraPos));
     
     // Test multiple mouse positions
     struct MousePos { float x, y; };
@@ -97,7 +98,7 @@ TEST_F(MouseRayMovementTest, RayOriginMatchesCameraPosition) {
 TEST_F(MouseRayMovementTest, RayDirectionChangesWithMouseMovement) {
     // Set camera position
     Math::Vector3f cameraPos(0.0f, 0.0f, 10.0f);
-    camera->setPosition(cameraPos);
+    camera->setPosition(Math::WorldCoordinates(cameraPos));
     
     // Get rays from different mouse positions
     auto centerRay = generateMouseRay(400, 300, 800, 600);
@@ -179,12 +180,12 @@ TEST_F(MouseRayMovementTest, CameraMovementUpdatesRayOrigin) {
     
     // First position
     Math::Vector3f pos1(0.0f, 0.0f, 10.0f);
-    camera->setPosition(pos1);
+    camera->setPosition(Math::WorldCoordinates(pos1));
     auto ray1 = generateMouseRay(mouseX, mouseY, 800, 600);
     
     // Move camera
     Math::Vector3f pos2(5.0f, -3.0f, 15.0f);
-    camera->setPosition(pos2);
+    camera->setPosition(Math::WorldCoordinates(pos2));
     auto ray2 = generateMouseRay(mouseX, mouseY, 800, 600);
     
     // Ray origins should match new camera positions
@@ -208,9 +209,9 @@ TEST_F(MouseRayMovementTest, ScreenCenterRayPointsForward) {
     Math::Vector3f target(0.0f, 0.0f, 0.0f);
     Math::Vector3f up(0.0f, 1.0f, 0.0f);
     
-    camera->setPosition(camPos);
-    camera->setTarget(target);
-    camera->setUp(up);
+    camera->setPosition(Math::WorldCoordinates(camPos));
+    camera->setTarget(Math::WorldCoordinates(target));
+    camera->setUp(Math::WorldCoordinates(up));
     
     // Ray from screen center
     auto ray = generateMouseRay(400, 300, 800, 600);
@@ -225,8 +226,8 @@ TEST_F(MouseRayMovementTest, ScreenCenterRayPointsForward) {
 
 TEST_F(MouseRayMovementTest, MouseAtCornersProducesExpectedRays) {
     // Set camera looking down Z axis
-    camera->setPosition(Math::Vector3f(0.0f, 0.0f, 10.0f));
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
+    camera->setPosition(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 10.0f)));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f)));
     
     // Get rays from corners
     auto topLeft = generateMouseRay(0, 0, 800, 600);
@@ -254,7 +255,7 @@ TEST_F(MouseRayMovementTest, MouseAtCornersProducesExpectedRays) {
 
 // Additional test to verify edge cases and extreme positions
 TEST_F(MouseRayMovementTest, ExtremeMousePositionsProduceValidRays) {
-    camera->setPosition(Math::Vector3f(0.0f, 0.0f, 10.0f));
+    camera->setPosition(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 10.0f)));
     
     // Test extreme positions including outside window bounds
     struct TestCase { float x, y; const char* desc; };

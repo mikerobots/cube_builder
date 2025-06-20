@@ -392,6 +392,7 @@
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_overlay_renderer_integration.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_feedback_renderer_integration.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_visual_feedback_requirements_integration.dir
+/Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_enhanced_shader_validation_integration.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/edit_cache.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/rebuild_cache.dir

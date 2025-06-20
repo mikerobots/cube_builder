@@ -18,7 +18,7 @@ protected:
 TEST_F(OverlayLogicTest, TextStyleValidation) {
     // Test text style creation and validation (pure logic)
     TextStyle defaultStyle = TextStyle::Default();
-    EXPECT_GT(defaultStyle.fontSize, 0);
+    EXPECT_GT(defaultStyle.size, 0);
     EXPECT_GT(defaultStyle.color.a, 0.0f);
 }
 
@@ -45,19 +45,19 @@ TEST_F(OverlayLogicTest, FrameStateLogic) {
 TEST_F(OverlayLogicTest, TextStyleFactories) {
     // Test text style creation (pure logic)
     TextStyle defaultStyle = TextStyle::Default();
-    EXPECT_GT(defaultStyle.fontSize, 0);
+    EXPECT_GT(defaultStyle.size, 0);
     
     TextStyle headerStyle = TextStyle::Header();
-    EXPECT_GT(headerStyle.fontSize, defaultStyle.fontSize);
+    EXPECT_GT(headerStyle.size, defaultStyle.size);
     
     TextStyle debugStyle = TextStyle::Debug();
     TextStyle warningStyle = TextStyle::Warning();
     TextStyle errorStyle = TextStyle::Error();
     
     // All styles should have valid properties
-    EXPECT_GT(debugStyle.fontSize, 0);
-    EXPECT_GT(warningStyle.fontSize, 0);
-    EXPECT_GT(errorStyle.fontSize, 0);
+    EXPECT_GT(debugStyle.size, 0);
+    EXPECT_GT(warningStyle.size, 0);
+    EXPECT_GT(errorStyle.size, 0);
 }
 
 TEST_F(OverlayLogicTest, GridParameterValidation) {
@@ -97,8 +97,8 @@ TEST_F(OverlayLogicTest, TextLayoutCalculation) {
         TextLayout layout;
         layout.position = position;
         layout.lineCount = 1 + std::count(text.begin(), text.end(), '\n');
-        layout.width = text.length() * style.fontSize * 0.6f; // Approximate character width
-        layout.height = layout.lineCount * style.fontSize * 1.2f; // Line height
+        layout.width = text.length() * style.size * 0.6f; // Approximate character width
+        layout.height = layout.lineCount * style.size * 1.2f; // Line height
         return layout;
     };
     
@@ -127,8 +127,8 @@ TEST_F(OverlayLogicTest, TextLayoutMultipleLines) {
         TextLayout layout;
         layout.position = position;
         layout.lineCount = 1 + std::count(text.begin(), text.end(), '\n');
-        layout.width = text.length() * style.fontSize * 0.6f; // Approximate character width
-        layout.height = layout.lineCount * style.fontSize * 1.2f; // Line height
+        layout.width = text.length() * style.size * 0.6f; // Approximate character width
+        layout.height = layout.lineCount * style.size * 1.2f; // Line height
         return layout;
     };
     
@@ -139,7 +139,7 @@ TEST_F(OverlayLogicTest, TextLayoutMultipleLines) {
     auto layout = calculateTextLayout(multiLineText, position, style);
     
     EXPECT_GT(layout.width, 0);
-    EXPECT_GT(layout.height, style.fontSize * 3); // Should be at least 3 lines tall
+    EXPECT_GT(layout.height, style.size * 3); // Should be at least 3 lines tall
     EXPECT_EQ(layout.lineCount, 3);
 }
 
@@ -241,8 +241,8 @@ TEST_F(OverlayLogicTest, TextBounds) {
         };
         
         TextBounds bounds;
-        bounds.width = text.length() * style.fontSize * 0.6f; // Approximate character width
-        bounds.height = style.fontSize * 1.2f; // Line height
+        bounds.width = text.length() * style.size * 0.6f; // Approximate character width
+        bounds.height = style.size * 1.2f; // Line height
         return bounds;
     };
     

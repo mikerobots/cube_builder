@@ -43,7 +43,7 @@ protected:
         camera = std::make_unique<Camera::OrbitCamera>();
         camera->setOrbitAngles(45.0f, 35.26f); // Isometric-like view
         camera->setDistance(10.0f);
-        camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
+        camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f)));
         camera->setAspectRatio(1.0f);
         
         // Start with empty workspace
@@ -90,10 +90,11 @@ protected:
         // Calculate placement position
         Math::Vector3f hitPoint;
         if (face.isGroundPlane()) {
-            hitPoint = face.getGroundPlaneHitPoint();
+            hitPoint = face.getGroundPlaneHitPoint().value();
         } else {
             // For voxel faces, calculate hit point based on face normal
-            Math::Vector3i voxelPos = face.getVoxelPosition();
+            Math::IncrementCoordinates voxelPosInc = face.getVoxelPosition();
+            Math::Vector3i voxelPos = voxelPosInc.value();
             float resolution = VoxelData::getVoxelSize(voxelManager->getActiveResolution());
             hitPoint = Math::Vector3f(
                 voxelPos.x * resolution,
@@ -121,7 +122,7 @@ protected:
             );
         } else {
             // For voxel faces, pass the face information
-            Math::Vector3i faceVoxelPos = face.getVoxelPosition();
+            Math::IncrementCoordinates faceVoxelPos = face.getVoxelPosition();
             // Convert VisualFeedback::FaceDirection to VoxelData::FaceDirection
             VoxelData::FaceDirection faceDir = VoxelData::FaceDirection::PosY; // Default to top
             switch (face.getDirection()) {
@@ -156,12 +157,12 @@ protected:
         // Log the placement position for debugging
         Logging::Logger::getInstance().infofc("MouseGroundPlaneClickingTest",
             "Placing voxel at increment grid pos (%d, %d, %d) from hit point (%.3f, %.3f, %.3f)",
-            context.snappedGridPos.x, context.snappedGridPos.y, context.snappedGridPos.z,
+            context.snappedIncrementPos.x(), context.snappedIncrementPos.y(), context.snappedIncrementPos.z(),
             hitPoint.x, hitPoint.y, hitPoint.z);
         
         auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
             voxelManager.get(),
-            context.snappedGridPos,
+            context.snappedIncrementPos.value(),
             voxelManager->getActiveResolution(),
             true // add voxel
         );
@@ -177,7 +178,7 @@ protected:
         const VoxelData::VoxelGrid* grid = voxelManager->getGrid(voxelManager->getActiveResolution());
         if (!grid) return false;
         
-        Math::Vector3f worldPos = grid->gridToWorld(gridPos);
+        Math::Vector3f worldPos = grid->incrementToWorld(Math::IncrementCoordinates(gridPos)).value();
         
         // Convert world coordinates to increment grid coordinates (1cm grid)
         const float INCREMENT_SIZE = 0.01f;
@@ -206,15 +207,14 @@ protected:
 TEST_F(MouseGroundPlaneClickingTest, ClickGroundPlaneAtOrigin) {
     ASSERT_EQ(getVoxelCount(), 0) << "Should start with no voxels";
     
-    // Click on ground plane near workspace center
-    // The workspace validation uses centered coordinates, so for an 8x8x8 workspace,
-    // valid positions are from -4 to +4. But we're placing at positive coordinates.
-    bool success = simulateGroundPlaneClick(Math::Vector3f(-3.96f, 0.0f, -3.96f));
+    // Click on ground plane at origin (centered coordinate system)
+    // In the centered system, (0,0,0) in world space maps to (0,0,0) in increment coordinates
+    bool success = simulateGroundPlaneClick(Math::Vector3f(0.0f, 0.0f, 0.0f));
     
     EXPECT_TRUE(success) << "Should successfully place voxel on ground plane";
     EXPECT_EQ(getVoxelCount(), 1) << "Should have placed one voxel";
-    // The voxel should be at grid position (0,0,0) in VoxelGrid coordinates
-    EXPECT_TRUE(hasVoxelAt(Math::Vector3i(0, 0, 0))) << "Voxel should be at grid position (0,0,0)";
+    // The voxel should be at increment position (0,0,0)
+    EXPECT_TRUE(hasVoxelAt(Math::Vector3i(0, 0, 0))) << "Voxel should be at increment position (0,0,0)";
 }
 
 // Test clicking on ground plane at various positions
@@ -222,16 +222,16 @@ TEST_F(MouseGroundPlaneClickingTest, ClickGroundPlaneMultiplePositions) {
     ASSERT_EQ(getVoxelCount(), 0) << "Should start with no voxels";
     
     // Test positions on ground plane (Y=0)
-    // Note: Workspace validation uses centered coordinates (-4 to +4)
-    // But VoxelGrid uses 0-based coordinates (0 to 8)
+    // In centered coordinate system, world (0,0,0) is at the center
+    // For 8cm voxels, positions snap to 0.08m increments
     std::vector<Math::Vector3f> testPositions = {
-        {-3.96f, 0.0f, -3.96f},  // Near bottom-left (-4,-4) maps to grid (0,0)
-        {-3.20f, 0.0f, -3.96f},  // +X from bottom-left
-        {-3.96f, 0.0f, -3.20f},  // +Z from bottom-left
-        {-3.20f, 0.0f, -3.20f},  // +X+Z from bottom-left
-        {0.00f, 0.0f, 0.00f},    // Center of workspace (centered coords)
-        {3.20f, 0.0f, 0.00f},    // Near +X edge
-        {0.00f, 0.0f, 3.20f},    // Near +Z edge
+        {0.00f, 0.0f, 0.00f},    // Origin
+        {0.08f, 0.0f, 0.00f},    // One voxel +X
+        {0.00f, 0.0f, 0.08f},    // One voxel +Z
+        {0.08f, 0.0f, 0.08f},    // One voxel +X+Z
+        {-0.08f, 0.0f, 0.00f},   // One voxel -X
+        {0.00f, 0.0f, -0.08f},   // One voxel -Z
+        {-0.08f, 0.0f, -0.08f},  // One voxel -X-Z
     };
     
     // For 8cm voxels, we need to calculate expected increment positions
@@ -277,8 +277,8 @@ TEST_F(MouseGroundPlaneClickingTest, ClickGroundPlaneMultiplePositions) {
 
 // Test clicking near existing voxels
 TEST_F(MouseGroundPlaneClickingTest, ClickNearExistingVoxel) {
-    // Place initial voxel near bottom-left
-    Math::Vector3f initPos(-3.96f, 0.0f, -3.96f);
+    // Place initial voxel at origin
+    Math::Vector3f initPos(0.0f, 0.0f, 0.0f);
     bool success = simulateGroundPlaneClick(initPos);
     
     ASSERT_TRUE(success) << "Should place initial voxel";
@@ -313,12 +313,13 @@ TEST_F(MouseGroundPlaneClickingTest, GroundPlaneYConstraint) {
     ASSERT_EQ(getVoxelCount(), 0) << "Should start with no voxels";
     
     // Our ray generation creates a ray from above pointing down, so it will always hit Y=0
-    bool success = simulateGroundPlaneClick(Math::Vector3f(-3.96f, 0.0f, -3.96f));
+    bool success = simulateGroundPlaneClick(Math::Vector3f(0.0f, 0.0f, 0.0f));
     
     // The click should succeed
     EXPECT_TRUE(success) << "Should place voxel on ground plane";
     
     if (success) {
+        // In centered coordinates, clicking at (0,0,0) should place at increment (0,0,0)
         EXPECT_TRUE(hasVoxelAt(Math::Vector3i(0, 0, 0))) << "Voxel should be at Y=0";
     }
 }

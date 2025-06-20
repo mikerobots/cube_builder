@@ -55,11 +55,11 @@
 
 ### Working with Groups
 ```
-> selectbox 0 0 0 5 5 5  # Select a region
-> group "wall"           # Create group from selection
-> hide wall              # Hide the group
-> show wall              # Show it again
-> groups                 # List all groups
+> selectbox -1m 0m -1m 1m 2m 1m  # Select a centered region
+> group "wall"                   # Create group from selection
+> hide wall                       # Hide the group
+> show wall                       # Show it again
+> groups                          # List all groups
 ```
 
 ### Camera Control
@@ -100,10 +100,10 @@
 
 ### Selection Techniques
 ```
-> select 0 0 0          # Select single voxel
-> selectbox 0 0 0 10 10 10  # Select box region
-> selectall             # Select everything
-> selectnone            # Clear selection
+> select 0cm 0cm 0cm              # Select single voxel at origin
+> selectbox -2m 0m -2m 2m 1m 2m   # Select centered box region
+> selectall                       # Select everything
+> selectnone                      # Clear selection
 ```
 
 ### Undo/Redo
@@ -121,7 +121,7 @@
 | `place` | Add a voxel | `place 1m 50cm 0cm` |
 | `delete` | Remove a voxel | `delete 1m 50cm 0cm` |
 | `fill` | Fill box region | `fill 0m 0m 0m 2m 1m 2m` |
-| `selectbox` | Select box region | `selectbox -1m 0m -1m 1m 2m 1m` |
+| `selectbox` | Select box region | `selectbox -2m 0m -2m 2m 2m 2m` |
 | `camera` | Change view | `camera front` |
 | `grid` | Toggle ground plane | `grid on/off/toggle` |
 | `edges` | Toggle voxel edges | `edges on/off/toggle` |
@@ -163,12 +163,12 @@
 ```
 > new
 > resolution 32cm
-> fill 0 0 0 10 0 10    # Floor
-> fill 0 0 0 0 8 10    # Left wall
-> fill 10 0 0 10 8 10  # Right wall
-> fill 0 0 0 10 0 0    # Front wall
-> fill 0 0 10 10 0 10  # Back wall
-> fill 0 8 0 10 8 10   # Roof
+> fill -2m 0m -2m 2m 0m 2m    # Floor (4x4 meter base)
+> fill -2m 0m -2m -2m 2m 2m   # Left wall
+> fill 2m 0m -2m 2m 2m 2m     # Right wall
+> fill -2m 0m -2m 2m 0m -2m   # Front wall
+> fill -2m 0m 2m 2m 0m 2m     # Back wall
+> fill -2m 2m -2m 2m 2m 2m    # Roof
 > save house.cvef
 ```
 

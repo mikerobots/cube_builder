@@ -94,10 +94,11 @@ protected:
     // Helper to get world position of a voxel
     Math::Vector3f getVoxelWorldPos(int x, int y, int z, VoxelData::VoxelResolution resolution) {
         float voxelSize = VoxelData::getVoxelSize(resolution);
+        // Centered coordinate system: 0,0,0 is at the center
         return Math::Vector3f(
-            x * voxelSize + voxelSize * 0.5f,
-            y * voxelSize + voxelSize * 0.5f,
-            z * voxelSize + voxelSize * 0.5f
+            x * voxelSize,
+            y * voxelSize,
+            z * voxelSize
         );
     }
     
@@ -105,9 +106,9 @@ protected:
     void printDebugInfo(const std::string& testName, const Math::Vector3f& cubePos, float cubeSize) {
         std::cout << "\n=== " << testName << " ===" << std::endl;
         auto pos = camera->getPosition();
-        std::cout << "Camera position: (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
+        std::cout << "Camera position: (" << pos.x() << ", " << pos.y() << ", " << pos.z() << ")" << std::endl;
         auto target = camera->getTarget();
-        std::cout << "Camera target: (" << target.x << ", " << target.y << ", " << target.z << ")" << std::endl;
+        std::cout << "Camera target: (" << target.x() << ", " << target.y() << ", " << target.z() << ")" << std::endl;
         auto forward = camera->getForward();
         std::cout << "Camera forward: (" << forward.x << ", " << forward.y << ", " << forward.z << ")" << std::endl;
         std::cout << "Cube position: (" << cubePos.x << ", " << cubePos.y << ", " << cubePos.z << ")" << std::endl;
@@ -140,8 +141,8 @@ TEST_F(CameraCubeVisibilityTest, SingleVoxelAtOrigin_FrontCamera) {
     
     // Set camera to front view
     // Set camera to front view
-    camera->setPosition(Math::Vector3f(5.0f, 5.0f, 15.0f));
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(5.0f, 5.0f, 5.0f));
+    camera->setPosition(Math::WorldCoordinates(5.0f, 5.0f, 15.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(5.0f, 5.0f, 5.0f)));
     camera->setDistance(5.0f);
     
     // Get voxel world position
@@ -171,8 +172,8 @@ TEST_F(CameraCubeVisibilityTest, VoxelGrid3x3x3_IsometricCamera) {
     // Set camera to isometric view
     // Set camera to isometric view
     float angle = 45.0f * M_PI / 180.0f;
-    camera->setPosition(Math::Vector3f(10.0f, 10.0f, 10.0f));
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(4.0f, 4.0f, 4.0f));
+    camera->setPosition(Math::WorldCoordinates(10.0f, 10.0f, 10.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(4.0f, 4.0f, 4.0f)));
     
     // Check center voxel
     Math::Vector3f centerVoxelPos = getVoxelWorldPos(4, 4, 4, resolution);
@@ -203,7 +204,7 @@ TEST_F(CameraCubeVisibilityTest, LargeVoxel_CloseCamera) {
     voxelData->setVoxel(Math::Vector3i(5, 5, 5), resolution, true);
     
     // Position camera very close
-    camera->setTarget(getVoxelWorldPos(5, 5, 5, resolution));
+    camera->setTarget(Math::WorldCoordinates(getVoxelWorldPos(5, 5, 5, resolution)));
     camera->setDistance(1.0f);
     camera->setYaw(0.0f);
     camera->setPitch(0.0f);
@@ -227,8 +228,8 @@ TEST_F(CameraCubeVisibilityTest, VoxelBehindCamera) {
     voxelData->setVoxel(Math::Vector3i(80, 80, 80), resolution, true);
     
     // Set camera looking away from voxel
-    camera->setPosition(Math::Vector3f(5.0f, 5.0f, 5.0f));
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
+    camera->setPosition(Math::WorldCoordinates(5.0f, 5.0f, 5.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f)));
     
     Math::Vector3f voxelPos = getVoxelWorldPos(80, 80, 80, resolution);
     float voxelSize = VoxelData::getVoxelSize(resolution);
@@ -246,13 +247,13 @@ TEST_F(CameraCubeVisibilityTest, VoxelRayIntersection) {
     
     // Set camera to look directly at voxel
     Math::Vector3f voxelPos = getVoxelWorldPos(6, 6, 6, resolution);
-    camera->setTarget(voxelPos);
+    camera->setTarget(Math::WorldCoordinates(voxelPos));
     camera->setDistance(3.0f);
     camera->setYaw(0.0f);
     camera->setPitch(0.0f);
     
     // Create ray from camera through center of viewport
-    Math::Vector3f rayOrigin = camera->getPosition();
+    Math::Vector3f rayOrigin = camera->getPosition().value();
     Math::Vector3f rayDir = (voxelPos - rayOrigin).normalized();
     
     // Check ray-cube intersection
@@ -302,8 +303,8 @@ TEST_F(CameraCubeVisibilityTest, MultipleVoxelsScreenCoverage) {
     
     // Set camera to front view
     // Set camera to front view
-    camera->setPosition(Math::Vector3f(5.0f, 5.0f, 15.0f));
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(5.0f, 5.0f, 5.0f));
+    camera->setPosition(Math::WorldCoordinates(5.0f, 5.0f, 15.0f));
+    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(5.0f, 5.0f, 5.0f)));
     camera->setDistance(5.0f);
     
     std::cout << "\n=== Multiple Voxels Screen Coverage ===" << std::endl;
@@ -345,8 +346,8 @@ TEST_F(CameraCubeVisibilityTest, ExplicitMatrixCalculations) {
     // Manually set camera parameters
     Math::Vector3f cameraPos(10.0f, 10.0f, 10.0f);
     Math::Vector3f targetPos(5.0f, 5.0f, 5.0f);
-    camera->setPosition(cameraPos);
-    camera->setTarget(targetPos);
+    camera->setPosition(Math::WorldCoordinates(cameraPos));
+    camera->setTarget(Math::WorldCoordinates(targetPos));
     
     Math::Vector3f voxelPos = getVoxelWorldPos(6, 6, 6, resolution);
     

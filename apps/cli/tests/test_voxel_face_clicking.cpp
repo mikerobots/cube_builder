@@ -10,6 +10,7 @@
 #include "foundation/logging/Logger.h"
 #include "camera/CameraController.h"
 #include "camera/OrbitCamera.h"
+#include "foundation/math/CoordinateConverter.h"
 
 namespace VoxelEditor {
 namespace Tests {
@@ -124,8 +125,8 @@ TEST_F(VoxelFaceClickingTest, ClickOnVoxelFaceAddsAdjacentVoxel) {
 }
 
 TEST_F(VoxelFaceClickingTest, ClickOnDifferentFacesAddsVoxelsCorrectly) {
-    // Place initial voxel
-    voxelManager->setVoxel(Math::Vector3i(5, 5, 5), VoxelData::VoxelResolution::Size_64cm, true);
+    // Place initial voxel at centered coordinate system origin
+    voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
     EXPECT_EQ(countVoxels(), 1);
     
     // Get camera
@@ -133,7 +134,9 @@ TEST_F(VoxelFaceClickingTest, ClickOnDifferentFacesAddsVoxelsCorrectly) {
     ASSERT_NE(camera, nullptr);
     
     // View from front - click to add voxel on front face
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(3.52f, 3.52f, 3.52f)));  // Center of voxel at (5,5,5) with 64cm size
+    // Convert increment coordinates to world coordinates for camera target
+    Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(0, 0, 0));
+    camera->setTarget(voxelWorldPos);
     camera->setDistance(5.0f);
     camera->setOrbitAngles(0.0f, 0.0f);  // Front view
     
@@ -158,7 +161,10 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     // Position camera to see the voxel
     auto camera = dynamic_cast<Camera::OrbitCamera*>(cameraController->getCamera());
     ASSERT_NE(camera, nullptr);
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.32f, 3.52f, 0.32f)));  // Center of voxel at (0,5,0)
+    // Calculate world position for voxel at increment coordinates (0,5,0) 
+    Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(0, 5, 0));
+    float voxelSize = VoxelData::getVoxelSize(VoxelData::VoxelResolution::Size_64cm);
+    camera->setTarget(Math::WorldCoordinates(voxelWorldPos.value() + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f)));
     camera->setDistance(5.0f);
     
     app->updateVoxelMeshes();
@@ -172,10 +178,10 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     EXPECT_GT(voxelCount, 1) << "Should be able to add voxel by clicking on (0,5,0)";
     
     // Test the working case: place at (0,0,0) then click
-    // Clear all voxels first
-    for (int x = 0; x < 10; x++) {
-        for (int y = 0; y < 10; y++) {
-            for (int z = 0; z < 10; z++) {
+    // Clear all voxels first - use centered coordinate range
+    for (int x = -5; x <= 5; x++) {
+        for (int y = 0; y <= 10; y++) {  // Keep Y positive since Y=0 is ground
+            for (int z = -5; z <= 5; z++) {
                 voxelManager->setVoxel(Math::Vector3i(x, y, z), VoxelData::VoxelResolution::Size_64cm, false);
             }
         }
@@ -184,7 +190,9 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
     EXPECT_EQ(countVoxels(), 1);
     
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.32f, 0.32f, 0.32f)));  // Center of voxel at (0,0,0)
+    // Calculate world position for voxel at increment coordinates (0,0,0)
+    Math::WorldCoordinates voxelWorldPos2 = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(0, 0, 0));
+    camera->setTarget(Math::WorldCoordinates(voxelWorldPos2.value() + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f)));
     app->updateVoxelMeshes();
     
     simulateClick(0.0f, 0.0f);
@@ -202,7 +210,9 @@ TEST_F(VoxelFaceClickingTest, ClosestVoxelIsSelected) {
     // Position camera so that (1,0,0) is closer than (0,0,0)
     auto camera = dynamic_cast<Camera::OrbitCamera*>(cameraController->getCamera());
     ASSERT_NE(camera, nullptr);
-    camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0.96f, 0.32f, 0.32f)));  // Center of voxel (1,0,0)
+    // Use coordinate converter to get proper world position for voxel (1,0,0)
+    Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(1, 0, 0));
+    camera->setTarget(voxelWorldPos);
     camera->setDistance(3.0f);
     camera->setOrbitAngles(90.0f, 0.0f);  // Look from positive X direction
     

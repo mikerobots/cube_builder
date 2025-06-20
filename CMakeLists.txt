@@ -11,6 +11,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
+# Build options
+option(VOXEL_ASSERT_ON_MISSING_SHADERS "Assert and exit when shader files are not found" ON)
+
+# Configure compile definitions based on options
+if(VOXEL_ASSERT_ON_MISSING_SHADERS)
+    add_compile_definitions(VOXEL_ASSERT_ON_MISSING_SHADERS=1)
+else()
+    add_compile_definitions(VOXEL_ASSERT_ON_MISSING_SHADERS=0)
+endif()
+
 # Enable testing
 enable_testing()
 include(CTest)

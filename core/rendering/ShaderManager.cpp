@@ -1,5 +1,6 @@
 #include "ShaderManager.h"
 #include "../../foundation/logging/Logger.h"
+#include "../../foundation/config/BuildConfig.h"
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -42,9 +43,11 @@ ShaderId ShaderManager::loadShaderFromFile(const std::string& name, const std::s
     // Read vertex shader file
     std::ifstream vertexFile(vertexPath);
     if (!vertexFile.is_open()) {
+        std::string errorMsg = "Failed to open vertex shader file: " + vertexPath;
         try {
-            Logging::Logger::getInstance().error("Failed to open vertex shader file: " + vertexPath);
+            Logging::Logger::getInstance().error(errorMsg);
         } catch (...) {}
+        VOXEL_ASSERT_SHADER_FILE(false, errorMsg);
         return InvalidId;
     }
     
@@ -56,9 +59,11 @@ ShaderId ShaderManager::loadShaderFromFile(const std::string& name, const std::s
     // Read fragment shader file
     std::ifstream fragmentFile(fragmentPath);
     if (!fragmentFile.is_open()) {
+        std::string errorMsg = "Failed to open fragment shader file: " + fragmentPath;
         try {
-            Logging::Logger::getInstance().error("Failed to open fragment shader file: " + fragmentPath);
+            Logging::Logger::getInstance().error(errorMsg);
         } catch (...) {}
+        VOXEL_ASSERT_SHADER_FILE(false, errorMsg);
         return InvalidId;
     }
     

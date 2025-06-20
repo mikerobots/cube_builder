@@ -27,9 +27,9 @@ protected:
         std::set<std::tuple<int, int, int>> uniquePositions;
         for (const auto& vertex : mesh.vertices) {
             // Round to avoid floating point comparison issues
-            int x = static_cast<int>(std::round(vertex.position.x * 1000));
-            int y = static_cast<int>(std::round(vertex.position.y * 1000));
-            int z = static_cast<int>(std::round(vertex.position.z * 1000));
+            int x = static_cast<int>(std::round(vertex.position.x() * 1000));
+            int y = static_cast<int>(std::round(vertex.position.y() * 1000));
+            int z = static_cast<int>(std::round(vertex.position.z() * 1000));
             uniquePositions.insert({x, y, z});
         }
         return uniquePositions.size();
@@ -45,7 +45,7 @@ protected:
         // Check that all vertices are at the expected distance from center
         float halfSize = expectedSize * 0.5f;
         for (const auto& vertex : mesh.vertices) {
-            Math::Vector3f diff = vertex.position - expectedCenter;
+            Math::Vector3f diff = vertex.position.value() - expectedCenter;
             
             // Each component should be either +halfSize or -halfSize
             bool validX = std::abs(std::abs(diff.x) - halfSize) < 0.001f;
@@ -121,8 +121,10 @@ TEST_F(VoxelMeshGeneratorTest, SingleVoxelAtOrigin) {
     EXPECT_EQ(mesh.vertices.size(), 24); // 4 vertices * 6 faces
     EXPECT_EQ(mesh.indices.size(), 36);  // 6 indices * 6 faces
     
-    // Verify voxel center position (grid (0,0,0) with 8cm voxels -> world center at (0.04, 0.04, 0.04))
-    Math::Vector3f expectedCenter(0.04f, 0.04f, 0.04f);
+    // Verify voxel center position using proper coordinate conversion
+    const VoxelData::VoxelGrid* grid = voxelManager->getGrid(VoxelData::VoxelResolution::Size_8cm);
+    Math::WorldCoordinates worldCenter = grid->incrementToWorld(Math::IncrementCoordinates(gridPos));
+    Math::Vector3f expectedCenter = worldCenter.value();
     float expectedSize = 0.08f * 0.95f; // 8cm with 0.95 scale factor
     
     EXPECT_TRUE(validateCubeGeometry(mesh, expectedCenter, expectedSize));
@@ -199,8 +201,10 @@ TEST_F(VoxelMeshGeneratorTest, DifferentResolutions) {
     auto mesh1cm = meshGenerator->generateCubeMesh(*voxelManager);
     EXPECT_EQ(mesh1cm.vertices.size(), 24);
     
-    // Expected world position for 1cm voxel at grid (10,10,10)
-    Math::Vector3f expectedCenter1cm(0.105f, 0.105f, 0.105f); // (10.5 * 0.01)
+    // Expected world position for 1cm voxel at grid (10,10,10) using proper coordinate conversion
+    const VoxelData::VoxelGrid* grid1cm = voxelManager->getGrid(VoxelData::VoxelResolution::Size_1cm);
+    Math::WorldCoordinates worldCenter1cm = grid1cm->incrementToWorld(Math::IncrementCoordinates(gridPos1cm));
+    Math::Vector3f expectedCenter1cm = worldCenter1cm.value();
     float expectedSize1cm = 0.01f * 0.95f;
     EXPECT_TRUE(validateCubeGeometry(mesh1cm, expectedCenter1cm, expectedSize1cm));
     
@@ -213,8 +217,10 @@ TEST_F(VoxelMeshGeneratorTest, DifferentResolutions) {
     auto mesh64cm = meshGenerator->generateCubeMesh(*voxelManager);
     EXPECT_EQ(mesh64cm.vertices.size(), 24);
     
-    // Expected world position for 64cm voxel at grid (1,1,1)
-    Math::Vector3f expectedCenter64cm(0.96f, 0.96f, 0.96f); // (1.5 * 0.64)
+    // Expected world position for 64cm voxel at grid (1,1,1) using proper coordinate conversion
+    const VoxelData::VoxelGrid* grid64cm = voxelManager->getGrid(VoxelData::VoxelResolution::Size_64cm);
+    Math::WorldCoordinates worldCenter64cm = grid64cm->incrementToWorld(Math::IncrementCoordinates(gridPos64cm));
+    Math::Vector3f expectedCenter64cm = worldCenter64cm.value();
     float expectedSize64cm = 0.64f * 0.95f;
     EXPECT_TRUE(validateCubeGeometry(mesh64cm, expectedCenter64cm, expectedSize64cm));
 }
@@ -260,15 +266,15 @@ TEST_F(VoxelMeshGeneratorTest, CoordinateSystemAlignment) {
     // Calculate expected world center using proper coordinate conversion
     // With the centered coordinate system, we need to convert grid to world coordinates properly
     Math::Vector3f workspaceSize = voxelManager->getWorkspaceSize();
-    Math::WorldCoordinates worldCoord = Math::CoordinateConverter::gridToWorld(
-        Math::GridCoordinates(gridPos), VoxelData::VoxelResolution::Size_8cm, workspaceSize
+    Math::WorldCoordinates worldCoord = Math::CoordinateConverter::incrementToWorld(
+        Math::IncrementCoordinates(gridPos)
     );
     Math::Vector3f expectedCenter = worldCoord.value();
     
     // Verify the mesh is centered at the expected position
     Math::Vector3f actualCenter(0.0f, 0.0f, 0.0f);
     for (const auto& vertex : mesh.vertices) {
-        actualCenter = actualCenter + vertex.position;
+        actualCenter = actualCenter + vertex.position.value();
     }
     actualCenter = actualCenter * (1.0f / mesh.vertices.size());
     

@@ -17,7 +17,7 @@ echo -e "\n=== Test 1: Single voxel at origin ==="
 (
     echo "workspace 5 5 5"
     echo "resolution 8cm"
-    echo "place 0 0 0"  # Origin
+    echo "place 0cm 0cm 0cm"  # Origin
     echo "camera front"
     sleep 1
     echo "screenshot $TEST_OUTPUT/test1_origin.ppm"
@@ -30,11 +30,11 @@ echo -e "\n=== Test 2: Voxels at workspace center ==="
 (
     echo "workspace 5 5 5"
     echo "resolution 8cm" 
-    # 5m workspace with 8cm voxels = 62.5 voxels, so center is around 31
-    echo "place 31 31 31"  
-    echo "place 32 31 31"
-    echo "place 31 32 31"
-    echo "place 31 31 32"
+    # In centered coordinate system, origin is at (0,0,0)
+    echo "place 0cm 0cm 0cm"  
+    echo "place 8cm 0cm 0cm"
+    echo "place 0cm 8cm 0cm"
+    echo "place 0cm 0cm 8cm"
     echo "camera iso"
     sleep 1
     echo "screenshot $TEST_OUTPUT/test2_center.ppm"
@@ -47,7 +47,7 @@ echo -e "\n=== Test 3: Large cube of voxels ==="
 (
     echo "workspace 5 5 5"
     echo "resolution 8cm"
-    echo "fill 30 30 30 35 35 35"  # 6x6x6 cube near center
+    echo "fill -24cm -24cm -24cm 24cm 24cm 24cm"  # 6x6x6 cube centered at origin
     echo "camera iso"
     sleep 1
     echo "screenshot $TEST_OUTPUT/test3_cube.ppm"
@@ -60,7 +60,7 @@ echo -e "\n=== Test 4: Different camera views ==="
 (
     echo "workspace 5 5 5"
     echo "resolution 8cm"
-    echo "fill 25 25 25 37 37 37"  # 13x13x13 cube centered
+    echo "fill -48cm -48cm -48cm 48cm 48cm 48cm"  # 13x13x13 cube centered at origin
     sleep 1
     echo "camera front"
     sleep 1

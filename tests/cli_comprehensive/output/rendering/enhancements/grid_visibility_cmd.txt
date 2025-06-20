@@ -1,8 +1,0 @@
-workspace 5 5 5
-view iso
-zoom 1.5
-grid on
-screenshot output/rendering/enhancements/grid_on.ppm
-grid off
-screenshot output/rendering/enhancements/grid_off.ppm
-quit

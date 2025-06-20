@@ -21,9 +21,14 @@ protected:
         voxelManager->resizeWorkspace(Math::Vector3f(8.0f, 8.0f, 8.0f));
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_64cm);
         
-        // Place initial voxel at (5,5,5) for testing
+        // Place initial voxel near origin for testing (centered coordinate system)
+        // For 64cm voxels, we need to snap to the 64cm grid
+        Math::IncrementCoordinates desiredPos(0, 64, 0); // 64cm up from ground
+        Math::IncrementCoordinates snappedPos = Math::CoordinateConverter::snapToVoxelResolution(
+            desiredPos, VoxelData::VoxelResolution::Size_64cm);
+        
         voxelManager->setVoxel(
-            Math::Vector3i(5, 5, 5), 
+            snappedPos.value(), 
             VoxelData::VoxelResolution::Size_64cm, 
             true
         );
@@ -50,15 +55,16 @@ protected:
         );
     }
     
-    // Helper to test placement position calculation
+    // Helper to test placement position calculation for 64cm voxels
     Math::Vector3i calculatePlacementPosition(const Math::Vector3i& voxelPos, const Math::Vector3f& normal) {
         Math::Vector3i newPos = voxelPos;
-        if (normal.x > 0.5f) newPos.x += 1;
-        else if (normal.x < -0.5f) newPos.x -= 1;
-        else if (normal.y > 0.5f) newPos.y += 1;
-        else if (normal.y < -0.5f) newPos.y -= 1;
-        else if (normal.z > 0.5f) newPos.z += 1;
-        else if (normal.z < -0.5f) newPos.z -= 1;
+        int voxelSize_cm = 64; // 64cm voxels
+        if (normal.x > 0.5f) newPos.x += voxelSize_cm;
+        else if (normal.x < -0.5f) newPos.x -= voxelSize_cm;
+        else if (normal.y > 0.5f) newPos.y += voxelSize_cm;
+        else if (normal.y < -0.5f) newPos.y -= voxelSize_cm;
+        else if (normal.z > 0.5f) newPos.z += voxelSize_cm;
+        else if (normal.z < -0.5f) newPos.z -= voxelSize_cm;
         return newPos;
     }
     
@@ -69,9 +75,15 @@ protected:
 // Test clicking on each face of a voxel
 TEST_F(FaceClickingTest, TestAllSixFaces) {
     float voxelSize = 0.64f;
-    Math::Vector3f voxelCenter(5.0f * voxelSize + voxelSize * 0.5f,
-                               5.0f * voxelSize + voxelSize * 0.5f,
-                               5.0f * voxelSize + voxelSize * 0.5f);
+    
+    // Verify the voxel was actually placed at the snapped position
+    Math::IncrementCoordinates snappedPos(0, 64, 0);
+    ASSERT_TRUE(voxelManager->hasVoxel(snappedPos.value(), VoxelData::VoxelResolution::Size_64cm))
+        << "Voxel should be present at (0,64,0)";
+    
+    // In centered coordinate system, use coordinate converter to get world position
+    Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(snappedPos);
+    Math::Vector3f voxelCenter = voxelWorldPos.value() + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
     
     // Test rays from different directions
     struct TestCase {
@@ -118,8 +130,20 @@ TEST_F(FaceClickingTest, TestAllSixFaces) {
         Math::Ray ray(tc.rayOrigin, direction);
         VisualFeedback::Face face = detectFace(ray);
         
+        // Debug logging
+        if (!face.isValid()) {
+            printf("DEBUG: Face not valid for %s\n", tc.description.c_str());
+            printf("  Ray origin: (%.2f, %.2f, %.2f)\n", tc.rayOrigin.x, tc.rayOrigin.y, tc.rayOrigin.z);
+            printf("  Ray direction: (%.2f, %.2f, %.2f)\n", direction.x, direction.y, direction.z);
+        } else {
+            auto voxelPos = face.getVoxelPosition();
+            printf("DEBUG: Face detected for %s\n", tc.description.c_str());
+            printf("  Voxel position: (%d, %d, %d)\n", voxelPos.x(), voxelPos.y(), voxelPos.z());
+            printf("  Expected: (0, 64, 0)\n");
+        }
+        
         ASSERT_TRUE(face.isValid()) << "Failed to hit face for " << tc.description;
-        EXPECT_EQ(face.getVoxelPosition(), Math::Vector3i(5, 5, 5)) 
+        EXPECT_EQ(face.getVoxelPosition(), Math::IncrementCoordinates(0, 64, 0)) 
             << "Wrong voxel hit for " << tc.description;
         
         Math::Vector3f normal = face.getNormal();
@@ -139,23 +163,23 @@ TEST_F(FaceClickingTest, TestVoxelPlacementCalculation) {
     };
     
     std::vector<TestCase> testCases = {
-        // Positive X face -> place at X+1
-        {Math::Vector3i(5,5,5), Math::Vector3f(1,0,0), Math::Vector3i(6,5,5), "Place on +X"},
+        // Positive X face -> place at X+64 (64cm voxel)
+        {Math::Vector3i(0,64,0), Math::Vector3f(1,0,0), Math::Vector3i(64,64,0), "Place on +X"},
         
-        // Negative X face -> place at X-1
-        {Math::Vector3i(5,5,5), Math::Vector3f(-1,0,0), Math::Vector3i(4,5,5), "Place on -X"},
+        // Negative X face -> place at X-64
+        {Math::Vector3i(0,64,0), Math::Vector3f(-1,0,0), Math::Vector3i(-64,64,0), "Place on -X"},
         
-        // Positive Y face -> place at Y+1
-        {Math::Vector3i(5,5,5), Math::Vector3f(0,1,0), Math::Vector3i(5,6,5), "Place on +Y"},
+        // Positive Y face -> place at Y+64
+        {Math::Vector3i(0,64,0), Math::Vector3f(0,1,0), Math::Vector3i(0,128,0), "Place on +Y"},
         
-        // Negative Y face -> place at Y-1
-        {Math::Vector3i(5,5,5), Math::Vector3f(0,-1,0), Math::Vector3i(5,4,5), "Place on -Y"},
+        // Negative Y face -> place at Y-64
+        {Math::Vector3i(0,64,0), Math::Vector3f(0,-1,0), Math::Vector3i(0,0,0), "Place on -Y"},
         
-        // Positive Z face -> place at Z+1
-        {Math::Vector3i(5,5,5), Math::Vector3f(0,0,1), Math::Vector3i(5,5,6), "Place on +Z"},
+        // Positive Z face -> place at Z+64
+        {Math::Vector3i(0,64,0), Math::Vector3f(0,0,1), Math::Vector3i(0,64,64), "Place on +Z"},
         
-        // Negative Z face -> place at Z-1
-        {Math::Vector3i(5,5,5), Math::Vector3f(0,0,-1), Math::Vector3i(5,5,4), "Place on -Z"},
+        // Negative Z face -> place at Z-64
+        {Math::Vector3i(0,64,0), Math::Vector3f(0,0,-1), Math::Vector3i(0,64,-64), "Place on -Z"},
     };
     
     for (const auto& tc : testCases) {
@@ -168,13 +192,13 @@ TEST_F(FaceClickingTest, TestVoxelPlacementCalculation) {
 
 // Test multiple voxel placement in a row
 TEST_F(FaceClickingTest, TestSequentialVoxelPlacement) {
-    // Start with voxel at (5,5,5)
-    ASSERT_TRUE(voxelManager->getVoxel(Math::Vector3i(5,5,5), VoxelData::VoxelResolution::Size_64cm));
+    // Start with voxel at (0,64,0)
+    ASSERT_TRUE(voxelManager->getVoxel(Math::Vector3i(0,64,0), VoxelData::VoxelResolution::Size_64cm));
     
     // Simulate clicking on positive X face and placing voxels
     for (int i = 1; i <= 3; ++i) {
         // Get the current rightmost voxel
-        Math::Vector3i currentVoxel(5 + i - 1, 5, 5);
+        Math::Vector3i currentVoxel((i - 1) * 64, 64, 0);
         ASSERT_TRUE(voxelManager->getVoxel(currentVoxel, VoxelData::VoxelResolution::Size_64cm))
             << "Voxel at " << currentVoxel.x << "," << currentVoxel.y << "," << currentVoxel.z << " should exist";
         
@@ -182,9 +206,9 @@ TEST_F(FaceClickingTest, TestSequentialVoxelPlacement) {
         Math::Vector3i placement = calculatePlacementPosition(currentVoxel, Math::Vector3f(1, 0, 0));
         
         // Verify placement is correct
-        EXPECT_EQ(placement.x, 5 + i);
-        EXPECT_EQ(placement.y, 5);
-        EXPECT_EQ(placement.z, 5);
+        EXPECT_EQ(placement.x, i * 64);
+        EXPECT_EQ(placement.y, 64);
+        EXPECT_EQ(placement.z, 0);
         
         // Check if position is valid before placing
         bool isValid = voxelManager->isValidPosition(placement, VoxelData::VoxelResolution::Size_64cm);
@@ -206,47 +230,43 @@ TEST_F(FaceClickingTest, TestSequentialVoxelPlacement) {
     }
     
     // Verify we have a row of 4 voxels
-    for (int x = 5; x <= 8; ++x) {
-        EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(x, 5, 5), VoxelData::VoxelResolution::Size_64cm))
-            << "Voxel at " << x << ",5,5 should exist";
+    for (int i = 0; i <= 3; ++i) {
+        EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(i * 64, 64, 0), VoxelData::VoxelResolution::Size_64cm))
+            << "Voxel at " << (i * 64) << ",64,0 should exist";
     }
 }
 
 // Test edge cases
 TEST_F(FaceClickingTest, TestEdgeCases) {
-    // Test clicking on workspace boundaries
-    voxelManager->setVoxel(Math::Vector3i(0, 5, 5), VoxelData::VoxelResolution::Size_64cm, true);
+    // Test placement calculation with negative coordinates (valid in centered system)
+    // Place at -64,64,-64 (one voxel left and back from center)
+    voxelManager->setVoxel(Math::Vector3i(-64, 64, -64), VoxelData::VoxelResolution::Size_64cm, true);
     
-    // Try to place outside workspace (negative X)
-    Math::Vector3i placement = calculatePlacementPosition(Math::Vector3i(0, 5, 5), Math::Vector3f(-1, 0, 0));
+    // Try to place on negative X face (should work in centered system)
+    Math::Vector3i placement = calculatePlacementPosition(Math::Vector3i(-64, 64, -64), Math::Vector3f(-1, 0, 0));
     
-    // Should calculate position -1,5,5 but voxel manager should reject it
-    EXPECT_EQ(placement.x, -1);
-    EXPECT_EQ(placement.y, 5);
-    EXPECT_EQ(placement.z, 5);
+    // Should calculate position -128,64,-64
+    EXPECT_EQ(placement.x, -128);
+    EXPECT_EQ(placement.y, 64);
+    EXPECT_EQ(placement.z, -64);
     
-    // Verify voxel manager rejects out-of-bounds placement
-    bool placed = voxelManager->setVoxel(
-        placement,
-        VoxelData::VoxelResolution::Size_64cm,
-        true
-    );
-    EXPECT_FALSE(placed) << "Should not be able to place voxel outside workspace";
+    // Verify this position is within workspace bounds (8x8x8 centered at origin)
+    bool isValid = voxelManager->isValidPosition(placement, VoxelData::VoxelResolution::Size_64cm);
+    EXPECT_TRUE(isValid) << "Position within workspace should be valid in centered coordinate system";
 }
 
 // Test that face detection works correctly with multiple voxels
 TEST_F(FaceClickingTest, TestFaceDetectionWithMultipleVoxels) {
-    // Place a line of voxels
-    for (int x = 3; x <= 7; ++x) {
-        voxelManager->setVoxel(Math::Vector3i(x, 5, 5), VoxelData::VoxelResolution::Size_64cm, true);
+    // Place a line of voxels centered around origin (using 64cm grid)
+    for (int i = -2; i <= 2; ++i) {
+        voxelManager->setVoxel(Math::Vector3i(i * 64, 64, 0), VoxelData::VoxelResolution::Size_64cm, true);
     }
     
     float voxelSize = 0.64f;
     
-    // Test ray hitting the rightmost voxel
-    Math::Vector3f rightVoxelCenter(7.0f * voxelSize + voxelSize * 0.5f,
-                                   5.0f * voxelSize + voxelSize * 0.5f,
-                                   5.0f * voxelSize + voxelSize * 0.5f);
+    // Test ray hitting the rightmost voxel (at x=128)
+    Math::WorldCoordinates rightVoxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(128, 64, 0));
+    Math::Vector3f rightVoxelCenter = rightVoxelWorldPos.value() + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
     
     Math::Vector3f rayOrigin = rightVoxelCenter + Math::Vector3f(2.0f, 0, 0);
     Math::Vector3f rayTarget = rightVoxelCenter + Math::Vector3f(0.5f * voxelSize, 0, 0);
@@ -255,7 +275,7 @@ TEST_F(FaceClickingTest, TestFaceDetectionWithMultipleVoxels) {
     
     VisualFeedback::Face face = detectFace(ray);
     ASSERT_TRUE(face.isValid());
-    EXPECT_EQ(face.getVoxelPosition(), Math::Vector3i(7, 5, 5)) 
+    EXPECT_EQ(face.getVoxelPosition(), Math::IncrementCoordinates(128, 64, 0)) 
         << "Should hit the rightmost voxel";
     
     Math::Vector3f normal = face.getNormal();

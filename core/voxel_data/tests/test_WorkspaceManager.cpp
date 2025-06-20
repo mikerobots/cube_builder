@@ -487,7 +487,7 @@ TEST_F(WorkspaceManagerTest, IncrementCoordinatesValidation) {
     IncrementCoordinates validIncrementPos(5, 5, 5);
     EXPECT_TRUE(manager->isIncrementPositionValid(validIncrementPos));
     
-    IncrementCoordinates invalidIncrementPos(1000, 1000, 1000);  // Outside 4m workspace
+    IncrementCoordinates invalidIncrementPos(210, 210, 210);  // 2.1m, outside 2m bound in 4m workspace
     EXPECT_FALSE(manager->isIncrementPositionValid(invalidIncrementPos));
     
     // Test with more increment positions
@@ -495,7 +495,7 @@ TEST_F(WorkspaceManagerTest, IncrementCoordinatesValidation) {
     IncrementCoordinates validSmallIncrement(100, 100, 100);  // 1m from origin
     EXPECT_TRUE(manager->isIncrementPositionValid(validSmallIncrement));
     
-    IncrementCoordinates invalidSmallIncrement(500, 500, 500);  // 5m from origin, outside 4m workspace
+    IncrementCoordinates invalidSmallIncrement(210, 210, 210);  // 2.1m from origin, outside 2m bound in 4m workspace
     EXPECT_FALSE(manager->isIncrementPositionValid(invalidSmallIncrement));
 }
 

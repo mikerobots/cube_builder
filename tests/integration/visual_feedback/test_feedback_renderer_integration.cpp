@@ -1,10 +1,12 @@
 #include <gtest/gtest.h>
 #include <chrono>
 #include "../../../core/visual_feedback/include/visual_feedback/FeedbackRenderer.h"
+#include "../../../core/selection/SelectionSet.h"
+#include "../../../foundation/math/BoundingBox.h"
+#include "../../../core/rendering/RenderTypes.h"
 
 using namespace VoxelEditor::VisualFeedback;
 using namespace VoxelEditor::Math;
-using namespace VoxelEditor::VoxelData;
 using namespace VoxelEditor::Rendering;
 
 class FeedbackRendererIntegrationTest : public ::testing::Test {
@@ -19,77 +21,76 @@ protected:
 
 // These tests require OpenGL context and should only run in environments with display support
 TEST_F(FeedbackRendererIntegrationTest, FaceHighlight) {
-    Face face(Vector3i(1, 2, 3), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    Face face(Vector3i(1, 2, 3), VoxelEditor::VoxelData::VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     
-    EXPECT_NO_THROW(renderer->setFaceHighlight(face));
+    EXPECT_NO_THROW(renderer->renderFaceHighlight(face));
     EXPECT_NO_THROW(renderer->clearFaceHighlight());
 }
 
 TEST_F(FeedbackRendererIntegrationTest, VoxelPreview) {
     Vector3i position(5, 10, 15);
-    VoxelResolution resolution = VoxelResolution::Size_32cm;
+    VoxelEditor::VoxelData::VoxelResolution resolution = VoxelEditor::VoxelData::VoxelResolution::Size_32cm;
     bool isValid = true;
     
-    EXPECT_NO_THROW(renderer->setVoxelPreview(position, resolution, isValid));
+    EXPECT_NO_THROW(renderer->renderVoxelPreviewWithValidation(position, resolution, isValid));
     EXPECT_NO_THROW(renderer->clearVoxelPreview());
 }
 
 TEST_F(FeedbackRendererIntegrationTest, SelectionVisualization) {
-    std::vector<VoxelId> selection = {
-        VoxelId{Vector3i(0, 0, 0), VoxelResolution::Size_32cm},
-        VoxelId{Vector3i(1, 0, 0), VoxelResolution::Size_32cm},
-        VoxelId{Vector3i(0, 1, 0), VoxelResolution::Size_32cm}
-    };
+    VoxelEditor::Selection::SelectionSet selection;
+    selection.add(VoxelEditor::Selection::VoxelId{Vector3i(0, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_32cm});
+    selection.add(VoxelEditor::Selection::VoxelId{Vector3i(1, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_32cm});
+    selection.add(VoxelEditor::Selection::VoxelId{Vector3i(0, 1, 0), VoxelEditor::VoxelData::VoxelResolution::Size_32cm});
     
-    EXPECT_NO_THROW(renderer->setSelectionVisualization(selection));
-    EXPECT_NO_THROW(renderer->clearSelectionVisualization());
+    EXPECT_NO_THROW(renderer->renderSelection(selection));
+    EXPECT_NO_THROW(renderer->setSelectionAnimationEnabled(false));
 }
 
 TEST_F(FeedbackRendererIntegrationTest, GroupVisualization) {
-    std::vector<VoxelId> group = {
-        VoxelId{Vector3i(2, 2, 2), VoxelResolution::Size_32cm},
-        VoxelId{Vector3i(3, 2, 2), VoxelResolution::Size_32cm}
-    };
+    std::vector<GroupId> groups = {1, 2, 3};
     
-    EXPECT_NO_THROW(renderer->setGroupVisualization(group));
-    EXPECT_NO_THROW(renderer->clearGroupVisualization());
+    EXPECT_NO_THROW(renderer->renderGroupOutlines(groups));
+    EXPECT_NO_THROW(renderer->renderGroupBounds(1, Color::Red()));
 }
 
 TEST_F(FeedbackRendererIntegrationTest, WorkspaceVisualization) {
-    Vector3f workspaceSize(5.0f, 5.0f, 5.0f);
-    Vector3f workspaceCenter(0.0f, 0.0f, 0.0f);
+    BoundingBox workspace(Vector3f(-2.5f, 0.0f, -2.5f), Vector3f(2.5f, 5.0f, 2.5f));
     
-    EXPECT_NO_THROW(renderer->setWorkspaceVisualization(workspaceSize, workspaceCenter));
-    EXPECT_NO_THROW(renderer->clearWorkspaceVisualization());
+    EXPECT_NO_THROW(renderer->renderWorkspaceBounds(workspace));
+    EXPECT_NO_THROW(renderer->renderGridLines(VoxelEditor::VoxelData::VoxelResolution::Size_32cm, 0.35f));
 }
 
 TEST_F(FeedbackRendererIntegrationTest, PerformanceOverlays) {
-    PerformanceMetrics metrics;
-    metrics.frameTime = 16.7f; // 60 FPS
-    metrics.voxelCount = 1000;
-    metrics.memoryUsage = 50.0f; // MB
+    RenderStats stats;
+    stats.drawCalls = 100;
+    stats.triangleCount = 5000;
+    stats.frameTime = 16.7f;
     
-    EXPECT_NO_THROW(renderer->setPerformanceOverlay(metrics));
-    EXPECT_NO_THROW(renderer->clearPerformanceOverlay());
+    EXPECT_NO_THROW(renderer->renderPerformanceMetrics(stats));
+    EXPECT_NO_THROW(renderer->renderMemoryUsage(50 * 1024 * 1024, 100 * 1024 * 1024)); // 50MB used, 100MB total
 }
 
 TEST_F(FeedbackRendererIntegrationTest, AnimationControl) {
-    // Test animation enable/disable
-    EXPECT_NO_THROW(renderer->setAnimationEnabled(true));
-    EXPECT_TRUE(renderer->isAnimationEnabled());
+    // Test animation pause/resume
+    EXPECT_NO_THROW(renderer->pauseAnimations(true));
+    EXPECT_TRUE(renderer->areAnimationsPaused());
     
-    EXPECT_NO_THROW(renderer->setAnimationEnabled(false));
-    EXPECT_FALSE(renderer->isAnimationEnabled());
+    EXPECT_NO_THROW(renderer->pauseAnimations(false));
+    EXPECT_FALSE(renderer->areAnimationsPaused());
+    
+    // Test animation speed
+    EXPECT_NO_THROW(renderer->setAnimationSpeed(2.0f));
+    EXPECT_FLOAT_EQ(renderer->getAnimationSpeed(), 2.0f);
 }
 
 TEST_F(FeedbackRendererIntegrationTest, RenderOrder) {
     // Test that multiple visual elements can be rendered without conflicts
-    Face face(Vector3i(1, 0, 0), VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+    Face face(Vector3i(1, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
     Vector3i previewPos(2, 0, 0);
     
     // Set multiple visual elements
-    EXPECT_NO_THROW(renderer->setFaceHighlight(face));
-    EXPECT_NO_THROW(renderer->setVoxelPreview(previewPos, VoxelResolution::Size_32cm, true));
+    EXPECT_NO_THROW(renderer->renderFaceHighlight(face));
+    EXPECT_NO_THROW(renderer->renderVoxelPreviewWithValidation(previewPos, VoxelEditor::VoxelData::VoxelResolution::Size_32cm, true));
     
     // Clear in different order
     EXPECT_NO_THROW(renderer->clearVoxelPreview());
@@ -100,63 +101,70 @@ TEST_F(FeedbackRendererIntegrationTest, MultipleUpdates) {
     // Test rapid updates don't cause issues
     for (int i = 0; i < 100; ++i) {
         Vector3i position(i % 10, 0, 0);
-        Face face(position, VoxelResolution::Size_32cm, FaceDirection::PositiveX);
+        Face face(position, VoxelEditor::VoxelData::VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
         
-        EXPECT_NO_THROW(renderer->setFaceHighlight(face));
-        EXPECT_NO_THROW(renderer->setVoxelPreview(position, VoxelResolution::Size_32cm, true));
+        EXPECT_NO_THROW(renderer->renderFaceHighlight(face));
+        EXPECT_NO_THROW(renderer->renderVoxelPreviewWithValidation(position, VoxelEditor::VoxelData::VoxelResolution::Size_32cm, true));
     }
     
-    EXPECT_NO_THROW(renderer->clearAll());
+    // Clear individual elements (no clearAll method)
+    EXPECT_NO_THROW(renderer->clearFaceHighlight());
+    EXPECT_NO_THROW(renderer->clearVoxelPreview());
 }
 
 TEST_F(FeedbackRendererIntegrationTest, ComplexScene) {
     // Test complex scene with multiple visual elements
     
     // Face highlight
-    Face face(Vector3i(5, 5, 5), VoxelResolution::Size_32cm, FaceDirection::PositiveY);
-    EXPECT_NO_THROW(renderer->setFaceHighlight(face));
+    Face face(Vector3i(5, 5, 5), VoxelEditor::VoxelData::VoxelResolution::Size_32cm, VoxelEditor::VisualFeedback::FaceDirection::PositiveY);
+    EXPECT_NO_THROW(renderer->renderFaceHighlight(face));
     
     // Voxel preview
     Vector3i previewPos(6, 5, 5);
-    EXPECT_NO_THROW(renderer->setVoxelPreview(previewPos, VoxelResolution::Size_32cm, true));
+    EXPECT_NO_THROW(renderer->renderVoxelPreviewWithValidation(previewPos, VoxelEditor::VoxelData::VoxelResolution::Size_32cm, true));
     
     // Selection
-    std::vector<VoxelId> selection;
+    std::vector<VoxelEditor::Selection::VoxelId> selection;
     for (int i = 0; i < 10; ++i) {
-        selection.push_back(VoxelId{Vector3i(i, 0, 0), VoxelResolution::Size_32cm});
+        selection.push_back(VoxelEditor::Selection::VoxelId{Vector3i(i, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_32cm});
     }
-    EXPECT_NO_THROW(renderer->setSelectionVisualization(selection));
+    VoxelEditor::Selection::SelectionSet selectionSet;
+    for (const auto& voxel : selection) {
+        selectionSet.add(voxel);
+    }
+    EXPECT_NO_THROW(renderer->renderSelection(selectionSet));
     
     // Workspace bounds
-    Vector3f workspaceSize(10.0f, 10.0f, 10.0f);
-    Vector3f workspaceCenter(0.0f, 0.0f, 0.0f);
-    EXPECT_NO_THROW(renderer->setWorkspaceVisualization(workspaceSize, workspaceCenter));
+    BoundingBox workspace(Vector3f(-5.0f, 0.0f, -5.0f), Vector3f(5.0f, 10.0f, 5.0f));
+    EXPECT_NO_THROW(renderer->renderWorkspaceBounds(workspace));
     
     // Performance overlay
-    PerformanceMetrics metrics;
-    metrics.frameTime = 16.7f;
-    metrics.voxelCount = selection.size();
-    metrics.memoryUsage = 75.0f;
-    EXPECT_NO_THROW(renderer->setPerformanceOverlay(metrics));
+    RenderStats stats;
+    stats.drawCalls = 200;
+    stats.triangleCount = 10000;
+    stats.frameTime = 16.7f;
+    EXPECT_NO_THROW(renderer->renderPerformanceMetrics(stats));
     
     // Clear everything
-    EXPECT_NO_THROW(renderer->clearAll());
+    // Clear individual elements (no clearAll method)
+    EXPECT_NO_THROW(renderer->clearFaceHighlight());
+    EXPECT_NO_THROW(renderer->clearVoxelPreview());
 }
 
 TEST_F(FeedbackRendererIntegrationTest, VoxelPreviewMultipleResolutions) {
     // Test preview with different voxel resolutions
-    std::vector<VoxelResolution> resolutions = {
-        VoxelResolution::Size_1cm,
-        VoxelResolution::Size_8cm,
-        VoxelResolution::Size_32cm,
-        VoxelResolution::Size_128cm
+    std::vector<VoxelEditor::VoxelData::VoxelResolution> resolutions = {
+        VoxelEditor::VoxelData::VoxelResolution::Size_1cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_8cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_32cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_128cm
     };
     
     Vector3i basePos(0, 0, 0);
     
     for (size_t i = 0; i < resolutions.size(); ++i) {
         Vector3i position(static_cast<int>(i), 0, 0);
-        EXPECT_NO_THROW(renderer->setVoxelPreview(position, resolutions[i], true));
+        EXPECT_NO_THROW(renderer->renderVoxelPreviewWithValidation(position, resolutions[i], true));
         EXPECT_NO_THROW(renderer->clearVoxelPreview());
     }
 }
@@ -169,7 +177,7 @@ TEST_F(FeedbackRendererIntegrationTest, PreviewUpdatePerformance) {
         Vector3i position(i % 100, (i / 100) % 10, 0);
         bool isValid = (i % 2 == 0);
         
-        renderer->setVoxelPreview(position, VoxelResolution::Size_32cm, isValid);
+        renderer->renderVoxelPreviewWithValidation(position, VoxelEditor::VoxelData::VoxelResolution::Size_32cm, isValid);
     }
     
     auto end = std::chrono::high_resolution_clock::now();

@@ -91,20 +91,22 @@ TEST_F(CLIErrorHandlingTest, VoxelPositionBoundaryTests) {
     voxelManager->resizeWorkspace(Math::Vector3f(4.0f, 4.0f, 4.0f));
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
     
-    int maxGrid = 49; // 4.0m / 0.08m = 50, so max index is 49
+    int maxGrid = 24; // 4.0m / 0.08m = 50 total, centered means -25 to +24, so max index is 24
+    int minGrid = -25; // Minimum index for centered coordinate system
     
-    // Test valid boundary positions
+    // Test valid boundary positions for centered coordinate system
     EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_8cm, true));
     EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(maxGrid, 0, 0), VoxelData::VoxelResolution::Size_8cm, true));
+    EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(minGrid, 0, 0), VoxelData::VoxelResolution::Size_8cm, true));
     EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(0, maxGrid, 0), VoxelData::VoxelResolution::Size_8cm, true));
     EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(0, 0, maxGrid), VoxelData::VoxelResolution::Size_8cm, true));
-    EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(maxGrid, maxGrid, maxGrid), VoxelData::VoxelResolution::Size_8cm, true));
+    EXPECT_TRUE(voxelManager->setVoxel(Math::Vector3i(0, 0, minGrid), VoxelData::VoxelResolution::Size_8cm, true));
     
-    // Test invalid boundary positions (implementation may vary on how these are handled)
-    // These might return false or be clamped, depending on implementation
-    bool result1 = voxelManager->setVoxel(Math::Vector3i(-1, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);
+    // Test invalid boundary positions (outside workspace bounds)
+    // These should return false as they're outside the valid coordinate range
+    bool result1 = voxelManager->setVoxel(Math::Vector3i(minGrid - 1, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);
     bool result2 = voxelManager->setVoxel(Math::Vector3i(maxGrid + 1, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);
-    bool result3 = voxelManager->setVoxel(Math::Vector3i(0, -1, 0), VoxelData::VoxelResolution::Size_8cm, true);
+    bool result3 = voxelManager->setVoxel(Math::Vector3i(0, -1, 0), VoxelData::VoxelResolution::Size_8cm, true); // Y < 0 should be invalid
     bool result4 = voxelManager->setVoxel(Math::Vector3i(0, maxGrid + 1, 0), VoxelData::VoxelResolution::Size_8cm, true);
     
     // The exact behavior may depend on implementation - we just verify it's consistent
@@ -115,10 +117,10 @@ TEST_F(CLIErrorHandlingTest, VoxelPositionBoundaryTests) {
 }
 
 TEST_F(CLIErrorHandlingTest, SelectionBoundaryTests) {
-    // Create test voxels
+    // Create test voxels using centered coordinate system
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
     for (int i = 0; i < 25; ++i) {
-        Math::Vector3i pos(i % 5, (i / 5) % 5, 0);
+        Math::Vector3i pos((i % 5) - 2, (i / 5) % 5, 0); // Center the grid around origin (-2 to +2 in X)
         voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
     }
     
@@ -250,7 +252,8 @@ TEST_F(CLIErrorHandlingTest, DiskSpaceHandling) {
     
     const int largeVoxelCount = 10000; // Large but not excessive for CI
     for (int i = 0; i < largeVoxelCount; ++i) {
-        Math::Vector3i pos(i % 100, (i / 100) % 100, i / 10000);
+        // Use centered coordinate system: -50 to +49 for 100 wide grid
+        Math::Vector3i pos((i % 100) - 50, (i / 100) % 100, i / 10000);
         if (!voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_1cm, true)) {
             break; // Stop if we hit workspace limits
         }
@@ -282,7 +285,8 @@ TEST_F(CLIErrorHandlingTest, MemoryStressTest) {
     int successfulPlacements = 0;
     
     for (int i = 0; i < maxVoxels; ++i) {
-        Math::Vector3i pos(i % 62, (i / 62) % 62, i / (62 * 62)); // Stay within 5m workspace
+        // Use centered coordinate system: 62 wide grid means -31 to +30
+        Math::Vector3i pos((i % 62) - 31, (i / 62) % 62, i / (62 * 62)); // Stay within 5m workspace
         
         if (voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true)) {
             successfulPlacements++;
@@ -314,10 +318,10 @@ TEST_F(CLIErrorHandlingTest, GroupErrorHandling) {
         EXPECT_EQ(group->getVoxelCount(), 0);
     }
     
-    // Test group creation with invalid voxel IDs
+    // Test group creation with invalid voxel IDs (far outside workspace bounds)
     std::vector<Groups::VoxelId> invalidVoxelList;
     for (int i = 0; i < 5; ++i) {
-        Math::Vector3i invalidPos(-1000 - i, -1000 - i, -1000 - i);
+        Math::Vector3i invalidPos(-1000 - i, -1000 - i, -1000 - i); // Way outside any reasonable workspace
         Groups::VoxelId invalidId(invalidPos, VoxelData::VoxelResolution::Size_8cm);
         invalidVoxelList.push_back(invalidId);
     }
@@ -337,7 +341,7 @@ TEST_F(CLIErrorHandlingTest, GroupErrorHandling) {
     
     // Test duplicate group names
     std::vector<Groups::VoxelId> validVoxelList;
-    Math::Vector3i pos(0, 0, 0);
+    Math::Vector3i pos(0, 0, 0); // Use origin (valid in centered coordinate system)
     voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
     Groups::VoxelId validId(pos, VoxelData::VoxelResolution::Size_8cm);
     validVoxelList.push_back(validId);
@@ -424,7 +428,8 @@ TEST_F(CLIErrorHandlingTest, ConcurrentOperations) {
     for (int t = 0; t < numThreads; ++t) {
         threads.emplace_back([&, t]() {
             for (int i = 0; i < operationsPerThread; ++i) {
-                Math::Vector3i pos(t * 10 + i, 0, 0);
+                // Use centered coordinate system: spread across different areas
+                Math::Vector3i pos(t * 10 + i - 50, 0, 0); // Center around origin
                 if (voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true)) {
                     successCount++;
                 } else {

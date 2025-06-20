@@ -147,9 +147,26 @@ target_link_libraries(test_visual_feedback_requirements_integration
 
 add_test(NAME VisualFeedbackRequirementsIntegration COMMAND test_visual_feedback_requirements_integration)
 
+# Enhanced Shader Validation Integration Test
+add_executable(test_enhanced_shader_validation_integration
+    rendering/test_enhanced_shader_validation_integration.cpp
+)
+
+target_link_libraries(test_enhanced_shader_validation_integration
+    VoxelEditor_Rendering
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME EnhancedShaderValidationIntegration COMMAND test_enhanced_shader_validation_integration)
+
 # Set working directory for tests
 set_tests_properties(CameraCubeVisibility CameraCubeVisibilitySimple GroundPlaneVoxelPlacement 
     MouseGroundPlaneClicking MouseBoundaryClicking WorkspaceBoundaryPlacement
-    OverlayRendererIntegration FeedbackRendererIntegration VisualFeedbackRequirementsIntegration PROPERTIES
+    OverlayRendererIntegration FeedbackRendererIntegration VisualFeedbackRequirementsIntegration
+    EnhancedShaderValidationIntegration PROPERTIES
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
