@@ -280,10 +280,67 @@ target_link_libraries(test_shader_visual_validation
 
 add_test(NAME ShaderVisualValidation COMMAND test_shader_visual_validation)
 
+# Comprehensive Shader Rendering Test
+add_executable(test_shader_rendering_comprehensive
+    rendering/test_shader_rendering_comprehensive.cpp
+)
+
+target_link_libraries(test_shader_rendering_comprehensive
+    VoxelEditor_Rendering
+    VoxelEditor_Camera
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME ShaderRenderingComprehensive COMMAND test_shader_rendering_comprehensive)
+
+# OpenGL Wrapper Validation Test
+add_executable(test_opengl_wrapper_validation
+    rendering/test_opengl_wrapper_validation.cpp
+)
+
+target_link_libraries(test_opengl_wrapper_validation
+    VoxelEditor_Rendering
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME OpenGLWrapperValidation COMMAND test_opengl_wrapper_validation)
+
+# VAO Attribute Validation Test
+add_executable(test_vao_attribute_validation
+    rendering/test_vao_attribute_validation.cpp
+)
+
+target_link_libraries(test_vao_attribute_validation
+    VoxelEditor_Rendering
+    VoxelEditor_Camera
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME VAOAttributeValidation COMMAND test_vao_attribute_validation)
+
 # Set working directory for tests
 set_tests_properties(CameraCubeVisibility CameraCubeVisibilitySimple GroundPlaneVoxelPlacement 
     MouseGroundPlaneClicking MouseBoundaryClicking WorkspaceBoundaryPlacement
     OverlayRendererIntegration FeedbackRendererIntegration VisualFeedbackRequirementsIntegration
-    EnhancedShaderValidationIntegration ShaderVisualValidation PROPERTIES
+    EnhancedShaderValidationIntegration ShaderVisualValidation
+    ShaderRenderingComprehensive OpenGLWrapperValidation VAOAttributeValidation PROPERTIES
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )

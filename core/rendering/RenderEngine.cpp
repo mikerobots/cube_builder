@@ -543,12 +543,13 @@ void RenderEngine::setupMeshBuffers(Mesh& mesh) {
     m_glRenderer->bindIndexBuffer(mesh.indexBuffer);
     
     // Configure vertex attributes for the VAO
-    // Note: Order matches shader expectations - Color at location 2, TexCoord at 3
+    // Note: Only enable attributes that the shader actually uses
+    // basic_voxel_gl33 shader only uses Position, Normal, and Color
     std::vector<VertexAttribute> attributes = {
         VertexAttribute::Position,
         VertexAttribute::Normal,
-        VertexAttribute::Color,
-        VertexAttribute::TexCoord0
+        VertexAttribute::Color
+        // TexCoord0 removed - not used by current shaders
     };
     m_glRenderer->setupVertexAttributes(attributes);
     
