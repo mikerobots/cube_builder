@@ -123,6 +123,7 @@ public:
     
     // Legacy increment position validation for backward compatibility
     bool isGridPositionValid(const Math::Vector3i& incrementPos, VoxelResolution resolution) const {
+        (void)resolution; // Currently unused - all positions validated at 1cm granularity
         return isIncrementPositionValid(Math::IncrementCoordinates(incrementPos));
     }
     
@@ -156,7 +157,8 @@ public:
     // Memory estimation
     size_t estimateMemoryUsage(VoxelResolution resolution, float fillRatio = 0.1f) const {
         // Base memory for workspace management
-        size_t baseMemory = sizeof(WorkspaceManager) + sizeof(Math::Vector3f);
+        // Base memory calculation removed - was unused
+        // size_t baseMemory = sizeof(WorkspaceManager) + sizeof(Math::Vector3f);
         
         // Estimate voxel storage
         int maxVoxels = getMaxVoxelCount(resolution);

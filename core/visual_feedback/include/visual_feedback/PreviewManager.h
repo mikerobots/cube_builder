@@ -4,6 +4,7 @@
 #include "FeedbackTypes.h"
 #include "../../input/PlacementValidation.h"
 #include "../../voxel_data/VoxelTypes.h"
+#include "../../voxel_data/VoxelGrid.h"
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/Vector3f.h"
 
@@ -44,6 +45,13 @@ public:
     Math::Vector3i getPreviewPosition() const { return m_previewPosition; }
     VoxelData::VoxelResolution getPreviewResolution() const { return m_previewResolution; }
     bool isValid() const { return m_isValid; }
+    
+    // Validation methods (for requirements tests)
+    bool isValidIncrementPosition(const Math::IncrementCoordinates& position) const;
+    bool isValidPlacement(const Math::IncrementCoordinates& position, VoxelData::VoxelResolution resolution, 
+                         const VoxelData::VoxelGrid& grid) const;
+    Rendering::Color getPreviewColor(bool isValid) const;
+    void updatePreview(const Math::IncrementCoordinates& position, VoxelData::VoxelResolution resolution, bool isValid);
     
     // Rendering
     void render(OutlineRenderer& renderer) const;

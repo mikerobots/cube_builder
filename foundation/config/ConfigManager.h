@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include <mutex>
+#include <atomic>
+#include <memory>
 
 namespace VoxelEditor {
 namespace Config {
@@ -14,6 +16,7 @@ class ConfigManager {
 public:
     static ConfigManager& getInstance() {
         static ConfigManager instance;
+        instance.ensureInitialized();
         return instance;
     }
     
@@ -42,42 +45,7 @@ public:
     
     bool loadDefaults() {
         std::lock_guard<std::mutex> lock(m_mutex);
-        
-        m_rootSection.clear();
-        
-        // Application defaults
-        m_rootSection.setValueByPath("app.name", std::string("VoxelEditor"));
-        m_rootSection.setValueByPath("app.version", std::string("1.0.0"));
-        m_rootSection.setValueByPath("app.debug", false);
-        
-        // Rendering defaults
-        m_rootSection.setValueByPath("rendering.vsync", true);
-        m_rootSection.setValueByPath("rendering.msaa", 4);
-        m_rootSection.setValueByPath("rendering.max_fps", 60);
-        m_rootSection.setValueByPath("rendering.wireframe", false);
-        
-        // Workspace defaults
-        m_rootSection.setValueByPath("workspace.size_min", 2.0f);
-        m_rootSection.setValueByPath("workspace.size_max", 8.0f);
-        m_rootSection.setValueByPath("workspace.size_default", 5.0f);
-        
-        // Voxel defaults
-        m_rootSection.setValueByPath("voxels.default_size", 0.1f);
-        m_rootSection.setValueByPath("voxels.max_count", 1000000);
-        
-        // Input defaults
-        m_rootSection.setValueByPath("input.mouse_sensitivity", 1.0f);
-        m_rootSection.setValueByPath("input.invert_y", false);
-        
-        // Memory defaults
-        m_rootSection.setValueByPath("memory.pool_initial_size", 64);
-        m_rootSection.setValueByPath("memory.max_usage_mb", 2048);
-        
-        // Logging defaults
-        m_rootSection.setValueByPath("logging.level", std::string("Info"));
-        m_rootSection.setValueByPath("logging.file_enabled", true);
-        m_rootSection.setValueByPath("logging.console_enabled", true);
-        
+        loadDefaultsNoLock();
         return true;
     }
     
@@ -218,9 +186,66 @@ private:
     ConfigSection m_rootSection;
     Events::EventDispatcher* m_eventDispatcher = nullptr;
     mutable std::mutex m_mutex;
+    std::atomic<bool> m_initialized{false};
     
-    ConfigManager() {
-        loadDefaults();
+    ConfigManager() = default;
+    
+    // Delete copy and move operations
+    ConfigManager(const ConfigManager&) = delete;
+    ConfigManager& operator=(const ConfigManager&) = delete;
+    ConfigManager(ConfigManager&&) = delete;
+    ConfigManager& operator=(ConfigManager&&) = delete;
+    
+    void ensureInitialized() {
+        bool expected = false;
+        if (m_initialized.compare_exchange_strong(expected, true)) {
+            // Don't load defaults automatically - let client code do it
+        }
+    }
+    
+    void loadDefaultsNoLock() {
+        m_rootSection.clear();
+        
+        // Application defaults
+        m_rootSection.setValueByPath("app.name", std::string("VoxelEditor"));
+        m_rootSection.setValueByPath("app.version", std::string("1.0.0"));
+        m_rootSection.setValueByPath("app.debug", false);
+        
+        // Rendering defaults
+        m_rootSection.setValueByPath("rendering.vsync", true);
+        m_rootSection.setValueByPath("rendering.msaa", 4);
+        m_rootSection.setValueByPath("rendering.max_fps", 60);
+        m_rootSection.setValueByPath("rendering.resolution_width", 1280);
+        m_rootSection.setValueByPath("rendering.resolution_height", 720);
+        m_rootSection.setValueByPath("rendering.enable_grid", true);
+        m_rootSection.setValueByPath("rendering.enable_shadows", true);
+        m_rootSection.setValueByPath("rendering.show_wireframe", false);
+        m_rootSection.setValueByPath("rendering.mode", std::string("normal"));
+        
+        // Workspace defaults
+        m_rootSection.setValueByPath("workspace.size_default", 5.0f);
+        m_rootSection.setValueByPath("workspace.size_min", 2.0f);
+        m_rootSection.setValueByPath("workspace.size_max", 8.0f);
+        m_rootSection.setValueByPath("workspace.auto_save", true);
+        m_rootSection.setValueByPath("workspace.auto_save_interval", 300);
+        
+        // Camera defaults
+        m_rootSection.setValueByPath("camera.fov", 45.0f);
+        m_rootSection.setValueByPath("camera.near_plane", 0.1f);
+        m_rootSection.setValueByPath("camera.far_plane", 100.0f);
+        m_rootSection.setValueByPath("camera.sensitivity", 0.05f);
+        m_rootSection.setValueByPath("camera.smooth_movement", true);
+        m_rootSection.setValueByPath("camera.invert_y", false);
+        
+        // Input defaults
+        m_rootSection.setValueByPath("input.mouse_sensitivity", 1.0f);
+        m_rootSection.setValueByPath("input.scroll_sensitivity", 0.1f);
+        m_rootSection.setValueByPath("input.double_click_time", 250);
+        
+        // Performance defaults
+        m_rootSection.setValueByPath("performance.voxel_cache_size", 1000);
+        m_rootSection.setValueByPath("performance.undo_history_size", 100);
+        m_rootSection.setValueByPath("performance.render_distance", 50.0f);
     }
     
     std::shared_ptr<ConfigSection> getSectionByPath(const std::string& path) {

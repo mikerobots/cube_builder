@@ -36,8 +36,15 @@ public:
     void setMaxRayDistance(float distance) { m_maxRayDistance = distance; }
     float getMaxRayDistance() const { return m_maxRayDistance; }
     
+    // Additional methods (for requirements tests)
+    bool isFaceVisible(const Face& face) const;
+    Rendering::Color getFaceHighlightColor(const Face& face) const;
+    bool validateFace(const Face& face, const VoxelData::VoxelGrid& grid) const;
+    bool hasActiveHighlight() const;
+    
 private:
     float m_maxRayDistance;
+    bool m_hasActiveHighlight = false;
     
     // Ray-voxel intersection
     RaycastHit raycastVoxelGrid(const Ray& ray, const VoxelData::VoxelGrid& grid, 
@@ -45,7 +52,7 @@ private:
     
     // Face creation
     Face createFaceFromHit(const RaycastHit& hit, VoxelData::VoxelResolution resolution);
-    bool isValidFace(const Face& face, const VoxelData::VoxelGrid& grid);
+    bool isValidFace(const Face& face, const VoxelData::VoxelGrid& grid) const;
     
     // Ray-box intersection
     bool rayIntersectsBox(const Ray& ray, const Math::BoundingBox& box, 

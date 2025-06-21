@@ -76,6 +76,9 @@ public:
     void markDirty() { m_dirty = true; }
     bool isDirty() const { return m_dirty; }
     
+    // Internal state management (for ShaderManager)
+    void setValid(bool valid) { m_valid = valid; }
+    
 private:
     ShaderId m_id;
     std::string m_name;

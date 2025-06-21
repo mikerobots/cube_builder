@@ -252,16 +252,9 @@ std::unique_ptr<Command> VoxelPlacementCommand::mergeWith(std::unique_ptr<Comman
         return nullptr;
     }
     
-    // Merge the base commands
-    auto mergedBase = m_baseCommand->mergeWith(std::move(otherPlacement->m_baseCommand));
-    if (mergedBase) {
-        m_baseCommand = std::unique_ptr<VoxelEditCommand>(
-            dynamic_cast<VoxelEditCommand*>(mergedBase.release()));
-        other.release();
-        return std::unique_ptr<Command>(this);
-    }
-    
-    return nullptr;
+    // For placement commands at the same position, we just keep the latest one
+    // (placing a voxel where one already exists is redundant)
+    return std::move(other);
 }
 
 ValidationResult VoxelPlacementCommand::validate() const {
@@ -364,16 +357,9 @@ std::unique_ptr<Command> VoxelRemovalCommand::mergeWith(std::unique_ptr<Command>
         return nullptr;
     }
     
-    // Merge the base commands
-    auto mergedBase = m_baseCommand->mergeWith(std::move(otherRemoval->m_baseCommand));
-    if (mergedBase) {
-        m_baseCommand = std::unique_ptr<VoxelEditCommand>(
-            dynamic_cast<VoxelEditCommand*>(mergedBase.release()));
-        other.release();
-        return std::unique_ptr<Command>(this);
-    }
-    
-    return nullptr;
+    // For removal commands at the same position, we just keep the latest one
+    // (removing a voxel that's already removed is redundant)
+    return std::move(other);
 }
 
 ValidationResult VoxelRemovalCommand::validate() const {

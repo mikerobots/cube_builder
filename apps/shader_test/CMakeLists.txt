@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Shader Test Application
-add_executable(ShaderTest
+add_executable(test_integration_shader_basic_functionality
     src/main.cpp
     src/ShaderTestFramework.cpp
     src/ShaderTestRunner.cpp
@@ -85,13 +85,13 @@ add_custom_command(TARGET GeometricShaderValidation POST_BUILD
     COMMENT "Creating test output directory for GeometricShaderValidation"
 )
 
-target_include_directories(ShaderTest PRIVATE
+target_include_directories(test_integration_shader_basic_functionality PRIVATE
     include
     ${CMAKE_SOURCE_DIR}/core
     ${CMAKE_SOURCE_DIR}/foundation
 )
 
-target_link_libraries(ShaderTest PRIVATE
+target_link_libraries(test_integration_shader_basic_functionality PRIVATE
     VoxelEditor_Rendering
     VoxelEditor_Math
     VoxelEditor_Logging
@@ -126,7 +126,7 @@ target_link_libraries(RenderIntegrationTest PRIVATE
 )
 
 # Set output directory
-set_target_properties(ShaderTest PROPERTIES
+set_target_properties(test_integration_shader_basic_functionality PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
@@ -135,19 +135,19 @@ set_target_properties(SimpleShaderTest PROPERTIES
 )
 
 # Copy shader files to build directory for testing
-add_custom_command(TARGET ShaderTest POST_BUILD
+add_custom_command(TARGET test_integration_shader_basic_functionality POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory 
-        $<TARGET_FILE_DIR:ShaderTest>/core/rendering/shaders
+        $<TARGET_FILE_DIR:test_integration_shader_basic_functionality>/core/rendering/shaders
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/core/rendering/shaders
-        $<TARGET_FILE_DIR:ShaderTest>/core/rendering/shaders
+        $<TARGET_FILE_DIR:test_integration_shader_basic_functionality>/core/rendering/shaders
     COMMENT "Copying shader files for testing"
 )
 
 # Create test output directory
-add_custom_command(TARGET ShaderTest POST_BUILD
+add_custom_command(TARGET test_integration_shader_basic_functionality POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory 
-        $<TARGET_FILE_DIR:ShaderTest>/test_output
+        $<TARGET_FILE_DIR:test_integration_shader_basic_functionality>/test_output
     COMMENT "Creating test output directory"
 )
 
@@ -163,8 +163,8 @@ add_custom_command(TARGET SimpleShaderTest POST_BUILD
 
 # Add as a test
 add_test(NAME ShaderValidation 
-    COMMAND ShaderTest --all --report shader_test_report.txt
-    WORKING_DIRECTORY $<TARGET_FILE_DIR:ShaderTest>
+    COMMAND test_integration_shader_basic_functionality --all --report shader_test_report.txt
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:test_integration_shader_basic_functionality>
 )
 
 # Set test properties

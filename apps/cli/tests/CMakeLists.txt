@@ -1,176 +1,98 @@
 find_package(GTest REQUIRED)
 
-# CLI Integration Tests
-set(TEST_SOURCES
-    integration_test.cpp
-    test_cli_headless.cpp
-    test_cli_commands.cpp
-    test_cli_error_handling.cpp
-    test_cli_rendering_basic.cpp
-    test_zoom_behavior.cpp
-)
+# Auto-discover CLI and interaction integration test files
+file(GLOB CLI_INTEGRATION_TEST_FILES "test_integration_cli_*.cpp" "test_integration_interaction_*.cpp")
 
-# Create test executable
-add_executable(VoxelEditor_CLI_Tests ${TEST_SOURCES})
+# Function to determine appropriate libraries for each test
+function(get_test_libraries TEST_NAME OUT_LIBRARIES)
+    # Default libraries for all tests
+    set(LIBS
+        VoxelEditor_CLI_Lib
+        GTest::gtest_main
+    )
+    
+    # Add specific libraries based on test name patterns
+    if(${TEST_NAME} MATCHES ".*face_clicking.*" OR 
+       ${TEST_NAME} MATCHES ".*click_voxel.*" OR
+       ${TEST_NAME} MATCHES ".*voxel_face.*")
+        list(APPEND LIBS
+            VoxelEditor_VisualFeedback
+            VoxelEditor_UndoRedo
+            VoxelEditor_VoxelData
+            VoxelEditor_Camera
+        )
+    endif()
+    
+    if(${TEST_NAME} MATCHES ".*mouse_ray.*")
+        list(APPEND LIBS glm::glm)
+    endif()
+    
+    if(${TEST_NAME} MATCHES ".*click_voxel.*" OR 
+       ${TEST_NAME} MATCHES ".*voxel_face_clicking_simple.*")
+        list(APPEND LIBS VoxelEditor_Logging)
+    endif()
+    
+    # Remove duplicates
+    list(REMOVE_DUPLICATES LIBS)
+    set(${OUT_LIBRARIES} ${LIBS} PARENT_SCOPE)
+endfunction()
 
-# Include directories
-target_include_directories(VoxelEditor_CLI_Tests PRIVATE
+# Create individual executables for each CLI integration test file
+foreach(TEST_FILE ${CLI_INTEGRATION_TEST_FILES})
+    # Extract the test name (filename without extension)
+    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
+    
+    message(STATUS "Creating CLI integration test: ${TEST_NAME}")
+    
+    # Create executable
+    add_executable(${TEST_NAME} ${TEST_FILE})
+    
+    # Standard include directories
+    target_include_directories(${TEST_NAME} PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../include
+        ${CMAKE_SOURCE_DIR}/core
+        ${CMAKE_SOURCE_DIR}/foundation
+    )
+    
+    # Get appropriate libraries for this test
+    get_test_libraries(${TEST_NAME} TEST_LIBS)
+    
+    # Link libraries
+    target_link_libraries(${TEST_NAME} PRIVATE ${TEST_LIBS})
+    
+    # Enable C++20
+    target_compile_features(${TEST_NAME} PRIVATE cxx_std_20)
+    
+    # Mark rendering tests as expected to skip due to API issues
+    if(${TEST_NAME} MATCHES ".*rendering.*")
+        message(STATUS "Note: ${TEST_NAME} will skip at runtime due to API compatibility issues")
+    endif()
+    
+    # Discover Google Tests
+    gtest_discover_tests(${TEST_NAME})
+    
+endforeach()
+
+# CLI Unit Tests (VoxelMeshGenerator) - kept separate as it's a unit test
+add_executable(test_unit_cli_voxel_mesh_generator test_unit_cli_voxel_mesh_generator.cpp)
+
+target_include_directories(test_unit_cli_voxel_mesh_generator PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../include
     ${CMAKE_SOURCE_DIR}/core
     ${CMAKE_SOURCE_DIR}/foundation
 )
 
-# Link libraries
-target_link_libraries(VoxelEditor_CLI_Tests PRIVATE
-    # CLI library which includes Application class
+target_link_libraries(test_unit_cli_voxel_mesh_generator PRIVATE
     VoxelEditor_CLI_Lib
-    
-    # Test framework
     GTest::gtest
     GTest::gtest_main
 )
 
-# Add test
-add_test(NAME VoxelEditor_CLI_Tests COMMAND VoxelEditor_CLI_Tests)
-
-# Enable C++20
-target_compile_features(VoxelEditor_CLI_Tests PRIVATE cxx_std_20)
-
-# VoxelMeshGenerator Tests
-set(MESH_GENERATOR_TEST_SOURCES
-    test_VoxelMeshGenerator.cpp
-)
-
-add_executable(VoxelEditor_VoxelMeshGenerator_Tests ${MESH_GENERATOR_TEST_SOURCES})
-
-target_include_directories(VoxelEditor_VoxelMeshGenerator_Tests PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(VoxelEditor_VoxelMeshGenerator_Tests PRIVATE
-    # Use the CLI library which includes VoxelMeshGenerator
-    VoxelEditor_CLI_Lib
-    
-    # Test framework
-    GTest::gtest
-    GTest::gtest_main
-)
+target_compile_features(test_unit_cli_voxel_mesh_generator PRIVATE cxx_std_20)
 
 # Add mesh generator test
-add_test(NAME VoxelEditor_VoxelMeshGenerator_Tests COMMAND VoxelEditor_VoxelMeshGenerator_Tests)
-
-# Enable C++20
-target_compile_features(VoxelEditor_VoxelMeshGenerator_Tests PRIVATE cxx_std_20)
+add_test(NAME cli_unit_tests COMMAND test_unit_cli_voxel_mesh_generator)
 
 # Discover tests
 include(GoogleTest)
-gtest_discover_tests(VoxelEditor_CLI_Tests)
-gtest_discover_tests(VoxelEditor_VoxelMeshGenerator_Tests)
-
-# Face clicking tests
-add_executable(test_face_clicking
-    test_face_clicking.cpp
-)
-
-target_include_directories(test_face_clicking PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(test_face_clicking PRIVATE
-    VoxelEditor_CLI_Lib
-    VoxelEditor_VisualFeedback
-    VoxelEditor_UndoRedo
-    VoxelEditor_VoxelData
-    VoxelEditor_Camera
-    GTest::gtest_main
-)
-
-target_compile_features(test_face_clicking PRIVATE cxx_std_20)
-gtest_discover_tests(test_face_clicking)
-
-# Click voxel placement tests
-add_executable(test_click_voxel_placement
-    test_click_voxel_placement.cpp
-)
-
-target_include_directories(test_click_voxel_placement PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(test_click_voxel_placement PRIVATE
-    VoxelEditor_VisualFeedback
-    VoxelEditor_UndoRedo
-    VoxelEditor_VoxelData
-    VoxelEditor_Logging
-    GTest::gtest_main
-)
-
-target_compile_features(test_click_voxel_placement PRIVATE cxx_std_20)
-gtest_discover_tests(test_click_voxel_placement)
-
-# Voxel face clicking integration tests
-add_executable(test_voxel_face_clicking
-    test_voxel_face_clicking.cpp
-)
-
-target_include_directories(test_voxel_face_clicking PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(test_voxel_face_clicking PRIVATE
-    VoxelEditor_CLI_Lib
-    GTest::gtest_main
-)
-
-target_compile_features(test_voxel_face_clicking PRIVATE cxx_std_20)
-gtest_discover_tests(test_voxel_face_clicking)
-
-# Simple voxel face clicking tests (without full app)
-add_executable(test_voxel_face_clicking_simple
-    test_voxel_face_clicking_simple.cpp
-)
-
-target_include_directories(test_voxel_face_clicking_simple PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(test_voxel_face_clicking_simple PRIVATE
-    VoxelEditor_VisualFeedback
-    VoxelEditor_VoxelData
-    VoxelEditor_Logging
-    GTest::gtest_main
-)
-
-target_compile_features(test_voxel_face_clicking_simple PRIVATE cxx_std_20)
-gtest_discover_tests(test_voxel_face_clicking_simple)
-
-# Mouse ray movement tests
-add_executable(test_mouse_ray_movement
-    test_mouse_ray_movement.cpp
-)
-
-target_include_directories(test_mouse_ray_movement PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(test_mouse_ray_movement PRIVATE
-    VoxelEditor_CLI_Lib
-    GTest::gtest_main
-    glm::glm
-)
-
-target_compile_features(test_mouse_ray_movement PRIVATE cxx_std_20)
-gtest_discover_tests(test_mouse_ray_movement)
-
+gtest_discover_tests(test_unit_cli_voxel_mesh_generator)

@@ -48,6 +48,7 @@ void MouseHandler::processMouseEvent(const MouseEvent& event) {
 }
 
 void MouseHandler::update(float deltaTime) {
+    (void)deltaTime; // Currently unused
     if (!isEnabled()) {
         return;
     }
@@ -195,6 +196,7 @@ void MouseHandler::handleMouseEnter(const MouseEvent& event) {
 }
 
 void MouseHandler::handleMouseLeave(const MouseEvent& event) {
+    (void)event; // Currently unused
     // Mouse left the window/viewport
     // Could reset some state here if needed
 }

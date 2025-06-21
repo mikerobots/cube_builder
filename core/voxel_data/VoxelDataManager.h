@@ -24,8 +24,8 @@ class VoxelDataManager {
 public:
     explicit VoxelDataManager(Events::EventDispatcher* eventDispatcher = nullptr)
         : m_activeResolution(VoxelResolution::Size_1cm)
-        , m_eventDispatcher(eventDispatcher)
-        , m_workspaceManager(std::make_unique<WorkspaceManager>(eventDispatcher)) {
+        , m_workspaceManager(std::make_unique<WorkspaceManager>(eventDispatcher))
+        , m_eventDispatcher(eventDispatcher) {
         
         // Initialize octree memory pool
         SparseOctree::initializePool(DEFAULT_OCTREE_POOL_SIZE);
@@ -477,6 +477,8 @@ public:
     // Enhancement: Adjacent position calculation
     Math::IncrementCoordinates getAdjacentPosition(const Math::IncrementCoordinates& pos, FaceDirection face, 
                                      VoxelResolution sourceRes, VoxelResolution targetRes) const {
+        (void)sourceRes; // Currently unused - all voxels stored at 1cm granularity
+        (void)targetRes; // Currently unused - all voxels stored at 1cm granularity
         // In the new coordinate system, all voxels are stored at 1cm increment granularity
         // Adjacent voxels are always 1 increment apart regardless of resolution
         // The resolution only affects rendering and collision detection
@@ -570,6 +572,7 @@ private:
     }
     
     bool validateWorkspaceResize(const Math::Vector3f& oldSize, const Math::Vector3f& newSize) {
+        (void)oldSize; // Currently unused - validation only checks if voxels would be lost
         // Check if any grids would lose voxels during resize
         for (const auto& grid : m_grids) {
             if (grid && !grid->resizeWorkspace(newSize)) {
@@ -637,7 +640,8 @@ private:
                               (maxIncCheck.y() - minIncCheck.y()) * 
                               (maxIncCheck.z() - minIncCheck.z());
             
-            if (searchVolume > COLLISION_SEARCH_VOLUME_THRESHOLD || grid->getVoxelCount() < searchVolume / 2) {
+            if (searchVolume > static_cast<int>(COLLISION_SEARCH_VOLUME_THRESHOLD) || 
+                grid->getVoxelCount() < static_cast<size_t>(searchVolume / 2)) {
                 // More efficient to check all voxels directly
                 auto voxels = grid->getAllVoxels();
                 for (const auto& voxelPos : voxels) {

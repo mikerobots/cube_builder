@@ -1,13 +1,13 @@
 find_package(GTest REQUIRED)
 
 set(MEMORY_TEST_SOURCES
-    test_MemoryPool.cpp
-    test_MemoryTracker.cpp
+    test_unit_foundation_memory_pool.cpp
+    test_unit_foundation_memory_tracker.cpp
 )
 
-add_executable(VoxelEditor_Memory_Tests ${MEMORY_TEST_SOURCES})
+add_executable(test_unit_foundation_memory ${MEMORY_TEST_SOURCES})
 
-target_link_libraries(VoxelEditor_Memory_Tests
+target_link_libraries(test_unit_foundation_memory
     VoxelEditor_Memory
     VoxelEditor_Events
     VoxelEditor_Math
@@ -15,7 +15,7 @@ target_link_libraries(VoxelEditor_Memory_Tests
     GTest::gtest_main
 )
 
-target_compile_features(VoxelEditor_Memory_Tests PRIVATE cxx_std_20)
+target_compile_features(test_unit_foundation_memory PRIVATE cxx_std_20)
 
 include(GoogleTest)
-gtest_discover_tests(VoxelEditor_Memory_Tests)
+gtest_discover_tests(test_unit_foundation_memory)

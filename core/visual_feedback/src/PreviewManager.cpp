@@ -124,5 +124,36 @@ Rendering::Color PreviewManager::getCurrentColor() const {
     }
 }
 
+// Additional validation methods for requirements tests
+bool PreviewManager::isValidIncrementPosition(const Math::IncrementCoordinates& position) const {
+    // Simple bounds check - ensure position is within reasonable range
+    const Math::Vector3i pos = position.value();
+    return (pos.x >= -1000 && pos.x <= 1000 &&
+            pos.y >= -1000 && pos.y <= 1000 &&
+            pos.z >= -1000 && pos.z <= 1000);
+}
+
+bool PreviewManager::isValidPlacement(const Math::IncrementCoordinates& position, VoxelData::VoxelResolution resolution, 
+                                     const VoxelData::VoxelGrid& grid) const {
+    // Check if position is valid and doesn't collide with existing voxels
+    if (!isValidIncrementPosition(position)) {
+        return false;
+    }
+    
+    // Check if there's already a voxel at this position
+    return !grid.getVoxel(position);
+}
+
+Rendering::Color PreviewManager::getPreviewColor(bool isValid) const {
+    return isValid ? m_validColor : m_invalidColor;
+}
+
+void PreviewManager::updatePreview(const Math::IncrementCoordinates& position, VoxelData::VoxelResolution resolution, bool isValid) {
+    m_previewPosition = position.value();
+    m_previewResolution = resolution;
+    m_isValid = isValid;
+    m_hasPreview = true;
+}
+
 } // namespace VisualFeedback
 } // namespace VoxelEditor

@@ -126,7 +126,7 @@ public:
             
             // Render cube
             Rendering::Transform cubeTransform;
-            cubeTransform.position = Math::Vector3f(-1.5f, 0.0f, 0.0f);
+            cubeTransform.position = Math::WorldCoordinates(Math::Vector3f(-1.5f, 0.0f, 0.0f));
             
             Rendering::Material cubeMaterial;
             cubeMaterial.shader = shaderId;
@@ -136,7 +136,7 @@ public:
             
             // Render sphere
             Rendering::Transform sphereTransform;
-            sphereTransform.position = Math::Vector3f(1.5f, 0.0f, 0.0f);
+            sphereTransform.position = Math::WorldCoordinates(Math::Vector3f(1.5f, 0.0f, 0.0f));
             
             Rendering::Material sphereMaterial;
             sphereMaterial.shader = shaderId;
@@ -147,7 +147,7 @@ public:
             // Render grid (only with basic shader)
             if (shaderName == "basic") {
                 Rendering::Transform gridTransform;
-                gridTransform.position = Math::Vector3f(0.0f, -1.0f, 0.0f);
+                gridTransform.position = Math::WorldCoordinates(Math::Vector3f(0.0f, -1.0f, 0.0f));
                 
                 Rendering::Material gridMaterial;
                 gridMaterial.shader = shaderId;

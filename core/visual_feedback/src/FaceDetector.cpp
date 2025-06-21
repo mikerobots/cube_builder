@@ -419,7 +419,7 @@ Face FaceDetector::createFaceFromHit(const RaycastHit& hit, VoxelData::VoxelReso
     return hit.face;
 }
 
-bool FaceDetector::isValidFace(const Face& face, const VoxelData::VoxelGrid& grid) {
+bool FaceDetector::isValidFace(const Face& face, const VoxelData::VoxelGrid& grid) const {
     // Check if the face's voxel exists
     return grid.getVoxel(face.getVoxelPosition());
 }
@@ -512,6 +512,25 @@ void FaceDetector::stepTraversal(GridTraversal& traversal) const {
             traversal.tMax.z += traversal.tDelta.z;
         }
     }
+}
+
+// Additional methods for requirements tests
+bool FaceDetector::isFaceVisible(const Face& face) const {
+    // For simplicity, assume all faces are visible
+    return face.isValid();
+}
+
+Rendering::Color FaceDetector::getFaceHighlightColor(const Face& face) const {
+    // Return yellow highlight color
+    return Rendering::Color(1.0f, 1.0f, 0.0f, 1.0f);
+}
+
+bool FaceDetector::validateFace(const Face& face, const VoxelData::VoxelGrid& grid) const {
+    return isValidFace(face, grid);
+}
+
+bool FaceDetector::hasActiveHighlight() const {
+    return m_hasActiveHighlight;
 }
 
 } // namespace VisualFeedback

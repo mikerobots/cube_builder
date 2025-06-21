@@ -36,7 +36,8 @@ GroundPlaneGrid::GroundPlaneGrid(ShaderManager* shaderManager, OpenGLRenderer* g
     , m_cursorPosition(0.0f, 0.0f, 0.0f)
     , m_smoothedCursorPosition(WorldCoordinates::zero())
     , m_currentOpacity(0.35f)
-    , m_targetOpacity(0.35f) {
+    , m_targetOpacity(0.35f)
+    , m_forceMaxOpacity(false) {
 }
 
 GroundPlaneGrid::~GroundPlaneGrid() {
@@ -81,6 +82,13 @@ void GroundPlaneGrid::updateGridMesh(const Vector3f& workspaceSize) {
 }
 
 void GroundPlaneGrid::update(float deltaTime) {
+    // Skip opacity calculations if forced to max opacity
+    if (m_forceMaxOpacity) {
+        m_currentOpacity = 1.0f;
+        m_targetOpacity = 1.0f;
+        return;
+    }
+    
     // Smooth cursor position for less jittery transitions
     Vector3f cursorDelta = (m_cursorPosition.value() - m_smoothedCursorPosition.value()) * 
                           std::min(CursorSmoothingFactor * deltaTime, 1.0f);
@@ -119,6 +127,14 @@ void GroundPlaneGrid::setOpacityParameters(float baseOpacity, float nearOpacity,
     m_transitionSpeed = transitionSpeed;
 }
 
+void GroundPlaneGrid::setForceMaxOpacity(bool forceMaxOpacity) {
+    m_forceMaxOpacity = forceMaxOpacity;
+    if (forceMaxOpacity) {
+        m_currentOpacity = 1.0f;
+        m_targetOpacity = 1.0f;
+    }
+}
+
 void GroundPlaneGrid::render(const Matrix4f& viewMatrix, 
                              const Matrix4f& projMatrix) {
     if (!m_initialized || !m_visible || m_lineCount == 0 || m_shader == InvalidId) {
@@ -131,6 +147,9 @@ void GroundPlaneGrid::render(const Matrix4f& viewMatrix,
     
     // Set uniforms
     Matrix4f mvpMatrix = projMatrix * viewMatrix;
+    
+    // MVP matrix calculated for ground plane rendering
+    
     m_glRenderer->setUniform("mvpMatrix", UniformValue(mvpMatrix));
     m_glRenderer->setUniform("minorLineColor", UniformValue(MinorLineColor()));
     m_glRenderer->setUniform("majorLineColor", UniformValue(MajorLineColor()));
@@ -147,6 +166,7 @@ void GroundPlaneGrid::render(const Matrix4f& viewMatrix,
     
     // Render grid lines
     m_glRenderer->bindVertexArray(m_vao);
+    
     m_glRenderer->drawArrays(PrimitiveType::Lines, 0, m_lineCount * 2);
     
     // Check for OpenGL errors (only log first few frames to avoid spam)
@@ -214,6 +234,8 @@ void GroundPlaneGrid::generateGridMesh(const Vector3f& workspaceSize) {
     
     m_lineCount = vertices.size() / 2;
     
+    // Note: Vertex count logging for debugging purposes (can be removed in production)
+    
     // Upload to GPU
     if (m_vbo != InvalidId) {
         m_glRenderer->deleteBuffer(m_vbo);
@@ -247,6 +269,8 @@ void GroundPlaneGrid::generateGridMesh(const Vector3f& workspaceSize) {
                                         std::to_string(workspaceSize.x) + ", " +
                                         std::to_string(workspaceSize.y) + ", " +
                                         std::to_string(workspaceSize.z) + ")");
+    
+    // Grid mesh generation completed successfully
 }
 
 bool GroundPlaneGrid::loadShader() {

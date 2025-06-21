@@ -38,19 +38,37 @@ cmake --build build_relwithdebinfo
 
 ## Testing
 
-### Unit Tests (Recommended)
+### Unified Test Runner (Recommended)
 ```bash
-# Run all unit tests only (excludes integration/e2e tests)
+# New unified test runner with auto-discovery
+./run_all_tests.sh list                    # Show all available test types and subsystems
+./run_all_tests.sh unit                    # Run all unit tests
+./run_all_tests.sh unit foundation         # Run unit tests for foundation subsystem
+./run_all_tests.sh integration             # Run all integration tests
+./run_all_tests.sh integration core        # Run core integration tests
+./run_all_tests.sh all                     # Run all tests (unit + integration + legacy)
+```
+
+**Test Naming Convention**: All tests follow the pattern `test_<type>_<subsystem>_<component>_<description>`:
+- **Types**: unit, integration, e2e, performance, stress, uperf (unit performance tests)
+- **Subsystems**: foundation, core, cli, interaction, rendering, shader, feedback, verification
+- **Examples**: `test_unit_foundation_memory_pool.cpp`, `test_integration_core_camera_visibility.cpp`, `test_integration_interaction_mouse_ray_movement.cpp`
+- **Performance Tests**: Use `test_uperf_` prefix for unit-level performance tests that may take longer to run (e.g., `test_uperf_core_voxel_data_collision.cpp`)
+
+### Other Test Runners
+```bash
+# Unit tests only
 ./run_all_unit.sh
 
-
-### Integration Tests (C++)
-```bash
-# Integration test runner for C++ cross-component tests
-./run_integration_tests.sh all        # All integration tests
-./run_integration_tests.sh core       # Core integration tests
-./run_integration_tests.sh cli-cpp    # CLI C++ integration tests
-./run_integration_tests.sh quick      # Quick integration tests only
+# Integration test runner with auto-discovery
+./run_integration_tests.sh all          # All integration tests
+./run_integration_tests.sh core         # Core integration tests
+./run_integration_tests.sh cli          # CLI integration tests
+./run_integration_tests.sh interaction  # Interaction tests (mouse, keyboard, zoom)
+./run_integration_tests.sh rendering    # Rendering integration tests
+./run_integration_tests.sh shader       # Shader validation tests
+./run_integration_tests.sh feedback     # Visual feedback tests
+./run_integration_tests.sh quick        # Quick integration tests only
 ```
 
 ### End-to-End Tests (Shell)
@@ -150,6 +168,11 @@ save project.vox     # Save project
 - Visual tests require OpenGL context
 - Some tests require Ninja build configuration
 - Headless tests can run without display
+
+### Test Naming Convention
+- Integration tests follow the pattern: `test_integration_<category>_<description>`
+- Categories include: core, cli, interaction, visual, rendering, shader, feedback, verification
+- The `run_integration_tests.sh` script auto-discovers tests by this naming pattern
 
 ### Git Workflow
 Remote repository available - after committing changes:

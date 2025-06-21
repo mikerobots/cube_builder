@@ -15,13 +15,13 @@ public:
     virtual ~InputHandler() = default;
     
     // Pure virtual methods for specific input types
-    virtual void processMouseEvent(const MouseEvent& event) {}
-    virtual void processKeyboardEvent(const KeyEvent& event) {}
-    virtual void processTouchEvent(const TouchEvent& event) {}
-    virtual void processVREvent(const VREvent& event) {}
+    virtual void processMouseEvent(const MouseEvent& event) { (void)event; }
+    virtual void processKeyboardEvent(const KeyEvent& event) { (void)event; }
+    virtual void processTouchEvent(const TouchEvent& event) { (void)event; }
+    virtual void processVREvent(const VREvent& event) { (void)event; }
     
     // Frame update
-    virtual void update(float deltaTime) {}
+    virtual void update(float deltaTime) { (void)deltaTime; }
     
     // Configuration
     virtual void setEnabled(bool enabled) { m_enabled = enabled; }

@@ -13,6 +13,7 @@ public:
     virtual void handleEvent(const EventType& event) = 0;
     
     virtual bool shouldHandle(const EventType& event) const { 
+        (void)event; // Suppress unused parameter warning
         return true; 
     }
     

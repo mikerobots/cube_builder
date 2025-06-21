@@ -491,16 +491,22 @@ size_t HistoryManager::calculateMemoryUsage() const {
     
     // Calculate command memory usage
     for (const auto& command : m_undoStack) {
-        usage += command->getMemoryUsage();
+        if (command) {
+            usage += command->getMemoryUsage();
+        }
     }
     
     for (const auto& command : m_redoStack) {
-        usage += command->getMemoryUsage();
+        if (command) {
+            usage += command->getMemoryUsage();
+        }
     }
     
     // Calculate snapshot memory usage
     for (const auto& snapshot : m_snapshots) {
-        usage += snapshot->getMemoryUsage();
+        if (snapshot) {
+            usage += snapshot->getMemoryUsage();
+        }
     }
     
     // Add transaction memory usage if active

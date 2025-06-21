@@ -81,6 +81,12 @@ public:
                              float transitionSpeed = 5.0f);
     
     /**
+     * @brief Force the grid to use maximum opacity for testing/debugging
+     * @param forceMaxOpacity true to force max opacity, false for normal dynamic behavior
+     */
+    void setForceMaxOpacity(bool forceMaxOpacity = true);
+    
+    /**
      * @brief Set whether grid should be rendered
      * @param visible true to show grid, false to hide
      */
@@ -139,6 +145,7 @@ private:
     Math::WorldCoordinates m_smoothedCursorPosition;
     float m_currentOpacity;
     float m_targetOpacity;
+    bool m_forceMaxOpacity;
     
     // Grid generation
     void generateGridMesh(const Math::Vector3f& workspaceSize);

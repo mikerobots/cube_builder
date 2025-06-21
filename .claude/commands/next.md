@@ -7,3 +7,6 @@ not possible to make them work, please say so.
 
 Pick a random name for yourself if you have not picked one already. It
 cannot be claude.
+
+If you have not done so already, please look at the guides in
+./guides. Read any that may make sense for you current work. 

@@ -37,7 +37,7 @@ CMAKE_AR:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=
+CMAKE_BUILD_TYPE:STRING=Debug
 
 //CXX compiler
 CMAKE_CXX_COMPILER:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/c++
@@ -453,6 +453,9 @@ glfw3_DIR:PATH=glfw3_DIR-NOTFOUND
 //Value Computed by CMake
 glm_BINARY_DIR:STATIC=/Users/michaelhalloran/cube_edit/build_ninja/_deps/glm-build
 
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=glm_DIR-NOTFOUND
+
 //Value Computed by CMake
 glm_IS_TOP_LEVEL:STATIC=OFF
 
@@ -668,7 +671,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=46
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=47
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

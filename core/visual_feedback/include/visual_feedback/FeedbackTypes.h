@@ -213,6 +213,31 @@ struct RenderStats {
     float gpuTime = 0.0f;
 };
 
+// Performance metrics for display
+struct PerformanceMetrics {
+    float frameTime = 0.0f;
+    uint32_t voxelCount = 0;
+    uint32_t triangleCount = 0;
+    uint32_t drawCalls = 0;
+    size_t memoryUsed = 0;
+    size_t memoryTotal = 0;
+    
+    struct FormattedText {
+        std::string frameTimeText;
+        std::string voxelCountText;
+        std::string memoryUsageText;
+        std::string performanceText;
+    };
+};
+
+// Grid information
+struct GridInfo {
+    uint32_t lineCount = 0;
+    float extent = 0.0f;
+    uint32_t vertexCount = 0;
+    float spacing = 0.0f;
+};
+
 // Utility functions
 inline Math::Vector3f faceDirectionToNormal(FaceDirection dir) {
     switch (dir) {

@@ -1,12 +1,7 @@
 #!/bin/bash
 
 # Core Subsystems Master Test Runner
-# Usage: ./run_tests.sh [build_dir] [--quick|--full|--slow]
-#
-# Test execution modes:
-#   --quick  : Run all tests under 1 second across all subsystems (default)
-#   --full   : Run all tests under 5 seconds across all subsystems
-#   --slow   : Run all tests over 5 seconds across all subsystems (performance tests)
+# Usage: ./run_tests.sh [pattern]
 #
 # This script runs tests for all 10 core subsystems:
 #   1. Camera System
@@ -30,53 +25,10 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
+BOLD='\033[1m'
 
-# Default build directory
-BUILD_DIR="${1:-build_ninja}"
-
-# Test mode (default to quick)
-TEST_MODE="quick"
-if [[ "$2" == "--full" ]]; then
-    TEST_MODE="full"
-elif [[ "$2" == "--slow" ]]; then
-    TEST_MODE="slow"
-elif [[ "$2" == "--quick" ]]; then
-    TEST_MODE="quick"
-elif [[ "$2" == "--help" ]]; then
-    echo "Core Subsystems Master Test Runner"
-    echo ""
-    echo "Usage: $0 [build_dir] [--quick|--full|--slow|--help]"
-    echo ""
-    echo "Modes:"
-    echo "  --quick  : Fast essential tests across all subsystems (<1s each)"
-    echo "  --full   : All stable tests across all subsystems (<5s each)"
-    echo "  --slow   : Performance and stress tests across all subsystems (>5s)"
-    echo ""
-    echo "Subsystems tested:"
-    echo "  1. Camera System"
-    echo "  2. File I/O System"
-    echo "  3. Groups System"
-    echo "  4. Input System"
-    echo "  5. Rendering System"
-    echo "  6. Selection System"
-    echo "  7. Surface Generation"
-    echo "  8. Undo/Redo System"
-    echo "  9. Visual Feedback"
-    echo "  10. VoxelData System"
-    echo ""
-    echo "Examples:"
-    echo "  $0                    # Quick tests with default build"
-    echo "  $0 --quick           # Quick tests with default build"
-    echo "  $0 build_debug       # Quick tests with debug build"
-    echo "  $0 build_debug --full # Full tests with debug build"
-    exit 0
-fi
-
-# Check if first argument is actually a mode flag
-if [[ "$1" == "--quick" || "$1" == "--full" || "$1" == "--slow" || "$1" == "--help" ]]; then
-    BUILD_DIR="build_ninja"
-    TEST_MODE="${1#--}"
-fi
+# Test pattern (default to all)
+PATTERN="${1:-*}"
 
 # Script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -85,20 +37,12 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 echo -e "${CYAN}=========================================${NC}"
 echo -e "${CYAN}Core Subsystems Master Test Runner${NC}"
 echo -e "${CYAN}=========================================${NC}"
-echo "Build directory: $BUILD_DIR"
 echo "Project root: $PROJECT_ROOT"
-echo "Test mode: $TEST_MODE"
+echo "Test pattern: $PATTERN"
 echo ""
 
 # Change to project root
 cd "$PROJECT_ROOT"
-
-# Ensure build directory exists
-if [ ! -d "$BUILD_DIR" ]; then
-    echo -e "${RED}Error: Build directory '$BUILD_DIR' does not exist${NC}"
-    echo "Please run: cmake -B $BUILD_DIR -G Ninja"
-    exit 1
-fi
 
 # Define all core subsystems
 declare -a SUBSYSTEMS=(
@@ -136,14 +80,22 @@ TOTAL_SUBSYSTEMS=${#SUBSYSTEMS[@]}
 PASSED_SUBSYSTEMS=0
 FAILED_SUBSYSTEMS=0
 SKIPPED_SUBSYSTEMS=0
+TOTAL_TESTS_RUN=0
 declare -a FAILED_LIST=()
 declare -a SKIPPED_LIST=()
 
 # Start timing
 MASTER_START_TIME=$(date +%s)
 
-echo -e "${BLUE}Running tests for $TOTAL_SUBSYSTEMS core subsystems in $TEST_MODE mode...${NC}"
+echo -e "${BLUE}Running tests for $TOTAL_SUBSYSTEMS core subsystems...${NC}"
 echo ""
+
+# Check if pattern excludes performance tests
+if [[ "$PATTERN" == "*" ]] || [[ -z "$PATTERN" ]]; then
+    echo -e "${YELLOW}Note: Running all unit tests. Performance tests (test_uperf_*) are excluded by default.${NC}"
+    echo -e "${YELLOW}To run performance tests, use: ./run_perf_tests.sh in each subsystem directory.${NC}"
+    echo ""
+fi
 
 # Loop through each subsystem
 for i in "${!SUBSYSTEMS[@]}"; do
@@ -178,14 +130,22 @@ for i in "${!SUBSYSTEMS[@]}"; do
     chmod +x "$TEST_SCRIPT"
     
     # Run the subsystem tests
-    echo "Executing: $TEST_SCRIPT $BUILD_DIR --$TEST_MODE"
+    echo "Executing: $TEST_SCRIPT $PATTERN"
     echo ""
     
-    if cd "$SUBSYSTEM_DIR" && ./run_tests.sh "$BUILD_DIR" "--$TEST_MODE"; then
+    # Capture test count from output
+    if cd "$SUBSYSTEM_DIR" && OUTPUT=$(./run_tests.sh "$PATTERN" 2>&1); then
+        echo "$OUTPUT"
+        
+        # Extract test count if available
+        TEST_COUNT=$(echo "$OUTPUT" | grep -oE "Total Tests: [0-9]+" | grep -oE "[0-9]+$" || echo "0")
+        TOTAL_TESTS_RUN=$((TOTAL_TESTS_RUN + TEST_COUNT))
+        
         echo ""
         echo -e "${GREEN}✅ $display_name: PASSED${NC}"
         PASSED_SUBSYSTEMS=$((PASSED_SUBSYSTEMS + 1))
     else
+        echo "$OUTPUT"
         echo ""
         echo -e "${RED}❌ $display_name: FAILED${NC}"
         FAILED_SUBSYSTEMS=$((FAILED_SUBSYSTEMS + 1))
@@ -208,8 +168,9 @@ MASTER_DURATION=$((MASTER_END_TIME - MASTER_START_TIME))
 echo -e "${CYAN}=========================================${NC}"
 echo -e "${CYAN}MASTER TEST SUMMARY${NC}"
 echo -e "${CYAN}=========================================${NC}"
-echo "Test mode: $TEST_MODE"
+echo "Test pattern: $PATTERN"
 echo "Total execution time: ${MASTER_DURATION} seconds"
+echo "Total tests run: $TOTAL_TESTS_RUN"
 echo ""
 
 # Results breakdown
@@ -249,27 +210,18 @@ else
     echo -e "${RED}⚠️  Slow performance: ${MASTER_DURATION}s total${NC}"
 fi
 
-# Mode-specific expectations
-case "$TEST_MODE" in
-    "quick")
-        if [ $MASTER_DURATION -gt 30 ]; then
-            echo -e "${YELLOW}⚠️  Quick mode took longer than expected (${MASTER_DURATION}s > 30s)${NC}"
-        fi
-        ;;
-    "full")
-        if [ $MASTER_DURATION -gt 120 ]; then
-            echo -e "${YELLOW}⚠️  Full mode took longer than expected (${MASTER_DURATION}s > 120s)${NC}"
-        fi
-        ;;
-    "slow")
-        echo -e "${BLUE}ℹ️  Slow mode timing is expected to be variable${NC}"
-        ;;
-esac
+# Average time per test
+if [ $TOTAL_TESTS_RUN -gt 0 ]; then
+    AVG_TIME_PER_TEST=$((MASTER_DURATION * 1000 / TOTAL_TESTS_RUN))
+    echo -e "${BLUE}Average time per test: ${AVG_TIME_PER_TEST}ms${NC}"
+fi
 
 echo ""
 echo -e "${BLUE}Individual subsystem results available above.${NC}"
 echo -e "${BLUE}To run tests for a specific subsystem:${NC}"
-echo -e "${BLUE}  cd core/[subsystem] && ./run_tests.sh $BUILD_DIR --$TEST_MODE${NC}"
+echo -e "${BLUE}  cd core/[subsystem] && ./run_tests.sh [pattern]${NC}"
+echo -e "${BLUE}To run performance tests for a subsystem:${NC}"
+echo -e "${BLUE}  cd core/[subsystem] && ./run_perf_tests.sh${NC}"
 
 # Exit with appropriate code
 if [ $FAILED_SUBSYSTEMS -gt 0 ]; then

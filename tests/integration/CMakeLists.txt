@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Camera-Cube Visibility Tests (Google Test version)
-add_executable(test_camera_cube_visibility
-    test_camera_cube_visibility.cpp
+add_executable(test_integration_core_camera_cube_visibility
+    test_integration_core_camera_cube_visibility.cpp
 )
 
-target_link_libraries(test_camera_cube_visibility
+target_link_libraries(test_integration_core_camera_cube_visibility
     VoxelEditor_Camera
     VoxelEditor_VoxelData
     VoxelEditor_Math
@@ -14,28 +14,34 @@ target_link_libraries(test_camera_cube_visibility
 )
 
 # Add test
-add_test(NAME CameraCubeVisibility COMMAND test_camera_cube_visibility)
+add_test(NAME test_integration_core_camera_cube_visibility COMMAND test_integration_core_camera_cube_visibility)
+set_tests_properties(test_integration_core_camera_cube_visibility PROPERTIES
+    LABELS "integration;core;camera"
+)
 
 # Camera-Cube Visibility Tests (Simple version)
-add_executable(test_camera_cube_visibility_simple
-    test_camera_cube_visibility_simple.cpp
+add_executable(test_integration_core_camera_cube_visibility_simple
+    test_integration_core_camera_cube_visibility_simple.cpp
 )
 
-target_link_libraries(test_camera_cube_visibility_simple
+target_link_libraries(test_integration_core_camera_cube_visibility_simple
     VoxelEditor_Camera
     VoxelEditor_VoxelData
     VoxelEditor_Math
 )
 
 # Add test
-add_test(NAME CameraCubeVisibilitySimple COMMAND test_camera_cube_visibility_simple)
+add_test(NAME test_integration_core_camera_cube_visibility_simple COMMAND test_integration_core_camera_cube_visibility_simple)
+set_tests_properties(test_integration_core_camera_cube_visibility_simple PROPERTIES
+    LABELS "integration;core;camera"
+)
 
 # Ground Plane Voxel Placement Integration Test
-add_executable(test_ground_plane_voxel_placement
-    test_ground_plane_voxel_placement.cpp
+add_executable(test_integration_core_ground_plane_voxel_placement
+    test_integration_core_ground_plane_voxel_placement.cpp
 )
 
-target_link_libraries(test_ground_plane_voxel_placement
+target_link_libraries(test_integration_core_ground_plane_voxel_placement
     VoxelEditor_VoxelData
     VoxelEditor_VisualFeedback
     VoxelEditor_Input
@@ -48,14 +54,17 @@ target_link_libraries(test_ground_plane_voxel_placement
 )
 
 # Add test
-add_test(NAME GroundPlaneVoxelPlacement COMMAND test_ground_plane_voxel_placement)
+add_test(NAME test_integration_core_ground_plane_voxel_placement COMMAND test_integration_core_ground_plane_voxel_placement)
+set_tests_properties(test_integration_core_ground_plane_voxel_placement PROPERTIES
+    LABELS "integration;core;voxel"
+)
 
 # Mouse Ground Plane Clicking Integration Test
-add_executable(test_mouse_ground_plane_clicking
-    test_mouse_ground_plane_clicking.cpp
+add_executable(test_integration_interaction_mouse_ground_plane_clicking
+    test_integration_interaction_mouse_ground_plane_clicking.cpp
 )
 
-target_link_libraries(test_mouse_ground_plane_clicking
+target_link_libraries(test_integration_interaction_mouse_ground_plane_clicking
     VoxelEditor_VoxelData
     VoxelEditor_VisualFeedback
     VoxelEditor_Input
@@ -69,14 +78,17 @@ target_link_libraries(test_mouse_ground_plane_clicking
 )
 
 # Add test
-add_test(NAME MouseGroundPlaneClicking COMMAND test_mouse_ground_plane_clicking)
-
-# Mouse Boundary Clicking Integration Test
-add_executable(test_mouse_boundary_clicking
-    test_mouse_boundary_clicking.cpp
+add_test(NAME test_integration_interaction_mouse_ground_plane_clicking COMMAND test_integration_interaction_mouse_ground_plane_clicking)
+set_tests_properties(test_integration_interaction_mouse_ground_plane_clicking PROPERTIES
+    LABELS "integration;interaction;mouse"
 )
 
-target_link_libraries(test_mouse_boundary_clicking
+# Mouse Boundary Clicking Integration Test
+add_executable(test_integration_interaction_mouse_boundary_clicking
+    test_integration_interaction_mouse_boundary_clicking.cpp
+)
+
+target_link_libraries(test_integration_interaction_mouse_boundary_clicking
     VoxelEditor_Math
     VoxelEditor_Logging
     gtest
@@ -84,14 +96,17 @@ target_link_libraries(test_mouse_boundary_clicking
 )
 
 # Add test
-add_test(NAME MouseBoundaryClicking COMMAND test_mouse_boundary_clicking)
-
-# Workspace Boundary Placement Test
-add_executable(test_workspace_boundary_placement
-    test_workspace_boundary_placement.cpp
+add_test(NAME test_integration_interaction_mouse_boundary_clicking COMMAND test_integration_interaction_mouse_boundary_clicking)
+set_tests_properties(test_integration_interaction_mouse_boundary_clicking PROPERTIES
+    LABELS "integration;interaction;mouse"
 )
 
-target_link_libraries(test_workspace_boundary_placement
+# Workspace Boundary Placement Test
+add_executable(test_integration_core_workspace_boundary_placement
+    test_integration_core_workspace_boundary_placement.cpp
+)
+
+target_link_libraries(test_integration_core_workspace_boundary_placement
     VoxelEditor_VoxelData
     VoxelEditor_Math
     VoxelEditor_Events
@@ -101,14 +116,17 @@ target_link_libraries(test_workspace_boundary_placement
 )
 
 # Add test
-add_test(NAME WorkspaceBoundaryPlacement COMMAND test_workspace_boundary_placement)
-
-# Visual Feedback Integration Tests (OpenGL-dependent)
-add_executable(test_overlay_renderer_integration
-    visual_feedback/test_overlay_renderer_integration.cpp
+add_test(NAME test_integration_core_workspace_boundary_placement COMMAND test_integration_core_workspace_boundary_placement)
+set_tests_properties(test_integration_core_workspace_boundary_placement PROPERTIES
+    LABELS "integration;core;workspace"
 )
 
-target_link_libraries(test_overlay_renderer_integration
+# Visual Feedback Integration Tests (OpenGL-dependent)
+add_executable(test_integration_feedback_overlay_renderer
+    visual_feedback/test_integration_feedback_overlay_renderer.cpp
+)
+
+target_link_libraries(test_integration_feedback_overlay_renderer
     VoxelEditor_VisualFeedback
     VoxelEditor_Camera
     VoxelEditor_Math
@@ -116,13 +134,16 @@ target_link_libraries(test_overlay_renderer_integration
     gtest_main
 )
 
-add_test(NAME OverlayRendererIntegration COMMAND test_overlay_renderer_integration)
-
-add_executable(test_feedback_renderer_integration
-    visual_feedback/test_feedback_renderer_integration.cpp
+add_test(NAME test_integration_feedback_overlay_renderer COMMAND test_integration_feedback_overlay_renderer)
+set_tests_properties(test_integration_feedback_overlay_renderer PROPERTIES
+    LABELS "integration;feedback;rendering"
 )
 
-target_link_libraries(test_feedback_renderer_integration
+add_executable(test_integration_feedback_renderer_components
+    visual_feedback/test_integration_feedback_renderer_components.cpp
+)
+
+target_link_libraries(test_integration_feedback_renderer_components
     VoxelEditor_VisualFeedback
     VoxelEditor_Rendering
     VoxelEditor_VoxelData
@@ -131,13 +152,16 @@ target_link_libraries(test_feedback_renderer_integration
     gtest_main
 )
 
-add_test(NAME FeedbackRendererIntegration COMMAND test_feedback_renderer_integration)
-
-add_executable(test_visual_feedback_requirements_integration
-    visual_feedback/test_visual_feedback_requirements_integration.cpp
+add_test(NAME test_integration_feedback_renderer_components COMMAND test_integration_feedback_renderer_components)
+set_tests_properties(test_integration_feedback_renderer_components PROPERTIES
+    LABELS "integration;feedback;rendering"
 )
 
-target_link_libraries(test_visual_feedback_requirements_integration
+add_executable(test_integration_feedback_requirements_validation
+    visual_feedback/test_integration_feedback_requirements_validation.cpp
+)
+
+target_link_libraries(test_integration_feedback_requirements_validation
     VoxelEditor_VisualFeedback
     VoxelEditor_VoxelData
     VoxelEditor_Math
@@ -145,14 +169,17 @@ target_link_libraries(test_visual_feedback_requirements_integration
     gtest_main
 )
 
-add_test(NAME VisualFeedbackRequirementsIntegration COMMAND test_visual_feedback_requirements_integration)
-
-# Enhanced Shader Validation Integration Test
-add_executable(test_enhanced_shader_validation_integration
-    rendering/test_enhanced_shader_validation_integration.cpp
+add_test(NAME test_integration_feedback_requirements_validation COMMAND test_integration_feedback_requirements_validation)
+set_tests_properties(test_integration_feedback_requirements_validation PROPERTIES
+    LABELS "integration;feedback;validation"
 )
 
-target_link_libraries(test_enhanced_shader_validation_integration
+# Enhanced Shader Validation Integration Test
+add_executable(test_integration_rendering_enhanced_shader_validation
+    rendering/test_integration_rendering_enhanced_shader_validation.cpp
+)
+
+target_link_libraries(test_integration_rendering_enhanced_shader_validation
     VoxelEditor_Rendering
     glfw
     glad
@@ -161,7 +188,10 @@ target_link_libraries(test_enhanced_shader_validation_integration
     gtest_main
 )
 
-add_test(NAME EnhancedShaderValidationIntegration COMMAND test_enhanced_shader_validation_integration)
+add_test(NAME test_integration_rendering_enhanced_shader_validation COMMAND test_integration_rendering_enhanced_shader_validation)
+set_tests_properties(test_integration_rendering_enhanced_shader_validation PROPERTIES
+    LABELS "integration;rendering;shader"
+)
 
 # Shader Pipeline Integration Test (VAO and complete rendering pipeline)
 # DISABLED: These tests use low-level OpenGL functions not properly initialized
@@ -263,11 +293,11 @@ add_test(NAME EnhancedShaderValidationIntegration COMMAND test_enhanced_shader_v
 # add_test(NAME ShaderUsageValidation COMMAND test_shader_usage_validation)
 
 # Shader Visual Validation Integration Test (Captures and validates visual output)
-add_executable(test_shader_visual_validation
-    rendering/test_shader_visual_validation.cpp
+add_executable(test_integration_visual_shader_output_validation
+    rendering/test_integration_visual_shader_output_validation.cpp
 )
 
-target_link_libraries(test_shader_visual_validation
+target_link_libraries(test_integration_visual_shader_output_validation
     VoxelEditor_Rendering
     VoxelEditor_Math
     VoxelEditor_Logging
@@ -278,14 +308,17 @@ target_link_libraries(test_shader_visual_validation
     gtest_main
 )
 
-add_test(NAME ShaderVisualValidation COMMAND test_shader_visual_validation)
+add_test(NAME test_integration_visual_shader_output_validation COMMAND test_integration_visual_shader_output_validation)
+set_tests_properties(test_integration_visual_shader_output_validation PROPERTIES
+    LABELS "integration;visual;shader"
+)
 
 # Comprehensive Shader Rendering Test
-add_executable(test_shader_rendering_comprehensive
-    rendering/test_shader_rendering_comprehensive.cpp
+add_executable(test_integration_rendering_shader_rendering_comprehensive
+    rendering/test_integration_rendering_shader_rendering_comprehensive.cpp
 )
 
-target_link_libraries(test_shader_rendering_comprehensive
+target_link_libraries(test_integration_rendering_shader_rendering_comprehensive
     VoxelEditor_Rendering
     VoxelEditor_Camera
     VoxelEditor_Math
@@ -297,14 +330,17 @@ target_link_libraries(test_shader_rendering_comprehensive
     gtest_main
 )
 
-add_test(NAME ShaderRenderingComprehensive COMMAND test_shader_rendering_comprehensive)
+add_test(NAME test_integration_rendering_shader_rendering_comprehensive COMMAND test_integration_rendering_shader_rendering_comprehensive)
+set_tests_properties(test_integration_rendering_shader_rendering_comprehensive PROPERTIES
+    LABELS "integration;rendering;shader"
+)
 
 # OpenGL Wrapper Validation Test
-add_executable(test_opengl_wrapper_validation
-    rendering/test_opengl_wrapper_validation.cpp
+add_executable(test_integration_rendering_opengl_wrapper_validation
+    rendering/test_integration_rendering_opengl_wrapper_validation.cpp
 )
 
-target_link_libraries(test_opengl_wrapper_validation
+target_link_libraries(test_integration_rendering_opengl_wrapper_validation
     VoxelEditor_Rendering
     VoxelEditor_Math
     VoxelEditor_Logging
@@ -315,14 +351,17 @@ target_link_libraries(test_opengl_wrapper_validation
     gtest_main
 )
 
-add_test(NAME OpenGLWrapperValidation COMMAND test_opengl_wrapper_validation)
-
-# VAO Attribute Validation Test
-add_executable(test_vao_attribute_validation
-    rendering/test_vao_attribute_validation.cpp
+add_test(NAME test_integration_rendering_opengl_wrapper_validation COMMAND test_integration_rendering_opengl_wrapper_validation)
+set_tests_properties(test_integration_rendering_opengl_wrapper_validation PROPERTIES
+    LABELS "integration;rendering;opengl"
 )
 
-target_link_libraries(test_vao_attribute_validation
+# VAO Attribute Validation Test
+add_executable(test_integration_rendering_vao_attribute_validation
+    rendering/test_integration_rendering_vao_attribute_validation.cpp
+)
+
+target_link_libraries(test_integration_rendering_vao_attribute_validation
     VoxelEditor_Rendering
     VoxelEditor_Camera
     VoxelEditor_Math
@@ -334,13 +373,52 @@ target_link_libraries(test_vao_attribute_validation
     gtest_main
 )
 
-add_test(NAME VAOAttributeValidation COMMAND test_vao_attribute_validation)
-
-# Set working directory for tests
-set_tests_properties(CameraCubeVisibility CameraCubeVisibilitySimple GroundPlaneVoxelPlacement 
-    MouseGroundPlaneClicking MouseBoundaryClicking WorkspaceBoundaryPlacement
-    OverlayRendererIntegration FeedbackRendererIntegration VisualFeedbackRequirementsIntegration
-    EnhancedShaderValidationIntegration ShaderVisualValidation
-    ShaderRenderingComprehensive OpenGLWrapperValidation VAOAttributeValidation PROPERTIES
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+add_test(NAME test_integration_rendering_vao_attribute_validation COMMAND test_integration_rendering_vao_attribute_validation)
+set_tests_properties(test_integration_rendering_vao_attribute_validation PROPERTIES
+    LABELS "integration;rendering;vao"
 )
+
+# All Shaders Validation Test
+add_executable(test_integration_shader_all_shaders_validation
+    rendering/test_integration_shader_all_shaders_validation.cpp
+)
+
+target_link_libraries(test_integration_shader_all_shaders_validation
+    VoxelEditor_Rendering
+    VoxelEditor_Camera
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_shader_all_shaders_validation COMMAND test_integration_shader_all_shaders_validation)
+set_tests_properties(test_integration_shader_all_shaders_validation PROPERTIES
+    LABELS "integration;shader;validation"
+)
+
+# Set working directory for all integration tests  
+set_tests_properties(
+    test_integration_core_camera_cube_visibility
+    test_integration_core_camera_cube_visibility_simple
+    test_integration_core_ground_plane_voxel_placement
+    test_integration_interaction_mouse_ground_plane_clicking
+    test_integration_interaction_mouse_boundary_clicking
+    test_integration_core_workspace_boundary_placement
+    test_integration_feedback_overlay_renderer
+    test_integration_feedback_renderer_components
+    test_integration_feedback_requirements_validation
+    test_integration_rendering_enhanced_shader_validation
+    test_integration_visual_shader_output_validation
+    test_integration_rendering_shader_rendering_comprehensive
+    test_integration_rendering_opengl_wrapper_validation
+    test_integration_rendering_vao_attribute_validation
+    test_integration_shader_all_shaders_validation
+    PROPERTIES WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Add rendering subdirectory for additional rendering tests
+add_subdirectory(rendering)

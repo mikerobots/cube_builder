@@ -2,12 +2,12 @@
 find_package(GTest REQUIRED)
 
 # Create verification test executable
-add_executable(CoreFunctionalityTests
-    test_core_functionality.cpp
+add_executable(test_integration_verification_core_functionality
+    test_integration_verification_core_functionality.cpp
 )
 
 # Link with all necessary libraries
-target_link_libraries(CoreFunctionalityTests
+target_link_libraries(test_integration_verification_core_functionality
     VoxelEditor_CLI_Lib  # CLI application library
     VoxelEditor_VoxelData
     VoxelEditor_Rendering
@@ -31,7 +31,7 @@ target_link_libraries(CoreFunctionalityTests
 )
 
 # Include directories
-target_include_directories(CoreFunctionalityTests PRIVATE
+target_include_directories(test_integration_verification_core_functionality PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/apps/cli/include
     ${CMAKE_SOURCE_DIR}/core
@@ -39,14 +39,14 @@ target_include_directories(CoreFunctionalityTests PRIVATE
 )
 
 # Set C++ standard
-target_compile_features(CoreFunctionalityTests PRIVATE cxx_std_20)
+target_compile_features(test_integration_verification_core_functionality PRIVATE cxx_std_20)
 
 # Platform-specific settings
 if(APPLE)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(IOKIT_LIBRARY IOKit)
     find_library(COREVIDEO_LIBRARY CoreVideo)
-    target_link_libraries(CoreFunctionalityTests 
+    target_link_libraries(test_integration_verification_core_functionality 
         ${COCOA_LIBRARY} 
         ${IOKIT_LIBRARY} 
         ${COREVIDEO_LIBRARY}
@@ -55,4 +55,4 @@ endif()
 
 # Register tests with CTest
 include(GoogleTest)
-gtest_discover_tests(CoreFunctionalityTests)
+gtest_discover_tests(test_integration_verification_core_functionality)

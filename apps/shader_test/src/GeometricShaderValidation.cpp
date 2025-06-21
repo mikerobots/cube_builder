@@ -193,7 +193,7 @@ public:
         
         // Render cube rotated 45 degrees
         Rendering::Transform transform;
-        transform.position = Math::Vector3f(0.0f, 0.0f, 0.0f);
+        transform.position = Math::WorldCoordinates(Math::Vector3f(0.0f, 0.0f, 0.0f));
         transform.rotation = Math::Vector3f(0.0f, 45.0f, 0.0f); // 45 degree Y rotation
         
         Rendering::Material material;
@@ -270,7 +270,7 @@ public:
         
         // Render grid
         Rendering::Transform transform;
-        transform.position = Math::Vector3f(0.0f, -2.0f, 0.0f);
+        transform.position = Math::WorldCoordinates(Math::Vector3f(0.0f, -2.0f, 0.0f));
         
         Rendering::Material material;
         material.shader = shaderId;
@@ -356,11 +356,11 @@ public:
                 Rendering::Mesh renderCube = convertMesh(cubeMesh);
                 
                 Rendering::Transform transform;
-                transform.position = Math::Vector3f(
+                transform.position = Math::WorldCoordinates(Math::Vector3f(
                     (x - gridSize/2.0f + 0.5f) * spacing,
                     0.0f,
                     (z - gridSize/2.0f + 0.5f) * spacing
-                );
+                ));
                 
                 Rendering::Material material;
                 material.shader = shaderId;
@@ -429,7 +429,7 @@ private:
         m_camera->setYaw(45.0f);     // Rotated to see corner
         m_camera->setFieldOfView(45.0f);
         m_camera->setAspectRatio((float)m_width / m_height);
-        m_camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0, 0, 0));
+        m_camera->setTarget(Math::WorldCoordinates(Math::Vector3f(0, 0, 0)));
     }
     
     ImageData captureFrame() {

@@ -68,6 +68,16 @@ public:
     void setDebugOverlaysEnabled(bool enabled) { m_debugOverlaysEnabled = enabled; }
     bool areDebugOverlaysEnabled() const { return m_debugOverlaysEnabled; }
     
+    // Validation methods
+    bool validateFace(const Face& face) const;
+    bool validatePreviewPosition(const Math::Vector3i& position, VoxelData::VoxelResolution resolution) const;
+    bool validateGridParameters(const Math::Vector3f& center, float extent, const Math::Vector3f& cursorPos) const;
+    Math::BoundingBox calculateSelectionBounds(const std::vector<VoxelId>& selection) const;
+    Rendering::Color getPreviewColor(const Math::Vector3i& position, VoxelData::VoxelResolution resolution, bool isValid) const;
+    Rendering::Color getFaceHighlightColor(const Face& face) const;
+    GridInfo calculateGridInfo(const Math::Vector3f& center, float extent) const;
+    PerformanceMetrics::FormattedText formatPerformanceMetrics(const PerformanceMetrics& metrics) const;
+    
     // Animation control
     void update(float deltaTime);
     void setAnimationSpeed(float speed) { m_animationSpeed = speed; }

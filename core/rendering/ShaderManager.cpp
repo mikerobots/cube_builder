@@ -160,7 +160,17 @@ ShaderId ShaderManager::createShaderFromSource(const std::string& name,
         return InvalidId;
     }
     
-    // Store in our map
+    // Create ShaderProgram wrapper
+    ShaderEntry entry;
+    entry.id = program;
+    entry.name = name;
+    entry.program = std::make_unique<ShaderProgram>(program, name, renderer);
+    entry.program->setValid(true); // Mark as valid since linking succeeded
+    entry.source = ShaderSource(vertexSource, fragmentSource);
+    entry.isBuiltIn = false;
+    
+    // Store in our maps
+    m_shaders[program] = std::move(entry);
     m_shadersByName[name] = program;
     
     try {
@@ -169,8 +179,150 @@ ShaderId ShaderManager::createShaderFromSource(const std::string& name,
     return program;
 }
 
+ShaderProgram* ShaderManager::getShaderProgram(ShaderId id) {
+    auto it = m_shaders.find(id);
+    if (it != m_shaders.end()) {
+        return it->second.program.get();
+    }
+    return nullptr;
+}
+
+ShaderProgram* ShaderManager::getShaderProgram(const std::string& name) {
+    ShaderId id = getShader(name);
+    if (id != InvalidId) {
+        return getShaderProgram(id);
+    }
+    return nullptr;
+}
+
 void ShaderManager::cleanup() {
+    m_shaders.clear();
     m_shadersByName.clear();
+}
+
+// ShaderProgram implementation
+ShaderProgram::ShaderProgram(ShaderId id, const std::string& name, OpenGLRenderer* renderer)
+    : m_id(id)
+    , m_name(name)
+    , m_renderer(renderer)
+    , m_valid(false)
+    , m_inUse(false)
+    , m_dirty(false) {
+}
+
+void ShaderProgram::setUniform(const std::string& name, const Math::Matrix4f& value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, const Math::Vector3f& value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, float value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, const Math::Vector2f& value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, const Color& value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, int value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, bool value) {
+    if (!m_renderer || !m_valid) return;
+    
+    UniformValue uniformValue(value ? 1 : 0);
+    m_renderer->setUniform(m_id, name, uniformValue);
+}
+
+void ShaderProgram::setUniform(const std::string& name, const UniformValue& value) {
+    if (!m_renderer || !m_valid) return;
+    
+    m_renderer->setUniform(m_id, name, value);
+}
+
+void ShaderProgram::use() {
+    if (!m_renderer || !m_valid) return;
+    
+    m_renderer->useProgram(m_id);
+    m_inUse = true;
+}
+
+void ShaderProgram::unuse() {
+    if (!m_renderer) return;
+    
+    m_renderer->useProgram(InvalidId);
+    m_inUse = false;
+}
+
+bool ShaderProgram::hasUniform(const std::string& name) const {
+    return getUniformLocation(name) >= 0;
+}
+
+int ShaderProgram::getUniformLocation(const std::string& name) const {
+    if (!m_renderer || !m_valid) return -1;
+    
+    // Check cache first
+    auto it = m_uniformLocations.find(name);
+    if (it != m_uniformLocations.end()) {
+        return it->second;
+    }
+    
+    // Get location from renderer and cache it
+    int location = m_renderer->getUniformLocation(m_id, name);
+    if (location >= 0) {
+        const_cast<ShaderProgram*>(this)->m_uniformLocations[name] = location;
+    }
+    
+    return location;
+}
+
+std::vector<std::string> ShaderProgram::getUniformNames() const {
+    std::vector<std::string> names;
+    for (const auto& pair : m_uniformLocations) {
+        names.push_back(pair.first);
+    }
+    return names;
+}
+
+bool ShaderProgram::recompile(const ShaderSource& source) {
+    // TODO: Implement recompilation
+    return false;
+}
+
+void ShaderProgram::cacheUniformLocations() {
+    // TODO: Implement uniform location caching
+}
+
+void ShaderProgram::updateUniformLocation(const std::string& name) {
+    if (!m_renderer || !m_valid) return;
+    
+    int location = m_renderer->getUniformLocation(m_id, name);
+    m_uniformLocations[name] = location;
 }
 
 } // namespace Rendering
