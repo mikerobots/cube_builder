@@ -11,38 +11,39 @@ namespace Tests {
 class CLIRenderingIntegrationTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        GTEST_SKIP() << "CLI rendering tests are skipped due to API compatibility issues. "
-                     << "The following methods need to be updated: "
-                     << "RenderWindow::getFramebufferSize(), RenderWindow::setSize(), "
-                     << "RenderEngine::setClearColor(), CameraController::resetView(), "
-                     << "ViewPreset enum values, Selection::VoxelId class. "
-                     << "These tests will be re-enabled once the API is updated.";
+        // Tests will now fail to show API compatibility issues
     }
 };
 
 // Placeholder tests that will be skipped
 TEST_F(CLIRenderingIntegrationTest, BasicRenderingTest) {
-    // This test is skipped in SetUp()
+    // Force failure to show this test needs implementation
+    FAIL() << "Test not implemented - needs to test basic rendering functionality";
 }
 
 TEST_F(CLIRenderingIntegrationTest, ScreenshotValidationTest) {
-    // This test is skipped in SetUp()
+    // Force failure to show this test needs implementation
+    FAIL() << "Test not implemented - needs to validate screenshot rendering";
 }
 
 TEST_F(CLIRenderingIntegrationTest, VoxelRenderingTest) {
-    // This test is skipped in SetUp()
+    // Force failure to show this test needs implementation
+    FAIL() << "Test not implemented - needs to test voxel rendering";
 }
 
 TEST_F(CLIRenderingIntegrationTest, CameraViewTest) {
-    // This test is skipped in SetUp()
+    // Force failure to show this test needs implementation
+    FAIL() << "Test not implemented - needs to test camera view functionality";
 }
 
 TEST_F(CLIRenderingIntegrationTest, MultipleVoxelRenderingTest) {
-    // This test is skipped in SetUp()
+    // Force failure to show this test needs implementation
+    FAIL() << "Test not implemented - needs to test rendering multiple voxels";
 }
 
 TEST_F(CLIRenderingIntegrationTest, ResolutionSwitchingTest) {
-    // This test is skipped in SetUp()
+    // Force failure to show this test needs implementation
+    FAIL() << "Test not implemented - needs to test resolution switching during rendering";
 }
 
 } // namespace Tests

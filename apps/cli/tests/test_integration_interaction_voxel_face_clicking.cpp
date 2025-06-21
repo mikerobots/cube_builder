@@ -26,9 +26,10 @@ protected:
         // Initialize logging
         Logging::Logger::getInstance().setLevel(Logging::Logger::Level::Warning);
         
-        // This test requires OpenGL context and mouse interaction
-        // It should always skip in environments without display
-        GTEST_SKIP() << "Skipping GUI test - requires OpenGL context for mouse interaction";
+        // Skip in CI environment where OpenGL is not available
+        if (std::getenv("CI") != nullptr) {
+            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
+        }
         
         // Create application in headless mode for testing
         app = std::make_unique<Application>();

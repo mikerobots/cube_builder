@@ -128,8 +128,12 @@ add_executable(test_integration_feedback_overlay_renderer
 
 target_link_libraries(test_integration_feedback_overlay_renderer
     VoxelEditor_VisualFeedback
+    VoxelEditor_Rendering
     VoxelEditor_Camera
     VoxelEditor_Math
+    glfw
+    glad
+    OpenGL::GL
     gtest
     gtest_main
 )
@@ -163,8 +167,12 @@ add_executable(test_integration_feedback_requirements_validation
 
 target_link_libraries(test_integration_feedback_requirements_validation
     VoxelEditor_VisualFeedback
+    VoxelEditor_Rendering
     VoxelEditor_VoxelData
     VoxelEditor_Math
+    glfw
+    glad
+    OpenGL::GL
     gtest
     gtest_main
 )

@@ -1,6 +1,17 @@
 #include <gtest/gtest.h>
+
+// Include OpenGL headers
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#include <OpenGL/gl3.h>
+#else
+#include <glad/glad.h>
+#endif
+
+#include <GLFW/glfw3.h>
 #include <chrono>
 #include <cstdlib>
+#include <memory>
 #include "../../../core/visual_feedback/include/visual_feedback/OverlayRenderer.h"
 #include "../../../core/camera/OrbitCamera.h"
 #include "../../../foundation/math/CoordinateTypes.h"
@@ -12,13 +23,51 @@ using namespace VoxelEditor::Camera;
 
 class OverlayRendererIntegrationTest : public ::testing::Test {
 protected:
+    GLFWwindow* window = nullptr;
+    
     void SetUp() override {
-        // Always skip these tests unless explicitly enabled
-        // These tests require a proper OpenGL context which is not available in CI/headless environments
-        if (std::getenv("ENABLE_OPENGL_TESTS") == nullptr) {
-            GTEST_SKIP() << "Skipping OpenGL tests - set ENABLE_OPENGL_TESTS=1 to run";
+        // Skip in CI environment
+        if (std::getenv("CI") != nullptr) {
+            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
         }
+        
+        // Initialize GLFW
+        ASSERT_TRUE(glfwInit()) << "Failed to initialize GLFW";
+        
+        // Configure GLFW
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Hidden window for testing
+        #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        #endif
+        
+        // Create window
+        window = glfwCreateWindow(1920, 1080, "Overlay Renderer Test", nullptr, nullptr);
+        ASSERT_NE(window, nullptr) << "Failed to create GLFW window";
+        
+        glfwMakeContextCurrent(window);
+        
+        #ifndef __APPLE__
+        // Initialize GLAD (not needed on macOS)
+        ASSERT_TRUE(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) << "Failed to initialize GLAD";
+        #endif
+        
+        // Clear any GL errors from initialization
+        while (glGetError() != GL_NO_ERROR) {}
+        
+        // Create overlay renderer
         renderer = std::make_unique<OverlayRenderer>();
+    }
+    
+    void TearDown() override {
+        renderer.reset();
+        
+        if (window) {
+            glfwDestroyWindow(window);
+        }
+        glfwTerminate();
     }
     
     std::unique_ptr<OverlayRenderer> renderer;

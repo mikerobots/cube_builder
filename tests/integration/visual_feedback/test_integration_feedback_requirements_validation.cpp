@@ -1,11 +1,25 @@
 #include <gtest/gtest.h>
+
+// Include OpenGL headers
+#ifdef __APPLE__
+#define GL_SILENCE_DEPRECATION
+#include <OpenGL/gl3.h>
+#else
+#include <glad/glad.h>
+#endif
+
+#include <GLFW/glfw3.h>
 #include <chrono>
 #include <cstdlib>
+#include <memory>
+
 #include "../../../core/visual_feedback/include/visual_feedback/FeedbackRenderer.h"
 #include "../../../core/visual_feedback/include/visual_feedback/OverlayRenderer.h"
 #include "../../../core/visual_feedback/include/visual_feedback/FaceDetector.h"
 #include "../../../core/camera/Camera.h"
 #include "../../../core/camera/OrbitCamera.h"
+#include "../../../core/rendering/OpenGLRenderer.h"
+#include "../../../core/rendering/RenderEngine.h"
 
 using namespace VoxelEditor::Math;
 using VoxelEditor::VoxelData::VoxelResolution;
@@ -17,18 +31,68 @@ using VoxelEditor::VisualFeedback::FaceDirection;
 
 class VisualFeedbackRequirementsIntegrationTest : public ::testing::Test {
 protected:
+    GLFWwindow* window = nullptr;
+    std::unique_ptr<VoxelEditor::Rendering::OpenGLRenderer> renderer;
+    
     void SetUp() override {
-        // Always skip these tests unless explicitly enabled
-        // These tests require a proper OpenGL context which is not available in CI/headless environments
-        if (std::getenv("ENABLE_OPENGL_TESTS") == nullptr) {
-            GTEST_SKIP() << "Skipping OpenGL tests - set ENABLE_OPENGL_TESTS=1 to run";
+        // Skip in CI environment
+        if (std::getenv("CI") != nullptr) {
+            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
         }
         
+        // Initialize GLFW
+        ASSERT_TRUE(glfwInit()) << "Failed to initialize GLFW";
+        
+        // Configure GLFW
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Hidden window for testing
+        #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        #endif
+        
+        // Create window
+        window = glfwCreateWindow(1920, 1080, "Visual Feedback Requirements Test", nullptr, nullptr);
+        ASSERT_NE(window, nullptr) << "Failed to create GLFW window";
+        
+        glfwMakeContextCurrent(window);
+        
+        #ifndef __APPLE__
+        // Initialize GLAD (not needed on macOS)
+        ASSERT_TRUE(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) << "Failed to initialize GLAD";
+        #endif
+        
+        // Clear any GL errors from initialization
+        while (glGetError() != GL_NO_ERROR) {}
+        
+        // Initialize OpenGLRenderer
+        renderer = std::make_unique<VoxelEditor::Rendering::OpenGLRenderer>();
+        VoxelEditor::Rendering::RenderConfig config;
+        config.windowWidth = 1920;
+        config.windowHeight = 1080;
+        ASSERT_TRUE(renderer->initializeContext(config)) << "Failed to initialize renderer";
+        
+        // Create components
         overlayRenderer = std::make_unique<OverlayRenderer>();
+        // Note: FeedbackRenderer is tested with nullptr in integration tests
+        // as it doesn't actually use the RenderEngine for these test cases
         feedbackRenderer = std::make_unique<FeedbackRenderer>(nullptr);
         camera = std::make_unique<VoxelEditor::Camera::OrbitCamera>(nullptr);
         camera->setPosition(VoxelEditor::Math::WorldCoordinates(Vector3f(5.0f, 5.0f, 5.0f)));
         camera->setTarget(VoxelEditor::Math::WorldCoordinates(Vector3f(0.0f, 0.0f, 0.0f)));
+    }
+    
+    void TearDown() override {
+        camera.reset();
+        feedbackRenderer.reset();
+        overlayRenderer.reset();
+        renderer.reset();
+        
+        if (window) {
+            glfwDestroyWindow(window);
+        }
+        glfwTerminate();
     }
     
     std::unique_ptr<OverlayRenderer> overlayRenderer;

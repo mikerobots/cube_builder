@@ -1,26 +1,72 @@
-# Shader Integration Testing Guide
+# OpenGL Integration Testing Guide
 
-This guide explains the options and approaches for creating comprehensive shader integration tests using C++ and OpenGL in the VoxelEditor project.
+This guide explains the options and approaches for creating comprehensive OpenGL integration tests in the VoxelEditor project, including shader validation, rendering tests, visual feedback, and any component that requires OpenGL context.
 
 ## Overview
 
-Shader integration testing validates that shaders correctly process vertex data, apply transformations, handle lighting, and produce expected visual output. Unlike unit tests that test individual components, integration tests verify the entire graphics pipeline from mesh data to framebuffer output.
+OpenGL integration testing validates the entire graphics pipeline including shaders, rendering systems, visual feedback components, and framebuffer operations. Unlike unit tests that test individual components, integration tests verify the complete rendering pipeline from input data to visual output.
 
 ## Key Components
 
 ### 1. OpenGL Context Setup
 
-Every shader integration test requires a proper OpenGL context:
+Every OpenGL integration test requires a proper OpenGL context with platform-specific handling:
 
 ```cpp
-// GLFW window setup for headless testing
-glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Hidden for automated testing
-
-// Initialize GLAD for OpenGL function loading
-ASSERT_TRUE(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
+class MyOpenGLTest : public ::testing::Test {
+protected:
+    GLFWwindow* window = nullptr;
+    std::unique_ptr<Rendering::OpenGLRenderer> renderer;
+    
+    void SetUp() override {
+        // Skip in CI environment where OpenGL is not available
+        if (std::getenv("CI") != nullptr) {
+            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
+        }
+        
+        // Initialize GLFW
+        ASSERT_TRUE(glfwInit()) << "Failed to initialize GLFW";
+        
+        // Configure GLFW
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Hidden for automated testing
+        
+        #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        #endif
+        
+        // Create window
+        window = glfwCreateWindow(800, 600, "Test Window", nullptr, nullptr);
+        ASSERT_NE(window, nullptr) << "Failed to create GLFW window";
+        
+        glfwMakeContextCurrent(window);
+        
+        #ifndef __APPLE__
+        // Initialize GLAD (not needed on macOS)
+        ASSERT_TRUE(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) << "Failed to initialize GLAD";
+        #endif
+        
+        // Clear any GL errors from initialization
+        while (glGetError() != GL_NO_ERROR) {}
+        
+        // Initialize OpenGLRenderer
+        renderer = std::make_unique<Rendering::OpenGLRenderer>();
+        Rendering::RenderConfig config;
+        config.windowWidth = 800;
+        config.windowHeight = 600;
+        ASSERT_TRUE(renderer->initializeContext(config)) << "Failed to initialize renderer";
+    }
+    
+    void TearDown() override {
+        renderer.reset();
+        if (window) {
+            glfwDestroyWindow(window);
+        }
+        glfwTerminate();
+    }
+};
 ```
 
 ### 2. Platform-Specific Compatibility
@@ -82,73 +128,92 @@ renderer->useProgram(shaderId);
 renderer->setUniform(shaderId, "model", Rendering::UniformValue(glmToMathMatrix(model)));
 ```
 
-## Alternative Implementation Options
+## Implementation Approaches
 
-When implementing shader integration tests, you have several architectural approaches depending on the maturity of your rendering system:
+When implementing OpenGL integration tests, always prefer using the OpenGLRenderer class which provides a stable, working API:
 
-### Option 1: ShaderProgram Wrapper (Ideal but may be incomplete)
+### Recommended: OpenGLRenderer API (Preferred approach)
 
-**When to use**: When ShaderProgram class has complete uniform API implementation
-**Pros**: Clean, type-safe API with better abstraction
-**Cons**: May not be implemented yet or have missing methods
-
-```cpp
-// Ideal approach with complete ShaderProgram wrapper
-auto* shader = shaderManager->getShaderProgram(shaderId);
-shader->use();
-shader->setUniform("model", glmToMathMatrix(model));
-shader->setUniform("viewPos", Math::Vector3f(3.0f, 3.0f, 3.0f));
-```
-
-**Limitations discovered in VoxelEditor**:
-- `ShaderProgram::setUniform(string, Matrix4f)` method not implemented
-- `ShaderProgram::setUniform(string, Vector3f)` method not implemented  
-- `ShaderProgram::use()` method not implemented
-- `ShaderManager::getShaderProgram(id)` method not implemented
-
-### Option 2: OpenGLRenderer Direct Usage (Current working solution)
-
-**When to use**: When ShaderProgram wrapper is incomplete or missing methods
-**Pros**: Bypasses incomplete abstractions, uses working low-level API
-**Cons**: More verbose, requires understanding of UniformValue wrapper
+**When to use**: Always - this is the stable, tested API for OpenGL operations
+**Pros**: Type-safe, consistent API, proper resource management, works across platforms
+**Usage**: All rendering operations should go through OpenGLRenderer when possible
 
 ```cpp
-// Working approach that bypasses incomplete ShaderProgram wrapper
-renderer->useProgram(shaderId);
-renderer->setUniform(shaderId, "model", Rendering::UniformValue(glmToMathMatrix(model)));
-renderer->setUniform(shaderId, "viewPos", Rendering::UniformValue(Math::Vector3f(3.0f, 3.0f, 3.0f)));
-```
-
-### Option 3: Raw OpenGL Calls (Fallback option)
-
-**When to use**: When both wrapper systems are incomplete
-**Pros**: Always available, direct control
-**Cons**: No type safety, requires manual uniform location management, error-prone
-
-```cpp
-// Raw OpenGL approach (use only as last resort)
-glUseProgram(shaderId);
-GLint modelLoc = glGetUniformLocation(shaderId, "model");
-glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-```
-
-### Option 4: Hybrid Approach (Recommended for development)
-
-**When to use**: During active development when some systems work and others don't
-**Strategy**: Use the highest-level working API for each operation
-
-```cpp
-// Use ShaderManager for loading (if working)
+// Shader management
 ASSERT_TRUE(shaderManager->loadShader("basic_voxel", "basic_voxel_gl33.vert", "basic_voxel_gl33.frag"));
 auto shaderId = shaderManager->getShader("basic_voxel");
 
-// Use OpenGLRenderer for uniforms (if ShaderProgram incomplete)
+// Use OpenGLRenderer for all shader operations
 renderer->useProgram(shaderId);
 renderer->setUniform(shaderId, "model", Rendering::UniformValue(glmToMathMatrix(model)));
+renderer->setUniform(shaderId, "viewPos", Rendering::UniformValue(Math::Vector3f(3.0f, 3.0f, 3.0f)));
+renderer->setUniform(shaderId, "lightDir", Rendering::UniformValue(Math::Vector3f(1.0f, 1.0f, 1.0f)));
 
-// Use raw OpenGL for operations not wrapped yet (if needed)
+// Vertex Array management
+auto vao = renderer->createVertexArray();
+renderer->bindVertexArray(vao);
+
+// Buffer management
+auto vbo = renderer->createBuffer();
+renderer->bindBuffer(GL_ARRAY_BUFFER, vbo);
+renderer->bufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+
+// Drawing
+renderer->drawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+```
+
+### Alternative: Raw OpenGL (Only when necessary)
+
+**When to use**: Only for operations not yet wrapped by OpenGLRenderer
+**Examples**: Specific GL state queries, specialized extensions, debugging
+
+```cpp
+// Use raw OpenGL only for operations not in OpenGLRenderer API
 glEnable(GL_DEPTH_TEST);
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+glViewport(0, 0, width, height);
+
+// Always prefer renderer->drawElements() over glDrawElements()
+```
+
+### Complete Example Using OpenGLRenderer
+
+```cpp
+class VisualFeedbackTest : public ::testing::Test {
+protected:
+    void renderTestScene() {
+        // Clear using raw GL (if not in renderer API)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        // All shader operations through renderer
+        auto shaderId = shaderManager->getShader("feedback_shader");
+        renderer->useProgram(shaderId);
+        
+        // Set uniforms using renderer
+        renderer->setUniform(shaderId, "projection", Rendering::UniformValue(projMatrix));
+        renderer->setUniform(shaderId, "view", Rendering::UniformValue(viewMatrix));
+        renderer->setUniform(shaderId, "model", Rendering::UniformValue(modelMatrix));
+        
+        // Bind and draw using renderer
+        renderer->bindVertexArray(meshVAO);
+        renderer->drawElements(GL_TRIANGLES, mesh->indexCount, GL_UNSIGNED_INT, 0);
+        
+        // Swap buffers through GLFW (window management)
+        glfwSwapBuffers(window);
+    }
+};
+```
+
+### Type Compatibility Notes
+
+Some components expect `RenderEngine*` interface. For integration testing, many components can be tested with nullptr if they don't actively use the render engine:
+
+```cpp
+// For components that don't use RenderEngine in the test scenarios
+auto feedbackRenderer = std::make_unique<FeedbackRenderer>(nullptr);
+
+// If actual rendering is needed, ensure proper inheritance or adapters are in place
+// Note: OpenGLRenderer may not directly inherit from RenderEngine in all cases
 ```
 
 ## Testing Approaches
@@ -239,57 +304,81 @@ bool compareToReference(const std::string& testName, float tolerance = 5.0f) {
 
 ## Test Categories
 
-### 1. Basic Shader Functionality
-- Single voxel rendering
-- Color validation
-- Transformation matrices
-- Basic lighting
+### 1. Shader Tests
+- Shader compilation and linking
+- Uniform setting and retrieval
+- Vertex attribute processing
+- Fragment shader output validation
+- Multi-shader switching
 
-### 2. Multi-Shader Validation
-- Shader switching performance
-- Different shader outputs (basic, enhanced, flat)
-- Uniform compatibility across shaders
+### 2. Rendering Tests
+- Basic primitive rendering
+- Mesh rendering with indices
+- Multiple draw calls
+- Framebuffer operations
+- Depth and stencil testing
 
-### 3. Lighting and Materials
-- Phong lighting validation
-- Light direction effects
-- Material property testing
-- Face orientation brightness
+### 3. Visual Feedback Tests
+- Overlay rendering
+- Text rendering
+- UI element rendering
+- Grid and guide rendering
+- Selection highlighting
 
-### 4. Performance Testing
+### 4. Camera and Transformation Tests
+- View matrix calculations
+- Projection matrix handling
+- Model transformations
+- Viewport management
+- Coordinate system conversions
+
+### 5. Performance Tests
 - FPS benchmarks
-- Uniform update performance
-- Memory usage scaling
-- Large scene rendering
+- Draw call optimization
+- State change minimization
+- Memory usage profiling
+- Large scene handling
 
-### 5. Edge Cases
-- Extreme transformations
-- Multiple meshes
-- Resolution scaling
-- Camera angle variations
+### 6. Integration Tests
+- Complete render pipeline validation
+- Multi-component interaction
+- Event-driven rendering updates
+- Resource management
+- Error handling and recovery
 
 ## CMake Integration
 
 ```cmake
-# Add shader test executable
-add_executable(test_shader_integration
-    test_shader_integration.cpp
+# Add OpenGL integration test executable
+add_executable(test_integration_opengl_component
+    test_integration_opengl_component.cpp
 )
 
-target_link_libraries(test_shader_integration PRIVATE
-    VoxelEditor_Rendering
+# IMPORTANT: Must link against glfw, glad, and OpenGL::GL for any test using OpenGL
+target_link_libraries(test_integration_opengl_component PRIVATE
+    VoxelEditor_Rendering      # For OpenGLRenderer
+    VoxelEditor_VisualFeedback # If testing visual feedback
+    VoxelEditor_Camera         # If testing camera integration
     VoxelEditor_Math
     VoxelEditor_Logging
-    OpenGL::GL
-    glfw
-    glad
-    glm::glm
-    GTest::gtest_main
-    ${CMAKE_DL_LIBS}  # Required for macOS dlopen
+    glfw                       # REQUIRED for GLFW window management
+    glad                       # REQUIRED for OpenGL function loading (except macOS)
+    OpenGL::GL                 # REQUIRED for OpenGL
+    glm::glm                   # For math operations
+    GTest::gtest_main          # Google Test framework
+    ${CMAKE_DL_LIBS}          # Required for macOS dlopen
 )
 
-target_compile_features(test_shader_integration PRIVATE cxx_std_20)
-gtest_discover_tests(test_shader_integration)
+target_compile_features(test_integration_opengl_component PRIVATE cxx_std_20)
+
+# Add compile definitions if needed
+target_compile_definitions(test_integration_opengl_component PRIVATE
+    $<$<PLATFORM_ID:Darwin>:GL_SILENCE_DEPRECATION>
+)
+
+gtest_discover_tests(test_integration_opengl_component)
+
+# Note: Order matters! glfw should come before glad in the link libraries
 ```
 
 ## Best Practices
