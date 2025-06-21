@@ -333,6 +333,7 @@ list_groups() {
     printf "    $0 rendering          - Build & run rendering integration tests\n"
     printf "    $0 all                - Build & run all integration tests\n"
     printf "    $0 quick              - Build & run essential quick tests\n"
+    printf "    $0 <test_name>        - Build & run individual test (e.g., test_integration_core_camera)\n"
     echo
     printf "  ${BOLD}Information:${NC}\n"
     printf "    $0 list               - Show all integration test files\n"
@@ -396,6 +397,86 @@ print_summary() {
     fi
 }
 
+# Function to run individual test by name
+run_individual_test() {
+    local test_name=$1
+    print_header "Running Individual Test: $test_name"
+    
+    # First try to find the test source file
+    local test_source=""
+    local found=false
+    
+    # Look for exact match first
+    while IFS= read -r source; do
+        local basename=$(basename "$source" .cpp)
+        if [[ "$basename" == "$test_name" ]]; then
+            test_source="$source"
+            found=true
+            break
+        fi
+    done < <(discover_test_sources | grep "test_integration_")
+    
+    # If not found, try partial match (user might have typed just part of the name)
+    if [[ "$found" == "false" ]]; then
+        while IFS= read -r source; do
+            local basename=$(basename "$source" .cpp)
+            if [[ "$basename" == *"$test_name"* ]]; then
+                if [[ -n "$test_source" ]]; then
+                    # Multiple matches found
+                    print_color "$RED" "Multiple tests match '$test_name':"
+                    discover_test_sources | grep "test_integration_" | while IFS= read -r s; do
+                        local b=$(basename "$s" .cpp)
+                        if [[ "$b" == *"$test_name"* ]]; then
+                            echo "  - $b"
+                        fi
+                    done
+                    echo
+                    echo "Please be more specific."
+                    return 1
+                fi
+                test_source="$source"
+                found=true
+            fi
+        done < <(discover_test_sources | grep "test_integration_")
+    fi
+    
+    if [[ "$found" == "false" ]]; then
+        print_color "$RED" "Test '$test_name' not found"
+        echo
+        echo "Available integration tests:"
+        discover_test_sources | grep "test_integration_" | while IFS= read -r source; do
+            echo "  - $(basename "$source" .cpp)"
+        done | sort | head -20
+        echo "  ..."
+        echo
+        echo "Use '$0 list' to see all available tests"
+        return 1
+    fi
+    
+    # Build and run the test
+    local test_basename=$(basename "$test_source" .cpp)
+    local test_executable="build_ninja/bin/$test_basename"
+    
+    # Build the specific test
+    if [ -d "build_ninja" ]; then
+        print_color "$CYAN" "Building test: $test_basename..."
+        if cmake --build build_ninja --target "$test_basename" 2>/dev/null; then
+            print_color "$GREEN" "Build successful"
+        else
+            print_color "$YELLOW" "Build failed or target not found, trying general build..."
+            cmake --build build_ninja --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4) 2>/dev/null || true
+        fi
+    fi
+    
+    # Run the test
+    if [ -x "$test_executable" ]; then
+        run_cpp_test "$test_executable"
+    else
+        print_color "$RED" "Test executable not found: $test_executable"
+        return 1
+    fi
+}
+
 # Main script logic
 main() {
     # If no arguments, show help
@@ -422,7 +503,7 @@ main() {
                 while IFS= read -r test_path; do
                     run_cpp_test "$test_path"
                 done < <(discover_integration_tests)
-                run_uncategorized_tests
+                # NOTE: Removed run_uncategorized_tests - only run tests following test_integration_* pattern
                 ;;
             uncategorized)
                 run_uncategorized_tests
@@ -432,16 +513,16 @@ main() {
                 ;;
             # No legacy mappings needed - all categories use standard names
             *)
-                # Try to run as a category
-                if discover_categories | grep -q "^${group}$"; then
+                # First check if it's a test name pattern
+                if [[ "$group" == *"test_integration"* ]] || [[ "$group" == *"test_"* ]]; then
+                    # Try to run as individual test
+                    run_individual_test "$group"
+                # Then try to run as a category
+                elif discover_categories | grep -q "^${group}$"; then
                     run_category_tests "$group"
                 else
-                    print_color "$RED" "Unknown category: $group"
-                    echo "Available categories:"
-                    discover_categories | sed 's/^/  /'
-                    echo
-                    echo "Use '$0 list' to see all available groups"
-                    exit 1
+                    # Could be a partial test name, try individual test
+                    run_individual_test "$group"
                 fi
                 ;;
         esac

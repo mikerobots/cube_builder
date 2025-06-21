@@ -61,6 +61,9 @@ protected:
         if (!glRenderer->initializeContext(config)) {
             GTEST_SKIP() << "Failed to initialize OpenGL context";
         }
+        
+        // Clear any GL errors from initialization
+        while (glGetError() != GL_NO_ERROR) {}
     }
     
     void TearDown() override {
@@ -349,13 +352,19 @@ TEST_F(OpenGLWrapperValidationTest, VAOOperations) {
 
 // Test line width setting
 TEST_F(OpenGLWrapperValidationTest, LineWidth) {
-    glRenderer->setLineWidth(2.0f);
-    EXPECT_TRUE(checkGLError("Set line width"));
+    // Note: OpenGL Core Profile only supports line width of 1.0
+    // Setting other values may generate GL_INVALID_VALUE on some platforms
+    glRenderer->setLineWidth(1.0f);
+    EXPECT_TRUE(checkGLError("Set line width to 1.0"));
     
     GLfloat width;
     glGetFloatv(GL_LINE_WIDTH, &width);
-    // Note: Some implementations may clamp line width
-    EXPECT_GE(width, 1.0f);
+    EXPECT_EQ(width, 1.0f);
+    
+    // Test that setting non-1.0 values doesn't crash (may generate error on Core Profile)
+    glRenderer->setLineWidth(2.0f);
+    // Clear the error as it's expected on Core Profile
+    glGetError();
     
     glRenderer->setLineWidth(1.0f);
     EXPECT_TRUE(checkGLError("Reset line width"));

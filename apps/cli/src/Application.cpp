@@ -438,29 +438,10 @@ void Application::render() {
     m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.3f, 0.3f, 0.3f, 1.0f));
     
     // Render all voxel meshes
-    static int frameCount = 0;
-    if (frameCount < 5) {
-        Logging::Logger::getInstance().debugfc("Application", 
-            "Rendering frame %d, mesh count: %zu", frameCount, m_voxelMeshes.size());
-    }
     
     for (size_t i = 0; i < m_voxelMeshes.size(); ++i) {
         const auto& mesh = m_voxelMeshes[i];
         if (!mesh.vertices.empty()) {
-            if (frameCount < 5) {
-                Logging::Logger::getInstance().debugfc("Application",
-                    "  Rendering mesh %zu with %zu vertices, %zu indices", 
-                    i, mesh.vertices.size(), mesh.indices.size());
-                
-                // Show first few vertex positions to verify they're different
-                for (size_t v = 0; v < std::min(size_t(3), mesh.vertices.size()); v += 24) {
-                    Logging::Logger::getInstance().debugfc("Application",
-                        "    Vertex %zu: pos(%.3f, %.3f, %.3f)", v,
-                        mesh.vertices[v].position.x(),
-                        mesh.vertices[v].position.y(),
-                        mesh.vertices[v].position.z());
-                }
-            }
             
             // Create identity transform and basic material
             Rendering::Transform transform;
@@ -472,10 +453,6 @@ void Application::render() {
                 m_defaultShaderId = m_renderEngine->getBuiltinShader("enhanced");
             }
             material.shader = m_defaultShaderId;
-            
-            if (frameCount < 5) {
-                Logging::Logger::getInstance().debugfc("Application", "  Shader ID: %u", material.shader);
-            }
             
             m_renderEngine->renderMesh(mesh, transform, material);
         }
@@ -504,7 +481,6 @@ void Application::render() {
         m_renderEngine->setLineWidth(1.0f);
     }
     
-    frameCount++;
     
     // Render ground plane grid
     if (m_renderEngine->isGroundPlaneGridVisible()) {

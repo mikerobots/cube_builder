@@ -311,6 +311,11 @@ public:
         clearResolution(getActiveResolution());
     }
     
+    // Convenience alias for clearAll()
+    void clear() {
+        clearAll();
+    }
+    
     // Statistics
     size_t getVoxelCount(VoxelResolution resolution) const {
         std::lock_guard<std::mutex> lock(m_mutex);

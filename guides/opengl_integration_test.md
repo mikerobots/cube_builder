@@ -6,11 +6,47 @@ This guide explains the options and approaches for creating comprehensive OpenGL
 
 OpenGL integration testing validates the entire graphics pipeline including shaders, rendering systems, visual feedback components, and framebuffer operations. Unlike unit tests that test individual components, integration tests verify the complete rendering pipeline from input data to visual output.
 
+## Test Classification and Skipping Policy
+
+**Integration Tests**: MUST NOT skip based on environment. These tests validate critical functionality and must pass in all environments including CI.
+
+**Unit Tests**: MAY skip in environments without OpenGL if they test OpenGL-specific functionality in isolation.
+
+**Placeholder Tests**: MAY skip with clear message indicating they are placeholders for future functionality.
+
+**IMPORTANT**: If a test requires OpenGL functionality (rendering, mouse interaction, visual feedback, etc.), it MUST NOT be run in headless mode. The application's headless mode skips OpenGL initialization, so any test using OpenGL features must initialize with a proper OpenGL context.
+
+```cpp
+// CORRECT: Placeholder test
+TEST_F(FutureFeatureTest, NotYetImplemented) {
+    GTEST_SKIP() << "Placeholder for future VR rendering support";
+}
+
+// INCORRECT: Integration test skipping
+TEST_F(RenderingIntegrationTest, BasicRendering) {
+    if (std::getenv("CI") != nullptr) {
+        GTEST_SKIP() << "Skipping in CI"; // WRONG! Integration tests must work everywhere
+    }
+}
+
+// INCORRECT: Using headless mode for OpenGL test
+TEST_F(MouseInteractionTest, ClickHandling) {
+    app->initialize(argc, {"--headless"}); // WRONG! Mouse interaction needs OpenGL
+}
+
+// CORRECT: OpenGL test without headless mode
+TEST_F(MouseInteractionTest, ClickHandling) {
+    app->initialize(argc, argv); // Initialize with OpenGL context
+}
+```
+
 ## Key Components
 
 ### 1. OpenGL Context Setup
 
 Every OpenGL integration test requires a proper OpenGL context with platform-specific handling:
+
+**IMPORTANT**: Integration tests should NEVER skip, even in CI environments. If OpenGL is required for an integration test, the test environment must provide it. Only skip tests if they are placeholders for future functionality.
 
 ```cpp
 class MyOpenGLTest : public ::testing::Test {
@@ -19,10 +55,9 @@ protected:
     std::unique_ptr<Rendering::OpenGLRenderer> renderer;
     
     void SetUp() override {
-        // Skip in CI environment where OpenGL is not available
-        if (std::getenv("CI") != nullptr) {
-            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
-        }
+        // IMPORTANT: Do NOT skip integration tests in CI
+        // Integration tests must work in all environments
+        // Only skip if the test is a placeholder for future functionality
         
         // Initialize GLFW
         ASSERT_TRUE(glfwInit()) << "Failed to initialize GLFW";
@@ -474,10 +509,24 @@ void savePPM(const std::string& filename, const std::vector<unsigned char>& pixe
 
 ## Integration with CI/CD
 
+**CRITICAL**: Integration tests MUST NOT skip in CI environments. The CI environment must be configured to support OpenGL testing.
+
 For automated testing environments:
 - Use headless rendering (GLFW_VISIBLE = FALSE)
 - Set appropriate timeouts for GPU operations
-- Consider using software rendering for consistent results
+- Consider using software rendering for consistent results (e.g., Mesa3D software renderer, Xvfb)
 - Save debug images for failed test analysis
+- Configure CI to provide OpenGL context (e.g., using xvfb-run on Linux)
+
+Example CI configuration for OpenGL support:
+```bash
+# Linux CI setup
+xvfb-run -a ./run_integration_tests.sh
+
+# Or with specific display settings
+export DISPLAY=:99.0
+Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+./run_integration_tests.sh
+```
 
 This guide provides a comprehensive foundation for creating robust shader integration tests that validate both functional correctness and performance characteristics of the VoxelEditor's graphics pipeline.

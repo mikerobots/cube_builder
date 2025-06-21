@@ -26,19 +26,15 @@ protected:
         // Initialize logging
         Logging::Logger::getInstance().setLevel(Logging::Logger::Level::Warning);
         
-        // Skip in CI environment where OpenGL is not available
-        if (std::getenv("CI") != nullptr) {
-            GTEST_SKIP() << "Skipping OpenGL tests in CI environment";
-        }
+        // Integration tests should not skip - OpenGL must be available in test environment
         
-        // Create application in headless mode for testing
+        // Create application for testing (NOT in headless mode as we need OpenGL)
         app = std::make_unique<Application>();
         
-        // Initialize in headless mode
-        int argc = 2;
+        // Initialize with OpenGL context
+        int argc = 1;
         char arg0[] = "test";
-        char arg1[] = "--headless";
-        char* argv[] = {arg0, arg1, nullptr};
+        char* argv[] = {arg0, nullptr};
         
         // Redirect stdout to suppress initialization messages
         std::stringstream buffer;
@@ -49,7 +45,7 @@ protected:
         // Restore stdout
         std::cout.rdbuf(old);
         
-        ASSERT_TRUE(initialized) << "Application should initialize in headless mode";
+        ASSERT_TRUE(initialized) << "Application should initialize with OpenGL context";
         
         // Get managers
         voxelManager = app->getVoxelManager();
@@ -71,15 +67,10 @@ protected:
     // Simulate a mouse click at normalized device coordinates
     void simulateClick(float ndcX, float ndcY) {
         auto renderWindow = app->getRenderWindow();
+        ASSERT_NE(renderWindow, nullptr) << "Render window should exist for mouse interaction";
         
-        // In headless mode, use default window size
-        int width = 800;
-        int height = 600;
-        
-        if (renderWindow) {
-            width = renderWindow->getWidth();
-            height = renderWindow->getHeight();
-        }
+        int width = renderWindow->getWidth();
+        int height = renderWindow->getHeight();
         
         double screenX = (ndcX + 1.0) * 0.5 * width;
         double screenY = (1.0 - ndcY) * 0.5 * height;  // Flip Y for screen coordinates
@@ -181,10 +172,10 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
     EXPECT_GT(voxelCount, 1) << "Should be able to add voxel by clicking on (0,5,0)";
     
     // Test the working case: place at (0,0,0) then click
-    // Clear all voxels first - use centered coordinate range
-    for (int x = -5; x <= 5; x++) {
-        for (int y = 0; y <= 10; y++) {  // Keep Y positive since Y=0 is ground
-            for (int z = -5; z <= 5; z++) {
+    // Clear all voxels first - use proper increment coordinates for 64cm voxels (multiples of 64)
+    for (int x = -320; x <= 320; x += 64) {
+        for (int y = 0; y <= 640; y += 64) {  // Keep Y positive since Y=0 is ground
+            for (int z = -320; z <= 320; z += 64) {
                 voxelManager->setVoxel(Math::Vector3i(x, y, z), VoxelData::VoxelResolution::Size_64cm, false);
             }
         }
@@ -206,30 +197,31 @@ TEST_F(VoxelFaceClickingTest, MultipleVoxelPlacementBug) {
 
 TEST_F(VoxelFaceClickingTest, ClosestVoxelIsSelected) {
     // Place two voxels along the same ray path
+    // For 64cm voxels, increment coordinates must be multiples of 64
     voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
-    voxelManager->setVoxel(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
+    voxelManager->setVoxel(Math::Vector3i(64, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);
     EXPECT_EQ(countVoxels(), 2);
     
-    // Position camera so that (1,0,0) is closer than (0,0,0)
+    // Position camera so that (64,0,0) is closer than (0,0,0)
     auto camera = dynamic_cast<Camera::OrbitCamera*>(cameraController->getCamera());
     ASSERT_NE(camera, nullptr);
-    // Use coordinate converter to get proper world position for voxel (1,0,0)
-    Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(1, 0, 0));
+    // Use coordinate converter to get proper world position for voxel (64,0,0)
+    Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(64, 0, 0));
     camera->setTarget(voxelWorldPos);
     camera->setDistance(3.0f);
     camera->setOrbitAngles(90.0f, 0.0f);  // Look from positive X direction
     
     app->updateVoxelMeshes();
     
-    // Click - should hit the closer voxel (1,0,0) and add voxel at (2,0,0)
+    // Click - should hit the closer voxel (64,0,0) and add voxel at (128,0,0)
     simulateClick(0.0f, 0.0f);
     app->updateVoxelMeshes();
     
     EXPECT_EQ(countVoxels(), 3) << "Should add voxel adjacent to the closer one";
     
-    // Verify the new voxel is at (2,0,0)
-    EXPECT_TRUE(voxelManager->hasVoxel(Math::Vector3i(2, 0, 0), VoxelData::VoxelResolution::Size_64cm)) 
-        << "New voxel should be placed at (2,0,0) adjacent to closer voxel";
+    // Verify the new voxel is at (128,0,0) - adjacent to (64,0,0)
+    EXPECT_TRUE(voxelManager->hasVoxel(Math::Vector3i(128, 0, 0), VoxelData::VoxelResolution::Size_64cm)) 
+        << "New voxel should be placed at (128,0,0) adjacent to closer voxel";
 }
 
 } // namespace Tests

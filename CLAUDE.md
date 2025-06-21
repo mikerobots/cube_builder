@@ -39,15 +39,6 @@ cmake --build build_relwithdebinfo
 ## Testing
 
 ### Unified Test Runner (Recommended)
-```bash
-# New unified test runner with auto-discovery
-./run_all_tests.sh list                    # Show all available test types and subsystems
-./run_all_tests.sh unit                    # Run all unit tests
-./run_all_tests.sh unit foundation         # Run unit tests for foundation subsystem
-./run_all_tests.sh integration             # Run all integration tests
-./run_all_tests.sh integration core        # Run core integration tests
-./run_all_tests.sh all                     # Run all tests (unit + integration + legacy)
-```
 
 **Test Naming Convention**: All tests follow the pattern `test_<type>_<subsystem>_<component>_<description>`:
 - **Types**: unit, integration, e2e, performance, stress, uperf (unit performance tests)
@@ -55,7 +46,9 @@ cmake --build build_relwithdebinfo
 - **Examples**: `test_unit_foundation_memory_pool.cpp`, `test_integration_core_camera_visibility.cpp`, `test_integration_interaction_mouse_ray_movement.cpp`
 - **Performance Tests**: Use `test_uperf_` prefix for unit-level performance tests that may take longer to run (e.g., `test_uperf_core_voxel_data_collision.cpp`)
 
-### Other Test Runners
+Test needs OpenGL, read ./guides/opengl_integration_test.md
+
+### Test Runners
 ```bash
 # Unit tests only
 ./run_all_unit.sh
@@ -69,6 +62,11 @@ cmake --build build_relwithdebinfo
 ./run_integration_tests.sh shader       # Shader validation tests
 ./run_integration_tests.sh feedback     # Visual feedback tests
 ./run_integration_tests.sh quick        # Quick integration tests only
+
+# Run individual integration tests
+./run_integration_tests.sh test_integration_cli_rendering  # Run specific test by full name
+./run_integration_tests.sh cli_rendering                   # Run test by partial name match
+./run_integration_tests.sh voxel_face                      # Finds all tests containing "voxel_face"
 ```
 
 ### End-to-End Tests (Shell)
@@ -130,6 +128,7 @@ Screenshot-based automated test suite using PPM color analysis:
 - **Visual validation** via screenshot analysis
 - **Integration tests** for cross-component functionality
 - **CLI validation** for end-to-end workflows
+- **Individual test execution** with partial name matching
 
 ## CLI Application
 
@@ -158,6 +157,12 @@ save project.vox     # Save project
 ```bash
 ./execute_command.sh ./build_ninja/path/to/executable
 ./execute_command.sh ./script.sh
+
+When you run bash command, wrap with ./execute_command.sh and run from
+the root directory. This doesn't apply to bash commands in scripts you
+have written.
+
+
 
 **CRITICAL**: When running executables in root directory or local scripts, ALWAYS cd to the root directory first and use ./execute_command.sh
 

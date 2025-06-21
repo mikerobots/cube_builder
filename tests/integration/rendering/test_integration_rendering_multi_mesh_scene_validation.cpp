@@ -347,7 +347,9 @@ TEST_F(MultiMeshSceneValidation, Render100VoxelMeshes) {
     renderer->setUniform("projection", Rendering::UniformValue(projMat));
     renderer->setUniform("viewPos", Rendering::UniformValue(Math::Vector3f(15.0f, 10.0f, 15.0f)));
     glm::vec3 lightDir = glm::normalize(glm::vec3(1.0f, 1.0f, 1.0f));
-    renderer->setUniform("lightDir", Rendering::UniformValue(Math::Vector3f(lightDir.x, lightDir.y, lightDir.z)));
+    glm::vec3 lightPos = lightDir * 10.0f; // Convert direction to position
+    renderer->setUniform("lightPos", Rendering::UniformValue(Math::Vector3f(lightPos.x, lightPos.y, lightPos.z)));
+    renderer->setUniform("lightColor", Rendering::UniformValue(Math::Vector3f(1.0f, 1.0f, 1.0f)));
     
     // Render all meshes
     for (const auto& mesh : meshes) {
@@ -441,7 +443,9 @@ TEST_F(MultiMeshSceneValidation, ShaderSwitchingPerformance) {
             renderer->setUniform(shaderId, "projection", Rendering::UniformValue(projMat));
             renderer->setUniform(shaderId, "viewPos", Rendering::UniformValue(Math::Vector3f(15.0f, 10.0f, 15.0f)));
             glm::vec3 lightDir = glm::normalize(glm::vec3(1.0f, 1.0f, 1.0f));
-            renderer->setUniform(shaderId, "lightDir", Rendering::UniformValue(Math::Vector3f(lightDir.x, lightDir.y, lightDir.z)));
+            glm::vec3 lightPos = lightDir * 10.0f; // Convert direction to position
+            renderer->setUniform(shaderId, "lightPos", Rendering::UniformValue(Math::Vector3f(lightPos.x, lightPos.y, lightPos.z)));
+            renderer->setUniform(shaderId, "lightColor", Rendering::UniformValue(Math::Vector3f(1.0f, 1.0f, 1.0f)));
             
             glm::mat4 model = glm::translate(glm::mat4(1.0f), meshes[i]->position);
             Math::Matrix4f modelMat;

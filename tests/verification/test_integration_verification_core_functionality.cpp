@@ -38,13 +38,12 @@ using namespace VoxelEditor::Math;
 class CoreFunctionalityTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        // Create application in headless mode for testing
+        // Create application with OpenGL context (NOT headless)
         m_app = std::make_unique<Application>();
-        m_app->setHeadless(true);
         
         // Initialize application
-        char* argv[] = { const_cast<char*>("test"), const_cast<char*>("--headless") };
-        ASSERT_TRUE(m_app->initialize(2, argv));
+        char* argv[] = { const_cast<char*>("test") };
+        ASSERT_TRUE(m_app->initialize(1, argv));
     }
     
     void TearDown() override {
@@ -90,10 +89,7 @@ protected:
 
 // Test 1: Verify grid rendering at Y=0
 TEST_F(CoreFunctionalityTest, GridRenderingAtYZero) {
-    // Skip this test in headless mode as rendering is not available
-    if (m_app->isHeadless()) {
-        GTEST_SKIP() << "Skipping grid rendering test in headless mode";
-    }
+    // Integration tests should not skip - OpenGL must be available
     
     auto* renderEngine = m_app->getRenderEngine();
     ASSERT_NE(renderEngine, nullptr);
@@ -161,10 +157,7 @@ TEST_F(CoreFunctionalityTest, OneCmIncrementPlacement) {
 
 // Test 3: Verify face highlighting
 TEST_F(CoreFunctionalityTest, FaceHighlighting) {
-    // Skip this test in headless mode as rendering is not available
-    if (m_app->isHeadless()) {
-        GTEST_SKIP() << "Skipping face highlighting test in headless mode";
-    }
+    // Integration tests should not skip - OpenGL must be available
     
     auto* feedbackRenderer = m_app->getFeedbackRenderer();
     ASSERT_NE(feedbackRenderer, nullptr);
@@ -194,10 +187,7 @@ TEST_F(CoreFunctionalityTest, FaceHighlighting) {
 
 // Test 4: Verify preview system (green/red)
 TEST_F(CoreFunctionalityTest, PreviewSystemGreenRed) {
-    // Skip this test in headless mode as rendering is not available
-    if (m_app->isHeadless()) {
-        GTEST_SKIP() << "Skipping preview system test in headless mode";
-    }
+    // Integration tests should not skip - OpenGL must be available
     
     auto* feedbackRenderer = m_app->getFeedbackRenderer();
     auto* voxelManager = m_app->getVoxelManager();
@@ -293,10 +283,7 @@ TEST_F(CoreFunctionalityTest, UndoRedoOperational) {
 
 // Integration test: Complete placement workflow
 TEST_F(CoreFunctionalityTest, CompletePlacementWorkflow) {
-    // Skip this test in headless mode as rendering is not available
-    if (m_app->isHeadless()) {
-        GTEST_SKIP() << "Skipping complete placement workflow test in headless mode";
-    }
+    // Integration tests should not skip - OpenGL must be available
     
     auto* voxelManager = m_app->getVoxelManager();
     auto* feedbackRenderer = m_app->getFeedbackRenderer();
