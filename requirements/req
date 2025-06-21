@@ -1,0 +1,57 @@
+#!/bin/bash
+# Shell wrapper for Requirements Management System
+# Provides convenient command interface for managing voxel editor requirements.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON_SCRIPT="$SCRIPT_DIR/requirements_manager.py"
+JSON_FILE="$SCRIPT_DIR/requirements.json"
+
+# Make sure Python script is executable
+chmod +x "$PYTHON_SCRIPT"
+
+# Function to show usage
+show_usage() {
+    echo "Requirements Management System"
+    echo "Usage: $0 <command> [arguments]"
+    echo ""
+    echo "Commands:"
+    echo "  add-category <name> [--description 'text']     Add a new category"
+    echo "  list-categories                                List all categories"
+    echo "  add-requirement <id> '<title>' <category> [options]  Add a requirement"
+    echo "    Options:"
+    echo "      --subsystems 'sys1' 'sys2' ...            List of subsystems"
+    echo "      --description 'text'                      Description"
+    echo "  list-all                                       List all requirements"
+    echo "  list-by-category <category>                    List requirements by category"
+    echo "  read <requirement-id>                          Read specific requirement"
+    echo "  export-markdown [--output filename.md]        Export to markdown file"
+    echo ""
+    echo "Examples:"
+    echo "  $0 add-category 'Grid System' --description 'Ground plane grid requirements'"
+    echo "  $0 add-requirement REQ-1.1.1 'Grid shall display 32cm squares' 'Grid System' --subsystems 'Rendering' 'Visual Feedback'"
+    echo "  $0 list-categories"
+    echo "  $0 list-by-category 'Grid System'"
+    echo "  $0 read REQ-1.1.1"
+    echo "  $0 export-markdown --output voxel_requirements.md"
+}
+
+# Check if Python script exists
+if [ ! -f "$PYTHON_SCRIPT" ]; then
+    echo "Error: Python script not found at $PYTHON_SCRIPT"
+    exit 1
+fi
+
+# Check if at least one argument is provided
+if [ $# -eq 0 ]; then
+    show_usage
+    exit 1
+fi
+
+# Handle help command
+if [ "$1" = "help" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    show_usage
+    exit 0
+fi
+
+# Execute the Python script with all arguments, using the JSON file in the same directory
+python3 "$PYTHON_SCRIPT" --file "$JSON_FILE" "$@"

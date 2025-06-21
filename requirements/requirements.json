@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "created": "2025-06-21T15:43:08.487659",
+    "last_modified": "2025-06-21T16:04:51.564066",
+    "version": "1.0"
+  },
+  "categories": {
+    "Test Category": {
+      "description": "Test category for auto-ID generation",
+      "created": "2025-06-21T15:43:08.487951",
+      "requirement_count": 0
+    },
+    "Voxel System": {
+      "description": "Voxel placement and management",
+      "created": "2025-06-21T15:43:42.500933",
+      "requirement_count": 0
+    }
+  },
+  "requirements": {
+    "REQ-1.1.1": {
+      "title": "Grid shall display 32cm squares",
+      "description": "",
+      "category": "Test Category",
+      "subsystems": [
+        "Rendering",
+        "Visual Feedback"
+      ],
+      "test_needed": true,
+      "test_status": "pending",
+      "test_files": {
+        "test_grid_display.cpp": "pending"
+      },
+      "created": "2025-06-21T15:43:29.617814",
+      "last_modified": "2025-06-21T16:04:25.302236",
+      "status": "active"
+    },
+    "REQ-1.2.1": {
+      "title": "Grid shall have proper opacity",
+      "description": "",
+      "category": "Test Category",
+      "subsystems": [
+        "Rendering"
+      ],
+      "test_needed": true,
+      "test_status": "pending",
+      "test_files": [],
+      "created": "2025-06-21T15:43:35.968292",
+      "last_modified": "2025-06-21T16:04:29.881722",
+      "status": "active"
+    },
+    "REQ-2.1.1": {
+      "title": "Voxels shall be placeable",
+      "description": "",
+      "category": "Voxel System",
+      "subsystems": [],
+      "test_needed": true,
+      "test_status": "pending",
+      "test_files": [],
+      "created": "2025-06-21T15:43:42.534264",
+      "last_modified": "2025-06-21T15:43:42.534269",
+      "status": "active"
+    },
+    "REQ-CUSTOM-1": {
+      "title": "Custom ID test",
+      "description": "",
+      "category": "Test Category",
+      "subsystems": [],
+      "test_needed": true,
+      "test_status": "pending",
+      "test_files": [],
+      "created": "2025-06-21T15:43:52.918484",
+      "last_modified": "2025-06-21T15:43:52.918488",
+      "status": "active"
+    },
+    "REQ-1.1.2": {
+      "title": "The ground plane shall display a grid with 32cm x 32cm squares",
+      "description": "",
+      "category": "Test Category",
+      "subsystems": [
+        "Rendering",
+        "Visual Feedback"
+      ],
+      "test_needed": true,
+      "test_files": {},
+      "group_id": "1",
+      "subgroup_id": "1.1",
+      "created": "2025-06-21T15:56:26.256875",
+      "last_modified": "2025-06-21T15:56:26.256881",
+      "status": "active"
+    }
+  },
+  "groups": {
+    "1": {
+      "name": "Ground Plane Grid System",
+      "description": "Requirements for ground plane grid display and interaction",
+      "category": "Test Category",
+      "subgroups": {
+        "1.1": {
+          "name": "Grid Specifications",
+          "description": "Grid visual specifications and properties",
+          "created": "2025-06-21T15:56:13.011247",
+          "last_modified": "2025-06-21T15:56:13.011254"
+        }
+      },
+      "created": "2025-06-21T15:56:06.596920",
+      "last_modified": "2025-06-21T15:56:13.011255"
+    }
+  },
+  "tests": {
+    "TEST-GRID-001": {
+      "name": "Grid Display Test",
+      "file": "test_grid_display.cpp",
+      "description": "Tests 32cm grid square display",
+      "type": "unit",
+      "status": "pending",
+      "created": "2025-06-21T16:04:11.142114",
+      "last_modified": "2025-06-21T16:04:51.564058"
+    },
+    "TEST-GRID-002": {
+      "name": "Grid Opacity Test",
+      "file": "test_grid_opacity.cpp",
+      "description": "Tests grid opacity levels",
+      "type": "integration",
+      "status": "pending",
+      "created": "2025-06-21T16:04:17.248351",
+      "last_modified": "2025-06-21T16:04:17.248356"
+    }
+  },
+  "test_assignments": {
+    "REQ-1.1.1": [
+      "TEST-GRID-001"
+    ],
+    "REQ-1.2.1": [
+      "TEST-GRID-002"
+    ]
+  }
+}
