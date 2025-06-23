@@ -63,10 +63,10 @@
 ### 2. Voxel Placement System
 
 #### 2.1 Placement Precision
-- **REQ-2.1.1**: Voxels shall be placeable only at 1cm increment positions
-  - *Subsystems: **Voxel Data** (position validation), **Input** (position snapping)*
-- **REQ-2.1.2**: Within each 32cm grid cell, there shall be exactly 32 valid positions per axis
-  - *Subsystems: **Voxel Data** (coordinate system), **Visual Feedback** (preview snapping)*
+- **REQ-2.1.1**: Voxels shall be placed at any 1cm increment position without resolution-based snapping
+  - *Subsystems: **Voxel Data** (position validation), **Input** (placement logic)*
+- **REQ-2.1.2**: Voxels of all sizes shall maintain their exact placement position in 1cm increments
+  - *Subsystems: **Voxel Data** (coordinate system), **Visual Feedback** (preview positioning)*
 - **REQ-2.1.3**: Voxels shall always be axis-aligned (no rotation)
   - *Subsystems: **Voxel Data** (voxel representation), **Rendering** (mesh generation)*
 - **REQ-2.1.4**: No voxels shall be placed below Y=0
@@ -75,12 +75,12 @@
 #### 2.2 Placement on Ground Plane
 - **REQ-2.2.1**: When hovering over the ground plane, a green outline preview shall be displayed
   - *Subsystems: **Visual Feedback** (OutlineRenderer), **Input** (hover detection)*
-- **REQ-2.2.2**: The preview shall snap to the nearest valid 1cm increment position
+- **REQ-2.2.2**: The preview shall show the exact 1cm increment position where the voxel will be placed
   - *Subsystems: **Input** (position calculation), **Visual Feedback** (preview positioning)*
 - **REQ-2.2.3**: The preview shall update in real-time as the mouse moves
   - *Subsystems: **Input** (mouse tracking), **Visual Feedback** (preview updates), **Rendering** (frame updates)*
-- **REQ-2.2.4**: All voxel sizes (1cm to 512cm) shall be placeable at any valid 1cm increment position on the ground plane
-  - *Subsystems: **Voxel Data** (multi-resolution positioning), **Input** (size-independent snapping), **Visual Feedback** (varying size preview)*
+- **REQ-2.2.4**: Voxels of any size (1cm to 512cm) shall be placeable at any 1cm increment position
+  - *Subsystems: **Voxel Data** (multi-resolution positioning), **Input** (1cm increment placement), **Visual Feedback** (varying size preview)*
 
 #### 2.3 Placement on Existing Voxels
 - **REQ-2.3.1**: When hovering over an existing voxel, the face under the cursor shall be highlighted
@@ -93,12 +93,12 @@
 ### 3. Voxel Size Relationships
 
 #### 3.1 Same-Size Voxel Placement
-- **REQ-3.1.1**: Same-size voxels shall auto-snap to perfect alignment by default
-  - *Subsystems: **Input** (snap logic), **Voxel Data** (alignment calculation)*
-- **REQ-3.1.2**: Holding Shift shall allow placement at any valid 1cm increment
+- **REQ-3.1.1**: When placing a same-size voxel on an existing voxel's face, the new voxel shall automatically align so its edges match perfectly with the clicked face (e.g., a 4cm voxel placed on a 4cm voxel's face will be positioned so all edges align)
+  - *Subsystems: **Input** (face-based alignment logic), **Voxel Data** (alignment calculation)*
+- **REQ-3.1.2**: Holding Shift shall override auto-alignment, allowing placement at any valid 1cm increment position on the face
   - *Subsystems: **Input** (modifier key handling), **Visual Feedback** (preview behavior)*
-- **REQ-3.1.3**: Aligned placement means edges match perfectly with the target face
-  - *Subsystems: **Voxel Data** (position calculation), **Visual Feedback** (preview alignment)*
+- **REQ-3.1.3**: Auto-aligned placement ensures the new voxel is positioned adjacent to the clicked face with edges matching perfectly
+  - *Subsystems: **Voxel Data** (adjacent position calculation), **Visual Feedback** (preview alignment)*
 
 #### 3.2 Smaller Voxel on Larger Voxel
 - **REQ-3.2.1**: A green outline preview shall show exact placement position
