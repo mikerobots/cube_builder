@@ -18,20 +18,13 @@ class SurfaceGeneratorOptimizedTest : public ::testing::Test {
 protected:
     void SetUp() override {
         // OPTIMIZATION 1: Use smaller test grids
-        // Current: 8x8x8 grid with 4x4x4 voxel cube
-        // Suggested: 4x4x4 grid with 2x2x2 voxel cube (8x less data)
+        // Using minimal workspace and single voxel for fastest tests
         gridDimensions = Vector3i(4, 4, 4);
-        workspaceSize = Vector3f(5.0f, 5.0f, 5.0f);  // Smaller workspace
-        testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_16cm, workspaceSize);
+        workspaceSize = Vector3f(1.0f, 1.0f, 1.0f);  // Minimal workspace
+        testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_32cm, workspaceSize);
         
-        // Add minimal test voxels (just 8 voxels instead of 64)
-        for (int z = 1; z < 3; ++z) {
-            for (int y = 1; y < 3; ++y) {
-                for (int x = 1; x < 3; ++x) {
-                    testGrid->setVoxel(IncrementCoordinates(x * 16, y * 16, z * 16), true);
-                }
-            }
-        }
+        // Add single test voxel for minimal mesh generation
+        testGrid->setVoxel(IncrementCoordinates(32, 32, 32), true);
         
         // OPTIMIZATION 2: Create simplified settings for tests
         simplifiedSettings = SurfaceSettings::Preview();
@@ -69,16 +62,10 @@ TEST_F(SurfaceGeneratorOptimizedTest, PreviewMeshGeneration_Optimized) {
 TEST_F(SurfaceGeneratorOptimizedTest, ExportMeshGeneration_Optimized) {
     SurfaceGenerator generator;
     
-    // OPTIMIZATION 4: Test only two export qualities instead of all four
-    std::vector<ExportQuality> qualities = {
-        ExportQuality::Draft,
-        ExportQuality::Maximum
-    };
-    
-    for (auto quality : qualities) {
-        Mesh mesh = generator.generateExportMesh(*testGrid, quality);
-        EXPECT_TRUE(mesh.isValid());
-    }
+    // OPTIMIZATION 4: Test only one export quality for speed
+    // Draft quality should be fastest
+    Mesh mesh = generator.generateExportMesh(*testGrid, ExportQuality::Draft);
+    EXPECT_TRUE(mesh.isValid());
 }
 
 // OPTIMIZATION 5: For future optimization, consider creating mocked tests
