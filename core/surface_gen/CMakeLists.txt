@@ -6,6 +6,14 @@ add_library(VoxelEditor_SurfaceGen STATIC
     MeshBuilder.cpp
     DualContouring.h
     DualContouring.cpp
+    DualContouringFast.h
+    DualContouringFast.cpp
+    DualContouringSparse.h
+    DualContouringSparse.cpp
+    DualContouringNEON.h
+    DualContouringNEON.cpp
+    DualContouringTables.h
+    EdgeCache.h
     SurfaceGenerator.h
     SurfaceGenerator.cpp
 )
@@ -26,6 +34,6 @@ target_link_libraries(VoxelEditor_SurfaceGen
 target_compile_features(VoxelEditor_SurfaceGen PUBLIC cxx_std_17)
 
 # Add tests
-if(BUILD_TESTS)
+if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

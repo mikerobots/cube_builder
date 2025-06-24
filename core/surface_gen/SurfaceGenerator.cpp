@@ -1,4 +1,5 @@
 #include "SurfaceGenerator.h"
+#include "DualContouringSparse.h"
 #include <thread>
 #include <sstream>
 #include <algorithm>
@@ -14,7 +15,7 @@ SurfaceGenerator::SurfaceGenerator(Events::EventDispatcher* eventDispatcher)
     , m_cacheEnabled(true)
     , m_cancelRequested(false) {
     
-    m_dualContouring = std::make_unique<DualContouring>();
+    m_dualContouring = std::make_unique<DualContouringSparse>();
     m_meshBuilder = std::make_unique<MeshBuilder>();
     m_lodManager = std::make_unique<LODManager>();
     m_meshCache = std::make_unique<MeshCache>();

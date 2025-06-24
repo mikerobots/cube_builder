@@ -35,6 +35,6 @@ target_link_libraries(VoxelEditor_UndoRedo
 target_compile_features(VoxelEditor_UndoRedo PUBLIC cxx_std_17)
 
 # Add tests
-if(BUILD_TESTS)
+if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

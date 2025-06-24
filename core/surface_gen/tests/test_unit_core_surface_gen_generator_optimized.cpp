@@ -28,7 +28,7 @@ protected:
         for (int z = 1; z < 3; ++z) {
             for (int y = 1; y < 3; ++y) {
                 for (int x = 1; x < 3; ++x) {
-                    testGrid->setVoxel(Vector3i(x, y, z), true);
+                    testGrid->setVoxel(IncrementCoordinates(x * 16, y * 16, z * 16), true);
                 }
             }
         }
@@ -81,26 +81,10 @@ TEST_F(SurfaceGeneratorOptimizedTest, ExportMeshGeneration_Optimized) {
     }
 }
 
-// OPTIMIZATION 5: Mock expensive operations for unit tests
-class MockSurfaceGenerator : public SurfaceGenerator {
-public:
-    MockSurfaceGenerator() : SurfaceGenerator(nullptr) {
-        // Override to return simple meshes without expensive computation
-    }
-    
-    Mesh generateSurface(const VoxelData::VoxelGrid& grid, 
-                        const SurfaceSettings& settings) override {
-        // Return a simple valid mesh without doing dual contouring
-        Mesh mesh;
-        mesh.vertices = {
-            Math::Vector3f(0, 0, 0),
-            Math::Vector3f(1, 0, 0),
-            Math::Vector3f(0, 1, 0)
-        };
-        mesh.indices = {0, 1, 2};
-        return mesh;
-    }
-};
+// OPTIMIZATION 5: For future optimization, consider creating mocked tests
+// Note: Since generateSurface is not virtual, we can't easily mock it.
+// Consider refactoring the SurfaceGenerator to use dependency injection
+// or making key methods virtual for better testability.
 
 // OPTIMIZATION 6: Separate integration tests from unit tests
 // Move these expensive tests to integration test suite:
