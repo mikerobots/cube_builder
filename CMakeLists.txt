@@ -11,6 +11,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     add_compile_options(-Wno-deprecated-volatile)
 endif()
 
+# Suppress duplicate library warnings on macOS
+if(APPLE)
+    add_link_options(-Wl,-no_warn_duplicate_libraries)
+endif()
+
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
