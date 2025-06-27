@@ -1,0 +1,37 @@
+----- File: core/groups/tests/test_unit_core_groups_types.cpp
+
+Test Name: VoxelIdConstruction
+Test Description: Tests the construction of VoxelId objects with specific position and resolution values, verifying both parameters are correctly stored.
+
+Test Name: VoxelIdEquality
+Test Description: Tests the equality and inequality operators for VoxelId objects, verifying that voxels with identical position and resolution are equal, while voxels differing in either position or resolution are not equal.
+
+Test Name: VoxelIdHash
+Test Description: Tests the hash function for VoxelId objects, ensuring identical voxels produce the same hash value, different voxels produce different hash values, and the std::hash specialization works correctly for STL containers.
+
+Test Name: GroupMetadataConstruction
+Test Description: Tests the default construction of GroupMetadata objects, verifying default values (empty name, visible=true, locked=false, opacity=1.0, zero pivot) and that creation/modification timestamps are automatically set. Validates requirements REQ-8.1.8 for group metadata storage.
+
+Test Name: GroupMetadataUpdateModified
+Test Description: Tests the updateModified method of GroupMetadata, verifying that calling it updates the modification timestamp to a later time than the initial value.
+
+Test Name: GroupInfoConstruction
+Test Description: Tests the construction of GroupInfo objects from GroupId and GroupMetadata, verifying all metadata fields are correctly transferred and default values are set (voxelCount=0, parentId=INVALID_GROUP_ID, empty childIds). Validates requirement REQ-9.2.5 for CLI group commands support.
+
+Test Name: GroupTransformConstruction
+Test Description: Tests the construction of GroupTransform objects, verifying default values (zero translation/rotation, unit scale) result in an identity transform, and custom translation values are correctly stored and make the transform non-identity.
+
+Test Name: GroupTransformIdentity
+Test Description: Tests the isIdentity method of GroupTransform, verifying it returns true only when translation is zero, rotation is zero, and scale is (1,1,1), and returns false when any component differs from identity values.
+
+Test Name: GroupColorPalette
+Test Description: Tests the GroupColorPalette functionality including default palette has multiple colors, color retrieval by index with wraparound behavior, and random color selection returns colors from the palette. Validates visual group indicators requirement.
+
+Test Name: GroupStatsDefault
+Test Description: Tests the default construction of GroupStats objects, verifying all statistics fields are initialized to zero (totalGroups, totalVoxels, maxGroupSize, maxHierarchyDepth, averageGroupSize, memoryUsage).
+
+Test Name: GroupModificationTypes
+Test Description: Tests that all GroupModificationType enum values are properly defined (Created, Deleted, Moved, VisibilityChanged) and can be assigned and compared.
+
+Test Name: InvalidGroupId
+Test Description: Tests the INVALID_GROUP_ID constant value (equals 0) and verifies that valid group IDs (non-zero) are different from INVALID_GROUP_ID.

@@ -1,0 +1,19 @@
+----- File: core/surface_gen/tests/test_unit_core_surface_gen_generator_optimized.cpp
+
+Test Name: PreviewMeshGeneration_Optimized
+Test Description: Optimized preview mesh generation test using smaller grids (4x4x4) and testing only 2 LOD levels (0 and 4) instead of all 5, targeting <2 seconds runtime
+
+Test Name: ExportMeshGeneration_Optimized
+Test Description: Optimized export mesh generation test using only Draft and Maximum quality levels instead of all four, with smaller test data for faster execution
+
+Test Name: BasicGeneration_Fast
+Test Description: Fast basic surface generation test using simplified settings (no UVs, no normals, no smoothing) and smaller voxel grid for quick validation
+
+Note: This file contains optimization suggestions for test_unit_core_surface_gen_generator.cpp including:
+- Reducing test grid size from 8x8x8 to 4x4x4 (8x reduction)
+- Using simplified surface settings without post-processing
+- Testing fewer parameter combinations
+- Mocking expensive operations with MockSurfaceGenerator
+- Moving integration tests to separate suite
+- Adding test categorization for selective running
+- Expected improvement: 48s to ~10s for essential unit tests

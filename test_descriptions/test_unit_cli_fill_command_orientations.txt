@@ -1,0 +1,28 @@
+----- File: apps/cli/tests/test_unit_cli_fill_command_orientations.cpp
+
+Test Name: DISABLED_SingleAxisXDirection_REQ_11_3_6
+Test Description: Tests fill command with ranges only along X-axis (Y and Z constant), validating X-axis lines from various coordinate ranges per REQ-11.3.6
+
+Test Name: DISABLED_SingleAxisYDirection_REQ_11_3_6
+Test Description: Tests fill command with ranges only along Y-axis (vertical), respecting ground plane constraint (Y ≥ 0) for vertical lines per REQ-11.3.6
+
+Test Name: DISABLED_SingleAxisZDirection_REQ_11_3_6
+Test Description: Tests fill command with ranges only along Z-axis (X and Y constant), validating Z-axis lines from various coordinate ranges per REQ-11.3.6
+
+Test Name: DISABLED_TwoAxisXYPlane_REQ_11_3_6
+Test Description: Tests fill command creating planes in XY orientation with Z constant, validating 2D rectangular fills per REQ-11.3.6
+
+Test Name: DISABLED_TwoAxisXZPlane_REQ_11_3_6
+Test Description: Tests fill command creating planes in XZ orientation with Y constant, validating horizontal plane fills per REQ-11.3.6
+
+Test Name: DISABLED_TwoAxisYZPlane_REQ_11_3_6
+Test Description: Tests fill command creating planes in YZ orientation with X constant, validating vertical plane fills per REQ-11.3.6
+
+Test Name: DISABLED_ThreeAxisVolumeOrientation_REQ_11_3_6
+Test Description: Tests fill command creating 3D volumes with ranges in all axes (X, Y, Z), validating volumetric fills in all orientations per REQ-11.3.6
+
+Test Name: CoordinateOrderIndependence_REQ_11_3_6
+Test Description: Tests that fill command works regardless of coordinate order (min/max can be in any order), validating coordinate range independence per REQ-11.3.6
+
+Test Name: DISABLED_MixedOrientationRanges_REQ_11_3_6
+Test Description: Tests fill command with mixed orientation ranges combining single-axis, two-axis, and three-axis ranges in various combinations per REQ-11.3.6

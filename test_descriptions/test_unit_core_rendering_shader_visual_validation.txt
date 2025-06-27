@@ -1,0 +1,7 @@
+----- File: core/rendering/tests/test_unit_core_rendering_shader_visual_validation.cpp
+
+Test Name: BasicVoxelShaderRendering
+Test Description: Tests basic shader rendering with fixed red color output and triangle geometry, validating pixel color output
+
+Test Name: FlatShadingValidation
+Test Description: Tests flat shading produces uniform colors per face using cube geometry with orthographic projection

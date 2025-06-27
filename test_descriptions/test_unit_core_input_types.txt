@@ -1,0 +1,46 @@
+----- File: core/input/tests/test_unit_core_input_types.cpp
+
+Test Name: MouseEventConstruction
+Test Description: Tests the construction of MouseEvent objects, verifying default values (Move type, None button, zero position/delta, zero wheel delta, no modifiers) and custom construction with specific event type, button, and position values.
+
+Test Name: KeyEventConstruction
+Test Description: Tests the construction of KeyEvent objects, verifying default values (Press type, Unknown key, no character, no modifiers, no repeat) and custom construction with specific event type, key code, and modifier flags.
+
+Test Name: TouchPointConstruction
+Test Description: Tests the construction of TouchPoint objects, verifying default values (id=-1, zero position/delta, zero pressure, Released state) and custom construction with specific id, position, state, and default pressure of 1.0f for pressed touches.
+
+Test Name: TouchEventConstruction
+Test Description: Tests the construction of TouchEvent objects, verifying default values (TouchBegin type, empty points) and custom construction with specific event type and multiple touch points, ensuring all points are correctly stored.
+
+Test Name: HandPoseConstruction
+Test Description: Tests the construction of HandPose objects for VR input, verifying default values (zero position, identity orientation, zero confidence, Left hand) and that all fingers are initialized with zero bend, extended state, and zero joint positions.
+
+Test Name: VREventConstruction
+Test Description: Tests the construction of VREvent objects for VR input, verifying default values (HandUpdate type, Left hand, empty gestures) and custom construction with specific event type, hand type, and pose data including position and confidence values.
+
+Test Name: ModifierFlags
+Test Description: Tests the bitwise operations on ModifierFlags enum, verifying that combined flags work correctly with hasModifier function, individual flags are detected properly, and all modifier combinations (Shift, Ctrl, Alt, Super) function as expected.
+
+Test Name: InputTriggerMatching
+Test Description: Tests InputTrigger matching functionality across different input types: mouse triggers with button and modifiers, key triggers with key code and modifiers, touch gestures, and VR gestures, ensuring triggers correctly match or reject input events.
+
+Test Name: KeyCombinationToString
+Test Description: Tests conversion of KeyCombination objects to string representation, handling simple keys, keys with single modifiers, keys with multiple modifiers, function keys, and special keys (Space, Enter), ensuring proper formatting like "Ctrl+C".
+
+Test Name: KeyCombinationFromString
+Test Description: Tests parsing of string representations into KeyCombination objects, handling simple keys, keys with modifiers, function keys, and special keys, ensuring the parsed result matches the original key and modifier combination.
+
+Test Name: KeyCombinationMatching
+Test Description: Tests KeyCombination matching functionality, verifying exact matches with key and modifiers, rejection of wrong keys or modifiers, and proper handling of combinations with no modifiers versus combinations with modifiers.
+
+Test Name: ActionContext
+Test Description: Tests ActionContext construction and initialization, verifying default values (not pressed, zero value/vectors, no modifiers, unknown device) and typed construction for different action types (Button, Axis).
+
+Test Name: ActionBinding
+Test Description: Tests ActionBinding construction, verifying default values (Button type, empty triggers, 0.1f deadzone, not continuous) and custom construction with specific name and action type.
+
+Test Name: VRComfortSettings
+Test Description: Tests VRComfortSettings preset factory methods, verifying Default settings (snap turning, teleport movement), Comfort settings (increased safety features), and Performance settings (smooth movement, no comfort aids), ensuring appropriate values for each preset.
+
+Test Name: EnumValues
+Test Description: Tests that various input-related enums have expected integer values, including MouseButton (Left=0, Right=1, Middle=2), HandType (Left=0, Right=1, Either=2), and ActionType (Button=0, Axis=1, Vector2=2, Vector3=3).

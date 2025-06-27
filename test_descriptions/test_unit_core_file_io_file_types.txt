@@ -1,0 +1,70 @@
+----- File: core/file_io/tests/test_unit_core_file_io_file_types.cpp
+
+Test Name: FileTypesTest.FileVersionConstruction
+Test Description: Tests FileVersion construction with major, minor, patch, and build numbers. Verifies all version components are correctly initialized.
+
+Test Name: FileTypesTest.FileVersionEquality
+Test Description: Tests FileVersion equality comparison operators. Verifies that versions with identical components are equal and different versions are not equal.
+
+Test Name: FileTypesTest.FileVersionComparison
+Test Description: Tests FileVersion less-than comparison for version ordering. Verifies correct comparison logic across major, minor, patch, and build numbers.
+
+Test Name: FileTypesTest.FileVersionCompatibility
+Test Description: Tests version compatibility checking for backward compatibility support. Verifies that only versions with same major and minor numbers are considered compatible.
+
+Test Name: FileTypesTest.FileVersionToString
+Test Description: Tests converting FileVersion to string representation. Verifies version is formatted as "major.minor.patch.build" string.
+
+Test Name: FileTypesTest.FileVersionFromString
+Test Description: Tests parsing FileVersion from string representation. Verifies correct parsing of version strings and defaults missing components to zero.
+
+Test Name: FileTypesTest.FileVersionCurrent
+Test Description: Tests getting the current file format version. Verifies FileVersion::Current() returns version 1.0.0.0.
+
+Test Name: FileTypesTest.FileResultSuccess
+Test Description: Tests creating a successful FileResult. Verifies success flag is true, error is None, and message is empty.
+
+Test Name: FileTypesTest.FileResultError
+Test Description: Tests creating an error FileResult with specific error type and message. Verifies success flag is false and error details are preserved.
+
+Test Name: FileTypesTest.SaveOptionsDefault
+Test Description: Tests default save options configuration. Verifies default settings for compression, backup creation, validation, and other save parameters.
+
+Test Name: FileTypesTest.SaveOptionsFast
+Test Description: Tests Fast save option preset for maximum speed. Verifies compression, backup, and validation are disabled for fastest saves.
+
+Test Name: FileTypesTest.SaveOptionsCompact
+Test Description: Tests Compact save option preset for minimal file size. Verifies maximum compression level is set and unnecessary data is excluded.
+
+Test Name: FileTypesTest.SaveOptionsDevelopment
+Test Description: Tests Development save option preset. Verifies history and cache are included with validation enabled for debugging purposes.
+
+Test Name: FileTypesTest.LoadOptionsDefault
+Test Description: Tests default load options configuration. Verifies default settings for validation, version upgrade, and data loading preferences.
+
+Test Name: FileTypesTest.LoadOptionsFast
+Test Description: Tests Fast load option preset. Verifies validation is disabled for faster loading performance.
+
+Test Name: FileTypesTest.LoadOptionsSafe
+Test Description: Tests Safe load option preset. Verifies strict validation and version checking are enabled for data integrity.
+
+Test Name: FileTypesTest.STLExportOptionsDefault
+Test Description: Tests default STL export options for 3D printing. Verifies binary format, millimeter units, mesh merging, and watertight validation defaults.
+
+Test Name: FileTypesTest.STLExportOptionsPrinting3D
+Test Description: Tests 3D printing-optimized STL export options. Verifies settings are configured for typical 3D printer requirements.
+
+Test Name: FileTypesTest.STLExportOptionsCAD
+Test Description: Tests CAD-optimized STL export options. Verifies ASCII format and meter units are used for CAD software compatibility.
+
+Test Name: FileTypesTest.ProjectMetadataInitialization
+Test Description: Tests ProjectMetadata default initialization. Verifies all metadata fields start empty for new projects.
+
+Test Name: FileTypesTest.WorkspaceSettingsDefaults
+Test Description: Tests WorkspaceSettings default values. Verifies default workspace size of 5m³, origin at (0,0,0), 1cm resolution, and visible grid/axes.
+
+Test Name: FileTypesTest.IOStatsInitialization
+Test Description: Tests FileManager::IOStats initialization. Verifies all I/O statistics counters start at zero or appropriate defaults.
+
+Test Name: FileTypesTest.STLExportStatsInitialization
+Test Description: Tests STLExportStats initialization. Verifies all STL export statistics start at zero with empty warnings list.

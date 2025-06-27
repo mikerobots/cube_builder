@@ -5,6 +5,7 @@ set(MATH_TEST_SOURCES
     test_unit_foundation_math_matrix4f.cpp
     test_unit_foundation_math_coordinate_types.cpp
     test_unit_foundation_math_coordinate_converter.cpp
+    test_unit_coordinate_conversions.cpp
 )
 
 add_executable(test_unit_foundation_math ${MATH_TEST_SOURCES})

@@ -1,0 +1,37 @@
+----- File: core/rendering/tests/test_unit_core_rendering_stats.cpp
+
+Test Name: DefaultConstruction
+Test Description: Tests default construction of RenderStats ensuring all statistics are initialized to appropriate default values (0 for counts, 1000.0f for minFrameTime, 0.0f for others)
+
+Test Name: UpdateFrameStats
+Test Description: Tests frame statistics updates including frame count, frame time, FPS calculation, and min/max frame time tracking across multiple frames with different timings
+
+Test Name: DrawCallTracking
+Test Description: Tests draw call tracking for both regular and instanced draw calls, including triangle and vertex counting, and calculation of average triangles per draw call
+
+Test Name: StateChangeTracking
+Test Description: Tests tracking of render state changes including general state changes, shader switches, and texture binds
+
+Test Name: CullingStats
+Test Description: Tests culling statistics tracking including total objects, rendered objects, culled objects, and culling efficiency calculation with edge case handling for zero objects
+
+Test Name: MemoryStats
+Test Description: Tests GPU memory statistics tracking for vertex buffers, index buffers, textures, total GPU memory calculation, and conversion to MB
+
+Test Name: ResourceCounts
+Test Description: Tests tracking of active resource counts including shaders, textures, and buffers
+
+Test Name: UtilizationCalculations
+Test Description: Tests CPU and GPU utilization percentage calculations based on frame time, with edge case handling for zero frame time
+
+Test Name: AverageFPSCalculation
+Test Description: Tests average FPS calculation based on average frame time, including zero frame time edge case
+
+Test Name: ResetOperations
+Test Description: Tests reset() method to ensure all per-frame statistics are properly cleared while preserving persistent stats
+
+Test Name: BasicTiming
+Test Description: Tests RenderTimer basic timing functionality by measuring elapsed time after a sleep period, with tolerances for system timing variance
+
+Test Name: RestartFunctionality
+Test Description: Tests RenderTimer restart() method which returns elapsed time and resets the timer, verifying timing continues correctly after restart

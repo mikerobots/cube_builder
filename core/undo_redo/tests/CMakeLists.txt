@@ -8,6 +8,7 @@ set(UNDO_REDO_TEST_SOURCES
     test_unit_core_undo_redo_history_manager.cpp
     test_unit_core_undo_redo_placement_commands.cpp
     test_unit_core_undo_redo_requirements.cpp
+    test_unit_core_undo_redo_voxel_commands.cpp
 )
 
 # Create individual test executables for better granularity and auto-discovery
@@ -23,10 +24,10 @@ foreach(test_source ${UNDO_REDO_TEST_SOURCES})
         PRIVATE
             VoxelEditor_UndoRedo
             VoxelEditor_VoxelData
-            VoxelEditor_Math
             VoxelEditor_Events
             VoxelEditor_Logging
             GTest::gtest_main
+            GTest::gmock
     )
     
     # Set C++ standard

@@ -1,0 +1,40 @@
+----- File: foundation/events/tests/test_unit_foundation_events_dispatcher.cpp
+
+Test Name: BasicEventDispatch
+Test Description: Tests basic event dispatching functionality, verifying single handler subscription and event delivery with correct call count and event value propagation.
+
+Test Name: MultipleHandlers
+Test Description: Validates multiple handler registration for same event type, ensuring all subscribed handlers receive events with correct values and call counts.
+
+Test Name: HandlerPriority
+Test Description: Tests handler priority ordering during event dispatch, verifying high/medium/low priority handlers receive events in correct sequence while maintaining order.
+
+Test Name: HandlerFiltering
+Test Description: Validates handler filtering mechanism via shouldHandle() method, ensuring handlers can selectively ignore events based on custom filtering logic.
+
+Test Name: Unsubscribe
+Test Description: Tests handler unsubscription functionality, verifying handlers stop receiving events after unsubscription while maintaining correct call counts.
+
+Test Name: AsyncEventDispatch
+Test Description: Validates asynchronous event dispatching with queuing, testing immediate queue addition, deferred processing, and proper queue size management.
+
+Test Name: QueueSizeLimit
+Test Description: Tests event queue size limiting functionality, ensuring queue respects maximum size limit (2 events) and properly drops excess events.
+
+Test Name: ClearQueue
+Test Description: Validates queue clearing functionality, testing removal of all queued events and proper queue size reset to zero.
+
+Test Name: HandlerCount
+Test Description: Tests handler counting functionality, verifying accurate counts for specific event types and total handler count with subscription/unsubscription tracking.
+
+Test Name: CommonVoxelChangedEvent
+Test Description: Validates VoxelChangedEvent dispatching with position (1,2,3), resolution (4cm), and state change (false→true), ensuring proper event data propagation.
+
+Test Name: EventTimestamp
+Test Description: Tests event timestamp functionality, verifying timestamps fall within expected time bounds and are properly assigned during event creation.
+
+Test Name: EventId
+Test Description: Validates unique event ID generation, ensuring each event receives distinct incrementing ID for proper event tracking and ordering.
+
+Test Name: ThreadSafety
+Test Description: Tests thread safety with 4 concurrent threads dispatching 100 events each (400 total), verifying all events are received without race conditions or data corruption.

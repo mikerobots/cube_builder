@@ -1,0 +1,40 @@
+----- File: core/selection/tests/test_unit_core_selection_types.cpp
+
+Test Name: VoxelId_DefaultConstruction
+Test Description: Tests the default construction of VoxelId objects, verifying that the position defaults to IncrementCoordinates of zero vector and resolution defaults to Size_1cm.
+
+Test Name: VoxelId_ParameterizedConstruction
+Test Description: Tests the parameterized construction of VoxelId objects with specific position and resolution values, ensuring both parameters are correctly stored.
+
+Test Name: VoxelId_Equality
+Test Description: Tests the equality and inequality operators for VoxelId objects, verifying that voxels with identical position and resolution are equal, while voxels differing in either position or resolution are not equal.
+
+Test Name: VoxelId_Comparison
+Test Description: Tests the less-than comparison operator for VoxelId objects, verifying that resolution takes precedence in ordering, followed by position comparison.
+
+Test Name: VoxelId_Hash
+Test Description: Tests the hash function for VoxelId objects, ensuring that identical voxels produce the same hash value while different voxels produce different hash values.
+
+Test Name: VoxelId_GetWorldPosition
+Test Description: Tests the getWorldPosition method for VoxelId objects at various positions and resolutions, verifying correct world coordinate calculations based on voxel size and position, including proper centering of voxels.
+
+Test Name: VoxelId_GetVoxelSize
+Test Description: Tests the getVoxelSize method for all voxel resolutions (1cm through 512cm), verifying that each resolution returns the correct size in meters.
+
+Test Name: VoxelId_GetBounds
+Test Description: Tests the getBounds method for VoxelId objects, verifying that the bounding box correctly represents the voxel's minimum and maximum world coordinates based on its position and size.
+
+Test Name: SelectionStats_DefaultConstruction
+Test Description: Tests the default construction of SelectionStats objects, verifying all fields are initialized to zero/empty (voxelCount=0, empty countByResolution map, center at origin, totalVolume=0).
+
+Test Name: SelectionStats_Clear
+Test Description: Tests the clear method of SelectionStats, verifying that all fields are reset to their default values after being populated with data.
+
+Test Name: SelectionStyle_DefaultValues
+Test Description: Tests the default values of SelectionStyle, verifying outline color (green), fill color (semi-transparent green), outline thickness (2.0f), animation settings (enabled, speed 1.0), and display options (showBounds and showCount enabled).
+
+Test Name: SelectionContext_DefaultValues
+Test Description: Tests the default values of SelectionContext, verifying mode is Replace, continuous is false, preview is false, and both region and filter are empty optional values.
+
+Test Name: VoxelId_StdHash
+Test Description: Tests the std::hash specialization for VoxelId by using an unordered_set, verifying that duplicate voxels are not inserted and different voxels are stored separately, confirming proper hash functionality for STL containers.

@@ -61,13 +61,16 @@ struct VoxelPosition {
     }
     
     // Get the world space bounds of this voxel
+    // The placement position represents the bottom-center of the voxel
     void getWorldBounds(Math::Vector3f& minBounds, 
                        Math::Vector3f& maxBounds) const {
         float voxelSize = getVoxelSize(resolution);
-        Math::Vector3f worldPos = toWorldSpace();
+        Math::Vector3f bottomCenter = toWorldSpace();
         
-        minBounds = worldPos;
-        maxBounds = worldPos + Math::Vector3f(voxelSize, voxelSize, voxelSize);
+        // Calculate bounds where bottomCenter is at the bottom face center
+        float halfSize = voxelSize * 0.5f;
+        minBounds = Math::Vector3f(bottomCenter.x - halfSize, bottomCenter.y, bottomCenter.z - halfSize);
+        maxBounds = Math::Vector3f(bottomCenter.x + halfSize, bottomCenter.y + voxelSize, bottomCenter.z + halfSize);
     }
     
     // Equality operators

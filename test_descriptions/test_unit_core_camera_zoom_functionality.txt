@@ -1,0 +1,40 @@
+----- File: core/camera/tests/test_unit_core_camera_zoom_functionality.cpp
+
+Test Name: ZoomFunctionalityTest.BasicZoomIn
+Test Description: Tests basic zoom in functionality. Verifies that the camera can zoom in by setting a distance that is half the initial distance (5.0f → 2.5f), implementing camera zoom commands for orbit-style controls.
+
+Test Name: ZoomFunctionalityTest.BasicZoomOut
+Test Description: Tests basic zoom out functionality. Verifies that the camera can zoom out by doubling the distance (5.0f → 10.0f) using the inverse of a zoom factor.
+
+Test Name: ZoomFunctionalityTest.ZoomConstraints
+Test Description: Tests zoom distance constraints enforcement. Verifies that attempting to set distance below minimum (0.5f) or above maximum (100.0f) results in the distance being clamped to these limits.
+
+Test Name: ZoomFunctionalityTest.MultipleZoomOperations
+Test Description: Tests cumulative effect of multiple zoom operations. Verifies that applying a series of zoom factors correctly accumulates the distance changes while respecting min/max constraints.
+
+Test Name: ZoomFunctionalityTest.CLIZoomBehavior
+Test Description: Tests zoom behavior consistent with CLI command implementation. Verifies that consecutive zoom operations use the current distance (not initial) and that zoom factors multiply correctly to produce cumulative effects.
+
+Test Name: ZoomFunctionalityTest.ExtremeZoomValues
+Test Description: Tests handling of extreme zoom factors. Verifies that very small zoom factors (0.01) and very large zoom factors (100) are properly constrained to the maximum and minimum distance limits respectively.
+
+Test Name: ZoomFunctionalityTest.ZoomMethodVsSetDistance
+Test Description: Tests the difference between zoom() method (delta-based) and setDistance() (absolute). Verifies that positive delta in zoom() decreases distance (zooms in) while setDistance() sets absolute values.
+
+Test Name: ZoomFunctionalityTest.CustomZoomConstraints
+Test Description: Tests custom zoom constraint settings. Verifies that after setting custom min/max constraints (2.0f, 20.0f), zoom operations respect these new limits instead of the defaults.
+
+Test Name: ZoomFunctionalityTest.ZoomSensitivity
+Test Description: Tests zoom sensitivity adjustment. Verifies that higher zoom sensitivity produces more distance change for the same delta input compared to lower sensitivity settings.
+
+Test Name: ZoomFunctionalityTest.ZoomPersistenceAcrossViews
+Test Description: Tests zoom behavior when switching view presets. Verifies that after changing to a view preset (which may set its own distance), zoom operations work correctly from the new distance value.
+
+Test Name: ZoomFunctionalityTest.ZoomPrecision
+Test Description: Tests precision of accumulated zoom operations. Verifies that applying many small zoom factors (1.05f repeated 10 times) accumulates correctly without significant floating-point error.
+
+Test Name: ZoomFunctionalityTest.ControllerZoomBehavior
+Test Description: Tests zoom behavior through the CameraController. Verifies that positive delta zooms in (decreases distance) and negative delta zooms out (increases distance) when using the controller's camera.
+
+Test Name: ZoomFunctionalityTest.SmoothZoom
+Test Description: Tests smooth zoom transitions with smoothing enabled. Verifies that when smoothing is active, zoom operations change distance gradually over multiple update frames rather than instantly, supporting smooth view transitions at 60+ FPS.

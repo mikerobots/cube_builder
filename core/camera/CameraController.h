@@ -162,12 +162,17 @@ public:
         );
     }
 
-    Math::Vector2i worldToScreen(const Math::Vector3f& worldPos) const {
+    Math::Vector2i worldToScreen(const Math::WorldCoordinates& worldPos) const {
         return m_viewport->worldToScreen(
-            worldPos,
+            worldPos.value(),
             m_camera->getViewMatrix(),
             m_camera->getProjectionMatrix()
         );
+    }
+    
+    // Backward compatibility overload
+    Math::Vector2i worldToScreen(const Math::Vector3f& worldPos) const {
+        return worldToScreen(Math::WorldCoordinates(worldPos));
     }
 
     // Update for animation/smoothing

@@ -1,0 +1,9 @@
+workspace 5 5 5
+resolution 64cm
+place 64cm 64cm 64cm
+place 128cm 128cm 128cm
+status
+clear
+status
+quit
+EOF < /dev/null

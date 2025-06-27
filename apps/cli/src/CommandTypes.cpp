@@ -5,6 +5,7 @@
 #include <stack>
 #include <mutex>
 #include <memory>
+#include <optional>
 
 // Application headers
 #include "cli/CommandTypes.h"
@@ -104,16 +105,16 @@ bool CommandContext::getBoolArg(size_t index, bool defaultValue) const {
     return defaultValue;
 }
 
-int CommandContext::getCoordinateArg(size_t index) const {
+std::optional<int> CommandContext::getCoordinateArg(size_t index) const {
     if (index >= m_args.size()) {
-        return -1; // Invalid index
+        return std::nullopt; // Invalid index
     }
     
     const std::string& arg = m_args[index];
     
     // Check if argument ends with "cm" or "m"
     if (arg.length() < 2) {
-        return -1; // Too short to have units
+        return std::nullopt; // Too short to have units
     }
     
     // Find unit suffix - look for "cm" or "m" at the end
@@ -127,15 +128,20 @@ int CommandContext::getCoordinateArg(size_t index) const {
         unitPart = "m";
         numberPart = arg.substr(0, arg.size() - 1);
     } else {
-        return -1; // No valid unit found
+        return std::nullopt; // No valid unit found
     }
     
     // Parse the number
     float value;
     try {
-        value = std::stof(numberPart);
+        size_t idx = 0;
+        value = std::stof(numberPart, &idx);
+        // Check if the entire string was consumed
+        if (idx != numberPart.length()) {
+            return std::nullopt; // Extra characters after number
+        }
     } catch (...) {
-        return -1; // Invalid number format
+        return std::nullopt; // Invalid number format
     }
     
     // Convert to grid units (1cm increments) based on unit
@@ -145,7 +151,7 @@ int CommandContext::getCoordinateArg(size_t index) const {
     } else if (unitPart == "m") {
         gridCoord = static_cast<int>(std::round(value * 100.0f)); // 1m = 100cm
     } else {
-        return -1; // Should not reach here
+        return std::nullopt; // Should not reach here
     }
     
     return gridCoord;

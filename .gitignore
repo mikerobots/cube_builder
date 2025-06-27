@@ -39,3 +39,14 @@ voxel_*.log
 # Test output files
 *.ppm
 test_output/
+file_*.bak
+readonly_test_*.vxl
+*_test.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Coverage reports
+coverage_reports/

@@ -239,13 +239,13 @@ TEST_F(SelectionSetTest, GetBounds) {
     SelectionSet set = {voxel1, voxel2, voxel3};
     Math::BoundingBox bounds = set.getBounds();
     
-    // With 4cm voxels:
-    // voxel1 at IncrementCoordinates(0,0,0) -> bounds (0,0,0) to (0.04,0.04,0.04)
-    // voxel2 at IncrementCoordinates(4,0,0) -> bounds (0.04,0,0) to (0.08,0.04,0.04)
-    // voxel3 at IncrementCoordinates(0,4,0) -> bounds (0,0.04,0) to (0.04,0.08,0.04)
+    // With 4cm voxels placed on ground plane (bottom face at Y position):
+    // voxel1 at (0,0,0): bounds (-0.02, 0.00, -0.02) to (0.02, 0.04, 0.02)
+    // voxel2 at (4,0,0): bounds (0.02, 0.00, -0.02) to (0.06, 0.04, 0.02)
+    // voxel3 at (0,4,0): bounds (-0.02, 0.04, -0.02) to (0.02, 0.08, 0.02)
     // Combined bounds encompass all three voxels:
-    EXPECT_EQ(bounds.min, Math::Vector3f(0.0f, 0.0f, 0.0f));
-    EXPECT_EQ(bounds.max, Math::Vector3f(0.08f, 0.08f, 0.04f));
+    EXPECT_EQ(bounds.min, Math::Vector3f(-0.02f, 0.0f, -0.02f));
+    EXPECT_EQ(bounds.max, Math::Vector3f(0.06f, 0.08f, 0.02f));
 }
 
 TEST_F(SelectionSetTest, GetCenter) {
@@ -255,12 +255,13 @@ TEST_F(SelectionSetTest, GetCenter) {
     SelectionSet set = {v1, v2};
     
     Math::Vector3f center = set.getCenter();
-    // v1 world position: (0,0,0) + half_size(0.02,0.02,0.02) = (0.02, 0.02, 0.02)
-    // v2 world position: (-0.04,0,0) + half_size(0.02,0.02,0.02) = (-0.02, 0.02, 0.02)
-    // average: ((0.02 + (-0.02)) / 2, (0.02 + 0.02) / 2, (0.02 + 0.02) / 2) = (0, 0.02, 0.02)
-    EXPECT_NEAR(center.x, 0.0f, 0.001f);
+    // With voxels placed on ground plane (bottom face at Y position):
+    // v1 at (0,0,0): center at (0, 0.02, 0) - half voxel size up from ground
+    // v2 at (-4,0,0): center at (-0.04, 0.02, 0) - converted from cm to meters
+    // average: ((-0.04 + 0) / 2, (0.02 + 0.02) / 2, (0 + 0) / 2) = (-0.02, 0.02, 0)
+    EXPECT_NEAR(center.x, -0.02f, 0.001f);
     EXPECT_NEAR(center.y, 0.02f, 0.001f);
-    EXPECT_NEAR(center.z, 0.02f, 0.001f);
+    EXPECT_NEAR(center.z, 0.0f, 0.001f);
 }
 
 TEST_F(SelectionSetTest, GetStats) {

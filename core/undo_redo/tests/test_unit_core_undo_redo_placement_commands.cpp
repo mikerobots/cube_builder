@@ -53,7 +53,7 @@ protected:
 // PlacementCommandFactory Tests
 // REQ-5.1.1: Left-click shall place a voxel at the current preview position
 TEST_F(PlacementCommandsTest, CreatePlacementCommand_ValidPosition) {
-    Vector3i pos(0, 0, 0);  // Use origin - always valid for all resolutions
+    IncrementCoordinates pos(0, 0, 0);  // Use origin - always valid for all resolutions
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto command = PlacementCommandFactory::createPlacementCommand(
@@ -64,7 +64,7 @@ TEST_F(PlacementCommandsTest, CreatePlacementCommand_ValidPosition) {
 }
 
 TEST_F(PlacementCommandsTest, CreatePlacementCommand_NullManager) {
-    Vector3i pos(0, 0, 0);  // Use origin - always valid for all resolutions
+    IncrementCoordinates pos(0, 0, 0);  // Use origin - always valid for all resolutions
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto command = PlacementCommandFactory::createPlacementCommand(nullptr, pos, resolution);
@@ -74,7 +74,7 @@ TEST_F(PlacementCommandsTest, CreatePlacementCommand_NullManager) {
 
 // Command creation for voxel operations - validation of ground plane constraint
 TEST_F(PlacementCommandsTest, CreatePlacementCommand_InvalidPosition_BelowGroundPlane) {
-    Vector3i pos(0, -4, 0); // Y < 0, aligned to 4cm grid
+    IncrementCoordinates pos(0, -4, 0); // Y < 0, aligned to 4cm grid
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto command = PlacementCommandFactory::createPlacementCommand(
@@ -84,7 +84,7 @@ TEST_F(PlacementCommandsTest, CreatePlacementCommand_InvalidPosition_BelowGround
 }
 
 TEST_F(PlacementCommandsTest, CreatePlacementCommand_OverlapDetected) {
-    Vector3i pos(4, 0, 4);  // Use 4cm-aligned position
+    IncrementCoordinates pos(4, 0, 4);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Place a voxel first to create an overlap
@@ -98,7 +98,7 @@ TEST_F(PlacementCommandsTest, CreatePlacementCommand_OverlapDetected) {
 
 // REQ-5.1.2: Right-click on a voxel shall remove that voxel
 TEST_F(PlacementCommandsTest, CreateRemovalCommand_ValidPosition) {
-    Vector3i pos(8, 4, 8);  // Use 4cm-aligned position
+    IncrementCoordinates pos(8, 4, 8);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Set up a voxel to remove
@@ -112,7 +112,7 @@ TEST_F(PlacementCommandsTest, CreateRemovalCommand_ValidPosition) {
 }
 
 TEST_F(PlacementCommandsTest, CreateRemovalCommand_NoVoxelExists) {
-    Vector3i pos(12, 8, 12);  // Use 4cm-aligned position
+    IncrementCoordinates pos(12, 8, 12);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Don't set any voxel at this position
@@ -125,7 +125,7 @@ TEST_F(PlacementCommandsTest, CreateRemovalCommand_NoVoxelExists) {
 
 // Validation Tests
 TEST_F(PlacementCommandsTest, ValidatePlacement_ValidPosition) {
-    Vector3i pos(16, 12, 16);  // Use 4cm-aligned position
+    IncrementCoordinates pos(16, 12, 16);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto result = PlacementCommandFactory::validatePlacement(
@@ -136,7 +136,7 @@ TEST_F(PlacementCommandsTest, ValidatePlacement_ValidPosition) {
 }
 
 TEST_F(PlacementCommandsTest, ValidatePlacement_BelowGroundPlane) {
-    Vector3i pos(0, -4, 0); // Y < 0, aligned to 4cm grid
+    IncrementCoordinates pos(0, -4, 0); // Y < 0, aligned to 4cm grid
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto result = PlacementCommandFactory::validatePlacement(
@@ -148,7 +148,7 @@ TEST_F(PlacementCommandsTest, ValidatePlacement_BelowGroundPlane) {
 }
 
 TEST_F(PlacementCommandsTest, ValidatePlacement_WouldOverlap) {
-    Vector3i pos(20, 16, 20);  // Use 4cm-aligned position
+    IncrementCoordinates pos(20, 16, 20);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Create overlapping voxels at different resolutions
@@ -163,7 +163,7 @@ TEST_F(PlacementCommandsTest, ValidatePlacement_WouldOverlap) {
 }
 
 TEST_F(PlacementCommandsTest, ValidatePlacement_VoxelAlreadyExists) {
-    Vector3i pos(0, 0, 0);  // Use centered coordinate system with 4cm-aligned position
+    IncrementCoordinates pos(0, 0, 0);  // Use centered coordinate system with 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     voxelManager->setVoxel(pos, resolution, true);
@@ -178,7 +178,7 @@ TEST_F(PlacementCommandsTest, ValidatePlacement_VoxelAlreadyExists) {
 }
 
 TEST_F(PlacementCommandsTest, ValidateRemoval_ValidPosition) {
-    Vector3i pos(4, 4, 4);  // Use centered coordinate system with 4cm-aligned position
+    IncrementCoordinates pos(4, 4, 4);  // Use centered coordinate system with 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     voxelManager->setVoxel(pos, resolution, true);
@@ -191,7 +191,7 @@ TEST_F(PlacementCommandsTest, ValidateRemoval_ValidPosition) {
 }
 
 TEST_F(PlacementCommandsTest, ValidateRemoval_NoVoxelExists) {
-    Vector3i pos(32, 28, 32);  // Use 4cm-aligned position
+    IncrementCoordinates pos(32, 28, 32);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto result = PlacementCommandFactory::validateRemoval(
@@ -206,7 +206,7 @@ TEST_F(PlacementCommandsTest, ValidateRemoval_NoVoxelExists) {
 // REQ-2.3.3: Clicking on a highlighted face shall place the new voxel adjacent to that face
 // (This test validates the command infrastructure for face-based placement)
 TEST_F(PlacementCommandsTest, VoxelPlacementCommand_BasicExecution) {
-    Vector3i pos(36, 32, 36);  // Use 4cm-aligned position
+    IncrementCoordinates pos(36, 32, 36);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     VoxelPlacementCommand command(
@@ -218,15 +218,15 @@ TEST_F(PlacementCommandsTest, VoxelPlacementCommand_BasicExecution) {
     
     // Check that the voxel was set via events
     EXPECT_EQ(voxelChangedHandler->eventCount, 1);
-    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.x, pos.x);
-    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.y, pos.y);
-    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.z, pos.z);
+    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.x, pos.value().x);
+    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.y, pos.value().y);
+    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.z, pos.value().z);
     EXPECT_EQ(voxelChangedHandler->lastEvent.resolution, resolution);
     EXPECT_TRUE(voxelChangedHandler->lastEvent.newValue);
 }
 
 TEST_F(PlacementCommandsTest, VoxelPlacementCommand_ExecuteUndo) {
-    Vector3i pos(40, 36, 40);  // Use 4cm-aligned position
+    IncrementCoordinates pos(40, 36, 40);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     VoxelPlacementCommand command(
@@ -250,7 +250,7 @@ TEST_F(PlacementCommandsTest, VoxelPlacementCommand_ExecuteUndo) {
 }
 
 TEST_F(PlacementCommandsTest, VoxelPlacementCommand_ExecutionFailure) {
-    Vector3i pos(44, 40, 44);  // Use 4cm-aligned position
+    IncrementCoordinates pos(44, 40, 44);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     VoxelPlacementCommand command(
@@ -265,7 +265,7 @@ TEST_F(PlacementCommandsTest, VoxelPlacementCommand_ExecutionFailure) {
 }
 
 TEST_F(PlacementCommandsTest, VoxelPlacementCommand_ValidationFailure) {
-    Vector3i pos(0, -4, 0); // Invalid position (Y < 0), aligned to 4cm grid
+    IncrementCoordinates pos(0, -4, 0); // Invalid position (Y < 0), aligned to 4cm grid
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     VoxelPlacementCommand command(
@@ -279,7 +279,7 @@ TEST_F(PlacementCommandsTest, VoxelPlacementCommand_ValidationFailure) {
 }
 
 TEST_F(PlacementCommandsTest, VoxelPlacementCommand_GetDescription) {
-    Vector3i pos(48, 44, 48);  // Use 4cm-aligned position
+    IncrementCoordinates pos(48, 44, 48);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     VoxelPlacementCommand command(
@@ -290,7 +290,7 @@ TEST_F(PlacementCommandsTest, VoxelPlacementCommand_GetDescription) {
 }
 
 TEST_F(PlacementCommandsTest, VoxelPlacementCommand_MemoryUsage) {
-    Vector3i pos(52, 48, 52);  // Use 4cm-aligned position
+    IncrementCoordinates pos(52, 48, 52);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     VoxelPlacementCommand command(
@@ -303,16 +303,16 @@ TEST_F(PlacementCommandsTest, VoxelPlacementCommand_MemoryUsage) {
 
 // VoxelRemovalCommand Tests
 TEST_F(PlacementCommandsTest, VoxelRemovalCommand_BasicExecution) {
-    Vector3i pos(0, 4, 0);  // Use centered coordinate system with 4cm-aligned position
+    IncrementCoordinates pos(0, 4, 0);  // Use centered coordinate system with 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Set up initial voxel
     bool placed = voxelManager->setVoxel(pos, resolution, true);
-    EXPECT_TRUE(placed) << "Failed to place voxel at position (" << pos.x << ", " << pos.y << ", " << pos.z << ")";
+    EXPECT_TRUE(placed) << "Failed to place voxel at position (" << pos.x() << ", " << pos.y() << ", " << pos.z() << ")";
     
     // Verify the voxel was actually placed
     bool exists = voxelManager->getVoxel(pos, resolution);
-    EXPECT_TRUE(exists) << "Voxel was not placed at position (" << pos.x << ", " << pos.y << ", " << pos.z << ")";
+    EXPECT_TRUE(exists) << "Voxel was not placed at position (" << pos.x() << ", " << pos.y() << ", " << pos.z() << ")";
     
     // Reset event count after setup
     voxelChangedHandler->eventCount = 0;
@@ -326,9 +326,9 @@ TEST_F(PlacementCommandsTest, VoxelRemovalCommand_BasicExecution) {
     
     // Check that the voxel was removed (event should have been triggered by the execute() call above)
     EXPECT_EQ(voxelChangedHandler->eventCount, 1);
-    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.x, pos.x);
-    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.y, pos.y);
-    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.z, pos.z);
+    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.x, pos.x());
+    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.y, pos.y());
+    EXPECT_EQ(voxelChangedHandler->lastEvent.gridPos.z, pos.z());
     EXPECT_EQ(voxelChangedHandler->lastEvent.resolution, resolution);
     EXPECT_FALSE(voxelChangedHandler->lastEvent.newValue);
     
@@ -337,7 +337,7 @@ TEST_F(PlacementCommandsTest, VoxelRemovalCommand_BasicExecution) {
 }
 
 TEST_F(PlacementCommandsTest, VoxelRemovalCommand_ExecuteUndo) {
-    Vector3i pos(8, 8, 8);  // Use centered coordinate system with 4cm-aligned position
+    IncrementCoordinates pos(8, 8, 8);  // Use centered coordinate system with 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Set up initial voxel
@@ -364,7 +364,7 @@ TEST_F(PlacementCommandsTest, VoxelRemovalCommand_ExecuteUndo) {
 }
 
 TEST_F(PlacementCommandsTest, VoxelRemovalCommand_GetDescription) {
-    Vector3i pos(64, 60, 64);  // Use 4cm-aligned position
+    IncrementCoordinates pos(64, 60, 64);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Set up initial voxel
@@ -384,7 +384,7 @@ TEST_F(PlacementCommandsTest, HistoryManager_PlacementAndRemoval) {
     HistoryManager history;
     history.setSnapshotInterval(0); // Disable snapshots
     
-    Vector3i pos(68, 64, 68);  // Use 4cm-aligned position
+    IncrementCoordinates pos(68, 64, 68);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Place a voxel
@@ -441,7 +441,7 @@ TEST_F(PlacementCommandsTest, MemoryUsage_ManyCommands) {
     
     // Create many commands
     for (int i = 0; i < numCommands; ++i) {
-        Vector3i pos(i, 0, 0);
+        IncrementCoordinates pos(i, 0, 0);
         VoxelResolution resolution = VoxelResolution::Size_1cm;
         
         commands.push_back(std::make_unique<VoxelPlacementCommand>(
@@ -464,7 +464,7 @@ TEST_F(PlacementCommandsTest, MemoryUsage_ManyCommands) {
 
 // Command merging tests
 TEST_F(PlacementCommandsTest, CommandMerging_SamePosition) {
-    Vector3i pos(72, 68, 72);  // Use 4cm-aligned position
+    IncrementCoordinates pos(72, 68, 72);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto command1 = std::make_unique<VoxelPlacementCommand>(
@@ -481,8 +481,8 @@ TEST_F(PlacementCommandsTest, CommandMerging_SamePosition) {
 }
 
 TEST_F(PlacementCommandsTest, CommandMerging_DifferentPosition) {
-    Vector3i pos1(76, 72, 76);  // Use 4cm-aligned position
-    Vector3i pos2(80, 76, 80);  // Use 4cm-aligned position
+    IncrementCoordinates pos1(76, 72, 76);  // Use 4cm-aligned position
+    IncrementCoordinates pos2(80, 76, 80);  // Use 4cm-aligned position
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     auto command1 = std::make_unique<VoxelPlacementCommand>(

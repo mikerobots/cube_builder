@@ -1,0 +1,31 @@
+----- File: apps/cli/tests/test_integration_cli_undo_redo_chains.cpp
+
+Test Name: PlaceCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests place command undo/redo chain functionality, verifying system state restoration after multiple place/undo/redo operations per REQ-11.4.3
+
+Test Name: RemoveCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests remove command undo/redo chain functionality, verifying proper state management for voxel removal operations per REQ-11.4.3
+
+Test Name: DISABLED_FillCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests fill command undo/redo chain functionality for bulk voxel operations, ensuring proper batch operation reversal per REQ-11.4.3
+
+Test Name: ResolutionCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests resolution command undo/redo chain functionality, verifying active resolution state restoration per REQ-11.4.3
+
+Test Name: WorkspaceCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests workspace command undo/redo chain functionality, verifying workspace size state restoration per REQ-11.4.3
+
+Test Name: CameraCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests camera command undo/redo chain functionality, verifying camera position and target state restoration per REQ-11.4.3
+
+Test Name: MixedCommand_UndoRedoChain_REQ_11_4_3
+Test Description: Tests mixed command undo/redo chains with different command types, ensuring proper state management across command varieties per REQ-11.4.3
+
+Test Name: UndoRedoBounds_Testing_REQ_11_4_3
+Test Description: Tests undo/redo bounds and limits, verifying history management behavior at maximum capacity per REQ-11.4.3
+
+Test Name: ComplexUndoRedoChain_StateIntegrity_REQ_11_4_3
+Test Description: Tests complex undo/redo chains with multiple operations, ensuring complete state integrity across long operation sequences per REQ-11.4.3
+
+Test Name: PartialUndoRedo_BranchingHistory_REQ_11_4_3
+Test Description: Tests partial undo/redo with branching history scenarios, verifying proper history branch management per REQ-11.4.3

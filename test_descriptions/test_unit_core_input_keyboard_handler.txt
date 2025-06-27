@@ -1,0 +1,43 @@
+----- File: core/input/tests/test_unit_core_input_keyboard_handler.cpp
+
+Test Name: DefaultState
+Test Description: Tests default state of KeyboardHandler ensuring no keys are pressed, no modifiers are active, text input is disabled, and current modifiers are None
+
+Test Name: KeyPressRelease
+Test Description: Tests key press and release events, including isKeyPressed(), isKeyJustPressed(), and isKeyJustReleased() states, and proper state transitions after update()
+
+Test Name: ModifierKeys
+Test Description: Tests modifier key handling for Shift and Ctrl keys, including individual and combined modifier states and proper tracking when modifiers are pressed/released
+
+Test Name: AllModifierKeys
+Test Description: Tests all modifier keys (Alt and Super) to ensure they are properly tracked and reflected in getCurrentModifiers()
+
+Test Name: KeyBindings
+Test Description: Tests basic key binding functionality, binding keys to action strings and retrieving actions for bound and unbound keys
+
+Test Name: KeyBindingsWithModifiers
+Test Description: Tests key bindings with modifier combinations (Ctrl+Z for undo, Ctrl+Y for redo, Ctrl+S for save, Ctrl+Shift+S for save_as)
+
+Test Name: KeyCombinationBindings
+Test Description: Tests KeyCombination object bindings using bindKeyCombination() and getKeyCombinationAction() methods
+
+Test Name: UnbindingKeys
+Test Description: Tests unbinding functionality for both simple key bindings and bindings with modifiers
+
+Test Name: ClearAllBindings
+Test Description: Tests clearAllBindings() method to ensure all key bindings (with and without modifiers) are removed
+
+Test Name: TextInput
+Test Description: Tests text input functionality including enabling/disabling text input, character input processing, and text clearing (relates to REQ-9.1.1 for CLI command prompt)
+
+Test Name: KeyRepeat
+Test Description: Tests key repeat configuration including repeat enabled state, repeat delay, and repeat rate settings
+
+Test Name: MultipleKeys
+Test Description: Tests handling of multiple keys pressed simultaneously and proper state tracking when individual keys are released
+
+Test Name: EnabledState
+Test Description: Tests enabled/disabled state of the handler, ensuring events are ignored when disabled and processed when enabled
+
+Test Name: KeyUtilities
+Test Description: Tests utility functions including keyCodeToString(), keyCodeFromString(), modifierFlagsToString(), isValidKeyCode(), isPrintableKey(), and isModifierKey()

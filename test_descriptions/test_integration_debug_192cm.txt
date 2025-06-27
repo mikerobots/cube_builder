@@ -1,0 +1,4 @@
+----- File: tests/integration/test_integration_debug_192cm.cpp
+
+Test Name: Debug192cmPlacement
+Test Description: Debug test that validates 192cm voxel placement logic, manually checks bounds calculation, and compares PlacementValidation with CoordinateConverter and VoxelDataManager validation methods.

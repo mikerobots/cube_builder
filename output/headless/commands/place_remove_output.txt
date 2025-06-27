@@ -1,0 +1,28 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at origin (0, 0, 0)
+Initialization complete!
+Type 'help' for available commands.
+
+> Workspace is already 5.000000x5.000000x5.000000 meters
+> Resolution set to 16cm
+> Voxel placed at (0, 0, 0)
+> Voxel placed at (16, 16, 16)
+> Voxel placed at (-16, 16, -16)
+> Voxel deleted at (16, 16, 16)
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 16cm
+Workspace: 5x5x5 meters
+Voxels: 2
+Selected: 0 voxels
+Groups: 0
+Memory: 0.000923157 MB
+
+> Goodbye!
+
+Shutting down...

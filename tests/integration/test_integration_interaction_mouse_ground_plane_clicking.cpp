@@ -222,30 +222,28 @@ TEST_F(MouseGroundPlaneClickingTest, ClickGroundPlaneMultiplePositions) {
     ASSERT_EQ(getVoxelCount(), 0) << "Should start with no voxels";
     
     // Test positions on ground plane (Y=0)
-    // In centered coordinate system, world (0,0,0) is at the center
-    // For 8cm voxels, positions snap to 0.08m increments
+    // With new requirements, 8cm voxels can be placed at any 1cm position
+    // We need non-overlapping positions for 8cm voxels
     std::vector<Math::Vector3f> testPositions = {
         {0.00f, 0.0f, 0.00f},    // Origin
-        {0.08f, 0.0f, 0.00f},    // One voxel +X
-        {0.00f, 0.0f, 0.08f},    // One voxel +Z
-        {0.08f, 0.0f, 0.08f},    // One voxel +X+Z
-        {-0.08f, 0.0f, 0.00f},   // One voxel -X
-        {0.00f, 0.0f, -0.08f},   // One voxel -Z
-        {-0.08f, 0.0f, -0.08f},  // One voxel -X-Z
+        {0.20f, 0.0f, 0.00f},    // 20cm +X (non-overlapping)
+        {0.00f, 0.0f, 0.20f},    // 20cm +Z (non-overlapping)
+        {0.20f, 0.0f, 0.20f},    // 20cm +X+Z (non-overlapping)
+        {-0.20f, 0.0f, 0.00f},   // 20cm -X (non-overlapping)
+        {0.00f, 0.0f, -0.20f},   // 20cm -Z (non-overlapping)
+        {-0.20f, 0.0f, -0.20f},  // 20cm -X-Z (non-overlapping)
     };
     
-    // For 8cm voxels, we need to calculate expected increment positions
-    // The hasVoxelAt function expects grid coordinates, but let's directly
-    // check if voxels were placed at the expected positions
+    // With new requirements, voxels can be placed at any 1cm position
+    // No snapping to 8cm boundaries - direct conversion to increment coordinates
     std::vector<Math::Vector3i> expectedIncrementPos;
     for (const auto& worldPos : testPositions) {
-        // Convert world position to increment position for 8cm voxels
-        // Snap to 8cm grid
-        float voxelSize = 0.08f;
+        // Convert world position directly to increment position (1cm = 1 increment)
+        const float INCREMENT_SIZE = 0.01f;
         Math::Vector3i incrementPos(
-            static_cast<int>(std::round(worldPos.x / voxelSize) * (voxelSize / 0.01f)),
-            static_cast<int>(std::round(worldPos.y / voxelSize) * (voxelSize / 0.01f)),
-            static_cast<int>(std::round(worldPos.z / voxelSize) * (voxelSize / 0.01f))
+            static_cast<int>(std::round(worldPos.x / INCREMENT_SIZE)),
+            static_cast<int>(std::round(worldPos.y / INCREMENT_SIZE)),
+            static_cast<int>(std::round(worldPos.z / INCREMENT_SIZE))
         );
         expectedIncrementPos.push_back(incrementPos);
     }
@@ -284,28 +282,28 @@ TEST_F(MouseGroundPlaneClickingTest, ClickNearExistingVoxel) {
     ASSERT_TRUE(success) << "Should place initial voxel";
     ASSERT_EQ(getVoxelCount(), 1) << "Should have placed initial voxel";
     
-    // Check using increment coordinates
+    // Check using increment coordinates - with new requirements, no snapping
+    const float INCREMENT_SIZE = 0.01f;
     Math::Vector3i expectedIncrement(
-        static_cast<int>(std::round(initPos.x / 0.08f) * 8),
-        0,
-        static_cast<int>(std::round(initPos.z / 0.08f) * 8)
+        static_cast<int>(std::round(initPos.x / INCREMENT_SIZE)),
+        static_cast<int>(std::round(initPos.y / INCREMENT_SIZE)),
+        static_cast<int>(std::round(initPos.z / INCREMENT_SIZE))
     );
     ASSERT_TRUE(voxelManager->getVoxel(expectedIncrement, voxelManager->getActiveResolution())) 
         << "Initial voxel should be at expected increment position";
     
-    // Place adjacent voxel
-    success = simulateGroundPlaneClick(Math::Vector3f(-3.88f, 0.0f, -3.96f)); // Adjacent in +X
+    // Place adjacent voxel - with new requirements, can place at any 1cm position
+    // Place an 8cm voxel at a position that won't overlap with the first one at (0,0,0)
+    Math::Vector3f adjacentPos(0.10f, 0.0f, 0.0f); // 10cm away from origin
+    success = simulateGroundPlaneClick(adjacentPos);
     
     EXPECT_TRUE(success) << "Should place adjacent voxel";
     EXPECT_EQ(getVoxelCount(), 2) << "Should have placed second voxel";
-    // The second voxel should be adjacent
-    Math::Vector3i expectedIncrement2(
-        static_cast<int>(std::round(-3.88f / 0.08f) * 8),
-        0,
-        static_cast<int>(std::round(-3.96f / 0.08f) * 8)
-    );
+    
+    // With new requirements, voxel should be at exact 1cm position (10,0,0)
+    Math::Vector3i expectedIncrement2(10, 0, 0); // 10cm = 10 increment units
     EXPECT_TRUE(voxelManager->getVoxel(expectedIncrement2, voxelManager->getActiveResolution())) 
-        << "Second voxel should be adjacent in +X";
+        << "Second voxel should be at exact position (10,0,0)";
 }
 
 // Test ground plane constraint

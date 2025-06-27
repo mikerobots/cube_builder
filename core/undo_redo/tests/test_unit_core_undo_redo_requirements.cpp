@@ -67,7 +67,7 @@ protected:
 // REQ-5.1.1: Left-click shall place a voxel at the current preview position
 TEST_F(UndoRedoRequirementsTest, PlacementCommand_LeftClickPlacement) {
     // Use positions that align with 4cm grid (multiples of 4)
-    Vector3i pos(4, 8, 12);  // 4cm, 8cm, 12cm in world coordinates
+    IncrementCoordinates pos(4, 8, 12);  // 4cm, 8cm, 12cm in world coordinates
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // Create placement command (simulates left-click placement)
@@ -87,7 +87,7 @@ TEST_F(UndoRedoRequirementsTest, PlacementCommand_LeftClickPlacement) {
 // REQ-5.1.2: Right-click on a voxel shall remove that voxel
 TEST_F(UndoRedoRequirementsTest, RemovalCommand_RightClickRemoval) {
     // Use positions that align with 4cm grid (multiples of 4)
-    Vector3i pos(4, 8, 12);  // 4cm, 8cm, 12cm in world coordinates
+    IncrementCoordinates pos(4, 8, 12);  // 4cm, 8cm, 12cm in world coordinates
     VoxelResolution resolution = VoxelResolution::Size_4cm;
     
     // First place a voxel
@@ -119,7 +119,7 @@ TEST_F(UndoRedoRequirementsTest, PlacementCommand_AdjacentPlacement) {
     
     // Create placement command for adjacent position (simulates face-click placement)
     auto command = PlacementCommandFactory::createPlacementCommand(
-        voxelManager.get(), adjacentPos, resolution);
+        voxelManager.get(), VoxelEditor::Math::IncrementCoordinates(adjacentPos), resolution);
     
     ASSERT_NE(command, nullptr) << "Should create placement command for adjacent position";
     
@@ -357,14 +357,14 @@ TEST_F(UndoRedoRequirementsTest, MemoryEfficiency_VRConstraints) {
 // Test placement validation prevents invalid commands
 TEST_F(UndoRedoRequirementsTest, PlacementValidation_PreventInvalidCommands) {
     // Test below ground plane
-    Vector3i belowGround(0, -1, 0);
+    IncrementCoordinates belowGround(0, -1, 0);
     auto invalidCommand = PlacementCommandFactory::createPlacementCommand(
         voxelManager.get(), belowGround, VoxelResolution::Size_4cm);
     
     EXPECT_EQ(invalidCommand, nullptr) << "Should not create command for invalid position";
     
     // Test overlap detection with properly aligned position
-    Vector3i pos(4, 0, 4);  // 4cm, 0cm, 4cm - aligned to 4cm grid
+    IncrementCoordinates pos(4, 0, 4);  // 4cm, 0cm, 4cm - aligned to 4cm grid
     voxelManager->setVoxel(pos, VoxelResolution::Size_4cm, true);
     
     auto overlapCommand = PlacementCommandFactory::createPlacementCommand(

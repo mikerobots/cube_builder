@@ -5,15 +5,15 @@ namespace Selection {
 
 Math::Vector3f VoxelId::getWorldPosition() const {
     // Calculate the world position of the voxel center
-    // First, snap to the voxel grid for the given resolution
-    Math::IncrementCoordinates snapped = Math::CoordinateConverter::snapToVoxelResolution(position, resolution);
+    // The increment position represents the bottom-center of the voxel
+    Math::IncrementCoordinates exact = position;
     
-    // Convert snapped corner position to world coordinates
-    Math::WorldCoordinates cornerWorld = Math::CoordinateConverter::incrementToWorld(snapped);
+    // Convert to world coordinates (gives us bottom-center position)
+    Math::WorldCoordinates bottomCenter = Math::CoordinateConverter::incrementToWorld(exact);
     
-    // Add half the voxel size to get the center
+    // Add half the voxel size in Y to get the center
     float halfSize = getVoxelSize() * 0.5f;
-    Math::Vector3f center = cornerWorld.value() + Math::Vector3f(halfSize, halfSize, halfSize);
+    Math::Vector3f center = bottomCenter.value() + Math::Vector3f(0, halfSize, 0);
     
     return center;
 }
@@ -23,16 +23,25 @@ float VoxelId::getVoxelSize() const {
 }
 
 Math::BoundingBox VoxelId::getBounds() const {
-    // Snap to the voxel grid for the given resolution
-    Math::IncrementCoordinates snapped = Math::CoordinateConverter::snapToVoxelResolution(position, resolution);
+    // Use exact position without snapping to allow any 1cm position
+    Math::IncrementCoordinates exact = position;
     
-    // Convert snapped position to world coordinates
-    Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(snapped);
-    float size = getVoxelSize();
+    // Convert to world coordinates (gives us bottom-center position)
+    Math::WorldCoordinates bottomCenter = Math::CoordinateConverter::incrementToWorld(exact);
+    float voxelSize = getVoxelSize();
+    float halfSize = voxelSize * 0.5f;
     
-    // The world position is the corner of the voxel
-    Math::Vector3f min = worldPos.value();
-    Math::Vector3f max = min + Math::Vector3f(size, size, size);
+    // Calculate bounds where bottomCenter is at the bottom face center
+    Math::Vector3f min = Math::Vector3f(
+        bottomCenter.value().x - halfSize, 
+        bottomCenter.value().y,              // Bottom at placement Y
+        bottomCenter.value().z - halfSize
+    );
+    Math::Vector3f max = Math::Vector3f(
+        bottomCenter.value().x + halfSize, 
+        bottomCenter.value().y + voxelSize,  // Top at placement Y + voxelSize
+        bottomCenter.value().z + halfSize
+    );
     return Math::BoundingBox(min, max);
 }
 

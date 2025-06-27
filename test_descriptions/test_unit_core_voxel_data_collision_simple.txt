@@ -1,0 +1,13 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_collision_simple.cpp
+
+Test Name: BasicOverlapAtExactPositions
+Test Description: Tests basic overlap detection at exact 1cm increment positions, verifying voxels cannot be placed at occupied positions and can be placed at adjacent positions (REQ-5.2.1, REQ-4.3.1)
+
+Test Name: DifferentSizesAtExactPositions
+Test Description: Tests placing voxels of different sizes (1cm, 4cm, 16cm) at exact positions without snapping, verifying overlap detection works correctly for each size (REQ-2.1.1)
+
+Test Name: NonAlignedPositionPlacement
+Test Description: Tests that voxels can be placed at non-aligned positions without snapping to resolution grids, verifying 4cm voxels can be placed at positions like (1,0,1) (REQ-2.1.1)
+
+Test Name: ExactPositionMaintenance
+Test Description: Tests that all voxel sizes (1cm through 16cm) maintain their exact placement positions without resolution-based snapping, verifying position integrity across different resolutions (REQ-2.1.2)

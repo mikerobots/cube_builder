@@ -1,0 +1,19 @@
+----- File: tests/integration/test_integration_preview_positioning.cpp
+
+Test Name: ExactPositionPreview_NoSnapToVoxelBoundaries
+Test Description: Tests REQ-2.2.2 for exact 1cm preview positioning without resolution-based snapping, verifying preview shows exact positions at non-aligned 1cm coordinates (1,1,1), (3,7,11), etc. for 4cm voxels without boundary snapping.
+
+Test Name: ExactPositionPreview_AllVoxelSizes
+Test Description: Validates exact position preview across all voxel resolutions (1cm-32cm), testing arbitrary prime number positions (13,27,41), (1,3,5), (7,11,19) to ensure no alignment-based snapping occurs regardless of voxel size.
+
+Test Name: ExactPositionPreview_WorldCoordinateConsistency
+Test Description: Tests world coordinate to increment coordinate conversion consistency for preview positioning, verifying world positions (0.13m, 0.27m, 0.41m) convert to exact increment positions without resolution-based rounding.
+
+Test Name: ExactPositionPreview_PlacementValidation
+Test Description: Validates preview positioning integration with placement validation system, testing exact position display for both valid adjacent positions and invalid overlapping positions while maintaining exact coordinate precision.
+
+Test Name: ExactPositionPreview_MouseRayCalculation
+Test Description: Tests mouse ray hit calculation for preview positioning at arbitrary world positions, verifying ray hits at positions like (0.13m, 0m, 0.27m) convert to exact increment coordinates for preview display.
+
+Test Name: ExactPositionPreview_RealTimeUpdates
+Test Description: Validates real-time preview positioning updates during mouse movement simulation, testing sequential position updates (1,0,1) → (3,0,3) → (5,0,5) to ensure exact positioning without lag or snapping artifacts.

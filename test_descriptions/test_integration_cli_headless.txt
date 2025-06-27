@@ -1,0 +1,52 @@
+----- File: apps/cli/tests/test_integration_cli_headless.cpp
+
+Test Name: HeadlessModeInitialization
+Test Description: Tests CLI application initializes properly in headless mode with --headless flag, verifying no render window is created while core systems remain available
+
+Test Name: HeadlessVoxelOperations
+Test Description: Tests basic voxel operations (place, get, remove) work correctly in headless mode using 8cm aligned coordinates without rendering
+
+Test Name: WorkspaceManagement
+Test Description: Tests workspace resizing operations in headless mode including default (5m³), minimum (2m), maximum (8m), invalid sizes, and non-uniform dimensions
+
+Test Name: WorkspaceBoundaryVoxelPlacement
+Test Description: Tests voxel placement at workspace boundaries using centered coordinate system with 4m workspace and 8cm voxels, verifying valid/invalid positions
+
+Test Name: MultiResolutionSupport
+Test Description: Tests support for multiple voxel resolutions (1cm-256cm) in headless mode, placing voxels at origin for each resolution
+
+Test Name: ResolutionSwitching
+Test Description: Tests switching between different resolutions (8cm, 16cm, 32cm) doesn't affect voxels at other resolutions, verifying independent storage
+
+Test Name: BasicSelectionOperations
+Test Description: Tests basic selection system operations including individual voxel selection, select all, clear selection with 5x5 grid of test voxels
+
+Test Name: BoxSelection
+Test Description: Tests box selection functionality with 5x5x5 cube of voxels using world space bounding box coordinates
+
+Test Name: SphereSelection
+Test Description: Tests sphere selection with center point and radius to capture multiple voxels from 5x5x5 test grid
+
+Test Name: BasicFileOperations
+Test Description: Tests basic file I/O operations including project save/load with proper error handling for VXL format files
+
+Test Name: MultipleFileOperations
+Test Description: Tests multiple save/load cycles with different filenames, verifying error handling and file management across multiple operations
+
+Test Name: InvalidFileOperations
+Test Description: Tests file I/O error handling including non-existent files and invalid file formats, ensuring graceful failure with error messages
+
+Test Name: UndoRedoOperations
+Test Description: Tests undo/redo system availability and basic functionality including history manager setup and memory limits
+
+Test Name: GroupOperations
+Test Description: Tests group management functionality including creating groups from voxel collections, visibility controls, and group listing
+
+Test Name: MultipleGroups
+Test Description: Tests creating and managing multiple groups with different voxel sets, verifying group isolation and proper listing
+
+Test Name: LargeVoxelCount
+Test Description: Tests performance with large voxel counts (1000 voxels in 10x10x10 grid), measuring placement time and success rate
+
+Test Name: MemoryUsage
+Test Description: Tests memory usage tracking and cleanup functionality, verifying memory is properly released after clearing voxels

@@ -80,13 +80,14 @@ TEST_F(VoxelTypesTest, VoxelBounds) {
     Math::Vector3f minBounds, maxBounds;
     voxelPos.getWorldBounds(minBounds, maxBounds);
     
-    // Grid (0,0,0) with 2cm voxels starts at (0, 0, 0) and extends 0.02m (0-based)
-    EXPECT_FLOAT_EQ(minBounds.x, 0.0f);
-    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);
-    EXPECT_FLOAT_EQ(minBounds.z, 0.0f);
-    EXPECT_FLOAT_EQ(maxBounds.x, 0.02f);
-    EXPECT_FLOAT_EQ(maxBounds.y, 0.02f);
-    EXPECT_FLOAT_EQ(maxBounds.z, 0.02f);
+    // Grid (0,0,0) with 2cm voxels: placement position is bottom-center
+    // Bottom face sits on ground plane (Y=0), extends ±1cm in X,Z
+    EXPECT_FLOAT_EQ(minBounds.x, -0.01f);  // -voxelSize/2
+    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);    // Bottom sits on ground plane
+    EXPECT_FLOAT_EQ(minBounds.z, -0.01f);  // -voxelSize/2
+    EXPECT_FLOAT_EQ(maxBounds.x, 0.01f);   // +voxelSize/2
+    EXPECT_FLOAT_EQ(maxBounds.y, 0.02f);   // Bottom + voxelSize
+    EXPECT_FLOAT_EQ(maxBounds.z, 0.01f);   // +voxelSize/2
 }
 
 TEST_F(VoxelTypesTest, VoxelPositionEquality) {
@@ -155,15 +156,78 @@ TEST_F(VoxelTypesTest, Resolution8cmValidation) {
     EXPECT_FLOAT_EQ(worldPos.y, 0.02f);
     EXPECT_FLOAT_EQ(worldPos.z, 0.02f);
     
-    // Test bounds for 8cm voxel
+    // Test bounds for 8cm voxel (placement position as bottom-center)
     Math::Vector3f minBounds, maxBounds;
     voxelPos.getWorldBounds(minBounds, maxBounds);
-    EXPECT_FLOAT_EQ(minBounds.x, 0.02f);
-    EXPECT_FLOAT_EQ(minBounds.y, 0.02f);
-    EXPECT_FLOAT_EQ(minBounds.z, 0.02f);
-    EXPECT_FLOAT_EQ(maxBounds.x, 0.10f); // 0.02 + 0.08
-    EXPECT_FLOAT_EQ(maxBounds.y, 0.10f);
-    EXPECT_FLOAT_EQ(maxBounds.z, 0.10f);
+    EXPECT_FLOAT_EQ(minBounds.x, -0.02f); // 0.02 - 0.08/2
+    EXPECT_FLOAT_EQ(minBounds.y, 0.02f);  // Bottom at placement Y
+    EXPECT_FLOAT_EQ(minBounds.z, -0.02f); // 0.02 - 0.08/2
+    EXPECT_FLOAT_EQ(maxBounds.x, 0.06f);  // 0.02 + 0.08/2
+    EXPECT_FLOAT_EQ(maxBounds.y, 0.10f);  // 0.02 + 0.08
+    EXPECT_FLOAT_EQ(maxBounds.z, 0.06f);  // 0.02 + 0.08/2
+}
+
+// Test bounds calculation for voxels at non-aligned 1cm increment positions
+TEST_F(VoxelTypesTest, VoxelBoundsNonAlignedPositions) {
+    // Test 32cm voxel at position (13, 0, 27)
+    VoxelPosition voxel32cm(Math::Vector3i(13, 0, 27), VoxelResolution::Size_32cm);
+    Math::Vector3f minBounds, maxBounds;
+    voxel32cm.getWorldBounds(minBounds, maxBounds);
+    
+    // Position (13, 0, 27) = world (0.13, 0.0, 0.27)
+    // 32cm voxel has halfSize = 0.16
+    EXPECT_FLOAT_EQ(minBounds.x, -0.03f);  // 0.13 - 0.16
+    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);    // Bottom at Y=0
+    EXPECT_FLOAT_EQ(minBounds.z, 0.11f);   // 0.27 - 0.16
+    EXPECT_FLOAT_EQ(maxBounds.x, 0.29f);   // 0.13 + 0.16
+    EXPECT_FLOAT_EQ(maxBounds.y, 0.32f);   // 0.0 + 0.32
+    EXPECT_FLOAT_EQ(maxBounds.z, 0.43f);   // 0.27 + 0.16
+    
+    // Test overlap with voxel at origin
+    VoxelPosition voxelOrigin(Math::Vector3i(0, 0, 0), VoxelResolution::Size_32cm);
+    Math::Vector3f originMin, originMax;
+    voxelOrigin.getWorldBounds(originMin, originMax);
+    
+    EXPECT_FLOAT_EQ(originMin.x, -0.16f);
+    EXPECT_FLOAT_EQ(originMax.x, 0.16f);
+    
+    // Check if they overlap in X dimension
+    bool overlapX = minBounds.x < originMax.x && maxBounds.x > originMin.x;
+    EXPECT_TRUE(overlapX) << "32cm voxels at (0,0,0) and (13,0,27) should overlap in X";
+    
+    // Test 16cm voxel at non-aligned position
+    VoxelPosition voxel16cm(Math::Vector3i(7, 0, 13), VoxelResolution::Size_16cm);
+    voxel16cm.getWorldBounds(minBounds, maxBounds);
+    
+    // Position (7, 0, 13) = world (0.07, 0.0, 0.13)
+    // 16cm voxel has halfSize = 0.08
+    EXPECT_FLOAT_EQ(minBounds.x, -0.01f);  // 0.07 - 0.08
+    EXPECT_FLOAT_EQ(minBounds.y, 0.0f);
+    EXPECT_FLOAT_EQ(minBounds.z, 0.05f);   // 0.13 - 0.08
+    EXPECT_FLOAT_EQ(maxBounds.x, 0.15f);   // 0.07 + 0.08
+    EXPECT_FLOAT_EQ(maxBounds.y, 0.16f);   // 0.0 + 0.16
+    EXPECT_FLOAT_EQ(maxBounds.z, 0.21f);   // 0.13 + 0.08
+}
+
+// Test that demonstrates when voxels at different positions don't overlap
+TEST_F(VoxelTypesTest, VoxelBoundsNoOverlap) {
+    // 32cm voxel at (50, 0, 50) - well separated from origin
+    VoxelPosition voxel1(Math::Vector3i(50, 0, 50), VoxelResolution::Size_32cm);
+    Math::Vector3f min1, max1;
+    voxel1.getWorldBounds(min1, max1);
+    
+    // 32cm voxel at origin
+    VoxelPosition voxel2(Math::Vector3i(0, 0, 0), VoxelResolution::Size_32cm);
+    Math::Vector3f min2, max2;
+    voxel2.getWorldBounds(min2, max2);
+    
+    // Check no overlap in any dimension
+    bool overlapX = min1.x < max2.x && max1.x > min2.x;
+    bool overlapY = min1.y < max2.y && max1.y > min2.y;
+    bool overlapZ = min1.z < max2.z && max1.z > min2.z;
+    
+    EXPECT_FALSE(overlapX && overlapY && overlapZ) 
+        << "32cm voxels at (0,0,0) and (50,0,50) should not overlap";
 }
 
 TEST_F(VoxelTypesTest, PositionBoundsChecking) {

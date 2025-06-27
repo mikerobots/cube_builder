@@ -1,0 +1,25 @@
+----- File: apps/cli/tests/test_integration_interaction_mouse_ray_movement.cpp
+
+Test Name: RayOriginMatchesCameraPosition
+Test Description: Tests that mouse ray origin matches camera position, verifying ray casting starts from correct world coordinates
+
+Test Name: RayDirectionChangesWithMouseMovement
+Test Description: Tests that ray direction changes appropriately as mouse moves across screen, validating screen-to-world coordinate transformation
+
+Test Name: RayDirectionIsNormalized
+Test Description: Tests that generated ray directions are properly normalized vectors, ensuring consistent ray mathematics
+
+Test Name: ConsistentRayForSameMousePosition
+Test Description: Tests that identical mouse positions generate consistent rays, verifying deterministic ray generation
+
+Test Name: CameraMovementUpdatesRayOrigin
+Test Description: Tests that camera movement properly updates ray origin for mouse ray casting, ensuring spatial consistency
+
+Test Name: ScreenCenterRayPointsForward
+Test Description: Tests that mouse ray from screen center points in camera's forward direction, validating coordinate system alignment
+
+Test Name: MouseAtCornersProducesExpectedRays
+Test Description: Tests that mouse positions at screen corners produce expected ray directions, verifying viewport bounds behavior
+
+Test Name: ExtremeMousePositionsProduceValidRays
+Test Description: Tests that extreme mouse positions (including outside viewport) produce valid normalized rays without errors

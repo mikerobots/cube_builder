@@ -1,0 +1,31 @@
+----- File: tests/integration/rendering/test_integration_rendering_enhanced_shader_validation.cpp
+
+Test Name: ValidateEnhancedVoxelShader
+Test Description: Validates compilation and linking of enhanced voxel shaders with lighting features (basic_voxel.vert + enhanced_voxel.frag)
+
+Test Name: ValidateBasicVoxelShader
+Test Description: Tests compilation and linking of basic OpenGL 3.3 compatible voxel shaders (basic_voxel_gl33.vert + basic_voxel_gl33.frag)
+
+Test Name: ShaderCompatibilityAcrossVersions
+Test Description: Comprehensive test that validates multiple shader combinations work correctly across different OpenGL versions and shader variants (basic, enhanced, flat, ground plane shaders)
+
+Test Name: ShaderCompilation
+Test Description: Tests individual shader compilation with proper error reporting and validation status checking
+
+Test Name: ProgramLinking
+Test Description: Validates shader program linking with attribute binding and proper error handling for link failures
+
+Test Name: UniformLocationValidation
+Test Description: Tests that shader uniforms (lightPos, lightColor, viewPos, model, view, projection) are properly accessible after program creation
+
+Test Name: OpenGLContextSetup
+Test Description: Integration test for proper OpenGL 3.3 Core Profile context creation and GLAD initialization
+
+Test Name: ShaderFileLoading
+Test Description: Tests loading shader source code from filesystem with multiple fallback path resolution strategies
+
+Test Name: ErrorReporting
+Test Description: Validates comprehensive error reporting for shader compilation and program linking failures with detailed log output
+
+Test Name: ShaderValidation
+Test Description: Tests OpenGL shader program validation to ensure shaders are ready for rendering operations

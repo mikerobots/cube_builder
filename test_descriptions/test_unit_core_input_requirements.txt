@@ -1,0 +1,103 @@
+----- File: core/input/tests/test_unit_core_input_requirements.cpp
+
+Test Name: GridClickableForVoxelPlacement_REQ_1_2_1
+Test Description: Verifies grid is clickable for voxel placement by testing mouse click processing per REQ-1.2.1
+
+Test Name: GridOpacityIncreasesNearCursor_REQ_1_2_2
+Test Description: Tests mouse position tracking for grid opacity increase near cursor feature per REQ-1.2.2
+
+Test Name: MouseMovementUpdatesPreviewRealtime_REQ_5_1_3
+Test Description: Validates real-time mouse movement tracking and delta calculation per REQ-5.1.3
+
+Test Name: RayCastingDeterminesFacePosition_REQ_5_1_4
+Test Description: Tests mouse position tracking for ray-casting to determine face/position under cursor per REQ-5.1.4
+
+Test Name: LeftClickPlacesVoxel_REQ_5_1_1
+Test Description: Verifies left-click detection for voxel placement functionality per REQ-5.1.1
+
+Test Name: RightClickRemovesVoxel_REQ_5_1_2
+Test Description: Tests right-click detection for voxel removal functionality per REQ-5.1.2
+
+Test Name: ClickHighlightedFacePlacesAdjacent_REQ_2_3_3
+Test Description: Validates click handling for placing voxels adjacent to highlighted faces per REQ-2.3.3
+
+Test Name: VoxelsPlaceableAt1cmIncrements_REQ_2_1_1
+Test Description: Tests position snapping to 1cm increments for various world positions per REQ-2.1.1
+
+Test Name: PreviewSnapsToNearest1cmIncrement_REQ_2_2_2
+Test Description: Verifies preview position snaps to nearest 1cm increment per REQ-2.2.2
+
+Test Name: AllVoxelSizesPlaceableAtGroundPlane_REQ_2_2_4
+Test Description: Tests all voxel resolutions (1cm-512cm) can be placed at 1cm increments on ground plane per REQ-2.2.4
+
+Test Name: SameSizeVoxelsAutoSnap_REQ_3_1_1
+Test Description: Validates face-to-face alignment for same-size adjacent voxels per REQ-3.1.1
+
+Test Name: PlacementRespects1cmIncrementsOnFace_REQ_3_2_2
+Test Description: Tests surface face snapping respects 1cm increment positions per REQ-3.2.2
+
+Test Name: PreviewSnapsToNearestValidPosition_REQ_3_2_3
+Test Description: Verifies preview snapping to nearest valid position with proper rounding per REQ-3.2.3
+
+Test Name: PlacementPlaneSnapsToSmallerVoxel_REQ_3_3_1
+Test Description: Tests placement plane detection finds smaller voxel's face per REQ-3.3.1
+
+Test Name: PlacementPlaneMaintainsHeightDuringOverlap_REQ_3_3_2
+Test Description: Validates placement plane maintains height while overlapping voxels per REQ-3.3.2
+
+Test Name: HighestVoxelTakesPrecedence_REQ_3_3_3
+Test Description: Tests highest voxel detection when multiple voxels at different heights per REQ-3.3.3
+
+Test Name: PlaneChangesWhenPreviewClears_REQ_3_3_4
+Test Description: Verifies plane changes only when preview completely clears current height per REQ-3.3.4
+
+Test Name: NoVoxelsBelowY0_REQ_2_1_4
+Test Description: Tests validation prevents voxel placement below Y=0 ground plane per REQ-2.1.4
+
+Test Name: VoxelsShallNotOverlap_REQ_5_2_1
+Test Description: Validates placement validation supports overlap prevention per REQ-5.2.1
+
+Test Name: SystemValidatesPlacementBeforeAllowing_REQ_5_2_2
+Test Description: Tests complete validation flow for placement context per REQ-5.2.2
+
+Test Name: OnlyPositionsWithY0OrGreaterValid_REQ_5_2_3
+Test Description: Verifies only positions with Y≥0 are valid for placement per REQ-5.2.3
+
+Test Name: ShiftAllowsPlacementAtAny1cmIncrement_REQ_3_1_2
+Test Description: Tests shift key detection and placement at 1cm increments per REQ-3.1.2
+
+Test Name: ShiftOverridesAutoSnapForSameSize_REQ_5_4_1
+Test Description: Validates shift key behavior with new 1cm increment requirements per REQ-5.4.1
+
+Test Name: NoRotationControls_REQ_5_4_2
+Test Description: Verifies no special rotation controls exist (voxels always axis-aligned) per REQ-5.4.2
+
+Test Name: CurrentVoxelSizeControlledByResolution_REQ_5_3_1
+Test Description: Tests placement context uses active resolution setting per REQ-5.3.1
+
+Test Name: ResolutionChangedViaCommand_REQ_5_3_2
+Test Description: Validates resolution parameter usage in placement context per REQ-5.3.2
+
+Test Name: PreviewUpdatesSmoothAndResponsive_REQ_4_1_3
+Test Description: Performance test ensuring preview calculations complete under 16ms per REQ-4.1.3 and REQ-6.1.2
+
+Test Name: FaceHighlightingUpdatesWithinOneFrame_REQ_6_1_3
+Test Description: Tests face highlighting calculations complete within 16ms per REQ-6.1.3
+
+Test Name: PlatformSupport_REQ_7_1_2
+Test Description: Placeholder test for Meta Quest 3 VR platform support per REQ-7.1.2
+
+Test Name: Qt6Support_REQ_7_3_1
+Test Description: Placeholder test for Qt6 desktop GUI support per REQ-7.3.1
+
+Test Name: OpenXRSupport_REQ_7_3_2
+Test Description: Placeholder test for OpenXR SDK VR interface support per REQ-7.3.2
+
+Test Name: MetaHandTrackingSupport_REQ_7_3_3
+Test Description: Placeholder test for Meta Hand Tracking SDK support per REQ-7.3.3
+
+Test Name: CLIAutoCompletion_REQ_9_1_1
+Test Description: Tests keyboard input handling for CLI auto-completion per REQ-9.1.1
+
+Test Name: CLICameraCommands_REQ_9_2_2
+Test Description: Validates mouse wheel input for CLI camera zoom commands per REQ-9.2.2

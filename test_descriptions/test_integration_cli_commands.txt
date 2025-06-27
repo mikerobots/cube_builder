@@ -1,0 +1,64 @@
+----- File: apps/cli/tests/test_integration_cli_commands.cpp
+
+Test Name: CLICommandTest.HelpCommand
+Test Description: Tests help command parsing and structure. Verifies help works standalone and with topics like place, workspace, resolution, save, load, export, undo, redo, select, group, view, camera.
+
+Test Name: CLICommandTest.VoxelEditCommands
+Test Description: Tests voxel editing command structure. Validates place commands with positive/negative coordinates (centered system), delete commands, and fill commands with proper coordinate ranges.
+
+Test Name: CLICommandTest.WorkspaceCommands
+Test Description: Tests workspace management command structure. Validates workspace sizing commands and resolution commands for all supported levels (1cm through 512cm).
+
+Test Name: CLICommandTest.FileCommands
+Test Description: Tests file operation command structure. Validates save, load, saveas, export, and new commands with proper file path parsing.
+
+Test Name: CLICommandTest.SelectionCommands
+Test Description: Tests selection command structure. Validates select, selectbox, selectall, and selectnone commands with coordinate parameters.
+
+Test Name: CLICommandTest.GroupCommands
+Test Description: Tests group management command structure. Validates group create/hide/show commands and groups listing command.
+
+Test Name: CLICommandTest.CameraCommands
+Test Description: Tests camera control command structure. Validates camera view commands (front, iso), zoom, rotate, and resetview commands.
+
+Test Name: CLICommandTest.UndoRedoCommands
+Test Description: Tests undo/redo command structure. Validates basic undo and redo command parsing.
+
+Test Name: CLICommandTest.SystemCommands
+Test Description: Tests system command structure. Validates status, clear, quit, validate, sleep, and screenshot commands.
+
+Test Name: CLICommandTest.PositionParameterValidation
+Test Description: Tests position parameter validation. Validates various coordinate formats including negative values for X/Z in centered coordinate system.
+
+Test Name: CLICommandTest.ResolutionParameterValidation
+Test Description: Tests resolution parameter validation. Validates all supported resolution formats from 1cm to 512cm.
+
+Test Name: CLICommandTest.FilePathParameterValidation
+Test Description: Tests file path parameter validation. Validates various file path formats for save/load commands including relative and absolute paths.
+
+Test Name: CLICommandTest.NumericParameterValidation
+Test Description: Tests numeric parameter validation. Validates integer and floating-point number formats including negative values.
+
+Test Name: CLICommandTest.CommandAliases
+Test Description: Tests command alias functionality. Validates aliases like selnone→selectnone, del→delete, rm→delete, ws→workspace, res→resolution, q→quit.
+
+Test Name: CLICommandTest.CommandCompletion
+Test Description: Tests command auto-completion structure. Validates completion scenarios for partial command names and expected completion results.
+
+Test Name: CLICommandTest.ParameterCompletion
+Test Description: Tests parameter auto-completion structure. Validates completion for resolution values, camera views, help topics, and group operations.
+
+Test Name: CLICommandTest.InvalidCommandHandling
+Test Description: Tests invalid command handling. Validates error detection for empty commands, unknown commands, missing parameters, and invalid parameter types.
+
+Test Name: CLICommandTest.ParameterRangeValidation
+Test Description: Tests parameter range validation. Validates workspace size limits, position bounds in centered coordinate system, Y≥0 constraint, and zoom factor limits.
+
+Test Name: CLICommandTest.CommandSequences
+Test Description: Tests command sequence workflows. Validates basic editing, selection, camera, and edit workflows with proper command chaining.
+
+Test Name: CLICommandTest.StateConsistency
+Test Description: Tests application state consistency. Validates workspace setup, voxel placement, save/load cycles, and state restoration.
+
+Test Name: CLICommandTest.CommandPerformance
+Test Description: Tests command parsing performance. Validates 1000 iterations of command parsing complete within 10ms performance requirement.

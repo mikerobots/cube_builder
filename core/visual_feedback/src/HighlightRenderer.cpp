@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
+#include <cassert>
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
@@ -164,6 +165,8 @@ void HighlightRenderer::render(const Camera::Camera& camera) {
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
         std::cerr << "HighlightRenderer GL Error after render: " << error << std::endl;
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "OpenGL error in HighlightRenderer - failing hard to catch issues early");
     }
 }
 

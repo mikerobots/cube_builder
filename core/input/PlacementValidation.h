@@ -34,14 +34,14 @@ enum class PlacementValidationResult {
 
 // Placement context information
 struct PlacementContext {
-    Math::Vector3f worldPosition;     // World position from ray cast
+    Math::WorldCoordinates worldPosition;     // World position from ray cast
     Math::IncrementCoordinates snappedIncrementPos;    // Snapped increment position (1cm increments)
     VoxelData::VoxelResolution resolution;  // Current voxel resolution
     bool shiftPressed;                // Shift key modifier state
     PlacementValidationResult validation; // Validation result
     
     PlacementContext() 
-        : worldPosition(0.0f, 0.0f, 0.0f)
+        : worldPosition(Math::WorldCoordinates(0.0f, 0.0f, 0.0f))
         , snappedIncrementPos(0, 0, 0)
         , resolution(VoxelData::VoxelResolution::Size_1cm)
         , shiftPressed(false)
@@ -52,10 +52,11 @@ struct PlacementContext {
 class PlacementUtils {
 public:
     // Snap a world position to the nearest 1cm increment
-    static Math::IncrementCoordinates snapToValidIncrement(const Math::Vector3f& worldPos);
+    static Math::IncrementCoordinates snapToValidIncrement(const Math::WorldCoordinates& worldPos);
     
-    // Snap to grid-aligned position for same-size voxels (unless shift is pressed)
-    static Math::IncrementCoordinates snapToGridAligned(const Math::Vector3f& worldPos, 
+    // Snap to 1cm increment grid (resolution and shift parameters maintained for compatibility)
+    // NOTE: With new requirements, all voxels place at exact 1cm positions without resolution-based snapping
+    static Math::IncrementCoordinates snapToGridAligned(const Math::WorldCoordinates& worldPos, 
                                            VoxelData::VoxelResolution resolution,
                                            bool shiftPressed);
     
@@ -71,26 +72,26 @@ public:
     // Use CoordinateConverter::worldToIncrement() and incrementToWorld() instead
     
     // Get the placement context from a world position
-    static PlacementContext getPlacementContext(const Math::Vector3f& worldPos,
+    static PlacementContext getPlacementContext(const Math::WorldCoordinates& worldPos,
                                                VoxelData::VoxelResolution resolution,
                                                bool shiftPressed,
                                                const Math::Vector3f& workspaceSize);
     
     // Phase 3 Enhancement: Smart snapping for same-size voxels
-    static Math::IncrementCoordinates snapToSameSizeVoxel(const Math::Vector3f& worldPos,
+    static Math::IncrementCoordinates snapToSameSizeVoxel(const Math::WorldCoordinates& worldPos,
                                              VoxelData::VoxelResolution resolution,
                                              const VoxelData::VoxelDataManager& dataManager,
                                              bool shiftPressed);
     
     // Phase 3 Enhancement: Sub-grid positioning for smaller voxels on larger Surface Faces
-    static Math::IncrementCoordinates snapToSurfaceFaceGrid(const Math::Vector3f& hitPoint,
+    static Math::IncrementCoordinates snapToSurfaceFaceGrid(const Math::WorldCoordinates& hitPoint,
                                                const Math::IncrementCoordinates& surfaceFaceVoxelPos,
                                                VoxelData::VoxelResolution surfaceFaceVoxelRes,
                                                VoxelData::FaceDirection surfaceFaceDir,
                                                VoxelData::VoxelResolution placementResolution);
     
     // Phase 3 Enhancement: Smart placement context with voxel data awareness
-    static PlacementContext getSmartPlacementContext(const Math::Vector3f& worldPos,
+    static PlacementContext getSmartPlacementContext(const Math::WorldCoordinates& worldPos,
                                                     VoxelData::VoxelResolution resolution,
                                                     bool shiftPressed,
                                                     const Math::Vector3f& workspaceSize,
@@ -100,7 +101,7 @@ public:
                                                     VoxelData::FaceDirection surfaceFaceDir = VoxelData::FaceDirection::PosY);
     
     // Validate if a world position is valid for increment placement
-    static bool isValidForIncrementPlacement(const Math::Vector3f& worldPos, VoxelData::VoxelResolution resolution);
+    static bool isValidForIncrementPlacement(const Math::WorldCoordinates& worldPos, VoxelData::VoxelResolution resolution);
     
 private:
     // 1cm in world units

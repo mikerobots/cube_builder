@@ -1,0 +1,19 @@
+----- File: tests/integration/test_integration_interaction_mouse_ground_plane_clicking.cpp
+
+Test Name: ClickGroundPlaneAtOrigin
+Test Description: Tests mouse clicking on ground plane at workspace center (origin) with proper ray-casting simulation.
+
+Test Name: ClickGroundPlaneMultiplePositions
+Test Description: Tests clicking at multiple non-overlapping positions on ground plane with 8cm voxels and exact positioning.
+
+Test Name: ClickNearExistingVoxel
+Test Description: Tests clicking near existing voxels to validate proper adjacent placement without overlap.
+
+Test Name: GroundPlaneYConstraint
+Test Description: Tests ground plane constraint enforcement during mouse clicking with ray-based interaction.
+
+Test Name: WorkspaceBoundaryConstraints
+Test Description: Tests workspace boundary validation during mouse clicking, ensuring out-of-bounds clicks are rejected.
+
+Test Name: UndoRedoGroundPlanePlacement
+Test Description: Tests undo/redo functionality with mouse-based ground plane voxel placement operations.

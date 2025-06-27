@@ -1,0 +1,19 @@
+----- File: core/camera/tests/test_unit_core_camera_orbit_transformations.cpp
+
+Test Name: CameraPositionFromAngles
+Test Description: Tests that camera position is calculated correctly from angles (yaw, pitch, distance). Verifies spherical coordinate transformations for default position (45° yaw, 45° pitch), straight down view (90° pitch), front view (0° yaw, 0° pitch), and side view (90° yaw, 0° pitch). Validates REQ-CAM-3 and REQ-CAM-1.
+
+Test Name: ViewMatrixTransformsTargetToOrigin
+Test Description: Tests that view matrix correctly transforms target to origin in view space. Verifies camera position transforms to origin in view space and target transforms to negative Z axis at correct distance. Validates REQ-1.1.2 and REQ-CAM-3.
+
+Test Name: ViewMatrixTransformations
+Test Description: Tests view matrix transformations for objects at various positions. Verifies objects at origin transform correctly to view space and camera position transforms to origin (0,0,0) in view space.
+
+Test Name: ProjectionMatrixNDC
+Test Description: Tests that projection matrix produces correct NDC (Normalized Device Coordinates). Verifies near plane center maps to -1 in NDC Z, far plane center maps to 1 in NDC Z, and center points map to (0,0) in NDC X,Y. Validates REQ-CAM-2.
+
+Test Name: VoxelMVPTransformation
+Test Description: Tests complete Model-View-Projection transformation for a voxel. Verifies voxel visibility through clip space transformation, NDC coordinate ranges, targeted voxel appears near screen center, and at least some voxel corners are visible. Validates REQ-4.2.3 and REQ-CAM-3.
+
+Test Name: ViewPresetPositions
+Test Description: Tests that view presets produce expected camera positions. Verifies FRONT view positions camera in +Z, TOP view positions camera in +Y, and RIGHT view positions camera in +X, all with other axes at zero. Validates REQ-CAM-4 and REQ-CAM-3.

@@ -1,0 +1,129 @@
+=== UNIT TESTS ===
+
+  test_unit_cli_arbitrary_positions
+  test_unit_cli_coordinate_system_constraints
+  test_unit_cli_voxel_mesh_generator
+  test_unit_core_camera_camera
+  test_unit_core_camera_controller
+  test_unit_core_camera_orbit_camera
+  test_unit_core_camera_orbit_transformations
+  test_unit_core_camera_requirements
+  test_unit_core_camera_set_distance
+  test_unit_core_camera_viewport
+  test_unit_core_camera_zoom_functionality
+  test_unit_core_input_keyboard_handler
+  test_unit_core_input_mapping
+  test_unit_core_input_modifier_key_tracking
+  test_unit_core_input_mouse_handler
+  test_unit_core_input_placement_validation
+  test_unit_core_input_plane_detector
+  test_unit_core_input_requirements
+  test_unit_core_input_touch_handler
+  test_unit_core_input_types
+  test_unit_core_input_vr_handler
+  test_unit_core_rendering_config
+  test_unit_core_rendering_edge_rendering
+  test_unit_core_rendering_engine
+  test_unit_core_rendering_enhanced_shader_validation
+  test_unit_core_rendering_file_based_shader_validation
+  test_unit_core_rendering_ground_plane_checkerboard
+  test_unit_core_rendering_ground_plane_grid
+  test_unit_core_rendering_ground_plane_grid_dynamics
+  test_unit_core_rendering_ground_plane_shader_files
+  test_unit_core_rendering_highlight_shader_validation
+  test_unit_core_rendering_incremental
+  test_unit_core_rendering_inline_shader_validation
+  test_unit_core_rendering_opengl_renderer
+  test_unit_core_rendering_requirements
+  test_unit_core_rendering_shader_attribute_binding
+  test_unit_core_rendering_shader_attribute_validation
+  test_unit_core_rendering_shader_manager
+  test_unit_core_rendering_shader_uniforms
+  test_unit_core_rendering_shader_visual_validation
+  test_unit_core_rendering_state
+  test_unit_core_rendering_stats
+  test_unit_core_rendering_types
+  test_unit_core_selection
+  test_unit_core_selection_box_selector
+  test_unit_core_selection_flood_fill
+  test_unit_core_selection_manager
+  test_unit_core_selection_requirements
+  test_unit_core_selection_set
+  test_unit_core_selection_sphere_selector
+  test_unit_core_selection_types
+  test_unit_core_voxel_data_collision_simple
+  test_unit_core_voxel_data_grid
+  test_unit_core_voxel_data_manager
+  test_unit_core_voxel_data_requirements
+  test_unit_core_voxel_data_sparse_octree
+  test_unit_core_voxel_data_types
+  test_unit_core_voxel_data_workspace_manager
+  test_unit_foundation_config
+  test_unit_foundation_logging
+  test_unit_foundation_math
+
+=== INTEGRATION TESTS ===
+
+  test_integration_clear_command
+  test_integration_cli_application
+  test_integration_cli_command_sequences
+  test_integration_cli_commands
+  test_integration_cli_error_handling
+  test_integration_cli_headless
+  test_integration_cli_rendering
+  test_integration_cli_rendering_basic
+  test_integration_cli_undo_redo_chains
+  test_integration_core_camera_cube_visibility
+  test_integration_core_camera_cube_visibility_simple
+  test_integration_core_ground_plane_voxel_placement
+  test_integration_core_workspace_boundary_placement
+  test_integration_debug_192cm
+  test_integration_face_to_face_alignment
+  test_integration_feedback_overlay_renderer
+  test_integration_feedback_renderer_components
+  test_integration_feedback_requirements_validation
+  test_integration_ground_plane_constraint
+  test_integration_interaction_click_voxel_placement
+  test_integration_interaction_face_clicking
+  test_integration_interaction_mouse_boundary_clicking
+  test_integration_interaction_mouse_ground_plane_clicking
+  test_integration_interaction_mouse_ray_movement
+  test_integration_interaction_voxel_face_clicking
+  test_integration_interaction_voxel_face_clicking_simple
+  test_integration_interaction_zoom_behavior
+  test_integration_overlap_detection
+  test_integration_preview_positioning
+  test_integration_rendering_enhanced_shader_validation
+  test_integration_rendering_multi_mesh_scene_validation
+  test_integration_rendering_opengl_wrapper_validation
+  test_integration_rendering_shader_rendering_comprehensive
+  test_integration_rendering_vao_attribute_validation
+  test_integration_shader_all_shaders_validation
+  test_integration_shader_basic_functionality
+  test_integration_shader_comprehensive_validation
+  test_integration_shader_lighting_validation
+  test_integration_shader_uniform_validation
+  test_integration_shader_validation_comprehensive
+  test_integration_verification_core_functionality
+  test_integration_visual_pixel_validation_helpers
+  test_integration_visual_reference_image_comparison
+  test_integration_visual_shader_output_validation
+
+=== PERFORMANCE TESTS ===
+
+  test_performance_core_rendering_engine
+  test_performance_core_selection
+  test_performance_core_selection_manager
+  test_performance_rendering_shader_benchmark
+
+=== TEST SUMMARY ===
+
+  Unit tests: 61
+  Integration tests: 44
+  Performance tests: 4
+  Total tests: 109
+
+=== USAGE ===
+  To run a specific test: ./build_ninja/bin/<test_name>
+  To run all unit tests: ./run_all_unit.sh
+  To run integration tests: ./run_integration_tests.sh

@@ -1,0 +1,43 @@
+----- File: foundation/config/tests/test_unit_foundation_config_manager.cpp
+
+Test Name: Singleton
+Test Description: Tests ConfigManager singleton pattern ensuring multiple getInstance() calls return the same instance reference
+
+Test Name: DefaultConfiguration
+Test Description: Tests default configuration values are properly loaded including app settings (name="VoxelEditor", version="1.0.0"), rendering settings (vsync=true, msaa=4, max_fps=60), and workspace settings (size_default=5.0f, size_min=2.0f, size_max=8.0f)
+
+Test Name: ValueOperations
+Test Description: Tests basic setValue() and getValue() operations for all supported types (int, float, string, bool), verifying values are stored and retrieved correctly
+
+Test Name: DefaultValues
+Test Description: Tests getValue() with default parameters returns specified default values when keys don't exist rather than throwing exceptions
+
+Test Name: HasValue
+Test Description: Tests hasValue() correctly identifies existing and non-existing configuration keys, including after setValue() operations
+
+Test Name: RemoveValue
+Test Description: Tests removeValue() functionality removes keys from configuration, making hasValue() return false for removed keys
+
+Test Name: SectionAccess
+Test Description: Tests hierarchical configuration section access via getSection(), allowing access to values using dot notation and setting values through section interface
+
+Test Name: CreateSection
+Test Description: Tests createSection() creates nested configuration sections ("new.deep.section"), allowing values to be set through section interface and accessed via full key path
+
+Test Name: EventNotification
+Test Description: Tests configuration change events are dispatched through EventDispatcher when values change, with custom TestConfigHandler receiving ConfigurationChangedEvent
+
+Test Name: GetAllKeys
+Test Description: Tests getAllKeys() returns complete list of configuration keys including defaults and custom keys, with proper key enumeration
+
+Test Name: FileIO
+Test Description: Tests saveToFile() and loadFromFile() functionality with custom values and nested sections, verifying configuration persistence and restoration while preserving defaults
+
+Test Name: StreamIO
+Test Description: Tests saveToStream() and loadFromStream() functionality using stringstream, verifying configuration serialization format and deserialization correctness
+
+Test Name: ConfigFileFormat
+Test Description: Tests loading configuration from formatted text with comments, quoted strings, and various data types (bool, int, string) using proper key=value syntax
+
+Test Name: ThreadSafety
+Test Description: Tests concurrent setValue()/getValue() operations from multiple threads (4 threads, 100 operations each), verifying thread-safe access and data integrity

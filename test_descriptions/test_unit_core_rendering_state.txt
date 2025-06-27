@@ -1,0 +1,58 @@
+----- File: core/rendering/tests/test_unit_core_rendering_state.cpp
+
+Test Name: InitialState
+Test Description: Tests default RenderState after construction including depth test enabled, blending disabled, back-face culling enabled, and zero statistics
+
+Test Name: ResetToDefaultState
+Test Description: Tests reset() method restores all render states to default values after various state changes
+
+Test Name: DepthStateManagement
+Test Description: Tests setDepthTest() and setDepthWrite() methods for enabling/disabling depth testing and depth buffer writing
+
+Test Name: BlendingStateManagement
+Test Description: Tests setBlending() with different blend modes (Alpha, Additive, Multiply) and verifies blend mode persists when blending is disabled
+
+Test Name: CullingStateManagement
+Test Description: Tests setCulling() with different cull modes (Front, Back, None) for face culling configuration
+
+Test Name: PolygonModeManagement
+Test Description: Tests setPolygonMode() for switching between wireframe (true) and filled (false) rendering modes
+
+Test Name: LineAndPointSize
+Test Description: Tests setLineWidth() and setPointSize() methods for configuring line and point rendering parameters
+
+Test Name: ShaderBinding
+Test Description: Tests bindShader() method for binding shader programs including invalid shader ID handling
+
+Test Name: TextureBinding
+Test Description: Tests bindTexture() method for binding textures to different texture slots including invalid texture handling
+
+Test Name: BufferBinding
+Test Description: Tests bindVertexArray(), bindVertexBuffer(), and bindIndexBuffer() for OpenGL buffer object binding
+
+Test Name: StatePersistenceAcrossFrames
+Test Description: Tests that render states persist after flush() simulating frame-to-frame state retention
+
+Test Name: ForceStateChange
+Test Description: Tests forceStateChange() method forces state updates even for redundant state changes
+
+Test Name: ViewportState
+Test Description: Tests setViewport() method for configuring rendering viewport dimensions
+
+Test Name: ClearColorState
+Test Description: Tests setClearColor() method with various colors including predefined colors like Color::Black()
+
+Test Name: StateChangeStatistics
+Test Description: Tests state change tracking including getStateChanges(), getShaderSwitches(), getTextureBinds() and resetStatistics()
+
+Test Name: ScopedStateRestore
+Test Description: Tests ScopedRenderState RAII class automatically restores render state when going out of scope
+
+Test Name: RedundantStateChanges
+Test Description: Tests behavior when setting the same state multiple times (redundant changes)
+
+Test Name: MultipleStateChangesBeforeFlush
+Test Description: Tests that only the final state matters when multiple changes are made before flush()
+
+Test Name: OpenGLStateApplication
+Test Description: Tests actual OpenGL state application with valid context (skipped if no context available)

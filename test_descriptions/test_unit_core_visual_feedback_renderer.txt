@@ -1,0 +1,61 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_renderer.cpp
+
+Test Name: Construction
+Test Description: Verifies that FeedbackRenderer can be constructed without crashing when passed a null renderer
+
+Test Name: StateManagement
+Test Description: Tests animation pausing and debug overlay enable/disable functionality without OpenGL dependencies
+
+Test Name: FaceValidation
+Test Description: Validates Face object construction with valid and invalid voxel positions
+
+Test Name: PreviewPositionValidation
+Test Description: Tests voxel preview rendering with valid, boundary, and invalid positions to ensure no exceptions are thrown
+
+Test Name: SelectionBoundsCalculation
+Test Description: Tests selection rendering with non-empty and empty selection sets, including custom color rendering
+
+Test Name: GroupVisualization
+Test Description: Validates group outline and bounds rendering functionality with custom colors
+
+Test Name: WorkspaceBoundsVisualization
+Test Description: Tests workspace bounds rendering and workspace visualization enable/disable state management
+
+Test Name: PerformanceMetrics
+Test Description: Verifies performance metrics rendering with frame time, vertex count, draw calls, and memory usage data
+
+Test Name: AnimationTimingCalculations
+Test Description: Tests animation update logic with different delta times and animation speed settings
+
+Test Name: RenderOrderValidation
+Test Description: Validates render order setting and retrieval with various values (0, 500, 1000)
+
+Test Name: ComponentAccess
+Test Description: Ensures safe access to FeedbackRenderer components (FaceDetector, HighlightRenderer, OutlineRenderer, OverlayRenderer)
+
+Test Name: StateUpdateLogic
+Test Description: Tests repeated update calls and animation pausing state persistence without rendering
+
+Test Name: DisabledStateValidation
+Test Description: Verifies that validation and rendering methods work correctly when renderer is disabled
+
+Test Name: ComplexSceneValidation
+Test Description: Tests comprehensive validation with faces, preview positions, selection bounds, and performance metrics formatting
+
+Test Name: VoxelPreviewColorLogic
+Test Description: Validates preview color logic returns green (0,1,0) for valid placement and red (1,0,0) for invalid placement per REQ-4.1.1 and REQ-4.1.2
+
+Test Name: MultipleResolutionValidation
+Test Description: Tests preview position validation and color generation for all 10 voxel resolutions (1cm to 512cm) per REQ-2.2.4
+
+Test Name: GridParameterValidation
+Test Description: Validates grid parameters including center, extent, and cursor position, rejecting negative or excessive extents per REQ-1.1.1, REQ-1.1.3, REQ-1.1.4, REQ-1.2.2
+
+Test Name: PreviewCalculationPerformance
+Test Description: Performance test ensuring 1000 preview color calculations complete in under 1ms per REQ-4.1.3
+
+Test Name: HighlightColorLogic
+Test Description: Verifies face highlighting uses yellow color (1,1,0) and maintains consistency across different faces per REQ-4.2.1
+
+Test Name: WorkspaceScalingValidation
+Test Description: Tests grid parameter validation and grid info calculation for various workspace extents (2m to 8m) per REQ-6.2.2

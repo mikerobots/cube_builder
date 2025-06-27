@@ -82,12 +82,20 @@ private:
     bool m_orbitMode = false;
     bool m_panMode = false;
     
+    // Ray visualization for debugging
+    bool m_rayVisualizationEnabled = false;
+    
     // Helper methods
     bool performRaycast(const Math::Ray& ray, VisualFeedback::Face& hitFace) const;
     void updateHoverState();
     void placeVoxel();
     void removeVoxel();
     void centerCameraOnVoxels();
+    
+public:
+    // Debug ray visualization
+    void setRayVisualizationEnabled(bool enabled) { m_rayVisualizationEnabled = enabled; }
+    bool isRayVisualizationEnabled() const { return m_rayVisualizationEnabled; }
     
 protected:
     // Made protected for testing

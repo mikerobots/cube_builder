@@ -1,0 +1,19 @@
+----- File: core/selection/tests/test_performance_core_selection_manager.cpp
+
+Test Name: LargeSelectionAddRemove
+Test Description: Performance test for adding/removing 10,000 voxels, testing add time (<5s), stats calculation (<500ms), and clearing (<100ms)
+
+Test Name: BoxSelectorHighResolution
+Test Description: Performance test for box selection with 1cm resolution creating ~500,000 voxels, should complete in <10 seconds
+
+Test Name: SphereSelectorVaryingRadii
+Test Description: Performance test for sphere selection with varying radii (0.1f to 1.0f), each should complete in <5 seconds
+
+Test Name: SelectionSetOperations
+Test Description: Performance test for set operations (union, intersection, filter) on 5000-element sets, each operation should complete in <1 second
+
+Test Name: UndoRedoLargeSelections
+Test Description: Performance test for undo/redo with 100 history entries of 1000 voxels each, testing creation (<10s), undo/redo (<2s each)
+
+Test Name: FloodFillMaximumStress
+Test Description: Stress test for flood fill with 10,000 voxel limit, should complete within 30 seconds even at maximum

@@ -67,19 +67,48 @@ struct Mesh {
     void transform(const Math::Matrix4f& matrix);
 };
 
+// Smoothing algorithms available
+enum class SmoothingAlgorithm {
+    Auto,        // Automatically select based on smoothing level
+    Laplacian,   // Basic smoothing (levels 1-3)
+    Taubin,      // Feature-preserving smoothing (levels 4-7)
+    BiLaplacian  // Aggressive smoothing (levels 8-10+)
+};
+
+// Preview quality levels for real-time updates
+enum class PreviewQuality {
+    Disabled,    // No preview mode optimizations
+    Fast,        // Fastest preview: minimal iterations, simplified algorithm
+    Balanced,    // Balanced preview: moderate quality with good performance  
+    HighQuality  // High quality preview: near-final quality with slight optimizations
+};
+
 // Surface generation settings
 struct SurfaceSettings {
     float adaptiveError = 0.01f;        // Error threshold for adaptive subdivision
     bool generateNormals = true;        // Generate vertex normals
     bool generateUVs = false;           // Generate UV coordinates
-    int smoothingIterations = 0;        // Number of smoothing iterations
+    int smoothingIterations = 0;        // Number of smoothing iterations (deprecated - use smoothingLevel)
     float simplificationRatio = 1.0f;   // Mesh simplification ratio (0-1)
-    bool preserveSharpFeatures = true;  // Preserve sharp features
+    bool preserveSharpFeatures = true;  // Preserve sharp features (deprecated - controlled by smoothing)
     float sharpFeatureAngle = 30.0f;    // Angle threshold for sharp features
+    
+    // New smoothing parameters
+    int smoothingLevel = 0;             // Smoothing level (0-10+), 0 = no smoothing
+    SmoothingAlgorithm smoothingAlgorithm = SmoothingAlgorithm::Auto; // Algorithm selection
+    bool preserveTopology = true;       // Preserve holes and loops during smoothing
+    float minFeatureSize = 1.0f;        // Minimum feature size in mm for 3D printing
+    PreviewQuality previewQuality = PreviewQuality::Disabled; // Preview optimization level
+    bool usePreviewQuality = false;     // Deprecated: use previewQuality instead
     
     static SurfaceSettings Default();
     static SurfaceSettings Preview();
     static SurfaceSettings Export();
+    
+    // Convenience methods for different preview quality levels
+    static SurfaceSettings FastPreview();      // Fastest preview mode
+    static SurfaceSettings BalancedPreview();  // Balanced preview mode  
+    static SurfaceSettings HighQualityPreview(); // High quality preview mode
     
     bool operator==(const SurfaceSettings& other) const;
     bool operator!=(const SurfaceSettings& other) const { return !(*this == other); }

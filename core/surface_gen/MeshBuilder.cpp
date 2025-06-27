@@ -1069,8 +1069,114 @@ void MeshUtils::removeDegenerateTriangles(Mesh& mesh, float epsilon) {
 }
 
 void MeshUtils::fillHoles(Mesh& mesh) {
-    // TODO: Implement hole filling algorithm
-    // This is complex and would involve finding boundary loops and triangulating them
+    // Find boundary edges (edges with only one adjacent face)
+    std::unordered_map<uint64_t, std::vector<uint32_t>> edgeFaces;
+    
+    // Helper to create edge key
+    auto edgeKey = [](uint32_t v0, uint32_t v1) -> uint64_t {
+        if (v0 > v1) std::swap(v0, v1);
+        return (static_cast<uint64_t>(v0) << 32) | v1;
+    };
+    
+    // Build edge-face adjacency
+    for (size_t i = 0; i < mesh.indices.size(); i += 3) {
+        uint32_t faceIdx = i / 3;
+        uint32_t v0 = mesh.indices[i];
+        uint32_t v1 = mesh.indices[i + 1];
+        uint32_t v2 = mesh.indices[i + 2];
+        
+        edgeFaces[edgeKey(v0, v1)].push_back(faceIdx);
+        edgeFaces[edgeKey(v1, v2)].push_back(faceIdx);
+        edgeFaces[edgeKey(v2, v0)].push_back(faceIdx);
+    }
+    
+    // Find boundary edges
+    std::vector<std::pair<uint32_t, uint32_t>> boundaryEdges;
+    for (const auto& [key, faces] : edgeFaces) {
+        if (faces.size() == 1) {
+            uint32_t v0 = key >> 32;
+            uint32_t v1 = key & 0xFFFFFFFF;
+            boundaryEdges.push_back({v0, v1});
+        }
+    }
+    
+    if (boundaryEdges.empty()) {
+        return; // No holes to fill
+    }
+    
+    // Build boundary vertex adjacency
+    std::unordered_map<uint32_t, std::vector<uint32_t>> boundaryAdjacency;
+    for (const auto& edge : boundaryEdges) {
+        boundaryAdjacency[edge.first].push_back(edge.second);
+        boundaryAdjacency[edge.second].push_back(edge.first);
+    }
+    
+    // Trace boundary loops
+    std::unordered_set<uint32_t> visited;
+    std::vector<std::vector<uint32_t>> holes;
+    
+    for (const auto& edge : boundaryEdges) {
+        if (visited.count(edge.first) > 0) continue;
+        
+        std::vector<uint32_t> loop;
+        uint32_t current = edge.first;
+        uint32_t previous = UINT32_MAX;
+        
+        while (true) {
+            loop.push_back(current);
+            visited.insert(current);
+            
+            // Find next vertex
+            uint32_t next = UINT32_MAX;
+            for (uint32_t neighbor : boundaryAdjacency[current]) {
+                if (neighbor != previous) {
+                    next = neighbor;
+                    break;
+                }
+            }
+            
+            if (next == UINT32_MAX || next == edge.first || visited.count(next) > 0) {
+                break;
+            }
+            
+            previous = current;
+            current = next;
+        }
+        
+        if (loop.size() >= 3) {
+            holes.push_back(loop);
+        }
+    }
+    
+    // Fill each hole with simple planar triangulation
+    for (const auto& hole : holes) {
+        if (hole.size() < 3) continue;
+        
+        // Calculate centroid
+        Math::Vector3f centroid(0.0f);
+        for (uint32_t v : hole) {
+            centroid += mesh.vertices[v].value();
+        }
+        centroid = centroid / static_cast<float>(hole.size());
+        
+        // Add centroid as new vertex
+        uint32_t centerIdx = mesh.vertices.size();
+        mesh.vertices.push_back(Math::WorldCoordinates(centroid));
+        
+        // Create triangles from boundary to center
+        for (size_t i = 0; i < hole.size(); ++i) {
+            uint32_t v0 = hole[i];
+            uint32_t v1 = hole[(i + 1) % hole.size()];
+            
+            // Add triangle (ensuring correct winding)
+            mesh.indices.push_back(v0);
+            mesh.indices.push_back(v1);
+            mesh.indices.push_back(centerIdx);
+        }
+    }
+    
+    // Recalculate normals after filling holes
+    mesh.calculateNormals();
 }
 
 void MeshUtils::makeWatertight(Mesh& mesh) {

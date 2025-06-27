@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include <fstream>
+#include <cassert>
 
 // Include OpenGL headers
 #ifdef __APPLE__
@@ -28,7 +29,7 @@ GroundPlaneGrid::GroundPlaneGrid(ShaderManager* shaderManager, OpenGLRenderer* g
     , m_shaderManager(shaderManager)
     , m_glRenderer(glRenderer)
     , m_initialized(false)
-    , m_visible(true)
+    , m_visible(false)
     , m_currentWorkspaceSize(0.0f, 0.0f, 0.0f)
     , m_baseOpacity(0.35f)
     , m_nearOpacity(0.65f)
@@ -137,7 +138,7 @@ void GroundPlaneGrid::setForceMaxOpacity(bool forceMaxOpacity) {
 
 void GroundPlaneGrid::render(const Matrix4f& viewMatrix, 
                              const Matrix4f& projMatrix) {
-    if (!m_initialized || !m_visible || m_lineCount == 0 || m_shader == InvalidId) {
+    if (!m_initialized || !m_visible || m_lineCount == 0 || m_shader == InvalidId || m_vbo == InvalidId || m_vao == 0) {
         return;
     }
     
@@ -169,10 +170,9 @@ void GroundPlaneGrid::render(const Matrix4f& viewMatrix,
     
     m_glRenderer->drawArrays(PrimitiveType::Lines, 0, m_lineCount * 2);
     
-    // Check for OpenGL errors (only log first few frames to avoid spam)
-    static int errorLogCount = 0;
+    // Check for OpenGL errors after rendering
     GLenum error = glGetError();
-    if (error != GL_NO_ERROR && errorLogCount < 5) {
+    if (error != GL_NO_ERROR) {
         const char* errorStr = nullptr;
         switch (error) {
             case GL_INVALID_ENUM: errorStr = "GL_INVALID_ENUM"; break;
@@ -183,7 +183,8 @@ void GroundPlaneGrid::render(const Matrix4f& viewMatrix,
             default: errorStr = "Unknown error"; break;
         }
         Logging::Logger::getInstance().error("GroundPlaneGrid GL error: " + std::string(errorStr));
-        errorLogCount++;
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "OpenGL error in GroundPlaneGrid - failing hard to catch issues early");
     }
     
     // Restore state

@@ -12,7 +12,6 @@ target_include_directories(test_integration_shader_comprehensive_validation PRIV
 
 target_link_libraries(test_integration_shader_comprehensive_validation PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     VoxelEditor_Logging
     OpenGL::GL
     glfw
@@ -62,7 +61,6 @@ target_include_directories(test_integration_rendering_multi_mesh_scene_validatio
 
 target_link_libraries(test_integration_rendering_multi_mesh_scene_validation PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     OpenGL::GL
     glfw
     glad
@@ -89,7 +87,6 @@ target_include_directories(test_integration_shader_uniform_validation PRIVATE
 
 target_link_libraries(test_integration_shader_uniform_validation PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     VoxelEditor_Logging
     OpenGL::GL
     glfw
@@ -117,7 +114,6 @@ target_include_directories(test_performance_rendering_shader_benchmark PRIVATE
 
 target_link_libraries(test_performance_rendering_shader_benchmark PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     VoxelEditor_Logging
     OpenGL::GL
     glfw
@@ -145,7 +141,6 @@ target_include_directories(test_integration_visual_reference_image_comparison PR
 
 target_link_libraries(test_integration_visual_reference_image_comparison PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     VoxelEditor_Logging
     OpenGL::GL
     glfw
@@ -173,7 +168,6 @@ target_include_directories(test_integration_shader_lighting_validation PRIVATE
 
 target_link_libraries(test_integration_shader_lighting_validation PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     VoxelEditor_Logging
     OpenGL::GL
     glfw
@@ -198,7 +192,6 @@ target_include_directories(test_integration_shader_validation_comprehensive PRIV
 
 target_link_libraries(test_integration_shader_validation_comprehensive PRIVATE
     VoxelEditor_Rendering
-    VoxelEditor_Math
     VoxelEditor_Logging
     OpenGL::GL
     glfw

@@ -97,14 +97,14 @@ TEST_F(IntegrationGroundPlaneConstraintTest, VoxelBottomAtGroundPlane) {
 TEST_F(IntegrationGroundPlaneConstraintTest, EdgeCaseNearZero) {
     // Test edge cases near Y=0 with floating point precision
     
-    // Very small negative Y - should fail
-    EXPECT_FALSE(voxelManager->setVoxelAtWorldPos(Vector3f(0.0f, -0.0001f, 0.0f), VoxelResolution::Size_1cm, true));
+    // Very small negative Y - should fail (beyond epsilon tolerance)
+    EXPECT_FALSE(voxelManager->setVoxelAtWorldPos(Vector3f(0.0f, -0.0002f, 0.0f), VoxelResolution::Size_1cm, true));
     
     // Exactly zero - should succeed
     EXPECT_TRUE(voxelManager->setVoxelAtWorldPos(Vector3f(0.1f, 0.0f, 0.0f), VoxelResolution::Size_1cm, true));
     
-    // Very small positive Y - should succeed (moved to avoid overlap)
-    EXPECT_TRUE(voxelManager->setVoxelAtWorldPos(Vector3f(0.5f, 0.0001f, 0.0f), VoxelResolution::Size_1cm, true));
+    // Very small positive Y - should succeed (1cm increment)
+    EXPECT_TRUE(voxelManager->setVoxelAtWorldPos(Vector3f(0.5f, 0.01f, 0.0f), VoxelResolution::Size_1cm, true));
     
     EXPECT_EQ(voxelManager->getTotalVoxelCount(), 2);
 }

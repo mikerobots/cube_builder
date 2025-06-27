@@ -1,0 +1,28 @@
+----- File: core/undo_redo/tests/test_unit_core_undo_redo_command.cpp
+
+Test Name: BasicExecuteUndo
+Test Description: Tests basic Command pattern implementation with execute and undo operations on an integer value
+
+Test Name: BasicUndoRedo
+Test Description: Validates HistoryManager's basic undo/redo functionality with multiple commands, checking state transitions
+
+Test Name: RedoStackClear
+Test Description: Verifies that executing a new command after undoing clears the redo stack properly
+
+Test Name: HistoryLimit
+Test Description: Tests history size limit enforcement, ensuring only specified number of commands can be undone
+
+Test Name: BasicComposite
+Test Description: Validates CompositeCommand execution and undo for multiple operations as a single atomic unit
+
+Test Name: PartialFailure
+Test Description: Tests CompositeCommand rollback behavior when one command in the composite fails during execution
+
+Test Name: BasicTransaction
+Test Description: Verifies Transaction class functionality with immediate command execution and commit to composite command
+
+Test Name: AutoRollback
+Test Description: Tests automatic rollback of transaction commands when Transaction object goes out of scope without commit
+
+Test Name: ManualRollback
+Test Description: Validates manual rollback functionality of Transaction class, reverting all executed commands

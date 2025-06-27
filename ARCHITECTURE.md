@@ -46,6 +46,7 @@ The system is built with a modular architecture centered around a shared core li
 - `WorkspaceManager` - Handles workspace bounds and resizing
 - **Coordinate System**: Centered at (0,0,0) with Y-up orientation
 - **Precision**: 1cm increment positioning with ground plane constraint (Y ≥ 0)
+- **Voxel Placement**: Voxels are placed on the ground plane, not centered on it (bottom face at Y = 0)
 - **Collision Detection**: Prevents overlapping placements across all resolutions
 
 #### Key Classes:
@@ -66,7 +67,7 @@ private:
 
 #### Tests:
 - Voxel placement and retrieval with 1cm precision
-- Position validation (Y ≥ 0 constraint, workspace bounds)
+- Position validation (Y ≥ 0 constraint, workspace bounds, voxels on ground plane)
 - Collision detection across multiple resolutions
 - Resolution switching performance (<100ms)
 - Workspace resizing and coordinate system integrity
@@ -108,31 +109,60 @@ private:
 
 ### 3. Surface Generation (`SurfaceGenerator`)
 
-**Purpose**: Converts voxel data to smooth 3D meshes
+**Purpose**: Converts voxel data to smooth, non-voxel-appearing 3D meshes for 3D printing
 **Dependencies**: Voxel Data Manager, Math Utils
 
 #### Components:
-- `DualContouring` - Core algorithm implementation
-- `MeshBuilder` - Constructs output meshes
+- `DualContouring` - Base mesh generation with topology preservation
+- `MeshSmoother` - Progressive smoothing algorithms (Laplacian, Taubin, etc.)
+- `TopologyPreserver` - Maintains loops, holes, and complex geometry
+- `MeshValidator` - Ensures watertight, manifold output
+- `MeshBuilder` - Constructs final optimized meshes
 - `LODManager` - Level-of-detail optimization
+- **Smoothing Pipeline**: Multi-stage process to eliminate blocky appearance
+- **User Control**: 0-10+ smoothing levels with real-time preview
 
 #### Key Classes:
 ```cpp
 class SurfaceGenerator {
 public:
     Mesh generateSurface(const VoxelGrid& grid, float isoValue = 0.5f);
+    Mesh generateSmoothedSurface(const VoxelGrid& grid, int smoothingLevel);
     Mesh generateLOD(const VoxelGrid& grid, int lodLevel);
+    void setSmoothingAlgorithm(SmoothingType type);
     void setQualitySettings(const SurfaceQuality& settings);
+    bool validateMeshForPrinting(const Mesh& mesh, float minFeatureSize = 1.0f);
     
 private:
     DualContouring m_algorithm;
+    MeshSmoother m_smoother;
+    TopologyPreserver m_topologyPreserver;
+    MeshValidator m_validator;
     MeshBuilder m_meshBuilder;
     LODManager m_lodManager;
+};
+
+class MeshSmoother {
+public:
+    enum class Algorithm {
+        None,          // Level 0: Raw dual contouring output
+        Laplacian,     // Levels 1-3: Basic smoothing
+        Taubin,        // Levels 4-7: Feature-preserving smoothing
+        BiLaplacian    // Levels 8-10+: Aggressive smoothing
+    };
+    
+    Mesh smooth(const Mesh& input, int iterations, Algorithm algo);
+    void setTopologyConstraints(const TopologyConstraints& constraints);
 };
 ```
 
 #### Tests:
-- Mesh generation accuracy
+- Mesh generation accuracy with topology preservation
+- Smoothing level progression (visual validation)
+- Topology preservation (loops, holes maintained)
+- Watertight/manifold validation
+- Minimum feature size constraints
+- Real-time preview performance (<100ms updates)
 - Edge case handling (empty grids, single voxels)
 - LOD quality verification
 - Performance benchmarks
@@ -258,6 +288,7 @@ private:
 - `FaceDetector` - Ray-casting for face selection
 - `PreviewManager` - Coordinates preview state and snapping
 - **Ground Plane Grid**: 32cm squares, dynamic opacity (35%/65%)
+- **Voxel Placement**: Visual feedback shows voxels placed on ground plane (Y ≥ 0)
 - **Performance**: <16ms preview updates, 60+ FPS grid rendering
 
 #### Key Classes:

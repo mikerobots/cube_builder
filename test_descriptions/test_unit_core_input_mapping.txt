@@ -1,0 +1,55 @@
+----- File: core/input/tests/test_unit_core_input_mapping.cpp
+
+Test Name: InputMappingTest.DefaultConstruction
+Test Description: Tests default construction of InputMapping. Verifies that all sensitivity values default to 1.0, timeout and threshold values are set to reasonable defaults, and all input mapping containers (mouse buttons, keys, gestures) are empty.
+
+Test Name: InputMappingTest.MouseButtonBinding
+Test Description: Tests basic mouse button to action binding. Verifies that mouse buttons can be bound to actions (Left→PLACE_VOXEL, Right→REMOVE_VOXEL, Middle→PAN_CAMERA) and correctly retrieved, with unbound buttons returning empty actions.
+
+Test Name: InputMappingTest.MouseButtonWithModifiers
+Test Description: Tests mouse button bindings with modifier keys. Verifies that the same mouse button can have different actions based on modifiers (Shift+Left→SELECT_VOXEL, Ctrl+Left→SELECT_MULTIPLE) and returns empty when queried without modifiers.
+
+Test Name: InputMappingTest.KeyBinding
+Test Description: Tests keyboard key to action binding. Verifies that keys can be bound to actions (Space→RESET_CAMERA, Delete→DELETE, F→FRAME_SELECTION) and correctly retrieved, with unbound keys returning empty actions.
+
+Test Name: InputMappingTest.KeyWithModifiers
+Test Description: Tests keyboard bindings with modifier keys. Verifies complex key combinations like Ctrl+Z→UNDO, Ctrl+Y→REDO, Ctrl+S→SAVE_FILE, and Ctrl+Shift+S→SAVE_AS work correctly, distinguishing between different modifier combinations.
+
+Test Name: InputMappingTest.KeyCombinationBinding
+Test Description: Tests KeyCombination object binding. Verifies that KeyCombination objects combining keys and modifiers can be bound to actions and retrieved correctly, with unknown combinations returning empty actions.
+
+Test Name: InputMappingTest.TouchGestureBinding
+Test Description: Tests touch gesture to action binding. Verifies that touch gestures (Tap→SELECT_VOXEL, Pinch→ZOOM_CAMERA, Pan→PAN_CAMERA, TwoFingerPan→ORBIT_CAMERA) can be bound and retrieved, with unbound gestures returning empty.
+
+Test Name: InputMappingTest.VRGestureBinding
+Test Description: Tests VR gesture to action binding. Verifies that VR gestures (Point→VR_POINT, Grab→VR_GRAB, Pinch→PLACE_VOXEL, TwoHandScale→VR_SCALE) can be bound and retrieved correctly.
+
+Test Name: InputMappingTest.SensitivitySettings
+Test Description: Tests sensitivity configuration for different input devices. Verifies that mouse, touch, and VR sensitivity values can be set and retrieved correctly.
+
+Test Name: InputMappingTest.MouseConfiguration
+Test Description: Tests mouse-specific configuration parameters. Verifies that click timeout, double-click timeout, and drag threshold values can be modified and persist correctly.
+
+Test Name: InputMappingTest.TouchConfiguration
+Test Description: Tests touch-specific configuration parameters. Verifies that tap timeout, tap radius, pinch threshold, and swipe threshold values can be set and retrieved correctly.
+
+Test Name: InputMappingTest.VRComfortSettings
+Test Description: Tests VR comfort settings presets. Verifies that comfort mode enables snap turning, vignette, and teleport movement while disabling smooth movement, and performance mode does the opposite.
+
+Test Name: InputMappingTest.PresetMappings
+Test Description: Tests predefined input mapping presets. Verifies that Default, Gaming, Accessibility, and VROptimized presets all create valid InputMapping configurations.
+
+Test Name: InputMappingTest.Validation
+Test Description: Tests basic validation of input mappings. Verifies that empty mappings are valid and remain valid after adding mouse button and key bindings.
+
+Test Name: InputMappingTest.ValidationMessages
+Test Description: Tests validation message generation for invalid configurations. Verifies that negative sensitivity values, negative tap radius, and zero drag threshold are detected as validation issues.
+
+Test Name: InputMappingTest.ActionConstants
+Test Description: Tests action constant definitions and uniqueness. Verifies that action constants are distinct strings and have expected values like "place_voxel", "orbit_camera", "select_voxel", "undo", and "vr_grab".
+
+Test Name: InputMappingTest.FileSerialization
+Test Description: Tests saving and loading input mappings to/from files. Verifies that bindings, sensitivities, and other settings persist correctly through file serialization and deserialization.
+
+Test Name: InputMappingTest.JsonSerialization
+Test Description: Tests JSON serialization of input mappings. Verifies that mappings can be converted to JSON format containing the expected values, though full deserialization verification is pending implementation.

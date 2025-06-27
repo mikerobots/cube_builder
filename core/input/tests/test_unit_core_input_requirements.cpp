@@ -166,7 +166,8 @@ TEST_F(InputRequirementsTest, VoxelsPlaceableAt1cmIncrements_REQ_2_1_1) {
         Vector3f(-0.123f, 0.0f, -0.456f)
     };
     
-    for (const auto& worldPos : testPositions) {
+    for (const auto& worldPosVec : testPositions) {
+        WorldCoordinates worldPos(worldPosVec);
         IncrementCoordinates snapped = PlacementUtils::snapToValidIncrement(worldPos);
         
         // Verify snapping to 1cm increments
@@ -193,7 +194,7 @@ TEST_F(InputRequirementsTest, VoxelsPlaceableAt1cmIncrements_REQ_2_1_1) {
 TEST_F(InputRequirementsTest, PreviewSnapsToNearest1cmIncrement_REQ_2_2_2) {
     // REQ-2.2.2: The preview shall snap to the nearest valid 1cm increment position
     
-    Vector3f worldPos(0.126f, 0.234f, 0.357f);
+    WorldCoordinates worldPos(Vector3f(0.126f, 0.234f, 0.357f));
     IncrementCoordinates snapped = PlacementUtils::snapToValidIncrement(worldPos);
     
     // Should snap to nearest 1cm: (0.13, 0.23, 0.36)
@@ -226,15 +227,16 @@ TEST_F(InputRequirementsTest, AllVoxelSizesPlaceableAtGroundPlane_REQ_2_2_4) {
         
         // Test positions that are safely within bounds considering voxel size
         for (int i = -30; i <= 30; i += 13) { // More conservative range
-            Vector3f worldPos(i * 0.01f, 0.0f, i * 0.01f);
+            Vector3f worldPosVec(i * 0.01f, 0.0f, i * 0.01f);
             
             // Check if this position plus half voxel size is within bounds
-            if (std::abs(worldPos.x) + halfVoxel > 5.0f || 
-                std::abs(worldPos.z) + halfVoxel > 5.0f) {
+            if (std::abs(worldPosVec.x) + halfVoxel > 5.0f || 
+                std::abs(worldPosVec.z) + halfVoxel > 5.0f) {
                 continue;
             }
             
             // With shift key (allowing 1cm increments)
+            WorldCoordinates worldPos(worldPosVec);
             PlacementContext context = PlacementUtils::getPlacementContext(
                 worldPos, resolution, true, Vector3f(10.0f, 10.0f, 10.0f));
             
@@ -250,19 +252,21 @@ TEST_F(InputRequirementsTest, AllVoxelSizesPlaceableAtGroundPlane_REQ_2_2_4) {
 }
 
 TEST_F(InputRequirementsTest, SameSizeVoxelsAutoSnap_REQ_3_1_1) {
-    // REQ-3.1.1: Same-size voxels shall auto-snap to perfect alignment by default
+    // REQ-3.1.1: Same-size voxels shall achieve face-to-face alignment when placed adjacent
+    // Note: This is NOT about grid snapping - it's about proper adjacent placement
     
     // Place a 32cm voxel
     m_voxelManager->setVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_32cm, true);
     
-    // Test snapping near the voxel (without shift)
-    Vector3f nearVoxel(0.35f, 0.0f, 0.35f); // Near but not aligned
+    // Test placement position near the voxel
+    WorldCoordinates nearVoxel(Vector3f(0.35f, 0.0f, 0.35f)); // 35cm position
     IncrementCoordinates snapped = PlacementUtils::snapToSameSizeVoxel(
         nearVoxel, VoxelResolution::Size_32cm, *m_voxelManager, false);
     
-    // Should snap to 32cm grid
-    EXPECT_EQ(snapped.x() % 32, 0);
-    EXPECT_EQ(snapped.z() % 32, 0);
+    // With new requirements, voxels place at exact 1cm positions - no grid snapping
+    // The position should snap to nearest 1cm increment: 35cm
+    EXPECT_EQ(snapped.x(), 35);
+    EXPECT_EQ(snapped.z(), 35);
 }
 
 TEST_F(InputRequirementsTest, PlacementRespects1cmIncrementsOnFace_REQ_3_2_2) {
@@ -270,7 +274,7 @@ TEST_F(InputRequirementsTest, PlacementRespects1cmIncrementsOnFace_REQ_3_2_2) {
     
     // Test surface face snapping
     IncrementCoordinates surfaceVoxel(100, 0, 100);
-    Vector3f hitPoint(1.32f, 0.15f, 1.15f); // On positive X face
+    WorldCoordinates hitPoint(Vector3f(1.32f, 0.15f, 1.15f)); // On positive X face
     
     IncrementCoordinates snapped = PlacementUtils::snapToSurfaceFaceGrid(
         hitPoint, surfaceVoxel, VoxelResolution::Size_32cm, 
@@ -283,7 +287,7 @@ TEST_F(InputRequirementsTest, PlacementRespects1cmIncrementsOnFace_REQ_3_2_2) {
 TEST_F(InputRequirementsTest, PreviewSnapsToNearestValidPosition_REQ_3_2_3) {
     // REQ-3.2.3: The preview shall snap to nearest valid position
     
-    Vector3f testPos(1.567f, 0.234f, 2.891f);
+    WorldCoordinates testPos(Vector3f(1.567f, 0.234f, 2.891f));
     IncrementCoordinates snapped = PlacementUtils::snapToValidIncrement(testPos);
     
     // Should snap to nearest cm
@@ -424,7 +428,7 @@ TEST_F(InputRequirementsTest, SystemValidatesPlacementBeforeAllowing_REQ_5_2_2) 
     // REQ-5.2.2: System shall validate placement before allowing it
     
     // Test complete validation flow
-    Vector3f worldPos(1.0f, 0.5f, 1.0f);
+    WorldCoordinates worldPos(Vector3f(1.0f, 0.5f, 1.0f));
     PlacementContext context = PlacementUtils::getPlacementContext(
         worldPos, VoxelResolution::Size_32cm, false, m_workspaceSize);
     
@@ -467,7 +471,7 @@ TEST_F(InputRequirementsTest, ShiftAllowsPlacementAtAny1cmIncrement_REQ_3_1_2) {
     EXPECT_TRUE(m_keyboardHandler->isKeyPressed(KeyCode::Shift));
     
     // Test placement with shift
-    Vector3f worldPos(1.234f, 0.567f, 2.891f);
+    WorldCoordinates worldPos(Vector3f(1.234f, 0.567f, 2.891f));
     IncrementCoordinates withShift = PlacementUtils::snapToGridAligned(
         worldPos, VoxelResolution::Size_32cm, true);
     
@@ -478,21 +482,25 @@ TEST_F(InputRequirementsTest, ShiftAllowsPlacementAtAny1cmIncrement_REQ_3_1_2) {
 }
 
 TEST_F(InputRequirementsTest, ShiftOverridesAutoSnapForSameSize_REQ_5_4_1) {
-    // REQ-5.4.1: Shift key shall override auto-snap for same-size voxels
+    // REQ-5.4.1: Shift key behavior with new requirements
+    // Note: With new requirements, there's no auto-snap to override
+    // All voxels always place at 1cm increments regardless of shift
     
     m_voxelManager->setVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_32cm, true);
     
-    Vector3f nearVoxel(0.35f, 0.0f, 0.35f);
+    WorldCoordinates nearVoxel(Vector3f(0.35f, 0.0f, 0.35f));
     
-    // Without shift - should snap to grid
+    // Without shift - places at exact 1cm position (no grid snapping)
     IncrementCoordinates noShift = PlacementUtils::snapToSameSizeVoxel(
         nearVoxel, VoxelResolution::Size_32cm, *m_voxelManager, false);
-    EXPECT_EQ(noShift.x() % 32, 0);
+    EXPECT_EQ(noShift.x(), 35);  // Exact 1cm position
+    EXPECT_EQ(noShift.z(), 35);
     
-    // With shift - should allow 1cm increments
+    // With shift - also places at exact 1cm position (same behavior)
     IncrementCoordinates withShift = PlacementUtils::snapToSameSizeVoxel(
         nearVoxel, VoxelResolution::Size_32cm, *m_voxelManager, true);
-    EXPECT_EQ(withShift.x(), 35); // Exact 1cm position
+    EXPECT_EQ(withShift.x(), 35); // Same exact position
+    EXPECT_EQ(withShift.z(), 35);
 }
 
 TEST_F(InputRequirementsTest, NoRotationControls_REQ_5_4_2) {
@@ -522,7 +530,7 @@ TEST_F(InputRequirementsTest, CurrentVoxelSizeControlledByResolution_REQ_5_3_1) 
         VoxelResolution::Size_512cm
     };
     
-    Vector3f testPos(1.0f, 0.0f, 1.0f);
+    WorldCoordinates testPos(Vector3f(1.0f, 0.0f, 1.0f));
     
     for (auto res : resolutions) {
         PlacementContext context = PlacementUtils::getPlacementContext(
@@ -537,7 +545,7 @@ TEST_F(InputRequirementsTest, ResolutionChangedViaCommand_REQ_5_3_2) {
     // This is a CLI requirement - test that resolution parameter is used
     
     VoxelResolution testRes = VoxelResolution::Size_16cm;
-    Vector3f pos(0.5f, 0.0f, 0.5f);
+    WorldCoordinates pos(Vector3f(0.5f, 0.0f, 0.5f));
     
     PlacementContext context = PlacementUtils::getPlacementContext(
         pos, testRes, false, m_workspaceSize);
@@ -554,7 +562,7 @@ TEST_F(InputRequirementsTest, PreviewUpdatesSmoothAndResponsive_REQ_4_1_3) {
     auto start = std::chrono::high_resolution_clock::now();
     
     // Simulate preview update calculation
-    Vector3f worldPos(1.234f, 0.567f, 2.891f);
+    WorldCoordinates worldPos(Vector3f(1.234f, 0.567f, 2.891f));
     PlacementContext context = PlacementUtils::getPlacementContext(
         worldPos, VoxelResolution::Size_32cm, false, m_workspaceSize);
     
@@ -571,7 +579,7 @@ TEST_F(InputRequirementsTest, FaceHighlightingUpdatesWithinOneFrame_REQ_6_1_3) {
     auto start = std::chrono::high_resolution_clock::now();
     
     // Simulate face detection calculation
-    Vector3f hitPoint(1.0f, 0.5f, 1.0f);
+    WorldCoordinates hitPoint(Vector3f(1.0f, 0.5f, 1.0f));
     IncrementCoordinates voxelPos(100, 0, 100);
     
     // Snap to surface face (part of highlighting calculation)

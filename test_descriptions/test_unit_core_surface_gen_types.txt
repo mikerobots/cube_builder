@@ -1,0 +1,46 @@
+----- File: core/surface_gen/tests/test_unit_core_surface_gen_types.cpp
+
+Test Name: MeshTest.DefaultConstruction
+Test Description: Tests the default construction of Mesh objects, verifying all containers are empty (vertices, normals, uvCoords, indices), materialId is 0, and that an empty mesh is considered valid. Validates requirement REQ-10.1.1 for Dual Contouring algorithm output structure.
+
+Test Name: MeshTest.IsValid
+Test Description: Tests the isValid method of Mesh objects, verifying that empty meshes are valid, meshes with only vertices are valid, meshes with valid indices are valid, meshes with out-of-bounds indices are invalid, and meshes with non-multiple-of-3 indices are invalid. Validates requirement REQ-8.2.1 for STL export validation.
+
+Test Name: MeshTest.Clear
+Test Description: Tests the clear method of Mesh objects, verifying that all data (vertices, normals, uvCoords, indices, materialId) is properly cleared and the mesh remains valid after clearing. Validates requirement REQ-10.1.5 for real-time preview mesh regeneration.
+
+Test Name: MeshTest.GetMemoryUsage
+Test Description: Tests memory usage calculation for Mesh objects, verifying empty mesh size equals sizeof(Mesh), memory increases when adding vertices, and further increases when adding normals, uvCoords, and indices. Validates requirement REQ-6.3.1 for memory constraint compliance.
+
+Test Name: MeshTest.Transform
+Test Description: Tests the transform method of Mesh objects, verifying that vertices are correctly transformed by a translation matrix while normals remain unchanged (as they represent directions, not positions).
+
+Test Name: SurfaceSettingsTest.DefaultSettings
+Test Description: Tests the Default factory method for SurfaceSettings, verifying default values including adaptiveError=0.01f, generateNormals=true, generateUVs=false, smoothingIterations=0, simplificationRatio=1.0f, preserveSharpFeatures=true, and sharpFeatureAngle=30.0f.
+
+Test Name: SurfaceSettingsTest.PreviewSettings
+Test Description: Tests the Preview factory method for SurfaceSettings, verifying optimized preview values including adaptiveError=0.05f (less precise), generateNormals=false, simplificationRatio=0.5f (half the triangles), and preserveSharpFeatures=false for faster generation.
+
+Test Name: SurfaceSettingsTest.ExportSettings
+Test Description: Tests the Export factory method for SurfaceSettings, verifying high-quality export values including adaptiveError=0.001f (very precise), generateNormals=true, generateUVs=true, smoothingIterations=2, simplificationRatio=0.95f, and sharpFeatureAngle=45.0f.
+
+Test Name: SurfaceSettingsTest.EqualityOperator
+Test Description: Tests the equality and inequality operators for SurfaceSettings, verifying that identical settings are equal, different presets are not equal, and modifying any field makes settings unequal.
+
+Test Name: SurfaceSettingsTest.HashFunction
+Test Description: Tests the hash function for SurfaceSettings, verifying that identical settings produce the same hash value, different presets produce different hashes, and modified settings produce different hashes.
+
+Test Name: MeshGenerationEventTest.Construction
+Test Description: Tests the construction of MeshGenerationEvent objects, verifying default values including the specified event type, progress=0.0f, empty message, and lodLevel=LOD0.
+
+Test Name: SimplificationSettingsTest.Presets
+Test Description: Tests the factory methods for SimplificationSettings presets, verifying Aggressive settings (targetRatio=0.25f, no topology/boundary preservation), Balanced settings (targetRatio=0.5f, preserve both), and Conservative settings (targetRatio=0.75f, preserve both).
+
+Test Name: MeshCacheEntryTest.UpdateAccess
+Test Description: Tests the updateAccess method of MeshCacheEntry, verifying that calling it updates the lastAccess timestamp to a later time than the initial value.
+
+Test Name: LODLevelTest.Conversion
+Test Description: Tests the conversion between LODLevel enum values and integers, verifying that LOD levels 0-4 correctly convert to and from their integer representations.
+
+Test Name: ExportQualityTest.Values
+Test Description: Tests that ExportQuality enum values (Draft, Standard, High, Maximum) have distinct integer values, ensuring they can be properly distinguished in quality selection logic.

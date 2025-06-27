@@ -1,0 +1,76 @@
+----- File: foundation/math/tests/test_unit_foundation_math_coordinate_types.cpp
+
+Test Name: WorldCoordinates_DefaultConstructor
+Test Description: Tests WorldCoordinates default constructor initializes all components (x, y, z) to 0.0f
+
+Test Name: WorldCoordinates_ParameterConstructor
+Test Description: Tests WorldCoordinates constructor with three float parameters (1.5f, 2.5f, 3.5f) sets components correctly
+
+Test Name: WorldCoordinates_Vector3fConstructor
+Test Description: Tests WorldCoordinates constructor accepting Vector3f parameter correctly copies vector components
+
+Test Name: WorldCoordinates_Addition
+Test Description: Tests WorldCoordinates addition operator (+) performs component-wise addition of two coordinate instances
+
+Test Name: WorldCoordinates_Subtraction
+Test Description: Tests WorldCoordinates subtraction operator (-) performs component-wise subtraction of two coordinate instances
+
+Test Name: WorldCoordinates_ScalarMultiplication
+Test Description: Tests WorldCoordinates scalar multiplication (coord * scalar) scales all components by scalar value
+
+Test Name: WorldCoordinates_ScalarMultiplication_Reverse
+Test Description: Tests reverse scalar multiplication (scalar * coord) produces same result as forward multiplication
+
+Test Name: WorldCoordinates_ScalarDivision
+Test Description: Tests WorldCoordinates scalar division (coord / scalar) divides all components by scalar value
+
+Test Name: WorldCoordinates_CompoundAssignment
+Test Description: Tests compound assignment operators (+=, -=, *=, /=) modify coordinate instance in-place with correct results
+
+Test Name: WorldCoordinates_Comparison
+Test Description: Tests equality (==) and inequality (!=) operators for WorldCoordinates compare all components correctly
+
+Test Name: WorldCoordinates_VectorOperations
+Test Description: Tests vector operations including length(), lengthSquared(), dot(), and cross() product calculations
+
+Test Name: WorldCoordinates_StaticConstants
+Test Description: Tests static constant methods zero(), unitX(), unitY(), unitZ() return expected coordinate values
+
+Test Name: IncrementCoordinates_DefaultConstructor
+Test Description: Tests IncrementCoordinates default constructor initializes all integer components (x, y, z) to 0
+
+Test Name: IncrementCoordinates_ParameterConstructor
+Test Description: Tests IncrementCoordinates constructor with three integer parameters (10, 20, 30) sets components correctly
+
+Test Name: IncrementCoordinates_Arithmetic
+Test Description: Tests IncrementCoordinates addition (+) and subtraction (-) operators perform component-wise integer arithmetic
+
+Test Name: IncrementCoordinates_Hash
+Test Description: Tests IncrementCoordinates hash() method and std::hash specialization for use in hash-based containers
+
+Test Name: IncrementCoordinates_CenteredCoordinateSystem
+Test Description: Tests IncrementCoordinates supports negative values for centered coordinate system (origin at 0,0,0) with proper arithmetic
+
+Test Name: ScreenCoordinates_DefaultConstructor
+Test Description: Tests ScreenCoordinates default constructor initializes 2D components (x, y) to 0.0f
+
+Test Name: ScreenCoordinates_ParameterConstructor
+Test Description: Tests ScreenCoordinates constructor with two float parameters (640.0f, 480.0f) sets components correctly
+
+Test Name: ScreenCoordinates_Vector2fConstructor
+Test Description: Tests ScreenCoordinates constructor accepting Vector2f parameter correctly copies 2D vector components
+
+Test Name: ScreenCoordinates_Arithmetic
+Test Description: Tests ScreenCoordinates arithmetic operations (+, -, *) perform correct 2D component-wise calculations
+
+Test Name: ScreenCoordinates_VectorOperations
+Test Description: Tests ScreenCoordinates vector operations including length(), lengthSquared(), and dot() product for 2D vectors
+
+Test Name: ScreenCoordinates_StaticConstants
+Test Description: Tests ScreenCoordinates static constants zero() and unitX() return expected 2D coordinate values
+
+Test Name: TypeSafety_CannotMixTypes
+Test Description: Tests type safety ensuring different coordinate types (WorldCoordinates, IncrementCoordinates) cannot be mixed in operations (compilation test)
+
+Test Name: ValueAccess_Mutable
+Test Description: Tests mutable access to coordinate components allowing modification of x(), y(), z() values through reference returns

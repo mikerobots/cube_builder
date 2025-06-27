@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_unit_core_rendering_ground_plane_checkerboard.cpp
+
+Test Name: DISABLED_RenderGroundPlaneFromAbove
+Test Description: Tests ground plane checkerboard rendering from top view, analyzing grid line detection and pattern validation (disabled)
+
+Test Name: GroundPlaneBasicVisibility
+Test Description: Verifies ground plane renders visible pixels with appropriate brightness when viewed from above
+
+Test Name: GroundPlaneVisibilityToggle
+Test Description: Tests that ground plane visibility can be toggled on/off with setVisible() method
+
+Test Name: GroundPlaneOpacityControl
+Test Description: Validates opacity parameter control affects rendering brightness with low vs high opacity settings
+
+Test Name: GroundPlaneCursorProximity
+Test Description: Tests cursor proximity-based opacity changes where grid becomes brighter when cursor is near vs far

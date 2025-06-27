@@ -1,0 +1,31 @@
+----- File: foundation/logging/tests/test_unit_foundation_logging_logger.cpp
+
+Test Name: BasicLogging
+Test Description: Tests basic logging functionality across all log levels (Debug, Info, Warning, Error), verifying message content and level assignment for each type.
+
+Test Name: LogLevelFiltering
+Test Description: Validates log level filtering mechanism, testing that only Warning and Error messages are captured when minimum level is set to Warning.
+
+Test Name: ComponentLogging
+Test Description: Tests component-specific logging functionality, verifying that log messages include proper component name when specified.
+
+Test Name: FormattedLogging
+Test Description: Validates formatted logging with printf-style string formatting, testing parameter substitution (%d, %s) for structured log messages.
+
+Test Name: ComponentFormattedLogging
+Test Description: Tests combined component and formatted logging, verifying proper component name assignment with printf-style formatting capabilities.
+
+Test Name: MultipleOutputs
+Test Description: Validates multiple log output management, testing output addition/removal and ensuring all outputs receive log messages with proper count tracking.
+
+Test Name: ThreadSafety
+Test Description: Tests thread safety with 4 concurrent threads generating 100 messages each (400 total), verifying all messages are captured without race conditions or data corruption.
+
+Test Name: ConsoleOutput
+Test Description: Validates console output functionality by adding ConsoleOutput to logger and verifying it doesn't crash during message output and flush operations.
+
+Test Name: FileOutput
+Test Description: Tests file-based logging output, creating test_log.txt file, writing Info/Warning messages with components, and verifying file content through filesystem validation.
+
+Test Name: Macros
+Test Description: Validates logging macros functionality, testing LOG_INFO and LOG_DEBUG_C macros for convenient logging with automatic message capture and component assignment.

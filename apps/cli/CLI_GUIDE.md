@@ -85,6 +85,30 @@
 > export model.stl       # Export for 3D printing
 ```
 
+### Surface Smoothing (For 3D Printing) - ⚠️ PLANNED FEATURE
+**Note: These commands are documented but NOT YET IMPLEMENTED. Currently, all exports produce blocky voxel geometry only.**
+
+```
+> smooth                    # [NOT IMPLEMENTED] Show current smoothing level
+> smooth 0                  # [NOT IMPLEMENTED] No smoothing (blocky voxel look)
+> smooth 5                  # [NOT IMPLEMENTED] Medium smoothing (balanced)
+> smooth 10                 # [NOT IMPLEMENTED] Maximum smoothing (very smooth)
+> smooth preview on         # [NOT IMPLEMENTED] Enable real-time preview
+> smooth preview off        # [NOT IMPLEMENTED] Disable preview (better performance)
+> smooth algorithm taubin   # [NOT IMPLEMENTED] Use Taubin algorithm
+> smooth algorithm laplacian # [NOT IMPLEMENTED] Use Laplacian algorithm
+> mesh validate             # [NOT IMPLEMENTED] Check if mesh is printable
+> mesh info                 # [NOT IMPLEMENTED] Show mesh statistics
+```
+
+**Planned Smoothing Levels** (when implemented):
+- **0**: Raw voxel edges (minecraft-like)
+- **1-3**: Light smoothing, retains blocky character
+- **4-7**: Medium smoothing, good for toys/models
+- **8-10+**: Heavy smoothing, organic shapes
+
+**Current Status**: The `export` command works but only exports raw voxel geometry as blocky STL files. Smoothing functionality is planned for a future release.
+
 ## Advanced Tips
 
 ### Efficient Building
@@ -125,7 +149,10 @@
 | `camera` | Change view | `camera front` |
 | `grid` | Toggle ground plane | `grid on/off/toggle` |
 | `edges` | Toggle voxel edges | `edges on/off/toggle` |
+| `smooth` | [NOT IMPLEMENTED] Set smoothing level | `smooth 5` |
+| `mesh` | [NOT IMPLEMENTED] Mesh operations | `mesh validate` |
 | `save` | Save project | `save project.cvef` |
+| `export` | Export STL | `export model.stl` |
 | `build` | Show build info | `build` |
 | `help` | Get help | `help place` |
 
@@ -182,5 +209,22 @@
 > place 0cm 8cm 0cm        # Add details on top
 > resolution 2cm           # Finest details
 > place 2cm 12cm 2cm       # Fine detail work
-> export sculpture.stl     # Export for 3D printing
+# Note: smooth commands below are NOT IMPLEMENTED - export will be blocky
+> smooth 7                  # [NOT WORKING] Would apply smoothing
+> mesh validate            # [NOT WORKING] Would check printability
+> export sculpture.stl     # Exports blocky voxel model (no smoothing)
+```
+
+### Creating a Toy (Without Smoothing)
+```
+> new
+> resolution 16cm          # Start with blocks
+> fill -32cm 0cm -32cm 32cm 64cm 32cm  # Basic body shape
+> place 0cm 80cm 0cm       # Add head
+> selectbox -48cm 32cm -16cm -32cm 48cm 16cm  # Select arm area
+> group "left_arm"         # Group it
+# Note: No smoothing available yet - design with voxels in mind
+> camera iso               # Check from all angles
+> export toy.stl           # Exports blocky voxel model
+# For smooth toys, you'll need to use external 3D software to smooth the STL
 ```

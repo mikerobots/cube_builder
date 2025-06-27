@@ -1,0 +1,37 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_overlay_renderer.cpp
+
+Test Name: TextStyleValidation
+Test Description: Validates default text style creation with valid size and alpha values without OpenGL dependencies
+
+Test Name: FrameStateLogic
+Test Description: Tests frame state management logic simulating begin/end frame states with dimensions
+
+Test Name: TextStyleFactories
+Test Description: Verifies text style factory methods (Default, Header, Debug, Warning, Error) produce valid styles with appropriate sizes
+
+Test Name: GridParameterValidation
+Test Description: Tests grid parameter validation logic checking opacity range (0-1) and positive workspace dimensions
+
+Test Name: TextLayoutCalculation
+Test Description: Calculates text layout dimensions based on character count, font size, and position for single-line text
+
+Test Name: TextLayoutMultipleLines
+Test Description: Tests multi-line text layout calculations correctly computing height and line count for newline-separated text
+
+Test Name: GridCalculations
+Test Description: Validates grid line calculations for 32cm spacing, computing line counts, vertex counts, and grid extent coverage
+
+Test Name: PerformanceMetrics
+Test Description: Tests render statistics formatting logic converting frame time, vertex count, and GPU memory to display strings
+
+Test Name: ScreenCoordinateConversion
+Test Description: Verifies screen-to-normalized coordinate conversion calculating 0-1 range from pixel coordinates
+
+Test Name: TextBounds
+Test Description: Calculates text bounding boxes comparing width differences between short and long text strings
+
+Test Name: IndicatorPositioning
+Test Description: Tests world-to-screen coordinate conversion for indicator positioning with screen boundary clamping
+
+Test Name: BoundingBoxCalculation
+Test Description: Validates workspace bounding box calculations from center point and size dimensions

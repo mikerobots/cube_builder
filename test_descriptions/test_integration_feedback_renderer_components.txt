@@ -1,0 +1,37 @@
+----- File: tests/integration/visual_feedback/test_integration_feedback_renderer_components.cpp
+
+Test Name: FaceHighlight
+Test Description: Tests face highlight rendering functionality, verifying renderFaceHighlight() and clearFaceHighlight() methods work without throwing exceptions.
+
+Test Name: VoxelPreview
+Test Description: Tests voxel preview rendering with validation state, verifying renderVoxelPreviewWithValidation() and clearVoxelPreview() methods work correctly.
+
+Test Name: SelectionVisualization
+Test Description: Tests selection visualization rendering with multiple selected voxels, verifying renderSelection() method and selection animation control functionality.
+
+Test Name: GroupVisualization
+Test Description: Tests group visualization rendering including group outlines and bounds with specified colors, verifying renderGroupOutlines() and renderGroupBounds() methods.
+
+Test Name: WorkspaceVisualization
+Test Description: Tests workspace visualization including bounds and grid lines rendering, verifying renderWorkspaceBounds() and renderGridLines() methods.
+
+Test Name: PerformanceOverlays
+Test Description: Tests performance metrics and memory usage overlay rendering, verifying renderPerformanceMetrics() and renderMemoryUsage() methods with specific statistics.
+
+Test Name: AnimationControl
+Test Description: Tests animation control functionality including pause/resume and speed adjustment, verifying animation state management and speed settings.
+
+Test Name: RenderOrder
+Test Description: Tests rendering multiple visual elements simultaneously without conflicts, verifying face highlight and voxel preview can coexist and be cleared independently.
+
+Test Name: MultipleUpdates
+Test Description: Tests rapid updates (100 iterations) of face highlights and voxel previews to ensure stability and performance under frequent updates.
+
+Test Name: ComplexScene
+Test Description: Tests complex scene rendering with multiple simultaneous visual elements including face highlight, voxel preview, selection, workspace bounds, and performance overlay.
+
+Test Name: VoxelPreviewMultipleResolutions
+Test Description: Tests voxel preview rendering with different resolutions (1cm, 8cm, 32cm, 128cm), verifying all resolution sizes render correctly.
+
+Test Name: PreviewUpdatePerformance
+Test Description: Tests performance of rapid preview updates (1000 iterations), verifying updates complete within 100ms performance requirement.

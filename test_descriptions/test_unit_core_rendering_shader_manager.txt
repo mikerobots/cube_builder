@@ -1,0 +1,61 @@
+----- File: core/rendering/tests/test_unit_core_rendering_shader_manager.cpp
+
+Test Name: BasicOperations
+Test Description: Tests getting non-existent shader returns InvalidId
+
+Test Name: CreateShaderFromSource
+Test Description: Tests shader creation from vertex and fragment source code with name registration (skipped - requires OpenGL)
+
+Test Name: MultipleShaders
+Test Description: Tests creating multiple named shaders with unique IDs and name-based retrieval (skipped - requires OpenGL)
+
+Test Name: ShaderReplacement
+Test Description: Tests that creating a shader with existing name replaces the old one (skipped - requires OpenGL)
+
+Test Name: LoadFromFile
+Test Description: Tests loading shader from file returns InvalidId as not implemented yet
+
+Test Name: Cleanup
+Test Description: Tests cleanup() removes all registered shaders from the manager
+
+Test Name: ReloadAllShaders
+Test Description: Tests reloadAllShaders() stub implementation doesn't crash
+
+Test Name: HotReloadToggle
+Test Description: Tests hot reload enable/disable toggle functionality
+
+Test Name: NullRendererHandling
+Test Description: Tests shader creation with null renderer returns InvalidId
+
+Test Name: MinimalShaderProgram
+Test Description: Tests minimal MVP vertex shader and solid color fragment shader creation (skipped - requires OpenGL)
+
+Test Name: BasicAttributesShader
+Test Description: Tests shader with position, normal, color attributes and basic lighting (skipped - requires OpenGL)
+
+Test Name: TexturedShader
+Test Description: Tests shader with texture coordinate attributes and texture sampling (skipped - requires OpenGL)
+
+Test Name: CompileVertexShaderIndependently
+Test Description: Tests independent vertex shader compilation with valid and invalid syntax
+
+Test Name: CompileFragmentShaderIndependently
+Test Description: Tests independent fragment shader compilation with valid, invalid, and wrong output types
+
+Test Name: LinkSimplePassThroughShader
+Test Description: Tests linking pass-through shader with color varying between stages (skipped - requires OpenGL)
+
+Test Name: ShaderCompilationErrorHandling
+Test Description: Tests shader creation with syntax errors in vertex shader source
+
+Test Name: ShaderLinkingErrorHandling
+Test Description: Tests shader linking with mismatched varyings between vertex and fragment shaders
+
+Test Name: MinimalConstantColorShader
+Test Description: Tests minimal shader with uniform color and constant color variations (skipped - requires OpenGL)
+
+Test Name: ShaderAttributeLocationBinding
+Test Description: Tests shader with explicit attribute location bindings (skipped - requires OpenGL)
+
+Test Name: GeometryShaderSupport
+Test Description: Documents expected interface for geometry shader support (not implemented)

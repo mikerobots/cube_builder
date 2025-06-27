@@ -1,0 +1,22 @@
+----- File: core/rendering/tests/test_unit_core_rendering_types.cpp
+
+Test Name: ColorConstruction
+Test Description: Tests Color class construction including default construction (black with full alpha), component construction with RGBA values, and static factory methods for common colors (White, Black, Transparent), verifying all color components are correctly initialized.
+
+Test Name: VertexConstruction
+Test Description: Tests Vertex class construction including default construction (zero position, Z-up normal, zero texture coordinates, white color) and custom construction with all parameters, verifying all vertex attributes are correctly stored.
+
+Test Name: MeshOperations
+Test Description: Tests Mesh class operations including empty mesh state checking, vertex and index management, triangle counting based on indices, the dirty flag behavior, and the clear operation that resets the mesh to empty state.
+
+Test Name: TransformConstruction
+Test Description: Tests Transform class construction including default construction (zero position/rotation, unit scale) and custom construction with position, rotation, and scale vectors, verifying all transform components are correctly initialized.
+
+Test Name: MaterialCreation
+Test Description: Tests Material class including default construction values, factory methods (createDefault, createVoxel, createWireframe), and verifying material properties like albedo color, metallic/roughness values, emission, double-sided flag, blend mode, and cull mode are correctly set for different material types.
+
+Test Name: EnumValues
+Test Description: Tests that various rendering-related enums have expected integer values including RenderMode (Solid=0, Wireframe=1, Combined=2, Points=3), BlendMode (Opaque=0, Alpha=1, Additive=2, Multiply=3), CullMode (None=0, Front=1, Back=2), and BufferUsage (Static=0, Dynamic=1, Stream=2).
+
+Test Name: ClearFlagsOperations
+Test Description: Tests ClearFlags enum bitwise operations, verifying individual flag values (COLOR=1, DEPTH=2, STENCIL=4), combined flags using bitwise OR operations, and the All flag (equals 7) that combines all clear flags.

@@ -1,0 +1,40 @@
+----- File: apps/cli/tests/test_unit_cli_place_command.cpp
+
+Test Name: GroundPlaneConstraint_ValidPositions_REQ_11_3_3
+Test Description: Tests place command accepts valid Y coordinates (Y ≥ 0) including ground level and above positions with various resolutions per REQ-11.3.3
+
+Test Name: GroundPlaneConstraint_InvalidPositions_NegativeY_REQ_11_3_3
+Test Description: Tests place command rejects invalid Y coordinates (Y < 0) with proper error messages mentioning ground plane violation per REQ-11.3.3
+
+Test Name: GroundPlaneConstraint_BoundaryValues_REQ_11_3_3
+Test Description: Tests boundary values around Y = 0 (ground plane), verifying Y=0 is valid and Y=-1 is invalid per REQ-11.3.3
+
+Test Name: GroundPlaneConstraint_AllResolutions_REQ_11_3_3
+Test Description: Tests ground plane constraint across all voxel resolutions (1cm-256cm) with resolution-specific workspace positioning per REQ-11.3.3
+
+Test Name: AllResolutions_LargeVoxelWorkspaceLimits_REQ_11_3_5
+Test Description: Tests all valid voxel resolutions (1cm-512cm) including large ones that may not fit in default workspace per REQ-11.3.5
+
+Test Name: GroundPlaneConstraint_CommandCreation_REQ_11_3_3
+Test Description: Tests PlacementCommandFactory refuses to create commands for invalid Y positions (below ground) per REQ-11.3.3
+
+Test Name: CollisionDetection_SameSize_SamePosition_REQ_11_3_4
+Test Description: Tests collision detection when placing same-size voxels at identical positions, verifying validation and command creation failures per REQ-11.3.4
+
+Test Name: CollisionDetection_DifferentSizes_SamePosition_REQ_11_3_4
+Test Description: Tests collision detection when placing different-size voxels at overlapping positions, testing both small-to-large and large-to-small scenarios per REQ-11.3.4
+
+Test Name: CollisionDetection_AdjacentVoxels_NoCollision_REQ_11_3_4
+Test Description: Tests that adjacent voxels (16cm apart for 16cm voxels) don't cause false collision detection per REQ-11.3.4
+
+Test Name: CollisionDetection_MultipleResolutions_REQ_11_3_4
+Test Description: Tests collision detection across different voxel resolutions with unique positions, verifying occupied position rejection per REQ-11.3.4
+
+Test Name: CollisionDetection_LargeVoxelOverlap_REQ_11_3_4
+Test Description: Tests collision detection when large voxels (64cm) would overlap with smaller ones (1cm) and non-overlapping placement per REQ-11.3.4
+
+Test Name: CollisionDetection_EdgeCases_REQ_11_3_4
+Test Description: Tests edge cases including place-remove-place cycles and null voxel manager validation per REQ-11.3.4
+
+Test Name: GroundPlaneConstraint_VoxelsTooLargeForWorkspace_REQ_11_3_3
+Test Description: Tests that voxels larger than workspace (256cm in 5x5x5m) are properly rejected with workspace bounds error per REQ-11.3.3

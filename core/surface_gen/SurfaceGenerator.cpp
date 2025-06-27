@@ -4,6 +4,8 @@
 #include <sstream>
 #include <algorithm>
 #include <atomic>
+#include <memory>
+#include <future>
 
 namespace VoxelEditor {
 namespace SurfaceGen {
@@ -19,9 +21,13 @@ SurfaceGenerator::SurfaceGenerator(Events::EventDispatcher* eventDispatcher)
     m_meshBuilder = std::make_unique<MeshBuilder>();
     m_lodManager = std::make_unique<LODManager>();
     m_meshCache = std::make_unique<MeshCache>();
+    m_progressiveCache = std::make_unique<ProgressiveSmoothingCache>();
     
     // Set default cache size to 256MB
     m_meshCache->setMaxMemoryUsage(256 * 1024 * 1024);
+    
+    // Set progressive cache size to 64MB for real-time preview
+    m_progressiveCache->setMaxMemoryUsage(64 * 1024 * 1024);
     
     // Set default settings
     m_settings = SurfaceSettings::Default();
@@ -143,19 +149,19 @@ Mesh SurfaceGenerator::generateExportMesh(const VoxelData::VoxelGrid& grid,
     // Adjust settings based on quality
     switch (quality) {
         case ExportQuality::Draft:
-            exportSettings.smoothingIterations = 1;
+            exportSettings.smoothingLevel = 1;
             exportSettings.simplificationRatio = 0.5f;
             break;
         case ExportQuality::Standard:
-            exportSettings.smoothingIterations = 2;
+            exportSettings.smoothingLevel = 2;
             exportSettings.simplificationRatio = 0.75f;
             break;
         case ExportQuality::High:
-            exportSettings.smoothingIterations = 3;
+            exportSettings.smoothingLevel = 3;
             exportSettings.simplificationRatio = 0.9f;
             break;
         case ExportQuality::Maximum:
-            exportSettings.smoothingIterations = 5;
+            exportSettings.smoothingLevel = 5;
             exportSettings.simplificationRatio = 1.0f;
             break;
     }
@@ -264,6 +270,11 @@ void SurfaceGenerator::applyPostProcessing(Mesh& mesh, const SurfaceSettings& se
     
     mesh = builder.endMesh();
     
+    // Apply smoothing if requested
+    if (settings.smoothingLevel > 0) {
+        applySmoothingToMesh(mesh, settings);
+    }
+    
     Logging::Logger::getInstance().debugfc("SurfaceGenerator", 
         "Post-processing complete: %zu vertices, %zu UVs", 
         mesh.vertices.size(), mesh.uvCoords.size());
@@ -271,6 +282,11 @@ void SurfaceGenerator::applyPostProcessing(Mesh& mesh, const SurfaceSettings& se
     // Apply simplification (but skip if UVs were generated to preserve them)
     if (settings.simplificationRatio < 1.0f && !settings.generateUVs) {
         optimizeMesh(mesh, settings.simplificationRatio);
+    }
+    
+    // Validate mesh for 3D printing if smoothing was applied
+    if (settings.smoothingLevel > 0) {
+        validateMeshForPrinting(mesh, settings);
     }
 }
 
@@ -584,6 +600,418 @@ void MeshCache::evictLRU() {
     
     m_currentMemoryUsage -= oldest->second.memoryUsage;
     m_cache.erase(oldest);
+}
+
+Mesh SurfaceGenerator::generateSmoothedSurface(const VoxelData::VoxelGrid& grid, int smoothingLevel) {
+    // Create settings optimized for smooth toy-like output
+    SurfaceSettings settings = SurfaceSettings::Export();
+    settings.smoothingLevel = smoothingLevel;
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Auto;
+    settings.preserveTopology = true;
+    settings.minFeatureSize = 1.0f;  // 1mm minimum for 3D printing
+    settings.usePreviewQuality = false;
+    settings.generateNormals = true;
+    settings.simplificationRatio = 1.0f;  // Don't simplify smoothed meshes
+    
+    return generateSurface(grid, settings);
+}
+
+void SurfaceGenerator::applySmoothingToMesh(Mesh& mesh, const SurfaceSettings& settings) {
+    if (settings.smoothingLevel <= 0) return;
+    
+    MeshSmoother smoother;
+    MeshSmoother::SmoothingConfig smoothConfig;
+    
+    // Configure smoothing based on settings
+    smoothConfig.smoothingLevel = settings.smoothingLevel;
+    smoothConfig.algorithm = (settings.smoothingAlgorithm == SmoothingAlgorithm::Auto) ?
+                           MeshSmoother::Algorithm::None : 
+                           static_cast<MeshSmoother::Algorithm>(static_cast<int>(settings.smoothingAlgorithm));
+    smoothConfig.preserveTopology = settings.preserveTopology;
+    smoothConfig.preserveBoundaries = true; // Always preserve boundaries for 3D printing
+    smoothConfig.minFeatureSize = settings.minFeatureSize;
+    smoothConfig.previewQuality = settings.previewQuality;
+    smoothConfig.usePreviewQuality = settings.usePreviewQuality; // Backward compatibility
+    
+    // Progress callback for smoothing
+    auto smoothingProgress = [this](float progress) -> bool {
+        reportProgress(0.5f + progress * 0.3f, "Smoothing mesh");
+        return !m_cancelRequested;
+    };
+    
+    // Apply smoothing
+    Mesh smoothedMesh = smoother.smooth(mesh, smoothConfig, smoothingProgress);
+    
+    if (smoothedMesh.isValid()) {
+        mesh = std::move(smoothedMesh);
+        Logging::Logger::getInstance().info("Applied smoothing level " + 
+                                          std::to_string(settings.smoothingLevel) + 
+                                          " to mesh", "SurfaceGenerator");
+    } else {
+        Logging::Logger::getInstance().warning("Smoothing failed, keeping original mesh", 
+                                             "SurfaceGenerator");
+    }
+}
+
+void SurfaceGenerator::validateMeshForPrinting(Mesh& mesh, const SurfaceSettings& settings) {
+    MeshValidator validator;
+    
+    auto result = validator.validate(mesh, settings.minFeatureSize);
+    
+    if (!result.isValid) {
+        Logging::Logger::getInstance().warning("Mesh validation failed:", "SurfaceGenerator");
+        for (const auto& error : result.errors) {
+            Logging::Logger::getInstance().warning("  - " + error, "SurfaceGenerator");
+        }
+        
+        // Attempt basic repairs
+        if (!result.isWatertight) {
+            MeshUtils::makeWatertight(mesh);
+            Logging::Logger::getInstance().info("Applied watertight repair", "SurfaceGenerator");
+        }
+        
+        if (result.flippedNormals > 0) {
+            validator.fixFaceOrientation(mesh);
+            Logging::Logger::getInstance().info("Fixed face orientations", "SurfaceGenerator");
+        }
+    } else {
+        Logging::Logger::getInstance().debug("Mesh passed validation for 3D printing", 
+                                          "SurfaceGenerator");
+    }
+    
+    // Log warnings
+    for (const auto& warning : result.warnings) {
+        Logging::Logger::getInstance().warning(warning, "SurfaceGenerator");
+    }
+}
+
+std::string SurfaceGenerator::startProgressiveSmoothing(const VoxelData::VoxelGrid& grid, 
+                                                       const SurfaceSettings& settings) {
+    // Generate base cache key from grid hash and settings
+    size_t gridHash = computeGridHash(grid);
+    std::string baseKey = getCacheKey(gridHash, settings, LODLevel::LOD0);
+    
+    // Start progressive smoothing operation
+    std::string progressKey = m_progressiveCache->startProgressiveSmoothing(baseKey, 
+                                                                           settings.smoothingLevel, 
+                                                                           settings.previewQuality);
+    
+    // Start background task to generate progressive results
+    // Note: We need to capture grid by value despite copy restrictions, so let's work around this
+    // by generating the initial mesh immediately and then doing progressive smoothing
+    
+    // Generate base mesh (without smoothing) immediately
+    SurfaceSettings baseSettings = settings;
+    baseSettings.smoothingLevel = 0;
+    baseSettings.previewQuality = PreviewQuality::Disabled;
+    
+    Mesh baseMesh = generateInternal(grid, baseSettings, LODLevel::LOD0);
+    if (!baseMesh.isValid()) {
+        m_progressiveCache->cancelProgressiveSmoothing(progressKey);
+        return progressKey;
+    }
+    
+    auto progressTask = std::async(std::launch::async, [this, baseMesh, settings, progressKey, baseKey]() {
+        try {
+            if (m_cancelRequested) {
+                m_progressiveCache->cancelProgressiveSmoothing(progressKey);
+                return;
+            }
+            
+            // Apply progressive smoothing if requested
+            if (settings.smoothingLevel > 0) {
+                MeshSmoother smoother;
+                
+                // Progressive smoothing: start with fast preview and gradually improve
+                std::vector<PreviewQuality> qualityLevels;
+                switch (settings.previewQuality) {
+                    case PreviewQuality::Fast:
+                        qualityLevels = {PreviewQuality::Fast};
+                        break;
+                    case PreviewQuality::Balanced:
+                        qualityLevels = {PreviewQuality::Fast, PreviewQuality::Balanced};
+                        break;
+                    case PreviewQuality::HighQuality:
+                        qualityLevels = {PreviewQuality::Fast, PreviewQuality::Balanced, PreviewQuality::HighQuality};
+                        break;
+                    default:
+                        qualityLevels = {PreviewQuality::Fast, PreviewQuality::Balanced};
+                        break;
+                }
+                
+                for (PreviewQuality quality : qualityLevels) {
+                    if (m_cancelRequested) {
+                        m_progressiveCache->cancelProgressiveSmoothing(progressKey);
+                        return;
+                    }
+                    
+                    // Configure smoothing for this quality level
+                    MeshSmoother::SmoothingConfig smoothConfig;
+                    smoothConfig.smoothingLevel = settings.smoothingLevel;
+                    smoothConfig.algorithm = (settings.smoothingAlgorithm == SmoothingAlgorithm::Auto) ?
+                                           MeshSmoother::Algorithm::None : 
+                                           static_cast<MeshSmoother::Algorithm>(static_cast<int>(settings.smoothingAlgorithm));
+                    smoothConfig.preserveTopology = settings.preserveTopology;
+                    smoothConfig.preserveBoundaries = true;
+                    smoothConfig.minFeatureSize = settings.minFeatureSize;
+                    smoothConfig.previewQuality = quality;
+                    
+                    // Progress callback for smoothing
+                    auto smoothingProgress = [this, progressKey](float progress) -> bool {
+                        if (m_progressCallback) {
+                            m_progressCallback(0.5f + progress * 0.5f, "Progressive smoothing");
+                        }
+                        return !m_cancelRequested;
+                    };
+                    
+                    // Apply smoothing
+                    Mesh smoothedMesh = smoother.smooth(baseMesh, smoothConfig, smoothingProgress);
+                    
+                    if (smoothedMesh.isValid() && !m_cancelRequested) {
+                        // Update progressive result
+                        bool isProgressive = (quality != qualityLevels.back());
+                        m_progressiveCache->updateProgressiveResult(progressKey, smoothedMesh, settings.smoothingLevel);
+                        
+                        if (!isProgressive) {
+                            // This is the final result
+                            m_progressiveCache->finalizeProgressiveResult(progressKey, smoothedMesh);
+                        }
+                    } else if (m_cancelRequested) {
+                        m_progressiveCache->cancelProgressiveSmoothing(progressKey);
+                        return;
+                    }
+                }
+            } else {
+                // No smoothing requested, just cache the base mesh
+                m_progressiveCache->finalizeProgressiveResult(progressKey, baseMesh);
+            }
+            
+        } catch (...) {
+            // Cancel on any exception
+            m_progressiveCache->cancelProgressiveSmoothing(progressKey);
+        }
+    });
+    
+    // Store the future (we don't wait for it)
+    m_activeProgressiveGenerations.push_back(std::move(progressTask));
+    
+    return progressKey;
+}
+
+Mesh SurfaceGenerator::getProgressiveResult(const std::string& progressKey) {
+    std::lock_guard<std::mutex> lock(m_generationMutex);
+    
+    // Clean up completed futures first
+    m_activeProgressiveGenerations.erase(
+        std::remove_if(m_activeProgressiveGenerations.begin(), m_activeProgressiveGenerations.end(),
+            [](std::future<void>& f) {
+                return f.wait_for(std::chrono::seconds(0)) == std::future_status::ready;
+            }),
+        m_activeProgressiveGenerations.end()
+    );
+    
+    // Try to get result from progressive cache
+    if (m_progressiveCache->hasEntry(progressKey)) {
+        auto entry = m_progressiveCache->getEntry(progressKey);
+        return entry.mesh;
+    }
+    
+    return Mesh();
+}
+
+void SurfaceGenerator::cancelProgressiveSmoothing(const std::string& progressKey) {
+    m_cancelRequested = true;
+    m_progressiveCache->cancelProgressiveSmoothing(progressKey);
+}
+
+bool SurfaceGenerator::isProgressiveSmoothingComplete(const std::string& progressKey) {
+    if (m_progressiveCache->hasEntry(progressKey)) {
+        auto entry = m_progressiveCache->getEntry(progressKey);
+        return !entry.isProgressive;
+    }
+    return false;
+}
+
+// ProgressiveSmoothingCache implementation
+ProgressiveSmoothingCache::ProgressiveSmoothingCache()
+    : m_maxMemoryUsage(64 * 1024 * 1024) // 64MB default for preview cache
+    , m_currentMemoryUsage(0) {
+}
+
+ProgressiveSmoothingCache::~ProgressiveSmoothingCache() = default;
+
+bool ProgressiveSmoothingCache::hasProgressiveResult(const std::string& baseKey, int targetLevel, PreviewQuality quality) const {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    std::string cacheKey = generateCacheKey(baseKey, targetLevel, quality);
+    return m_cache.find(cacheKey) != m_cache.end();
+}
+
+Mesh ProgressiveSmoothingCache::getProgressiveResult(const std::string& baseKey, int targetLevel, PreviewQuality quality) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    std::string cacheKey = generateCacheKey(baseKey, targetLevel, quality);
+    
+    auto it = m_cache.find(cacheKey);
+    if (it != m_cache.end()) {
+        it->second.timestamp = std::chrono::steady_clock::now();
+        return it->second.mesh;
+    }
+    
+    return Mesh();
+}
+
+void ProgressiveSmoothingCache::cacheProgressiveResult(const std::string& baseKey, const Mesh& mesh, 
+                                                     int smoothingLevel, PreviewQuality quality, bool isProgressive) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    std::string cacheKey = generateCacheKey(baseKey, smoothingLevel, quality);
+    
+    size_t meshSize = mesh.getMemoryUsage();
+    
+    // Evict entries if necessary
+    while (m_currentMemoryUsage + meshSize > m_maxMemoryUsage && !m_cache.empty()) {
+        evictLRU();
+    }
+    
+    CacheEntry entry;
+    entry.mesh = mesh;
+    entry.smoothingLevel = smoothingLevel;
+    entry.quality = quality;
+    entry.timestamp = std::chrono::steady_clock::now();
+    entry.isProgressive = isProgressive;
+    
+    m_cache[cacheKey] = std::move(entry);
+    m_currentMemoryUsage += meshSize;
+}
+
+std::string ProgressiveSmoothingCache::startProgressiveSmoothing(const std::string& baseKey, int targetLevel, PreviewQuality quality) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    
+    // Generate unique progress key
+    static std::atomic<int> progressCounter{0};
+    std::string progressKey = "progress_" + std::to_string(progressCounter.fetch_add(1)) + "_" + std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
+    
+    m_progressiveKeys[progressKey] = baseKey;
+    
+    return progressKey;
+}
+
+void ProgressiveSmoothingCache::updateProgressiveResult(const std::string& progressKey, const Mesh& mesh, int currentLevel) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    
+    auto it = m_progressiveKeys.find(progressKey);
+    if (it != m_progressiveKeys.end()) {
+        const std::string& baseKey = it->second;
+        
+        // Store intermediate result
+        CacheEntry entry;
+        entry.mesh = mesh;
+        entry.smoothingLevel = currentLevel;
+        entry.quality = PreviewQuality::Fast; // Intermediate results are fast quality
+        entry.timestamp = std::chrono::steady_clock::now();
+        entry.isProgressive = true;
+        
+        m_cache[progressKey] = std::move(entry);
+    }
+}
+
+void ProgressiveSmoothingCache::finalizeProgressiveResult(const std::string& progressKey, const Mesh& finalMesh) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    
+    auto it = m_progressiveKeys.find(progressKey);
+    if (it != m_progressiveKeys.end()) {
+        // Update the final result
+        auto cacheIt = m_cache.find(progressKey);
+        if (cacheIt != m_cache.end()) {
+            cacheIt->second.mesh = finalMesh;
+            cacheIt->second.isProgressive = false;
+            cacheIt->second.timestamp = std::chrono::steady_clock::now();
+        }
+    }
+}
+
+void ProgressiveSmoothingCache::cancelProgressiveSmoothing(const std::string& progressKey) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    
+    // Remove from both maps
+    m_progressiveKeys.erase(progressKey);
+    auto it = m_cache.find(progressKey);
+    if (it != m_cache.end()) {
+        m_currentMemoryUsage -= it->second.mesh.getMemoryUsage();
+        m_cache.erase(it);
+    }
+}
+
+void ProgressiveSmoothingCache::clear() {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    m_cache.clear();
+    m_progressiveKeys.clear();
+    m_currentMemoryUsage = 0;
+}
+
+void ProgressiveSmoothingCache::clearExpired(std::chrono::seconds maxAge) {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    
+    auto now = std::chrono::steady_clock::now();
+    auto it = m_cache.begin();
+    
+    while (it != m_cache.end()) {
+        if (now - it->second.timestamp > maxAge) {
+            m_currentMemoryUsage -= it->second.mesh.getMemoryUsage();
+            
+            // Also remove from progressive keys if it's a progressive entry
+            auto progressIt = std::find_if(m_progressiveKeys.begin(), m_progressiveKeys.end(),
+                [&](const auto& pair) { return pair.first == it->first; });
+            if (progressIt != m_progressiveKeys.end()) {
+                m_progressiveKeys.erase(progressIt);
+            }
+            
+            it = m_cache.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void ProgressiveSmoothingCache::evictLRU() {
+    if (m_cache.empty()) return;
+    
+    // Find oldest entry
+    auto oldest = m_cache.begin();
+    for (auto it = m_cache.begin(); it != m_cache.end(); ++it) {
+        if (it->second.timestamp < oldest->second.timestamp) {
+            oldest = it;
+        }
+    }
+    
+    m_currentMemoryUsage -= oldest->second.mesh.getMemoryUsage();
+    
+    // Also remove from progressive keys if it's a progressive entry
+    auto progressIt = std::find_if(m_progressiveKeys.begin(), m_progressiveKeys.end(),
+        [&](const auto& pair) { return pair.first == oldest->first; });
+    if (progressIt != m_progressiveKeys.end()) {
+        m_progressiveKeys.erase(progressIt);
+    }
+    
+    m_cache.erase(oldest);
+}
+
+std::string ProgressiveSmoothingCache::generateCacheKey(const std::string& baseKey, int level, PreviewQuality quality) const {
+    return baseKey + "_level" + std::to_string(level) + "_quality" + std::to_string(static_cast<int>(quality));
+}
+
+bool ProgressiveSmoothingCache::hasEntry(const std::string& key) const {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    return m_cache.find(key) != m_cache.end();
+}
+
+ProgressiveSmoothingCache::CacheEntry ProgressiveSmoothingCache::getEntry(const std::string& key) const {
+    std::lock_guard<std::mutex> lock(m_cacheMutex);
+    auto it = m_cache.find(key);
+    if (it != m_cache.end()) {
+        // Update timestamp (const_cast because this is conceptually non-const but mutex is needed)
+        const_cast<CacheEntry&>(it->second).timestamp = std::chrono::steady_clock::now();
+        return it->second;
+    }
+    return CacheEntry{}; // Return empty entry if not found
 }
 
 }

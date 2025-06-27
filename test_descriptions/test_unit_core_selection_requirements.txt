@@ -1,0 +1,31 @@
+----- File: core/selection/tests/test_unit_core_selection_requirements.cpp
+
+Test Name: SelectionStatePersistence
+Test Description: Tests REQ-8.1.7 for storing vertex selection state, verifying selection can be saved, cleared, and restored while maintaining the exact same voxel IDs in the selection set.
+
+Test Name: SingleAndMultiVoxelSelection
+Test Description: Validates support for both single and multi-voxel selection operations, testing individual voxel selection and adding multiple voxels to build larger selections with proper size tracking.
+
+Test Name: SelectionPersistenceAcrossOperations
+Test Description: Tests selection persistence through various operations including toggle, deselect, and add operations, ensuring the selection state remains consistent across multiple modification operations.
+
+Test Name: VisualFeedbackConfiguration
+Test Description: Validates visual feedback configuration for selected voxels, testing selection style settings including outline/fill colors, animation settings, and proper storage/retrieval of visual properties.
+
+Test Name: GroupCreationFromSelection
+Test Description: Tests integration with group system for creating groups from selections, verifying selection can be converted to vector format suitable for group creation with correct voxel IDs.
+
+Test Name: SelectionBoundsValidation
+Test Description: Validates selection bounds checking and calculation, ensuring computed bounding box properly encompasses all selected voxels with correct coordinate ranges for multi-voxel selections.
+
+Test Name: UndoRedoIntegration
+Test Description: Tests integration with undo/redo system for reversible selections, verifying selection history can be saved, undone to previous state, and redone to newer state with proper state tracking.
+
+Test Name: BasicPerformanceValidation
+Test Description: Basic performance validation for moderate-sized selections (100 voxels), testing selection creation and statistics calculation performance as foundation for larger performance testing.
+
+Test Name: SelectionSerialization
+Test Description: Tests selection serialization for project files, verifying named selection sets can be saved and loaded with multi-resolution voxels while preserving exact voxel IDs and resolution statistics.
+
+Test Name: SelectionMethods
+Test Description: Validates different selection methods including BoxSelector for rectangular regions, SphereSelector for radial selections, and FloodFillSelector for connected voxel groups with proper flood fill limits.

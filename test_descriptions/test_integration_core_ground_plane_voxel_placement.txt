@@ -1,0 +1,22 @@
+----- File: tests/integration/test_integration_core_ground_plane_voxel_placement.cpp
+
+Test Name: TestClickOriginPlacesVoxelAtOrigin
+Test Description: Tests that clicking on ground plane at world origin (0,0,0) correctly places a voxel at grid position (0,0,0).
+
+Test Name: TestClickVariousGroundPositions
+Test Description: Tests ground plane clicking at various positions with 1cm resolution to validate exact positioning without snapping.
+
+Test Name: TestGroundPlaneExactPositioning
+Test Description: Tests that voxels are placed at exact 1cm increment positions without any grid snapping occurring.
+
+Test Name: TestGroundVsExistingVoxel
+Test Description: Tests placement behavior when clicking near existing voxels vs empty ground plane areas.
+
+Test Name: TestBuildGroundPattern
+Test Description: Tests building a 3x3 square pattern on the ground plane to validate multiple sequential placements.
+
+Test Name: TestUndoRedoGroundPlacement
+Test Description: Tests undo/redo functionality works correctly with ground plane voxel placement operations.
+
+Test Name: TestArbitrarySizeVoxelsAtAnyPosition
+Test Description: Tests new requirement that voxels of any size can be placed at any 1cm position without resolution-based snapping.

@@ -424,9 +424,14 @@ TEST_F(SelectionManagerTest, GetSelectionBounds) {
     manager->selectVoxel(voxel3);
     
     Math::BoundingBox bounds = manager->getSelectionBounds();
-    // With properly spaced voxels at (0,0,0), (4,0,0), and (0,4,0):
-    EXPECT_EQ(bounds.min, Math::Vector3f(0.0f, 0.0f, 0.0f));
-    EXPECT_EQ(bounds.max, Math::Vector3f(0.08f, 0.08f, 0.04f));
+    // With voxels at (0,0,0), (4,0,0), and (0,4,0) increment coordinates
+    // voxel1 at (0,0,0): bounds (-0.02, 0.00, -0.02) to (0.02, 0.04, 0.02)
+    // voxel2 at (4,0,0): bounds (0.02, 0.00, -0.02) to (0.06, 0.04, 0.02)
+    // voxel3 at (0,4,0): bounds (-0.02, 0.04, -0.02) to (0.02, 0.08, 0.02) - placed 4cm above ground!
+    // Combined bounds: (-0.02, 0.00, -0.02) to (0.06, 0.08, 0.02)
+    
+    EXPECT_EQ(bounds.min, Math::Vector3f(-0.02f, 0.0f, -0.02f));
+    EXPECT_EQ(bounds.max, Math::Vector3f(0.06f, 0.08f, 0.02f));
 }
 
 TEST_F(SelectionManagerTest, GetSelectionStats) {

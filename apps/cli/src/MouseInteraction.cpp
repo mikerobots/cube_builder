@@ -367,11 +367,14 @@ Math::Ray MouseInteraction::getMouseRay(float x, float y) const {
     Math::Matrix4f projMat = m_cameraController->getCamera()->getProjectionMatrix();
     
     // Convert to glm matrices
-    // GLM uses column-major ordering, our matrices use row-major
+    // Math::Matrix4f is row-major: m[row * 4 + col]
+    // GLM is column-major: mat[col][row]
+    // Need to transpose during conversion
     glm::mat4 viewMatrix;
     glm::mat4 projMatrix;
-    for (int col = 0; col < 4; ++col) {
-        for (int row = 0; row < 4; ++row) {
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            // Math::Matrix4f element at (row,col) goes to GLM element at [col][row]
             viewMatrix[col][row] = viewMat.m[row * 4 + col];
             projMatrix[col][row] = projMat.m[row * 4 + col];
         }
@@ -498,7 +501,7 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
     if (face.isGroundPlane()) {
         // For ground plane, use smart context snapping (no specific surface face)
         Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
-            hitPoint, resolution, shiftPressed, workspaceSize, *m_voxelManager, nullptr);
+            Math::WorldCoordinates(hitPoint), resolution, shiftPressed, workspaceSize, *m_voxelManager, nullptr);
         snappedPos = context.snappedIncrementPos.value();
         
         Logging::Logger::getInstance().debugfc("MouseInteraction",
@@ -510,7 +513,7 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
         VoxelResolution surfaceFaceVoxelRes = face.getResolution();
         
         Input::PlacementContext context = PlacementUtils::getSmartPlacementContext(
-            hitPoint, resolution, shiftPressed, workspaceSize, *m_voxelManager,
+            Math::WorldCoordinates(hitPoint), resolution, shiftPressed, workspaceSize, *m_voxelManager,
             &surfaceFaceVoxelPos, surfaceFaceVoxelRes, surfaceFaceDir);
         snappedPos = context.snappedIncrementPos.value();
         
@@ -565,6 +568,14 @@ void MouseInteraction::updateHoverState() {
     
     // Get mouse ray
     Math::Ray ray = getMouseRay(m_mousePos.x, m_mousePos.y);
+    
+    // Set ray for visualization if enabled (will be rendered during render phase)
+    if (m_rayVisualizationEnabled && m_feedbackRenderer) {
+        VisualFeedback::Ray vfRay(ray.origin, ray.direction);
+        m_feedbackRenderer->setDebugRay(vfRay, true);
+    } else if (m_feedbackRenderer) {
+        m_feedbackRenderer->clearDebugRay();
+    }
     
     // Perform raycast
     VisualFeedback::Face newHoverFace;
@@ -624,7 +635,7 @@ void MouseInteraction::placeVoxel() {
     // Use PlacementCommandFactory to create placement command with validation
     auto cmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
         m_voxelManager,
-        Math::Vector3i(m_previewPos.x, m_previewPos.y, m_previewPos.z),
+        Math::IncrementCoordinates(Math::Vector3i(m_previewPos.x, m_previewPos.y, m_previewPos.z)),
         m_voxelManager->getActiveResolution()
     );
     
@@ -655,7 +666,7 @@ void MouseInteraction::removeVoxel() {
     // Use PlacementCommandFactory to create removal command with validation
     auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
         m_voxelManager,
-        voxelPos,
+        Math::IncrementCoordinates(voxelPos),
         m_voxelManager->getActiveResolution()
     );
     

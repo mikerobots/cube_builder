@@ -16,12 +16,12 @@ mkdir -p "$OUTPUT_DIR"
 rm -f "$OUTPUT_DIR"/*.ppm*
 
 # Build the project if needed
-CLI_BINARY="../../build_ninja/bin/VoxelEditor_CLI"
+CLI_BINARY="../../../build_ninja/bin/VoxelEditor_CLI"
 if [ ! -f "$CLI_BINARY" ]; then
     echo "Building voxel-cli..."
-    cd ../..
+    cd ../../..
     cmake --build build_ninja
-    cd tests/cli_validation
+    cd tests/e2e/cli_validation
 fi
 
 # Create test commands
@@ -58,7 +58,7 @@ fi
 SCREENSHOT_FILE="$ACTUAL_SCREENSHOT"
 
 echo "Analyzing colors in screenshot..."
-../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$EXPECTED_COLORS_FILE"
+../../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$EXPECTED_COLORS_FILE"
 
 # Check if voxels are actually visible - require multiple colors for PASS
 TOTAL_COLORS=$(grep "Unique colors:" "$EXPECTED_COLORS_FILE" | grep -oE '[0-9]+$')

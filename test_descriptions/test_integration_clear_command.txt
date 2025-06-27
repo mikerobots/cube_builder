@@ -1,0 +1,22 @@
+----- File: tests/integration/test_integration_clear_command.cpp
+
+Test Name: ClearAllVoxels
+Test Description: Tests clearing all voxels across multiple resolutions and validates complete removal with count verification.
+
+Test Name: ClearSpecificResolution
+Test Description: Tests selective clearing of voxels by resolution while preserving voxels of other resolutions.
+
+Test Name: ClearActiveResolution
+Test Description: Tests clearing only the currently active resolution while leaving other resolutions intact.
+
+Test Name: ClearEmptyManager
+Test Description: Tests clearing operations on empty voxel manager to ensure no crashes or errors occur.
+
+Test Name: ClearAndReusePositions
+Test Description: Tests clearing voxels and reusing the same positions to verify proper cleanup and position availability.
+
+Test Name: ClearAliasMethod
+Test Description: Tests that clear() method is a proper alias for clearAll() method.
+
+Test Name: MemoryOptimizationAfterClear
+Test Description: Tests memory optimization after clearing many voxels to ensure proper memory cleanup and reduction.

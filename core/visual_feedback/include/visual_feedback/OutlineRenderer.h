@@ -59,6 +59,7 @@ private:
     OutlineBatch m_currentBatch;
     bool m_batchMode;
     
+    uint32_t m_vertexArray;  // VAO
     uint32_t m_vertexBuffer;
     uint32_t m_indexBuffer;
     uint32_t m_outlineShader;

@@ -1,0 +1,16 @@
+----- File: tests/integration/test_integration_interaction_mouse_boundary_clicking.cpp
+
+Test Name: CornerClickValidation
+Test Description: Tests mouse clicking at all 8 workspace corners with boundary adjustment to ensure voxels can be placed near corners with proper grid snapping.
+
+Test Name: ExactBoundaryClicks
+Test Description: Tests clicking exactly on workspace boundaries and validates that clicks slightly inside boundaries succeed.
+
+Test Name: OutsideBoundaryClicks
+Test Description: Tests clicking outside workspace boundaries to ensure placement is properly rejected.
+
+Test Name: ResolutionBoundaryBehavior
+Test Description: Tests boundary behavior across different voxel resolutions (1cm-32cm) to ensure grid snapping maintains boundary constraints.
+
+Test Name: GroundPlaneConstraint
+Test Description: Tests ground plane constraint (Y >= 0) by attempting clicks below ground and verifying proper clamping behavior.

@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_unit_core_rendering_file_based_shader_validation.cpp
+
+Test Name: FlatVoxelShader
+Test Description: Validates the flat voxel shader compilation and linking, ensuring it contains required uniforms (model, view, projection) and attributes (aPos, aNormal, aColor) for flat shading rendering.
+
+Test Name: BasicVoxelGL33Shader
+Test Description: Tests OpenGL 3.3 specific voxel shader variants, verifying proper version declaration (#version 330 core) and use of layout qualifiers for attribute locations.
+
+Test Name: EnhancedVoxelShader
+Test Description: Validates enhanced voxel shader with additional lighting features, checking for standard transformation uniforms and proper compilation/linking of enhanced rendering capabilities.
+
+Test Name: GroundPlaneShader
+Test Description: Tests ground plane shader compilation and linking, verifying presence of specific uniforms (mvpMatrix, minorLineColor, majorLineColor, opacity) required for grid rendering.
+
+Test Name: ShaderVersionCompatibility
+Test Description: Ensures compatibility between OpenGL 2.1 and OpenGL 3.3 shader versions, verifying both compile successfully and contain consistent uniform interfaces for cross-platform support.

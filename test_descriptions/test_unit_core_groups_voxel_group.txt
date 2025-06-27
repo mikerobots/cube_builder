@@ -1,0 +1,49 @@
+----- File: core/groups/tests/test_unit_core_groups_voxel_group.cpp
+
+Test Name: VoxelGroupTest.Construction
+Test Description: Tests VoxelGroup construction with ID and name. Verifies that a new group has the correct ID, name, is empty, and has zero voxel count.
+
+Test Name: VoxelGroupTest.NameManagement
+Test Description: Tests group name management functionality. Verifies that group names can be changed and retrieved correctly for group naming and organization.
+
+Test Name: VoxelGroupTest.ColorManagement
+Test Description: Tests visual group color indicator management. Verifies that groups can have their color changed and retrieved for visual distinction.
+
+Test Name: VoxelGroupTest.VisibilityManagement
+Test Description: Tests group visibility state management. Verifies that groups can be hidden/shown with proper state tracking, defaulting to visible.
+
+Test Name: VoxelGroupTest.OpacityManagement
+Test Description: Tests group opacity control for visual indicators. Verifies opacity can be set between 0.0 and 1.0 with proper clamping, defaulting to fully opaque.
+
+Test Name: VoxelGroupTest.LockingManagement
+Test Description: Tests group locking functionality to prevent modifications. Verifies groups can be locked/unlocked with proper state tracking, defaulting to unlocked.
+
+Test Name: VoxelGroupTest.VoxelMembership
+Test Description: Tests adding and removing voxels from groups. Verifies voxels can be added uniquely, contained, counted, and removed with duplicate handling.
+
+Test Name: VoxelGroupTest.VoxelList
+Test Description: Tests retrieving the list of voxels in a group. Verifies that all added voxels of different resolutions appear in the returned list.
+
+Test Name: VoxelGroupTest.ClearVoxels
+Test Description: Tests clearing all voxels from a group. Verifies that clearing removes all voxels, resets count to zero, and makes the group empty.
+
+Test Name: VoxelGroupTest.BoundingBox
+Test Description: Tests bounding box calculation for voxel groups. Verifies that bounding boxes correctly encompass all voxels accounting for their positions and sizes in the centered coordinate system.
+
+Test Name: VoxelGroupTest.PivotManagement
+Test Description: Tests group pivot point management for transformations. Verifies that pivot points can be set and retrieved for rotation/scaling operations.
+
+Test Name: VoxelGroupTest.GroupInfo
+Test Description: Tests comprehensive group information retrieval. Verifies that GroupInfo structure contains all group properties including ID, name, color, visibility, lock state, opacity, and voxel count.
+
+Test Name: VoxelGroupTest.Translation
+Test Description: Tests translating a group of voxels by an offset. Verifies that group translation moves all voxels to new positions maintaining relative spacing.
+
+Test Name: VoxelGroupTest.MetadataManagement
+Test Description: Tests group metadata storage and retrieval for file format support. Verifies complete metadata including name, color, visibility, lock state, opacity, and description can be set and retrieved.
+
+Test Name: VoxelGroupTest.BoundsInvalidation
+Test Description: Tests that bounding box is recalculated when voxels are added/removed. Verifies bounds properly expand when adding voxels at different positions with correct coordinate conversions.
+
+Test Name: VoxelGroupTest.DifferentResolutions
+Test Description: Tests handling groups containing voxels of different resolutions. Verifies that groups can contain and properly manage voxels at multiple resolution levels.

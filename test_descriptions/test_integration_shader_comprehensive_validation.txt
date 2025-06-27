@@ -1,0 +1,31 @@
+----- File: tests/integration/rendering/test_integration_shader_comprehensive_validation.cpp
+
+Test Name: VoxelMeshVisualValidation
+Test Description: Comprehensive test fixture for visual validation of voxel mesh rendering with OpenGL context setup, GLFW window management, and shader validation infrastructure
+
+Test Name: BasicShaderValidation  
+Test Description: Validates that basic shaders compile correctly and can render simple geometry without errors
+
+Test Name: VertexAttributeSetup
+Test Description: Tests that vertex attribute configurations (position, normal, color) are properly set up and bound to shader attributes
+
+Test Name: MultipleMeshRendering
+Test Description: Validates rendering of multiple mesh objects with proper vertex array object (VAO) management and attribute binding
+
+Test Name: ShaderUniformHandling
+Test Description: Tests setting and updating shader uniforms (model, view, projection matrices, lighting parameters) during rendering
+
+Test Name: OpenGLStateManagement
+Test Description: Validates proper OpenGL state management including depth testing, blending, and viewport configuration
+
+Test Name: RenderingPipelineIntegration
+Test Description: Integration test for the complete rendering pipeline from mesh creation through shader execution to framebuffer output
+
+Test Name: MacOSCompatibility
+Test Description: Tests OpenGL compatibility on macOS systems with proper extension loading and VAO macro handling
+
+Test Name: ErrorHandling
+Test Description: Validates proper error handling and cleanup when OpenGL operations fail or shaders don't compile
+
+Test Name: PerformanceValidation
+Test Description: Tests rendering performance with multiple objects and rapid shader switching scenarios

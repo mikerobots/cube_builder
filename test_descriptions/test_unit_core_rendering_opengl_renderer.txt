@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_unit_core_rendering_opengl_renderer.cpp
+
+Test Name: VertexAttributes
+Test Description: Tests standard vertex attribute setup for Position, Normal, TexCoord0, and Color attributes, verifying the renderer can configure vertex arrays without crashing even without OpenGL context.
+
+Test Name: UniformValues
+Test Description: Validates creation and storage of different uniform value types including float, vec2, vec3, vec4 (Color), int, and mat4 (Matrix4f), ensuring proper type identification and data storage.
+
+Test Name: CapabilityQueries
+Test Description: Tests OpenGL capability queries for maximum texture size, texture units, and anisotropy levels, verifying default values are returned without context and debug features are properly detected.
+
+Test Name: VertexAttributeConfigurations
+Test Description: Validates different vertex format configurations including position-only, position+normal, full format (with tangent), and custom attribute combinations, ensuring flexible vertex layout support.
+
+Test Name: ErrorHandling
+Test Description: Tests error handling for invalid resource access with non-existent IDs (9999), verifying getters return nullptr and operations with invalid IDs don't crash the renderer.

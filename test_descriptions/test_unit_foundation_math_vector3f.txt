@@ -1,0 +1,73 @@
+----- File: foundation/math/tests/test_unit_foundation_math_vector3f.cpp
+
+Test Name: DefaultConstructor
+Test Description: Tests the default constructor of Vector3f, verifying all components (x, y, z) are initialized to 0.0f.
+
+Test Name: ParameterConstructor
+Test Description: Tests the parameterized constructor of Vector3f with three float values, verifying each component is correctly assigned.
+
+Test Name: SingleValueConstructor
+Test Description: Tests the single value constructor of Vector3f, verifying all three components are set to the same provided value.
+
+Test Name: Addition
+Test Description: Tests the addition operator for Vector3f, verifying component-wise addition produces the correct result vector.
+
+Test Name: Subtraction
+Test Description: Tests the subtraction operator for Vector3f, verifying component-wise subtraction produces the correct result vector.
+
+Test Name: ScalarMultiplication
+Test Description: Tests scalar multiplication of Vector3f, verifying each component is correctly multiplied by the scalar value.
+
+Test Name: ScalarDivision
+Test Description: Tests scalar division of Vector3f, verifying each component is correctly divided by the scalar value.
+
+Test Name: Negation
+Test Description: Tests the unary negation operator for Vector3f, verifying each component's sign is correctly inverted.
+
+Test Name: DotProduct
+Test Description: Tests the dot product calculation between two Vector3f objects, verifying the sum of component-wise products is correct.
+
+Test Name: CrossProduct
+Test Description: Tests the cross product calculation between two Vector3f objects, verifying the resulting perpendicular vector is correct (testing with unit vectors along X and Y axes producing Z).
+
+Test Name: Length
+Test Description: Tests the length (magnitude) calculation of Vector3f, verifying the Euclidean distance formula returns the correct value (testing with a 3-4-5 right triangle).
+
+Test Name: LengthSquared
+Test Description: Tests the squared length calculation of Vector3f, verifying it returns the sum of squared components without taking the square root.
+
+Test Name: Normalization
+Test Description: Tests the normalized method of Vector3f, verifying it returns a unit vector in the same direction with length approximately 1.0.
+
+Test Name: NormalizeInPlace
+Test Description: Tests the normalize method that modifies the vector in place, verifying the vector becomes a unit vector with length approximately 1.0.
+
+Test Name: ZeroVectorNormalization
+Test Description: Tests normalization of a zero vector, verifying it returns a default unit vector (1,0,0) to avoid division by zero.
+
+Test Name: StaticConstants
+Test Description: Tests the static constant vectors (Zero, One, UnitX, UnitY, UnitZ), verifying they return the expected predefined vectors.
+
+Test Name: Distance
+Test Description: Tests the static distance calculation between two Vector3f points, verifying the Euclidean distance is correctly computed.
+
+Test Name: DistanceSquared
+Test Description: Tests the static squared distance calculation between two Vector3f points, verifying it returns the squared Euclidean distance.
+
+Test Name: Lerp
+Test Description: Tests linear interpolation between two Vector3f objects, verifying the interpolated vector at t=0.5 is the midpoint between the two vectors.
+
+Test Name: MinMax
+Test Description: Tests the static min and max functions for Vector3f, verifying they return vectors with component-wise minimum and maximum values respectively.
+
+Test Name: Clamp
+Test Description: Tests the static clamp function for Vector3f, verifying each component is constrained within the specified minimum and maximum bounds.
+
+Test Name: Equality
+Test Description: Tests the equality and inequality operators for Vector3f, verifying vectors with identical components are equal and vectors with different components are not equal.
+
+Test Name: IndexOperator
+Test Description: Tests the index operator (operator[]) for Vector3f, verifying read and write access to components by index (0=x, 1=y, 2=z).
+
+Test Name: CompoundAssignment
+Test Description: Tests compound assignment operators (+=, -=, *=, /=) for Vector3f, verifying they correctly modify the vector in place with the appropriate operation.

@@ -71,6 +71,7 @@ private:
         std::vector<Math::Vector3f> vertices;
         std::vector<Rendering::Color> colors;
         uint32_t vertexBuffer;
+        uint32_t vertexArray;  // VAO for OpenGL 3.3 Core Profile
         uint32_t lineShader;
         bool depthTest;
     } m_lineRenderer;

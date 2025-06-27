@@ -1,0 +1,43 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_types.cpp
+
+Test Name: FaceConstruction
+Test Description: Tests the construction of a Face object from voxel position, resolution, and face direction. Verifies that the face is valid and correctly stores its voxel position (with increment coordinates applied), resolution, and direction. Validates requirements REQ-2.3.1 and REQ-2.3.2 for face highlighting when hovering over voxel.
+
+Test Name: FaceId
+Test Description: Tests that Face objects generate consistent IDs for faces with the same properties (position, resolution, direction) and different IDs for faces with different properties. This ensures only one face can be highlighted at a time as per requirement REQ-4.2.2.
+
+Test Name: FaceWorldPosition
+Test Description: Tests that Face objects correctly calculate their world position based on the voxel position and face direction, accounting for the centered coordinate system where increment (0,0,0) maps to world (0,0,0). Validates face visibility from all camera angles per requirement REQ-4.2.3.
+
+Test Name: FaceNormal
+Test Description: Tests that Face objects correctly return their normal vector based on the face direction. For a PositiveX face, verifies the normal is (1,0,0).
+
+Test Name: FaceCorners
+Test Description: Tests that Face objects correctly calculate their four corner positions in world space, verifying all corners have the expected X coordinate for a PositiveX face in the centered coordinate system.
+
+Test Name: FaceArea
+Test Description: Tests that Face objects correctly calculate their surface area based on the voxel size determined by the resolution.
+
+Test Name: FaceEquality
+Test Description: Tests the equality comparison between Face objects, ensuring faces with identical properties are equal and faces with different properties are not equal.
+
+Test Name: RayConstruction
+Test Description: Tests the construction of a Ray object from origin and direction vectors, verifying the ray stores its origin and normalizes its direction vector.
+
+Test Name: RayPointAt
+Test Description: Tests that Ray objects correctly calculate points along the ray at a given distance using the parametric equation origin + t * direction.
+
+Test Name: TransformMatrix
+Test Description: Tests that Transform objects correctly generate transformation matrices with proper translation components based on position and scale values.
+
+Test Name: HighlightStyleFactories
+Test Description: Tests the factory methods for creating different HighlightStyle presets (Face, Selection, Group, Preview), verifying their animation and wireframe properties. Validates face highlighting uses appropriate styling per requirement REQ-4.2.1.
+
+Test Name: OutlineStyleFactories
+Test Description: Tests the factory methods for creating different OutlineStyle presets (VoxelPreview, GroupBoundary, SelectionBox, WorkspaceBounds), verifying their line patterns. Validates green outline for valid placements and red for invalid per requirements REQ-4.1.1 and REQ-4.1.2.
+
+Test Name: TextStyleFactories
+Test Description: Tests the factory methods for creating different TextStyle presets (Default, Header, Debug, Warning, Error), verifying their background and size properties with appropriate hierarchies.
+
+Test Name: FaceDirectionUtils
+Test Description: Tests utility functions for face directions including converting directions to normal vectors and finding opposite directions (e.g., PositiveX opposite is NegativeX).

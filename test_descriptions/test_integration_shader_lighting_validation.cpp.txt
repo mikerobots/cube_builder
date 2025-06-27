@@ -1,0 +1,13 @@
+----- File: tests/integration/rendering/test_integration_shader_lighting_validation.cpp
+
+Test Name: BasicShaderPhongLighting
+Test Description: Tests Phong lighting implementation in the basic_voxel shader by rendering a white cube with lights positioned at different angles (top-front, top-left, bottom-right, top-back). Validates brightness variation, highlights, and shadows to ensure proper lighting calculations.
+
+Test Name: EnhancedShaderLighting
+Test Description: Tests enhanced_voxel shader lighting capabilities using a cyan cube. Validates that enhanced lighting produces significant brightness variation and maintains good contrast between light and shadow areas. Skips if enhanced shader is unavailable.
+
+Test Name: FlatShaderNoInterpolation
+Test Description: Tests flat shading characteristics by rendering a yellow cube with rotation to show multiple faces. Analyzes brightness histogram to detect distinct brightness levels per face and validates that flat shading produces less smooth variation than Phong shading.
+
+Test Name: FaceOrientationBrightness
+Test Description: Tests how different cube face orientations (front, right, top, back) affect lighting brightness with a fixed light position. Validates that all visible faces receive illumination and checks for brightness variation between different orientations, accounting for back-face culling.

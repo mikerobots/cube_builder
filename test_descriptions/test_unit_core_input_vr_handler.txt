@@ -1,0 +1,52 @@
+----- File: core/input/tests/test_unit_core_input_vr_handler.cpp
+
+Test Name: DefaultState
+Test Description: Verifies that VRInputHandler initializes with correct default state - no hand tracking, zero positions/orientations, no active gestures, and pointing disabled for both hands.
+
+Test Name: HandTracking
+Test Description: Tests hand tracking enable/disable functionality and validates that the system meets VR platform requirements (REQ-7.1.2 for Meta Quest 3, REQ-7.3.2 for OpenXR SDK, REQ-7.3.3 for Meta Hand Tracking SDK).
+
+Test Name: TrackingQuality
+Test Description: Validates tracking quality state management, ensuring the handler correctly tracks and reports different quality levels (None, Low, Medium, High).
+
+Test Name: HandPoseUpdate
+Test Description: Tests updating hand pose data through VR events, verifying that position, orientation, and confidence values are correctly stored and retrievable for individual hands.
+
+Test Name: BothHandPoses
+Test Description: Validates simultaneous tracking of both left and right hand poses, ensuring independent updates and correct retrieval of position and confidence data for each hand.
+
+Test Name: GestureConfiguration
+Test Description: Tests gesture enable/disable functionality, verifying default states (Point, Grab, Pinch enabled) and the ability to toggle individual gesture recognition on/off.
+
+Test Name: GestureThresholds
+Test Description: Validates gesture detection threshold management, ensuring default thresholds are valid (0-1 range) and custom thresholds can be set and retrieved for different gestures.
+
+Test Name: GestureDetection
+Test Description: Tests basic gesture detection event processing, verifying that gesture detected events with hand pose and gesture data are processed without errors.
+
+Test Name: ComfortSettings
+Test Description: Validates VR comfort settings management, testing default settings (snap turning, teleport movement) and custom performance-oriented settings configuration.
+
+Test Name: PoseFiltering
+Test Description: Tests pose filtering configuration including enable/disable state, filter strength adjustment, and pose history size settings for smooth hand tracking.
+
+Test Name: Sensitivity
+Test Description: Validates sensitivity configuration for VR input, testing default value (1.0) and the ability to adjust sensitivity for different interaction styles.
+
+Test Name: EnabledState
+Test Description: Tests handler enable/disable functionality, verifying that VR events are ignored when disabled and processed correctly when enabled.
+
+Test Name: VRUtilities
+Test Description: Validates utility functions for VR gesture and hand type conversions (to/from string), and validation functions for gesture and hand type enums.
+
+Test Name: GestureQueries
+Test Description: Tests gesture query functions including confidence values, gesture positions, and active gesture lists for each hand, verifying correct default values.
+
+Test Name: RayCasting
+Test Description: Tests ray casting functionality for pointing gestures, validating hand ray generation, pointing detection based on finger poses, and pointing direction calculation.
+
+Test Name: Update
+Test Description: Validates the update loop functionality, ensuring stable state maintenance and proper handling of hand pose data across update cycles.
+
+Test Name: HandLost
+Test Description: Tests hand tracking loss detection, verifying that hands with zero confidence are correctly marked as no longer tracking.

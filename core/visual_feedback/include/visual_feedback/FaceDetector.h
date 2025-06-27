@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "FeedbackTypes.h"
-#include "voxel_data/VoxelGrid.h"
+#include "../../voxel_data/VoxelGrid.h"
 
 namespace VoxelEditor {
 namespace VisualFeedback {
@@ -69,6 +69,9 @@ private:
     void initializeTraversal(const Ray& ray, const Math::WorldCoordinates& gridMin, 
                            float voxelSize, VoxelData::VoxelResolution resolution, GridTraversal& traversal) const;
     void stepTraversal(GridTraversal& traversal) const;
+    
+    // Simplified face direction determination
+    FaceDirection determineFaceDirection(const Ray& ray, const Math::BoundingBox& voxelBox, float tMin) const;
 };
 
 } // namespace VisualFeedback

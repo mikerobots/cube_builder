@@ -281,3 +281,257 @@ TEST_F(ViewportTest, SmallViewport) {
     EXPECT_TRUE(smallViewport.contains(0, 0));
     EXPECT_FALSE(smallViewport.contains(1, 1));
 }
+
+// ===== Comprehensive Ray Generation Tests =====
+
+TEST_F(ViewportTest, ScreenToWorldRay_AllCorners) {
+    // Test ray generation from all corners and edges
+    Matrix4f viewMatrix = Matrix4f::lookAt(
+        Vector3f(0, 0, 5),  // Eye at positive Z
+        Vector3f(0, 0, 0),  // Looking at origin
+        Vector3f(0, 1, 0)   // Y up
+    );
+    
+    Matrix4f projMatrix = Matrix4f::perspective(
+        90.0f,                      // 90 degree FOV for easier testing
+        viewport->getAspectRatio(), 
+        0.1f, 
+        1000.0f
+    );
+    
+    // Test top-left corner
+    Vector2i topLeft(viewport->getX(), viewport->getY());
+    Ray topLeftRay = viewport->screenToWorldRay(topLeft, viewMatrix, projMatrix);
+    EXPECT_NEAR(topLeftRay.direction.length(), 1.0f, 0.001f);
+    EXPECT_LT(topLeftRay.direction.x, 0.0f); // Should point left
+    EXPECT_GT(topLeftRay.direction.y, 0.0f); // Should point up
+    EXPECT_LT(topLeftRay.direction.z, 0.0f); // Should point forward
+    
+    // Test top-right corner
+    Vector2i topRight(viewport->getX() + viewport->getWidth() - 1, viewport->getY());
+    Ray topRightRay = viewport->screenToWorldRay(topRight, viewMatrix, projMatrix);
+    EXPECT_NEAR(topRightRay.direction.length(), 1.0f, 0.001f);
+    EXPECT_GT(topRightRay.direction.x, 0.0f); // Should point right
+    EXPECT_GT(topRightRay.direction.y, 0.0f); // Should point up
+    EXPECT_LT(topRightRay.direction.z, 0.0f); // Should point forward
+    
+    // Test bottom-left corner
+    Vector2i bottomLeft(viewport->getX(), viewport->getY() + viewport->getHeight() - 1);
+    Ray bottomLeftRay = viewport->screenToWorldRay(bottomLeft, viewMatrix, projMatrix);
+    EXPECT_NEAR(bottomLeftRay.direction.length(), 1.0f, 0.001f);
+    EXPECT_LT(bottomLeftRay.direction.x, 0.0f); // Should point left
+    EXPECT_LT(bottomLeftRay.direction.y, 0.0f); // Should point down
+    EXPECT_LT(bottomLeftRay.direction.z, 0.0f); // Should point forward
+    
+    // Test bottom-right corner
+    Vector2i bottomRight(viewport->getX() + viewport->getWidth() - 1, 
+                        viewport->getY() + viewport->getHeight() - 1);
+    Ray bottomRightRay = viewport->screenToWorldRay(bottomRight, viewMatrix, projMatrix);
+    EXPECT_NEAR(bottomRightRay.direction.length(), 1.0f, 0.001f);
+    EXPECT_GT(bottomRightRay.direction.x, 0.0f); // Should point right
+    EXPECT_LT(bottomRightRay.direction.y, 0.0f); // Should point down
+    EXPECT_LT(bottomRightRay.direction.z, 0.0f); // Should point forward
+}
+
+TEST_F(ViewportTest, ScreenToWorldRay_DifferentCameraPositions) {
+    // Test ray generation with different camera configurations
+    Matrix4f projMatrix = Matrix4f::perspective(
+        45.0f, viewport->getAspectRatio(), 0.1f, 1000.0f
+    );
+    
+    Vector2i center(viewport->getX() + viewport->getWidth() / 2,
+                   viewport->getY() + viewport->getHeight() / 2);
+    
+    // Camera looking down from above
+    {
+        Matrix4f viewMatrix = Matrix4f::lookAt(
+            Vector3f(0, 10, 0),  // Above origin
+            Vector3f(0, 0, 0),   // Looking at origin
+            Vector3f(0, 0, -1)   // Z is forward
+        );
+        
+        Ray ray = viewport->screenToWorldRay(center, viewMatrix, projMatrix);
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f);
+        EXPECT_NEAR(ray.direction.x, 0.0f, 0.1f);
+        EXPECT_LT(ray.direction.y, 0.0f); // Should point down
+        EXPECT_NEAR(ray.direction.z, 0.0f, 0.1f);
+    }
+    
+    // Camera at angle
+    {
+        Matrix4f viewMatrix = Matrix4f::lookAt(
+            Vector3f(5, 5, 5),   // At diagonal
+            Vector3f(0, 0, 0),   // Looking at origin
+            Vector3f(0, 1, 0)    // Y up
+        );
+        
+        Ray ray = viewport->screenToWorldRay(center, viewMatrix, projMatrix);
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f);
+        // Should point toward origin from camera position
+        Vector3f expectedDir = Vector3f(0, 0, 0) - Vector3f(5, 5, 5);
+        expectedDir = expectedDir.normalized();
+        EXPECT_NEAR(ray.direction.x, expectedDir.x, 0.1f);
+        EXPECT_NEAR(ray.direction.y, expectedDir.y, 0.1f);
+        EXPECT_NEAR(ray.direction.z, expectedDir.z, 0.1f);
+    }
+}
+
+TEST_F(ViewportTest, ScreenToWorldRay_OrthographicProjection) {
+    // Test with orthographic projection
+    Matrix4f viewMatrix = Matrix4f::lookAt(
+        Vector3f(0, 0, 5),
+        Vector3f(0, 0, 0),
+        Vector3f(0, 1, 0)
+    );
+    
+    float halfWidth = 5.0f;
+    float halfHeight = halfWidth / viewport->getAspectRatio();
+    Matrix4f orthoMatrix = Matrix4f::orthographic(
+        -halfWidth, halfWidth,
+        -halfHeight, halfHeight,
+        0.1f, 1000.0f
+    );
+    
+    // With orthographic projection, all rays should be parallel
+    Vector2i pos1(viewport->getX() + 100, viewport->getY() + 100);
+    Vector2i pos2(viewport->getX() + 200, viewport->getY() + 200);
+    
+    Ray ray1 = viewport->screenToWorldRay(pos1, viewMatrix, orthoMatrix);
+    Ray ray2 = viewport->screenToWorldRay(pos2, viewMatrix, orthoMatrix);
+    
+    // Directions should be parallel (same direction)
+    EXPECT_NEAR(ray1.direction.x, ray2.direction.x, 0.001f);
+    EXPECT_NEAR(ray1.direction.y, ray2.direction.y, 0.001f);
+    EXPECT_NEAR(ray1.direction.z, ray2.direction.z, 0.001f);
+    
+    // Both should point forward
+    EXPECT_NEAR(ray1.direction.x, 0.0f, 0.001f);
+    EXPECT_NEAR(ray1.direction.y, 0.0f, 0.001f);
+    EXPECT_NEAR(ray1.direction.z, -1.0f, 0.001f);
+}
+
+TEST_F(ViewportTest, ScreenToWorldRay_EdgeCases) {
+    Matrix4f viewMatrix = Matrix4f::lookAt(
+        Vector3f(0, 0, 5),
+        Vector3f(0, 0, 0),
+        Vector3f(0, 1, 0)
+    );
+    
+    Matrix4f projMatrix = Matrix4f::perspective(
+        45.0f, viewport->getAspectRatio(), 0.1f, 1000.0f
+    );
+    
+    // Test positions outside viewport
+    {
+        Vector2i outsidePos(-100, -100);
+        Ray ray = viewport->screenToWorldRay(outsidePos, viewMatrix, projMatrix);
+        // Should still generate a valid ray
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f);
+    }
+    
+    // Test with very wide FOV
+    {
+        Matrix4f wideFovMatrix = Matrix4f::perspective(
+            170.0f, viewport->getAspectRatio(), 0.1f, 1000.0f
+        );
+        
+        Vector2i center(viewport->getX() + viewport->getWidth() / 2,
+                       viewport->getY() + viewport->getHeight() / 2);
+        Ray ray = viewport->screenToWorldRay(center, viewMatrix, wideFovMatrix);
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f);
+    }
+    
+    // Test with very narrow FOV
+    {
+        Matrix4f narrowFovMatrix = Matrix4f::perspective(
+            5.0f, viewport->getAspectRatio(), 0.1f, 1000.0f
+        );
+        
+        Vector2i center(viewport->getX() + viewport->getWidth() / 2,
+                       viewport->getY() + viewport->getHeight() / 2);
+        Ray ray = viewport->screenToWorldRay(center, viewMatrix, narrowFovMatrix);
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f);
+    }
+}
+
+TEST_F(ViewportTest, ScreenToWorldRay_ConsistencyCheck) {
+    // Verify that ray generation is consistent and reversible
+    Matrix4f viewMatrix = Matrix4f::lookAt(
+        Vector3f(3, 4, 5),
+        Vector3f(0, 0, 0),
+        Vector3f(0, 1, 0)
+    );
+    
+    Matrix4f projMatrix = Matrix4f::perspective(
+        60.0f, viewport->getAspectRatio(), 0.1f, 1000.0f
+    );
+    
+    // Test multiple screen positions
+    std::vector<Vector2i> testPositions = {
+        Vector2i(viewport->getX() + 100, viewport->getY() + 100),
+        Vector2i(viewport->getX() + 400, viewport->getY() + 300),
+        Vector2i(viewport->getX() + 700, viewport->getY() + 500)
+    };
+    
+    for (const auto& screenPos : testPositions) {
+        Ray ray = viewport->screenToWorldRay(screenPos, viewMatrix, projMatrix);
+        
+        // Ray should originate near camera position
+        float distToCamera = (ray.origin - Vector3f(3, 4, 5)).length();
+        EXPECT_LT(distToCamera, 1.0f) << "Ray origin should be near camera";
+        
+        // Project a point along the ray back to screen
+        Vector3f worldPoint = ray.origin + ray.direction * 10.0f;
+        Vector2i projectedBack = viewport->worldToScreen(worldPoint, viewMatrix, projMatrix);
+        
+        // Should be close to original screen position (within a few pixels)
+        EXPECT_NEAR(projectedBack.x, screenPos.x, 5);
+        EXPECT_NEAR(projectedBack.y, screenPos.y, 5);
+    }
+}
+
+TEST_F(ViewportTest, ScreenToWorldRay_RayPlaneIntersection) {
+    // Test that generated rays can correctly intersect with planes
+    Matrix4f viewMatrix = Matrix4f::lookAt(
+        Vector3f(0, 5, 5),
+        Vector3f(0, 0, 0),
+        Vector3f(0, 1, 0)
+    );
+    
+    Matrix4f projMatrix = Matrix4f::perspective(
+        45.0f, viewport->getAspectRatio(), 0.1f, 1000.0f
+    );
+    
+    // Generate ray toward ground plane (Y=0)
+    Vector2i center(viewport->getX() + viewport->getWidth() / 2,
+                   viewport->getY() + viewport->getHeight() / 2);
+    Ray ray = viewport->screenToWorldRay(center, viewMatrix, projMatrix);
+    
+    // Calculate intersection with Y=0 plane
+    if (ray.direction.y < 0) { // Ray points down
+        float t = -ray.origin.y / ray.direction.y;
+        Vector3f intersection = ray.origin + ray.direction * t;
+        
+        // Intersection should be near origin since camera looks at origin
+        EXPECT_NEAR(intersection.x, 0.0f, 1.0f);
+        EXPECT_NEAR(intersection.y, 0.0f, 0.001f);
+        EXPECT_NEAR(intersection.z, 0.0f, 1.0f);
+    }
+}
+
+TEST_F(ViewportTest, ScreenToWorldRay_NonInvertibleMatrix) {
+    // Test handling of non-invertible matrices
+    Matrix4f viewMatrix = Matrix4f::Identity();
+    Matrix4f singularMatrix = Matrix4f::zero(); // Non-invertible
+    
+    Vector2i center(viewport->getX() + viewport->getWidth() / 2,
+                   viewport->getY() + viewport->getHeight() / 2);
+    
+    // Should return a default ray without crashing
+    Ray ray = viewport->screenToWorldRay(center, viewMatrix, singularMatrix);
+    
+    // Default ray should point down negative Z
+    EXPECT_NEAR(ray.direction.x, 0.0f, 0.001f);
+    EXPECT_NEAR(ray.direction.y, 0.0f, 0.001f);
+    EXPECT_NEAR(ray.direction.z, -1.0f, 0.001f);
+}

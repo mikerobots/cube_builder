@@ -1,0 +1,4 @@
+----- File: test_overlap_detection.cpp
+
+Test Name: main
+Test Description: Standalone overlap detection test that simulates voxel overlap checking using AABB (Axis-Aligned Bounding Box) intersection. Tests 16cm voxels at positions (0.01, 0, 0.01) and (0.07, 0, 0.13), calculates bounds assuming bottom-center placement, and outputs whether voxels overlap along with distance calculations.

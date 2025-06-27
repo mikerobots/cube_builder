@@ -1,0 +1,31 @@
+----- File: apps/cli/tests/test_integration_cli_application.cpp
+
+Test Name: BasicInitialization
+Test Description: Tests application initialization in headless mode, verifying all core systems (VoxelManager, CameraController, InputManager, SelectionManager, HistoryManager, SurfaceGenerator, GroupManager, FileManager) are properly created and accessible.
+
+Test Name: VoxelPlacementWorkflow
+Test Description: Tests complete voxel placement workflow with 8cm resolution at arbitrary 1cm positions (0,0,0), (3,0,1), (1,7,2), verifying the new requirement that large voxels can be placed at any centimeter increment.
+
+Test Name: ArbitraryPositionPlacement
+Test Description: Validates new requirement allowing 16cm voxels at non-aligned positions, testing placement at (1,0,1), (25,0,1), (1,0,25), (45,0,45) without overlap and verifying exact position placement without snapping.
+
+Test Name: SelectionWorkflow
+Test Description: Tests selection system workflow with 8cm voxels, placing 5x5 grid, selecting 3x3 subset, verifying selection counts, and testing selectNone/selectAll functionality.
+
+Test Name: GroupManagementWorkflow
+Test Description: Tests group management system by creating voxels, selecting them, creating named group "TestGroup", verifying group properties (name, voxel count), and testing visibility controls.
+
+Test Name: CameraControlWorkflow
+Test Description: Tests camera control functionality including camera access, distance manipulation (zoom), orbital rotation, and verification that camera settings persist through transformations.
+
+Test Name: UndoRedoWorkflow
+Test Description: Basic test of voxel placement and removal workflow, laying groundwork for future undo/redo system implementation with voxel state management.
+
+Test Name: FileIOWorkflow
+Test Description: Tests file I/O system with project creation, metadata setting (name, description, author), saving to test_project.cvef, loading, and verifying project integrity and metadata preservation.
+
+Test Name: WorkspaceResizing
+Test Description: Tests workspace resizing functionality, verifying default 5m³ size, successful resize to 8m³, and validation rejection of too-small workspace dimensions (1m³).
+
+Test Name: MultiResolutionSupport
+Test Description: Tests multi-resolution voxel support by placing voxels at different resolutions (1cm, 8cm, 64cm) with proper alignment, verifying individual voxel existence and total count across all resolutions.

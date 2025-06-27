@@ -1,0 +1,64 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_grid.cpp
+
+Test Name: VoxelGridTest.ConstructionWithValidParameters
+Test Description: Tests VoxelGrid construction with valid parameters. Verifies resolution, workspace size, initial voxel count, memory usage, and grid dimensions covering entire workspace.
+
+Test Name: VoxelGridTest.ConstructionWithDifferentResolutions
+Test Description: Tests VoxelGrid construction with all 10 resolution levels. Verifies each resolution correctly initializes with proper voxel size and empty state.
+
+Test Name: VoxelGridTest.BasicVoxelOperations
+Test Description: Tests basic voxel set/get operations using grid coordinates. Verifies voxels can be placed, retrieved, counted, and removed correctly.
+
+Test Name: VoxelGridTest.WorldSpaceOperations
+Test Description: Tests voxel operations using world space coordinates. Verifies world position placement and retrieval work with coordinate conversion.
+
+Test Name: VoxelGridTest.GridWorldCoordinateConversion
+Test Description: Tests coordinate conversion between increment and world coordinates. Verifies centered coordinate system with origin at (0,0,0) and round-trip conversion accuracy.
+
+Test Name: VoxelGridTest.PositionValidation
+Test Description: Tests position validation for increment and world coordinates. Verifies workspace bounds enforcement and Y>=0 constraint for both coordinate types.
+
+Test Name: VoxelGridTest.OutOfBoundsOperations
+Test Description: Tests operations outside workspace bounds fail gracefully. Verifies out-of-bounds set/get operations return false and don't create voxels.
+
+Test Name: VoxelGridTest.WorkspaceResizing
+Test Description: Tests workspace resizing functionality. Verifies grid can be resized to larger/smaller workspaces with optional voxel preservation.
+
+Test Name: VoxelGridTest.ClearOperation
+Test Description: Tests clearing all voxels from grid. Verifies clear removes all voxels, resets count to zero, and reduces memory usage.
+
+Test Name: VoxelGridTest.MemoryOptimization
+Test Description: Tests memory optimization functionality. Verifies optimize preserves voxel count and accessibility while potentially reducing memory usage.
+
+Test Name: VoxelGridTest.VoxelExport
+Test Description: Tests exporting all voxels as a list. Verifies getAllVoxels returns correct positions and resolutions for all stored voxels.
+
+Test Name: VoxelGridTest.DifferentResolutionBehavior
+Test Description: Tests that different resolution grids use same coordinate system. Verifies all grids have same dimensions and coordinate mappings regardless of voxel size.
+
+Test Name: VoxelGridTest.StressTestLargeGrid
+Test Description: Tests large-scale voxel storage with 8m workspace. Verifies grid can handle thousands of voxels efficiently with correct retrieval.
+
+Test Name: VoxelGridTest.MemoryUsageScaling
+Test Description: Tests memory usage scales appropriately with voxel count. Verifies memory increases when adding voxels and decreases when clearing.
+
+Test Name: VoxelGridTest.ThreadSafetyPreparation
+Test Description: Tests rapid voxel operations simulating multi-threaded usage. Verifies grid handles rapid set/clear operations correctly maintaining consistency.
+
+Test Name: VoxelGridTest.VoxelWorldPositionVerification
+Test Description: Tests voxel world position accuracy for rendering. Verifies increment coordinates map to expected world positions with proper round-trip conversion.
+
+Test Name: VoxelGridTest.ArbitraryPositions_NoSnapToVoxelBoundaries
+Test Description: Tests voxels can be stored at any 1cm position without resolution-based snapping. Verifies new requirement allows non-aligned positions for all voxel sizes.
+
+Test Name: VoxelGridTest.ArbitraryPositions_AllResolutionsSupported
+Test Description: Tests all voxel resolutions support arbitrary 1cm positions. Verifies no resolution enforces grid alignment, supporting exact placement.
+
+Test Name: VoxelGridTest.ArbitraryPositions_StorageAndRetrieval
+Test Description: Tests storage and retrieval at arbitrary positions. Verifies voxels stored at non-aligned positions can be retrieved correctly.
+
+Test Name: VoxelGridTest.ArbitraryPositions_GridCoordinateMapping
+Test Description: Tests increment-to-grid coordinate mapping without snapping. Verifies internal grid coordinates preserve 1cm granularity for all resolutions.
+
+Test Name: VoxelGridTest.ArbitraryPositions_DensePacking
+Test Description: Tests dense storage at 1cm intervals. Verifies sparse octree efficiently handles many voxels at arbitrary positions with reasonable memory usage.

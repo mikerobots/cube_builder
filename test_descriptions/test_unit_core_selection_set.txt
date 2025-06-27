@@ -1,0 +1,88 @@
+----- File: core/selection/tests/test_unit_core_selection_set.cpp
+
+Test Name: DefaultConstruction
+Test Description: Tests SelectionSet default construction, verifying it creates an empty collection with zero size, fulfilling the requirement for managing collections of selected voxels.
+
+Test Name: VectorConstruction
+Test Description: Validates SelectionSet construction from vector of VoxelIds, ensuring all voxels are properly added and accessible via contains() method with correct size tracking.
+
+Test Name: InitializerListConstruction
+Test Description: Tests SelectionSet construction from initializer list syntax, verifying convenient creation of selection sets with multiple voxels using brace initialization.
+
+Test Name: AddAndContains
+Test Description: Validates basic add and contains operations, testing individual voxel addition, duplicate prevention, and proper containment checking with size management.
+
+Test Name: Remove
+Test Description: Tests voxel removal from selection sets, verifying specific voxels can be removed while preserving others, and ensuring removal of non-existent voxels doesn't affect size.
+
+Test Name: Clear
+Test Description: Validates complete selection clearing, ensuring all voxels are removed, empty state is restored, and no voxels remain accessible after clearing.
+
+Test Name: AddRange
+Test Description: Tests bulk addition of voxel ranges from vector, verifying efficient batch operations for adding multiple voxels simultaneously to selection sets.
+
+Test Name: RemoveRange
+Test Description: Validates bulk removal of voxel ranges, testing efficient removal of multiple voxels from selection sets while preserving non-targeted voxels.
+
+Test Name: AddSet
+Test Description: Tests adding entire selection sets to existing sets, verifying union-like behavior for combining multiple selection collections efficiently.
+
+Test Name: RemoveSet
+Test Description: Validates removing entire selection sets from existing sets, testing subtraction-like behavior for bulk removal operations across selection collections.
+
+Test Name: UnionWith
+Test Description: Tests set union operations returning new SelectionSet containing all voxels from both sets, verifying mathematical set union behavior with proper duplication handling.
+
+Test Name: IntersectWith
+Test Description: Validates set intersection operations returning new SelectionSet containing only voxels present in both sets, ensuring correct mathematical intersection behavior.
+
+Test Name: Subtract
+Test Description: Tests set subtraction operations returning new SelectionSet with voxels from first set minus those in second set, verifying proper difference calculation.
+
+Test Name: SymmetricDifference
+Test Description: Validates symmetric difference operations returning voxels present in either set but not both, testing exclusive OR behavior for selection sets.
+
+Test Name: Unite
+Test Description: Tests in-place union operations modifying existing SelectionSet to include all voxels from both sets, verifying efficient self-modifying union behavior.
+
+Test Name: Intersect
+Test Description: Validates in-place intersection operations modifying existing SelectionSet to contain only voxels present in both sets, ensuring efficient self-intersection.
+
+Test Name: SubtractFrom
+Test Description: Tests in-place subtraction operations modifying existing SelectionSet by removing voxels present in second set, verifying efficient self-subtraction.
+
+Test Name: ToVector
+Test Description: Validates conversion of SelectionSet to vector format, ensuring all voxels are preserved in vector form for external API compatibility and iteration.
+
+Test Name: GetBounds
+Test Description: Tests bounding box calculation for selection sets, verifying correct min/max coordinates encompassing all selected voxels across multiple resolutions.
+
+Test Name: GetCenter
+Test Description: Validates center point calculation for selection sets, testing average position computation across multiple voxels with proper world coordinate handling.
+
+Test Name: GetStats
+Test Description: Tests selection statistics calculation including voxel count by resolution and total volume, verifying proper aggregation across mixed-resolution selections.
+
+Test Name: Filter
+Test Description: Validates selection filtering with predicates, testing creation of new SelectionSet containing only voxels matching specified criteria for performance optimization.
+
+Test Name: FilterInPlace
+Test Description: Tests in-place filtering modifying existing SelectionSet to contain only voxels matching predicate, ensuring efficient self-filtering operations.
+
+Test Name: Iteration
+Test Description: Validates standard iterator support for SelectionSet, testing range-based for loops and proper iteration over all contained voxels.
+
+Test Name: ForEach
+Test Description: Tests functional-style iteration using forEach with lambda functions, verifying callback-based processing of all voxels in selection sets.
+
+Test Name: Equality
+Test Description: Validates equality comparison between SelectionSets, testing order-independent equality and proper inequality detection for different selections.
+
+Test Name: MakeBoxSelection
+Test Description: Tests utility function for creating box-based selections, verifying generation of SelectionSet containing all voxels within specified bounding box.
+
+Test Name: MakeSphereSelection
+Test Description: Validates utility function for creating sphere-based selections, ensuring all selected voxels are within specified radius of center point.
+
+Test Name: MakeCylinderSelection
+Test Description: Tests utility function for creating cylindrical selections, verifying generation of SelectionSet containing voxels within specified cylindrical volume.

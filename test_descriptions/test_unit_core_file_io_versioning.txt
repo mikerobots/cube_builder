@@ -1,0 +1,40 @@
+----- File: core/file_io/tests/test_unit_core_file_io_versioning.cpp
+
+Test Name: GetCurrentVersion
+Test Description: Tests getting the current file version, verifying it returns FileVersion::Current() with version 1.0.0.0.
+
+Test Name: VersionCompatibility
+Test Description: Tests version compatibility checking, verifying same major/minor versions are compatible and different major versions are incompatible.
+
+Test Name: DetectVersion
+Test Description: Tests detecting file version from binary stream, verifying correct version is detected from file header with magic bytes "CVEF".
+
+Test Name: DetectInvalidVersion
+Test Description: Tests detecting version from invalid file header, verifying invalid magic bytes return version 0.0.0.0.
+
+Test Name: CanUpgrade
+Test Description: Tests upgrade capability checking, verifying upgrades are allowed within major version, downgrades are not allowed, and major version upgrade support is implementation-dependent.
+
+Test Name: UpgradeFile
+Test Description: Tests file upgrade functionality (currently stub implementation), verifying the upgradeFile method exists and returns false in current implementation.
+
+Test Name: GetUpgradeWarnings
+Test Description: Tests getting upgrade warnings for version transitions, verifying the method exists and returns empty vector in current implementation.
+
+Test Name: FindUpgradePath
+Test Description: Tests finding upgrade path between versions (placeholder test for future implementation when migration paths are defined).
+
+Test Name: VersionStringConversion
+Test Description: Tests version to string and string to version conversions, verifying format "major.minor.patch.build" and handling of partial version strings.
+
+Test Name: RegisterMigrations
+Test Description: Tests migration registration system (placeholder for future implementation), documenting expected behavior for version migration registration.
+
+Test Name: MigrationDataIntegrity
+Test Description: Tests data migration between versions using migrateData method, verifying current stub returns false and documenting expected future behavior.
+
+Test Name: BackwardCompatibility
+Test Description: Tests handling of files from future versions, verifying future versions are detected as incompatible and cannot be upgraded to.
+
+Test Name: VersionComparison
+Test Description: Tests FileVersion comparison operators, verifying less-than operator works correctly across major/minor/patch/build fields and equality operator works as expected.

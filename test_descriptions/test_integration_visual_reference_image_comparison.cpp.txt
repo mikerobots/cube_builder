@@ -1,0 +1,22 @@
+----- File: tests/integration/rendering/test_integration_visual_reference_image_comparison.cpp
+
+Test Name: GenerateReferenceImages
+Test Description: Generates reference PPM images for visual regression testing across three shader types (basic_voxel, enhanced_voxel, flat_voxel) and three scenes (single_cube, three_cubes, rotated_cube). Skips existing references and reports generation statistics.
+
+Test Name: ImageDiffAlgorithm
+Test Description: Validates the image comparison algorithm by creating two test images with known differences (400 pixels in a 20x20 square). Verifies pixel match percentage calculation (~96%), difference detection, and that the diff image correctly highlights differences in red.
+
+Test Name: ColorToleranceThreshold
+Test Description: Tests color tolerance functionality by comparing images with slight RGB variations. Validates that small color differences (2-4 RGB values) pass with default 5.0 tolerance but fail with stricter 2.0 tolerance, ensuring proper threshold behavior.
+
+Test Name: CompareRenderedToReference
+Test Description: Compares current rendered output against a stored reference image for the basic_voxel shader rendering a single cube. Saves diff and actual images if comparison fails, using a 98% pixel match threshold for pass/fail determination.
+
+Test Name: AllShaderVariantsComparison
+Test Description: Comprehensive test that compares all shader/scene combinations (9 total) against their reference images. Reports pass/fail/skip status for each combination and provides a summary. Saves diagnostic diff and actual images for any failures.
+
+Test Name: UpdateReferenceImages
+Test Description: Provides a mechanism to update all reference images when shader changes are intentional. Only runs when UPDATE_REFERENCE_IMAGES environment variable is set to "1". Forces regeneration of all reference images for baseline updates.
+
+Test Name: DetectVisualRegression
+Test Description: Simulates a visual regression by intentionally modifying render output (changing cube to bright red and background to lighter color). Validates that the comparison algorithm correctly detects these visual changes and fails the test with pixel match below 95%.

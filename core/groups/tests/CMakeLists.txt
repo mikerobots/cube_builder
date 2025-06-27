@@ -25,12 +25,6 @@ foreach(test_source ${GROUPS_TEST_SOURCES})
     target_link_libraries(${test_name}
         PRIVATE
             VoxelEditor_Groups
-            VoxelEditor_VoxelData
-            VoxelEditor_Rendering
-            VoxelEditor_Math
-            VoxelEditor_Events
-            VoxelEditor_Memory
-            VoxelEditor_Logging
             GTest::GTest
             GTest::Main
     )
@@ -63,12 +57,6 @@ add_executable(test_unit_core_groups ${GROUPS_TEST_SOURCES})
 target_link_libraries(test_unit_core_groups
     PRIVATE
         VoxelEditor_Groups
-        VoxelEditor_VoxelData
-        VoxelEditor_Rendering
-        VoxelEditor_Math
-        VoxelEditor_Events
-        VoxelEditor_Memory
-        VoxelEditor_Logging
         GTest::GTest
         GTest::Main
 )

@@ -22,11 +22,14 @@ public:
         , m_workspaceSize(workspaceSize)
         , m_voxelSize(VoxelData::getVoxelSize(resolution)) {
         
-        // Calculate grid dimensions
+        // CRITICAL FIX: Calculate grid dimensions based on 1cm granularity, not voxel resolution
+        // All voxels are now stored at 1cm increments regardless of their resolution
+        // This ensures the octree can handle positions at any 1cm increment
+        const float CM_SIZE = 0.01f;  // 1cm in meters
         m_gridDimensions = Math::Vector3i(
-            static_cast<int>(std::ceil(workspaceSize.x / m_voxelSize)),
-            static_cast<int>(std::ceil(workspaceSize.y / m_voxelSize)),
-            static_cast<int>(std::ceil(workspaceSize.z / m_voxelSize))
+            static_cast<int>(std::ceil(workspaceSize.x / CM_SIZE)),
+            static_cast<int>(std::ceil(workspaceSize.y / CM_SIZE)),
+            static_cast<int>(std::ceil(workspaceSize.z / CM_SIZE))
         );
         
         // Calculate octree depth based on largest dimension
@@ -47,6 +50,7 @@ public:
             depth++;
         }
         
+        
         // Create sparse octree
         m_octree = std::make_unique<SparseOctree>(depth);
     }
@@ -54,54 +58,97 @@ public:
     // Voxel operations
     bool setVoxel(const Math::IncrementCoordinates& pos, bool value) {
         if (!isValidIncrementPosition(pos)) {
-            Logging::Logger::getInstance().debugfc("VoxelGrid", 
-                "Attempt to set voxel at invalid position (%d, %d, %d)", pos.x(), pos.y(), pos.z());
+            // Commented out to prevent excessive debug output during tests
+            // Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            //     "Attempt to set voxel at invalid position (%d, %d, %d)", pos.x(), pos.y(), pos.z());
             return false;
         }
         
         // Convert increment coordinates to grid coordinates for octree storage
         Math::Vector3i gridPos = incrementToGrid(pos);
-        m_octree->setVoxel(gridPos, value);
-        Logging::Logger::getInstance().debugfc("VoxelGrid", 
-            "Set voxel at position (%d, %d, %d) to %s", pos.x(), pos.y(), pos.z(), value ? "true" : "false");
-        return true;
+        bool success = m_octree->setVoxel(gridPos, value);
+        
+        
+        // Commented out to prevent excessive debug output during tests
+        // if (success) {
+        //     Logging::Logger::getInstance().debugfc("VoxelGrid", 
+        //         "Set voxel at position (%d, %d, %d) to %s", pos.x(), pos.y(), pos.z(), value ? "true" : "false");
+        // } else {
+        //     Logging::Logger::getInstance().debugfc("VoxelGrid", 
+        //         "Failed to set voxel at position (%d, %d, %d) - octree operation failed", pos.x(), pos.y(), pos.z());
+        // }
+        
+        return success;
     }
     
     bool getVoxel(const Math::IncrementCoordinates& pos) const {
         if (!isValidIncrementPosition(pos)) {
-            Logging::Logger::getInstance().debugfc("VoxelGrid", 
-                "Attempt to get voxel at invalid position (%d, %d, %d)", pos.x(), pos.y(), pos.z());
+            // Commented out to prevent excessive debug output during tests
+            // Logging::Logger::getInstance().debugfc("VoxelGrid", 
+            //     "Attempt to get voxel at invalid position (%d, %d, %d)", pos.x(), pos.y(), pos.z());
             return false;
         }
         
         // Convert increment coordinates to grid coordinates for octree lookup
         Math::Vector3i gridPos = incrementToGrid(pos);
         bool result = m_octree->getVoxel(gridPos);
-        Logging::Logger::getInstance().debugfc("VoxelGrid", 
-            "Get voxel at position (%d, %d, %d): %s", pos.x(), pos.y(), pos.z(), result ? "true" : "false");
+        // Commented out to prevent excessive debug output during tests
+        // Logging::Logger::getInstance().debugfc("VoxelGrid", 
+        //     "Get voxel at position (%d, %d, %d): %s", pos.x(), pos.y(), pos.z(), result ? "true" : "false");
         return result;
     }
     
     // World space operations
     bool setVoxelAtWorldPos(const Math::WorldCoordinates& worldPos, bool value) {
         Math::IncrementCoordinates incrementPos = worldToIncrement(worldPos);
-        Logging::Logger::getInstance().debugfc("VoxelGrid", 
-            "World position (%.3f, %.3f, %.3f) maps to increment position (%d, %d, %d)", 
-            worldPos.x(), worldPos.y(), worldPos.z(), incrementPos.x(), incrementPos.y(), incrementPos.z());
+        // Commented out to prevent excessive debug output during tests
+        // Logging::Logger::getInstance().debugfc("VoxelGrid", 
+        //     "World position (%.3f, %.3f, %.3f) maps to increment position (%d, %d, %d)", 
+        //     worldPos.x(), worldPos.y(), worldPos.z(), incrementPos.x(), incrementPos.y(), incrementPos.z());
         return setVoxel(incrementPos, value);
     }
     
     bool getVoxelAtWorldPos(const Math::WorldCoordinates& worldPos) const {
         Math::IncrementCoordinates incrementPos = worldToIncrement(worldPos);
-        Logging::Logger::getInstance().debugfc("VoxelGrid", 
-            "Query world position (%.3f, %.3f, %.3f) -> increment position (%d, %d, %d)", 
-            worldPos.x(), worldPos.y(), worldPos.z(), incrementPos.x(), incrementPos.y(), incrementPos.z());
+        // Commented out to prevent excessive debug output during tests
+        // Logging::Logger::getInstance().debugfc("VoxelGrid", 
+        //     "Query world position (%.3f, %.3f, %.3f) -> increment position (%d, %d, %d)", 
+        //     worldPos.x(), worldPos.y(), worldPos.z(), incrementPos.x(), incrementPos.y(), incrementPos.z());
         return getVoxel(incrementPos);
     }
     
     // Position validation
     bool isValidIncrementPosition(const Math::IncrementCoordinates& pos) const {
-        return Math::CoordinateConverter::isValidIncrementCoordinate(pos, m_workspaceSize);
+        // Check if the voxel position + voxel size fits within workspace bounds
+        // Get the voxel size in centimeters
+        float voxelSizeMeters = VoxelData::getVoxelSize(m_resolution);
+        int voxelSizeCm = static_cast<int>(voxelSizeMeters * 100.0f);
+        
+        // Convert workspace bounds to increment coordinates  
+        int halfX_cm = static_cast<int>(m_workspaceSize.x * 100.0f * 0.5f);
+        int halfZ_cm = static_cast<int>(m_workspaceSize.z * 100.0f * 0.5f);
+        int height_cm = static_cast<int>(m_workspaceSize.y * 100.0f);
+        
+        const Math::Vector3i& increment = pos.value();
+        
+        // Check Y >= 0 constraint first (before general bounds check)
+        if (increment.y < 0) {
+            return false;
+        }
+        
+        // Check if voxel position is within bounds (centered coordinate system)
+        if (increment.x < -halfX_cm || increment.x > halfX_cm ||
+            increment.z < -halfZ_cm || increment.z > halfZ_cm) {
+            return false;
+        }
+        
+        // Check if the top of the voxel would exceed workspace height
+        // Voxel bottom is at increment.y, top is at increment.y + voxelSizeCm
+        if (increment.y + voxelSizeCm > height_cm) {
+            return false;
+        }
+        
+        return true;
     }
     
     bool isValidWorldPosition(const Math::WorldCoordinates& worldPos) const {
@@ -124,27 +171,26 @@ public:
     
     // Internal helper: Convert increment coordinates to grid coordinates for octree storage
     Math::Vector3i incrementToGrid(const Math::IncrementCoordinates& incrementPos) const {
-        // For this grid's resolution, convert increment position to grid coordinates
-        // by snapping to the voxel resolution and then dividing by voxel size
-        Math::IncrementCoordinates snapped = Math::CoordinateConverter::snapToVoxelResolution(incrementPos, m_resolution);
-        float voxelSizeMeters = Math::CoordinateConverter::getVoxelSizeMeters(m_resolution);
-        int voxelSize_cm = static_cast<int>(voxelSizeMeters * 100.0f);
+        // CRITICAL FIX: Store all voxels at 1cm granularity regardless of resolution
+        // This ensures that voxels at different increment positions don't collide
+        // The resolution is used only for rendering and collision detection, not storage granularity
         
-        // Convert to grid coordinates relative to workspace center
+        // Use 1cm granularity (no division) - each increment position maps to unique grid position
         Math::Vector3i gridPos(
-            snapped.x() / voxelSize_cm,
-            snapped.y() / voxelSize_cm,
-            snapped.z() / voxelSize_cm
+            incrementPos.x(),  // 1cm = 1 grid unit
+            incrementPos.y(),  // 1cm = 1 grid unit
+            incrementPos.z()   // 1cm = 1 grid unit
         );
         
         // Adjust for centered coordinate system - convert to positive grid indices
-        int halfX_voxels = static_cast<int>(m_workspaceSize.x / voxelSizeMeters / 2.0f);
-        int halfZ_voxels = static_cast<int>(m_workspaceSize.z / voxelSizeMeters / 2.0f);
+        // Now working in 1cm units, so workspace size in cm = workspace size in meters * 100
+        int halfX_cm = static_cast<int>(m_workspaceSize.x * 100.0f / 2.0f);
+        int halfZ_cm = static_cast<int>(m_workspaceSize.z * 100.0f / 2.0f);
         
         return Math::Vector3i(
-            gridPos.x + halfX_voxels,
+            gridPos.x + halfX_cm,
             gridPos.y,
-            gridPos.z + halfZ_voxels
+            gridPos.z + halfZ_cm
         );
     }
     
@@ -178,22 +224,22 @@ public:
         // Get all voxel positions from octree
         auto positions = m_octree->getAllVoxels();
         
-        Logging::Logger::getInstance().debugfc("VoxelGrid", 
-            "Retrieved %zu voxel positions from octree", positions.size());
+        // Commented out to prevent excessive debug output during tests
+        // Logging::Logger::getInstance().debugfc("VoxelGrid", 
+        //     "Retrieved %zu voxel positions from octree", positions.size());
         
         for (const auto& pos : positions) {
             // Convert grid position back to increment coordinates
             Math::Vector3i gridPos = pos;
             // Apply reverse transformation from incrementToGrid()
-            float voxelSizeMeters = Math::CoordinateConverter::getVoxelSizeMeters(m_resolution);
-            int voxelSize_cm = static_cast<int>(voxelSizeMeters * 100.0f);
-            int halfX_voxels = static_cast<int>(m_workspaceSize.x / voxelSizeMeters / 2.0f);
-            int halfZ_voxels = static_cast<int>(m_workspaceSize.z / voxelSizeMeters / 2.0f);
+            // Since we now store at 1cm granularity, reverse is simpler
+            int halfX_cm = static_cast<int>(m_workspaceSize.x * 100.0f / 2.0f);
+            int halfZ_cm = static_cast<int>(m_workspaceSize.z * 100.0f / 2.0f);
             
             Math::IncrementCoordinates incrementPos(
-                (gridPos.x - halfX_voxels) * voxelSize_cm,
-                gridPos.y * voxelSize_cm,
-                (gridPos.z - halfZ_voxels) * voxelSize_cm
+                gridPos.x - halfX_cm,  // Direct mapping (1cm = 1 grid unit)
+                gridPos.y,             // Direct mapping (1cm = 1 grid unit)
+                gridPos.z - halfZ_cm   // Direct mapping (1cm = 1 grid unit)
             );
             
             VoxelPosition voxelPos(incrementPos, m_resolution);
@@ -205,11 +251,12 @@ public:
     
     // Resize workspace
     bool resizeWorkspace(const Math::Vector3f& newSize) {
-        // Calculate new grid dimensions
+        // Calculate new grid dimensions based on 1cm granularity, not voxel resolution
+        const float CM_SIZE = 0.01f;  // 1cm in meters
         Math::Vector3i newDimensions(
-            static_cast<int>(std::ceil(newSize.x / m_voxelSize)),
-            static_cast<int>(std::ceil(newSize.y / m_voxelSize)),
-            static_cast<int>(std::ceil(newSize.z / m_voxelSize))
+            static_cast<int>(std::ceil(newSize.x / CM_SIZE)),
+            static_cast<int>(std::ceil(newSize.y / CM_SIZE)),
+            static_cast<int>(std::ceil(newSize.z / CM_SIZE))
         );
         
         // Check if any voxels would be lost
@@ -228,6 +275,31 @@ public:
         
         m_workspaceSize = newSize;
         m_gridDimensions = newDimensions;
+        
+        // Recalculate octree depth for new dimensions and recreate octree
+        int maxDim = std::max({newDimensions.x, newDimensions.y, newDimensions.z});
+        int depth = 0;
+        int size = 1;
+        while (size < maxDim) {
+            size *= 2;
+            depth++;
+        }
+        
+        if (size == maxDim && maxDim > 1) {
+            depth++;
+        }
+        
+        // Create new octree with correct depth
+        auto newOctree = std::make_unique<SparseOctree>(depth);
+        
+        // Transfer existing voxels to new octree
+        for (const auto& pos : positions) {
+            newOctree->setVoxel(pos, true);
+        }
+        
+        // Replace the old octree
+        m_octree = std::move(newOctree);
+        
         return true;
     }
     

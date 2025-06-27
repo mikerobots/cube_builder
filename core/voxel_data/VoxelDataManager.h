@@ -58,15 +58,6 @@ public:
             return false;
         }
         
-        // NOTE: Commenting out resolution alignment validation for now
-        // The tests seem to expect different behavior
-        // // Validate that the increment position aligns with the voxel resolution
-        // // For example, a 4cm voxel can only be placed at increments that are multiples of 4
-        // int voxelSizeInCm = static_cast<int>(getVoxelSize(resolution) * 100.0f);
-        // if (pos.x() % voxelSizeInCm != 0 || pos.y() % voxelSizeInCm != 0 || pos.z() % voxelSizeInCm != 0) {
-        //     return false;
-        // }
-        
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
@@ -75,7 +66,7 @@ public:
         
         // Handle redundant operations (setting same value as current)
         if (oldValue == value) {
-            // This is a redundant operation - no change needed, but return true to indicate success
+            // Redundant operation - succeed silently (no-op)
             return true;
         }
         
@@ -205,7 +196,7 @@ public:
         const VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
         
-        return grid->getVoxelAtWorldPos(worldPos);
+        return grid->getVoxelAtWorldPos(Math::WorldCoordinates(worldPos));
     }
     
     bool getVoxelAtWorldPos(const Math::Vector3f& worldPos) const {
@@ -606,12 +597,22 @@ private:
             "wouldOverlapInternal: checking increment position (%d, %d, %d) with resolution %d",
             pos.x(), pos.y(), pos.z(), static_cast<int>(resolution));
         
-        // Convert increment position to world space
-        Math::WorldCoordinates worldCenter = Math::CoordinateConverter::incrementToWorld(pos);
+        // Convert increment position to world space (bottom-center coordinate)
+        Math::WorldCoordinates worldBottomCenter = Math::CoordinateConverter::incrementToWorld(pos);
         float voxelSize = getVoxelSize(resolution);
         float halfSize = voxelSize * 0.5f;
-        Math::Vector3f worldMin = worldCenter.value() - Math::Vector3f(halfSize, halfSize, halfSize);
-        Math::Vector3f worldMax = worldCenter.value() + Math::Vector3f(halfSize, halfSize, halfSize);
+        
+        // Calculate bounds where worldBottomCenter is at the bottom face center
+        Math::Vector3f worldMin = Math::Vector3f(
+            worldBottomCenter.value().x - halfSize, 
+            worldBottomCenter.value().y,              // Bottom at placement Y
+            worldBottomCenter.value().z - halfSize
+        );
+        Math::Vector3f worldMax = Math::Vector3f(
+            worldBottomCenter.value().x + halfSize, 
+            worldBottomCenter.value().y + voxelSize,  // Top at placement Y + voxelSize
+            worldBottomCenter.value().z + halfSize
+        );
         
         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
             "World bounds: min=(%.3f, %.3f, %.3f) max=(%.3f, %.3f, %.3f)",
@@ -627,8 +628,6 @@ private:
                 "Checking against resolution %d with %zu voxels",
                 i, grid->getVoxelCount());
             
-            float checkVoxelSize = getVoxelSize(checkRes);
-            
             // Convert world bounds to increment coordinates for this resolution
             Math::IncrementCoordinates minIncCheck = Math::CoordinateConverter::worldToIncrement(
                 Math::WorldCoordinates(worldMin));
@@ -640,58 +639,31 @@ private:
                 minIncCheck.x(), minIncCheck.y(), minIncCheck.z(),
                 maxIncCheck.x(), maxIncCheck.y(), maxIncCheck.z());
             
-            // Quick check: if the search range is too large, use getAllVoxels instead
-            int searchVolume = (maxIncCheck.x() - minIncCheck.x()) * 
-                              (maxIncCheck.y() - minIncCheck.y()) * 
-                              (maxIncCheck.z() - minIncCheck.z());
-            
-            if (searchVolume > static_cast<int>(COLLISION_SEARCH_VOLUME_THRESHOLD) || 
-                grid->getVoxelCount() < static_cast<size_t>(searchVolume / 2)) {
-                // More efficient to check all voxels directly
-                auto voxels = grid->getAllVoxels();
-                for (const auto& voxelPos : voxels) {
-                    Math::Vector3f voxelCenter = voxelPos.toWorldSpace();
-                    float checkHalfSize = checkVoxelSize * 0.5f;
-                    Math::Vector3f voxelMin = voxelCenter - Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
-                    Math::Vector3f voxelMax = voxelCenter + Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
-                    
-                    // Check for overlap (AABB intersection)
-                    if (worldMin.x < voxelMax.x && worldMax.x > voxelMin.x &&
-                        worldMin.y < voxelMax.y && worldMax.y > voxelMin.y &&
-                        worldMin.z < voxelMax.z && worldMax.z > voxelMin.z) {
-                        return true; // Would overlap
-                    }
-                }
-                continue; // Next resolution
-            }
-            
-            // For the detailed search, iterate through the region in increment coordinates
-            // Step by the voxel resolution to check each potential voxel position
-            int checkVoxelSize_cm = static_cast<int>(checkVoxelSize * 100.0f);
-            for (int x = minIncCheck.x(); x <= maxIncCheck.x(); x += checkVoxelSize_cm) {
-                for (int y = minIncCheck.y(); y <= maxIncCheck.y(); y += checkVoxelSize_cm) {
-                    for (int z = minIncCheck.z(); z <= maxIncCheck.z(); z += checkVoxelSize_cm) {
-                        Math::IncrementCoordinates checkPos(x, y, z);
-                        if (grid->getVoxel(checkPos)) {
-                            // Found a voxel that might overlap
-                            Math::Vector3f voxelCenter = Math::CoordinateConverter::incrementToWorld(checkPos).value();
-                            float checkHalfSize = checkVoxelSize * 0.5f;
-                            Math::Vector3f voxelMin = voxelCenter - Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
-                            Math::Vector3f voxelMax = voxelCenter + Math::Vector3f(checkHalfSize, checkHalfSize, checkHalfSize);
-                            
-                            // Check for overlap (AABB intersection)
-                            if (worldMin.x < voxelMax.x && worldMax.x > voxelMin.x &&
-                                worldMin.y < voxelMax.y && worldMax.y > voxelMin.y &&
-                                worldMin.z < voxelMax.z && worldMax.z > voxelMin.z) {
-                                return true; // Would overlap
-                            }
-                        }
-                    }
+            // Always use getAllVoxels approach for consistency and correctness
+            auto voxels = grid->getAllVoxels();
+            for (const auto& voxelPos : voxels) {
+                // Use the VoxelPosition's getWorldBounds method for correct bottom-center bounds
+                Math::Vector3f voxelMin, voxelMax;
+                voxelPos.getWorldBounds(voxelMin, voxelMax);
+                
+                // Check for overlap (AABB intersection) with epsilon tolerance for floating-point precision
+                const float epsilon = 1e-6f; // Small tolerance for floating-point comparisons
+                bool overlapsX = (worldMin.x + epsilon) < voxelMax.x && (worldMax.x - epsilon) > voxelMin.x;
+                bool overlapsY = (worldMin.y + epsilon) < voxelMax.y && (worldMax.y - epsilon) > voxelMin.y;
+                bool overlapsZ = (worldMin.z + epsilon) < voxelMax.z && (worldMax.z - epsilon) > voxelMin.z;
+                bool overlaps = overlapsX && overlapsY && overlapsZ;
+                
+                if (overlaps) {
+                    Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                        "Overlap detected: new voxel at (%d,%d,%d) overlaps with existing voxel at (%d,%d,%d)",
+                        pos.x(), pos.y(), pos.z(), 
+                        voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z());
+                    return true; // Would overlap
                 }
             }
         }
         
-        return false; // No overlap
+        return false; // No overlap detected
     }
 };
 

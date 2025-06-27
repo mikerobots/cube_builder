@@ -1,0 +1,19 @@
+----- File: apps/cli/tests/test_integration_interaction_face_clicking.cpp
+
+Test Name: TestAllSixFaces
+Test Description: Tests face detection on all six faces of a 64cm voxel placed at non-aligned position (7,23,11cm), validating ray casting from different directions with expected normals per REQ-5.1.1
+
+Test Name: TestVoxelPlacementCalculation
+Test Description: Tests voxel placement calculation logic for all six face directions from non-aligned voxel position, verifying correct offset calculations (±64cm for 64cm voxels)
+
+Test Name: TestSequentialVoxelPlacement
+Test Description: Tests sequential voxel placement by clicking positive X faces multiple times, creating a row of 4 voxels starting from non-aligned position (7,23,11cm)
+
+Test Name: TestEdgeCases
+Test Description: Tests edge cases with negative coordinates and non-aligned positions (-37,19,-23cm) in centered coordinate system, validating workspace bounds checking
+
+Test Name: TestFaceDetectionWithMultipleVoxels
+Test Description: Tests face detection accuracy when multiple 64cm voxels are placed at non-aligned positions in a line pattern, ensuring correct voxel identification
+
+Test Name: TestNonAlignedVoxelMixedSizes
+Test Description: Tests face detection on different voxel sizes (16cm and 32cm) placed at arbitrary non-aligned 1cm positions, validating multi-resolution support per REQ-1.1.1

@@ -1,0 +1,37 @@
+----- File: foundation/logging/tests/test_unit_foundation_logging_performance_profiler.cpp
+
+Test Name: BasicProfiling
+Test Description: Tests basic performance profiling functionality with begin/end section timing, verifying call count, total time (≥10ms), and timing statistics calculation.
+
+Test Name: MultipleCalls
+Test Description: Validates profiling of repeated section calls (3 iterations), testing cumulative timing statistics, call count tracking, and proper min/max/average time calculations.
+
+Test Name: MultipleSections
+Test Description: Tests profiling multiple different sections with varying execution times, verifying proper section separation and results sorting by total time (descending).
+
+Test Name: ScopedProfiler
+Test Description: Validates automatic scoped profiling using ScopedProfiler RAII class, testing scope-based timing measurement and automatic cleanup on scope exit.
+
+Test Name: NestedProfiling
+Test Description: Tests nested profiling sections with outer/inner timing hierarchy, verifying proper timing isolation and that outer time includes inner execution time.
+
+Test Name: MismatchedSections
+Test Description: Validates error handling for mismatched begin/end section names, ensuring invalid profiling attempts result in no recorded sections.
+
+Test Name: MemoryTracking
+Test Description: Tests memory allocation/deallocation tracking with category-based organization, verifying allocation counts, byte tracking, and current usage calculations.
+
+Test Name: MultipleMemoryCategories
+Test Description: Validates memory tracking across multiple categories, ensuring proper isolation and independent tracking of allocation/deallocation per category.
+
+Test Name: Reset
+Test Description: Tests profiler reset functionality, verifying complete clearing of both timing profile data and memory statistics after reset operation.
+
+Test Name: SaveReport
+Test Description: Validates profile report generation to file, testing file creation, content verification (timing/memory sections), and proper report formatting with cleanup.
+
+Test Name: Macros
+Test Description: Tests PROFILE_SCOPE macro functionality for convenient scoped profiling, verifying automatic section naming and timing measurement.
+
+Test Name: FunctionMacro
+Test Description: Validates PROFILE_FUNCTION macro for automatic function profiling, testing function name detection and timing measurement for testFunction.

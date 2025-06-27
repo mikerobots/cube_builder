@@ -1,0 +1,13 @@
+----- File: tests/integration/test_integration_core_camera_cube_visibility_simple.cpp
+
+Test Name: test_SingleVoxelAtOrigin_FrontCamera
+Test Description: Tests visibility of a single 8cm voxel at origin using front camera view with mathematical frustum validation.
+
+Test Name: test_VoxelGrid3x3x3_IsometricCamera
+Test Description: Tests visibility of a 3x3x3 grid of 16cm voxels using isometric camera view, validating all 27 voxels are visible.
+
+Test Name: test_LargeVoxel_CloseCamera
+Test Description: Tests visibility of a large 32cm voxel with camera positioned very close to validate near-plane handling.
+
+Test Name: test_ExplicitMatrixCalculations
+Test Description: Tests explicit matrix calculation pipeline including view, projection, and NDC transformations for voxel visibility.

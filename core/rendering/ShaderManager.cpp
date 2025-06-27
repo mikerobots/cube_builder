@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <cassert>
 
 namespace VoxelEditor {
 namespace Rendering {
@@ -120,6 +121,8 @@ ShaderId ShaderManager::createShaderFromSource(const std::string& name,
                 Logging::Logger::getInstance().error("Vertex shader error: " + vertexInfo->errorLog);
             }
         } catch (...) {}
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "Vertex shader compilation failed - failing hard to catch issues early");
         return InvalidId;
     }
     try {
@@ -138,6 +141,8 @@ ShaderId ShaderManager::createShaderFromSource(const std::string& name,
             }
         } catch (...) {}
         renderer->deleteShader(vertexShader);
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "Fragment shader compilation failed - failing hard to catch issues early");
         return InvalidId;
     }
     try {
@@ -157,6 +162,8 @@ ShaderId ShaderManager::createShaderFromSource(const std::string& name,
             Logging::Logger::getInstance().error("Failed to link shader program: " + name);
             Logging::Logger::getInstance().debug("Make sure vertex outputs match fragment inputs (varyings)");
         } catch (...) {}
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "Shader program linking failed - failing hard to catch issues early");
         return InvalidId;
     }
     

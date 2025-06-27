@@ -1,0 +1,76 @@
+----- File: core/undo_redo/tests/test_unit_core_undo_redo_placement_commands.cpp
+
+Test Name: CreatePlacementCommand_ValidPosition
+Test Description: Tests creating a placement command with valid position at origin for 4cm resolution per REQ-5.1.1
+
+Test Name: CreatePlacementCommand_NullManager
+Test Description: Verifies that null VoxelDataManager returns null command for safety
+
+Test Name: CreatePlacementCommand_InvalidPosition_BelowGroundPlane
+Test Description: Tests ground plane constraint validation rejecting Y<0 positions
+
+Test Name: CreatePlacementCommand_OverlapDetected
+Test Description: Validates overlap detection prevents creating placement command at occupied position
+
+Test Name: CreateRemovalCommand_ValidPosition
+Test Description: Tests creating removal command for existing voxel per REQ-5.1.2
+
+Test Name: CreateRemovalCommand_NoVoxelExists
+Test Description: Verifies null command returned when attempting to remove non-existent voxel
+
+Test Name: ValidatePlacement_ValidPosition
+Test Description: Tests placement validation succeeds for valid 4cm-aligned position
+
+Test Name: ValidatePlacement_BelowGroundPlane
+Test Description: Validates error message for placement attempts below Y=0 ground plane
+
+Test Name: ValidatePlacement_WouldOverlap
+Test Description: Tests overlap detection between different resolution voxels
+
+Test Name: ValidatePlacement_VoxelAlreadyExists
+Test Description: Verifies overlap error when voxel exists at exact placement position
+
+Test Name: ValidateRemoval_ValidPosition
+Test Description: Tests removal validation succeeds for existing voxel
+
+Test Name: ValidateRemoval_NoVoxelExists
+Test Description: Validates appropriate error when no voxel exists at removal position
+
+Test Name: VoxelPlacementCommand_BasicExecution
+Test Description: Tests basic voxel placement command execution and event generation per REQ-2.3.3
+
+Test Name: VoxelPlacementCommand_ExecuteUndo
+Test Description: Verifies placement command undo functionality removes placed voxel
+
+Test Name: VoxelPlacementCommand_ExecutionFailure
+Test Description: Skipped test for simulating execution failure conditions
+
+Test Name: VoxelPlacementCommand_ValidationFailure
+Test Description: Tests command validation prevents execution for invalid Y<0 positions
+
+Test Name: VoxelPlacementCommand_GetDescription
+Test Description: Verifies command description formatting with position and resolution details
+
+Test Name: VoxelPlacementCommand_MemoryUsage
+Test Description: Tests memory usage reporting is reasonable and non-zero
+
+Test Name: VoxelRemovalCommand_BasicExecution
+Test Description: Tests voxel removal command execution with event verification
+
+Test Name: VoxelRemovalCommand_ExecuteUndo
+Test Description: Verifies removal command undo restores removed voxel
+
+Test Name: VoxelRemovalCommand_GetDescription
+Test Description: Tests removal command description formatting
+
+Test Name: HistoryManager_PlacementAndRemoval
+Test Description: Integration test for placement and removal commands with history manager undo/redo
+
+Test Name: MemoryUsage_ManyCommands
+Test Description: Validates memory efficiency with 1000 commands staying under 1MB per REQ-6.3.4
+
+Test Name: CommandMerging_SamePosition
+Test Description: Tests command merging capability for identical position operations
+
+Test Name: CommandMerging_DifferentPosition
+Test Description: Verifies commands at different positions cannot merge

@@ -72,6 +72,22 @@ void BinaryWriter::writeVector3f(const Math::Vector3f& vec) {
     writeFloat(vec.z);
 }
 
+void BinaryWriter::writeVector3i(const Math::Vector3i& vec) {
+    writeInt32(vec.x);
+    writeInt32(vec.y);
+    writeInt32(vec.z);
+}
+
+void BinaryWriter::writeWorldCoordinates(const Math::WorldCoordinates& coord) {
+    // Write as Vector3f for backward compatibility
+    writeVector3f(coord.value());
+}
+
+void BinaryWriter::writeIncrementCoordinates(const Math::IncrementCoordinates& coord) {
+    // Write as Vector3i for backward compatibility
+    writeVector3i(coord.value());
+}
+
 void BinaryWriter::writeMatrix4f(const Math::Matrix4f& mat) {
     for (int i = 0; i < 16; ++i) {
         writeFloat(mat.m[i]);
@@ -188,6 +204,24 @@ Math::Vector3f BinaryReader::readVector3f() {
     vec.y = readFloat();
     vec.z = readFloat();
     return vec;
+}
+
+Math::Vector3i BinaryReader::readVector3i() {
+    Math::Vector3i vec;
+    vec.x = readInt32();
+    vec.y = readInt32();
+    vec.z = readInt32();
+    return vec;
+}
+
+Math::WorldCoordinates BinaryReader::readWorldCoordinates() {
+    // Read as Vector3f for backward compatibility
+    return Math::WorldCoordinates(readVector3f());
+}
+
+Math::IncrementCoordinates BinaryReader::readIncrementCoordinates() {
+    // Read as Vector3i for backward compatibility
+    return Math::IncrementCoordinates(readVector3i());
 }
 
 Math::Matrix4f BinaryReader::readMatrix4f() {

@@ -1,0 +1,31 @@
+----- File: core/rendering/tests/test_unit_core_rendering_incremental.cpp
+
+Test Name: Test1_ClearToSolidColor
+Test Description: Tests clearing the framebuffer to solid colors (red, green, blue) and verifies render engine state
+
+Test Name: Test1_ClearDepthOnly
+Test Description: Tests clearing only the depth buffer or only the color buffer independently
+
+Test Name: Test1_MultipleFrameClears
+Test Description: Tests multiple consecutive frame clears with different colors and verifies render stats tracking
+
+Test Name: Test2_RenderImmediateModeTriangle
+Test Description: Tests basic OpenGL vertex buffer creation and attribute setup without shaders to simulate immediate mode
+
+Test Name: Test2_OpenGLStateVerification
+Test Description: Verifies OpenGL context state including viewport settings, depth test enabled, and clear color values
+
+Test Name: Test3_RenderTriangleKnownCoordinates
+Test Description: Tests rendering a triangle mesh with known world coordinates using RenderEngine API with vertex colors
+
+Test Name: Test4_VerifyMVPMatrixMultiplication
+Test Description: Verifies MVP (Model-View-Projection) matrix multiplication pipeline and NDC transformation accuracy
+
+Test Name: Test5_RenderTriangleFullMVP
+Test Description: Tests rendering a triangle with full MVP pipeline including model transform at specific world position
+
+Test Name: Test6_RenderVoxelAtOrigin
+Test Description: Tests rendering a unit cube voxel at world origin with colored faces and proper normals
+
+Test Name: Test7_RenderVoxelAtPosition
+Test Description: Tests rendering a voxel at specific world position with rotation and scale transforms applied

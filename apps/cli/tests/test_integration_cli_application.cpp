@@ -75,10 +75,11 @@ TEST_F(CLIIntegrationTest, VoxelPlacementWorkflow) {
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
     EXPECT_EQ(voxelManager->getActiveResolution(), VoxelData::VoxelResolution::Size_8cm);
     
-    // Place voxels - for 8cm resolution, coordinates must be multiples of 8
-    Math::Vector3i pos1(0, 0, 0);    // Origin
-    Math::Vector3i pos2(8, 0, 0);    // 8cm to the right
-    Math::Vector3i pos3(0, 8, 0);    // 8cm up
+    // Place voxels - with new requirements, 8cm voxels can be placed at any 1cm position
+    // But they still cannot overlap! 8cm voxels extend 8cm in each direction
+    Math::Vector3i pos1(0, 0, 0);    // Origin: extends from (0,0,0) to (7,7,7)
+    Math::Vector3i pos2(9, 0, 1);    // 9cm right, 1cm forward - tests non-aligned placement, no overlap
+    Math::Vector3i pos3(1, 8, 10);   // 1cm right, 8cm up, 10cm forward - tests arbitrary placement, no overlap
     
     EXPECT_TRUE(voxelManager->setVoxel(pos1, VoxelData::VoxelResolution::Size_8cm, true));
     EXPECT_TRUE(voxelManager->setVoxel(pos2, VoxelData::VoxelResolution::Size_8cm, true));
@@ -93,25 +94,63 @@ TEST_F(CLIIntegrationTest, VoxelPlacementWorkflow) {
     EXPECT_EQ(voxelManager->getVoxelCount(), 3);
 }
 
+// Test the new requirement: large voxels can be placed at any 1cm position
+TEST_F(CLIIntegrationTest, ArbitraryPositionPlacement) {
+    ASSERT_TRUE(initialized);
+    
+    auto voxelManager = app->getVoxelManager();
+    
+    // Test with 16cm voxels at non-aligned positions
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_16cm);
+    
+    // Under old rules, 16cm voxels could only be placed at multiples of 16 (0, 16, 32, etc.)
+    // Under new rules, they can be placed at any 1cm position
+    // For 16cm voxels, positions must be at least 16cm apart to avoid overlaps
+    // A 16cm voxel extends from position to position+15 in each dimension
+    std::vector<Math::Vector3i> testPositions = {
+        Math::Vector3i(1, 0, 1),    // 1cm offset: (1,0,1) to (16,15,16)
+        Math::Vector3i(25, 0, 1),   // 24cm apart in X: (25,0,1) to (40,15,16) - no overlap with first
+        Math::Vector3i(1, 16, 25),  // 16cm up, 24cm forward: (1,16,25) to (16,31,40) - no overlap with first two
+        Math::Vector3i(45, 0, 45)   // Far apart: (45,0,45) to (60,15,60) - no overlap with any
+    };
+    
+    for (size_t i = 0; i < testPositions.size(); ++i) {
+        bool result = voxelManager->setVoxel(testPositions[i], VoxelData::VoxelResolution::Size_16cm, true);
+        EXPECT_TRUE(result) << "Should be able to place 16cm voxel at arbitrary position " 
+                           << testPositions[i].x << "," << testPositions[i].y << "," << testPositions[i].z;
+        
+        // Verify the voxel exists at the exact position (no snapping)
+        bool exists = voxelManager->getVoxel(testPositions[i], VoxelData::VoxelResolution::Size_16cm);
+        EXPECT_TRUE(exists) << "Voxel should exist at exact position " 
+                           << testPositions[i].x << "," << testPositions[i].y << "," << testPositions[i].z;
+    }
+    
+    // Verify total count
+    EXPECT_EQ(voxelManager->getVoxelCount(VoxelData::VoxelResolution::Size_16cm), testPositions.size())
+        << "Should have placed all voxels at their exact positions";
+}
+
 TEST_F(CLIIntegrationTest, SelectionWorkflow) {
     ASSERT_TRUE(initialized);
     
     auto voxelManager = app->getVoxelManager();
     auto selectionManager = app->getSelectionManager();
     
-    // Create some voxels (centered around origin) - for 8cm voxels, use multiples of 8
+    // Create some voxels (centered around origin)
+    // With new requirements, 8cm voxels can be at any 1cm position, but still need 8cm spacing to avoid overlap
+    // Using 9cm spacing to demonstrate arbitrary positioning while avoiding overlaps
     for (int x = -2; x <= 2; ++x) {
         for (int y = 0; y < 5; ++y) {
-            Math::Vector3i pos(x * 8, y * 8, 0);  // Convert to 8cm increments
+            Math::Vector3i pos(x * 9, y * 9, 0);  // 9cm spacing to avoid overlaps
             voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
         }
     }
     
     // Select a subset of voxels
-    // For 8cm voxels, coordinates must be multiples of 8
+    // Update positions to match the 9cm spacing we used above
     for (int x = -1; x <= 1; ++x) {
         for (int y = 0; y < 3; ++y) {
-            Math::Vector3i pos(x * 8, y * 8, 0);  // Convert to 8cm increments
+            Math::Vector3i pos(x * 9, y * 9, 0);  // Match the 9cm spacing
             Selection::VoxelId voxelId(pos, VoxelData::VoxelResolution::Size_8cm);
             selectionManager->selectVoxel(voxelId);
         }
@@ -137,9 +176,10 @@ TEST_F(CLIIntegrationTest, GroupManagementWorkflow) {
     auto groupManager = app->getGroupManager();
     
     // Create voxels and select them (centered around origin)
+    // Use 9cm spacing to avoid overlaps while demonstrating arbitrary positioning
     std::vector<Groups::VoxelId> groupVoxelIds;
     for (int i = -2; i <= 2; ++i) {
-        Math::Vector3i pos(i * 8, 0, 0);  // Convert to 8cm increments
+        Math::Vector3i pos(i * 9, 0, 0);  // 9cm spacing to avoid overlaps
         voxelManager->setVoxel(pos, VoxelData::VoxelResolution::Size_8cm, true);
         // Create proper voxel IDs for selection
         Selection::VoxelId selectionId(pos, VoxelData::VoxelResolution::Size_8cm);
@@ -271,20 +311,21 @@ TEST_F(CLIIntegrationTest, MultiResolutionSupport) {
     auto voxelManager = app->getVoxelManager();
     
     // Place voxels at different resolutions
-    // Each voxel position must be aligned to its resolution
+    // With new requirements, voxels can be placed at any 1cm position
+    // But they still cannot overlap with existing voxels
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_1cm);
     voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm, true);
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
-    voxelManager->setVoxel(Math::Vector3i(8, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);  // 8cm aligned
+    voxelManager->setVoxel(Math::Vector3i(9, 0, 0), VoxelData::VoxelResolution::Size_8cm, true);  // 9cm offset, no overlap
     
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_64cm);
-    voxelManager->setVoxel(Math::Vector3i(64, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);  // 64cm aligned
+    voxelManager->setVoxel(Math::Vector3i(65, 0, 0), VoxelData::VoxelResolution::Size_64cm, true);  // 65cm offset, no overlap
     
     // Verify each resolution has its voxel
     EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm));
-    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(8, 0, 0), VoxelData::VoxelResolution::Size_8cm));
-    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(64, 0, 0), VoxelData::VoxelResolution::Size_64cm));
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(9, 0, 0), VoxelData::VoxelResolution::Size_8cm));
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(65, 0, 0), VoxelData::VoxelResolution::Size_64cm));
     
     // Verify total count across all resolutions
     EXPECT_EQ(voxelManager->getTotalVoxelCount(), 3);

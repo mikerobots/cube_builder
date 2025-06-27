@@ -1,0 +1,52 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_requirements.cpp
+
+Test Name: VoxelDataRequirementsTest.GridOriginAtWorkspaceCenter
+Test Description: Tests REQ-1.1.5 that grid origin is at workspace center. Verifies default 5m³ workspace has bounds from -2.5 to +2.5 in X/Z with Y from 0 to 5.
+
+Test Name: VoxelDataRequirementsTest.GridCoversEntireWorkspace
+Test Description: Tests REQ-1.2.3 that grid extends to cover entire workspace. Verifies all resolution grids have sufficient dimensions to cover 2m, 5m, and 8m workspaces.
+
+Test Name: VoxelDataRequirementsTest.VoxelsPlaceableAt1cmIncrements
+Test Description: Tests REQ-2.1.1 that voxels are placeable only at 1cm increments. Verifies valid 1cm-aligned positions pass validation while non-aligned positions fail.
+
+Test Name: VoxelDataRequirementsTest.NoVoxelsBelowY0
+Test Description: Tests REQ-2.1.4 that no voxels can be placed below Y=0. Verifies negative Y positions fail validation and placement attempts.
+
+Test Name: VoxelDataRequirementsTest.MultiResolutionGroundPlanePositioning
+Test Description: Tests REQ-2.2.4 multi-resolution positioning on ground plane. Verifies all voxel sizes can be placed at 1cm-aligned positions on Y=0 plane.
+
+Test Name: VoxelDataRequirementsTest.CollisionDetectionAndSpatialQueries
+Test Description: Tests REQ-3.3.2 & REQ-3.3.3 collision detection and spatial queries. Verifies overlap detection prevents placement and spatial queries work correctly.
+
+Test Name: VoxelDataRequirementsTest.PlacementValidation
+Test Description: Tests REQ-4.1.2, REQ-4.3.1, REQ-4.3.2 placement validation. Verifies invalid placements (Y<0, overlaps, out of bounds) fail while valid ones succeed.
+
+Test Name: VoxelDataRequirementsTest.VoxelCreationAndRemoval
+Test Description: Tests REQ-5.1.1 & REQ-5.1.2 voxel creation and removal. Verifies voxels can be created at valid positions and removed, updating counts correctly.
+
+Test Name: VoxelDataRequirementsTest.ResolutionManagement
+Test Description: Tests REQ-5.3.1, REQ-5.3.2, REQ-5.3.3 resolution management. Verifies 10 resolutions available, names/sizes correct, and active resolution switching works.
+
+Test Name: VoxelDataRequirementsTest.WorkspaceBounds
+Test Description: Tests REQ-6.2.2 workspace bounds up to 8m³. Verifies workspace can be resized between 2m and 8m limits with invalid sizes rejected.
+
+Test Name: VoxelDataRequirementsTest.AdjacentPositionCalculation
+Test Description: Tests REQ-2.3.3 adjacent position calculation. Verifies adjacent positions are calculated correctly in all 6 face directions.
+
+Test Name: VoxelDataRequirementsTest.SameSizeVoxelAlignment
+Test Description: Tests REQ-3.1.1 & REQ-3.1.3 same-size voxel alignment. Verifies same-size voxels can be placed adjacent without overlap.
+
+Test Name: VoxelDataRequirementsTest.CoordinateSystemConversions
+Test Description: Tests coordinate system conversions. Verifies increment (0,0,0) maps to world (0,0,0) in centered coordinate system with proper round-trip conversion.
+
+Test Name: VoxelDataRequirementsTest.ValidPositionsIn32cmCell_REQ_2_1_2
+Test Description: Tests REQ-2.1.2 that 32 valid positions exist per axis in 32cm cell. Verifies positions 0-31cm are valid within each 32cm boundary.
+
+Test Name: VoxelDataRequirementsTest.OverlapPreventionAndValidation_REQ_5_2_1_REQ_5_2_2
+Test Description: Tests REQ-5.2.1 & REQ-5.2.2 overlap prevention and validation. Verifies system validates placement and prevents overlapping voxels.
+
+Test Name: VoxelDataRequirementsTest.VoxelDataStorageLimit_REQ_6_3_2
+Test Description: Tests REQ-6.3.2 voxel data storage shall not exceed 2GB. Verifies reasonable memory usage and extrapolates capacity for millions of voxels.
+
+Test Name: VoxelDataRequirementsTest.MemoryPressureDetection_REQ_6_3_5
+Test Description: Tests REQ-6.3.5 memory pressure detection. Verifies memory usage reporting increases with voxels and decreases when cleared.

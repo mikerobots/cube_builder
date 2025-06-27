@@ -1,0 +1,64 @@
+----- File: core/selection/tests/test_unit_core_selection_flood_fill.cpp
+
+Test Name: DefaultConfiguration
+Test Description: Tests FloodFillSelector default configuration, verifying default max voxels (1,000,000), disabled diagonal connectivity, and Face6 connectivity mode for standard flood fill behavior.
+
+Test Name: SetConfiguration
+Test Description: Validates configuration modification for FloodFillSelector, testing custom max voxels limit, diagonal connectivity toggle, and connectivity mode changes (Face6/Edge18/Vertex26).
+
+Test Name: SelectFloodFill_SingleVoxel
+Test Description: Tests basic flood fill operation starting from single seed voxel with Connected6 criteria, verifying the seed is included and additional connected voxels are selected.
+
+Test Name: SelectFloodFill_Connected
+Test Description: Validates flood fill with face connectivity (6-connected), ensuring seed and face-adjacent neighbors are selected while respecting connectivity constraints.
+
+Test Name: SelectFloodFill_SameResolution
+Test Description: Tests flood fill with SameResolution criteria, verifying all selected voxels maintain the same resolution as the seed voxel for consistent multi-resolution behavior.
+
+Test Name: SelectFloodFillCustom_PositiveCoordinates
+Test Description: Validates custom predicate flood fill, testing selection limited to voxels with positive coordinates using user-defined criteria for flexible flood fill behavior.
+
+Test Name: SelectFloodFillCustom_MaxDistance
+Test Description: Tests custom predicate flood fill with Manhattan distance constraint, ensuring selected voxels remain within specified distance limit from seed position.
+
+Test Name: SelectFloodFillLimited_OneStep
+Test Description: Validates limited flood fill with single step, testing selection restricted to immediate neighbors (max 7 voxels for Face6 connectivity) around seed.
+
+Test Name: SelectFloodFillLimited_MultipleSteps
+Test Description: Tests limited flood fill with multiple steps (3), verifying selection expands beyond immediate neighbors while respecting step limit and Manhattan distance constraints.
+
+Test Name: SelectFloodFillBounded_InsideBounds
+Test Description: Validates bounded flood fill within specified bounding box, ensuring all selected voxels remain within world coordinate bounds during flood fill operation.
+
+Test Name: SelectFloodFillBounded_OutsideBounds
+Test Description: Tests bounded flood fill with seed outside bounds, verifying empty result when seed voxel falls outside specified bounding box constraints.
+
+Test Name: SelectPlanarFloodFill_HorizontalPlane
+Test Description: Validates planar flood fill on horizontal plane (Y-normal), testing selection of voxels coplanar within specified tolerance for planar selections.
+
+Test Name: SelectPlanarFloodFill_TiltedPlane
+Test Description: Tests planar flood fill on tilted plane (45-degree), verifying distance-to-plane calculations and tolerance-based inclusion for angled planar selections.
+
+Test Name: ConnectivityMode_Face6
+Test Description: Validates Face6 connectivity mode limiting selection to face-adjacent neighbors (max 7 voxels: center + 6 faces) for conservative flood fill behavior.
+
+Test Name: ConnectivityMode_Edge18
+Test Description: Tests Edge18 connectivity mode including face and edge neighbors (max 19 voxels: center + 6 faces + 12 edges) for expanded connectivity.
+
+Test Name: ConnectivityMode_Vertex26
+Test Description: Validates Vertex26 connectivity mode including all adjacent voxels (max 27 voxels: center + 26 neighbors) for maximum connectivity.
+
+Test Name: MaxVoxelsLimit
+Test Description: Tests maximum voxel limit enforcement, verifying flood fill respects user-defined limits (10 voxels) to prevent excessive selection growth.
+
+Test Name: SelectFloodFill_NonExistentSeed
+Test Description: Validates flood fill behavior with non-existent seed, testing fallback behavior when voxel manager is not available (assumes all voxels exist).
+
+Test Name: SelectFloodFillCustom_FalsePredicate
+Test Description: Tests custom predicate flood fill with always-false predicate, verifying empty result when no voxels meet the specified criteria.
+
+Test Name: SelectPlanarFloodFill_ZeroTolerance
+Test Description: Validates planar flood fill with zero tolerance, testing strict planar selection with minimal distance tolerance for precise planar matching.
+
+Test Name: SetVoxelManager
+Test Description: Tests voxel manager configuration, verifying flood fill functionality when voxel manager is null (falls back to assuming all voxels exist).

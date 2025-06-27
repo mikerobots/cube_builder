@@ -1,0 +1,13 @@
+----- File: core/undo_redo/tests/test_unit_core_undo_redo_simple_command.cpp
+
+Test Name: SimpleCommandTest.ExecuteAndUndo
+Test Description: Tests the basic command pattern implementation for reversible operations. Verifies that a SimpleCommand can execute to change a value from 0 to 42, and then undo to restore the original value of 0.
+
+Test Name: CompositeCommandTest.ExecuteMultiple
+Test Description: Tests composite command functionality for state management of complex operations. Verifies that multiple commands can be grouped together, executed as a unit to set two values (10 and 20), and then undone as a unit to restore both original values (0).
+
+Test Name: TransactionTest.CommitTransaction
+Test Description: Tests transaction commit behavior for atomic operations. Verifies that commands added to a transaction execute immediately, and when the transaction is committed, it returns a composite command containing all operations while preserving the changed values.
+
+Test Name: TransactionTest.RollbackTransaction
+Test Description: Tests transaction rollback behavior for atomic operations. Verifies that when a transaction is rolled back, all commands executed within the transaction are automatically undone, restoring values to their original state before the transaction began.

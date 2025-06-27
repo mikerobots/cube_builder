@@ -1,0 +1,28 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_outline_renderer_preview.cpp
+
+Test Name: OutlineRendererPreviewTest.VoxelOutlineGeneration
+Test Description: Tests that voxel outlines can be generated correctly for all 10 voxel resolutions (1cm to 512cm). Verifies that a cube generates exactly 24 edge points (12 edges with 2 points each) and that all generated points fall within the expected voxel bounds based on position and size.
+
+Test Name: OutlineRendererPreviewTest.OutlineStyleCreation
+Test Description: Tests the creation of outline styles for both valid and invalid placement previews. Verifies that valid preview styles use green color (0,1,0,1) with solid lines and no depth testing, while invalid preview styles can be configured with red color (1,0,0,1) and dashed lines with animation support.
+
+Test Name: OutlineRendererPreviewTest.BatchRendering
+Test Description: Tests the batch rendering functionality for handling multiple voxel outlines efficiently. Verifies that the renderer can begin a batch, add multiple voxel outlines, end the batch, and clear without errors, supporting the requirement to handle 10,000+ voxels without degradation.
+
+Test Name: OutlineRendererPreviewTest.AnimationUpdate
+Test Description: Tests the animation update functionality for outline rendering. Verifies that the renderer can set pattern scale and offset, handle animation updates at 60 FPS (16ms intervals), and process multiple consecutive updates without issues, ensuring smooth and responsive preview updates.
+
+Test Name: OutlineRendererPreviewTest.ColorSwitching
+Test Description: Tests the ability to switch between valid (green) and invalid (red) outline colors dynamically. Verifies that the renderer can render a voxel outline with one color style, clear the batch, and then render with a different color style without errors.
+
+Test Name: OutlineRendererPreviewTest.EdgeCases
+Test Description: Tests various edge cases for outline rendering including very small position values (0,0,0), large position values (1000,1000,1000), negative positions for X and Z axes, and mixed voxel resolutions within the same batch to ensure robust handling of extreme values.
+
+Test Name: OutlineRendererPreviewTest.CustomOutline
+Test Description: Tests the rendering of custom outline shapes beyond standard voxel cubes. Verifies that the renderer can handle custom point arrays for both closed and open outlines, and gracefully handles edge cases like empty point arrays and single-point arrays without crashing.
+
+Test Name: OutlineRendererPreviewTest.LinePatterns
+Test Description: Tests the support for different line patterns in outline rendering. Verifies that the renderer correctly handles Solid, Dashed, Dotted, and DashDot line patterns when rendering voxel outlines with different visual styles.
+
+Test Name: OutlineRendererPreviewTest.PerformanceManyOutlines
+Test Description: Tests the performance of the outline renderer when handling a large number of outlines. Verifies that the renderer can batch render 1000 voxel outlines (10x10x10 grid) and complete the operation in less than 100 milliseconds, ensuring efficient handling of complex scenes.

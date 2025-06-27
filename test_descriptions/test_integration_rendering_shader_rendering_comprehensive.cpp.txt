@@ -1,0 +1,25 @@
+----- File: tests/integration/rendering/test_integration_rendering_shader_rendering_comprehensive.cpp
+
+Test Name: AllShadersRenderWithoutErrors
+Test Description: Tests that all built-in shaders (basic, enhanced, flat) compile successfully and can render a test triangle mesh without generating OpenGL errors. Validates the complete rendering pipeline for each shader.
+
+Test Name: VAOAttributesProperlyConfigured
+Test Description: Verifies that Vertex Array Object (VAO) attributes are correctly configured for mesh rendering. Checks that position, normal, and color attributes (0, 1, 2) are enabled while texture coordinate attribute (3) is disabled, confirming the fix for the texcoord issue.
+
+Test Name: MultipleMeshRendering
+Test Description: Tests rendering multiple mesh objects (5 triangles) using different shaders and positioned at different locations. Validates that the rendering system can handle multiple objects with varying materials and transformations without errors.
+
+Test Name: LineRenderingMode
+Test Description: Tests line rendering functionality by rendering a triangle mesh in wireframe mode using the renderMeshAsLines method. Sets line width to 2.0 and validates that line rendering completes without OpenGL errors.
+
+Test Name: RenderStateManagement
+Test Description: Comprehensive test of render state management including depth testing, face culling, and alpha blending. Tests toggling these states on/off while rendering and validates that state changes don't cause errors.
+
+Test Name: GroundPlaneRendering
+Test Description: Tests ground plane grid rendering functionality by enabling grid visibility, updating the grid mesh for a 10x10x10 workspace, and rendering the grid at the origin. Validates that ground plane rendering works without errors.
+
+Test Name: EmptySceneRendering
+Test Description: Tests that the rendering system handles empty scenes gracefully by performing a clear operation with a colored background without rendering any meshes. Validates robust behavior with no geometry.
+
+Test Name: RapidShaderSwitching
+Test Description: Performance test that rapidly switches between different shaders (basic, enhanced, flat) across 30 render calls with rotating transformations. Tests shader switching overhead and validates that rapid changes don't cause errors.

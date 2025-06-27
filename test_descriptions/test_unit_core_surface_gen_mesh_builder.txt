@@ -1,0 +1,64 @@
+----- File: core/surface_gen/tests/test_unit_core_surface_gen_mesh_builder.cpp
+
+Test Name: CreateSimpleTriangle
+Test Description: Tests creating a simple triangle mesh with 3 vertices and verifying proper mesh construction (REQ-10.1.1)
+
+Test Name: CreateQuad
+Test Description: Tests creating a quad mesh which is automatically triangulated into 2 triangles, suitable for STL export (REQ-8.2.1)
+
+Test Name: RemoveDuplicateVertices
+Test Description: Tests duplicate vertex removal to improve mesh quality and reduce file size (REQ-10.1.6)
+
+Test Name: GenerateNormals
+Test Description: Tests smooth normal generation for high-quality rendering and export, verifying normals are normalized (REQ-10.1.6)
+
+Test Name: CombineMeshes
+Test Description: Tests combining multiple meshes into a single mesh, preserving all vertices and indices
+
+Test Name: CreateCubeMesh
+Test Description: Tests creating a complete cube mesh with 8 vertices and 6 faces (12 triangles), verifying vertex positions and bounds
+
+Test Name: CubeWindingOrder
+Test Description: Tests that cube faces have correct counter-clockwise winding order for proper back-face culling
+
+Test Name: CalculateBounds
+Test Description: Tests Mesh::calculateBounds() method to compute bounding box from vertex positions
+
+Test Name: CalculateNormals
+Test Description: Tests Mesh::calculateNormals() method for generating normals from triangle data
+
+Test Name: VertexWindingOrderValidation
+Test Description: Tests that all triangles maintain consistent counter-clockwise winding order for proper rendering
+
+Test Name: NormalDirectionValidation
+Test Description: Tests that generated normals point outward from the surface for correct lighting calculations
+
+Test Name: ConsistentTriangulation
+Test Description: Tests that quad triangulation maintains consistent winding order across multiple quads
+
+Test Name: CalculateVolume
+Test Description: Placeholder test for future MeshUtils::calculateVolume implementation
+
+Test Name: CalculateSurfaceArea
+Test Description: Placeholder test for future MeshUtils::calculateSurfaceArea implementation
+
+Test Name: Equality
+Test Description: Tests SurfaceSettings equality comparison between default, preview, and export settings
+
+Test Name: Hash
+Test Description: Tests SurfaceSettings hash function for consistent hashing of equal settings
+
+Test Name: BasicCaching
+Test Description: Tests MeshCache basic functionality including cache insertion, retrieval, hit/miss counting
+
+Test Name: LRUEviction
+Test Description: Tests Least Recently Used eviction when cache exceeds memory limit (REQ-6.3.1)
+
+Test Name: RegionInvalidation
+Test Description: Tests selective cache invalidation based on bounding box regions
+
+Test Name: LODCalculation
+Test Description: Tests LOD level calculation based on distance and object bounds (REQ-10.1.4)
+
+Test Name: SimplificationRatios
+Test Description: Tests getting and setting mesh simplification ratios for different LOD levels

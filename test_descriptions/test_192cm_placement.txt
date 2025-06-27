@@ -1,0 +1,4 @@
+----- File: test_192cm_placement.cpp
+
+Test Name: Debug192cmPlacement
+Test Description: Comprehensive debug test for 192cm voxel placement validation in 5x5x5 workspace, testing placement bounds checking through multiple validation systems (PlacementValidation, CoordinateConverter, VoxelDataManager) and verifying actual voxel placement success at position (192,0,0) with detailed console logging for troubleshooting placement validation issues.

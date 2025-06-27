@@ -1,0 +1,7 @@
+----- File: core/voxel_data/tests/test_uperf_core_voxel_data_requirements.cpp
+
+Test Name: VoxelDataRequirementsPerfTest.SparseStoragePerformance
+Test Description: Tests memory efficiency with sparse voxel placement. Places 1000 voxels across workspace in sparse pattern, measures memory usage per voxel, verifies under 1KB per voxel requirement.
+
+Test Name: VoxelDataRequirementsPerfTest.ResolutionSwitchingPerformance_REQ_6_1_4
+Test Description: Tests resolution switching performance requirement. Places 100 test voxels, cycles through all resolution levels, verifies total time under 16ms requirement.

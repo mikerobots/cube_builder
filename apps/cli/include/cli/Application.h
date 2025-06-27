@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <algorithm>
 
 // Include singleton headers for complete types
 #include "../../foundation/logging/Logger.h"
@@ -9,6 +10,7 @@
 
 // Include core types we need
 #include "../../core/rendering/RenderTypes.h"
+#include "../../core/surface_gen/MeshSmoother.h"
 
 // Forward declarations of core systems
 namespace VoxelEditor {
@@ -76,6 +78,7 @@ public:
     void requestMeshUpdate() { updateVoxelMesh(); }
     void updateVoxelMeshes() { updateVoxelMesh(); } // Alias for tests
     void render(); // Make render public for tests
+    void update(); // Update method for tests
     
     // Headless mode
     bool isHeadless() const { return m_headless; }
@@ -84,6 +87,21 @@ public:
     // Test support methods
     void setHoverPosition(const Math::Vector3i& pos) { m_hoverPosition = pos; }
     CommandProcessor* getCommandProcessor() const { return m_commandProcessor.get(); }
+    MouseInteraction* getMouseInteraction() const { return m_mouseInteraction.get(); }
+    
+    // Smoothing settings access
+    int getSmoothingLevel() const { return m_smoothingLevel; }
+    void setSmoothingLevel(int level) { m_smoothingLevel = std::max(0, level); }
+    SurfaceGen::MeshSmoother::Algorithm getSmoothingAlgorithm() const { return m_smoothingAlgorithm; }
+    void setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm algo) { m_smoothingAlgorithm = algo; }
+    bool isSmoothPreviewEnabled() const { return m_smoothPreviewEnabled; }
+    void setSmoothPreviewEnabled(bool enabled) { m_smoothPreviewEnabled = enabled; }
+    
+    // Rendering settings access
+    Rendering::ShaderId getDefaultShaderId() const { return m_defaultShaderId; }
+    void setDefaultShaderId(Rendering::ShaderId id) { m_defaultShaderId = id; }
+    bool getShowEdges() const { return m_showEdges; }
+    void setShowEdges(bool show) { m_showEdges = show; }
     
 private:
     // Core systems
@@ -115,11 +133,17 @@ private:
     std::string m_currentProject;
     Math::Vector3i m_hoverPosition;
     
+    // Smoothing settings
+    int m_smoothingLevel = 0;  // 0-10+ smoothing level
+    SurfaceGen::MeshSmoother::Algorithm m_smoothingAlgorithm = SurfaceGen::MeshSmoother::Algorithm::None;
+    bool m_smoothPreviewEnabled = false;
+    
     // Current scene data for rendering
     std::vector<Rendering::Mesh> m_voxelMeshes;
     std::vector<Rendering::Mesh> m_edgeMeshes;  // Wireframe edge meshes
     Rendering::ShaderId m_defaultShaderId = Rendering::InvalidId;
     bool m_showEdges = true;  // Toggle for edge rendering
+    bool m_debugGridVisible = false;  // Toggle for debug grid overlay
     
     // Private methods
     bool initializeFoundation();

@@ -1,0 +1,31 @@
+----- File: core/surface_gen/tests/test_unit_core_surface_gen_dual_contouring.cpp
+
+Test Name: EmptyGrid
+Test Description: Tests Dual Contouring algorithm with empty voxel grid produces empty but valid mesh with zero vertices and indices (REQ-10.1.1)
+
+Test Name: SingleVoxel
+Test Description: Tests mesh generation from single voxel produces valid cube-like mesh with vertices, indices, and proper triangle count (REQ-10.1.1)
+
+Test Name: SimpleCube
+Test Description: Tests 2x2x2 voxel cube generates mesh with more than 8 vertices (due to dual contouring), proper bounds, and reasonable world coordinates
+
+Test Name: Sphere
+Test Description: Tests sphere shape generation from voxels produces smooth sphere-like mesh with appropriate vertex and index counts
+
+Test Name: AdaptiveError
+Test Description: Tests adaptive mesh generation with different error thresholds (0.001f vs 0.1f) affecting mesh detail level (REQ-10.1.3)
+
+Test Name: EdgeCases
+Test Description: Tests voxels at grid boundaries (0,0,0 and 7,7,7) are handled properly without crashes or invalid meshes
+
+Test Name: ComplexShape
+Test Description: Tests L-shaped structure generation for feature preservation and sharp edge handling in architectural details (REQ-10.1.2, REQ-10.1.7)
+
+Test Name: PerformanceSettings
+Test Description: Tests mesh generation with performance-oriented preview settings on large voxel structure (6x6x6 cube)
+
+Test Name: NormalGeneration
+Test Description: Tests normal generation produces normalized vectors (length ~1.0) with one normal per vertex when generateNormals is enabled
+
+Test Name: ConsistentWindingOrder
+Test Description: Tests generated mesh has valid triangle indices, proper winding order, and calculateNormals() works without crashes

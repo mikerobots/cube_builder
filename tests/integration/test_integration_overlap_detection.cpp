@@ -2,6 +2,7 @@
 #include "../../core/voxel_data/VoxelDataManager.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/logging/Logger.h"
 
 using namespace VoxelEditor;
 using namespace VoxelEditor::VoxelData;
@@ -11,6 +12,12 @@ using namespace VoxelEditor::Events;
 class IntegrationOverlapDetectionTest : public ::testing::Test {
 protected:
     void SetUp() override {
+        // Initialize logger to see debug output
+        auto& logger = Logging::Logger::getInstance();
+        logger.setLevel(Logging::LogLevel::Debug);
+        logger.clearOutputs();
+        logger.addOutput(std::make_unique<Logging::ConsoleOutput>("Test"));
+        
         eventDispatcher = std::make_unique<EventDispatcher>();
         voxelManager = std::make_unique<VoxelDataManager>(eventDispatcher.get());
     }
@@ -24,6 +31,13 @@ TEST_F(IntegrationOverlapDetectionTest, SameResolutionOverlapPrevention) {
     // Place a 4cm voxel at origin
     Vector3i pos(0, 0, 0);
     VoxelResolution resolution = VoxelResolution::Size_4cm;
+    
+    // Debug: Print expected behavior under new requirements
+    std::cout << "\n=== Testing 4cm voxel overlap (NEW BEHAVIOR) ===\n";
+    std::cout << "Understanding: NO resolution-based snapping\n";
+    std::cout << "- 4cm voxel at (0,0,0) occupies space from (0,0,0) to (3,3,3)\n";
+    std::cout << "- Position (1,1,1) would overlap - DIFFERENT from (0,0,0)!\n";
+    std::cout << "- Position (4,0,0) would not overlap - outside the 4cm bounds\n";
     
     ASSERT_TRUE(voxelManager->setVoxel(pos, resolution, true));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1);
@@ -40,10 +54,23 @@ TEST_F(IntegrationOverlapDetectionTest, SameResolutionOverlapPrevention) {
     EXPECT_TRUE(voxelManager->setVoxel(pos, resolution, true));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1);
     
-    // Try to place a different voxel that would overlap - should fail
-    Vector3i overlapPos(1, 1, 1); // Within the 4cm voxel bounds
+    // Try to place a voxel that would overlap - should fail
+    // A 4cm voxel at (0,0,0) occupies space from (0,0,0) to (3,3,3)
+    Vector3i overlapPos(2, 2, 2); // This is inside the 4cm voxel bounds
+    
+    // Add explicit check for overlap before placing
+    bool wouldOverlap = voxelManager->wouldOverlap(overlapPos, resolution);
+    EXPECT_TRUE(wouldOverlap) << "Expected overlap detection to return true for voxel at (2,2,2)";
+    
+    // This should fail because (2,2,2) overlaps with the 4cm voxel at (0,0,0)
     EXPECT_FALSE(voxelManager->setVoxel(overlapPos, resolution, true));
-    EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1);
+    EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1); // Still just 1 voxel
+    
+    // Now try a position that would not overlap - outside the 4cm voxel bounds
+    Vector3i adjacentPos(4, 0, 0); // This is outside the (0,0,0)-(3,3,3) bounds
+    EXPECT_FALSE(voxelManager->wouldOverlap(adjacentPos, resolution));
+    EXPECT_TRUE(voxelManager->setVoxel(adjacentPos, resolution, true));
+    EXPECT_EQ(voxelManager->getVoxelCount(resolution), 2); // Now we have 2 voxels
     
     // Verify the original voxel is still there
     EXPECT_TRUE(voxelManager->getVoxel(pos, resolution));
@@ -55,17 +82,18 @@ TEST_F(IntegrationOverlapDetectionTest, DifferentResolutionOverlapPrevention) {
     ASSERT_TRUE(voxelManager->setVoxel(largePos, VoxelResolution::Size_16cm, true));
     
     // Try to place smaller voxels that would overlap
-    // 16cm voxel covers 0-16cm in each dimension
-    EXPECT_FALSE(voxelManager->setVoxel(Vector3i(0, 0, 0), VoxelResolution::Size_1cm, true));
-    EXPECT_FALSE(voxelManager->setVoxel(Vector3i(8, 8, 8), VoxelResolution::Size_1cm, true));
-    EXPECT_FALSE(voxelManager->setVoxel(Vector3i(15, 15, 15), VoxelResolution::Size_1cm, true));
+    // 16cm voxel at (0,0,0) has bounds: X:[-8,+8], Y:[0,+16], Z:[-8,+8] in cm
+    EXPECT_FALSE(voxelManager->setVoxel(Vector3i(0, 0, 0), VoxelResolution::Size_1cm, true));   // Center - overlaps
+    EXPECT_FALSE(voxelManager->setVoxel(Vector3i(8, 8, 8), VoxelResolution::Size_1cm, true));   // Edge - overlaps  
+    EXPECT_FALSE(voxelManager->setVoxel(Vector3i(-8, 15, -8), VoxelResolution::Size_1cm, true)); // Corner - overlaps
     
-    // Place a 1cm voxel outside the 16cm voxel - should succeed
-    EXPECT_TRUE(voxelManager->setVoxel(Vector3i(17, 0, 0), VoxelResolution::Size_1cm, true));
+    // Place 1cm voxels outside the 16cm voxel bounds - should succeed
+    EXPECT_TRUE(voxelManager->setVoxel(Vector3i(9, 0, 0), VoxelResolution::Size_1cm, true));    // X outside bounds
+    EXPECT_TRUE(voxelManager->setVoxel(Vector3i(0, 17, 0), VoxelResolution::Size_1cm, true));   // Y outside bounds
     
     // Verify voxel counts
     EXPECT_EQ(voxelManager->getVoxelCount(VoxelResolution::Size_16cm), 1);
-    EXPECT_EQ(voxelManager->getVoxelCount(VoxelResolution::Size_1cm), 1);
+    EXPECT_EQ(voxelManager->getVoxelCount(VoxelResolution::Size_1cm), 2);  // Two 1cm voxels placed outside bounds
 }
 
 TEST_F(IntegrationOverlapDetectionTest, ComplexOverlapScenario) {

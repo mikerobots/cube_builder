@@ -6,20 +6,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Compiler flags to fix GLM warnings
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    add_compile_options(-Wno-deprecated-volatile)
+endif()
+
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
-# Build options
-option(VOXEL_ASSERT_ON_MISSING_SHADERS "Assert and exit when shader files are not found" ON)
-
-# Configure compile definitions based on options
-if(VOXEL_ASSERT_ON_MISSING_SHADERS)
-    add_compile_definitions(VOXEL_ASSERT_ON_MISSING_SHADERS=1)
-else()
-    add_compile_definitions(VOXEL_ASSERT_ON_MISSING_SHADERS=0)
-endif()
 
 # Enable testing
 enable_testing()

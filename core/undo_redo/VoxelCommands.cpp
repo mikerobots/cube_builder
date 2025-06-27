@@ -1,14 +1,17 @@
 #include "VoxelCommands.h"
 #include "../../foundation/logging/Logger.h"
+#include "../../foundation/math/CoordinateTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include <algorithm>
 #include <sstream>
+#include <string>
 
 namespace VoxelEditor {
 namespace UndoRedo {
 
 // VoxelEditCommand implementation
 VoxelEditCommand::VoxelEditCommand(VoxelData::VoxelDataManager* voxelManager,
-                                   const Math::Vector3i& position,
+                                   const Math::IncrementCoordinates& position,
                                    VoxelData::VoxelResolution resolution,
                                    bool newValue)
     : m_voxelManager(voxelManager)
@@ -31,6 +34,7 @@ bool VoxelEditCommand::execute() {
     }
     
     bool success = m_voxelManager->setVoxel(m_position, m_resolution, m_newValue);
+    
     if (success) {
         m_executed = true;
     }
@@ -229,49 +233,94 @@ VoxelFillCommand::VoxelFillCommand(VoxelData::VoxelDataManager* voxelManager,
 }
 
 bool VoxelFillCommand::execute() {
-    // Calculate voxel positions within the region
-    float voxelSize = VoxelData::getVoxelSize(m_resolution);
-    
-    Math::Vector3i minVoxel(
-        static_cast<int>(std::floor(m_region.min.x / voxelSize)),
-        static_cast<int>(std::floor(m_region.min.y / voxelSize)),
-        static_cast<int>(std::floor(m_region.min.z / voxelSize))
+    // Convert world bounds to increment coordinates for proper iteration
+    Math::IncrementCoordinates minIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(m_region.min)
+    );
+    Math::IncrementCoordinates maxIncrement = Math::CoordinateConverter::worldToIncrement(
+        Math::WorldCoordinates(m_region.max)
     );
     
-    Math::Vector3i maxVoxel(
-        static_cast<int>(std::ceil(m_region.max.x / voxelSize)),
-        static_cast<int>(std::ceil(m_region.max.y / voxelSize)),
-        static_cast<int>(std::ceil(m_region.max.z / voxelSize))
-    );
+    Math::Vector3i minInc = minIncrement.value();
+    Math::Vector3i maxInc = maxIncrement.value();
     
-    // Store previous state and execute fill
-    m_previousState.clear();
-    m_previousState.reserve((maxVoxel.x - minVoxel.x + 1) * 
-                           (maxVoxel.y - minVoxel.y + 1) * 
-                           (maxVoxel.z - minVoxel.z + 1));
+    Logging::Logger::getInstance().debug("VoxelFillCommand::execute - Region: min=" + 
+        m_region.min.toString() + ", max=" + m_region.max.toString());
+    Logging::Logger::getInstance().debug("VoxelFillCommand::execute - Increment coords: min=" + 
+        minInc.toString() + ", max=" + maxInc.toString());
     
-    bool allSuccessful = true;
     
-    for (int x = minVoxel.x; x <= maxVoxel.x; ++x) {
-        for (int y = minVoxel.y; y <= maxVoxel.y; ++y) {
-            for (int z = minVoxel.z; z <= maxVoxel.z; ++z) {
-                Math::Vector3i pos(x, y, z);
+    // First, check if all positions can be filled without actually filling them
+    // This ensures the operation is atomic - either all succeed or none are changed
+    std::vector<BulkVoxelEditCommand::VoxelChange> plannedChanges;
+    plannedChanges.reserve((maxInc.x - minInc.x + 1) * 
+                          (maxInc.y - minInc.y + 1) * 
+                          (maxInc.z - minInc.z + 1));
+    
+    // Phase 1: Check all positions for validity
+    int totalPositions = 0;
+    int wouldFail = 0;
+    for (int x = minInc.x; x <= maxInc.x; ++x) {
+        for (int y = minInc.y; y <= maxInc.y; ++y) {
+            for (int z = minInc.z; z <= maxInc.z; ++z) {
+                Math::IncrementCoordinates pos(x, y, z);
+                totalPositions++;
                 bool oldValue = m_voxelManager->getVoxel(pos, m_resolution);
                 
-                m_previousState.emplace_back(pos, m_resolution, oldValue, m_fillValue);
-                
                 if (oldValue != m_fillValue) {
-                    bool success = m_voxelManager->setVoxel(pos, m_resolution, m_fillValue);
-                    if (!success) {
-                        allSuccessful = false;
+                    // Check if we can set this voxel
+                    if (!m_voxelManager->isValidPosition(pos, m_resolution)) {
+                        wouldFail++;
+                        Logging::Logger::getInstance().debug("VoxelFillCommand: Position invalid at " + pos.toString());
+                    } else if (m_fillValue && m_voxelManager->wouldOverlap(pos, m_resolution)) {
+                        wouldFail++;
+                        Logging::Logger::getInstance().debug("VoxelFillCommand: Would overlap at " + pos.toString());
+                    } else {
+                        // This position can be filled
+                        plannedChanges.emplace_back(pos, m_resolution, oldValue, m_fillValue);
                     }
                 }
             }
         }
     }
     
+    // If any positions would fail, abort the entire operation
+    if (wouldFail > 0) {
+        Logging::Logger::getInstance().debug("VoxelFillCommand: Aborting - " + std::to_string(wouldFail) + 
+            " positions would fail out of " + std::to_string(totalPositions));
+        return false;
+    }
+    
+    // Phase 2: Execute all changes (we know they will all succeed)
+    m_previousState.clear();
+    m_previousState.reserve(plannedChanges.size());
+    
+    bool allSuccessful = true;
+    int successCount = 0;
+    
+    for (const auto& change : plannedChanges) {
+        m_previousState.push_back(change);
+        bool success = m_voxelManager->setVoxel(change.position, change.resolution, change.newValue);
+        if (!success) {
+            // This shouldn't happen since we pre-validated
+            allSuccessful = false;
+            Logging::Logger::getInstance().error("VoxelFillCommand: Unexpected failure at " + change.position.toString());
+        } else {
+            successCount++;
+        }
+    }
+    
+    Logging::Logger::getInstance().debug("VoxelFillCommand: Filled " + std::to_string(successCount) + 
+        " voxels out of " + std::to_string(totalPositions) + " positions");
+    
     if (allSuccessful) {
         m_executed = true;
+    } else {
+        // If we somehow failed, undo any changes we made
+        for (const auto& change : m_previousState) {
+            m_voxelManager->setVoxel(change.position, change.resolution, change.oldValue);
+        }
+        m_previousState.clear();
     }
     
     return allSuccessful;
@@ -307,8 +356,8 @@ size_t VoxelFillCommand::getMemoryUsage() const {
 
 // VoxelCopyCommand implementation
 VoxelCopyCommand::VoxelCopyCommand(VoxelData::VoxelDataManager* voxelManager,
-                                   const std::vector<Math::Vector3i>& sourcePositions,
-                                   const Math::Vector3i& offset,
+                                   const std::vector<Math::IncrementCoordinates>& sourcePositions,
+                                   const Math::IncrementCoordinates& offset,
                                    VoxelData::VoxelResolution resolution)
     : m_voxelManager(voxelManager)
     , m_sourcePositions(sourcePositions)
@@ -329,7 +378,11 @@ bool VoxelCopyCommand::execute() {
     for (const auto& sourcePos : m_sourcePositions) {
         bool sourceValue = m_voxelManager->getVoxel(sourcePos, m_resolution);
         if (sourceValue) {
-            Math::Vector3i destPos = sourcePos + m_offset;
+            Math::IncrementCoordinates destPos(
+                sourcePos.x() + m_offset.x(),
+                sourcePos.y() + m_offset.y(),
+                sourcePos.z() + m_offset.z()
+            );
             bool oldValue = m_voxelManager->getVoxel(destPos, m_resolution);
             
             m_changes.emplace_back(destPos, m_resolution, oldValue, true);
@@ -372,14 +425,14 @@ bool VoxelCopyCommand::undo() {
 
 size_t VoxelCopyCommand::getMemoryUsage() const {
     return sizeof(*this) + 
-           m_sourcePositions.capacity() * sizeof(Math::Vector3i) +
+           m_sourcePositions.capacity() * sizeof(Math::IncrementCoordinates) +
            m_changes.capacity() * sizeof(BulkVoxelEditCommand::VoxelChange);
 }
 
 // VoxelMoveCommand implementation
 VoxelMoveCommand::VoxelMoveCommand(VoxelData::VoxelDataManager* voxelManager,
-                                   const std::vector<Math::Vector3i>& positions,
-                                   const Math::Vector3i& offset,
+                                   const std::vector<Math::IncrementCoordinates>& positions,
+                                   const Math::IncrementCoordinates& offset,
                                    VoxelData::VoxelResolution resolution)
     : m_voxelManager(voxelManager)
     , m_positions(positions)
@@ -401,7 +454,11 @@ bool VoxelMoveCommand::execute() {
     for (const auto& sourcePos : m_positions) {
         bool sourceValue = m_voxelManager->getVoxel(sourcePos, m_resolution);
         if (sourceValue) {
-            Math::Vector3i destPos = sourcePos + m_offset;
+            Math::IncrementCoordinates destPos(
+                sourcePos.x() + m_offset.x(),
+                sourcePos.y() + m_offset.y(),
+                sourcePos.z() + m_offset.z()
+            );
             bool destOldValue = m_voxelManager->getVoxel(destPos, m_resolution);
             
             m_sourceChanges.emplace_back(sourcePos, m_resolution, true, false);
@@ -466,7 +523,7 @@ bool VoxelMoveCommand::undo() {
 
 size_t VoxelMoveCommand::getMemoryUsage() const {
     return sizeof(*this) + 
-           m_positions.capacity() * sizeof(Math::Vector3i) +
+           m_positions.capacity() * sizeof(Math::IncrementCoordinates) +
            m_sourceChanges.capacity() * sizeof(BulkVoxelEditCommand::VoxelChange) +
            m_destChanges.capacity() * sizeof(BulkVoxelEditCommand::VoxelChange);
 }

@@ -1,0 +1,37 @@
+----- File: core/rendering/tests/test_unit_core_rendering_engine.cpp
+
+Test Name: Initialization
+Test Description: Tests RenderEngine initialization interface, verifying initialization state checks and double initialization protection (skipped without OpenGL context).
+
+Test Name: RenderSettings
+Test Description: Validates render settings management including render mode (wireframe), lighting enable/disable, and shadow settings, ensuring proper storage and retrieval.
+
+Test Name: RenderModeChanges
+Test Description: Tests switching between different render modes (Solid, Wireframe, Combined) and verifies the engine correctly stores and reports the current mode.
+
+Test Name: StateManagement
+Test Description: Validates OpenGL state management functions including blend mode, depth write, cull mode, and depth test settings through the engine interface.
+
+Test Name: CameraManagement
+Test Description: Tests camera assignment and viewport configuration, verifying the engine can accept camera objects and set viewport dimensions.
+
+Test Name: DebugMode
+Test Description: Validates debug mode toggle functionality, ensuring the engine can enable/disable debug mode and correctly report its state.
+
+Test Name: RenderStats
+Test Description: Tests render statistics tracking, verifying initial stats are zero (frameCount, drawCalls, trianglesRendered, verticesProcessed).
+
+Test Name: MeshOperations
+Test Description: Tests mesh buffer operations including setup and cleanup of vertex and index data through the rendering engine interface.
+
+Test Name: ResourceCreation
+Test Description: Validates resource creation interface for vertex buffers, index buffers, and textures, expecting InvalidId returns without OpenGL context (skipped).
+
+Test Name: ShaderManagement
+Test Description: Tests shader management including builtin shader retrieval and custom shader loading from files, expecting InvalidId without initialization (skipped).
+
+Test Name: FrameOperations
+Test Description: Validates frame rendering lifecycle including beginFrame, clear operations with flags and colors, endFrame, and present calls.
+
+Test Name: TransformOperations
+Test Description: Tests mesh rendering with transform (position, rotation, scale) and material parameters, validating the complete rendering pipeline interface.

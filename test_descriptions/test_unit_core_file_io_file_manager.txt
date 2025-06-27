@@ -1,0 +1,55 @@
+----- File: core/file_io/tests/test_unit_core_file_io_file_manager.cpp
+
+Test Name: FileManagerTest.SaveAndLoadProject
+Test Description: Tests complete save and load cycle for project files. Verifies that a project can be saved to the custom binary format (.cvef) with metadata, workspace settings, and custom properties, then loaded back with all data intact including name, description, author, workspace size, and custom properties.
+
+Test Name: FileManagerTest.SaveToInvalidPath
+Test Description: Tests error handling when attempting to save a project to an invalid file path. Verifies that the FileManager properly detects invalid paths, returns appropriate error status, and provides a meaningful error message.
+
+Test Name: FileManagerTest.LoadNonExistentFile
+Test Description: Tests error handling when attempting to load a non-existent project file. Verifies that the FileManager returns FileError::FileNotFound when trying to load a file that doesn't exist.
+
+Test Name: FileManagerTest.SaveOptionsFast
+Test Description: Tests the Fast save option preset. Verifies that Fast save options disable compression, backup creation, and validation for maximum save speed.
+
+Test Name: FileManagerTest.SaveOptionsCompact
+Test Description: Tests the Compact save option preset for efficient storage. Verifies that Compact save options enable compression with maximum compression level (9) to minimize file size using LZ4 compression.
+
+Test Name: FileManagerTest.ExportSTL
+Test Description: Tests STL file export functionality for 3D printing. Verifies that a single mesh with vertices and indices can be successfully exported to STL format and that the exported file exists on disk.
+
+Test Name: FileManagerTest.ExportMultipleSTL
+Test Description: Tests exporting multiple meshes to a single STL file. Verifies that multiple mesh objects can be combined and exported into one STL file for 3D printing applications.
+
+Test Name: FileManagerTest.FileInfo
+Test Description: Tests retrieval of file metadata information. Verifies that FileInfo correctly returns file size, last modified timestamp, and file format version for saved project files.
+
+Test Name: FileManagerTest.RecentFiles
+Test Description: Tests recent files list management. Verifies that files can be added to the recent files list, the list maintains proper order (most recent first), and the list can be cleared.
+
+Test Name: FileManagerTest.ValidateProjectFile
+Test Description: Tests project file validation functionality. Verifies that valid project files are correctly identified as valid, while non-existent files are identified as invalid.
+
+Test Name: FileManagerTest.GetFileVersion
+Test Description: Tests file version detection. Verifies that the FileManager can correctly read and return the format version from a saved project file for backward compatibility support.
+
+Test Name: FileManagerTest.ProgressCallback
+Test Description: Tests progress reporting during file operations. Verifies that progress callbacks are invoked during save operations with values between 0.0 and 1.0, providing feedback for long-running operations.
+
+Test Name: FileManagerTest.AutoSaveBasic
+Test Description: Tests automatic save functionality. Verifies that projects registered for auto-save are automatically saved at specified intervals, creating .autosave files to prevent data loss.
+
+Test Name: FileManagerTest.BackupCreation
+Test Description: Tests backup file creation during save operations. Verifies that when backup is enabled in save options, previous versions are preserved as .bak files before overwriting.
+
+Test Name: FileManagerTest.CompressionSettings
+Test Description: Tests file compression settings using LZ4. Verifies that compression can be enabled/disabled and compression level can be configured, with files saved accordingly.
+
+Test Name: FileManagerTest.Statistics
+Test Description: Tests I/O statistics tracking for monitoring performance. Verifies that FileManager tracks bytes read/written, files saved/loaded, and average operation times for performance analysis.
+
+Test Name: FileManagerTest.ErrorHandling
+Test Description: Tests general error handling for invalid operations. Verifies that attempting to save an invalid/uninitialized project returns appropriate error status with descriptive message.
+
+Test Name: FileManagerTest.ConcurrentAccess
+Test Description: Tests thread-safe concurrent file operations. Verifies that multiple FileManager instances can safely save different projects simultaneously without conflicts or corruption.

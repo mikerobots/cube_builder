@@ -1,0 +1,5 @@
+workspace 5.0 5.0 5.0
+resolution 64cm
+place 64cm 0cm 0cm
+export output/headless/commands/test_export.stl
+quit

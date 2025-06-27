@@ -1,0 +1,34 @@
+----- File: foundation/memory/tests/test_unit_foundation_memory_tracker.cpp
+
+Test Name: BasicAllocationTracking
+Test Description: Tests basic memory allocation tracking functionality including recording allocation/deallocation, tracking total allocated, current usage, peak usage, and active allocation count
+
+Test Name: CategoryTracking
+Test Description: Tests categorized memory tracking by assigning allocations to categories ("Voxels", "Meshes"), verifying per-category usage statistics and proper updates on deallocation
+
+Test Name: PeakUsageTracking
+Test Description: Tests peak memory usage tracking, ensuring peak value persists even after deallocations and updates correctly when new higher peaks are reached
+
+Test Name: MemoryPressureDetection
+Test Description: Tests memory pressure detection with configurable limits, checking isMemoryPressure() triggers when usage exceeds 90% of limit and pressure ratio calculation
+
+Test Name: ActiveAllocations
+Test Description: Tests retrieval of active allocation list with details (pointer, size, category), verifying all tracked allocations are properly reported with correct metadata
+
+Test Name: MemoryStats
+Test Description: Tests comprehensive memory statistics retrieval including total allocated, current usage, peak usage, active allocations count, and category usage breakdown
+
+Test Name: CleanupCallbacks
+Test Description: Tests MemoryOptimizer cleanup callback registration and execution, verifying callbacks are invoked and return freed memory size correctly
+
+Test Name: CleanupPriority
+Test Description: Tests cleanup callback priority ordering (High, Medium, Low), verifying callbacks execute in priority order during aggressive cleanup mode
+
+Test Name: MemoryPressureResponse
+Test Description: Tests automatic cleanup triggering in response to MemoryPressureEvent dispatched through event system when memory usage reaches 95% threshold
+
+Test Name: ManagedMemoryPool
+Test Description: Tests ManagedMemoryPool integration with MemoryManager, tracking pool allocations in memory statistics under named category "TestPool"
+
+Test Name: ThreadSafety
+Test Description: Tests concurrent memory tracking from multiple threads (4 threads, 100 allocations each), verifying thread-safe operation and accurate final statistics

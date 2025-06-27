@@ -1,0 +1,22 @@
+----- File: tests/integration/test_integration_core_camera_cube_visibility.cpp
+
+Test Name: SingleVoxelAtOrigin_FrontCamera
+Test Description: Tests single 8cm voxel at origin (0,0,0) is visible from front camera position, validating both point and cube frustum intersection
+
+Test Name: VoxelGrid3x3x3_IsometricCamera
+Test Description: Tests 3x3x3 grid of 16cm voxels (positions 3-5 in each axis) are all visible from isometric camera view, expecting all 27 voxels in frustum
+
+Test Name: LargeVoxel_CloseCamera
+Test Description: Tests 32cm voxel visibility when camera is positioned very close (distance 1.0f), ensuring large voxels remain visible at close range
+
+Test Name: VoxelBehindCamera
+Test Description: Tests voxel at grid position (80,80,80) is not visible when positioned behind camera looking from (5,5,5) towards (0,0,0)
+
+Test Name: VoxelRayIntersection
+Test Description: Tests ray-cube intersection from camera through viewport center to 16cm voxel, validating ray-AABB intersection algorithm and frustum visibility
+
+Test Name: MultipleVoxelsScreenCoverage
+Test Description: Tests 5 voxels arranged in cross pattern (center, left, right, top, bottom) project to correct screen coordinates within viewport bounds
+
+Test Name: ExplicitMatrixCalculations
+Test Description: Tests detailed transform pipeline from world to NDC space for voxel at (6,6,6), manually calculating and verifying view matrix basis vectors and transformations

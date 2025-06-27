@@ -32,15 +32,16 @@ void CommandProcessor::registerAlias(const std::string& alias, const std::string
 }
 
 CommandResult CommandProcessor::execute(const std::string& input) {
-    if (input.empty()) {
-        return CommandResult::Success();
+    // Check if input is empty or only whitespace
+    if (input.empty() || input.find_first_not_of(" \t\n\r") == std::string::npos) {
+        return CommandResult::Error("Invalid command: empty or whitespace only");
     }
     
     addToHistory(input);
     
     auto tokens = parseInput(input);
     if (tokens.empty()) {
-        return CommandResult::Success();
+        return CommandResult::Error("Invalid command: no valid tokens");
     }
     
     return executeCommand(tokens[0], std::vector<std::string>(tokens.begin() + 1, tokens.end()));
@@ -65,6 +66,11 @@ CommandResult CommandProcessor::executeCommand(const std::string& command,
     
     if (args.size() < requiredCount) {
         return CommandResult::Error("Insufficient arguments. " + def.getUsage());
+    }
+    
+    // Check for too many arguments
+    if (args.size() > def.arguments.size()) {
+        return CommandResult::Error("Too many arguments. " + def.getUsage());
     }
     
     CommandContext context(m_app, cmdName, args);

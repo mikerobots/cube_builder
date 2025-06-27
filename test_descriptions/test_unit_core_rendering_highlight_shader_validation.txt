@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_unit_core_rendering_highlight_shader_validation.cpp
+
+Test Name: ValidateHighlightShaderCompilation
+Test Description: Tests direct compilation and linking of highlight shader code, verifying vertex and fragment shaders compile successfully, uniforms (u_model, u_view, u_projection, u_color, u_time) are accessible, and attributes are at correct locations
+
+Test Name: ValidateHighlightRendererCreation
+Test Description: Tests HighlightRenderer initialization and basic rendering with empty state and single voxel highlight, verifying no OpenGL errors occur during creation and rendering
+
+Test Name: ValidateShaderWithDifferentStates
+Test Description: Tests highlight shader with various styles including static opaque, animated semi-transparent, and very transparent highlights, ensuring no OpenGL errors for different rendering states
+
+Test Name: ValidateMultipleHighlights
+Test Description: Tests rendering performance with 125 voxel highlights (5x5x5 grid), including animation updates over multiple frames, verifying shader handles multiple highlights without errors
+
+Test Name: ValidateFaceHighlightRendering
+Test Description: Tests face-specific highlight rendering for a single voxel face (PositiveY direction), ensuring face highlight shader path works correctly without OpenGL errors

@@ -4,6 +4,12 @@ add_library(VoxelEditor_SurfaceGen STATIC
     SurfaceTypes.cpp
     MeshBuilder.h
     MeshBuilder.cpp
+    MeshSmoother.h
+    MeshSmoother.cpp
+    TopologyPreserver.h
+    TopologyPreserver.cpp
+    MeshValidator.h
+    MeshValidator.cpp
     DualContouring.h
     DualContouring.cpp
     DualContouringFast.h

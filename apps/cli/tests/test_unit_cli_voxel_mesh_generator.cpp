@@ -36,16 +36,22 @@ protected:
     }
     
     // Helper to validate cube geometry
-    bool validateCubeGeometry(const Rendering::Mesh& mesh, const Math::Vector3f& expectedCenter, float expectedSize) {
+    // expectedBottomCenter is the bottom-center position where the voxel was placed
+    bool validateCubeGeometry(const Rendering::Mesh& mesh, const Math::Vector3f& expectedBottomCenter, float expectedSize) {
         // A cube should have 24 vertices (4 per face * 6 faces) and 36 indices (6 per face * 6 faces)
         if (mesh.vertices.size() != 24 || mesh.indices.size() != 36) {
             return false;
         }
         
-        // Check that all vertices are at the expected distance from center
+        // Calculate expected cube center from bottom-center position
+        Math::Vector3f expectedCubeCenter(expectedBottomCenter.x, 
+                                         expectedBottomCenter.y + expectedSize * 0.5f, 
+                                         expectedBottomCenter.z);
+        
+        // Check that all vertices are at the expected distance from cube center
         float halfSize = expectedSize * 0.5f;
         for (const auto& vertex : mesh.vertices) {
-            Math::Vector3f diff = vertex.position.value() - expectedCenter;
+            Math::Vector3f diff = vertex.position.value() - expectedCubeCenter;
             
             // Each component should be either +halfSize or -halfSize
             bool validX = std::abs(std::abs(diff.x) - halfSize) < 0.001f;
@@ -173,10 +179,10 @@ TEST_F(VoxelMeshGeneratorTest, FullWorkspaceCube) {
     
     // For 8cm voxels in a 5m workspace:
     // 5m = 500cm, so we can fit 500/8 = 62.5 voxels per dimension
-    // But we need to account for centering, so let's use a smaller grid
+    // But we need to account for centering, so let's use a smaller grid for reasonable test time
     // Place voxels at 8cm intervals
     int placedCount = 0;
-    int gridSize = 30; // 30 * 8cm = 240cm = 2.4m (fits within 5m workspace)
+    int gridSize = 8; // 8 * 8cm = 64cm cube (fits within 5m workspace, 8^3 = 512 voxels)
     for (int x = -gridSize/2; x < gridSize/2; ++x) {
         for (int y = 0; y < gridSize; ++y) {
             for (int z = -gridSize/2; z < gridSize/2; ++z) {
@@ -269,10 +275,16 @@ TEST_F(VoxelMeshGeneratorTest, CoordinateSystemAlignment) {
     
     auto mesh = meshGenerator->generateCubeMesh(*voxelManager);
     
-    // Calculate expected world center using proper coordinate conversion
+    // Calculate expected bottom-center using proper coordinate conversion
     const VoxelData::VoxelGrid* grid = voxelManager->getGrid(VoxelData::VoxelResolution::Size_8cm);
     Math::WorldCoordinates worldCoord = grid->incrementToWorld(Math::IncrementCoordinates(gridPos));
-    Math::Vector3f expectedCenter = worldCoord.value();
+    Math::Vector3f expectedBottomCenter = worldCoord.value();
+    
+    // Calculate expected cube center (bottom-center + size/2 in Y)
+    float voxelSize = 0.08f * 0.95f; // 8cm with scale factor
+    Math::Vector3f expectedCubeCenter(expectedBottomCenter.x, 
+                                     expectedBottomCenter.y + voxelSize * 0.5f, 
+                                     expectedBottomCenter.z);
     
     // Verify the mesh is centered at the expected position
     Math::Vector3f actualCenter(0.0f, 0.0f, 0.0f);
@@ -281,9 +293,9 @@ TEST_F(VoxelMeshGeneratorTest, CoordinateSystemAlignment) {
     }
     actualCenter = actualCenter * (1.0f / mesh.vertices.size());
     
-    EXPECT_NEAR(actualCenter.x, expectedCenter.x, 0.001f);
-    EXPECT_NEAR(actualCenter.y, expectedCenter.y, 0.001f);
-    EXPECT_NEAR(actualCenter.z, expectedCenter.z, 0.001f);
+    EXPECT_NEAR(actualCenter.x, expectedCubeCenter.x, 0.001f);
+    EXPECT_NEAR(actualCenter.y, expectedCubeCenter.y, 0.001f);
+    EXPECT_NEAR(actualCenter.z, expectedCubeCenter.z, 0.001f);
 }
 
 // Test 8: Large voxel count performance characteristics

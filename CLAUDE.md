@@ -54,29 +54,13 @@ Test needs OpenGL, read ./guides/opengl_integration_test.md
 ./run_all_unit.sh
 
 # Integration test runner with auto-discovery
-./run_integration_tests.sh all          # All integration tests
-./run_integration_tests.sh core         # Core integration tests
-./run_integration_tests.sh cli          # CLI integration tests
-./run_integration_tests.sh interaction  # Interaction tests (mouse, keyboard, zoom)
-./run_integration_tests.sh rendering    # Rendering integration tests
-./run_integration_tests.sh shader       # Shader validation tests
-./run_integration_tests.sh feedback     # Visual feedback tests
-./run_integration_tests.sh quick        # Quick integration tests only
-
-# Run individual integration tests
-./run_integration_tests.sh test_integration_cli_rendering  # Run specific test by full name
-./run_integration_tests.sh cli_rendering                   # Run test by partial name match
-./run_integration_tests.sh voxel_face                      # Finds all tests containing "voxel_face"
+./run_integration_tests.sh <various options>
 ```
 
 ### End-to-End Tests (Shell)
 ```bash
 # End-to-end test runner for CLI workflow validation
-./run_e2e_tests.sh all                # All e2e tests
-./run_e2e_tests.sh cli-validation     # Basic CLI validation tests
-./run_e2e_tests.sh cli-comprehensive  # Complex CLI workflow tests
-./run_e2e_tests.sh visual            # Visual validation tests
-./run_e2e_tests.sh quick             # Quick smoke tests only
+./run_e2e_tests.sh <various options>
 ```
 
 ### Comprehensive Testing

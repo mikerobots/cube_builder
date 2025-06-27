@@ -1,0 +1,58 @@
+----- File: apps/cli/tests/test_unit_cli_workspace_command_validation.cpp
+
+Test Name: ValidMinimumDimensions
+Test Description: Tests workspace accepts minimum valid dimensions (2m x 2m x 2m) and verifies the workspace size is set correctly through VoxelDataManager
+
+Test Name: ValidMaximumDimensions
+Test Description: Tests workspace accepts maximum valid dimensions (8m x 8m x 8m) and verifies the workspace size is set correctly
+
+Test Name: ValidMixedDimensions
+Test Description: Tests various valid mixed dimensions within the 2m-8m range including different combinations of low, high, and mid-range values
+
+Test Name: ValidDefaultDimensions
+Test Description: Tests default workspace dimensions (5m x 5m x 5m) are set correctly and can be explicitly set to default values
+
+Test Name: ValidBoundaryDimensions
+Test Description: Tests exact boundary values (2.0m and 8.0m) in different combinations including min-max, max-min-max configurations
+
+Test Name: InvalidDimensionsTooSmall
+Test Description: Tests workspace rejects dimensions below 2m threshold and maintains original size after failed resize attempts
+
+Test Name: InvalidDimensionsTooLarge
+Test Description: Tests workspace rejects dimensions above 8m threshold and maintains original size after failed resize attempts
+
+Test Name: InvalidZeroAndNegativeDimensions
+Test Description: Tests workspace rejects zero and negative dimensions, maintaining original size for all invalid inputs
+
+Test Name: ValidDimensionsNearBoundaries
+Test Description: Tests valid dimensions very close to but within boundaries (e.g., 2.001m, 7.999m) are accepted correctly
+
+Test Name: MinimumWorkspaceLimits_REQ_11_3_16
+Test Description: Tests enforcement of minimum workspace limits (2m per dimension) with exact boundary testing and precision validation
+
+Test Name: MaximumWorkspaceLimits_REQ_11_3_16
+Test Description: Tests enforcement of maximum workspace limits (8m per dimension) with exact boundary testing and precision validation
+
+Test Name: WorkspaceLimitEnforcement_REQ_11_3_16
+Test Description: Tests consistent limit enforcement across all dimensions with mixed boundary conditions and comprehensive validation
+
+Test Name: WorkspaceLimitPrecision_REQ_11_3_16
+Test Description: Tests precision of workspace limit enforcement with very small differences at boundaries (0.0001m precision)
+
+Test Name: WorkspaceVolumeConstraints_REQ_11_3_16
+Test Description: Tests workspace volume constraints from minimum (8 m³) to maximum (512 m³) with various valid volume configurations
+
+Test Name: DISABLED_WorkspaceResizeWithExistingVoxels_PreservationWithinBounds_REQ_11_3_17
+Test Description: Tests voxels within new workspace bounds are preserved during resize, using 64cm resolution voxels in coordinated positions
+
+Test Name: DISABLED_WorkspaceResizeWithExistingVoxels_RemovalOutsideBounds_REQ_11_3_17
+Test Description: Tests voxels outside new workspace bounds are removed during resize while preserving those within bounds
+
+Test Name: DISABLED_WorkspaceResizeWithExistingVoxels_EnlargementPreservation_REQ_11_3_17
+Test Description: Tests all existing voxels are preserved when enlarging workspace and new areas become available for voxel placement
+
+Test Name: DISABLED_WorkspaceResizeWithExistingVoxels_MultipleResolutions_REQ_11_3_17
+Test Description: Tests workspace resize with existing voxels at multiple resolutions (16cm, 4cm, 64cm) maintaining appropriate preservation/removal
+
+Test Name: DISABLED_WorkspaceResizeWithExistingVoxels_StateConsistency_REQ_11_3_17
+Test Description: Tests workspace resize maintains data consistency through sequence of shrink/expand operations with complex voxel arrangements

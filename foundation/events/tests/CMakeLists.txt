@@ -8,7 +8,6 @@ add_executable(test_unit_foundation_events ${EVENTS_TEST_SOURCES})
 
 target_link_libraries(test_unit_foundation_events
     VoxelEditor_Events
-    VoxelEditor_Math
     GTest::gtest
     GTest::gtest_main
 )

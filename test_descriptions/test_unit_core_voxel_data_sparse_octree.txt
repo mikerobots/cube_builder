@@ -1,0 +1,43 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_sparse_octree.cpp
+
+Test Name: SparseOctreeTest.DefaultConstruction
+Test Description: Tests SparseOctree default construction. Verifies empty octree returns false for all voxel queries, has zero voxel count and memory usage.
+
+Test Name: SparseOctreeTest.CustomDepthConstruction
+Test Description: Tests SparseOctree construction with custom depth. Verifies octree with depth 5 can handle 32x32x32 grid positions.
+
+Test Name: SparseOctreeTest.SingleVoxelOperations
+Test Description: Tests single voxel set/get/clear operations. Verifies voxel can be set to true, retrieved, then cleared with proper count tracking.
+
+Test Name: SparseOctreeTest.MultipleVoxelOperations
+Test Description: Tests operations on multiple voxels. Verifies multiple voxels can be set, retrieved, selectively cleared with accurate count.
+
+Test Name: SparseOctreeTest.NegativeCoordinates
+Test Description: Tests negative coordinate handling. Verifies SparseOctree properly rejects negative coordinates by design for Y>=0 constraint.
+
+Test Name: SparseOctreeTest.LargeCoordinates
+Test Description: Tests large coordinate handling. Verifies coordinates outside octree bounds are rejected while valid large coordinates work correctly.
+
+Test Name: SparseOctreeTest.RedundantOperations
+Test Description: Tests redundant voxel operations. Verifies setting same voxel multiple times succeeds without increasing memory usage.
+
+Test Name: SparseOctreeTest.ClearOperation
+Test Description: Tests clearing all voxels. Verifies clear removes all voxels, resets count to zero, and reduces memory usage.
+
+Test Name: SparseOctreeTest.OptimizationOperation
+Test Description: Tests octree optimization. Verifies optimize preserves all voxels and count while potentially restructuring internal nodes.
+
+Test Name: SparseOctreeTest.MemoryPoolOperations
+Test Description: Tests shared memory pool usage. Verifies multiple octrees can share the same memory pool without interference.
+
+Test Name: SparseOctreeTest.NonCopyableDesign
+Test Description: Tests non-copyable design constraint. Verifies octree maintains proper encapsulation by preventing copy operations.
+
+Test Name: SparseOctreeTest.StressTestLargeDataset
+Test Description: Tests handling 10,000+ voxels without degradation. Verifies octree efficiently stores and retrieves large checkerboard pattern dataset.
+
+Test Name: SparseOctreeTest.MemoryUsageTracking
+Test Description: Tests memory usage tracking for 2GB limit compliance. Verifies memory increases with voxels and decreases when cleared.
+
+Test Name: SparseOctreeTest.ClusteringEfficiency
+Test Description: Tests memory efficiency for clustered vs scattered voxels. Verifies clustered voxels use memory more efficiently than scattered ones.

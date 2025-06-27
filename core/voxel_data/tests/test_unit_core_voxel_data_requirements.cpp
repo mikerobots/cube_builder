@@ -126,20 +126,26 @@ TEST_F(VoxelDataRequirementsTest, MultiResolutionGroundPlanePositioning) {
         VoxelResolution res = static_cast<VoxelResolution>(i);
         float voxelSize = getVoxelSize(res);
         
-        // Test positions that align to this resolution's grid and fit in workspace
-        std::vector<VoxelEditor::Math::Vector3f> alignedPositions;
+        // NEW BEHAVIOR: With updated voxel placement requirements, voxels can be placed
+        // at any 1cm increment position regardless of resolution. We need to test 
+        // positions that are exactly on 1cm increments to avoid floating-point issues.
+        std::vector<VoxelEditor::Math::Vector3f> validPositions;
         
         // Origin always works
-        alignedPositions.push_back(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.0f));
+        validPositions.push_back(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.0f));
         
-        // For smaller voxels, test additional positions
+        // For smaller voxels, test additional 1cm-aligned positions
         if (voxelSize < 2.0f) {  // Only test multiple positions for voxels < 2m
-            alignedPositions.push_back(VoxelEditor::Math::Vector3f(voxelSize, 0.0f, 0.0f));
-            alignedPositions.push_back(VoxelEditor::Math::Vector3f(-voxelSize, 0.0f, 0.0f));
-            alignedPositions.push_back(VoxelEditor::Math::Vector3f(0.0f, 0.0f, voxelSize));
+            // Use simple, guaranteed 1cm positions to avoid any floating-point precision issues
+            // These positions are all exactly on 1cm boundaries
+            validPositions.push_back(VoxelEditor::Math::Vector3f(0.01f, 0.0f, 0.0f));  // 1cm
+            validPositions.push_back(VoxelEditor::Math::Vector3f(-0.01f, 0.0f, 0.0f)); // -1cm
+            validPositions.push_back(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.01f));  // 1cm in Z
+            validPositions.push_back(VoxelEditor::Math::Vector3f(0.1f, 0.0f, 0.0f));   // 10cm
+            validPositions.push_back(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.1f));   // 10cm in Z
         }
         
-        for (const auto& pos : alignedPositions) {
+        for (const auto& pos : validPositions) {
             // Clear any previous voxels
             manager->clearAll();
             
@@ -148,7 +154,19 @@ TEST_F(VoxelDataRequirementsTest, MultiResolutionGroundPlanePositioning) {
                                << " voxel at grid-aligned position (" << pos.x << ", " << pos.y << ", " << pos.z << ")";
             
             if (result) {
-                EXPECT_TRUE(manager->getVoxelAtWorldPos(pos, res));
+                // NEW BEHAVIOR: With the updated voxel placement requirements, voxels are stored
+                // at exact 1cm positions regardless of resolution. The original test assumes
+                // "grid-aligned" positions, but now ALL positions are valid 1cm positions.
+                
+                // Debug: Check if the voxel was actually placed
+                size_t voxelCount = manager->getVoxelCount(res);
+                EXPECT_EQ(voxelCount, 1) << "Voxel count should be 1 after placement at (" 
+                                        << pos.x << ", " << pos.y << ", " << pos.z << ") for " << getVoxelSizeName(res);
+                
+                // Try to retrieve the voxel 
+                bool canRetrieve = manager->getVoxelAtWorldPos(pos, res);
+                EXPECT_TRUE(canRetrieve) << "Failed to retrieve " << getVoxelSizeName(res) 
+                                        << " voxel at position (" << pos.x << ", " << pos.y << ", " << pos.z << ")";
             }
         }
     }

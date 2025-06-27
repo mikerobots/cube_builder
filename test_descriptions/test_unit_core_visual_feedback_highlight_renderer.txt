@@ -1,0 +1,31 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_highlight_renderer.cpp
+
+Test Name: HighlightRendererTest.Construction
+Test Description: Tests the construction and basic configuration of the HighlightRenderer. Verifies that animation is enabled by default and can be toggled on/off using setGlobalAnimationEnabled.
+
+Test Name: HighlightRendererTest.FaceHighlight
+Test Description: Tests rendering of face highlights with yellow color for hover feedback. Verifies that rendering a face highlight with the Face style doesn't throw exceptions and that face highlights can be cleared properly.
+
+Test Name: HighlightRendererTest.VoxelHighlight
+Test Description: Tests rendering of voxel highlights for preview visualization. Verifies that rendering a voxel highlight at a specific position and resolution doesn't throw exceptions and that voxel highlights can be cleared.
+
+Test Name: HighlightRendererTest.MultiSelection
+Test Description: Tests rendering of multiple selected voxels as a group. Verifies that the renderer handles empty selection sets without crashing and that selection highlights can be cleared properly.
+
+Test Name: HighlightRendererTest.ClearAll
+Test Description: Tests the clearAll functionality to ensure only one highlight is active at a time. Verifies that after adding both face and voxel highlights, calling clearAll removes all highlights without errors.
+
+Test Name: HighlightRendererTest.Animation
+Test Description: Tests animation update functionality for smooth highlight transitions. Verifies that update calls with 60 FPS frame time work correctly with animation enabled and disabled, ensuring face highlighting updates within one frame.
+
+Test Name: HighlightRendererTest.PerformanceSettings
+Test Description: Tests performance-related settings including maximum highlight limits and instancing. Verifies that setting max highlights and toggling instancing on/off doesn't cause crashes during updates.
+
+Test Name: HighlightRendererTest.MultipleHighlights
+Test Description: Tests handling of multiple simultaneous highlights of different types. Verifies that the renderer can handle 10 voxel highlights and 6 face highlights (one per direction) simultaneously without issues during update or clear operations.
+
+Test Name: HighlightRendererTest.DifferentResolutions
+Test Description: Tests highlight rendering across different voxel resolutions. Verifies that highlights can be rendered for voxels of varying sizes (1cm, 32cm, 512cm) without errors.
+
+Test Name: HighlightRendererTest.StyleVariations
+Test Description: Tests all available highlight style variations on a single voxel. Verifies that Face, Selection, Group, and Preview styles can all be applied to the same voxel position without conflicts or errors.

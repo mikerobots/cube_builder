@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_unit_core_rendering_shader_attribute_binding.cpp
+
+Test Name: VertexAttributeOffsets
+Test Description: Validates vertex struct memory layout with expected offsets for position (0), normal (12), texCoords (24), and color (32) totaling 48 bytes
+
+Test Name: VertexDataPacking
+Test Description: Tests that vertex data is correctly packed in memory with float arrays at expected positions
+
+Test Name: AttributeLocationMapping
+Test Description: Verifies shader attribute location bindings match expected order: position (0), normal (1), color (2), texCoord (3)
+
+Test Name: MeshVertexGeneration
+Test Description: Tests mesh vertex creation with correct data format including position, normal, texCoords, and color for a simple triangle
+
+Test Name: VertexBufferLayout
+Test Description: Validates vertex buffer layout and stride (48 bytes) for OpenGL vertex array compatibility

@@ -1,0 +1,19 @@
+----- File: tests/verification/test_integration_verification_core_functionality.cpp
+
+Test Name: GridRenderingAtYZero
+Test Description: Verifies grid rendering at Y=0 plane with proper configuration, testing render engine initialization, ground plane grid visibility controls, and feedback renderer grid line rendering with 35% opacity for visual validation.
+
+Test Name: OneCmIncrementPlacement
+Test Description: Validates 1cm increment placement system across various positions including origin (0,0,0), single-axis offsets (1,0,0), grid-aligned positions (32,0,0), and arbitrary coordinates (100,50,75), ensuring valid increment position validation and voxel placement.
+
+Test Name: FaceHighlighting
+Test Description: Tests face highlighting functionality with yellow highlight color (1.0,1.0,0.0,1.0), verifying feedback renderer can handle face highlights on placed voxels and properly clear highlighting for interactive face selection.
+
+Test Name: PreviewSystemGreenRed
+Test Description: Validates preview system color coding with green previews for valid placements and red previews for invalid/overlapping placements, testing voxel preview rendering and clearing functionality for user feedback.
+
+Test Name: UndoRedoOperational
+Test Description: Tests undo/redo system functionality with voxel placement commands, verifying initial state (no undo/redo available), command execution creating history, proper undo/redo state transitions, and multi-command history management.
+
+Test Name: CompletePlacementWorkflow
+Test Description: Integration test validating complete voxel placement workflow including resolution setting (32cm), preview rendering (green for valid, red for invalid), command-based placement with history, overlap detection, and undo/redo operations in realistic usage sequence.

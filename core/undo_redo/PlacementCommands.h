@@ -3,7 +3,7 @@
 #include "VoxelCommands.h"
 #include "../voxel_data/VoxelDataManager.h"
 #include "../voxel_data/VoxelTypes.h"
-#include "../../foundation/math/Vector3i.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include <memory>
 
 namespace VoxelEditor {
@@ -27,7 +27,7 @@ public:
      */
     static std::unique_ptr<Command> createPlacementCommand(
         VoxelData::VoxelDataManager* voxelManager,
-        const Math::Vector3i& position,
+        const Math::IncrementCoordinates& position,
         VoxelData::VoxelResolution resolution);
     
     /**
@@ -39,7 +39,7 @@ public:
      */
     static std::unique_ptr<Command> createRemovalCommand(
         VoxelData::VoxelDataManager* voxelManager,
-        const Math::Vector3i& position,
+        const Math::IncrementCoordinates& position,
         VoxelData::VoxelResolution resolution);
     
     /**
@@ -51,7 +51,7 @@ public:
      */
     static ValidationResult validatePlacement(
         VoxelData::VoxelDataManager* voxelManager,
-        const Math::Vector3i& position,
+        const Math::IncrementCoordinates& position,
         VoxelData::VoxelResolution resolution);
     
     /**
@@ -63,7 +63,7 @@ public:
      */
     static ValidationResult validateRemoval(
         VoxelData::VoxelDataManager* voxelManager,
-        const Math::Vector3i& position,
+        const Math::IncrementCoordinates& position,
         VoxelData::VoxelResolution resolution);
 };
 
@@ -76,7 +76,7 @@ public:
 class VoxelPlacementCommand : public Command {
 public:
     VoxelPlacementCommand(VoxelData::VoxelDataManager* voxelManager,
-                         const Math::Vector3i& position,
+                         const Math::IncrementCoordinates& position,
                          VoxelData::VoxelResolution resolution);
     
     bool execute() override;
@@ -94,12 +94,12 @@ public:
     ValidationResult validate() const override;
     
     // Getters for debugging/logging
-    Math::Vector3i getPosition() const { return m_position; }
+    Math::IncrementCoordinates getPosition() const { return m_position; }
     VoxelData::VoxelResolution getResolution() const { return m_resolution; }
     
 private:
     std::unique_ptr<VoxelEditCommand> m_baseCommand;
-    Math::Vector3i m_position;
+    Math::IncrementCoordinates m_position;
     VoxelData::VoxelResolution m_resolution;
     VoxelData::VoxelDataManager* m_voxelManager;
 };
@@ -113,7 +113,7 @@ private:
 class VoxelRemovalCommand : public Command {
 public:
     VoxelRemovalCommand(VoxelData::VoxelDataManager* voxelManager,
-                       const Math::Vector3i& position,
+                       const Math::IncrementCoordinates& position,
                        VoxelData::VoxelResolution resolution);
     
     bool execute() override;
@@ -131,12 +131,12 @@ public:
     ValidationResult validate() const override;
     
     // Getters for debugging/logging
-    Math::Vector3i getPosition() const { return m_position; }
+    Math::IncrementCoordinates getPosition() const { return m_position; }
     VoxelData::VoxelResolution getResolution() const { return m_resolution; }
     
 private:
     std::unique_ptr<VoxelEditCommand> m_baseCommand;
-    Math::Vector3i m_position;
+    Math::IncrementCoordinates m_position;
     VoxelData::VoxelResolution m_resolution;
     VoxelData::VoxelDataManager* m_voxelManager;
 };

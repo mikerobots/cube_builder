@@ -1,0 +1,73 @@
+----- File: foundation/math/tests/test_unit_foundation_math_coordinate_converter.cpp
+
+Test Name: GetVoxelSizeMeters_AllResolutions
+Test Description: Tests voxel size conversion for all resolutions (1cm-512cm), verifying correct meter values from 0.01m to 5.12m for proper coordinate scaling.
+
+Test Name: GetWorkspaceBoundsIncrement_CenteredBounds
+Test Description: Validates workspace bounds calculation for 5x5x5m workspace, testing centered coordinate system bounds: X[-250cm,250cm], Y[0cm,500cm], Z[-250cm,250cm].
+
+Test Name: WorldToIncrement_CenteredConversion
+Test Description: Tests world-to-increment coordinate conversion with centered system, verifying (1.23m,4.56m,-2.34m) converts to (123,456,-234) increment coordinates.
+
+Test Name: IncrementToWorld_CenteredConversion
+Test Description: Validates increment-to-world coordinate conversion, testing (123,456,-234) increment coordinates convert to (1.23m,4.56m,-2.34m) world coordinates.
+
+Test Name: WorldIncrement_RoundTripConversion
+Test Description: Tests round-trip coordinate conversion preserves values, ensuring world→increment→world conversions maintain precision within tolerance (1e-5f).
+
+Test Name: WorldToIncrement_Rounding
+Test Description: Validates sub-centimeter rounding behavior, testing 0.004m→0cm, 0.006m→1cm, -0.006m→-1cm for proper nearest-centimeter rounding.
+
+Test Name: WorldToIncrement_CenterPositions
+Test Description: Tests coordinate conversion for workspace center (0,2.5,0) and corners (-2.5,0,-2.5) and (2.5,5,2.5), verifying correct increment coordinate mapping.
+
+Test Name: IsValidIncrementCoordinate_ValidPositions
+Test Description: Validates increment coordinate validation for positions within workspace bounds including center (0,250,0), corners, and near-edge positions.
+
+Test Name: IsValidIncrementCoordinate_InvalidPositions
+Test Description: Tests increment coordinate validation rejects positions beyond workspace bounds in all dimensions (X±251, Y-1/501, Z±251).
+
+Test Name: IsValidWorldCoordinate_ValidPositions
+Test Description: Validates world coordinate validation for positions within workspace bounds including center and corner positions.
+
+Test Name: IsValidWorldCoordinate_InvalidPositions
+Test Description: Tests world coordinate validation rejects positions beyond workspace bounds in all dimensions for proper boundary checking.
+
+Test Name: SnapToIncrementGrid_BasicSnapping
+Test Description: Tests snapping unaligned world coordinates (1.234m,2.567m,-0.891m) to nearest centimeter grid (1.23m,2.57m,-0.89m).
+
+Test Name: GetVoxelCenterIncrement_1cmVoxels
+Test Description: Validates 1cm voxel center calculation returns input position unchanged since 0.5cm offset cannot be represented in integer coordinates.
+
+Test Name: GetVoxelCenterIncrement_4cmVoxels
+Test Description: Tests 4cm voxel center calculation, verifying position (107,215,-33) yields center (109,217,-31) with 2cm offset.
+
+Test Name: GetVoxelCenterIncrement_16cmVoxels
+Test Description: Validates 16cm voxel center calculation, testing position (100,200,-50) yields center (108,208,-42) with 8cm offset.
+
+Test Name: ZeroWorkspace_HandledGracefully
+Test Description: Tests coordinate conversion handles zero workspace gracefully without crashes, verifying origin conversion and validation work correctly.
+
+Test Name: LargeValues_NoOverflow
+Test Description: Validates coordinate conversion handles large values (100m→10000cm) without overflow and maintains round-trip precision.
+
+Test Name: AllResolutions_ConsistentCenterCalculation
+Test Description: Tests voxel center calculation consistency across all resolutions, verifying 1cm voxels return unchanged position and others add half-voxel-size offset.
+
+Test Name: CoordinateSystemConsistency_CenteredOrigin
+Test Description: Validates coordinate system consistency with centered origin, testing (0,0,0) world↔increment conversion maintains origin mapping.
+
+Test Name: CoordinateSystemConsistency_NegativeValues
+Test Description: Tests coordinate system handles negative values correctly, verifying (-1.5m,2.0m,-0.5m)↔(-150,200,-50) conversion and round-trip precision.
+
+Test Name: ArbitraryPositions_AllVoxelSizesSupported
+Test Description: Tests requirement change: voxels of any size can be placed at any 1cm increment position without resolution-based snapping, validating arbitrary positions (1,1,1), (3,7,13), primes, mixed signs.
+
+Test Name: ArbitraryPositions_NoResolutionBasedConstraints
+Test Description: Validates no resolution-based coordinate constraints, testing positions not aligned to 4cm, 8cm, 16cm, 32cm grids work perfectly with coordinate conversion.
+
+Test Name: ArbitraryPositions_VoxelCenterCalculation
+Test Description: Tests voxel center calculation for arbitrary starting positions without grid alignment, verifying 2cm/8cm/32cm voxel centers from position (13,27,-19).
+
+Test Name: ArbitraryPositions_SnapToIncrementGridOnly
+Test Description: Validates snapToIncrementGrid only snaps to 1cm grid (not resolution grids), testing sub-centimeter precision (1.234m→1.23m) and edge case rounding.

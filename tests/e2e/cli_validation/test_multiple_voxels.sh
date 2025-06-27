@@ -6,7 +6,7 @@ set -e
 
 TEST_NAME="Multiple Voxel Placement"
 OUTPUT_DIR="test_output"
-CLI_BINARY="../../build_ninja/bin/VoxelEditor_CLI"
+CLI_BINARY="../../../build_ninja/bin/VoxelEditor_CLI"
 SCREENSHOT_FILE="$OUTPUT_DIR/multiple_voxels.ppm"
 COLORS_FILE="$OUTPUT_DIR/multiple_voxels_colors.txt"
 

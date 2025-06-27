@@ -1,0 +1,103 @@
+----- File: apps/cli/tests/test_integration_cli_command_sequences.cpp
+
+Test Name: VoxelPlacementSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests voxel placement command sequence state consistency, verifying 4 placed voxels exist at expected positions (origin and adjacent in X/Y/Z) with correct final count.
+
+Test Name: ResolutionChangeSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests resolution change sequence state consistency across 1cm→4cm→16cm→1cm, verifying voxels exist at their respective resolutions and final resolution is correctly set.
+
+Test Name: CameraWorkspaceSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests camera and workspace command sequence state consistency, verifying workspace resize, camera view changes, voxel persistence, and camera position validity throughout sequence.
+
+Test Name: FillRemoveSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests fill and remove operation sequence state consistency with simple placement, small fill (3x3x3 region), and individual voxel removal verification.
+
+Test Name: UndoRedoSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests undo/redo sequence state consistency, verifying proper state reversion through place→undo→place→undo chain with correct final voxel count and existence.
+
+Test Name: ComplexMixedSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests complex mixed command sequence (resolution/workspace/camera/place/fill/undo) state consistency, verifying all system states remain valid through comprehensive workflow.
+
+Test Name: ErrorRecoverySequence_StateConsistency_REQ_11_4_1
+Test Description: Tests error recovery sequence with mixed valid/invalid commands, verifying invalid commands fail gracefully while valid commands succeed and state remains consistent.
+
+Test Name: PlaceRemoveInteraction_OverlapEffect_REQ_11_4_2
+Test Description: Tests place-remove command interaction effects with same position, verifying place→remove→place sequence results in final voxel existence.
+
+Test Name: ResolutionPlaceInteraction_MultiResolution_REQ_11_4_2
+Test Description: Tests resolution-place interaction effects across multiple resolutions, verifying collision detection prevents overlapping placements between different voxel sizes.
+
+Test Name: FillPlaceInteraction_OverlapDetection_REQ_11_4_2
+Test Description: Tests fill-place interaction effects, verifying collision detection between filled regions and individual placement attempts with proper overlap handling.
+
+Test Name: WorkspacePlaceInteraction_BoundsEffect_REQ_11_4_2
+Test Description: Tests workspace-place interaction effects, verifying workspace boundary changes affect voxel placement validity and existing voxels handle workspace resizing.
+
+Test Name: CameraResolutionInteraction_ViewEffect_REQ_11_4_2
+Test Description: Tests camera-resolution interaction effects, verifying camera state remains valid through resolution changes and resolution state persists through camera changes.
+
+Test Name: UndoPlaceInteraction_StateReversion_REQ_11_4_2
+Test Description: Tests undo-place interaction effects with complex state changes, verifying undo properly reverts voxel placement and enables placement at previously conflicting positions.
+
+Test Name: FillResolutionInteraction_GridAlignment_REQ_11_4_2
+Test Description: Tests fill-resolution interaction effects across different resolutions, verifying grid alignment behavior and collision detection between resolution-specific fills.
+
+Test Name: ComplexInteractionChain_MultipleEffects_REQ_11_4_2
+Test Description: Tests complex command interaction chain with cascading effects across workspace/resolution/camera/place/fill/undo operations, verifying all interaction effects work correctly.
+
+Test Name: PlaceCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests place command graceful handling of invalid parameters including missing coordinates, non-numeric values, invalid units, ground plane violations, and malformed formats.
+
+Test Name: RemoveCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests remove command graceful handling of invalid parameters including missing coordinates, non-numeric values, mixed/invalid units, and excessive parameters.
+
+Test Name: FillCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests fill command graceful handling of invalid parameters including missing coordinates, non-numeric values, ground plane violations, and parameter count errors.
+
+Test Name: ResolutionCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests resolution command graceful handling of invalid parameters including non-numeric values, invalid resolutions, wrong units, missing parameters, and range violations.
+
+Test Name: WorkspaceCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests workspace command graceful handling of invalid parameters including non-numeric values, zero/negative dimensions, size constraints, mixed units, and parameter count errors.
+
+Test Name: CameraCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests camera command graceful handling of invalid parameters including invalid view names, case sensitivity, numeric parameters, security attempts, and parameter count errors.
+
+Test Name: UndoRedoCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests undo/redo command graceful handling of invalid parameters including extra parameters, numeric values, text parameters, and command injection attempts.
+
+Test Name: SaveLoadCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests save/load command graceful handling of invalid parameters including missing filenames, invalid paths, wrong extensions, path traversal attempts, and special characters.
+
+Test Name: HelpCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests help command graceful handling of invalid parameters including non-existent commands, numeric parameters, quoted parameters, and security attempts.
+
+Test Name: UnknownCommand_InvalidParameters_REQ_11_5_1
+Test Description: Tests graceful handling of completely unknown commands including empty commands, whitespace, command injection attempts, path traversal, and various security test patterns.
+
+Test Name: StateConsistency_AfterInvalidCommands_REQ_11_5_1
+Test Description: Tests application state consistency after invalid commands, verifying voxel count, resolution, workspace, and functionality remain unchanged after invalid command attempts.
+
+Test Name: PlaceCommandFailure_ResourceCleanup_REQ_11_5_4
+Test Description: Tests place command failure resource cleanup with repeated invalid commands (ground plane violations, invalid coordinates), verifying no memory leaks and continued functionality.
+
+Test Name: FillCommandFailure_ResourceCleanup_REQ_11_5_4
+Test Description: Tests fill command failure resource cleanup with repeated invalid commands (ground plane, invalid coordinates), verifying no memory leaks and system functionality.
+
+Test Name: ResolutionCommandFailure_ResourceCleanup_REQ_11_5_4
+Test Description: Tests resolution command failure resource cleanup with repeated invalid commands (invalid values, units), verifying state consistency and continued functionality.
+
+Test Name: WorkspaceCommandFailure_ResourceCleanup_REQ_11_5_4
+Test Description: Tests workspace command failure resource cleanup with repeated invalid commands (invalid dimensions), verifying state consistency and continued functionality.
+
+Test Name: CameraCommandFailure_ResourceCleanup_REQ_11_5_4
+Test Description: Tests camera command failure resource cleanup with repeated invalid commands (invalid views), verifying camera state validity and continued functionality.
+
+Test Name: SaveLoadCommandFailure_ResourceCleanup_REQ_11_5_4
+Test Description: Tests save/load command failure resource cleanup with repeated invalid file operations, verifying no file handle leaks and system responsiveness.
+
+Test Name: MixedCommandFailures_ResourceCleanup_REQ_11_5_4
+Test Description: Tests mixed command failure resource cleanup across all command types with massive failure stress test, verifying no state corruption and all systems remain functional.
+
+Test Name: CommandProcessor_ResourceCleanup_REQ_11_5_4
+Test Description: Tests command processor resource cleanup with extreme stress including very long commands, many parameters, and special characters, verifying parser robustness and functionality.

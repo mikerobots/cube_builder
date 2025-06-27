@@ -1,0 +1,34 @@
+----- File: foundation/config/tests/test_unit_foundation_config_value.cpp
+
+Test Name: BasicConstruction
+Test Description: Tests construction of ConfigValue with different types (int, float, string, bool), verifying all values are valid and not empty after construction
+
+Test Name: DefaultConstruction
+Test Description: Tests default-constructed ConfigValue is invalid, empty, and has type name "void"
+
+Test Name: TypedRetrieval
+Test Description: Tests type-safe value retrieval using get<T>() template method for int, float, string, and bool values, verifying correct values are returned
+
+Test Name: TypeMismatch
+Test Description: Tests that attempting to retrieve values with wrong type (e.g., get<string>() on int value) throws std::bad_cast exception
+
+Test Name: TypeNames
+Test Description: Tests getTypeName() returns correct type strings ("int", "float", "string", "bool", "double") for each value type
+
+Test Name: StringConversion
+Test Description: Tests toString() method converts values to string representation ("42", "3.140000", "hello", "true", "false") for all supported types
+
+Test Name: FromString
+Test Description: Tests fromString() parsing from string to typed values including boolean ("true"/"false"/"1"/"0"), integer, float, double, and string conversions
+
+Test Name: ValueUpdate
+Test Description: Tests set() method updates value and type, allowing ConfigValue to change from int to string to float with correct type tracking
+
+Test Name: TypeChecking
+Test Description: Tests canConvertTo<T>() type checking method returns true for matching types and false for incompatible types
+
+Test Name: GetValueOrHelper
+Test Description: Tests getValueOr() helper function returns stored value if valid or fallback value if empty/invalid, including type mismatch scenarios
+
+Test Name: InvalidStringConversion
+Test Description: Tests fromString() throws exceptions for invalid input (non-numeric strings for numbers, unsupported types like void*)

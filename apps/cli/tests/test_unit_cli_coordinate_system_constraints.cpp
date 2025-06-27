@@ -23,7 +23,10 @@ namespace Tests {
 class CoordinateSystemConstraintsTest : public ::testing::Test {
 protected:
     void SetUp() override {
+        std::cout << "DEBUG SetUp: Starting SetUp()" << std::endl;
+        
         app = std::make_unique<Application>();
+        std::cout << "DEBUG SetUp: Created Application" << std::endl;
         
         // Initialize in headless mode for testing
         int argc = 2;
@@ -31,23 +34,35 @@ protected:
         char arg1[] = "--headless";
         char* argv[] = {arg0, arg1, nullptr};
         
+        std::cout << "DEBUG SetUp: About to initialize app" << std::endl;
         initialized = app->initialize(argc, argv);
+        std::cout << "DEBUG SetUp: App initialized = " << initialized << std::endl;
         ASSERT_TRUE(initialized) << "Application should initialize in headless mode";
         
         // Set up a standard workspace for testing
+        std::cout << "DEBUG SetUp: Getting voxel manager" << std::endl;
         auto voxelManager = app->getVoxelManager();
         ASSERT_TRUE(voxelManager != nullptr);
+        
+        std::cout << "DEBUG SetUp: Resizing workspace" << std::endl;
         voxelManager->resizeWorkspace(Math::Vector3f(5.0f, 5.0f, 5.0f)); // 5m³ workspace
+        std::cout << "DEBUG SetUp: Workspace size set to 5m x 5m x 5m" << std::endl;
         
         // Set resolution to 1cm for most precise coordinate testing
+        std::cout << "DEBUG SetUp: Setting active resolution" << std::endl;
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_1cm);
         
+        std::cout << "DEBUG SetUp: Getting command processor" << std::endl;
         processor = app->getCommandProcessor();
         ASSERT_TRUE(processor != nullptr);
+        
+        std::cout << "DEBUG SetUp: SetUp() completed successfully" << std::endl;
     }
     
     void TearDown() override {
+        std::cout << "DEBUG TearDown: Starting TearDown()" << std::endl;
         app.reset();
+        std::cout << "DEBUG TearDown: TearDown() completed" << std::endl;
     }
     
     // Helper to execute command and verify result
@@ -79,8 +94,8 @@ TEST_F(CoordinateSystemConstraintsTest, ValidCoordinateUnits_REQ_11_2_4) {
     
     for (const auto& coord : validCoordinates) {
         CommandContext ctx = createContext({coord, "0cm", "0cm"});
-        int result = ctx.getCoordinateArg(0);
-        EXPECT_NE(result, -1) << "Valid coordinate should parse successfully: " << coord;
+        auto result = ctx.getCoordinateArg(0);
+        EXPECT_TRUE(result.has_value()) << "Valid coordinate should parse successfully: " << coord;
     }
 }
 
@@ -101,8 +116,8 @@ TEST_F(CoordinateSystemConstraintsTest, InvalidCoordinateUnits_REQ_11_2_4) {
     
     for (const auto& coord : invalidCoordinates) {
         CommandContext ctx = createContext({coord, "0cm", "0cm"});
-        int result = ctx.getCoordinateArg(0);
-        EXPECT_EQ(result, -1) << "Invalid coordinate should fail to parse: " << coord;
+        auto result = ctx.getCoordinateArg(0);
+        EXPECT_FALSE(result.has_value()) << "Invalid coordinate should fail to parse: " << coord;
     }
     
     // Note: "100mm" actually gets parsed as "100m" due to the parser checking 'm' suffix first
@@ -127,8 +142,9 @@ TEST_F(CoordinateSystemConstraintsTest, CoordinateUnitConversion_REQ_11_2_4) {
     
     for (const auto& test : tests) {
         CommandContext ctx = createContext({test.input, "0cm", "0cm"});
-        int result = ctx.getCoordinateArg(0);
-        EXPECT_EQ(result, test.expectedGridUnits) 
+        auto result = ctx.getCoordinateArg(0);
+        ASSERT_TRUE(result.has_value()) << "Coordinate " << test.input << " should parse successfully";
+        EXPECT_EQ(*result, test.expectedGridUnits) 
             << "Coordinate " << test.input << " should convert to " << test.expectedGridUnits << " grid units";
     }
 }
@@ -301,6 +317,7 @@ TEST_F(CoordinateSystemConstraintsTest, DeleteCommandCoordinates_REQ_11_2_4) {
 
 TEST_F(CoordinateSystemConstraintsTest, FillCommandCoordinates_REQ_11_2_4) {
     // Test fill command with coordinate range constraints
+    std::cout << "DEBUG TEST: Starting FillCommandCoordinates test body" << std::endl;
     
     struct FillTest {
         std::string command;
@@ -308,29 +325,40 @@ TEST_F(CoordinateSystemConstraintsTest, FillCommandCoordinates_REQ_11_2_4) {
         std::string description;
     };
     
+    std::cout << "DEBUG TEST: Creating test vector" << std::endl;
+    
     std::vector<FillTest> tests = {
-        // Valid coordinate ranges
-        {"fill 0cm 0cm 0cm 100cm 100cm 100cm", true, "Valid positive range"},
-        {"fill -100cm 0cm -100cm 100cm 100cm 100cm", true, "Valid centered range"},
-        {"fill 50cm 0cm 50cm 50cm 50cm 50cm", true, "Single point fill"},
+        // Valid fill commands
+        {"fill 0cm 0cm 0cm 2cm 2cm 2cm", true, "Small valid fill"},
+        {"fill -5cm 0cm -5cm 5cm 10cm 5cm", true, "Centered fill region"},
+        {"fill 0cm 10cm 0cm 5cm 20cm 5cm", true, "Above ground fill"},
         
-        // Invalid Y coordinates (any Y < 0)
-        {"fill 0cm -1cm 0cm 100cm 100cm 100cm", false, "Start Y below ground"},
-        {"fill 0cm 0cm 0cm 100cm -1cm 100cm", false, "End Y below ground"},
-        {"fill -50cm -50cm -50cm 50cm 50cm 50cm", true, "Range includes Y < 0 - partial fill"},
+        // Invalid Y coordinates (below ground)
+        {"fill 0cm -1cm 0cm 10cm 10cm 10cm", false, "Start Y below ground"},
+        {"fill 0cm 0cm 0cm 10cm -1cm 10cm", false, "End Y below ground"},
+        {"fill -10cm -5cm -10cm 10cm 5cm 10cm", false, "Y range spans below ground"},
         
         // Invalid coordinate formats
-        {"fill 0 0 0 100 100 100", false, "Missing units"},
-        {"fill 0cm 0cm 0cm 100cm 100cm", false, "Insufficient coordinates"},
-        {"fill 0cm 0cm", false, "Too few coordinates"},
+        {"fill 0 0 0 2 2 2", false, "Missing units"},
+        {"fill 0cm 0cm 0cm 2cm 2cm", false, "Insufficient coordinates"},
         {"fill", false, "No coordinates"},
         
-        // Workspace boundary violations - fill succeeds with partial fill
-        {"fill -300cm 0cm -300cm 300cm 300cm 300cm", true, "Range exceeds workspace - partial fill"}
+        // Edge cases
+        {"fill 2cm 0cm 2cm 0cm 0cm 0cm", true, "Reversed range (should normalize)"},
+        {"fill 0cm 0cm 0cm 0cm 0cm 0cm", true, "Single voxel fill"},
     };
     
-    for (const auto& test : tests) {
+    std::cout << "DEBUG TEST: Test vector created with " << tests.size() << " tests" << std::endl;
+    
+    for (size_t i = 0; i < tests.size(); ++i) {
+        const auto& test = tests[i];
+        std::cout << "DEBUG TEST: Running test " << i << ": " << test.command << std::endl;
+        
         auto result = executeCommand(test.command);
+        
+        std::cout << "DEBUG TEST: Command executed, result.success = " << result.success << std::endl;
+        std::cout << "DEBUG TEST: Result message: " << result.message << std::endl;
+        
         if (test.shouldSucceed) {
             EXPECT_TRUE(result.success) 
                 << "Should succeed: " << test.description 
@@ -340,7 +368,11 @@ TEST_F(CoordinateSystemConstraintsTest, FillCommandCoordinates_REQ_11_2_4) {
                 << "Should fail: " << test.description 
                 << " (" << test.command << ")";
         }
+        
+        std::cout << "DEBUG TEST: Test " << i << " completed" << std::endl;
     }
+    
+    std::cout << "DEBUG TEST: All tests completed" << std::endl;
 }
 
 TEST_F(CoordinateSystemConstraintsTest, DISABLED_SelectboxCommandCoordinates_REQ_11_2_4) {

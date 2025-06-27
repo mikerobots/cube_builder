@@ -3,6 +3,7 @@
 #include <sstream>
 #include <algorithm>
 #include <vector>
+#include <cassert>
 
 // Silence OpenGL deprecation warnings on macOS
 #ifdef __APPLE__
@@ -933,9 +934,16 @@ bool OpenGLRenderer::compileShaderInternal(ShaderInfo& info) {
         
         if (!info.compiled) {
             std::cerr << "Shader compilation failed: " << info.errorLog << std::endl;
+            // Assert when failing to ensure we are not masking problems
+            assert(false && "Shader compilation failed - failing hard to catch issues early");
         } else if (!info.errorLog.empty()) {
             std::cerr << "Shader compilation warning: " << info.errorLog << std::endl;
         }
+    }
+    
+    // Assert when failing to ensure we are not masking problems  
+    if (!info.compiled) {
+        assert(false && "Shader compilation failed - failing hard to catch issues early");
     }
     
     return info.compiled;
@@ -958,9 +966,16 @@ bool OpenGLRenderer::linkProgramInternal(ProgramInfo& info) {
         
         if (!info.linked) {
             std::cerr << "Program linking failed: " << info.errorLog << std::endl;
+            // Assert when failing to ensure we are not masking problems
+            assert(false && "Shader program linking failed - failing hard to catch issues early");
         } else if (!info.errorLog.empty()) {
             std::cerr << "Program linking warning: " << info.errorLog << std::endl;
         }
+    }
+    
+    // Assert when failing to ensure we are not masking problems  
+    if (!info.linked) {
+        assert(false && "Shader program linking failed - failing hard to catch issues early");
     }
     
     if (info.linked) {
@@ -1006,6 +1021,9 @@ bool OpenGLRenderer::checkGLError(const std::string& operation) {
     }
     std::cerr << std::endl;
     
+    // Assert when failing to ensure we are not masking problems
+    assert(false && "OpenGL error detected - failing hard to catch issues early");
+    
     return true;
 }
 
@@ -1030,8 +1048,7 @@ TextureId OpenGLRenderer::createTexture2D(int width, int height, TextureFormat f
     glBindTexture(GL_TEXTURE_2D, info.glHandle);
     
     uint32_t internalFormat, glFormat, glType;
-    translateTextureFormat(format, internalFormat, glType);
-    glFormat = internalFormat; // Simplified for now
+    glFormat = translateTextureFormat(format, internalFormat, glType);
     
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, glFormat, glType, data);
     
@@ -1060,8 +1077,7 @@ TextureId OpenGLRenderer::createTextureCube(int size, TextureFormat format, cons
     glBindTexture(GL_TEXTURE_CUBE_MAP, info.glHandle);
     
     uint32_t internalFormat, glFormat, glType;
-    translateTextureFormat(format, internalFormat, glType);
-    glFormat = internalFormat; // Simplified for now
+    glFormat = translateTextureFormat(format, internalFormat, glType);
     
     for (int i = 0; i < 6; ++i) {
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, internalFormat, 
@@ -1089,8 +1105,7 @@ void OpenGLRenderer::updateTexture(TextureId textureId, int x, int y, int width,
     glBindTexture(GL_TEXTURE_2D, info.glHandle);
     
     uint32_t internalFormat, glFormat, glType;
-    translateTextureFormat(info.format, internalFormat, glType);
-    glFormat = internalFormat; // Simplified for now
+    glFormat = translateTextureFormat(info.format, internalFormat, glType);
     
     glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, glFormat, glType, data);
     

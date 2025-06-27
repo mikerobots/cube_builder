@@ -1,0 +1,19 @@
+----- File: core/rendering/tests/test_unit_core_rendering_shader_uniforms.cpp
+
+Test Name: SetAndGetUniforms
+Test Description: Tests setting and retrieving shader uniforms including matrix uniforms (model, view, projection), verifying uniform locations are found and values are correctly set using OpenGL queries
+
+Test Name: OldUniformNameCompatibility
+Test Description: Tests compatibility with old uniform naming convention (u_model, u_view, u_projection, u_color) ensuring backwards compatibility with older shaders
+
+Test Name: VariousUniformTypes
+Test Description: Tests setting various uniform types including float (brightness), vec3 (lightDir), int (useTexture), and vec4/color uniforms with verification through OpenGL queries
+
+Test Name: UniformLocationCaching
+Test Description: Tests that uniform locations are cached in ProgramInfo after first query, ensuring multiple getUniformLocation calls return the same cached value
+
+Test Name: InvalidUniformHandling
+Test Description: Tests error handling for invalid uniforms including non-existent uniform names (returns -1), invalid program IDs, and null program handling without crashes
+
+Test Name: ProgramSpecificVsCurrentProgram
+Test Description: Tests setting uniforms on specific programs vs current program, verifying setUniform with program ID temporarily binds that program

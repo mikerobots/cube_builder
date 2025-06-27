@@ -1,0 +1,64 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_workspace_manager.cpp
+
+Test Name: WorkspaceManagerTest.DefaultConstruction
+Test Description: Tests WorkspaceManager default construction. Verifies default 5m³ workspace with centered coordinate system (X/Z: -2.5 to 2.5, Y: 0 to 5).
+
+Test Name: WorkspaceManagerTest.ConstructionWithEventDispatcher
+Test Description: Tests construction with event dispatcher. Verifies workspace initializes properly and no events are dispatched during construction.
+
+Test Name: WorkspaceManagerTest.ValidSizeChanges
+Test Description: Tests valid workspace size changes up to 8m³ limit. Verifies size changes succeed and trigger resize events correctly.
+
+Test Name: WorkspaceManagerTest.InvalidSizeChanges
+Test Description: Tests rejection of invalid size changes. Verifies sizes outside 2m-8m range are rejected, workspace remains unchanged, and no events dispatched.
+
+Test Name: WorkspaceManagerTest.CubicSizeShorthand
+Test Description: Tests cubic workspace sizing shorthand method. Verifies single dimension sets all three axes and invalid cubic sizes are rejected.
+
+Test Name: WorkspaceManagerTest.PositionBoundsChecking
+Test Description: Tests position validation against workspace bounds. Verifies positions within centered coordinate system bounds pass while out-of-bounds positions fail.
+
+Test Name: WorkspaceManagerTest.PositionClamping
+Test Description: Tests position clamping to workspace bounds. Verifies out-of-bounds positions are clamped to valid ranges and clamped positions are always valid.
+
+Test Name: WorkspaceManagerTest.BoundsRetrievalMethods
+Test Description: Tests workspace bounds retrieval with centered coordinate system. Verifies getMinBounds, getMaxBounds, and getCenter return correct values.
+
+Test Name: WorkspaceManagerTest.SizeChangeCallbacks
+Test Description: Tests size change callbacks. Verifies callbacks are invoked with old/new sizes when workspace is resized.
+
+Test Name: WorkspaceManagerTest.SizeChangeCallbackVeto
+Test Description: Tests callback veto functionality. Verifies callbacks can prevent size changes and workspace remains unchanged when vetoed.
+
+Test Name: WorkspaceManagerTest.SizeChangeCallbackConditional
+Test Description: Tests conditional size change approval. Verifies callbacks can selectively allow or reject size changes based on custom criteria.
+
+Test Name: WorkspaceManagerTest.EventDispatcherChanges
+Test Description: Tests dynamic event dispatcher management. Verifies events are dispatched when dispatcher present and not dispatched when removed.
+
+Test Name: WorkspaceManagerTest.MultipleSizeChanges
+Test Description: Tests multiple sequential size changes. Verifies each change succeeds and triggers events correctly maintaining consistency.
+
+Test Name: WorkspaceManagerTest.EdgeCaseBounds
+Test Description: Tests edge case bounds at minimum and maximum workspace sizes. Verifies boundary validation works correctly at 2m and 8m limits.
+
+Test Name: WorkspaceManagerTest.NonCubicWorkspaces
+Test Description: Tests asymmetric workspace dimensions. Verifies each dimension is validated independently and corner cases work correctly.
+
+Test Name: WorkspaceManagerTest.ConstMethodsWithConstManager
+Test Description: Tests const methods work with const manager instance. Verifies all read-only operations function correctly without modifying state.
+
+Test Name: WorkspaceManagerTest.WorldCoordinatesIntegration
+Test Description: Tests integration with WorldCoordinates type. Verifies position validation and clamping work with coordinate wrapper types.
+
+Test Name: WorkspaceManagerTest.WorldCoordinatesBounds
+Test Description: Tests WorldCoordinates bounds methods. Verifies new coordinate type methods match legacy Vector3f methods.
+
+Test Name: WorkspaceManagerTest.IncrementCoordinatesValidation
+Test Description: Tests IncrementCoordinates validation. Verifies grid positions are properly validated against workspace bounds in 1cm increments.
+
+Test Name: WorkspaceManagerTest.CoordinateTypeBackwardCompatibility
+Test Description: Tests backward compatibility with Vector3f methods. Verifies legacy and new coordinate type methods produce equivalent results.
+
+Test Name: WorkspaceManagerTest.CoordinateConverterIntegration
+Test Description: Tests integration with CoordinateConverter. Verifies round-trip conversion between world and increment coordinates maintains workspace validity.

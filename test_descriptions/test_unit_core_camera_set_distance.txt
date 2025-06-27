@@ -1,0 +1,40 @@
+----- File: core/camera/tests/test_unit_core_camera_set_distance.cpp
+
+Test Name: BasicSetDistance
+Test Description: Tests basic setDistance functionality verifying distance getter/setter works correctly with various values (10.0f, 2.5f, 50.0f) (REQ-CAM-1, REQ-8.1.5)
+
+Test Name: DistanceConstraints
+Test Description: Tests distance clamping to min/max constraints (0.5f-100.0f), verifying values below minimum and above maximum are properly clamped
+
+Test Name: CustomDistanceConstraints
+Test Description: Tests setDistanceConstraints() method with custom min/max values (2.0f-20.0f) and verifies current distance is clamped when constraints change
+
+Test Name: EdgeCases
+Test Description: Tests edge cases including zero distance, negative distance, very large values, and NaN handling to ensure distance remains valid
+
+Test Name: UpdatesCameraPosition
+Test Description: Tests that setDistance updates camera position correctly, verifying position changes proportionally with distance along view axis (REQ-CAM-3)
+
+Test Name: WithDifferentOrientations
+Test Description: Tests setDistance with different camera yaw/pitch orientations, verifying camera position updates correctly regardless of orientation
+
+Test Name: RapidSetDistanceCalls
+Test Description: Tests rapid sequential setDistance calls to ensure stability and correct behavior under frequent changes
+
+Test Name: PreservesOtherProperties
+Test Description: Tests that setDistance preserves other camera properties like yaw, pitch, and target position unchanged
+
+Test Name: WithSmoothingEnabled
+Test Description: Tests setDistance behavior with smoothing enabled, verifying immediate distance change for setDistance vs gradual change for zoom()
+
+Test Name: ThroughCameraController
+Test Description: Tests setDistance through CameraController's camera instance, verifying constraints still apply
+
+Test Name: ViewMatrixUpdate
+Test Description: Tests that changing distance updates the view matrix appropriately for integration with rendering system (REQ-CAM-8)
+
+Test Name: SmallIncrements
+Test Description: Tests applying many small distance increments (0.01f) to verify floating-point precision handling
+
+Test Name: AfterViewPresetChange
+Test Description: Tests setDistance functionality after changing view presets (FRONT, ISOMETRIC), verifying manual distance control works after preset changes

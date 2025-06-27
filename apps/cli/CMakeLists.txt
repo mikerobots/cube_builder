@@ -50,6 +50,16 @@ set(CLI_LIB_SOURCES
     src/AutoComplete.cpp
     src/VoxelMeshGenerator.cpp
     src/SimpleValidation.cpp
+    # Command registry system
+    src/CommandRegistry.cpp
+    src/CommandModule.cpp
+    # Modular command files
+    src/commands/EditCommands.cpp
+    src/commands/FileCommands.cpp
+    src/commands/SelectCommands.cpp
+    src/commands/ViewCommands.cpp
+    src/commands/SystemCommands.cpp
+    src/commands/MeshCommands.cpp
 )
 
 set(CLI_HEADERS
@@ -60,6 +70,14 @@ set(CLI_HEADERS
     include/cli/MouseInteraction.h
     include/cli/AutoComplete.h
     include/cli/VoxelMeshGenerator.h
+    # Modular command headers
+    include/cli/CommandRegistry.h
+    include/cli/EditCommands.h
+    include/cli/FileCommands.h
+    include/cli/SelectCommands.h
+    include/cli/ViewCommands.h
+    include/cli/SystemCommands.h
+    include/cli/MeshCommands.h
 )
 
 # Create static library for testing

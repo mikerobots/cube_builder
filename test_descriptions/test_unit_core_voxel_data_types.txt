@@ -1,0 +1,40 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_types.cpp
+
+Test Name: VoxelResolutionValues
+Test Description: Tests that getVoxelSize function returns correct meter values for each voxel resolution (1cm=0.01f, 2cm=0.02f, 4cm=0.04f, ..., 512cm=5.12f). Validates requirement REQ-5.3.3 for available resolutions.
+
+Test Name: VoxelResolutionNames
+Test Description: Tests that getVoxelSizeName function returns correct string names for each voxel resolution (Size_1cm="1cm", Size_16cm="16cm", Size_512cm="512cm").
+
+Test Name: ResolutionValidation
+Test Description: Tests the isValidResolution function, verifying that values 0-9 are valid (corresponding to the 10 resolution levels) and values outside this range (-1, 10) are invalid.
+
+Test Name: VoxelPositionConstruction
+Test Description: Tests VoxelPosition construction including default construction (zero position, Size_1cm resolution), construction from Vector3i and resolution, and construction from individual coordinates and resolution.
+
+Test Name: WorldSpaceConversion
+Test Description: Tests conversion between voxel increment positions and world space coordinates for 1cm voxels, including toWorldSpace conversion and round-trip conversion using fromWorldSpace. Validates requirement REQ-2.2.4 for voxel placement at any valid increment position.
+
+Test Name: WorldSpaceConversionLargerVoxels
+Test Description: Tests world space conversion for larger voxels (4cm), verifying that increment position (5,5,5) correctly converts to world position (0.05, 0.05, 0.05) meters in the centered coordinate system.
+
+Test Name: VoxelBounds
+Test Description: Tests getWorldBounds function for voxels, verifying correct bounding box calculation where the voxel's bottom face sits on the ground plane (Y=0) and extends appropriately in X,Z directions based on voxel size.
+
+Test Name: VoxelPositionEquality
+Test Description: Tests equality and inequality operators for VoxelPosition objects, verifying that positions with identical coordinates and resolution are equal, while positions differing in either coordinate or resolution are not equal.
+
+Test Name: VoxelPositionHash
+Test Description: Tests the hash function for VoxelPosition objects, ensuring identical positions produce the same hash value while different positions produce different hash values.
+
+Test Name: WorkspaceConstraints
+Test Description: Tests WorkspaceConstraints validation and clamping functions, verifying valid workspace sizes (2m-8m), invalid sizes (<2m or >8m), and proper clamping of out-of-range values to valid bounds.
+
+Test Name: GridDimensionCalculation
+Test Description: Tests calculateMaxGridDimensions function for different voxel resolutions, verifying correct grid dimensions based on workspace size (e.g., 5m workspace with 1cm voxels = 500x500x500 grid). Validates requirement REQ-6.2.2 for grid scaling with workspace.
+
+Test Name: Resolution8cmValidation
+Test Description: Comprehensive test for 8cm voxel resolution including size verification (0.08f), grid dimension calculation (63x63x63 for 5m workspace), world position conversion, and bounds calculation with placement position as bottom-center.
+
+Test Name: PositionBoundsChecking
+Test Description: Tests isPositionInBounds function for various positions, verifying correct boundary checking for centered workspace including valid positions within bounds, positions outside X/Y/Z boundaries, and positions below ground plane (Y<0).

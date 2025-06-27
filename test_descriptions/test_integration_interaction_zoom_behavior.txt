@@ -1,0 +1,25 @@
+----- File: apps/cli/tests/test_integration_interaction_zoom_behavior.cpp
+
+Test Name: ZoomOnceAndStep
+Test Description: Tests exact zoom behavior issue by executing three consecutive 1.5x zoom commands, verifying each reduces distance properly without stepping back
+
+Test Name: MultipleSequentialZooms
+Test Description: Tests multiple sequential zoom commands (5 iterations of 1.2x zoom), verifying each zoom reduces distance and applies correct factor
+
+Test Name: AlternatingZoomInOut
+Test Description: Tests alternating zoom in (2.0x) and zoom out (0.5x) operations, verifying camera returns to original distance
+
+Test Name: SmallIncrementalZooms
+Test Description: Tests many small zoom steps (20 iterations of 1.05x zoom), verifying cumulative effect and floating point precision
+
+Test Name: ZoomAfterOtherOperations
+Test Description: Tests zoom behavior after other camera operations (view preset change, rotation), ensuring zoom works correctly from any camera state
+
+Test Name: IdenticalConsecutiveZooms
+Test Description: Tests the specific pattern that might cause stepping by executing identical 1.5x zoom factors 5 times with debug logging
+
+Test Name: ZoomFromDifferentDistances
+Test Description: Tests zoom behavior from different starting distances (5.0f to 45.0f), verifying consistent zoom factor application
+
+Test Name: FloatingPointPrecision
+Test Description: Tests floating point precision issues by starting with 3.333333f distance and applying 10 iterations of 1.1x zoom with precise comparisons

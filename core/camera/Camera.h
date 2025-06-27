@@ -21,6 +21,11 @@ enum class ViewPreset {
     ISOMETRIC
 };
 
+enum class ProjectionType {
+    PERSPECTIVE,
+    ORTHOGRAPHIC
+};
+
 class Camera {
 public:
     Camera(Events::EventDispatcher* eventDispatcher = nullptr)
@@ -32,6 +37,8 @@ public:
         , m_nearPlane(0.1f)
         , m_farPlane(1000.0f)
         , m_aspectRatio(16.0f / 9.0f)
+        , m_projectionType(ProjectionType::PERSPECTIVE)
+        , m_orthographicSize(10.0f)
         , m_viewMatrixDirty(true)
         , m_projectionMatrixDirty(true) {}
 
@@ -90,6 +97,22 @@ public:
         }
     }
 
+    void setProjectionType(ProjectionType type) {
+        if (m_projectionType != type) {
+            m_projectionType = type;
+            m_projectionMatrixDirty = true;
+            dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::ZOOM);
+        }
+    }
+
+    void setOrthographicSize(float size) {
+        if (m_orthographicSize != size) {
+            m_orthographicSize = size;
+            m_projectionMatrixDirty = true;
+            dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType::ZOOM);
+        }
+    }
+
     // Matrix getters with lazy computation
     const Math::Matrix4f& getViewMatrix() const {
         if (m_viewMatrixDirty) {
@@ -119,6 +142,8 @@ public:
     float getAspectRatio() const { return m_aspectRatio; }
     float getNearPlane() const { return m_nearPlane; }
     float getFarPlane() const { return m_farPlane; }
+    ProjectionType getProjectionType() const { return m_projectionType; }
+    float getOrthographicSize() const { return m_orthographicSize; }
 
     // Direction vectors
     Math::Vector3f getForward() const {
@@ -151,9 +176,20 @@ protected:
     }
 
     void updateProjectionMatrix() const {
-        m_projectionMatrix = Math::Matrix4f::perspective(Math::toRadians(m_fov), m_aspectRatio, m_nearPlane, m_farPlane);
-        Logging::Logger::getInstance().debugfc("Camera", "Projection matrix updated (FOV: %.1f, Aspect: %.3f, Near: %.3f, Far: %.1f)", 
-            m_fov, m_aspectRatio, m_nearPlane, m_farPlane);
+        if (m_projectionType == ProjectionType::PERSPECTIVE) {
+            m_projectionMatrix = Math::Matrix4f::perspective(Math::toRadians(m_fov), m_aspectRatio, m_nearPlane, m_farPlane);
+            Logging::Logger::getInstance().debugfc("Camera", "Perspective projection matrix updated (FOV: %.1f, Aspect: %.3f, Near: %.3f, Far: %.1f)", 
+                m_fov, m_aspectRatio, m_nearPlane, m_farPlane);
+        } else {
+            float halfSize = m_orthographicSize * 0.5f;
+            float left = -halfSize * m_aspectRatio;
+            float right = halfSize * m_aspectRatio;
+            float bottom = -halfSize;
+            float top = halfSize;
+            m_projectionMatrix = Math::Matrix4f::orthographic(left, right, bottom, top, m_nearPlane, m_farPlane);
+            Logging::Logger::getInstance().debugfc("Camera", "Orthographic projection matrix updated (Size: %.1f, Aspect: %.3f, Near: %.3f, Far: %.1f)", 
+                m_orthographicSize, m_aspectRatio, m_nearPlane, m_farPlane);
+        }
     }
 
     void dispatchCameraChangedEvent(Events::CameraChangedEvent::ChangeType changeType) {
@@ -173,6 +209,8 @@ protected:
     float m_nearPlane;
     float m_farPlane;
     float m_aspectRatio;
+    ProjectionType m_projectionType;
+    float m_orthographicSize;
 
     mutable Math::Matrix4f m_viewMatrix;
     mutable Math::Matrix4f m_projectionMatrix;

@@ -1,0 +1,31 @@
+----- File: apps/cli/tests/test_unit_cli_voxel_mesh_generator.cpp
+
+Test Name: EmptyVoxelData
+Test Description: Tests mesh generation from empty voxel data, verifying that no vertices or indices are generated when no voxels are present.
+
+Test Name: SingleVoxelAtOrigin
+Test Description: Tests mesh generation for single 8cm voxel at origin (0,0,0), verifying correct cube geometry (24 vertices, 36 indices), proper coordinate conversion, normals validation, and red color assignment.
+
+Test Name: MultipleVoxelsInLine
+Test Description: Tests mesh generation for 3 voxels placed in line along X-axis at 8cm intervals, verifying total vertex/index counts and valid index ranges.
+
+Test Name: FullWorkspaceCube
+Test Description: Tests mesh generation for large 8x8x8 voxel cube (512 voxels) with proper 8cm spacing, verifying scalability and correct vertex/index counts for many voxels.
+
+Test Name: DifferentResolutions
+Test Description: Tests mesh generation across different voxel resolutions (1cm and 64cm), verifying proper coordinate conversion, cube geometry validation, and size scaling with resolution.
+
+Test Name: ValidateStaticCubeData
+Test Description: Validates static cube geometry data by checking triangle formation, index validity, counter-clockwise winding order, and ensuring all indices reference valid vertices.
+
+Test Name: CoordinateSystemAlignment
+Test Description: Tests coordinate system alignment by placing voxel at known position (16,24,32) and verifying mesh center matches expected world coordinates through proper coordinate conversion.
+
+Test Name: LargeVoxelCount
+Test Description: Performance test with 10x10x10 voxel cube (1000 voxels), measuring mesh generation time (<1 second), verifying correct vertex/index counts, and logging performance metrics.
+
+Test Name: SparseVoxelPattern
+Test Description: Tests mesh generation for checkerboard pattern (256 voxels from 8x8x8 grid), verifying sparse voxel handling and correct count calculation for non-contiguous voxel arrangements.
+
+Test Name: FaceNormalOrientation
+Test Description: Tests face normal orientation for single cube, verifying each of 6 faces (±X, ±Y, ±Z) has exactly 4 vertices with correct normal directions for proper lighting and rendering.

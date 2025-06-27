@@ -28,11 +28,9 @@ foreach(test_source ${FILE_IO_TEST_SOURCES})
     target_link_libraries(${test_name}
         PRIVATE
             VoxelEditor_FileIO
-            VoxelEditor_VoxelData
-            VoxelEditor_Groups
-            VoxelEditor_Selection
+            # VoxelEditor_FileIO already transitively links these:
+            # VoxelEditor_VoxelData, VoxelEditor_Groups, VoxelEditor_Selection, VoxelEditor_Rendering
             VoxelEditor_Camera
-            VoxelEditor_Rendering
             VoxelEditor_Math
             VoxelEditor_Events
             VoxelEditor_Memory
@@ -69,11 +67,9 @@ add_executable(test_unit_core_file_io ${FILE_IO_TEST_SOURCES})
 target_link_libraries(test_unit_core_file_io
     PRIVATE
         VoxelEditor_FileIO
-        VoxelEditor_VoxelData
-        VoxelEditor_Groups
-        VoxelEditor_Selection
+        # VoxelEditor_FileIO already transitively links these:
+        # VoxelEditor_VoxelData, VoxelEditor_Groups, VoxelEditor_Selection, VoxelEditor_Rendering
         VoxelEditor_Camera
-        VoxelEditor_Rendering
         VoxelEditor_Math
         VoxelEditor_Events
         VoxelEditor_Memory

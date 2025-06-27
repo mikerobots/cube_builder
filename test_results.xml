@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="1" disabled="0" errors="0" time="0.001" timestamp="2025-06-26T20:24:34.873" name="AllTests">
+  <testsuite name="PreviewAccuracyTest" tests="4" failures="1" disabled="0" skipped="0" errors="0" time="0.001" timestamp="2025-06-26T20:24:34.873">
+    <testcase name="GroundPlanePreviewMatchesPlacement" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="78" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.873" classname="PreviewAccuracyTest" />
+    <testcase name="VoxelFacePreviewMatchesPlacement" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="118" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.874" classname="PreviewAccuracyTest">
+      <failure message="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158&#x0A;Value of: isAdjacent&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Top face: Position should be adjacent to reference voxel. Got: (2,4,2), Expected adjacent to: (0,0,0)" type=""><![CDATA[/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158
+Value of: isAdjacent
+  Actual: false
+Expected: true
+Top face: Position should be adjacent to reference voxel. Got: (2,4,2), Expected adjacent to: (0,0,0)]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158&#x0A;Value of: isAdjacent&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Right face: Position should be adjacent to reference voxel. Got: (4,2,2), Expected adjacent to: (0,0,0)" type=""><![CDATA[/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158
+Value of: isAdjacent
+  Actual: false
+Expected: true
+Right face: Position should be adjacent to reference voxel. Got: (4,2,2), Expected adjacent to: (0,0,0)]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158&#x0A;Value of: isAdjacent&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Front face: Position should be adjacent to reference voxel. Got: (2,2,4), Expected adjacent to: (0,0,0)" type=""><![CDATA[/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158
+Value of: isAdjacent
+  Actual: false
+Expected: true
+Front face: Position should be adjacent to reference voxel. Got: (2,2,4), Expected adjacent to: (0,0,0)]]></failure>
+    </testcase>
+    <testcase name="MultipleResolutionsPreviewAccuracy" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="173" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.874" classname="PreviewAccuracyTest" />
+    <testcase name="BoundaryConditionsPreviewAccuracy" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="208" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.874" classname="PreviewAccuracyTest" />
+  </testsuite>
+</testsuites>

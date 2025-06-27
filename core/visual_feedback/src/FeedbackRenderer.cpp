@@ -243,7 +243,17 @@ void FeedbackRenderer::renderOutlines(const Camera::Camera& camera) {
     m_outliner->renderBatch(camera);
 }
 
+void FeedbackRenderer::setDebugRay(const Ray& ray, bool enabled) {
+    m_debugRay = ray;
+    m_debugRayEnabled = enabled;
+}
+
 void FeedbackRenderer::renderOverlays(const Camera::Camera& camera, const Rendering::RenderContext& context) {
+    // Render debug ray if enabled
+    if (m_debugRayEnabled) {
+        m_overlay->renderRaycast(m_debugRay, 100.0f, Rendering::Color(1.0f, 1.0f, 0.0f, 1.0f), camera);
+    }
+    
     if (m_workspaceVisualizationEnabled) {
         // DEBUG: Only render workspace indicator to see what text is causing white boxes
         Math::Vector3f size = m_workspaceBounds.max - m_workspaceBounds.min;

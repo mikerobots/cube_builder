@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_performance_core_rendering_engine.cpp
+
+Test Name: Maintain60FPSWithVaryingVoxelCounts
+Test Description: Tests that the render engine maintains 60 FPS (16.67ms frame time) with varying voxel counts (100, 1000, 5000, 10000) per REQ-6.1.1
+
+Test Name: FrameTimeUnder16ms
+Test Description: Verifies frame time stays under 16ms with 5000 voxels for smooth preview updates per REQ-6.1.2 and REQ-4.1.3
+
+Test Name: HandleLargeVoxelCountsWithoutDegradation
+Test Description: Tests rendering performance with large voxel counts (10k, 20k, 30k) without significant degradation per REQ-6.2.1
+
+Test Name: RenderStatsAccuracy
+Test Description: Validates that render statistics (draw calls, vertices, triangles, frame time) are accurately tracked and reasonable
+
+Test Name: ConsistentFrameTiming
+Test Description: Tests frame timing consistency over 200 frames to ensure no spikes or high variance in performance

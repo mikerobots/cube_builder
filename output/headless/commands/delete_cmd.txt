@@ -1,0 +1,10 @@
+workspace 5.0 5.0 5.0
+resolution 16cm
+place 16cm 16cm 16cm
+place -16cm 16cm -16cm
+status
+delete 16cm 16cm 16cm
+status
+delete -16cm 16cm -16cm
+status
+quit

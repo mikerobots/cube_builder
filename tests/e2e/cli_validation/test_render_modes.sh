@@ -6,7 +6,7 @@ set -e
 
 TEST_NAME="Render Mode Validation"
 OUTPUT_DIR="test_output"
-CLI_BINARY="../../build_ninja/bin/VoxelEditor_CLI"
+CLI_BINARY="../../../build_ninja/bin/VoxelEditor_CLI"
 
 echo "Running $TEST_NAME..."
 

@@ -1,0 +1,25 @@
+----- File: tests/integration/visual_feedback/test_integration_feedback_shadow_placement.cpp
+
+Test Name: HoverOverTopFaceShowsPreview
+Test Description: Tests that hovering mouse over voxel top face shows placement preview. Camera looks down from above at origin voxel, mouse hover at screen center should hit top face and show preview at Y+64cm position.
+
+Test Name: HoverOverGroundPlaneShowsPreview
+Test Description: Tests that hovering mouse over ground plane shows placement preview. Mouse hover on side area should hit ground plane and show preview at Y=0 position.
+
+Test Name: HoverAwayFromSurfaceClearsPreview
+Test Description: Tests that moving mouse away from any valid surface clears the placement preview. First creates preview, then moves mouse to edge where ray misses workspace.
+
+Test Name: PreviewWithDifferentVoxelSizes
+Test Description: Tests placement preview with all voxel resolutions (1cm, 4cm, 16cm, 64cm, 256cm). Verifies preview resolution matches active resolution and Y position matches voxel size.
+
+Test Name: PreviewShowsInvalidForOverlap
+Test Description: Tests that preview shows invalid (red) state when placement would overlap existing voxel. Places second voxel and verifies preview becomes invalid for overlapping position.
+
+Test Name: PreviewUpdatesWithMouseMovement
+Test Description: Tests that preview position updates as mouse moves across screen. Tracks preview positions during horizontal mouse movement and verifies positions change.
+
+Test Name: PreviewRenderingIntegration
+Test Description: Tests preview rendering integration without crashes. Verifies OpenGL rendering calls work correctly and no OpenGL errors occur after rendering.
+
+Test Name: PreviewAnimationUpdate
+Test Description: Tests preview animation functionality over time. Enables animation, updates over multiple frames, and verifies preview remains active during animation with proper rendering.

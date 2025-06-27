@@ -1,0 +1,10 @@
+----- File: apps/cli/tests/test_integration_cli_rendering_basic.cpp
+
+Test Name: WindowCreationTest
+Test Description: Tests render window creation, verifying window is open with positive width, height, and aspect ratio properties
+
+Test Name: BasicRenderLoopTest
+Test Description: Tests basic render loop functionality by running 5 frames with event polling, rendering, buffer swapping, and OpenGL error checking
+
+Test Name: FramebufferTest
+Test Description: Tests framebuffer functionality by clearing with specific color (0.2, 0.3, 0.4), reading pixels back, and verifying color matches with depth buffer testing

@@ -5,6 +5,7 @@
 #include <functional>
 #include <unordered_map>
 #include <memory>
+#include <optional>
 
 namespace VoxelEditor {
 
@@ -77,8 +78,8 @@ public:
     // Coordinate parsing with units
     // Returns coordinate in grid units (1cm increments)
     // Accepts formats: "100cm", "1.5m", "1m", "-2.5m"
-    // Returns -1 if invalid format
-    int getCoordinateArg(size_t index) const;
+    // Returns std::nullopt if invalid format or index out of bounds
+    std::optional<int> getCoordinateArg(size_t index) const;
     
     // Named argument access (for future --name=value style)
     bool hasOption(const std::string& name) const;
@@ -102,6 +103,7 @@ namespace CommandCategory {
     constexpr const char* GROUP = "Group Management";
     constexpr const char* HELP = "Help & Info";
     constexpr const char* SYSTEM = "System";
+    constexpr const char* MESH = "Mesh Operations";
 }
 
 // Common command names
@@ -160,6 +162,10 @@ namespace Commands {
     constexpr const char* SETTINGS = "settings";
     constexpr const char* VALIDATE = "validate";
     constexpr const char* BUILD = "build";
+    
+    // Mesh operations
+    constexpr const char* SMOOTH = "smooth";
+    constexpr const char* MESH = "mesh";
 }
 
 } // namespace VoxelEditor

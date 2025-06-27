@@ -1,0 +1,76 @@
+----- File: core/camera/tests/test_unit_core_camera_controller.cpp
+
+Test Name: DefaultConstruction
+Test Description: Tests default construction of CameraController verifying camera, viewport creation and initial interaction mode is NONE
+
+Test Name: ViewportManagement
+Test Description: Tests viewport size and bounds management including setViewportSize() and setViewportBounds() with aspect ratio updates
+
+Test Name: MouseButtonInteraction
+Test Description: Tests mouse button interactions for orbit (left), pan (middle), and zoom (right) modes (REQ-CAM-1, REQ-9.2.2)
+
+Test Name: MouseButtonOutsideViewport
+Test Description: Tests that mouse clicks outside viewport do not start camera interaction
+
+Test Name: MouseDragThreshold
+Test Description: Tests mouse drag threshold behavior ensuring small movements don't trigger interaction until threshold is exceeded
+
+Test Name: OrbitControl
+Test Description: Tests orbit camera control with mouse movement changing yaw and pitch angles
+
+Test Name: PanControl
+Test Description: Tests pan camera control with middle mouse button changing camera target position
+
+Test Name: ZoomControl
+Test Description: Tests zoom control with right mouse button changing camera distance
+
+Test Name: MouseWheelZoom
+Test Description: Tests mouse wheel zoom functionality with positive delta zooming in and negative delta zooming out
+
+Test Name: MouseWheelOutsideViewport
+Test Description: Tests that mouse wheel events outside viewport are ignored
+
+Test Name: ViewPresets
+Test Description: Tests camera view presets (FRONT, TOP, ISOMETRIC) setting correct yaw/pitch angles (REQ-CAM-4, REQ-9.2.2)
+
+Test Name: FrameAll
+Test Description: Tests frameAll() method centers camera on bounding box center with appropriate distance
+
+Test Name: FocusOn
+Test Description: Tests focusOn() method sets camera target and optional distance correctly
+
+Test Name: MouseRayGeneration
+Test Description: Tests mouse ray generation for ray-casting with normalized direction vectors (REQ-5.1.4, REQ-CAM-6)
+
+Test Name: WorldToScreen
+Test Description: Tests world to screen coordinate conversion with target point projecting near viewport center
+
+Test Name: UpdateAnimation
+Test Description: Tests camera animation update with smoothing enabled for smooth transitions (REQ-CAM-5, REQ-CAM-7)
+
+Test Name: SensitivitySettings
+Test Description: Tests setCameraSensitivity() configures pan, rotate, and zoom sensitivity values
+
+Test Name: SmoothingSettings
+Test Description: Tests setCameraSmoothing() enables/disables smoothing with configurable smooth factor
+
+Test Name: ConstraintSettings
+Test Description: Tests setCameraConstraints() sets distance and pitch angle limits
+
+Test Name: DragThresholdSettings
+Test Description: Tests setMouseDragThreshold() configuration
+
+Test Name: MouseMoveOutsideViewport
+Test Description: Tests mouse movement outside viewport during interaction maintains mode but stops active interaction
+
+Test Name: MultipleMouseButtons
+Test Description: Tests multiple simultaneous mouse button presses with later buttons overriding earlier ones
+
+Test Name: InvalidMouseButton
+Test Description: Tests invalid mouse button numbers are ignored and don't change interaction mode
+
+Test Name: ContinuousMouseMovement
+Test Description: Tests continuous mouse movements accumulate to significant camera angle changes
+
+Test Name: ZeroMouseMovement
+Test Description: Tests zero mouse movement doesn't trigger interaction or camera changes

@@ -1,0 +1,37 @@
+----- File: core/input/tests/test_unit_core_input_touch_handler.cpp
+
+Test Name: TouchHandlerTest.DefaultState
+Test Description: Tests the default state of TouchHandler initialization. Verifies that no touches are active, all gesture states are inactive, and configuration parameters have appropriate default values (tap timeout 0.3s, tap radius 20px, pinch threshold 50px, swipe threshold 100px).
+
+Test Name: TouchHandlerTest.SingleTouchBeginEnd
+Test Description: Tests single touch lifecycle from begin to end. Verifies that a touch begin event creates an active touch with correct ID, position, and pressed state, and that a touch end event properly removes the touch from active tracking.
+
+Test Name: TouchHandlerTest.TouchUpdate
+Test Description: Tests touch position updates and delta calculation. Verifies that when a touch moves from one position to another, the handler correctly updates the position, calculates the delta movement, and sets the state to Moved.
+
+Test Name: TouchHandlerTest.MultipleTouches
+Test Description: Tests handling of multiple simultaneous touches. Verifies that the handler can track two touches independently, retrieve specific touches by ID, and properly maintain state when one touch ends while another continues.
+
+Test Name: TouchHandlerTest.PrimaryTouch
+Test Description: Tests primary touch designation for multi-touch scenarios. Verifies that the first touch becomes the primary touch and remains primary even when additional touches are added to the system.
+
+Test Name: TouchHandlerTest.GestureConfiguration
+Test Description: Tests gesture enable/disable functionality. Verifies that gestures are enabled by default, can be individually disabled and re-enabled, and that the enabled state is correctly reported for each gesture type.
+
+Test Name: TouchHandlerTest.TouchConfiguration
+Test Description: Tests configuration parameter modifications. Verifies that all touch configuration values (tap timeout, tap radius, pinch threshold, swipe threshold, rotation threshold, long press timeout, and sensitivity) can be set and retrieved correctly.
+
+Test Name: TouchHandlerTest.TouchCancel
+Test Description: Tests touch cancellation handling. Verifies that when a touch is cancelled (e.g., due to system interruption), it is properly removed from active touch tracking and the handler state is updated accordingly.
+
+Test Name: TouchHandlerTest.EnabledState
+Test Description: Tests the handler's enabled/disabled state functionality. Verifies that when disabled, the handler ignores all touch events, and when re-enabled, it resumes normal touch event processing.
+
+Test Name: TouchHandlerTest.TouchGestureUtilities
+Test Description: Tests utility functions for gesture type conversions and validation. Verifies gesture-to-string and string-to-gesture conversions work correctly for all gesture types, with proper fallback handling for unknown strings.
+
+Test Name: TouchHandlerTest.GestureData
+Test Description: Tests gesture data retrieval methods. Verifies that gesture center, scale, rotation, and velocity methods return appropriate default values when no gestures are active (zero position, 1.0 scale, 0.0 rotation, zero velocity).
+
+Test Name: TouchHandlerTest.Update
+Test Description: Tests the update method for time-based gesture processing. Verifies that calling update with delta time maintains handler state correctly both with no touches and with active touches present.

@@ -3,6 +3,8 @@
 #include "SurfaceTypes.h"
 #include "DualContouring.h"
 #include "MeshBuilder.h"
+#include "MeshSmoother.h"
+#include "MeshValidator.h"
 #include "../voxel_data/VoxelGrid.h"
 #include "../voxel_data/VoxelDataManager.h"
 #include "../../foundation/events/EventDispatcher.h"
@@ -21,6 +23,7 @@ namespace SurfaceGen {
 // Forward declarations
 class LODManager;
 class MeshCache;
+class ProgressiveSmoothingCache;
 
 class SurfaceGenerator {
 public:
@@ -33,6 +36,16 @@ public:
     Mesh generatePreviewMesh(const VoxelData::VoxelGrid& grid, int lodLevel = 1);
     Mesh generateExportMesh(const VoxelData::VoxelGrid& grid, 
                            ExportQuality quality = ExportQuality::High);
+    
+    // Generate smoothed surface for toy-like output
+    Mesh generateSmoothedSurface(const VoxelData::VoxelGrid& grid, int smoothingLevel = 5);
+    
+    // Progressive smoothing for real-time preview
+    std::string startProgressiveSmoothing(const VoxelData::VoxelGrid& grid, 
+                                         const SurfaceSettings& settings);
+    Mesh getProgressiveResult(const std::string& progressKey);
+    void cancelProgressiveSmoothing(const std::string& progressKey);
+    bool isProgressiveSmoothingComplete(const std::string& progressKey);
     
     // Multi-resolution support
     Mesh generateMultiResMesh(const VoxelData::VoxelDataManager& voxelManager,
@@ -76,6 +89,7 @@ private:
     std::unique_ptr<MeshBuilder> m_meshBuilder;
     std::unique_ptr<LODManager> m_lodManager;
     std::unique_ptr<MeshCache> m_meshCache;
+    std::unique_ptr<ProgressiveSmoothingCache> m_progressiveCache;
     
     // Settings
     SurfaceSettings m_settings;
@@ -94,6 +108,8 @@ private:
     
     void applyPostProcessing(Mesh& mesh, const SurfaceSettings& settings);
     void optimizeMesh(Mesh& mesh, float targetRatio);
+    void applySmoothingToMesh(Mesh& mesh, const SurfaceSettings& settings);
+    void validateMeshForPrinting(Mesh& mesh, const SurfaceSettings& settings);
     
     // Cache helpers
     size_t computeGridHash(const VoxelData::VoxelGrid& grid) const;
@@ -105,6 +121,7 @@ private:
     // Multi-threading
     std::mutex m_generationMutex;
     std::vector<std::future<Mesh>> m_activeGenerations;
+    std::vector<std::future<void>> m_activeProgressiveGenerations;
 };
 
 // LOD Manager
@@ -135,6 +152,53 @@ private:
     // Grid downsampling
     std::unique_ptr<VoxelData::VoxelGrid> downsampleGrid(const VoxelData::VoxelGrid& grid, 
                                                          int factor);
+};
+
+// Progressive Smoothing Cache for real-time preview
+class ProgressiveSmoothingCache {
+public:
+    struct CacheEntry {
+        Mesh mesh;
+        int smoothingLevel;
+        PreviewQuality quality;
+        std::chrono::steady_clock::time_point timestamp;
+        bool isProgressive;  // True if this is a partial result
+    };
+    
+    ProgressiveSmoothingCache();
+    ~ProgressiveSmoothingCache();
+    
+    // Cache operations
+    bool hasProgressiveResult(const std::string& baseKey, int targetLevel, PreviewQuality quality) const;
+    Mesh getProgressiveResult(const std::string& baseKey, int targetLevel, PreviewQuality quality);
+    void cacheProgressiveResult(const std::string& baseKey, const Mesh& mesh, 
+                               int smoothingLevel, PreviewQuality quality, bool isProgressive = false);
+    
+    // Progressive operations
+    std::string startProgressiveSmoothing(const std::string& baseKey, int targetLevel, PreviewQuality quality);
+    void updateProgressiveResult(const std::string& progressKey, const Mesh& mesh, int currentLevel);
+    void finalizeProgressiveResult(const std::string& progressKey, const Mesh& finalMesh);
+    void cancelProgressiveSmoothing(const std::string& progressKey);
+    
+    // Cache management
+    void clear();
+    void clearExpired(std::chrono::seconds maxAge = std::chrono::seconds(30));
+    size_t getMemoryUsage() const { return m_currentMemoryUsage; }
+    void setMaxMemoryUsage(size_t maxBytes) { m_maxMemoryUsage = maxBytes; }
+    
+    // Direct cache access for SurfaceGenerator
+    bool hasEntry(const std::string& key) const;
+    CacheEntry getEntry(const std::string& key) const;
+    
+private:
+    mutable std::mutex m_cacheMutex;
+    std::unordered_map<std::string, CacheEntry> m_cache;
+    std::unordered_map<std::string, std::string> m_progressiveKeys; // progressKey -> baseKey mapping
+    size_t m_maxMemoryUsage;
+    size_t m_currentMemoryUsage;
+    
+    void evictLRU();
+    std::string generateCacheKey(const std::string& baseKey, int level, PreviewQuality quality) const;
 };
 
 // Mesh Cache

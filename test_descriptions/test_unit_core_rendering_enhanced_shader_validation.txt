@@ -1,0 +1,10 @@
+----- File: core/rendering/tests/test_unit_core_rendering_enhanced_shader_validation.cpp
+
+Test Name: ValidateEnhancedVoxelShader
+Test Description: Validates enhanced voxel shader compilation, linking, and verifies required uniforms (lightPos, lightColor, viewPos, model, view, projection) are present
+
+Test Name: ValidateBasicVoxelShader
+Test Description: Validates basic voxel shader compilation and linking as a baseline comparison
+
+Test Name: ValidateGL21VoxelShader
+Test Description: Placeholder test for GL 2.1 compatible shaders (skipped on GL 3.3 context)

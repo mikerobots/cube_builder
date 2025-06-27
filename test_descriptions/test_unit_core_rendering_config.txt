@@ -1,0 +1,19 @@
+----- File: core/rendering/tests/test_unit_core_rendering_config.cpp
+
+Test Name: DefaultConfiguration
+Test Description: Tests default RenderConfig values including window settings (1920x1080), graphics settings (4x MSAA, vsync), performance settings (frustum culling), and quality settings (16x anisotropic filtering)
+
+Test Name: PresetConfigurations
+Test Description: Tests various preset configurations including Default(), HighQuality() (8x MSAA, shadows, RGBA16F), Performance() (no MSAA, occlusion culling), VR() (2x MSAA, no vsync), and Debug() (all debug overlays enabled)
+
+Test Name: ValidationTests
+Test Description: Tests RenderConfig validation for invalid configurations including zero/negative window dimensions, invalid MSAA samples (-1 or >16), invalid max lights (0 or >32), and invalid anisotropic filtering (<1.0f)
+
+Test Name: AspectRatioCalculation
+Test Description: Tests getAspectRatio() calculation for various window dimensions including 16:9 (1920x1080), 4:3 (1024x768), square (800x800), and ultra-wide (3440x1440)
+
+Test Name: DefaultSettings
+Test Description: Tests default RenderSettings values including solid render mode, wireframe settings (0.5 gray, 1.0 width), lighting settings (normalized direction, white light, 0.2 ambient), and material settings
+
+Test Name: PresetSettings
+Test Description: Tests RenderSettings presets including Wireframe() (wireframe mode only), Solid() (solid mode only), and Combined() (both wireframe and solid enabled)

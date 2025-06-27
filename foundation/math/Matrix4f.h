@@ -242,6 +242,14 @@ public:
         return result;
     }
 
+    static Matrix4f zero() {
+        Matrix4f result;
+        for (int i = 0; i < 16; ++i) {
+            result.m[i] = 0.0f;
+        }
+        return result;
+    }
+
     static Matrix4f rotation(const Vector3f& axis, float angle) {
         Vector3f normalizedAxis = axis.normalized();
         float c = std::cos(angle);

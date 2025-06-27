@@ -1,0 +1,76 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_face_detector.cpp
+
+Test Name: FaceDetectorTest.RayMiss
+Test Description: Tests ray casting that doesn't hit any voxels. Verifies that when a ray is cast in a direction away from all voxels (negative Z direction from origin), the face detector correctly reports no valid face hit.
+
+Test Name: FaceDetectorTest.RayHit
+Test Description: Tests ray casting that successfully hits a voxel face. Verifies that when a ray is cast towards a voxel at position (32,32,32), the face detector correctly identifies the hit, returns the voxel position, and identifies the correct face direction (NegativeZ). Note: The ray must pass through the voxel's increment position for detection to work - rays that only pass through the voxel's bounding box but miss the increment position will not detect the voxel.
+
+Test Name: FaceDetectorTest.GroundPlaneDetection
+Test Description: Tests detection of the ground plane for placement preview. Verifies that when a ray is cast downward from above the ground plane, the detector correctly identifies the ground plane hit, marks it as a ground plane face, and calculates the correct hit point at Y=0.
+
+Test Name: FaceDetectorTest.GroundPlaneNoHit_ParallelRay
+Test Description: Tests that rays parallel to the ground plane don't detect ground plane hits. Verifies that a ray traveling horizontally (parallel to Y=0) correctly reports no valid ground plane intersection.
+
+Test Name: FaceDetectorTest.GroundPlaneNoHit_UpwardRay
+Test Description: Tests that upward-pointing rays don't detect ground plane hits. Verifies that a ray pointing upward (positive Y direction) correctly reports no valid ground plane intersection.
+
+Test Name: FaceDetectorTest.DetectFaceOrGround_HitsVoxel
+Test Description: Tests the combined face/ground detection when hitting a voxel. Verifies that when a ray hits a voxel, the detector prioritizes the voxel face over the ground plane and correctly identifies it as a non-ground-plane face.
+
+Test Name: FaceDetectorTest.DetectFaceOrGround_HitsGround
+Test Description: Tests the combined face/ground detection when missing voxels but hitting ground. Verifies that when a ray misses all voxels but would hit the ground plane, the detector correctly identifies the ground plane hit.
+
+Test Name: FaceDetectorTest.CalculatePlacementPosition_GroundPlane
+Test Description: Tests calculation of placement position on ground plane with 1cm increment snapping. Verifies that arbitrary floating-point ground plane hit positions are correctly snapped to the nearest 1cm increment coordinates.
+
+Test Name: FaceDetectorTest.FaceDirection_AllDirections
+Test Description: Tests face detection from all six cardinal directions. Verifies that rays approaching a voxel from each direction (±X, ±Y, ±Z) correctly identify the corresponding face direction.
+
+Test Name: FaceDetectorTest.ValidFaceForPlacement
+Test Description: Tests validation of faces for voxel placement when adjacent space is empty. Verifies that a face is considered valid for placement when the adjacent voxel position in the face's direction is unoccupied.
+
+Test Name: FaceDetectorTest.InvalidFaceForPlacement
+Test Description: Tests validation of faces for voxel placement when adjacent space is occupied. Verifies that a face is considered invalid for placement when the adjacent voxel position already contains a voxel.
+
+Test Name: FaceDetectorTest.PlacementPosition
+Test Description: Tests calculation of adjacent voxel placement position. Verifies that given a face and its direction, the detector correctly calculates the position where a new voxel would be placed (one voxel unit in the face direction).
+
+Test Name: FaceDetectorTest.FacesInRegion
+Test Description: Tests detection of multiple faces within a bounding box region. Verifies that the detector can find faces within a specified region without crashing, supporting the face highlighting feature when hovering over voxels.
+
+Test Name: FaceDetectorTest.MaxRayDistance
+Test Description: Tests the maximum ray distance limit functionality. Verifies that rays are limited by the configured maximum distance and won't detect faces beyond this limit, even if they would otherwise hit a valid target.
+
+Test Name: FaceDetectorTest.RayFromInside
+Test Description: Tests ray casting that starts from inside a voxel. Verifies that when a ray originates from within a voxel's bounds, it correctly detects the exit face in the ray's direction.
+
+Test Name: FaceDetectorTest.EmptyGrid
+Test Description: Tests face detection behavior with an empty voxel grid. Verifies that face detection operations on an empty grid correctly report no hits and return empty results for both ray casting and region queries.
+
+Test Name: FaceDetectorTest.GridBoundaryRay
+Test Description: Tests ray casting that starts from outside the grid boundaries. Verifies that rays originating from outside the grid workspace can still detect voxels within the grid when the ray path intersects them.
+
+Test Name: FaceDetectorTest.MultipleVoxelRay
+Test Description: Tests ray casting through multiple aligned voxels. Verifies that when a ray passes through multiple voxels in a line, the detector correctly identifies the first voxel hit along the ray's path.
+
+Test Name: FaceDetectorTest.MinimalRaycast_VoxelAtOrigin
+Test Description: Minimal test case for debugging ray-voxel intersection. Tests a single voxel at the origin (0,0,0) with a ray traveling straight toward it in the +Z direction. This test was created to debug the core issue where rays must pass through the voxel's increment position for proper detection.
+
+Test Name: FaceDetectorTest.NonAlignedVoxelPositions_SingleVoxel
+Test Description: Tests detection of a voxel placed at an arbitrary 1cm position that is not aligned to the voxel size grid. Verifies that a 32cm voxel at position (7,23,11) can be correctly detected by ray casting, demonstrating that voxels can exist at any 1cm increment position.
+
+Test Name: FaceDetectorTest.NonAlignedVoxelPositions_AllFaces
+Test Description: Tests detection of all six faces for a voxel at a non-aligned position. Verifies that rays from all six cardinal directions can correctly detect and identify the faces of a voxel placed at position (13,47,29), ensuring non-aligned voxels behave identically to aligned ones.
+
+Test Name: FaceDetectorTest.NonAlignedVoxelPositions_MixedAlignedAndNonAligned
+Test Description: Tests ray casting with a mix of aligned and non-aligned voxels. Verifies that when both aligned voxels (at multiples of 32cm) and non-aligned voxels (at arbitrary 1cm positions) exist, the ray correctly detects the first voxel along its path regardless of alignment.
+
+Test Name: FaceDetectorTest.NonAlignedVoxelPositions_PlacementCalculation
+Test Description: Tests placement position calculation for non-aligned voxels. Verifies that when calculating adjacent placement positions from faces of non-aligned voxels, the correct increment offsets are applied based on voxel size and face direction.
+
+Test Name: FaceDetectorTest.NonAlignedVoxelPositions_DifferentResolutions
+Test Description: Tests non-aligned voxel positions with different voxel resolutions. Verifies that voxels of various sizes (1cm, 4cm, 16cm, 64cm, 256cm) can all be placed at the same non-aligned position (7,23,11) and be correctly detected by ray casting.
+
+Test Name: FaceDetectorTest.NonAlignedVoxelPositions_RegionDetection
+Test Description: Tests detection of faces for non-aligned voxels within a bounding box region. Verifies that the detectFacesInRegion function correctly finds and reports faces for voxels at arbitrary 1cm positions within the specified region bounds.

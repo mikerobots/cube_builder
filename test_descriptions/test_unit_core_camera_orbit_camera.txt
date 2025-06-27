@@ -1,0 +1,61 @@
+----- File: core/camera/tests/test_unit_core_camera_orbit_camera.cpp
+
+Test Name: DefaultConstruction
+Test Description: Verifies default OrbitCamera construction with 5m distance, 0° angles, centered at origin per REQ-CAM-1 and REQ-CAM-3
+
+Test Name: DistanceControl
+Test Description: Tests camera distance setting and position update based on new distance
+
+Test Name: DistanceConstraints
+Test Description: Validates distance constraint enforcement with min/max limits
+
+Test Name: AngleControl
+Test Description: Tests yaw and pitch angle control individually and combined
+
+Test Name: PitchConstraints
+Test Description: Verifies pitch angle constraint enforcement within specified limits
+
+Test Name: OrbitControl
+Test Description: Tests orbit functionality for horizontal (yaw) and vertical (pitch) rotation per REQ-CAM-1 and REQ-9.2.2
+
+Test Name: ZoomControl
+Test Description: Validates zoom in/out functionality affecting camera distance per REQ-9.2.2
+
+Test Name: PanControl
+Test Description: Tests camera panning while maintaining relative position to target
+
+Test Name: ViewPresets
+Test Description: Verifies all standard view presets (front, back, left, right, top, bottom, isometric) per REQ-CAM-4 and REQ-9.2.2
+
+Test Name: IsometricViewMatrixValidation
+Test Description: Comprehensive test of isometric view matrix properties including position calculation and orthographic projection
+
+Test Name: FocusOnPoint
+Test Description: Tests focusing camera on specific point with optional distance per REQ-8.1.5
+
+Test Name: FrameBox
+Test Description: Validates framing a bounding box by centering target and calculating appropriate distance
+
+Test Name: SensitivitySettings
+Test Description: Tests pan, rotate, and zoom sensitivity settings and their effect on operations
+
+Test Name: SmoothingSystem
+Test Description: Verifies smoothing enable/disable and smooth factor clamping
+
+Test Name: SmoothingBehavior
+Test Description: Tests smooth camera transitions with delta time updates per REQ-CAM-5 and REQ-CAM-7
+
+Test Name: UpdateWithoutSmoothing
+Test Description: Validates immediate camera changes when smoothing is disabled
+
+Test Name: PositionCalculation
+Test Description: Tests camera position calculation from angles and distance for specific orientations
+
+Test Name: TargetOverride
+Test Description: Verifies target setting and position recalculation relative to new target
+
+Test Name: EdgeCaseAngles
+Test Description: Tests edge cases including multiple yaw rotations and extreme pitch clamping
+
+Test Name: ZeroDistance
+Test Description: Validates graceful handling of zero distance where camera position equals target

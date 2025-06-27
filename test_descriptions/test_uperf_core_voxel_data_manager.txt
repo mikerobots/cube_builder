@@ -1,0 +1,4 @@
+----- File: core/voxel_data/tests/test_uperf_core_voxel_data_manager.cpp
+
+Test Name: VoxelDataManagerPerfTest.CollisionCheck10000Voxels
+Test Description: Tests collision detection performance with large voxel datasets. Places 1,024 voxels in sparse pattern then performs 50 collision checks, verifying operation completes within 750ms (15ms per check).

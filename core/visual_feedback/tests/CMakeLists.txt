@@ -3,6 +3,7 @@ find_package(GTest REQUIRED)
 # List of test source files
 set(VISUAL_FEEDBACK_TEST_SOURCES
     test_unit_core_visual_feedback_face_detector.cpp
+    test_unit_core_face_detector_traversal.cpp
     test_unit_core_visual_feedback_highlight_manager.cpp
     test_unit_core_visual_feedback_highlight_renderer.cpp
     test_unit_core_visual_feedback_outline_renderer.cpp
@@ -12,6 +13,8 @@ set(VISUAL_FEEDBACK_TEST_SOURCES
     test_unit_core_visual_feedback_renderer.cpp
     test_unit_core_visual_feedback_requirements.cpp
     test_unit_core_visual_feedback_types.cpp
+    test_unit_face_direction_accuracy.cpp
+    test_uperf_core_face_detector_traversal.cpp
 )
 
 # Create individual test executables for better granularity and auto-discovery
@@ -25,15 +28,10 @@ foreach(test_source ${VISUAL_FEEDBACK_TEST_SOURCES})
     # Link libraries
     target_link_libraries(${test_name}
         VoxelEditor_VisualFeedback
-        VoxelEditor_VoxelData
         VoxelEditor_Selection
-        VoxelEditor_Camera
-        VoxelEditor_Rendering
-        VoxelEditor_Math
-        VoxelEditor_Memory
-        VoxelEditor_Events
-        VoxelEditor_Logging
         VoxelEditor_Input
+        VoxelEditor_Memory
+        VoxelEditor_Logging
         GTest::gtest
         GTest::gtest_main
     )
@@ -56,15 +54,10 @@ add_executable(VoxelEditor_VisualFeedback_Tests ${VISUAL_FEEDBACK_TEST_SOURCES})
 
 target_link_libraries(VoxelEditor_VisualFeedback_Tests
     VoxelEditor_VisualFeedback
-    VoxelEditor_VoxelData
     VoxelEditor_Selection
-    VoxelEditor_Camera
-    VoxelEditor_Rendering
-    VoxelEditor_Math
-    VoxelEditor_Memory
-    VoxelEditor_Events
-    VoxelEditor_Logging
     VoxelEditor_Input
+    VoxelEditor_Memory
+    VoxelEditor_Logging
     GTest::gtest
     GTest::gtest_main
 )

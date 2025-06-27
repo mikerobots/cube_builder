@@ -1,0 +1,19 @@
+----- File: apps/cli/tests/test_unit_cli_remove_command.cpp
+
+Test Name: RemoveCommandTest.GroundPlaneConstraint_ValidPositions_REQ_11_3_8
+Test Description: Tests remove command accepts valid Y coordinates (Y≥0). Places voxels at ground level and above, validates PlacementCommandFactory validates removal, creates removal commands, and successfully removes voxels.
+
+Test Name: RemoveCommandTest.GroundPlaneConstraint_InvalidPositions_NegativeY_REQ_11_3_8
+Test Description: Tests remove command rejects invalid Y coordinates (Y<0). Validates PlacementCommandFactory rejects removal below ground plane, provides error messages, and refuses command creation.
+
+Test Name: RemoveCommandTest.GroundPlaneConstraint_BoundaryValues_REQ_11_3_8
+Test Description: Tests boundary values around ground plane (Y=0). Validates Y=0 is valid for removal operations while Y=-1 is invalid, ensuring proper ground plane boundary enforcement.
+
+Test Name: RemoveCommandTest.GroundPlaneConstraint_AllResolutions_REQ_11_3_8
+Test Description: Tests ground plane constraint across all voxel resolutions. Validates removal operations respect Y≥0 constraint for 1cm, 4cm, 16cm, 64cm, and 256cm voxel sizes.
+
+Test Name: RemoveCommandTest.GroundPlaneConstraint_CommandCreation_REQ_11_3_8
+Test Description: Tests PlacementCommandFactory command creation behavior. Validates factory creates removal commands for valid Y positions and refuses creation for invalid Y positions below ground.
+
+Test Name: RemoveCommandTest.GroundPlaneConstraint_RemoveNonExistentVoxel_REQ_11_3_8
+Test Description: Tests removing non-existent voxels at valid and invalid Y positions. Validates removal fails when no voxel exists regardless of Y coordinate, with appropriate error messaging.

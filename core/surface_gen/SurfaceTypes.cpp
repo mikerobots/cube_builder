@@ -173,6 +173,13 @@ SurfaceSettings SurfaceSettings::Default() {
     settings.simplificationRatio = 1.0f;
     settings.preserveSharpFeatures = true;
     settings.sharpFeatureAngle = 30.0f;
+    // New smoothing defaults
+    settings.smoothingLevel = 0;  // No smoothing by default
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Auto;
+    settings.preserveTopology = true;
+    settings.minFeatureSize = 1.0f;
+    settings.previewQuality = PreviewQuality::Disabled;
+    settings.usePreviewQuality = false;  // Deprecated
     return settings;
 }
 
@@ -185,6 +192,13 @@ SurfaceSettings SurfaceSettings::Preview() {
     settings.simplificationRatio = 0.5f;
     settings.preserveSharpFeatures = false;
     settings.sharpFeatureAngle = 30.0f;
+    // Preview quality smoothing
+    settings.smoothingLevel = 3;  // Light smoothing for preview
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Auto;
+    settings.preserveTopology = true;
+    settings.minFeatureSize = 2.0f;  // Less strict for preview
+    settings.previewQuality = PreviewQuality::Balanced;  // Balanced preview mode
+    settings.usePreviewQuality = true;  // Deprecated but maintain compatibility
     return settings;
 }
 
@@ -197,6 +211,70 @@ SurfaceSettings SurfaceSettings::Export() {
     settings.simplificationRatio = 0.95f;
     settings.preserveSharpFeatures = true;
     settings.sharpFeatureAngle = 45.0f;
+    // Export quality smoothing
+    settings.smoothingLevel = 5;  // Medium smoothing for export
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Auto;
+    settings.preserveTopology = true;
+    settings.minFeatureSize = 1.0f;  // 3D printing standard
+    settings.previewQuality = PreviewQuality::Disabled;  // Full quality for export
+    settings.usePreviewQuality = false;  // Deprecated but maintain compatibility
+    return settings;
+}
+
+SurfaceSettings SurfaceSettings::FastPreview() {
+    SurfaceSettings settings;
+    settings.adaptiveError = 0.1f;  // More relaxed for speed
+    settings.generateNormals = false;  // Skip normals for speed
+    settings.generateUVs = false;
+    settings.smoothingIterations = 0;
+    settings.simplificationRatio = 0.3f;  // Aggressive simplification
+    settings.preserveSharpFeatures = false;
+    settings.sharpFeatureAngle = 30.0f;
+    // Fast preview smoothing
+    settings.smoothingLevel = 2;  // Minimal smoothing
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Laplacian;  // Force fastest algorithm
+    settings.preserveTopology = false;  // Skip topology preservation for speed
+    settings.minFeatureSize = 3.0f;  // Very relaxed feature constraints
+    settings.previewQuality = PreviewQuality::Fast;
+    settings.usePreviewQuality = true;
+    return settings;
+}
+
+SurfaceSettings SurfaceSettings::BalancedPreview() {
+    SurfaceSettings settings;
+    settings.adaptiveError = 0.05f;
+    settings.generateNormals = false;  // Skip for performance
+    settings.generateUVs = false;
+    settings.smoothingIterations = 0;
+    settings.simplificationRatio = 0.5f;
+    settings.preserveSharpFeatures = false;
+    settings.sharpFeatureAngle = 30.0f;
+    // Balanced preview smoothing
+    settings.smoothingLevel = 3;
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Auto;
+    settings.preserveTopology = true;
+    settings.minFeatureSize = 2.0f;
+    settings.previewQuality = PreviewQuality::Balanced;
+    settings.usePreviewQuality = true;
+    return settings;
+}
+
+SurfaceSettings SurfaceSettings::HighQualityPreview() {
+    SurfaceSettings settings;
+    settings.adaptiveError = 0.02f;
+    settings.generateNormals = true;  // Generate normals for better quality
+    settings.generateUVs = false;  // Still skip UVs for performance
+    settings.smoothingIterations = 0;
+    settings.simplificationRatio = 0.8f;  // Minimal simplification
+    settings.preserveSharpFeatures = true;
+    settings.sharpFeatureAngle = 30.0f;
+    // High quality preview smoothing
+    settings.smoothingLevel = 4;
+    settings.smoothingAlgorithm = SmoothingAlgorithm::Auto;
+    settings.preserveTopology = true;
+    settings.minFeatureSize = 1.5f;
+    settings.previewQuality = PreviewQuality::HighQuality;
+    settings.usePreviewQuality = true;
     return settings;
 }
 
@@ -207,7 +285,13 @@ bool SurfaceSettings::operator==(const SurfaceSettings& other) const {
            smoothingIterations == other.smoothingIterations &&
            simplificationRatio == other.simplificationRatio &&
            preserveSharpFeatures == other.preserveSharpFeatures &&
-           sharpFeatureAngle == other.sharpFeatureAngle;
+           sharpFeatureAngle == other.sharpFeatureAngle &&
+           smoothingLevel == other.smoothingLevel &&
+           smoothingAlgorithm == other.smoothingAlgorithm &&
+           preserveTopology == other.preserveTopology &&
+           minFeatureSize == other.minFeatureSize &&
+           previewQuality == other.previewQuality &&
+           usePreviewQuality == other.usePreviewQuality;
 }
 
 size_t SurfaceSettings::hash() const {
@@ -225,6 +309,12 @@ size_t SurfaceSettings::hash() const {
     hashCombine(std::hash<float>{}(simplificationRatio));
     hashCombine(std::hash<bool>{}(preserveSharpFeatures));
     hashCombine(std::hash<float>{}(sharpFeatureAngle));
+    hashCombine(std::hash<int>{}(smoothingLevel));
+    hashCombine(std::hash<int>{}(static_cast<int>(smoothingAlgorithm)));
+    hashCombine(std::hash<bool>{}(preserveTopology));
+    hashCombine(std::hash<float>{}(minFeatureSize));
+    hashCombine(std::hash<int>{}(static_cast<int>(previewQuality)));
+    hashCombine(std::hash<bool>{}(usePreviewQuality));
     
     return h;
 }

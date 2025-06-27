@@ -1,0 +1,19 @@
+----- File: apps/cli/tests/test_integration_cli_rendering.cpp
+
+Test Name: BasicRenderingTest
+Test Description: Tests basic rendering pipeline with OpenGL context, verifying window dimensions and no OpenGL errors during rendering
+
+Test Name: ScreenshotValidationTest
+Test Description: Tests screenshot functionality by placing a voxel, rendering frame, and saving screenshot to verify save method works
+
+Test Name: VoxelRenderingTest
+Test Description: Tests voxel rendering by placing a 64cm voxel, capturing framebuffer, and verifying rendered pixels are visible
+
+Test Name: CameraViewTest
+Test Description: Tests rendering from different camera views (front, back, left, right, top, bottom) with voxel visibility verification
+
+Test Name: MultipleVoxelRenderingTest
+Test Description: Tests rendering multiple voxels in a pattern (3 voxels spaced 64cm apart) and verifies proper voxel count and visibility
+
+Test Name: ResolutionSwitchingTest
+Test Description: Tests switching between different voxel resolutions (1cm, 4cm, 16cm, 64cm) and verifying rendering works for each resolution

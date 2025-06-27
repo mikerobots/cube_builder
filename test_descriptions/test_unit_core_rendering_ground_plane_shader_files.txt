@@ -1,0 +1,10 @@
+----- File: core/rendering/tests/test_unit_core_rendering_ground_plane_shader_files.cpp
+
+Test Name: LoadsShaderFromFiles
+Test Description: Tests that GroundPlaneGrid successfully loads shaders from external files through ShaderManager, verifying shader is registered with ID "ground_plane" after initialization
+
+Test Name: ShaderFilesExist
+Test Description: Tests existence of ground plane shader files (ground_plane.vert and ground_plane.frag) in multiple possible paths, checking various relative paths from test execution directories
+
+Test Name: ShaderContentIsValid
+Test Description: Tests shader file content validation ensuring vertex shader contains required elements (#version, position attribute, mvpMatrix uniform) and fragment shader contains required uniforms (minorLineColor, majorLineColor, opacity)

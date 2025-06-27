@@ -1,0 +1,46 @@
+----- File: apps/cli/tests/test_integration_cli_command_sequences.cpp
+
+Test Name: VoxelPlacementSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests voxel placement command sequence state consistency, verifying 4 placed voxels exist at expected positions (origin and adjacent in X/Y/Z) with correct final count.
+
+Test Name: ResolutionChangeSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests resolution change sequence state consistency across 1cm→4cm→16cm→1cm, verifying voxels exist at their respective resolutions and final resolution is correctly set.
+
+Test Name: CameraWorkspaceSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests camera and workspace command sequence state consistency, verifying workspace resize, camera view changes, voxel persistence, and camera position validity throughout sequence.
+
+Test Name: FillRemoveSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests fill and remove operation sequence state consistency with simple placement, small fill (3x3x3 region), and individual voxel removal verification.
+
+Test Name: UndoRedoSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests undo/redo sequence state consistency, verifying proper state reversion through place→undo→place→undo chain with correct final voxel count and existence.
+
+Test Name: ComplexMixedSequence_StateConsistency_REQ_11_4_1
+Test Description: Tests complex mixed command sequence (resolution/workspace/camera/place/fill/undo) state consistency, verifying all system states remain valid through comprehensive workflow.
+
+Test Name: ErrorRecoverySequence_StateConsistency_REQ_11_4_1
+Test Description: Tests error recovery sequence with mixed valid/invalid commands, verifying invalid commands fail gracefully while valid commands succeed and state remains consistent.
+
+Test Name: PlaceRemoveInteraction_OverlapEffect_REQ_11_4_2
+Test Description: Tests place-remove command interaction effects with same position, verifying place→remove→place sequence results in final voxel existence.
+
+Test Name: ResolutionPlaceInteraction_MultiResolution_REQ_11_4_2
+Test Description: Tests resolution-place interaction effects across multiple resolutions, verifying collision detection prevents overlapping placements between different voxel sizes.
+
+Test Name: FillPlaceInteraction_OverlapDetection_REQ_11_4_2
+Test Description: Tests fill-place interaction effects, verifying collision detection between filled regions and individual placement attempts with proper overlap handling.
+
+Test Name: WorkspacePlaceInteraction_BoundsEffect_REQ_11_4_2
+Test Description: Tests workspace-place interaction effects, verifying workspace boundary changes affect voxel placement validity and existing voxels handle workspace resizing.
+
+Test Name: CameraResolutionInteraction_ViewEffect_REQ_11_4_2
+Test Description: Tests camera-resolution interaction effects, verifying camera state remains valid through resolution changes and resolution state persists through camera changes.
+
+Test Name: UndoPlaceInteraction_StateReversion_REQ_11_4_2
+Test Description: Tests undo-place interaction effects with complex state changes, verifying undo properly reverts voxel placement and enables placement at previously conflicting positions.
+
+Test Name: FillResolutionInteraction_GridAlignment_REQ_11_4_2
+Test Description: Tests fill-resolution interaction effects across different resolutions, verifying grid alignment behavior and collision detection between resolution-specific fills.
+
+Test Name: ComplexInteractionChain_MultipleEffects_REQ_11_4_2
+Test Description: Tests complex command interaction chain with cascading effects across workspace/resolution/camera/place/fill/undo operations, verifying all interaction effects work correctly.

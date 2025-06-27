@@ -1,0 +1,37 @@
+----- File: apps/cli/tests/test_unit_cli_command_error_handling.cpp
+
+Test Name: CommandErrorHandlingTest.PlaceCommand_ErrorMessages_REQ_11_5_2
+Test Description: Tests place command error message quality for user guidance. Validates error messages for missing parameters, invalid coordinates, ground plane violations (Y<0), and proper success messaging.
+
+Test Name: CommandErrorHandlingTest.FillCommand_ErrorMessages_REQ_11_5_2
+Test Description: Tests fill command error message quality. Validates error messages for insufficient parameters, invalid coordinate formats, and ground plane constraint violations.
+
+Test Name: CommandErrorHandlingTest.ResolutionCommand_ErrorMessages_REQ_11_5_2
+Test Description: Tests resolution command error messages. Validates error messages for missing parameters, invalid resolution values, and invalid format strings.
+
+Test Name: CommandErrorHandlingTest.CameraCommand_ErrorMessages_REQ_11_5_2
+Test Description: Tests camera command error messages. Validates error messages for missing parameters and invalid camera preset names.
+
+Test Name: CommandErrorHandlingTest.WorkspaceCommand_ErrorMessages_REQ_11_5_2
+Test Description: Tests workspace command error messages. Validates error messages for missing parameters, too small dimensions, and too large dimensions.
+
+Test Name: CommandErrorHandlingTest.PlaceCommand_StateConsistency_REQ_11_5_3
+Test Description: Tests place command state consistency after errors. Validates system state remains unchanged after parameter errors, coordinate errors, ground plane violations, and collision errors.
+
+Test Name: CommandErrorHandlingTest.FillCommand_StateConsistency_REQ_11_5_3
+Test Description: Tests fill command state consistency after errors. Validates system state handling for parameter errors, coordinate errors, and documents current behavior for ground plane coordinates.
+
+Test Name: CommandErrorHandlingTest.ResolutionCommand_StateConsistency_REQ_11_5_3
+Test Description: Tests resolution command state consistency. Validates only active resolution changes on success while all other system state remains unchanged after errors.
+
+Test Name: CommandErrorHandlingTest.CameraCommand_StateConsistency_REQ_11_5_3
+Test Description: Tests camera command state consistency. Validates only camera state changes on success while workspace, voxel, selection, and group state remain unchanged.
+
+Test Name: CommandErrorHandlingTest.WorkspaceCommand_StateConsistency_REQ_11_5_3
+Test Description: Tests workspace command state consistency. Validates only workspace size changes on success while other system components remain unchanged after errors.
+
+Test Name: CommandErrorHandlingTest.UndoCommand_StateConsistency_REQ_11_5_3
+Test Description: Tests undo command state consistency. Validates undo fails with no history, properly restores state when history exists, and maintains consistency after failed undo attempts.
+
+Test Name: CommandErrorHandlingTest.MultipleErrors_StateConsistency_REQ_11_5_3
+Test Description: Tests state consistency after multiple consecutive command errors. Validates system state remains unchanged through sequences of various error conditions and unknown commands.

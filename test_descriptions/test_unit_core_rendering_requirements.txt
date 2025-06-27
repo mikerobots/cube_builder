@@ -1,0 +1,34 @@
+----- File: core/rendering/tests/test_unit_core_rendering_requirements.cpp
+
+Test Name: GroundPlaneGrid32cmSquares
+Test Description: Tests ground plane displays a grid with 32cm x 32cm squares by enabling grid visibility and updating with 5m workspace (REQ-1.1.1)
+
+Test Name: GridPositionedAtGroundLevel
+Test Description: Tests grid is positioned at Y=0 (ground level) verifying grid mesh vertices are generated at correct height (REQ-1.1.2)
+
+Test Name: GridLineColorAndOpacity
+Test Description: Tests grid lines use RGB(180, 180, 180) at 35% opacity as defined in shader uniforms (REQ-1.1.3)
+
+Test Name: GridOriginAtWorkspaceCenter
+Test Description: Tests grid origin (0,0,0) is at center of workspace with grid extending from -size/2 to +size/2 (REQ-1.1.5)
+
+Test Name: GridCoversEntireWorkspace
+Test Description: Tests grid extends to cover entire workspace area for 2m, 5m, and 8m workspace sizes (REQ-1.2.3)
+
+Test Name: FaceHighlightingShaderSupport
+Test Description: Tests shader system supports face highlighting with yellow color capability (REQ-4.2.1)
+
+Test Name: VoxelAxisAlignedRendering
+Test Description: Tests rendering system maintains axis-aligned voxels without rotation transforms (REQ-2.1.3)
+
+Test Name: GridRenderingPerformance60FPS
+Test Description: Tests grid rendering maintains 60 FPS minimum by measuring average frame time over 100 frames (REQ-6.1.1)
+
+Test Name: GridScalesWithWorkspace
+Test Description: Tests grid successfully scales with workspace up to 8m x 8m maximum size (REQ-6.2.2)
+
+Test Name: RenderingBufferMemoryLimit
+Test Description: Tests rendering buffers do not exceed 512MB memory limit by tracking GPU memory usage (REQ-6.3.3)
+
+Test Name: OpenGLCoreProfileSupport
+Test Description: Tests OpenGL 3.3+ core profile support by verifying version string and context profile mask (REQ-7.1.3)

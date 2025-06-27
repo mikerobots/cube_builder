@@ -23,8 +23,6 @@ foreach(test_source ${CAMERA_TEST_SOURCES})
     # Link libraries
     target_link_libraries(${test_name}
         VoxelEditor_Camera
-        VoxelEditor_Math
-        VoxelEditor_Events
         GTest::gtest
         GTest::gtest_main
     )
@@ -47,8 +45,6 @@ add_executable(VoxelEditor_Camera_Tests ${CAMERA_TEST_SOURCES})
 
 target_link_libraries(VoxelEditor_Camera_Tests
     VoxelEditor_Camera
-    VoxelEditor_Math
-    VoxelEditor_Events
     GTest::gtest
     GTest::gtest_main
 )

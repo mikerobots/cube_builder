@@ -97,7 +97,7 @@ run_test() {
     
     local start_time=$(date +%s)
     
-    if timeout 60 "$PROJECT_ROOT/execute_command.sh" "$test_executable" > "/tmp/${test_name}.log" 2>&1; then
+    if timeout 10 "$PROJECT_ROOT/execute_command.sh" "$test_executable" > "/tmp/${test_name}.log" 2>&1; then
         local end_time=$(date +%s)
         local duration=$((end_time - start_time))
         print_result "$test_name" "PASS" "$duration"
@@ -142,8 +142,11 @@ build_tests() {
     # Build each test target
     cd "$PROJECT_ROOT"
     for target in "${test_sources[@]}"; do
-        if ! cmake --build "$BUILD_DIR" --target "$target" 2>/dev/null; then
-            print_color "$YELLOW" "Warning: Failed to build $target"
+        print_color "$CYAN" "Building target: $target"
+        if ! cmake --build "$BUILD_DIR" --target "$target"; then
+            print_color "$RED" "ERROR: Failed to build $target"
+            print_color "$RED" "Build failed! Cannot continue with tests."
+            exit 1
         fi
     done
 }
@@ -330,11 +333,14 @@ main() {
     # Build if we have source files but missing some executables
     if [ "$source_count" -gt 0 ] && [ "$built_count" -lt "$source_count" ]; then
         print_color "$YELLOW" "Found $source_count test sources but only $built_count built. Building all tests..."
-        build_tests "$pattern"
+        if ! build_tests "$pattern"; then
+            print_color "$RED" "Failed to build tests - stopping execution"
+            exit 1
+        fi
         # Re-check for built tests
         built_tests=$(discover_test_executables "$pattern")
         if [ -z "$built_tests" ]; then
-            print_color "$RED" "Failed to build tests"
+            print_color "$RED" "Failed to build tests - no executables found after build"
             exit 1
         fi
     fi

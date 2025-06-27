@@ -3,7 +3,7 @@
 # Unit Test Runner - Auto-Discovery Version
 # Automatically discovers unit tests using naming convention: test_unit_*
 
-set -euo pipefail
+set -uo pipefail
 
 # Color codes for output
 RED='\033[0;31m'
@@ -85,13 +85,9 @@ run_unit_test() {
         echo "  Error output:"
         tail -n 10 "/tmp/${test_name}.log" | sed 's/^/    /'
         
-        # Stop at first failure
-        print_color "$RED" "STOPPING AT FIRST FAILURE as requested"
-        echo
-        print_color "$CYAN" "To debug this failure:"
-        echo "  cd build_ninja && $test_executable --gtest_list_tests"
-        echo "  cd build_ninja && $test_executable --gtest_filter='*SpecificTest*'"
-        exit 1
+        # Continue to run all tests instead of stopping at first failure
+        # Save full log for later analysis
+        echo "  Full log saved to: /tmp/${test_name}.log"
     fi
 }
 
@@ -206,6 +202,13 @@ print_summary() {
                 echo "  - $name"
             fi
         done
+        echo
+        print_color "$CYAN" "To debug failed tests:"
+        echo "  1. Check the full logs in /tmp/"
+        echo "  2. Run individual tests with filters:"
+        echo "     cd build_ninja && ./bin/test_unit_<subsystem>_<name> --gtest_filter='*SpecificTest*'"
+        echo "  3. List all tests in an executable:"
+        echo "     cd build_ninja && ./bin/test_unit_<subsystem>_<name> --gtest_list_tests"
     fi
     
     echo

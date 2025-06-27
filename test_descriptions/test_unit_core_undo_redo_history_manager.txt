@@ -1,0 +1,16 @@
+----- File: core/undo_redo/tests/test_unit_core_undo_redo_history_manager.cpp
+
+Test Name: HistoryManagerTest.CreateAndDestroy
+Test Description: Tests basic HistoryManager initialization. Verifies that a newly created HistoryManager starts with no commands in its history, so both canUndo() and canRedo() return false.
+
+Test Name: HistoryManagerTest.SingleCommand
+Test Description: Tests command pattern implementation for reversible operations with a single command. Verifies that executing a command changes the value, updates the history state to allow undo but not redo, and returns success status.
+
+Test Name: HistoryManagerTest.UndoSingleCommand
+Test Description: Tests undo functionality for a single command. Verifies that after executing a command to set a value to 5, undoing restores the original value of 0 and updates the history state to disallow further undo but allow redo.
+
+Test Name: HistoryManagerTest.RedoSingleCommand
+Test Description: Tests redo functionality for a single command. Verifies that after undoing a command, redoing it restores the value to 5 and updates the history state to allow undo but disallow further redo.
+
+Test Name: HistoryManagerTest.MultipleCommands
+Test Description: Tests state management for complex operations with multiple command sequences. Verifies that executing three commands in sequence (setting values to 5, 10, 15) and then undoing all three correctly restores values in reverse order (15→10→5→0) with proper history state updates.

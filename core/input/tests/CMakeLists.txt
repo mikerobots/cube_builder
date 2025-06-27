@@ -12,6 +12,8 @@ set(INPUT_TEST_SOURCES
     test_unit_core_input_touch_handler.cpp
     test_unit_core_input_types.cpp
     test_unit_core_input_vr_handler.cpp
+    test_unit_placement_snapping.cpp
+    test_integration_placement_validation.cpp
     # test_unit_core_input_manager.cpp     # When full implementation is added
 )
 
@@ -26,8 +28,6 @@ foreach(test_source ${INPUT_TEST_SOURCES})
     # Link libraries
     target_link_libraries(${test_name}
         VoxelEditor_Input
-        VoxelEditor_Math
-        VoxelEditor_Events
         VoxelEditor_Camera
         VoxelEditor_VoxelData
         VoxelEditor_VisualFeedback
@@ -61,8 +61,6 @@ add_executable(VoxelEditor_Input_Tests ${INPUT_TEST_SOURCES})
 # Link dependencies
 target_link_libraries(VoxelEditor_Input_Tests
     VoxelEditor_Input
-    VoxelEditor_Math
-    VoxelEditor_Events
     VoxelEditor_Camera
     VoxelEditor_VoxelData
     VoxelEditor_VisualFeedback

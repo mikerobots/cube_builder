@@ -1,0 +1,43 @@
+----- File: core/camera/tests/test_unit_core_camera_requirements.cpp
+
+Test Name: GridAtGroundLevel_ViewMatrices
+Test Description: Validates that camera view matrices properly transform the Y=0 plane (ground level) and keep it visible from different camera angles (REQ-1.1.2).
+
+Test Name: RayCasting_ScreenToWorld
+Test Description: Tests ray generation from screen coordinates to world space, verifying normalized direction vectors and valid ray properties without NaN values (REQ-5.1.4).
+
+Test Name: ViewIndependence_AllAngles
+Test Description: Verifies that highlights remain visible from multiple camera angles (front, right, back, left, elevated) by checking depth ordering in view space (REQ-4.2.3).
+
+Test Name: StatePersistence_Serialization
+Test Description: Tests camera state serialization and restoration, ensuring distance, yaw, pitch, and target position can be persisted and restored accurately (REQ-8.1.5).
+
+Test Name: CLICommands_CameraControl
+Test Description: Validates CLI camera command functionality including zoom in/out, view preset selection (front, top), and orbit rotation commands (REQ-9.2.2).
+
+Test Name: OrbitControls_Implementation
+Test Description: Tests orbit-style camera controls, verifying that camera maintains constant distance from target while rotating around it (REQ-CAM-1).
+
+Test Name: ViewProjections_Support
+Test Description: Validates support for multiple view projections, testing perspective projection matrices and proper handling of different aspect ratios (REQ-CAM-2).
+
+Test Name: CoordinateSystem_Consistency
+Test Description: Verifies consistent centered coordinate system with Y-up orientation, proper handling of negative coordinates, and origin at (0,0,0) (REQ-CAM-3).
+
+Test Name: ViewPresets_AllDirections
+Test Description: Tests all standard view presets (front, back, left, right, top, bottom, isometric) can be set without errors and produce valid camera states (REQ-CAM-4).
+
+Test Name: ViewTransitions_Smoothness
+Test Description: Validates smooth view transitions between presets when smoothing is enabled, ensuring camera doesn't jump instantly between positions (REQ-CAM-5).
+
+Test Name: RayGeneration_Accuracy
+Test Description: Tests accurate ray generation through screen center, verifying correct intersection with Y=0 plane and reasonable hit point accuracy (REQ-CAM-6).
+
+Test Name: Performance_Operations
+Test Description: Measures performance of camera operations, ensuring view/projection matrix calculations average < 1ms and ray generation averages < 0.1ms (REQ-CAM-7).
+
+Test Name: Integration_EventSystem
+Test Description: Validates camera integration with other subsystems, verifying proper matrix generation and state change functionality (REQ-CAM-8).
+
+Test Name: CameraBounds_Constraints
+Test Description: Tests camera bounds and constraints including minimum/maximum distance limits (0.5-100 units) and pitch constraints (-90 to 90 degrees) to prevent gimbal lock.

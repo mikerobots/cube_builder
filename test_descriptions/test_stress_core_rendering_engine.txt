@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_stress_core_rendering_engine.cpp
+
+Test Name: FindMaximumVoxelCount
+Test Description: Tests maximum voxel count that maintains 30 FPS, testing counts from 1000 to 100000 per REQ-6.2.1
+
+Test Name: MixedResolutionPerformance
+Test Description: Tests rendering performance with mixed voxel resolutions (1cm to 32cm) totaling 2300 voxels
+
+Test Name: ComplexSceneRendering
+Test Description: Tests complex scene with 5000 voxels, ground plane, face highlights, and voxel preview rendering
+
+Test Name: RapidSceneUpdates
+Test Description: Tests performance with rapid voxel additions/removals (10 changes per frame over 100 frames)
+
+Test Name: MemoryUsageUnderStress
+Test Description: Tests memory stability through repeated allocation/deallocation cycles of 5000 voxels per iteration

@@ -1,0 +1,13 @@
+----- File: apps/cli/tests/test_integration_interaction_voxel_face_clicking.cpp
+
+Test Name: ClickOnVoxelFaceAddsAdjacentVoxel
+Test Description: Tests clicking on voxel face adds adjacent voxel using mouse interaction simulation, verifying two clicks result in 3 total voxels
+
+Test Name: ClickOnDifferentFacesAddsVoxelsCorrectly
+Test Description: Tests clicking on different voxel faces (front and right) from different camera views adds voxels correctly in proper directions
+
+Test Name: MultipleVoxelPlacementBug
+Test Description: Tests specific bug with voxel placement at (0,5,0) vs (0,0,0), verifying both positions allow clicking to add adjacent voxels
+
+Test Name: ClosestVoxelIsSelected
+Test Description: Tests that when multiple voxels are along same ray path, the closest voxel is selected for face clicking and adjacent placement

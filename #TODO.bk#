@@ -1,0 +1,68 @@
+
+mark it as "In Progress, [Your Name]". Update it as you are
+working. Don't pick up any work that is "In progress" by other
+agents. If you have not picked a random name, please pick one. Once
+you finish a task, pick another one. Do not disable tests unless
+specifically approved.
+
+## CRITICAL: Test Naming Convention for Requirements
+
+All requirement tests MUST follow the naming pattern `TestName_REQ_X_X_X` to be captured by the automated requirement traceability system. This system leverages existing GoogleTest output and established naming conventions to provide comprehensive requirement coverage tracking across unit tests, integration tests, and CLI validation.
+
+**Test Pattern Recognition:**
+```cpp
+// REQ-X.X.X: Description of requirement
+TEST_F(TestClass, RequirementTestName_REQ_X_X_X) {
+    // Test implementation
+}
+```
+
+**Automatic Coverage Analysis:**
+- Extracts requirement ID from test name (e.g., `REQ_2_1_2` → `REQ-2.1.2`)
+- Tracks test status (PASSED/FAILED/RUNNING)
+- Categorizes by test type (UNIT/INTEGRATION/CLI/VISUAL)
+- Generates comprehensive coverage reports in `coverage_reports/`
+
+**Coverage Tools:**
+- `./tools/requirement_coverage.sh` - Full test execution with coverage analysis
+- `./tools/analyze_requirement_coverage_static.sh` - Static analysis without test execution
+- `ctest -R "REQ_[0-9_]*" --verbose` - Run only requirement tests
+
+**Current Status:** 75% coverage of testable requirements (75/100), with 44 missing requirements that need tests. The system automatically excludes 76 non-testable requirements documented in `requirements_exclusions.txt`.
+
+For each of these requirements in requirements.md, please make sure we
+have an associated test. First try to make a unit test. In not
+possible, do an integration test. As a last resort, do an e2e test.
+
+Consider each a separate task!
+
+[Completed, Nova] REQ-11.1.4 - Command unit tests shall validate state changes before and after execution 
+[Completed, Alex] REQ-11.2.4 - Commands with coordinate parameters shall test coordinate system constraints
+[Completed, Zara] REQ-11.3.10 - Fill command shall test ground plane violations (any Y < 0) 
+[Completed, Nova] REQ-11.3.11 - Fill command shall test coordinate alignment with current resolution 
+[Completed, Iris] REQ-11.3.12 - Resolution command shall test all valid resolution values
+[Completed, Alexis] REQ-11.3.13 - Resolution command shall test invalid resolution values 
+[Completed, Iris] REQ-11.3.14 - Resolution command shall test resolution switching with existing voxels
+[Completed, Zara] REQ-11.3.15 - Workspace command shall test all valid workspace dimensions 
+[Completed, Zara] REQ-11.3.16 - Workspace command shall test minimum and maximum workspace limits 
+[Completed, Alexis] REQ-11.3.17 - Workspace command shall test workspace resizing with existing voxels 
+[Completed, Zara] REQ-11.3.18 - Camera commands shall test all predefined view positions 
+[Completed, Zara] REQ-11.3.19 - Camera commands shall test zoom limits and boundaries 
+[Completed, Iris] REQ-11.3.20 - Camera commands shall test invalid view parameters 
+[Completed, Nova] REQ-11.3.3 - Place command shall test ground plane constraint (Y ≥ 0) 
+[Completed, Nova] REQ-11.3.4 - Place command shall test collision detection with existing voxels 
+[Completed, Nova] REQ-11.3.5 - Place command shall test all valid voxel resolutions (1cm-512cm) 
+[Completed, Alex] REQ-11.3.6 - Fill command shall test valid coordinate ranges in all orientations
+[Completed, Iris] REQ-11.3.7 - Fill command shall test inverted coordinate ranges (min > max) 
+[Completed, Nova] REQ-11.3.8 - Remove command shall test ground plane constraint (Y ≥ 0)
+[Completed, Nova] REQ-11.3.9 - Undo command shall test state restoration after undo 
+[Completed, Iris] REQ-11.4.1 - Command sequences shall be tested for state consistency 
+[Completed, Phoenix] REQ-11.4.2 - Command combinations shall be tested for interaction effects 
+[Completed, Mercury] REQ-11.4.3 - Undo/redo chains shall be tested for all commands 
+[Completed, Nova] REQ-11.4.4 - Performance tests shall validate memory usage within limits 
+[Completed, Phoenix] REQ-11.5.1 - Each command shall test graceful handling of invalid parameters 
+[Completed, Zara] REQ-11.5.2 - Each command shall test appropriate error messages for user guidance 
+[Completed, Zara] REQ-11.5.3 - Commands shall test state consistency after error conditions 
+[Completed, Phoenix] REQ-11.5.4 - Commands shall test memory and resource cleanup after failures 
+
+

@@ -1,0 +1,16 @@
+----- File: tests/integration/rendering/test_integration_rendering_vao_attribute_validation.cpp
+
+Test Name: VAOShaderAttributeAlignment
+Test Description: Creates a mesh with full vertex attributes (position, normal, texcoord, color) and verifies that the VAO setup correctly enables only attributes 0, 1, and 2 (position, normal, color) while keeping attribute 3 (texcoord) disabled. Includes detailed VAO state dumping for debugging.
+
+Test Name: RenderWithCorrectAttributes
+Test Description: Tests rendering a triangle mesh with each built-in shader (basic, enhanced, flat) to ensure proper attribute alignment. Verifies that rendering completes without OpenGL errors, confirming the fix for the texcoord attribute issue.
+
+Test Name: VertexAttributePointerAlignment
+Test Description: Manually creates a VAO and VBO using OpenGLRenderer, sets up vertex attributes for position, normal, and color, then renders with a custom test shader. Validates proper vertex attribute pointer alignment and successful rendering.
+
+Test Name: ShaderOptionalAttributes
+Test Description: Tests that shaders handle missing optional attributes gracefully by creating a minimal mesh with only position data. Uses a simple shader that only requires position attribute and verifies successful rendering without errors.
+
+Test Name: DetectInvalidSetups
+Test Description: Creates an intentionally incorrect VAO setup by enabling attribute 3 (which shaders don't use) to test error detection. Verifies that the system handles invalid attribute configurations appropriately.

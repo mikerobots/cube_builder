@@ -1,0 +1,19 @@
+----- File: tests/integration/test_integration_overlap_detection.cpp
+
+Test Name: SameResolutionOverlapPrevention
+Test Description: Tests overlap prevention between voxels of the same resolution, including redundant operations and placement validation with new non-snapping requirements.
+
+Test Name: DifferentResolutionOverlapPrevention
+Test Description: Tests overlap prevention between voxels of different resolutions (16cm vs 1cm) with proper boundary checking.
+
+Test Name: ComplexOverlapScenario
+Test Description: Tests complex overlap scenarios with multiple voxels in patterns to validate comprehensive overlap detection.
+
+Test Name: RedundantOperationHandling
+Test Description: Tests handling of redundant voxel placement and removal operations to ensure they succeed without side effects.
+
+Test Name: WorldSpaceOverlapDetection
+Test Description: Tests overlap detection using world space coordinates with setVoxelAtWorldPos method.
+
+Test Name: PlacementValidationOrder
+Test Description: Tests that placement validation occurs in proper order (Y constraint before overlap check) for invalid positions.

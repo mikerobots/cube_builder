@@ -4,9 +4,17 @@ find_package(GTest REQUIRED)
 set(SURFACE_GEN_TEST_SOURCES
     test_unit_core_surface_gen_dual_contouring.cpp
     test_unit_core_surface_gen_generator.cpp
+    test_unit_core_surface_gen_generator_optimized.cpp
     test_unit_core_surface_gen_mesh_builder.cpp
+    test_unit_core_surface_gen_mesh_smoother.cpp
+    test_unit_core_surface_gen_topology_preserver.cpp
+    test_unit_core_surface_gen_mesh_validator.cpp
+    test_unit_core_surface_gen_performance.cpp
     test_unit_core_surface_gen_requirements.cpp
+    test_unit_core_surface_gen_settings.cpp
     test_unit_core_surface_gen_types.cpp
+    test_unit_core_surface_gen_preview_simple.cpp
+    test_integration_surface_gen_mock.cpp
 )
 
 # Create individual test executables for better granularity and auto-discovery
@@ -21,7 +29,6 @@ foreach(test_source ${SURFACE_GEN_TEST_SOURCES})
     target_link_libraries(${test_name}
         VoxelEditor_SurfaceGen
         VoxelEditor_VoxelData
-        VoxelEditor_Math
         VoxelEditor_Events
         GTest::gtest
         GTest::gtest_main
@@ -46,7 +53,6 @@ add_executable(VoxelEditor_SurfaceGen_Tests ${SURFACE_GEN_TEST_SOURCES})
 target_link_libraries(VoxelEditor_SurfaceGen_Tests
     VoxelEditor_SurfaceGen
     VoxelEditor_VoxelData
-    VoxelEditor_Math
     VoxelEditor_Events
     GTest::gtest
     GTest::gtest_main

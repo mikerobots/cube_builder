@@ -1,0 +1,16 @@
+----- File: core/rendering/tests/test_unit_core_rendering_edge_rendering.cpp
+
+Test Name: EnhancedShaderCompiles
+Test Description: Tests that enhanced, basic, and flat shaders compile successfully
+
+Test Name: EdgeMeshGeneration
+Test Description: Tests edge mesh generation creates correct number of vertices (8 per voxel) and indices (24 per voxel for 12 edges)
+
+Test Name: EdgeMeshRendersProperly
+Test Description: Tests edge mesh rendering with solid voxels and line-based edge rendering using basic shader
+
+Test Name: ShaderDerivativesWork
+Test Description: Tests enhanced shader's derivative-based edge detection compiles and renders without errors
+
+Test Name: EdgeColorValidation
+Test Description: Validates edge mesh vertices have correct dark color (0.1, 0.1, 0.1, 1.0)

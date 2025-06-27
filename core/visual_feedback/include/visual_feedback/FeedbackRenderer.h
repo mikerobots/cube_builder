@@ -68,6 +68,11 @@ public:
     void setDebugOverlaysEnabled(bool enabled) { m_debugOverlaysEnabled = enabled; }
     bool areDebugOverlaysEnabled() const { return m_debugOverlaysEnabled; }
     
+    // Debug ray visualization
+    void setDebugRay(const Ray& ray, bool enabled);
+    void clearDebugRay() { m_debugRayEnabled = false; }
+    bool isDebugRayEnabled() const { return m_debugRayEnabled; }
+    
     // Validation methods
     bool validateFace(const Face& face) const;
     bool validatePreviewPosition(const Math::Vector3i& position, VoxelData::VoxelResolution resolution) const;
@@ -145,6 +150,10 @@ private:
     RenderStats m_lastStats;
     size_t m_memoryUsed;
     size_t m_memoryTotal;
+    
+    // Debug ray state
+    bool m_debugRayEnabled = false;
+    Ray m_debugRay;
     
     // Helper methods
     void updateAnimations(float deltaTime);

@@ -1,0 +1,19 @@
+----- File: tests/integration/test_integration_ground_plane_constraint.cpp
+
+Test Name: IncrementCoordinateYConstraint
+Test Description: Tests ground plane constraint (Y >= 0) using increment coordinates, validating rejection of Y < 0 positions.
+
+Test Name: WorldCoordinateYConstraint
+Test Description: Tests ground plane constraint using world coordinates with setVoxelAtWorldPos method.
+
+Test Name: MultipleResolutionYConstraint
+Test Description: Tests Y constraint enforcement across different voxel resolutions (1cm-64cm) ensuring all sizes respect ground plane.
+
+Test Name: VoxelBottomAtGroundPlane
+Test Description: Tests that voxels can sit exactly on ground plane with bottom at Y=0 and validates world bounds calculation.
+
+Test Name: EdgeCaseNearZero
+Test Description: Tests edge cases near Y=0 with floating point precision, including very small negative and positive values.
+
+Test Name: CombinedConstraints
+Test Description: Tests Y constraint combined with other constraints (overlap, bounds) to ensure Y validation occurs first.

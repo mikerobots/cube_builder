@@ -1,0 +1,52 @@
+----- File: core/groups/tests/test_unit_core_groups_manager.cpp
+
+Test Name: GroupManagerTest.CreateGroup
+Test Description: Tests basic group creation with a name. Verifies group is created with valid ID, correct name, and exists in the manager.
+
+Test Name: GroupManagerTest.CreateGroupWithVoxels
+Test Description: Tests creating a group with initial voxels. Verifies group contains specified voxels and voxel-to-group mapping is established.
+
+Test Name: GroupManagerTest.DeleteGroup
+Test Description: Tests group deletion functionality. Verifies group is removed from manager and attempting to delete non-existent group returns false.
+
+Test Name: GroupManagerTest.RenameGroup
+Test Description: Tests renaming an existing group. Verifies group name is updated while maintaining the same group ID.
+
+Test Name: GroupManagerTest.VoxelMembership
+Test Description: Tests voxel membership in multiple groups. Verifies voxels can belong to multiple groups and membership queries work correctly.
+
+Test Name: GroupManagerTest.GroupVisibility
+Test Description: Tests group hide/show operations. Verifies groups default to visible and visibility state can be toggled with proper tracking.
+
+Test Name: GroupManagerTest.GroupOpacity
+Test Description: Tests group opacity control for visual indicators. Verifies default opacity is 1.0 and can be adjusted for transparency effects.
+
+Test Name: GroupManagerTest.GroupColor
+Test Description: Tests group color assignment for visual distinction. Verifies groups get assigned palette colors by default and custom colors can be set.
+
+Test Name: GroupManagerTest.GroupLocking
+Test Description: Tests group locking to prevent modifications. Verifies groups default to unlocked and lock state can be toggled.
+
+Test Name: GroupManagerTest.GroupHierarchy
+Test Description: Tests nested group hierarchy support. Verifies parent-child relationships can be established and queried for hierarchical organization.
+
+Test Name: GroupManagerTest.GroupQueries
+Test Description: Tests various group query operations. Verifies finding groups by name, predicate-based searches, and locked group queries work correctly.
+
+Test Name: GroupManagerTest.GroupStatistics
+Test Description: Tests group statistics tracking for memory monitoring. Verifies total groups, voxels, max/average group sizes are calculated correctly.
+
+Test Name: GroupManagerTest.GroupIteration
+Test Description: Tests iterating over groups and hierarchies. Verifies forEach operations visit all groups including hierarchical traversal.
+
+Test Name: GroupManagerTest.GroupBounds
+Test Description: Tests bounding box calculation for groups. Verifies bounds correctly encompass all voxels with proper coordinate conversions.
+
+Test Name: GroupManagerTest.CleanupEmptyGroups
+Test Description: Tests automatic removal of empty groups. Verifies cleanup removes groups without voxels while preserving non-empty groups.
+
+Test Name: GroupManagerTest.ExportImport
+Test Description: Tests group data export/import for persistence. Verifies complete group structure including hierarchy, properties, and voxel membership is preserved.
+
+Test Name: GroupManagerTest.Validation
+Test Description: Tests group structure validation. Verifies valid group configurations pass validation checks.

@@ -1,0 +1,13 @@
+----- File: apps/cli/tests/test_integration_interaction_click_voxel_placement.cpp
+
+Test Name: TestClickingVoxelFacePlacesAdjacentVoxel
+Test Description: Tests complete click-to-place flow by simulating ray hitting positive X face of 32cm voxel, verifying adjacent voxel placement at correct position (32,0,0)
+
+Test Name: TestClickingGroundPlanePlacesVoxel
+Test Description: Tests clicking on ground plane places voxel using smart placement context, verifying 1cm-snapped position near target point (1.0, 0, 1.0)
+
+Test Name: TestBuildingVoxelChain
+Test Description: Tests building chain of adjacent voxels by clicking faces sequentially, creating line of 3 voxels at (0,0,0), (32,0,0), (64,0,0)
+
+Test Name: TestClickingDifferentFaces
+Test Description: Tests clicking on different voxel faces (positive Y top face, positive Z front face) places voxels in correct directions, verifying proper face detection and placement

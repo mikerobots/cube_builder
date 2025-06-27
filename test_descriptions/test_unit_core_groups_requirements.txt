@@ -1,0 +1,52 @@
+----- File: core/groups/tests/test_unit_core_groups_requirements.cpp
+
+Test Name: GroupRequirementsTest.CreateGroupFromSelectedVoxels
+Test Description: Tests creating groups from selected voxels requirement. Verifies groups can be created with pre-selected voxels and voxel-to-group mapping is established correctly.
+
+Test Name: GroupRequirementsTest.GroupMoveOperation
+Test Description: Tests group move operation support. Verifies groups have position tracking and bounding boxes necessary for move operations.
+
+Test Name: GroupRequirementsTest.GroupHideShowOperation
+Test Description: Tests group hide/show operations requirement. Verifies groups default to visible and visibility state can be toggled properly.
+
+Test Name: GroupRequirementsTest.GroupLockOperation
+Test Description: Tests group lock/unlock operations requirement. Verifies groups default to unlocked and lock state prevents modifications.
+
+Test Name: GroupRequirementsTest.GroupCopyDuplicateOperation
+Test Description: Tests group copy/duplicate functionality. Verifies groups can be duplicated by creating new groups with the same voxel content.
+
+Test Name: GroupRequirementsTest.GroupHierarchySupport
+Test Description: Tests nested group hierarchy requirement. Verifies parent-child relationships, multi-level hierarchies, and root group queries work correctly.
+
+Test Name: GroupRequirementsTest.VisualGroupIndicators
+Test Description: Tests visual group indicators requirement. Verifies groups support color coding and opacity settings for visual distinction.
+
+Test Name: GroupRequirementsTest.GroupManagementOperations
+Test Description: Tests group management operations (list, rename, delete). Verifies groups can be listed, searched by name, renamed, and deleted.
+
+Test Name: GroupRequirementsTest.GroupMetadataStorage
+Test Description: Tests group metadata storage requirement. Verifies comprehensive metadata including name, color, opacity, lock state, and timestamps are stored.
+
+Test Name: GroupRequirementsTest.GroupPersistenceAcrossSaveLoad
+Test Description: Tests group persistence requirement. Verifies complete group structure including hierarchy and properties survive export/import cycles.
+
+Test Name: GroupRequirementsTest.GroupNamingAndOrganization
+Test Description: Tests group naming and organization requirement. Verifies groups support hierarchical naming patterns and can be searched by partial names.
+
+Test Name: GroupRequirementsTest.MemoryConstraints_REQ_6_3_2
+Test Description: Tests memory constraint compliance (2GB limit). Verifies group system tracks memory usage and provides statistics for monitoring.
+
+Test Name: GroupRequirementsTest.GroupDefinitionsStorage_REQ_8_1_8
+Test Description: Tests group definitions storage in file format. Verifies exported data contains all group metadata and relationships for persistence.
+
+Test Name: GroupRequirementsTest.GroupVisibilityStates_REQ_8_1_9
+Test Description: Tests group visibility state storage requirement. Verifies visibility and opacity states are preserved through export/import cycles.
+
+Test Name: GroupRequirementsTest.CLIGroupCommands_REQ_9_2_5
+Test Description: Tests CLI group command support requirement. Verifies group system provides APIs for create, hide, show, and list operations needed by CLI.
+
+Test Name: GroupRequirementsTest.ThreadSafeGroupOperations
+Test Description: Tests thread-safe group operations. Verifies multiple threads can safely create groups concurrently without conflicts or data corruption.
+
+Test Name: GroupRequirementsTest.PerformanceOptimizationForLargeGroups
+Test Description: Tests performance with large groups. Verifies group operations remain fast even with thousands of voxels, completing operations in reasonable time.

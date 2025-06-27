@@ -217,6 +217,251 @@ TEST_F(CameraControllerTest, MouseRayGeneration) {
     EXPECT_LT(mouseRay.direction.z, 0.0f); // Negative Z is forward
 }
 
+// ===== Comprehensive getMouseRay Tests =====
+
+TEST_F(CameraControllerTest, GetMouseRay_AllCorners) {
+    // Test ray generation from all viewport corners
+    controller->setViewportSize(800, 600);
+    Viewport* viewport = controller->getViewport();
+    
+    // Test all four corners
+    struct CornerTest {
+        Vector2i position;
+        std::string name;
+        bool expectXPositive;
+        bool expectYPositive;
+    };
+    
+    CornerTest corners[] = {
+        {Vector2i(0, 0), "top-left", false, true},
+        {Vector2i(799, 0), "top-right", true, true},
+        {Vector2i(0, 599), "bottom-left", false, false},
+        {Vector2i(799, 599), "bottom-right", true, false}
+    };
+    
+    for (const auto& corner : corners) {
+        Ray ray = controller->getMouseRay(corner.position);
+        
+        // Ray should be normalized
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f) 
+            << "Ray not normalized for " << corner.name;
+        
+        // Check X direction
+        if (corner.expectXPositive) {
+            EXPECT_GT(ray.direction.x, 0.0f) 
+                << "Ray X should be positive for " << corner.name;
+        } else {
+            EXPECT_LT(ray.direction.x, 0.0f) 
+                << "Ray X should be negative for " << corner.name;
+        }
+        
+        // Check Y direction
+        if (corner.expectYPositive) {
+            EXPECT_GT(ray.direction.y, 0.0f) 
+                << "Ray Y should be positive for " << corner.name;
+        } else {
+            EXPECT_LT(ray.direction.y, 0.0f) 
+                << "Ray Y should be negative for " << corner.name;
+        }
+        
+        // Z should always be negative (forward)
+        EXPECT_LT(ray.direction.z, 0.0f) 
+            << "Ray Z should be negative for " << corner.name;
+    }
+}
+
+TEST_F(CameraControllerTest, GetMouseRay_OutsideViewport) {
+    controller->setViewportSize(800, 600);
+    
+    // Test positions outside viewport bounds
+    std::vector<Vector2i> outsidePositions = {
+        Vector2i(-100, 300),    // Left of viewport
+        Vector2i(900, 300),     // Right of viewport
+        Vector2i(400, -100),    // Above viewport
+        Vector2i(400, 700),     // Below viewport
+        Vector2i(-100, -100),   // Top-left outside
+        Vector2i(900, 700)      // Bottom-right outside
+    };
+    
+    for (const auto& pos : outsidePositions) {
+        Ray ray = controller->getMouseRay(pos);
+        
+        // Should still generate valid rays
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f)
+            << "Ray not normalized for position (" << pos.x << ", " << pos.y << ")";
+        
+        // Ray should point forward
+        EXPECT_LT(ray.direction.z, 0.0f)
+            << "Ray should point forward for position (" << pos.x << ", " << pos.y << ")";
+    }
+}
+
+TEST_F(CameraControllerTest, GetMouseRay_DifferentViewPresets) {
+    controller->setViewportSize(800, 600);
+    Vector2i centerPos(400, 300);
+    
+    // Test ray generation with different view presets
+    ViewPreset presets[] = {
+        ViewPreset::FRONT,
+        ViewPreset::BACK,
+        ViewPreset::LEFT,
+        ViewPreset::RIGHT,
+        ViewPreset::TOP,
+        ViewPreset::BOTTOM,
+        ViewPreset::ISOMETRIC
+    };
+    
+    for (auto preset : presets) {
+        controller->setViewPreset(preset);
+        Ray ray = controller->getMouseRay(centerPos);
+        
+        // Ray should be normalized
+        EXPECT_NEAR(ray.direction.length(), 1.0f, 0.001f)
+            << "Ray not normalized for preset " << static_cast<int>(preset);
+        
+        // Verify ray direction makes sense for the view
+        switch (preset) {
+            case ViewPreset::FRONT:
+                EXPECT_LT(ray.direction.z, 0.0f); // Looking -Z
+                break;
+            case ViewPreset::BACK:
+                EXPECT_GT(ray.direction.z, 0.0f); // Looking +Z
+                break;
+            case ViewPreset::LEFT:
+                EXPECT_GT(ray.direction.x, 0.0f); // Looking +X
+                break;
+            case ViewPreset::RIGHT:
+                EXPECT_LT(ray.direction.x, 0.0f); // Looking -X
+                break;
+            case ViewPreset::TOP:
+                EXPECT_LT(ray.direction.y, 0.0f); // Looking -Y
+                break;
+            case ViewPreset::BOTTOM:
+                EXPECT_GT(ray.direction.y, 0.0f); // Looking +Y
+                break;
+            case ViewPreset::ISOMETRIC:
+                // Should have components in all directions
+                EXPECT_NE(ray.direction.x, 0.0f);
+                EXPECT_NE(ray.direction.y, 0.0f);
+                EXPECT_NE(ray.direction.z, 0.0f);
+                break;
+        }
+    }
+}
+
+TEST_F(CameraControllerTest, GetMouseRay_ConsistencyWithWorldToScreen) {
+    controller->setViewportSize(800, 600);
+    
+    // Place a point in world space
+    Vector3f worldPoint(2.0f, 1.0f, -3.0f);
+    
+    // Project to screen
+    Vector2i screenPos = controller->worldToScreen(worldPoint);
+    
+    // Generate ray from that screen position
+    Ray ray = controller->getMouseRay(screenPos);
+    
+    // The ray should pass through the world point
+    // Calculate parameter t where ray hits the plane containing worldPoint
+    // perpendicular to camera forward
+    WorldCoordinates cameraPos = controller->getCamera()->getPosition();
+    Vector3f toPoint = worldPoint - cameraPos.value();
+    float t = toPoint.length();
+    
+    // Point along ray at distance t
+    Vector3f rayPoint = ray.origin + ray.direction * t;
+    
+    // Should be close to original world point (within projection tolerance)
+    EXPECT_NEAR(rayPoint.x, worldPoint.x, 0.1f);
+    EXPECT_NEAR(rayPoint.y, worldPoint.y, 0.1f);
+    EXPECT_NEAR(rayPoint.z, worldPoint.z, 0.1f);
+}
+
+TEST_F(CameraControllerTest, GetMouseRay_AfterCameraMovement) {
+    controller->setViewportSize(800, 600);
+    Vector2i centerPos(400, 300);
+    
+    // Get initial ray
+    Ray initialRay = controller->getMouseRay(centerPos);
+    
+    // Move camera
+    controller->getCamera()->setYaw(45.0f);
+    controller->getCamera()->setPitch(30.0f);
+    controller->getCamera()->setDistance(20.0f);
+    controller->getCamera()->setTarget(WorldCoordinates(Vector3f(5.0f, 3.0f, 2.0f)));
+    
+    // Get ray after movement
+    Ray movedRay = controller->getMouseRay(centerPos);
+    
+    // Rays should be different
+    EXPECT_NE(movedRay.origin.x, initialRay.origin.x);
+    EXPECT_NE(movedRay.origin.y, initialRay.origin.y);
+    EXPECT_NE(movedRay.origin.z, initialRay.origin.z);
+    EXPECT_NE(movedRay.direction.x, initialRay.direction.x);
+    EXPECT_NE(movedRay.direction.y, initialRay.direction.y);
+    EXPECT_NE(movedRay.direction.z, initialRay.direction.z);
+    
+    // But both should still be normalized
+    EXPECT_NEAR(movedRay.direction.length(), 1.0f, 0.001f);
+}
+
+TEST_F(CameraControllerTest, GetMouseRay_WithOrthographicProjection) {
+    controller->setViewportSize(800, 600);
+    
+    // Switch to orthographic projection
+    controller->getCamera()->setProjectionType(ProjectionType::ORTHOGRAPHIC);
+    controller->getCamera()->setOrthographicSize(10.0f);
+    
+    // Test multiple positions
+    Vector2i pos1(200, 150);
+    Vector2i pos2(600, 450);
+    
+    Ray ray1 = controller->getMouseRay(pos1);
+    Ray ray2 = controller->getMouseRay(pos2);
+    
+    // In orthographic projection, all rays should be parallel
+    EXPECT_NEAR(ray1.direction.x, ray2.direction.x, 0.001f);
+    EXPECT_NEAR(ray1.direction.y, ray2.direction.y, 0.001f);
+    EXPECT_NEAR(ray1.direction.z, ray2.direction.z, 0.001f);
+    
+    // Both should be normalized
+    EXPECT_NEAR(ray1.direction.length(), 1.0f, 0.001f);
+    EXPECT_NEAR(ray2.direction.length(), 1.0f, 0.001f);
+    
+    // Origins should be different
+    EXPECT_NE(ray1.origin.x, ray2.origin.x);
+    EXPECT_NE(ray1.origin.y, ray2.origin.y);
+}
+
+TEST_F(CameraControllerTest, GetMouseRay_SubpixelAccuracy) {
+    controller->setViewportSize(800, 600);
+    
+    // Test that nearby pixels generate slightly different rays
+    Vector2i pos1(400, 300);
+    Vector2i pos2(401, 300); // One pixel to the right
+    Vector2i pos3(400, 301); // One pixel down
+    
+    Ray ray1 = controller->getMouseRay(pos1);
+    Ray ray2 = controller->getMouseRay(pos2);
+    Ray ray3 = controller->getMouseRay(pos3);
+    
+    // Rays should be slightly different
+    EXPECT_NE(ray1.direction.x, ray2.direction.x);
+    EXPECT_NE(ray1.direction.y, ray3.direction.y);
+    
+    // But differences should be small (subpixel)
+    float xDiff = std::abs(ray2.direction.x - ray1.direction.x);
+    float yDiff = std::abs(ray3.direction.y - ray1.direction.y);
+    
+    EXPECT_LT(xDiff, 0.01f); // Small difference
+    EXPECT_LT(yDiff, 0.01f); // Small difference
+    
+    // All should still be normalized
+    EXPECT_NEAR(ray1.direction.length(), 1.0f, 0.001f);
+    EXPECT_NEAR(ray2.direction.length(), 1.0f, 0.001f);
+    EXPECT_NEAR(ray3.direction.length(), 1.0f, 0.001f);
+}
+
 TEST_F(CameraControllerTest, WorldToScreen) {
     // Test converting target point to screen coordinates
     Vector3f targetPoint = controller->getCamera()->getTarget().value();

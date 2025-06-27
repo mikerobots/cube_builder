@@ -1,0 +1,40 @@
+----- File: core/input/tests/test_unit_core_input_mouse_handler.cpp
+
+Test Name: DefaultState
+Test Description: Verifies MouseHandler initializes with all buttons unpressed, zero position/delta/wheel, and no active clicks or drags
+
+Test Name: ButtonPressRelease
+Test Description: Tests button press/release state tracking and just-pressed/just-released flags per REQ-5.1.1 and REQ-5.1.2
+
+Test Name: MouseMovement
+Test Description: Validates real-time mouse position and delta tracking for preview updates per REQ-5.1.3 and REQ-1.2.2
+
+Test Name: MouseWheel
+Test Description: Tests mouse wheel delta tracking and reset after update for camera zoom per REQ-9.2.2
+
+Test Name: ClickDetection
+Test Description: Verifies single click detection with position tracking for grid interaction per REQ-1.2.1 and REQ-2.3.3
+
+Test Name: DoubleClickDetection
+Test Description: Tests double-click detection when two clicks occur in quick succession
+
+Test Name: DragDetection
+Test Description: Validates drag detection when mouse moves beyond threshold while button pressed
+
+Test Name: MultipleButtons
+Test Description: Tests simultaneous multiple button press/release state tracking
+
+Test Name: Configuration
+Test Description: Verifies get/set functionality for click timeout, double-click timeout, drag threshold, and sensitivity
+
+Test Name: PositionFiltering
+Test Description: Tests position filtering with minimum movement threshold to smooth small movements
+
+Test Name: EnabledState
+Test Description: Validates events are ignored when handler is disabled and processed when enabled
+
+Test Name: MouseButtonUtilities
+Test Description: Tests button-to-string conversion, string-to-button parsing, and button validation utilities
+
+Test Name: RayCasting
+Test Description: Placeholder test for ray creation from mouse position (requires camera implementation) per REQ-5.1.4

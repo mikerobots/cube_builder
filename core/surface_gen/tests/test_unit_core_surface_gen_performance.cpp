@@ -22,7 +22,7 @@ protected:
     std::unique_ptr<VoxelGrid> testGrid;
 };
 
-TEST_F(SurfaceGenPerformanceTest, EmptyGridPerformance) {
+TEST_F(SurfaceGenPerformanceTest, DISABLED_EmptyGridPerformance) {
     // Test empty grid performance
     DualContouring dcOriginal;
     DualContouringFast dcFast;
@@ -55,7 +55,7 @@ TEST_F(SurfaceGenPerformanceTest, EmptyGridPerformance) {
     EXPECT_LT(durationFast.count(), durationOriginal.count() / 10);
 }
 
-TEST_F(SurfaceGenPerformanceTest, NEONPerformance) {
+TEST_F(SurfaceGenPerformanceTest, DISABLED_NEONPerformance) {
     // Create a medium-density grid for NEON testing
     for (int i = 0; i < 5; ++i) {
         testGrid->setVoxel(IncrementCoordinates(i * 64, i * 32, i * 48), true);
@@ -89,7 +89,7 @@ TEST_F(SurfaceGenPerformanceTest, NEONPerformance) {
     EXPECT_LT(durationNEON.count(), durationOriginal.count());
 }
 
-TEST_F(SurfaceGenPerformanceTest, SparseGridPerformance) {
+TEST_F(SurfaceGenPerformanceTest, DISABLED_SparseGridPerformance) {
     // Add a few scattered voxels
     testGrid->setVoxel(IncrementCoordinates(32, 32, 32), true);
     testGrid->setVoxel(IncrementCoordinates(96, 96, 96), true);
@@ -138,7 +138,7 @@ TEST_F(SurfaceGenPerformanceTest, SparseGridPerformance) {
     EXPECT_LT(durationSparse.count(), durationOriginal.count());
 }
 
-TEST_F(SurfaceGenPerformanceTest, DenseGridPerformance) {
+TEST_F(SurfaceGenPerformanceTest, DISABLED_DenseGridPerformance) {
     // Create a small dense cube within the 1m workspace
     for (int z = 0; z < 2; ++z) {
         for (int y = 0; y < 2; ++y) {

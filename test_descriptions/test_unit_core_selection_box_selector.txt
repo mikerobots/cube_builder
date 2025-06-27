@@ -1,0 +1,49 @@
+----- File: core/selection/tests/test_unit_core_selection_box_selector.cpp
+
+Test Name: DefaultConfiguration
+Test Description: Tests BoxSelector default configuration, verifying Replace selection mode and includePartial enabled by default for standard box selection behavior.
+
+Test Name: SetConfiguration
+Test Description: Validates BoxSelector configuration modification, testing selection mode changes (Replace to Add) and includePartial toggle for customizable selection behavior.
+
+Test Name: SelectFromWorld_SmallBox
+Test Description: Tests world-coordinate box selection with small bounding box, verifying selection of voxels intersecting the box in centered coordinate system with proper voxel containment.
+
+Test Name: SelectFromWorld_LargerBox
+Test Description: Validates larger world-coordinate box selection spanning multiple voxels (3x3x3), testing proper coverage and corner voxel inclusion with minimum expected count verification.
+
+Test Name: SelectFromWorld_NegativeCoordinates
+Test Description: Tests box selection across negative and positive world coordinates, verifying proper handling of coordinate system boundaries and inclusion of voxels on both sides.
+
+Test Name: SelectFromWorld_IncludePartialTrue
+Test Description: Validates partial inclusion behavior when enabled, testing selection of voxels that are only partially intersected by the bounding box rather than fully contained.
+
+Test Name: SelectFromWorld_IncludePartialFalse
+Test Description: Tests strict containment when partial inclusion is disabled, verifying only fully contained voxels are selected and partially intersected voxels are excluded.
+
+Test Name: SelectFromGrid_SingleVoxel
+Test Description: Validates grid-coordinate selection of single voxel, testing exact grid position selection with proper VoxelId creation and containment verification.
+
+Test Name: SelectFromGrid_Range
+Test Description: Tests grid-coordinate range selection (3x3x3), verifying all voxels within specified min/max grid coordinates are included with exact count validation.
+
+Test Name: SelectFromGrid_ReversedMinMax
+Test Description: Validates grid selection with swapped min/max coordinates, testing automatic coordinate ordering and proper range handling for user convenience.
+
+Test Name: SelectFromRays_Basic
+Test Description: Tests ray-based box selection, verifying creation of selection box between two ray endpoints with proper geometric intersection calculations.
+
+Test Name: SelectFromScreen_Basic
+Test Description: Validates screen-coordinate box selection, testing conversion from screen coordinates to world coordinates using view/projection matrices and viewport dimensions.
+
+Test Name: SelectFromWorld_EmptyBox
+Test Description: Tests edge case of zero-volume box (single point), verifying selection behavior when bounding box has no volume but may still intersect voxels.
+
+Test Name: SelectFromWorld_VerySmallBox
+Test Description: Validates selection with box smaller than voxel size, testing containment logic when bounding box is smaller than individual voxel dimensions.
+
+Test Name: SelectFromGrid_DifferentResolutions
+Test Description: Tests grid selection with different voxel resolutions (4cm vs 8cm), verifying same grid range produces same voxel count but different resolution VoxelIds.
+
+Test Name: SetVoxelManager
+Test Description: Validates voxel manager configuration, testing box selection functionality when voxel manager is null (falls back to assuming all voxels exist).

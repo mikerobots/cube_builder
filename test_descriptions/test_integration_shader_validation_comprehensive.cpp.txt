@@ -1,0 +1,31 @@
+----- File: tests/integration/rendering/test_integration_shader_validation_comprehensive.cpp
+
+Test Name: BasicShaderValidation
+Test Description: Validates the basic_voxel shader by loading it from files, checking vertex attributes (a_position, a_normal, a_color) and uniforms (model, view, projection, lightPos, lightColor, viewPos). Uses OpenGLRenderer directly to bypass incomplete ShaderProgram wrapper.
+
+Test Name: EnhancedShaderValidation
+Test Description: Validates the enhanced_voxel shader compilation and attribute/uniform presence. Checks for the same vertex attributes and uniforms as basic shader. Skips test if enhanced shader files are not available.
+
+Test Name: FlatShaderValidation
+Test Description: Validates the flat_voxel shader which typically has fewer uniforms (no lighting). Checks for position, normal, and color attributes and basic transformation uniforms (model, view, projection). Skips if flat shader is unavailable.
+
+Test Name: RenderWithBasicShader
+Test Description: Tests actual rendering with the basic_voxel shader by creating a red triangle, setting up uniforms, and rendering. Captures framebuffer output and validates that visible triangle rendering occurred with >1% foreground pixel coverage.
+
+Test Name: RenderWithEnhancedShader
+Test Description: Tests rendering with enhanced_voxel shader using a green triangle. Similar to basic shader test but validates enhanced shader's rendering capabilities. Uses color distribution analysis to confirm visible output.
+
+Test Name: RenderWithFlatShader
+Test Description: Tests rendering with flat_voxel shader using a blue triangle. Sets up minimal uniforms (no lighting) appropriate for flat shading and validates successful rendering through pixel analysis.
+
+Test Name: VertexAttributeSetup
+Test Description: Tests proper vertex attribute array setup by creating a triangle mesh and verifying that attributes 0, 1, and 2 (position, normal, color) are enabled while attribute 3 (texcoord) is disabled, confirming the VAO configuration fix.
+
+Test Name: ShaderUniformUpdates
+Test Description: Tests setting various uniform types including matrices (model, view, projection) and vectors (lightPos, lightColor, viewPos) using the OpenGLRenderer uniform system. Validates that uniform updates complete without errors.
+
+Test Name: MultipleMeshRendering
+Test Description: Tests rendering multiple triangles using different available shaders simultaneously. Loads all shader types, creates colored triangles, and renders them side-by-side with different shaders and transforms. Validates >2% foreground coverage.
+
+Test Name: ErrorConditions
+Test Description: Tests error handling by rendering a triangle without setting shader uniforms. Validates that the system handles incomplete uniform setup gracefully without crashing, clearing any generated OpenGL errors.

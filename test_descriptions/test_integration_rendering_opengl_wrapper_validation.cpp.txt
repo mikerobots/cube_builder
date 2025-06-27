@@ -1,0 +1,28 @@
+----- File: tests/integration/rendering/test_integration_rendering_opengl_wrapper_validation.cpp
+
+Test Name: BufferManagement
+Test Description: Tests OpenGL buffer creation, updating, and deletion through the OpenGLRenderer wrapper. Creates vertex and index buffers, tests buffer data updates, and verifies proper cleanup without OpenGL errors.
+
+Test Name: TextureManagement
+Test Description: Validates texture operations including creating 2D textures with RGBA8 format, updating texture data regions, binding textures to texture units, and proper texture deletion. Uses 64x64 and 32x32 test patterns.
+
+Test Name: FramebufferOperations
+Test Description: Tests framebuffer clear operations with different clear flags (All, COLOR, DEPTH) and various clear colors. Validates that clear operations complete without errors.
+
+Test Name: RenderStateManagement
+Test Description: Comprehensive test of OpenGL render state management including depth testing, depth writing, blending modes, and face culling. Verifies that state changes are properly applied and can be queried back from OpenGL.
+
+Test Name: ViewportOperations
+Test Description: Tests viewport setting and updating through the OpenGLRenderer. Sets viewports to different dimensions and positions, then verifies the changes were applied correctly by querying OpenGL state.
+
+Test Name: ShaderCompilation
+Test Description: Tests shader program management through the wrapper, including getting current program state and using/binding shader programs. Handles cases where programs may not exist gracefully.
+
+Test Name: UniformSetting
+Test Description: Validates uniform setting functionality with different data types including Matrix4f, Vector3f, float, and int values. Tests the UniformValue wrapper system even when no shader program is bound.
+
+Test Name: VAOOperations
+Test Description: Tests Vertex Array Object creation, binding, setup, and state preservation. Creates VAO with vertex buffer, sets up vertex attributes, and verifies that VAO state is preserved across bind/unbind operations.
+
+Test Name: LineWidth
+Test Description: Tests line width setting functionality. Sets line width to 1.0 (Core Profile compatible), verifies the setting, and handles potential errors when setting non-1.0 values on Core Profile contexts.

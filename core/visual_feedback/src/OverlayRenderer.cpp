@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iomanip>
 #include <cstddef>
+#include <cassert>
+#include <iostream>
 
 #ifdef __APPLE__
     #include <OpenGL/gl3.h>
@@ -15,6 +17,9 @@ namespace VisualFeedback {
 OverlayRenderer::OverlayRenderer()
     : m_frameActive(false)
     , m_initialized(false) {
+    
+    // Initialize line renderer settings
+    m_lineRenderer.depthTest = false;  // Overlay lines should render on top
     
     // Delay OpenGL resource creation until first use
 }
@@ -36,6 +41,9 @@ OverlayRenderer::~OverlayRenderer() {
         }
         if (m_textRenderer.indexBuffer) {
             glDeleteBuffers(1, &m_textRenderer.indexBuffer);
+        }
+        if (m_lineRenderer.vertexArray) {
+            glDeleteVertexArrays(1, &m_lineRenderer.vertexArray);
         }
         if (m_lineRenderer.vertexBuffer) {
             glDeleteBuffers(1, &m_lineRenderer.vertexBuffer);
@@ -209,6 +217,9 @@ void OverlayRenderer::renderRaycast(const Ray& ray, float length, const Renderin
     if (!m_frameActive) return;
     
     Math::Vector3f end = ray.origin.value() + ray.direction * length;
+    
+    // Debug output removed - ray visualization working correctly
+    
     addLine(ray.origin.value(), end, color);
     flushLineBatch(camera);
 }
@@ -612,11 +623,27 @@ void OverlayRenderer::initializeTextRenderer() {
 }
 
 void OverlayRenderer::initializeLineRenderer() {
+    // Create VAO first
+    glGenVertexArrays(1, &m_lineRenderer.vertexArray);
+    glBindVertexArray(m_lineRenderer.vertexArray);
+    
     // Create vertex buffer for lines
     glGenBuffers(1, &m_lineRenderer.vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_lineRenderer.vertexBuffer);
     // Allocate initial buffer size
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 7 * 1024, nullptr, GL_DYNAMIC_DRAW);
+    
+    // Setup vertex attributes while VAO is bound
+    size_t stride = 7 * sizeof(float);
+    glEnableVertexAttribArray(0); // position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
+    
+    glEnableVertexAttribArray(1); // color
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+    
+    // Unbind VAO
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     // Create line shader program
     const char* vertexShaderSource = R"(
@@ -645,14 +672,37 @@ void OverlayRenderer::initializeLineRenderer() {
         }
     )";
     
-    // Compile shaders
+    // Compile vertex shader
     uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
     
+    // Check vertex shader compilation
+    GLint success;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+        std::cerr << "OverlayRenderer: Vertex shader compilation failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        return; // Early return to prevent using invalid shader
+    }
+    
+    // Compile fragment shader
     uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
+    
+    // Check fragment shader compilation
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+        std::cerr << "OverlayRenderer: Fragment shader compilation failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        return; // Early return to prevent using invalid shader
+    }
     
     // Create and link program
     m_lineRenderer.lineShader = glCreateProgram();
@@ -660,7 +710,20 @@ void OverlayRenderer::initializeLineRenderer() {
     glAttachShader(m_lineRenderer.lineShader, fragmentShader);
     glLinkProgram(m_lineRenderer.lineShader);
     
-    // Clean up
+    // Check program linking
+    glGetProgramiv(m_lineRenderer.lineShader, GL_LINK_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetProgramInfoLog(m_lineRenderer.lineShader, 512, nullptr, infoLog);
+        std::cerr << "OverlayRenderer: Shader program linking failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteProgram(m_lineRenderer.lineShader);
+        m_lineRenderer.lineShader = 0; // Mark as invalid
+        return; // Early return to prevent using invalid program
+    }
+    
+    // Clean up shader objects (no longer needed after successful linking)
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
@@ -801,15 +864,29 @@ void OverlayRenderer::flushTextBatch() {
     // Bind VAO (contains all vertex attribute setup)
     glBindVertexArray(m_textRenderer.vertexArray);
     
-    // Upload vertex data
-    glBindBuffer(GL_ARRAY_BUFFER, m_textRenderer.vertexBuffer);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, m_textRenderer.vertices.size() * sizeof(float), 
-                    m_textRenderer.vertices.data());
+    // Check and resize vertex buffer if needed
+    size_t vertexDataSize = m_textRenderer.vertices.size() * sizeof(float);
+    size_t currentVertexBufferSize = sizeof(float) * 8 * 1024; // Initial size
     
-    // Upload index data
+    glBindBuffer(GL_ARRAY_BUFFER, m_textRenderer.vertexBuffer);
+    if (vertexDataSize > currentVertexBufferSize) {
+        // Reallocate buffer with larger size
+        size_t newSize = vertexDataSize * 2; // Double the required size for future growth
+        glBufferData(GL_ARRAY_BUFFER, newSize, nullptr, GL_DYNAMIC_DRAW);
+    }
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vertexDataSize, m_textRenderer.vertices.data());
+    
+    // Check and resize index buffer if needed
+    size_t indexDataSize = m_textRenderer.indices.size() * sizeof(uint32_t);
+    size_t currentIndexBufferSize = sizeof(uint32_t) * 6 * 256; // Initial size
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_textRenderer.indexBuffer);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_textRenderer.indices.size() * sizeof(uint32_t),
-                    m_textRenderer.indices.data());
+    if (indexDataSize > currentIndexBufferSize) {
+        // Reallocate buffer with larger size
+        size_t newSize = indexDataSize * 2; // Double the required size for future growth
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, newSize, nullptr, GL_DYNAMIC_DRAW);
+    }
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexDataSize, m_textRenderer.indices.data());
     
     // Draw text (VAO already has vertex attributes set up)
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_textRenderer.indices.size()),
@@ -823,6 +900,14 @@ void OverlayRenderer::flushTextBatch() {
     glUseProgram(0);
     
     glEnable(GL_DEPTH_TEST);
+    
+    // Check for OpenGL errors after text rendering
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer GL Error after flushTextBatch: " << error << std::endl;
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "OpenGL error in OverlayRenderer text rendering - failing hard to catch issues early");
+    }
     
     // Clear for next frame
     m_textRenderer.vertices.clear();
@@ -840,13 +925,32 @@ void OverlayRenderer::addLine(const Math::Vector3f& start, const Math::Vector3f&
 void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
     if (m_lineRenderer.vertices.empty()) return;
     
+    // Check if shader is valid
+    if (m_lineRenderer.lineShader == 0) {
+        std::cerr << "OverlayRenderer: Cannot render lines - line shader is invalid" << std::endl;
+        return;
+    }
+    
     // Use line shader
     glUseProgram(m_lineRenderer.lineShader);
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error after glUseProgram: " << error << std::endl;
+        return;
+    }
     
     // Set MVP matrix
     GLint mvpLoc = glGetUniformLocation(m_lineRenderer.lineShader, "mvpMatrix");
+    if (mvpLoc == -1) {
+        std::cerr << "OverlayRenderer: Warning - mvpMatrix uniform not found in line shader" << std::endl;
+    }
     Math::Matrix4f mvpMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
     glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error after setting uniforms: " << error << std::endl;
+        return;
+    }
     
     // Create interleaved vertex data
     std::vector<float> interleavedData;
@@ -862,18 +966,29 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
         interleavedData.push_back(m_lineRenderer.colors[i].a);
     }
     
+    // Bind VAO (contains all vertex attribute setup)
+    glBindVertexArray(m_lineRenderer.vertexArray);
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error after glBindVertexArray: " << error << std::endl;
+        return;
+    }
+    
     // Upload vertex data
     glBindBuffer(GL_ARRAY_BUFFER, m_lineRenderer.vertexBuffer);
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error after glBindBuffer: " << error << std::endl;
+        return;
+    }
+    
     glBufferSubData(GL_ARRAY_BUFFER, 0, interleavedData.size() * sizeof(float),
                     interleavedData.data());
-    
-    // Setup vertex attributes
-    glEnableVertexAttribArray(0); // position
-    glEnableVertexAttribArray(1); // color
-    
-    size_t stride = 7 * sizeof(float);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error after glBufferSubData: " << error << std::endl;
+        return;
+    }
     
     // Enable/disable depth test based on settings
     if (m_lineRenderer.depthTest) {
@@ -885,19 +1000,37 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
     // Enable blending for lines
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error after setting blend state: " << error << std::endl;
+        return;
+    }
     
     // Draw lines
+    std::cerr << "OverlayRenderer: About to draw " << m_lineRenderer.vertices.size() << " vertices as " 
+              << (m_lineRenderer.vertices.size() / 2) << " lines" << std::endl;
     glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(m_lineRenderer.vertices.size()));
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer: GL error in glDrawArrays: " << error << std::endl;
+        return;
+    }
     
     // Cleanup
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    
+    glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glUseProgram(0);
     
     // Reset depth test
     glEnable(GL_DEPTH_TEST);
+    
+    // Check for OpenGL errors after line rendering
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OverlayRenderer GL Error after flushLineBatch: " << error << std::endl;
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "OpenGL error in OverlayRenderer line rendering - failing hard to catch issues early");
+    }
     
     // Clear for next batch
     m_lineRenderer.vertices.clear();

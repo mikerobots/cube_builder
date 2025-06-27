@@ -1,0 +1,46 @@
+----- File: core/file_io/tests/test_unit_core_file_io_stl_exporter.cpp
+
+Test Name: ExportBinarySTL
+Test Description: Tests binary STL export of a simple triangle mesh, verifying file creation, correct file size (134 bytes), and export statistics (REQ-8.2.1).
+
+Test Name: ExportASCIISTL
+Test Description: Validates ASCII STL export of a triangle mesh, checking file creation and verifying ASCII format with proper "solid" header and "facet normal" content (REQ-8.2.1).
+
+Test Name: ExportCubeMesh
+Test Description: Tests exporting a complete cube mesh (8 vertices, 12 triangles), verifying correct triangle and vertex counts in export statistics (REQ-8.2.1).
+
+Test Name: ExportWithScale
+Test Description: Validates mesh export with 10x scaling transformation applied, ensuring successful file creation with scaled geometry.
+
+Test Name: ExportWithTranslation
+Test Description: Tests mesh export with translation transformation (5,5,5), verifying file creation with translated geometry.
+
+Test Name: ExportMultipleMeshes
+Test Description: Tests exporting multiple meshes (triangle + cube) merged into a single STL file, verifying combined triangle count of 13 (REQ-8.2.1).
+
+Test Name: ExportEmptyMesh
+Test Description: Validates graceful handling of empty mesh export attempt, ensuring the exporter returns false without crashing.
+
+Test Name: ExportPrinting3DOptions
+Test Description: Tests export with 3D printing presets (binary format, millimeters), verifying correct option application for 3D printing workflows (REQ-8.2.1).
+
+Test Name: ExportCADOptions
+Test Description: Validates export with CAD presets (ASCII format, meters), ensuring proper option configuration for CAD software compatibility (REQ-8.2.1).
+
+Test Name: ValidateMesh
+Test Description: Tests mesh validation for a properly constructed cube, verifying it passes validation with no issues reported.
+
+Test Name: ValidateInvalidMesh
+Test Description: Validates detection of invalid mesh with out-of-bounds indices, ensuring validation fails and issues are reported.
+
+Test Name: PreprocessMesh
+Test Description: Tests mesh preprocessing with scale and translation transformations applied during export, verifying successful file creation.
+
+Test Name: ExportMultipleMeshesWithMerge
+Test Description: Tests merging multiple meshes (two translated triangles) into a single export, verifying merged statistics show 2 triangles total.
+
+Test Name: ExportToInvalidPath
+Test Description: Validates error handling when attempting to export to an invalid file path, ensuring the exporter returns false.
+
+Test Name: UnitConversion
+Test Description: Tests STL export with different unit conversions (millimeters, centimeters, meters, inches), verifying successful file creation for each unit type.

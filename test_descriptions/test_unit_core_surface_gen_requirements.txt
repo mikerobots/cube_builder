@@ -1,0 +1,34 @@
+----- File: core/surface_gen/tests/test_unit_core_surface_gen_requirements.cpp
+
+Test Name: DualContouringAlgorithm
+Test Description: Tests dual contouring algorithm generates valid meshes with more vertices than simple marching cubes per REQ-10.1.1
+
+Test Name: FeaturePreservation
+Test Description: Tests feature preservation with L-shaped structure using sharp feature angle settings per REQ-10.1.2
+
+Test Name: AdaptiveMeshGeneration
+Test Description: Tests adaptive mesh generation with different error tolerances for quality adaptation per REQ-10.1.3
+
+Test Name: MultiResolutionLOD
+Test Description: Tests multi-resolution LOD generation with distance-based LOD calculation per REQ-10.1.4
+
+Test Name: RealtimePreview
+Test Description: Tests real-time preview generation completes under 100ms with simplified mesh per REQ-10.1.5
+
+Test Name: HighQualityExport
+Test Description: Tests export mesh generation at different quality levels (Draft to Maximum) per REQ-10.1.6
+
+Test Name: SharpEdgePreservation
+Test Description: Tests architectural detail preservation using stairs pattern with configurable feature angle per REQ-10.1.7
+
+Test Name: MemoryConstraints
+Test Description: Tests cache memory management stays within bounds (100MB limit) with eviction per REQ-6.3.1
+
+Test Name: STLExportSupport
+Test Description: Tests mesh validity for STL export with proper triangulation and non-degenerate faces per REQ-8.2.1
+
+Test Name: AsyncGenerationSupport
+Test Description: Tests multiple concurrent async surface generation operations complete successfully
+
+Test Name: ProgressCallbackSupport
+Test Description: Tests progress callback functionality provides 0-1 progress values during generation

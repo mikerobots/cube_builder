@@ -1,0 +1,49 @@
+----- File: core/file_io/tests/test_unit_core_file_io_requirements.cpp
+
+Test Name: BinaryFormatHeader
+Test Description: Tests custom binary format includes file header with version and metadata including magic bytes 'CVEF' and current version (REQ-8.1.1)
+
+Test Name: WorkspaceDimensionsStorage
+Test Description: Tests storage and retrieval of workspace dimensions and settings including size, grid visibility, and axes visibility (REQ-8.1.2)
+
+Test Name: MultiResolutionVoxelStorage
+Test Description: Tests format capability to handle multi-resolution voxel data storage for all 10 resolution levels (REQ-8.1.3)
+
+Test Name: ActiveResolutionStorage
+Test Description: Tests storage and retrieval of current active resolution level setting (REQ-8.1.4)
+
+Test Name: CameraSettingsStorage
+Test Description: Tests format capability to store and retrieve camera position and view settings (REQ-8.1.5)
+
+Test Name: UndoHistoryStorage
+Test Description: Tests format capability to store limited undo history (10-20 operations) using custom data (REQ-8.1.6)
+
+Test Name: SelectionStateStorage
+Test Description: Tests format capability to store and retrieve vertex selection state using custom data (REQ-8.1.7)
+
+Test Name: GroupDefinitionsStorage
+Test Description: Tests storage and retrieval of group definitions and metadata using custom data and properties (REQ-8.1.8)
+
+Test Name: GroupVisibilityStorage
+Test Description: Tests storage and retrieval of group visibility states using custom data (REQ-8.1.9)
+
+Test Name: TimestampsStorage
+Test Description: Tests storage and retrieval of creation and modification timestamps with 1-second tolerance (REQ-8.1.10)
+
+Test Name: STLExport
+Test Description: Tests STL file export for 3D printing and sharing including binary, ASCII, and 3D printing presets (REQ-8.2.1)
+
+Test Name: FormatVersioning
+Test Description: Tests format versioning support for backward compatibility including version storage and retrieval (REQ-8.2.2)
+
+Test Name: LZ4Compression
+Test Description: Tests LZ4 compression for efficient storage including direct compression/decompression and compressed project files (REQ-8.2.3)
+
+Test Name: MemoryConstraints
+Test Description: Tests that file operations don't create excessive memory allocations, validating application overhead constraint (REQ-6.3.4)
+
+Test Name: CLIFileCommandSupport
+Test Description: Tests File I/O subsystem provides all necessary functionality for CLI save, load, and export commands (REQ-9.2.4)
+
+Test Name: ErrorHandlingCoverage
+Test Description: Tests error handling for invalid file operations including non-existent files, invalid paths, and empty mesh exports

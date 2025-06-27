@@ -1,0 +1,13 @@
+----- File: core/rendering/tests/test_unit_core_rendering_inline_shader_validation.cpp
+
+Test Name: OutlineRendererShaders
+Test Description: Validates inline shaders for outline rendering with line pattern support (solid, dashed, dotted, dashdot), testing vertex/fragment compilation, linking, and required uniforms (mvpMatrix, patternScale, patternOffset, linePattern) and attributes (position, color, patternCoord).
+
+Test Name: OverlayRendererShaders
+Test Description: Tests inline shaders for overlay/UI rendering with font texture support, verifying screen coordinate to NDC conversion, texture sampling for text rendering, and required uniforms (screenSize, fontTexture) and attributes (position, texCoord, color).
+
+Test Name: GroundPlaneGridShaders
+Test Description: Validates inline shaders for ground plane grid rendering with major/minor line distinction, testing distance-based fading effects, grid color differentiation, and required uniforms (mvpMatrix, gridColor, majorGridColor, gridOpacity, fadeStart, fadeEnd).
+
+Test Name: HighlightRendererShaders
+Test Description: Tests inline shaders for voxel highlighting with Fresnel edge effects and animated pulsing, verifying advanced lighting calculations with view direction and normal matrices, and required uniforms (mvpMatrix, modelMatrix, viewMatrix, normalMatrix, highlightColor, pulseTime, edgeThreshold).

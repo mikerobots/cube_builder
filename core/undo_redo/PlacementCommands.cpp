@@ -16,7 +16,7 @@ using namespace Logging;
 // PlacementCommandFactory implementation
 std::unique_ptr<Command> PlacementCommandFactory::createPlacementCommand(
     VoxelDataManager* voxelManager,
-    const Vector3i& position,
+    const IncrementCoordinates& position,
     VoxelResolution resolution) {
     
     if (!voxelManager) {
@@ -28,8 +28,8 @@ std::unique_ptr<Command> PlacementCommandFactory::createPlacementCommand(
     ValidationResult validation = validatePlacement(voxelManager, position, resolution);
     if (!validation.valid) {
         std::stringstream ss;
-        ss << "Invalid placement at (" << position.x << ", " << position.y << ", " << position.z 
-           << ") resolution " << VoxelData::getVoxelSizeName(resolution) << ": "
+        ss << "Invalid placement at " << position.toString()
+           << " resolution " << VoxelData::getVoxelSizeName(resolution) << ": "
            << (validation.errors.empty() ? "Unknown error" : validation.errors[0]);
         Logger::getInstance().warning(ss.str());
         return nullptr;
@@ -40,7 +40,7 @@ std::unique_ptr<Command> PlacementCommandFactory::createPlacementCommand(
 
 std::unique_ptr<Command> PlacementCommandFactory::createRemovalCommand(
     VoxelDataManager* voxelManager,
-    const Vector3i& position,
+    const IncrementCoordinates& position,
     VoxelResolution resolution) {
     
     if (!voxelManager) {
@@ -52,8 +52,8 @@ std::unique_ptr<Command> PlacementCommandFactory::createRemovalCommand(
     ValidationResult validation = validateRemoval(voxelManager, position, resolution);
     if (!validation.valid) {
         std::stringstream ss;
-        ss << "Invalid removal at (" << position.x << ", " << position.y << ", " << position.z 
-           << ") resolution " << VoxelData::getVoxelSizeName(resolution) << ": "
+        ss << "Invalid removal at " << position.toString()
+           << " resolution " << VoxelData::getVoxelSizeName(resolution) << ": "
            << (validation.errors.empty() ? "Unknown error" : validation.errors[0]);
         Logger::getInstance().warning(ss.str());
         return nullptr;
@@ -64,7 +64,7 @@ std::unique_ptr<Command> PlacementCommandFactory::createRemovalCommand(
 
 ValidationResult PlacementCommandFactory::validatePlacement(
     VoxelDataManager* voxelManager,
-    const Vector3i& position,
+    const IncrementCoordinates& position,
     VoxelResolution resolution) {
     
     ValidationResult result;
@@ -107,21 +107,9 @@ ValidationResult PlacementCommandFactory::validatePlacement(
         result.addError("Position is not aligned to 1cm increments");
     }
     
-    // Check grid alignment for voxel resolution
-    Math::WorldCoordinates worldCoord = Math::CoordinateConverter::incrementToWorld(incrementPos);
-    Math::Vector3f worldPos = worldCoord.value();
-    float voxelSize = VoxelData::getVoxelSize(resolution);
-    
-    // Validate grid alignment (position must be multiple of voxel size)
-    const float EPSILON = 0.001f; // 1mm tolerance
-    if (std::fmod(worldPos.x + EPSILON, voxelSize) > 2 * EPSILON ||
-        std::fmod(worldPos.y + EPSILON, voxelSize) > 2 * EPSILON ||
-        std::fmod(worldPos.z + EPSILON, voxelSize) > 2 * EPSILON) {
-        std::stringstream ss;
-        ss << "Position (" << worldPos.x << ", " << worldPos.y << ", " << worldPos.z 
-           << ") is not aligned to " << static_cast<int>(voxelSize * 100) << "cm grid";
-        result.addError(ss.str());
-    }
+    // NOTE: Grid alignment check removed per new requirements
+    // Voxels can now be placed at any 1cm increment position regardless of their size
+    // The 1cm increment validation is already done by isValidIncrementPosition() above
     
     // Check if position would overlap with existing voxel
     if (voxelManager->wouldOverlap(position, resolution)) {
@@ -138,7 +126,7 @@ ValidationResult PlacementCommandFactory::validatePlacement(
 
 ValidationResult PlacementCommandFactory::validateRemoval(
     VoxelDataManager* voxelManager,
-    const Vector3i& position,
+    const IncrementCoordinates& position,
     VoxelResolution resolution) {
     
     ValidationResult result;
@@ -158,7 +146,7 @@ ValidationResult PlacementCommandFactory::validateRemoval(
 
 // VoxelPlacementCommand implementation
 VoxelPlacementCommand::VoxelPlacementCommand(VoxelDataManager* voxelManager,
-                                           const Vector3i& position,
+                                           const IncrementCoordinates& position,
                                            VoxelResolution resolution)
     : m_position(position)
     , m_resolution(resolution)
@@ -174,6 +162,7 @@ VoxelPlacementCommand::VoxelPlacementCommand(VoxelDataManager* voxelManager,
 
 bool VoxelPlacementCommand::execute() {
     if (!m_baseCommand) {
+        Logger::getInstance().error("VoxelPlacementCommand: No base command");
         return false;
     }
     
@@ -181,16 +170,22 @@ bool VoxelPlacementCommand::execute() {
     ValidationResult validation = validate();
     if (!validation.valid) {
         Logger::getInstance().error("VoxelPlacementCommand execution failed validation");
+        for (const auto& error : validation.errors) {
+            Logger::getInstance().error("  - " + error);
+        }
         return false;
     }
     
     bool success = m_baseCommand->execute();
+    
     if (success) {
         m_executed = true;
         std::stringstream ss;
-        ss << "Placed voxel at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
+        ss << "Placed voxel at " << m_position.toString()
+           << " resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
+    } else {
+        Logger::getInstance().error("VoxelPlacementCommand: Base command execution failed");
     }
     
     return success;
@@ -205,8 +200,8 @@ bool VoxelPlacementCommand::undo() {
     if (success) {
         m_executed = false;
         std::stringstream ss;
-        ss << "Undid voxel placement at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
+        ss << "Undid voxel placement at " << m_position.toString()
+           << " resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -219,8 +214,8 @@ bool VoxelPlacementCommand::canUndo() const {
 
 std::string VoxelPlacementCommand::getDescription() const {
     std::stringstream ss;
-    ss << "Place " << VoxelData::getVoxelSizeName(m_resolution) << " voxel at (" 
-       << m_position.x << ", " << m_position.y << ", " << m_position.z << ")";
+    ss << "Place " << VoxelData::getVoxelSizeName(m_resolution) << " voxel at " 
+       << m_position.toString();
     return ss.str();
 }
 
@@ -263,7 +258,7 @@ ValidationResult VoxelPlacementCommand::validate() const {
 
 // VoxelRemovalCommand implementation
 VoxelRemovalCommand::VoxelRemovalCommand(VoxelDataManager* voxelManager,
-                                        const Vector3i& position,
+                                        const IncrementCoordinates& position,
                                         VoxelResolution resolution)
     : m_position(position)
     , m_resolution(resolution)
@@ -293,8 +288,8 @@ bool VoxelRemovalCommand::execute() {
     if (success) {
         m_executed = true;
         std::stringstream ss;
-        ss << "Removed voxel at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
+        ss << "Removed voxel at " << m_position.toString()
+           << " resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -310,8 +305,8 @@ bool VoxelRemovalCommand::undo() {
     if (success) {
         m_executed = false;
         std::stringstream ss;
-        ss << "Undid voxel removal at (" << m_position.x << ", " << m_position.y << ", " << m_position.z 
-           << ") resolution " << VoxelData::getVoxelSizeName(m_resolution);
+        ss << "Undid voxel removal at " << m_position.toString()
+           << " resolution " << VoxelData::getVoxelSizeName(m_resolution);
         Logger::getInstance().debug(ss.str());
     }
     
@@ -324,8 +319,8 @@ bool VoxelRemovalCommand::canUndo() const {
 
 std::string VoxelRemovalCommand::getDescription() const {
     std::stringstream ss;
-    ss << "Remove " << VoxelData::getVoxelSizeName(m_resolution) << " voxel at (" 
-       << m_position.x << ", " << m_position.y << ", " << m_position.z << ")";
+    ss << "Remove " << VoxelData::getVoxelSizeName(m_resolution) << " voxel at " 
+       << m_position.toString();
     return ss.str();
 }
 

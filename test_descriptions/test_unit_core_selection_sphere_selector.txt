@@ -1,0 +1,55 @@
+----- File: core/selection/tests/test_unit_core_selection_sphere_selector.cpp
+
+Test Name: DefaultConfiguration
+Test Description: Tests default configuration of SphereSelector with Replace mode, includePartial true, falloff disabled, and falloffStart at 0.8
+
+Test Name: SetConfiguration
+Test Description: Tests setting and getting configuration options including selection mode, includePartial flag, and falloff settings
+
+Test Name: SelectFromSphere_SmallRadius
+Test Description: Tests sphere selection with small radius (0.02m) verifying at least one voxel is selected at the origin
+
+Test Name: SelectFromSphere_LargerRadius
+Test Description: Tests sphere selection with larger radius (0.1m) verifying multiple voxels are selected and all are within radius bounds
+
+Test Name: SelectFromSphere_OffsetCenter
+Test Description: Tests sphere selection with offset center (0.1, 0.1, 0.1), verifying proper voxel selection and intersection checking with 1cm precision placement
+
+Test Name: SelectFromSphere_IncludePartialTrue
+Test Description: Tests sphere selection with includePartial=true, verifying that voxels partially intersecting the sphere are included
+
+Test Name: SelectFromSphere_IncludePartialFalse
+Test Description: Tests sphere selection with includePartial=false, verifying only voxels with centers inside the sphere are selected
+
+Test Name: SelectFromRay_Basic
+Test Description: Tests selection from ray, creating a sphere at the intersection point along the ray with specified radius
+
+Test Name: SelectEllipsoid_Basic
+Test Description: Tests ellipsoid selection with different radii (0.1, 0.05, 0.08), verifying selected voxels satisfy the ellipsoid equation
+
+Test Name: SelectEllipsoid_Rotated
+Test Description: Tests rotated ellipsoid selection with 45-degree rotation around Z axis
+
+Test Name: SelectHemisphere_UpwardFacing
+Test Description: Tests hemisphere selection with upward normal (0,1,0), verifying voxels are in upper hemisphere and none below the plane
+
+Test Name: SelectHemisphere_SidewaysFacing
+Test Description: Tests hemisphere selection with sideways normal (1,0,0), verifying voxels in positive X direction and none in negative X
+
+Test Name: SelectFromSphere_DifferentResolutions
+Test Description: Tests sphere selection with different voxel resolutions (2cm and 8cm), verifying both select appropriate voxels
+
+Test Name: SelectFromSphere_ZeroRadius
+Test Description: Tests edge case of zero radius sphere with includePartial=false, expecting no voxels selected
+
+Test Name: SelectFromSphere_VeryLargeRadius
+Test Description: Tests very large radius (10m) sphere selection with 64cm voxels, expecting many voxels selected
+
+Test Name: SelectEllipsoid_Sphere
+Test Description: Tests that ellipsoid with equal radii behaves identically to sphere selection
+
+Test Name: SelectHemisphere_FullSphere
+Test Description: Compares hemisphere selection with full sphere, verifying hemisphere has fewer voxels and all are contained in sphere
+
+Test Name: SetVoxelManager
+Test Description: Tests that selection works without a voxel manager (assumes all voxels exist)

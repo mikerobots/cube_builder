@@ -1,0 +1,61 @@
+----- File: core/input/tests/test_unit_core_input_placement_validation.cpp
+
+Test Name: SnapToValidIncrement
+Test Description: Tests position snapping to 1cm increments, verifying exact positions, rounding up/down behavior, and negative position handling. Validates REQ-2.1.1 and REQ-2.2.2.
+
+Test Name: SnapToGridAligned
+Test Description: Tests grid-aligned snapping behavior updated for new requirements where all voxels place at exact 1cm positions without resolution-based snapping. Tests various resolutions with and without shift key.
+
+Test Name: ValidateYBelowZero
+Test Description: Tests Y >= 0 constraint validation, verifying positions below ground are invalid, positions at ground (Y=0) are valid, and positions above ground are valid. Validates REQ-2.1.4 and REQ-5.2.3.
+
+Test Name: ValidateWorkspaceBounds
+Test Description: Tests workspace bounds validation for positions within bounds, outside X bounds (negative and positive), outside Y bounds (too high), and large voxels that would extend outside bounds. Validates REQ-5.2.2.
+
+Test Name: WorldToIncrementCoordinate
+Test Description: Tests world to increment coordinate conversion via CoordinateConverter for both positive and negative positions, verifying proper rounding behavior.
+
+Test Name: IncrementToWorldCoordinate
+Test Description: Tests increment coordinate to world conversion via CoordinateConverter for positive and negative increment positions, verifying exact float conversions.
+
+Test Name: GetPlacementContext
+Test Description: Tests complete placement context generation for valid placement with/without shift, invalid placement (Y < 0), and invalid placement (out of bounds). Validates new behavior with exact 1cm position placement.
+
+Test Name: ShiftKeyOverrideAllResolutions
+Test Description: Tests shift key override for all resolutions, verifying that both shift and no-shift now use 1cm increments (same behavior). Validates REQ-3.1.2 and REQ-5.4.1.
+
+Test Name: SameSizeVoxelSnapping
+Test Description: Tests same-size voxel placement with new behavior of no resolution-based snapping, using exact 1cm positions. Validates REQ-3.1.1 with updated requirements.
+
+Test Name: SameSizeSnappingShiftOverride
+Test Description: Tests same-size snapping with Shift override, verifying placement at 1cm increments regardless of nearby voxels. Validates REQ-3.1.2 and REQ-5.4.1.
+
+Test Name: NoNearbyVoxelsSnapping
+Test Description: Tests placement when no same-size voxels are nearby, verifying exact 1cm positions are used even when no nearby voxels exist.
+
+Test Name: SurfaceFaceGridSnapping
+Test Description: Tests sub-grid positioning on larger voxel surface faces, verifying snapping to nearest valid position on the target face. Validates REQ-3.2.2 and REQ-3.2.3.
+
+Test Name: SurfaceFaceAllDirections
+Test Description: Tests surface face snapping for all six face directions (PosX, NegX, PosY, NegY, PosZ, NegZ), verifying proper constraint behavior for each axis.
+
+Test Name: SmartPlacementContext
+Test Description: Tests smart placement context selection for cases without surface face (using same-size snapping) and with surface face (using surface face grid snapping).
+
+Test Name: SmartSnappingValidation
+Test Description: Tests validation with smart snapping for invalid placement (Y < 0) and valid placement scenarios.
+
+Test Name: SurfaceFaceEdgeCases
+Test Description: Tests edge cases for surface face snapping, including placing large voxels on small surface faces with proper constraint handling.
+
+Test Name: AllVoxelSizesOnGroundPlane1cmIncrements
+Test Description: Tests that all voxel sizes (1cm to 512cm) can be placed at any valid 1cm increment position on the ground plane with shift key. Validates REQ-2.2.4.
+
+Test Name: Arbitrary1cmPositions_AllVoxelSizes
+Test Description: Tests that all voxel sizes can be placed at arbitrary 1cm positions, validating new requirements where voxels aren't constrained to resolution-based grids.
+
+Test Name: NonAlignedPositions_NoResolutionConstraints
+Test Description: Tests that voxels can be placed at positions that don't align with their resolution grid, validating removal of snapToVoxelResolution behavior.
+
+Test Name: PlacementContext_ExactPositions
+Test Description: Tests that the complete placement context system works with exact 1cm positions for various voxel sizes and positions, validating all components work together without snapping.

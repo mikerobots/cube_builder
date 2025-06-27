@@ -631,7 +631,8 @@ TEST_F(ResolutionCommandTest, InvalidResolutionValues_WrongUnits_REQ_11_3_13) {
             << "Command 'resolution " << invalidValue << "' should fail";
         
         EXPECT_TRUE(result.message.find("Invalid resolution") != std::string::npos)
-            << "Error message should mention 'Invalid resolution' for value: " << invalidValue;
+            << "Error message should mention 'Invalid resolution' for value: " << invalidValue
+            << "\nActual error message: " << result.message;
         
         VoxelData::VoxelResolution currentResolution = voxelManager->getActiveResolution();
         EXPECT_EQ(currentResolution, initialResolution)
@@ -661,11 +662,16 @@ TEST_F(ResolutionCommandTest, InvalidResolutionValues_FormatIssues_REQ_11_3_13) 
     for (const std::string& invalidValue : formatIssues) {
         CommandResult result = cmdProcessor->execute("resolution " + invalidValue);
         
+        std::cout << "Testing resolution value: '" << invalidValue << "'" << std::endl;
+        std::cout << "Command result success: " << result.success << std::endl;
+        std::cout << "Command result message: '" << result.message << "'" << std::endl;
+        
         EXPECT_FALSE(result.success) 
             << "Command 'resolution " << invalidValue << "' should fail";
         
         EXPECT_TRUE(result.message.find("Invalid resolution") != std::string::npos)
-            << "Error message should mention 'Invalid resolution' for value: " << invalidValue;
+            << "Error message should mention 'Invalid resolution' for value: " << invalidValue
+            << "\nActual error message: " << result.message;
         
         VoxelData::VoxelResolution currentResolution = voxelManager->getActiveResolution();
         EXPECT_EQ(currentResolution, initialResolution)
@@ -701,7 +707,8 @@ TEST_F(ResolutionCommandTest, InvalidResolutionValues_InvalidStrings_REQ_11_3_13
             << "Command 'resolution " << invalidValue << "' should fail";
         
         EXPECT_TRUE(result.message.find("Invalid resolution") != std::string::npos)
-            << "Error message should mention 'Invalid resolution' for value: " << invalidValue;
+            << "Error message should mention 'Invalid resolution' for value: " << invalidValue
+            << "\nActual error message: " << result.message;
         
         VoxelData::VoxelResolution currentResolution = voxelManager->getActiveResolution();
         EXPECT_EQ(currentResolution, initialResolution)

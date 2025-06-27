@@ -1,0 +1,49 @@
+----- File: core/camera/tests/test_unit_core_camera_viewport.cpp
+
+Test Name: DefaultConstruction
+Test Description: Tests default construction of Viewport with expected default values (position at 0,0, size 800x600, aspect ratio calculation)
+
+Test Name: CustomConstruction
+Test Description: Tests custom construction of Viewport with specified position (100,50) and size (800x600), verifying all parameters are set correctly
+
+Test Name: PositionManagement
+Test Description: Tests viewport position management including setPosition() method and position getter methods
+
+Test Name: SizeManagement
+Test Description: Tests viewport size management including setSize() method, aspect ratio updates, and validation that invalid sizes (0, negative) are rejected
+
+Test Name: BoundsManagement
+Test Description: Tests setBounds() method which sets both position and size simultaneously
+
+Test Name: ScreenToNormalizedCoordinates
+Test Description: Tests conversion from screen coordinates to normalized device coordinates (-1 to 1), testing center, corners, and various points
+
+Test Name: NormalizedToScreenCoordinates
+Test Description: Tests conversion from normalized device coordinates (-1 to 1) to screen coordinates, testing center and corner points
+
+Test Name: CoordinateRoundTrip
+Test Description: Tests that converting screen coordinates to normalized and back to screen gives the original coordinates
+
+Test Name: ContainsPoint
+Test Description: Tests the contains() method to check if a point is inside the viewport boundaries, testing both inside and outside points including edge cases
+
+Test Name: ScreenToWorldRay
+Test Description: Tests ray generation from screen coordinates for ray-casting, validates ray direction and normalization (REQ-5.1.4, REQ-CAM-6)
+
+Test Name: WorldToScreen
+Test Description: Tests projection of 3D world points to 2D screen coordinates using view and projection matrices
+
+Test Name: MouseDelta
+Test Description: Tests calculation of normalized mouse delta movement between two screen positions
+
+Test Name: ZoomFactor
+Test Description: Tests zoom factor calculation based on viewport size (min dimension / 800)
+
+Test Name: AspectRatioUpdates
+Test Description: Tests aspect ratio calculations for various viewport sizes (square, wide, tall) supporting multiple view projections (REQ-CAM-2)
+
+Test Name: EdgeCaseCoordinates
+Test Description: Tests viewport boundary conditions with coordinates exactly at edges and just outside boundaries
+
+Test Name: SmallViewport
+Test Description: Tests behavior with very small viewport (1x1 pixel) including aspect ratio and contains() functionality

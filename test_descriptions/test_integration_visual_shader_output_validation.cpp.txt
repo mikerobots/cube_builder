@@ -1,0 +1,31 @@
+----- File: tests/integration/rendering/test_integration_visual_shader_output_validation.cpp
+
+Test Name: BasicTriangleRendering
+Test Description: Tests basic shader functionality by creating and rendering a colored triangle using inline vertex and fragment shaders. Validates that the triangle covers at least 5% of the screen, contains RGB colors, and has proper brightness levels. Saves output as PPM for debugging.
+
+Test Name: VoxelCubeShading
+Test Description: Tests voxel cube rendering with simplified 2D positioning and color output. Creates a red square using cube vertices and validates visibility, color presence, and brightness. Uses vertex attributes for position, normal, and color without matrix transformations.
+
+Test Name: GroundPlaneGridRendering
+Test Description: Tests ground plane grid rendering functionality by initializing a GroundPlaneGrid component and rendering it from an overhead camera angle. Validates grid line visibility (>0.1% pixel coverage) and checks for grayscale rendering characteristics.
+
+Test Name: MultipleObjectsWithDifferentShaders
+Test Description: Tests rendering multiple objects using different shaders (solid color and gradient). Creates two quads rendered with distinct shaders and validates that both are visible with their expected colors (red solid, gradient colors). Verifies distinct color regions exist.
+
+Test Name: ShaderErrorVisualization
+Test Description: Tests error handling by attempting to compile a shader with syntax errors, then falling back to a valid shader. Validates that the system handles compilation failures gracefully and can still render using a fallback shader (magenta triangle).
+
+Test Name: GroundPlaneAtDifferentDistances
+Test Description: Tests ground plane grid rendering at multiple camera distances (near, medium, far, very far). Validates that grid visibility decreases appropriately with distance and that fading effects work correctly for perspective rendering.
+
+Test Name: GroundPlaneMajorMinorLines
+Test Description: Tests ground plane grid line detection and differentiation between major and minor grid lines. Uses orthographic projection from directly overhead to clearly detect grid lines and validate their brightness and coverage across the screen.
+
+Test Name: GroundPlaneOpacityAndColor
+Test Description: Tests ground plane grid opacity and blending functionality with a colored background. Enables alpha blending and validates that grid lines properly blend with the background color rather than appearing as pure white/gray lines.
+
+Test Name: GroundPlaneWithDifferentViewAngles
+Test Description: Tests ground plane visibility from various camera angles including top-down, diagonal high/low, near horizontal, and from below. Validates expected visibility for each angle and proper culling behavior.
+
+Test Name: GroundPlaneLineDetection
+Test Description: Advanced test that detects and analyzes individual grid lines using orthographic projection. Scans for horizontal and vertical lines, validates grid structure consistency, and checks line spacing uniformity for proper grid formation.

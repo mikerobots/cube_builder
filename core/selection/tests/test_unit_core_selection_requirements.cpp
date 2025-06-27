@@ -139,12 +139,14 @@ TEST_F(SelectionRequirementsTest, SelectionBoundsValidation) {
     Math::BoundingBox bounds = manager->getSelectionBounds();
     
     // Verify bounds encompass all selected voxels
-    EXPECT_GE(bounds.min.x, 0.0f);
-    EXPECT_GE(bounds.min.y, 0.0f);
-    EXPECT_GE(bounds.min.z, 0.0f);
-    EXPECT_LE(bounds.max.x, 0.08f);  // 2 voxels at 4cm each
-    EXPECT_LE(bounds.max.y, 0.08f);
-    EXPECT_LE(bounds.max.z, 0.04f);
+    // With new coordinate system, voxels extend from their center position
+    // A 4cm voxel at (0,0,0) extends from (-0.02, 0, -0.02) to (0.02, 0.04, 0.02)
+    EXPECT_GE(bounds.min.x, -0.02f);
+    EXPECT_GE(bounds.min.y, 0.0f);    // Ground plane constraint
+    EXPECT_GE(bounds.min.z, -0.02f);
+    EXPECT_LE(bounds.max.x, 0.06f);  // voxel at (4,0,0) extends to x=0.06
+    EXPECT_LE(bounds.max.y, 0.08f);  // voxel at (0,4,0) extends to y=0.08
+    EXPECT_LE(bounds.max.z, 0.02f);  // all voxels have z from -0.02 to 0.02
 }
 
 // REQ: Integration with undo/redo system for reversible selections

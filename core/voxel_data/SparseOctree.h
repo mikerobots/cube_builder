@@ -184,6 +184,9 @@ public:
         }
     }
     
+    // Debug methods
+    int getRootSize() const { return m_rootSize; }
+    
     // Static memory pool management
     static void initializePool(size_t initialSize = 1024);
     static void shutdownPool();

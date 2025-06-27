@@ -58,19 +58,20 @@ TEST_F(SelectionTypesTest, VoxelId_Hash) {
 }
 
 TEST_F(SelectionTypesTest, VoxelId_GetWorldPosition) {
-    // Test 1cm voxel at origin
+    // Test 1cm voxel at origin - placed on ground plane
     VoxelId voxel1(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_1cm);
-    EXPECT_EQ(voxel1.getWorldPosition(), Math::Vector3f(0.005f, 0.005f, 0.005f));
+    // Bottom at Y=0, center at Y=0.005m
+    EXPECT_EQ(voxel1.getWorldPosition(), Math::Vector3f(0.0f, 0.005f, 0.0f));
     
-    // Test 8cm voxel at increment position (8, 16, 24) which is the first 8cm voxel
-    // This voxel spans from (0,0,0) to (8,8,8) cm, center at (4,4,4) cm = (0.04, 0.04, 0.04) m
+    // Test 8cm voxel at origin - placed on ground plane
     VoxelId voxel2(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_8cm);
-    EXPECT_EQ(voxel2.getWorldPosition(), Math::Vector3f(0.04f, 0.04f, 0.04f));
+    // Bottom at Y=0, center at Y=0.04m
+    EXPECT_EQ(voxel2.getWorldPosition(), Math::Vector3f(0.0f, 0.04f, 0.0f));
     
-    // Test 8cm voxel at increment position (8, 16, 24) - the second voxel in each dimension
-    // This voxel spans from (8,16,24) to (16,24,32) cm, center at (12,20,28) cm = (0.12, 0.20, 0.28) m
+    // Test 8cm voxel at increment position (8, 16, 24)
+    // Position in meters: (0.08, 0.16, 0.24), with center at Y + half voxel size
     VoxelId voxel3(Math::IncrementCoordinates(Math::Vector3i(8, 16, 24)), VoxelData::VoxelResolution::Size_8cm);
-    EXPECT_EQ(voxel3.getWorldPosition(), Math::Vector3f(0.12f, 0.20f, 0.28f));
+    EXPECT_EQ(voxel3.getWorldPosition(), Math::Vector3f(0.08f, 0.20f, 0.24f));
 }
 
 TEST_F(SelectionTypesTest, VoxelId_GetVoxelSize) {
@@ -87,14 +88,14 @@ TEST_F(SelectionTypesTest, VoxelId_GetVoxelSize) {
 }
 
 TEST_F(SelectionTypesTest, VoxelId_GetBounds) {
-    // Test with a voxel at origin - this should work correctly
+    // Test with a voxel at origin - placed on ground plane
     VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(0, 0, 0)), VoxelData::VoxelResolution::Size_4cm);
     Math::BoundingBox bounds = voxel.getBounds();
     
-    // World position at origin (0,0,0)
-    // Size of 4cm voxel = 0.04m
-    Math::Vector3f expectedMin(0.0f, 0.0f, 0.0f);
-    Math::Vector3f expectedMax(0.04f, 0.04f, 0.04f);
+    // Voxel placed on ground plane with bottom face at Y=0
+    // 4cm voxel extends from -0.02 to +0.02 in X/Z, and 0 to 0.04 in Y
+    Math::Vector3f expectedMin(-0.02f, 0.0f, -0.02f);
+    Math::Vector3f expectedMax(0.02f, 0.04f, 0.02f);
     
     EXPECT_EQ(bounds.min, expectedMin);
     EXPECT_EQ(bounds.max, expectedMax);

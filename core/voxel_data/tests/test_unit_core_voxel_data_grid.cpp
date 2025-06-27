@@ -336,9 +336,10 @@ TEST_F(VoxelGridTest, DifferentResolutionBehavior) {
     Vector3i dims4cm = grid4cm.getGridDimensions();
     Vector3i dims16cm = grid16cm.getGridDimensions();
     
-    // Higher resolution = more grid cells
-    EXPECT_GT(dims1cm.x, dims4cm.x);
-    EXPECT_GT(dims4cm.x, dims16cm.x);
+    // NEW BEHAVIOR: All grids use the same 1cm increment coordinate system
+    // So they should have the same dimensions
+    EXPECT_EQ(dims1cm.x, dims4cm.x);
+    EXPECT_EQ(dims4cm.x, dims16cm.x);
     
     // Same world position should map to same increment coordinates
     WorldCoordinates worldPos(1.0f, 1.0f, 1.0f);
@@ -356,14 +357,18 @@ TEST_F(VoxelGridTest, StressTestLargeGrid) {
     // Use larger voxels for stress test to reduce memory usage
     VoxelGrid grid(VoxelEditor::VoxelData::VoxelResolution::Size_4cm, Vector3f(8.0f, 8.0f, 8.0f));
     
-    Vector3i maxDims = grid.getGridDimensions();
+    // For centered coordinate system with 8m workspace:
+    // X: -400 to +400 cm (800 cm total)
+    // Y: 0 to 800 cm
+    // Z: -400 to +400 cm (800 cm total)
     size_t expectedVoxels = 0;
     
-    // Fill every 4th voxel in each dimension
-    for (int x = 0; x < maxDims.x; x += 4) {
-        for (int y = 0; y < maxDims.y; y += 4) {
-            for (int z = 0; z < maxDims.z; z += 4) {
-                if (grid.setVoxel(Vector3i(x, y, z), true)) {
+    // Fill every 40cm (10 x 4cm voxels) in each dimension to reduce memory usage
+    for (int x = -400; x <= 400; x += 40) {
+        for (int y = 0; y <= 800; y += 40) {
+            for (int z = -400; z <= 400; z += 40) {
+                IncrementCoordinates pos(x, y, z);
+                if (grid.setVoxel(pos, true)) {
                     expectedVoxels++;
                 }
             }
@@ -374,10 +379,12 @@ TEST_F(VoxelGridTest, StressTestLargeGrid) {
     EXPECT_GT(expectedVoxels, 0);
     
     // Verify the voxels are correctly set
-    for (int x = 0; x < maxDims.x; x += 4) {
-        for (int y = 0; y < maxDims.y; y += 4) {
-            for (int z = 0; z < maxDims.z; z += 4) {
-                EXPECT_TRUE(grid.getVoxel(Vector3i(x, y, z)));
+    for (int x = -400; x <= 400; x += 40) {
+        for (int y = 0; y <= 800; y += 40) {
+            for (int z = -400; z <= 400; z += 40) {
+                IncrementCoordinates pos(x, y, z);
+                EXPECT_TRUE(grid.getVoxel(pos)) 
+                    << "Failed to retrieve voxel at position (" << x << "," << y << "," << z << ")";
             }
         }
     }
@@ -510,5 +517,250 @@ TEST_F(VoxelGridTest, VoxelWorldPositionVerification) {
     for (const auto& voxelPos : allVoxels) {
         WorldCoordinates worldPos = CoordinateConverter::incrementToWorld(voxelPos.incrementPos);
         EXPECT_TRUE(grid.isValidWorldPosition(worldPos.value()));
+    }
+}
+
+// ==================== Requirements Change Tests - Arbitrary 1cm Position Storage ====================
+
+// REQ-2.1.1 (updated): Voxels shall be placed at any 1cm increment position without resolution-based snapping
+TEST_F(VoxelGridTest, ArbitraryPositions_NoSnapToVoxelBoundaries) {
+    // Test that VoxelGrid can store voxels at any 1cm position, regardless of voxel size
+    // This verifies the new requirement: no resolution-based snapping in storage
+    
+    // Test with 4cm voxels - previously these would snap to multiples of 4
+    VoxelGrid grid4cm(VoxelEditor::VoxelData::VoxelResolution::Size_4cm, Vector3f(10.0f, 10.0f, 10.0f));
+    
+    // These positions are NOT aligned to 4cm boundaries
+    std::vector<IncrementCoordinates> nonAlignedPositions = {
+        IncrementCoordinates(1, 1, 1),    // 1cm position (not multiple of 4)
+        IncrementCoordinates(3, 7, 11),   // Prime numbers (not multiples of 4)
+        IncrementCoordinates(17, 23, 29), // More primes
+        IncrementCoordinates(50, 75, 99), // Random non-aligned positions
+        IncrementCoordinates(-5, 13, -21) // Mixed positive/negative
+    };
+    
+    // All these positions should be storable without snapping
+    for (const auto& pos : nonAlignedPositions) {
+        EXPECT_TRUE(grid4cm.setVoxel(pos, true)) 
+            << "Failed to store 4cm voxel at non-aligned position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+        EXPECT_TRUE(grid4cm.getVoxel(pos))
+            << "Failed to retrieve 4cm voxel at non-aligned position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+    }
+    
+    EXPECT_EQ(grid4cm.getVoxelCount(), nonAlignedPositions.size());
+    
+    // Test with 16cm voxels - even larger voxels should store at arbitrary 1cm positions
+    VoxelGrid grid16cm(VoxelEditor::VoxelData::VoxelResolution::Size_16cm, Vector3f(20.0f, 20.0f, 20.0f));
+    
+    std::vector<IncrementCoordinates> moreNonAlignedPositions = {
+        IncrementCoordinates(7, 13, 19),   // Not multiples of 16
+        IncrementCoordinates(31, 37, 41),  // More primes
+        IncrementCoordinates(100, 200, 150) // Large non-aligned
+    };
+    
+    for (const auto& pos : moreNonAlignedPositions) {
+        EXPECT_TRUE(grid16cm.setVoxel(pos, true))
+            << "Failed to store 16cm voxel at non-aligned position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+        EXPECT_TRUE(grid16cm.getVoxel(pos))
+            << "Failed to retrieve 16cm voxel at non-aligned position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+    }
+    
+    EXPECT_EQ(grid16cm.getVoxelCount(), moreNonAlignedPositions.size());
+}
+
+TEST_F(VoxelGridTest, ArbitraryPositions_AllResolutionsSupported) {
+    // Test that ALL voxel resolutions can store voxels at arbitrary 1cm positions
+    // This is the core of the requirements change
+    
+    Vector3f testWorkspace(8.0f, 8.0f, 8.0f);
+    
+    // Test arbitrary 1cm positions that are NOT aligned to any common voxel size
+    std::vector<IncrementCoordinates> testPositions = {
+        IncrementCoordinates(13, 27, 41),  // Prime numbers
+        IncrementCoordinates(97, 103, 107), // More primes
+        IncrementCoordinates(-23, 59, -67), // Mixed signs
+        IncrementCoordinates(1, 3, 5),     // Small odds
+        IncrementCoordinates(127, 131, 137) // Large primes
+    };
+    
+    std::vector<VoxelEditor::VoxelData::VoxelResolution> allResolutions = {
+        VoxelEditor::VoxelData::VoxelResolution::Size_1cm, VoxelEditor::VoxelData::VoxelResolution::Size_2cm, 
+        VoxelEditor::VoxelData::VoxelResolution::Size_4cm, VoxelEditor::VoxelData::VoxelResolution::Size_8cm, 
+        VoxelEditor::VoxelData::VoxelResolution::Size_16cm, VoxelEditor::VoxelData::VoxelResolution::Size_32cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_64cm, VoxelEditor::VoxelData::VoxelResolution::Size_128cm
+        // Note: Skip 256cm and 512cm as they're too large for 8m workspace
+    };
+    
+    for (auto resolution : allResolutions) {
+        VoxelGrid grid(resolution, testWorkspace);
+        float voxelSize = VoxelEditor::VoxelData::getVoxelSize(resolution);
+        
+        for (const auto& pos : testPositions) {
+            // Skip positions outside workspace for this resolution
+            if (!grid.isValidIncrementPosition(pos)) {
+                continue;
+            }
+            
+            // Should be able to store at exact position (no snapping)
+            EXPECT_TRUE(grid.setVoxel(pos, true))
+                << "Failed to store " << (voxelSize * 100) << "cm voxel at position (" 
+                << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+                
+            EXPECT_TRUE(grid.getVoxel(pos))
+                << "Failed to retrieve " << (voxelSize * 100) << "cm voxel at position (" 
+                << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+        }
+    }
+}
+
+TEST_F(VoxelGridTest, ArbitraryPositions_StorageAndRetrieval) {
+    // Test that voxels stored at arbitrary positions can be retrieved correctly
+    // This verifies that VoxelGrid correctly handles storage at any 1cm position
+    
+    VoxelGrid grid(VoxelEditor::VoxelData::VoxelResolution::Size_8cm, Vector3f(6.0f, 6.0f, 6.0f));
+    
+    // Store voxels at positions that would NOT align to 8cm boundaries
+    std::vector<IncrementCoordinates> testPositions = {
+        IncrementCoordinates(11, 19, 23),  // Not multiples of 8
+        IncrementCoordinates(37, 41, 43),  // More non-aligned
+        IncrementCoordinates(-13, 29, -31), // Mixed signs, non-aligned
+        IncrementCoordinates(67, 71, 73),  // Large non-aligned
+        IncrementCoordinates(5, 9, 15)     // Small non-aligned
+    };
+    
+    // Store all voxels
+    for (const auto& pos : testPositions) {
+        EXPECT_TRUE(grid.setVoxel(pos, true))
+            << "Failed to store voxel at position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+    }
+    
+    EXPECT_EQ(grid.getVoxelCount(), testPositions.size());
+    
+    // Verify all stored voxels can be retrieved at their exact positions
+    for (const auto& pos : testPositions) {
+        EXPECT_TRUE(grid.getVoxel(pos))
+            << "Failed to retrieve voxel at position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+    }
+    
+    // Verify adjacent positions are NOT set (unless they happen to map to same grid cell)
+    for (const auto& pos : testPositions) {
+        IncrementCoordinates adjacent1(pos.x() + 1, pos.y(), pos.z());
+        IncrementCoordinates adjacent2(pos.x(), pos.y() + 1, pos.z());
+        IncrementCoordinates adjacent3(pos.x(), pos.y(), pos.z() + 1);
+        
+        // These might or might not be set depending on whether they map to the same grid cell
+        // But we can at least verify the operations don't crash
+        if (grid.isValidIncrementPosition(adjacent1)) {
+            grid.getVoxel(adjacent1); // Should not crash
+        }
+        if (grid.isValidIncrementPosition(adjacent2)) {
+            grid.getVoxel(adjacent2); // Should not crash
+        }
+        if (grid.isValidIncrementPosition(adjacent3)) {
+            grid.getVoxel(adjacent3); // Should not crash
+        }
+    }
+}
+
+TEST_F(VoxelGridTest, ArbitraryPositions_GridCoordinateMapping) {
+    // Test that the incrementToGrid function correctly maps arbitrary positions
+    // This tests the internal grid coordinate conversion without snapping
+    
+    VoxelGrid grid(VoxelEditor::VoxelData::VoxelResolution::Size_4cm, Vector3f(8.0f, 8.0f, 8.0f));
+    
+    // Test positions and their expected grid mappings
+    struct MappingTest {
+        IncrementCoordinates incrementPos;
+        Vector3i expectedGridPos;
+        std::string description;
+    };
+    
+    // NEW BEHAVIOR: VoxelGrid now stores at 1cm granularity regardless of resolution
+    // For 8m workspace: offset is 400cm for X/Z (halfX_cm = halfZ_cm = 400)
+    // Grid position = increment position + offset (no division by voxel size)
+    std::vector<MappingTest> mappingTests = {
+        {IncrementCoordinates(0, 0, 0), Vector3i(400, 0, 400), "Center position"},
+        {IncrementCoordinates(4, 4, 4), Vector3i(404, 4, 404), "4cm offset"},
+        {IncrementCoordinates(1, 1, 1), Vector3i(401, 1, 401), "1cm position (each cm is unique)"},
+        {IncrementCoordinates(3, 3, 3), Vector3i(403, 3, 403), "3cm position (each cm is unique)"},
+        {IncrementCoordinates(5, 5, 5), Vector3i(405, 5, 405), "5cm position (each cm is unique)"},
+        {IncrementCoordinates(-100, 50, -200), Vector3i(300, 50, 200), "Negative coordinates"},
+        {IncrementCoordinates(100, 100, 100), Vector3i(500, 100, 500), "Positive coordinates"}
+    };
+    
+    for (const auto& test : mappingTests) {
+        if (grid.isValidIncrementPosition(test.incrementPos)) {
+            Vector3i actualGridPos = grid.incrementToGrid(test.incrementPos);
+            EXPECT_EQ(actualGridPos.x, test.expectedGridPos.x) 
+                << test.description << " - X coordinate mismatch";
+            EXPECT_EQ(actualGridPos.y, test.expectedGridPos.y) 
+                << test.description << " - Y coordinate mismatch"; 
+            EXPECT_EQ(actualGridPos.z, test.expectedGridPos.z) 
+                << test.description << " - Z coordinate mismatch";
+        }
+    }
+}
+
+TEST_F(VoxelGridTest, ArbitraryPositions_DensePacking) {
+    // Test storing many voxels at arbitrary 1cm positions to verify no conflicts
+    // This ensures the sparse octree can handle arbitrary positions efficiently
+    
+    VoxelGrid grid(VoxelEditor::VoxelData::VoxelResolution::Size_2cm, Vector3f(4.0f, 4.0f, 4.0f));
+    
+    // Create positions that test arbitrary 1cm placement
+    std::vector<IncrementCoordinates> testPositions;
+    
+    // Add positions at 1cm intervals within a smaller area (10cm x 10cm x 10cm)
+    // For 2cm voxels, many of these will map to the same grid cells, which is expected
+    for (int x = -5; x <= 5; x += 1) {
+        for (int y = 0; y <= 10; y += 1) {
+            for (int z = -5; z <= 5; z += 1) {
+                IncrementCoordinates pos(x, y, z);
+                if (grid.isValidIncrementPosition(pos)) {
+                    testPositions.push_back(pos);
+                }
+            }
+        }
+    }
+    
+    // Store all voxels - NEW: each 1cm position has its own unique grid cell
+    size_t successfulStores = 0;
+    for (const auto& pos : testPositions) {
+        if (grid.setVoxel(pos, true)) {
+            successfulStores++;
+        }
+    }
+    
+    EXPECT_GT(successfulStores, 0);
+    
+    // NEW BEHAVIOR: VoxelGrid stores at 1cm granularity
+    // So each 1cm position has a unique grid cell, regardless of voxel resolution
+    size_t actualVoxelCount = grid.getVoxelCount();
+    EXPECT_EQ(actualVoxelCount, successfulStores);
+    EXPECT_GT(actualVoxelCount, 0);
+    
+    // We should have exactly as many voxels as positions we set
+    // (11x11x11 = 1331 positions in the test range)
+    EXPECT_EQ(actualVoxelCount, testPositions.size());
+    
+    // Verify all stored positions can be retrieved
+    // Each 1cm position should return true since they're stored independently
+    size_t successfulRetrieves = 0;
+    for (const auto& pos : testPositions) {
+        if (grid.getVoxel(pos)) {
+            successfulRetrieves++;
+        }
+    }
+    
+    EXPECT_EQ(successfulRetrieves, successfulStores);
+    
+    // Memory usage should be reasonable
+    size_t memoryUsage = grid.getMemoryUsage();
+    EXPECT_GT(memoryUsage, 0);
+    
+    // Memory per unique voxel should be reasonable
+    if (actualVoxelCount > 0) {
+        double memoryPerVoxel = static_cast<double>(memoryUsage) / actualVoxelCount;
+        EXPECT_LT(memoryPerVoxel, 2048.0) << "Memory usage per voxel too high: " << memoryPerVoxel << " bytes";
     }
 }

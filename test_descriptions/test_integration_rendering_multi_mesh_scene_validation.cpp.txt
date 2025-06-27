@@ -1,0 +1,16 @@
+----- File: tests/integration/rendering/test_integration_rendering_multi_mesh_scene_validation.cpp
+
+Test Name: Render100VoxelMeshes
+Test Description: Creates and renders 125 voxel meshes in a 5x5x5 grid pattern. Validates that all meshes render correctly without GL errors, checks pixel coverage to ensure significant visual output (>50,000 pixels), and verifies memory usage stays under 10MB.
+
+Test Name: ShaderSwitchingPerformance
+Test Description: Tests performance when rapidly switching between different shaders (basic_voxel, enhanced_voxel, flat_voxel) while rendering 100 voxel meshes. Renders 10 frames with shader switches for each mesh draw call, verifying the operation completes within 1 second and produces correct visual output.
+
+Test Name: LargeSceneNoArtifacts
+Test Description: Renders 216 voxels in a 6x6x6 grid from multiple camera angles to check for visual artifacts. Uses enhanced shader for quality, validates no GL errors occur, checks pixel coverage from each viewpoint, and specifically tests for "salt and pepper" artifacts (isolated bright pixels). Memory usage should stay under 20MB.
+
+Test Name: MemoryUsageWithManyMeshes
+Test Description: Progressive memory usage test that creates scenes with 100, 200, 400, and 800 voxel meshes. Verifies that memory usage scales linearly with mesh count (within 10% tolerance) and ensures total memory stays under 100MB even with 800 meshes.
+
+Test Name: RenderingPerformanceBenchmark
+Test Description: Performance benchmark that renders 200 voxel meshes for 100 frames after a 10-frame warm-up period. Measures frame rate and validates achievement of at least 60 FPS. Reports average frame time and FPS for performance tracking.

@@ -1,0 +1,22 @@
+----- File: core/input/tests/test_unit_core_input_modifier_key_tracking.cpp
+
+Test Name: BasicModifierKeyStates
+Test Description: Tests basic modifier key state tracking for Shift, Ctrl, Alt, and Super keys. Verifies initial state is None, correct state after key press/release, and getCurrentModifiers() returns proper flags. Validates REQ-3.1.2 and REQ-5.4.1.
+
+Test Name: MultipleModifierKeys
+Test Description: Tests multiple modifier keys pressed simultaneously, verifying correct combined modifier flags when Ctrl and Shift are pressed together, and proper state updates when one modifier is released while another remains pressed.
+
+Test Name: ModifierStateTransitions
+Test Description: Tests modifier state transitions during frame updates, including press and release within same frame, just pressed/released detection, and state clearing after frame updates. Verifies proper timing of state changes.
+
+Test Name: ModifiersWithMouseEvents
+Test Description: Tests modifier flags integration with mouse events, verifying that modifier state is correctly maintained when mouse events occur while modifier keys are pressed, and that both keyboard and mouse report consistent modifier states.
+
+Test Name: AllModifierCombinations
+Test Description: Tests all modifier key combinations individually and together, verifying each modifier (Shift, Ctrl, Alt, Super) works correctly alone and that all modifiers can be active simultaneously with correct combined flags.
+
+Test Name: KeyboardHandlerDirectTest
+Test Description: Tests KeyboardHandler directly without InputManager, verifying getCurrentModifiers() returns correct flags for multiple pressed modifiers and that modifierFlagsToString() properly formats modifier combinations.
+
+Test Name: ModifierFlagsHelpers
+Test Description: Tests modifier flags helper functions including hasModifier() for checking individual flags in combined modifiers, OR operator for combining flags, and AND operator for masking flags.

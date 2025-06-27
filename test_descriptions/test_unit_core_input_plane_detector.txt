@@ -1,0 +1,46 @@
+----- File: core/input/tests/test_unit_core_input_plane_detector.cpp
+
+Test Name: DetectGroundPlane
+Test Description: Tests detection of ground plane when no voxels are placed, verifying ground plane is found at height 0.0 (REQ-2.2.4)
+
+Test Name: DetectPlaneWithSingleVoxel
+Test Description: Tests plane detection with a single 32cm voxel, verifying the detected plane is at the voxel's top height of 0.32m (REQ-3.3.1)
+
+Test Name: DetectPlaneWithMultipleVoxels
+Test Description: Tests plane detection with multiple voxels at the same Y level, verifying the plane is detected at the common height
+
+Test Name: FindHighestVoxelUnderCursor
+Test Description: Tests finding the highest voxel under cursor when multiple voxels are stacked vertically (REQ-3.3.3)
+
+Test Name: PlanePersistenceDuringOverlap
+Test Description: Tests plane persistence while preview overlaps voxels at current height using updatePlanePersistence() (REQ-3.3.2)
+
+Test Name: PlaneClearingWhenPreviewClears
+Test Description: Tests basic plane clearing functionality including setCurrentPlane(), getCurrentPlane(), and reset() methods (REQ-3.3.4)
+
+Test Name: DifferentVoxelSizes
+Test Description: Tests plane detection with voxels of different sizes (32cm, 16cm, 8cm) at grid-aligned positions (REQ-3.3.1)
+
+Test Name: VoxelTopHeightCalculation
+Test Description: Tests calculateVoxelTopHeight() method for different voxel positions and resolutions
+
+Test Name: PlaneTransitionLogic
+Test Description: Tests shouldTransitionToNewPlane() logic for transitions to higher, same height, and lower planes
+
+Test Name: VoxelsAtSpecificHeight
+Test Description: Tests getVoxelsAtHeight() method with a simplified test case using a single voxel at origin
+
+Test Name: PreviewOverlapDetection
+Test Description: Tests previewOverlapsCurrentPlane() method for overlapping and non-overlapping preview positions (REQ-3.3.2)
+
+Test Name: ResetFunctionality
+Test Description: Tests reset() method clears the current plane state properly
+
+Test Name: EmptyWorkspace
+Test Description: Tests behavior in empty workspace - findHighestVoxelUnderCursor returns empty, detectPlane returns ground plane
+
+Test Name: VoxelAtBoundary
+Test Description: Tests detection of voxels placed at workspace boundaries within the search area
+
+Test Name: ComplexStackingScenario
+Test Description: Simplified test for complex stacking scenarios, verifying basic plane detection with a single voxel

@@ -1,0 +1,31 @@
+----- File: tests/integration/rendering/test_integration_visual_pixel_validation_helpers.cpp
+
+Test Name: ColorDistributionAnalysis
+Test Description: Tests the analyzeColorDistribution function by creating a 100x100 test image with 25% red foreground on black background. Validates accurate percentage calculations, color histogram generation, and specific color percentage retrieval.
+
+Test Name: EdgeDetection
+Test Description: Tests edge detection functionality by creating an image with a sharp vertical edge (half black, half white). Validates that the detectEdges function properly identifies the edge at x=50 and reports the correct edge pixel count and coordinates.
+
+Test Name: BrightnessAnalysis
+Test Description: Tests brightness analysis on a gradient image from dark to bright. Validates correct calculation of average brightness (~127.5), min/max brightness values, variance calculation, and brightness histogram distribution across the range.
+
+Test Name: BrightnessAnalysisIgnoreBackground
+Test Description: Tests brightness analysis with background exclusion by analyzing only the bright square in an image with black background. Validates that analysis correctly ignores background pixels and calculates metrics only for foreground content.
+
+Test Name: ColorAccuracyValidation
+Test Description: Tests color accuracy validation by comparing expected and actual images with slight color differences (2-3 RGB values). Validates that the system correctly identifies colors as accurate within a 5-unit threshold.
+
+Test Name: ColorAccuracyFailure
+Test Description: Tests color accuracy failure detection by comparing images with large color differences. Validates that the system correctly identifies significant color mismatches and reports low accuracy percentages and high error values.
+
+Test Name: RegionValidation
+Test Description: Tests region-specific validation by creating an image with a specific colored region (red 20x20 square). Validates that validateRegion correctly identifies matching and non-matching regions with specified accuracy thresholds.
+
+Test Name: DebugReportGeneration
+Test Description: Tests debug report generation by running all analysis functions and generating a comprehensive report. Validates that the report contains expected sections for color distribution, edge detection, and brightness analysis.
+
+Test Name: ColorMethods
+Test Description: Tests Color class utility methods including brightness calculation, luminance calculation using standard weights, and threshold-based color comparison for determining color similarity within specified tolerances.
+
+Test Name: RealisticShaderOutput
+Test Description: Tests the validation helpers with realistic shader output simulation by creating a lit cube with different face brightnesses. Validates that the analysis correctly detects visible geometry, distinct edges, lighting variation, and brightness differences between faces.

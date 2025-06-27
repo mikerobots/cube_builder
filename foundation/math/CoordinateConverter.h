@@ -162,40 +162,24 @@ public:
         return incrementToWorld(increment);
     }
 
-    /**
-     * Snap increment coordinates to voxel resolution boundaries
-     * @param incrementCoord Increment coordinates to snap
-     * @param resolution Target voxel resolution for alignment
-     * @return Snapped increment coordinates aligned to resolution boundaries
-     */
-    static IncrementCoordinates snapToVoxelResolution(
-        const IncrementCoordinates& incrementCoord,
-        VoxelEditor::VoxelData::VoxelResolution resolution
-    ) {
-        const Vector3i& increment = incrementCoord.value();
-        float voxelSize = getVoxelSizeMeters(resolution);
-        int voxelSize_cm = static_cast<int>(voxelSize * METERS_TO_CM);
-        
-        // Use floating point floor division for proper negative handling
-        Vector3i snapped(
-            static_cast<int>(std::floor(static_cast<float>(increment.x) / voxelSize_cm)) * voxelSize_cm,
-            static_cast<int>(std::floor(static_cast<float>(increment.y) / voxelSize_cm)) * voxelSize_cm,
-            static_cast<int>(std::floor(static_cast<float>(increment.z) / voxelSize_cm)) * voxelSize_cm
-        );
-        
-        return IncrementCoordinates(snapped);
-    }
 
     /**
      * Get the center increment coordinate for a voxel at given resolution
-     * @param incrementCoord Any increment coordinate within the voxel
+     * @param incrementCoord Bottom-center coordinate of the voxel (placement position)
      * @param resolution Voxel resolution
      * @return Center increment coordinate of the voxel
      * 
-     * Note: For voxels smaller than 2cm, the center cannot be exactly represented
+     * Note: This function is DEPRECATED and potentially confusing.
+     * Since increment coordinates already represent the bottom-center position of voxels,
+     * calculating the "center" would mean adding half the voxel height in Y.
+     * 
+     * For voxels smaller than 2cm, the center cannot be exactly represented
      * in integer increment coordinates. In these cases, the function returns the
-     * increment coordinate itself, and the half-voxel offset should be applied
-     * during world coordinate conversion.
+     * increment coordinate itself.
+     * 
+     * WARNING: The implementation incorrectly adds half voxel size in all dimensions,
+     * which would move the position from bottom-center to somewhere else entirely.
+     * This function should not be used for voxel positioning.
      */
     static IncrementCoordinates getVoxelCenterIncrement(
         const IncrementCoordinates& incrementCoord,
@@ -206,20 +190,20 @@ public:
         float voxelSize_cm = voxelSize * METERS_TO_CM;
         
         // For 1cm voxels, we can't represent the 0.5cm offset in integer coordinates
-        // So we just return the snapped position
+        // So we just return the position unchanged
         if (resolution == VoxelEditor::VoxelData::VoxelResolution::Size_1cm) {
             return IncrementCoordinates(increment);
         }
         
-        // For larger voxels, calculate the center offset
+        // For larger voxels, calculate the center by adding half the voxel size
         int voxelSize_cm_int = static_cast<int>(voxelSize_cm);
         int halfVoxel_cm = voxelSize_cm_int / 2;
         
-        // Use floating point floor division for proper negative handling
+        // Simply add half voxel size to get center (no snapping)
         Vector3i center(
-            static_cast<int>(std::floor(static_cast<float>(increment.x) / voxelSize_cm_int)) * voxelSize_cm_int + halfVoxel_cm,
-            static_cast<int>(std::floor(static_cast<float>(increment.y) / voxelSize_cm_int)) * voxelSize_cm_int + halfVoxel_cm,
-            static_cast<int>(std::floor(static_cast<float>(increment.z) / voxelSize_cm_int)) * voxelSize_cm_int + halfVoxel_cm
+            increment.x + halfVoxel_cm,
+            increment.y + halfVoxel_cm,
+            increment.z + halfVoxel_cm
         );
         
         return IncrementCoordinates(center);

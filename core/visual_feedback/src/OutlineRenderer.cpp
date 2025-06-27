@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <map>
 #include <cstddef>
+#include <cassert>
+#include <iostream>
 
 #ifdef __APPLE__
     #include <OpenGL/gl3.h>
@@ -14,6 +16,7 @@ namespace VisualFeedback {
 
 OutlineRenderer::OutlineRenderer()
     : m_batchMode(false)
+    , m_vertexArray(0)
     , m_vertexBuffer(0)
     , m_indexBuffer(0)
     , m_outlineShader(0)
@@ -28,6 +31,9 @@ OutlineRenderer::OutlineRenderer()
 OutlineRenderer::~OutlineRenderer() {
     // Clean up GPU resources only if initialized
     if (m_initialized) {
+        if (m_vertexArray) {
+            glDeleteVertexArrays(1, &m_vertexArray);
+        }
         if (m_vertexBuffer) {
             glDeleteBuffers(1, &m_vertexBuffer);
         }
@@ -120,14 +126,32 @@ void OutlineRenderer::endBatch() {
 }
 
 void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
+    // Early return if no batches or not initialized
     if (m_batches.empty()) return;
     
+    // Check if any batch has actual data to render
+    bool hasDataToRender = false;
+    for (const auto& batch : m_batches) {
+        if (!batch.vertices.empty() && !batch.indices.empty()) {
+            hasDataToRender = true;
+            break;
+        }
+    }
+    
+    if (!hasDataToRender) return;
+    
     ensureInitialized();
+    
+    // Check if shader is valid
+    if (m_outlineShader == 0) {
+        std::cerr << "OutlineRenderer: Cannot render - outline shader is invalid" << std::endl;
+        return;
+    }
     
     // Enable line rendering settings
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_LINE_SMOOTH);
+    // Note: GL_LINE_SMOOTH is deprecated in core profile
     
     // Use outline shader
     glUseProgram(m_outlineShader);
@@ -146,26 +170,31 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
     glUniform1f(animationTimeLoc, m_animationTime);
     
-    // Setup vertex attributes
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+    // Clear any previous errors
+    while (glGetError() != GL_NO_ERROR) {}
     
-    glEnableVertexAttribArray(0); // position
-    glEnableVertexAttribArray(1); // color
-    glEnableVertexAttribArray(2); // patternCoord
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
-                          (void*)offsetof(OutlineVertex, position));
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
-                          (void*)offsetof(OutlineVertex, color));
-    glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
-                          (void*)offsetof(OutlineVertex, patternCoord));
+    // Bind VAO (contains all vertex attribute setup)
+    glBindVertexArray(m_vertexArray);
+    GLenum vaoError = glGetError();
+    if (vaoError != GL_NO_ERROR) {
+        std::cerr << "OutlineRenderer: Error binding VAO: " << vaoError << std::endl;
+        glBindVertexArray(0);
+        glUseProgram(0);
+        return;
+    }
     
     // Render each batch
     for (const auto& batch : m_batches) {
-        if (batch.vertices.empty()) continue;
+        if (batch.vertices.empty() || batch.indices.empty()) continue;
         
         updateBuffers(batch);
+        
+        // Check for errors after buffer update
+        GLenum bufferError = glGetError();
+        if (bufferError != GL_NO_ERROR) {
+            std::cerr << "OutlineRenderer: Error after updateBuffers: " << bufferError << std::endl;
+            continue;
+        }
         
         // Set line width
         glLineWidth(batch.style.lineWidth);
@@ -175,23 +204,34 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
         glUniform1f(patternOffsetLoc, batch.style.animated ? m_patternOffset : 0.0f);
         glUniform1i(linePatternLoc, static_cast<int>(batch.style.pattern));
         
+        // Ensure index buffer is bound before drawing
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+        
         // Draw lines
         glDrawElements(GL_LINES, static_cast<GLsizei>(batch.indices.size()),
                        GL_UNSIGNED_INT, nullptr);
+        
+        GLenum drawError = glGetError();
+        if (drawError != GL_NO_ERROR) {
+            std::cerr << "OutlineRenderer: Error after glDrawElements: " << drawError 
+                     << " with " << batch.indices.size() << " indices" << std::endl;
+        }
     }
     
     // Cleanup
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
     glUseProgram(0);
     
     // Reset line width
     glLineWidth(1.0f);
-    glDisable(GL_LINE_SMOOTH);
+    
+    // Check for OpenGL errors after rendering
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OutlineRenderer GL Error after renderBatch: " << error << std::endl;
+        // Assert when failing to ensure we are not masking problems
+        assert(false && "OpenGL error in OutlineRenderer - failing hard to catch issues early");
+    }
 }
 
 void OutlineRenderer::clearBatch() {
@@ -292,12 +332,25 @@ std::vector<Math::Vector3f> OutlineRenderer::generateGroupOutline(const std::vec
 
 void OutlineRenderer::ensureInitialized() {
     if (!m_initialized) {
+        // Check if we have a valid OpenGL context
+        GLint currentVAO = 0;
+        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &currentVAO);
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR) {
+            std::cerr << "OutlineRenderer: No valid OpenGL context, cannot initialize" << std::endl;
+            return;
+        }
+        
         createBuffers();
         m_initialized = true;
     }
 }
 
 void OutlineRenderer::createBuffers() {
+    // Create VAO first
+    glGenVertexArrays(1, &m_vertexArray);
+    glBindVertexArray(m_vertexArray);
+    
     // Create vertex buffer
     glGenBuffers(1, &m_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -309,6 +362,25 @@ void OutlineRenderer::createBuffers() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
     // Allocate initial buffer size (will be resized as needed)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * 2048, nullptr, GL_DYNAMIC_DRAW);
+    
+    // Set up vertex attributes while VAO is bound
+    // Position attribute
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
+                          (void*)offsetof(OutlineVertex, position));
+    
+    // Color attribute
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
+                          (void*)offsetof(OutlineVertex, color));
+    
+    // Pattern coordinate attribute
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(OutlineVertex),
+                          (void*)offsetof(OutlineVertex, patternCoord));
+    
+    // Unbind VAO
+    glBindVertexArray(0);
     
     // Create shader program for outline rendering
     const char* vertexShaderSource = R"(
@@ -364,10 +436,34 @@ void OutlineRenderer::createBuffers() {
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
     
+    // Check vertex shader compilation
+    GLint success;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+        std::cerr << "OutlineRenderer: Vertex shader compilation failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        m_outlineShader = 0;
+        return;
+    }
+    
     // Compile fragment shader
     uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
+    
+    // Check fragment shader compilation
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+        std::cerr << "OutlineRenderer: Fragment shader compilation failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        m_outlineShader = 0;
+        return;
+    }
     
     // Create and link shader program
     m_outlineShader = glCreateProgram();
@@ -375,13 +471,26 @@ void OutlineRenderer::createBuffers() {
     glAttachShader(m_outlineShader, fragmentShader);
     glLinkProgram(m_outlineShader);
     
+    // Check program linking
+    glGetProgramiv(m_outlineShader, GL_LINK_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetProgramInfoLog(m_outlineShader, 512, nullptr, infoLog);
+        std::cerr << "OutlineRenderer: Shader program linking failed: " << infoLog << std::endl;
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteProgram(m_outlineShader);
+        m_outlineShader = 0;
+        return;
+    }
+    
     // Clean up shader objects
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
-    // Unbind buffers
+    // Unbind only vertex buffer - keep index buffer bound to VAO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    // Note: Don't unbind GL_ELEMENT_ARRAY_BUFFER as it needs to stay bound to the VAO
 }
 
 void OutlineRenderer::updateBuffers(const OutlineBatch& batch) {
@@ -418,9 +527,9 @@ void OutlineRenderer::updateBuffers(const OutlineBatch& batch) {
     // Upload index data
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, requiredIndexSize, batch.indices.data());
     
-    // Unbind buffers
+    // Unbind only the vertex buffer - keep index buffer bound to VAO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    // Note: Don't unbind GL_ELEMENT_ARRAY_BUFFER as it needs to stay bound to the VAO
 }
 
 float OutlineRenderer::calculatePatternCoordinate(float distance, LinePattern pattern, 

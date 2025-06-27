@@ -30,7 +30,7 @@ public:
     void cancel() { m_cancelled = true; }
     bool isCancelled() const { return m_cancelled; }
     
-private:
+protected:
     // Edge directions
     static constexpr int EDGE_COUNT = 12;
     static const std::array<Math::IncrementCoordinates, EDGE_COUNT> EDGE_VERTICES;
@@ -91,9 +91,9 @@ private:
     const VoxelData::VoxelGrid* m_currentGrid;
     
     // Core algorithm steps
-    void extractEdgeIntersections(const VoxelData::VoxelGrid& grid);
+    virtual void extractEdgeIntersections(const VoxelData::VoxelGrid& grid);
     void generateVertices();
-    void generateQuads();
+    virtual void generateQuads();
     
     // Edge processing
     bool findEdgeIntersection(const Math::IncrementCoordinates& v0, const Math::IncrementCoordinates& v1, 
@@ -121,6 +121,9 @@ private:
     // Sharp feature detection
     bool isSharpFeature(const std::vector<HermiteData>& edges) const;
     float computeFeatureAngle(const Math::Vector3f& n1, const Math::Vector3f& n2) const;
+
+private:
+    // Keep some members truly private
 };
 
 // Dual contouring tables

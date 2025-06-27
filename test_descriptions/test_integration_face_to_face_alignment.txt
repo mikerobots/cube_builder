@@ -1,0 +1,13 @@
+----- File: tests/integration/test_integration_face_to_face_alignment.cpp
+
+Test Name: SameSizeVoxelAutomaticEdgeAlignment
+Test Description: Tests automatic edge alignment for same-size voxels placed via face detection across multiple resolutions and all 6 faces.
+
+Test Name: EdgeAlignmentIndependentOfBasePosition
+Test Description: Tests that edge alignment works correctly regardless of the base voxel's position in the workspace.
+
+Test Name: PerfectlyAlignedVoxelChain
+Test Description: Tests creation of a chain of perfectly aligned voxels using face detection to ensure consistent alignment.
+
+Test Name: AlignmentWorksForAllVoxelSizes
+Test Description: Tests that edge alignment functionality works correctly for all supported voxel sizes (1cm-64cm).

@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include "math/Vector3f.h"
+#include "math/Vector3i.h"
 #include "math/Matrix4f.h"
+#include "math/CoordinateTypes.h"
 
 namespace VoxelEditor {
 namespace FileIO {
@@ -31,6 +33,9 @@ public:
     // Complex types
     void writeString(const std::string& str);
     void writeVector3f(const Math::Vector3f& vec);
+    void writeVector3i(const Math::Vector3i& vec);
+    void writeWorldCoordinates(const Math::WorldCoordinates& coord);
+    void writeIncrementCoordinates(const Math::IncrementCoordinates& coord);
     void writeMatrix4f(const Math::Matrix4f& mat);
     void writeBytes(const void* data, size_t size);
     
@@ -82,6 +87,9 @@ public:
     // Complex types
     std::string readString();
     Math::Vector3f readVector3f();
+    Math::Vector3i readVector3i();
+    Math::WorldCoordinates readWorldCoordinates();
+    Math::IncrementCoordinates readIncrementCoordinates();
     Math::Matrix4f readMatrix4f();
     void readBytes(void* data, size_t size);
     std::vector<uint8_t> readBytes(size_t size);
@@ -131,6 +139,9 @@ template<> inline void BinaryWriter::write(const double& value) { writeDouble(va
 template<> inline void BinaryWriter::write(const bool& value) { writeBool(value); }
 template<> inline void BinaryWriter::write(const std::string& value) { writeString(value); }
 template<> inline void BinaryWriter::write(const Math::Vector3f& value) { writeVector3f(value); }
+template<> inline void BinaryWriter::write(const Math::Vector3i& value) { writeVector3i(value); }
+template<> inline void BinaryWriter::write(const Math::WorldCoordinates& value) { writeWorldCoordinates(value); }
+template<> inline void BinaryWriter::write(const Math::IncrementCoordinates& value) { writeIncrementCoordinates(value); }
 template<> inline void BinaryWriter::write(const Math::Matrix4f& value) { writeMatrix4f(value); }
 
 template<> inline uint8_t BinaryReader::read<uint8_t>() { return readUInt8(); }
@@ -146,6 +157,9 @@ template<> inline double BinaryReader::read<double>() { return readDouble(); }
 template<> inline bool BinaryReader::read<bool>() { return readBool(); }
 template<> inline std::string BinaryReader::read<std::string>() { return readString(); }
 template<> inline Math::Vector3f BinaryReader::read<Math::Vector3f>() { return readVector3f(); }
+template<> inline Math::Vector3i BinaryReader::read<Math::Vector3i>() { return readVector3i(); }
+template<> inline Math::WorldCoordinates BinaryReader::read<Math::WorldCoordinates>() { return readWorldCoordinates(); }
+template<> inline Math::IncrementCoordinates BinaryReader::read<Math::IncrementCoordinates>() { return readIncrementCoordinates(); }
 template<> inline Math::Matrix4f BinaryReader::read<Math::Matrix4f>() { return readMatrix4f(); }
 
 } // namespace FileIO

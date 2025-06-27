@@ -1,0 +1,31 @@
+----- File: apps/cli/tests/test_unit_cli_arbitrary_positions.cpp
+
+Test Name: PlaceCommand_ArbitraryPositions_16cmVoxels
+Test Description: Tests placing 16cm voxels at arbitrary 1cm positions (non-aligned), verifying new requirements allow placement at any 1cm increment per CLI-003
+
+Test Name: PlaceCommand_ArbitraryPositions_32cmVoxels
+Test Description: Tests placing 32cm voxels at arbitrary 1cm positions that would be invalid under old snapping rules per CLI-003
+
+Test Name: PlaceCommand_ArbitraryPositions_MixedResolutions
+Test Description: Tests placing different resolution voxels (1cm-64cm) at arbitrary positions with mixed resolution sequences per CLI-003
+
+Test Name: DeleteCommand_ArbitraryPositions
+Test Description: Tests deleting voxels at arbitrary positions where they were placed, verifying delete command works with non-aligned positions per CLI-003
+
+Test Name: FillCommand_ArbitraryBounds
+Test Description: Tests fill command with arbitrary boundaries not aligned to resolution, using 1cm voxels to avoid overlap issues per CLI-003
+
+Test Name: PlaceCommand_MetersAndCentimeters
+Test Description: Tests place command works with both meter and centimeter units at arbitrary positions, verifying unit conversion consistency per CLI-003
+
+Test Name: PlaceCommand_NegativeArbitraryPositions
+Test Description: Tests placing voxels at negative arbitrary positions in centered coordinate system, verifying negative X/Z coordinates work per CLI-003
+
+Test Name: PlaceCommand_EdgeCasePositions
+Test Description: Tests edge cases with very small offsets (1cm) and near-boundary positions with 64cm voxels, including position verification per CLI-003
+
+Test Name: FillCommand_LargeArbitraryRegion
+Test Description: Tests fill command with large arbitrary region to verify no timeout issues and reasonable performance with non-aligned boundaries per CLI-003
+
+Test Name: SelectionCommands_ArbitraryPositions
+Test Description: Tests selection commands (selbox, selall, selnone) work correctly with voxels placed at arbitrary positions per CLI-003

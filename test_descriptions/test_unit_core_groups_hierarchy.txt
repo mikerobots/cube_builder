@@ -1,0 +1,61 @@
+----- File: core/groups/tests/test_unit_core_groups_hierarchy.cpp
+
+Test Name: EmptyHierarchy
+Test Description: Tests empty hierarchy state with no groups, verifying getRootGroups(), getTotalGroups(), getMaxDepth(), and isValid()
+
+Test Name: AddChild
+Test Description: Tests adding a child to a parent group, verifying parent-child relationships are established correctly
+
+Test Name: RemoveChild
+Test Description: Tests removing a child from a parent, verifying both parent and child relationships are cleared
+
+Test Name: SetParent
+Test Description: Tests setParent() method including initial parent setting, changing parent, and removing parent (REQ: Group hierarchy support)
+
+Test Name: CycleDetection
+Test Description: Tests cycle detection preventing circular dependencies in hierarchy (e.g., preventing 3->1 when 1->2->3 exists)
+
+Test Name: GetAllDescendants
+Test Description: Tests getAllDescendants() method returns all children and grandchildren of a group recursively
+
+Test Name: GetAllAncestors
+Test Description: Tests getAllAncestors() method returns all parents up to the root of the hierarchy
+
+Test Name: GetRootGroups
+Test Description: Tests getRootGroups() returns only groups with no parents (REQ-9.2.5: CLI group commands support)
+
+Test Name: IsAncestor
+Test Description: Tests isAncestor() method correctly identifies ancestor relationships in the hierarchy
+
+Test Name: IsDescendant
+Test Description: Tests isDescendant() method correctly identifies descendant relationships in the hierarchy
+
+Test Name: GetDepth
+Test Description: Tests getDepth() returns correct depth level for each group (0 for root, increasing by 1 per level)
+
+Test Name: GetMaxDepth
+Test Description: Tests getMaxDepth() returns the maximum depth of the entire hierarchy tree
+
+Test Name: RemoveFromHierarchy
+Test Description: Tests removeFromHierarchy() removes a group and orphans its children
+
+Test Name: HasParentAndChildren
+Test Description: Tests hasChildren() and hasParent() methods for various group configurations
+
+Test Name: GetTotalGroups
+Test Description: Tests getTotalGroups() returns correct count of all groups in the hierarchy
+
+Test Name: CycleDetectionComplex
+Test Description: Tests complex cycle detection scenarios with multiple branches and reparenting operations
+
+Test Name: FindOrphans
+Test Description: Tests findOrphans() method identifies groups not in the valid groups set
+
+Test Name: FindCycles
+Test Description: Tests findCycles() method detects cycles when hierarchy data is manually manipulated
+
+Test Name: ExportImport
+Test Description: Tests exportData() and importData() preserve hierarchy structure (REQ-8.1.8: Format stores group definitions)
+
+Test Name: DISABLED_ThreadSafety
+Test Description: Disabled test for thread safety with multiple threads adding branches concurrently

@@ -1,0 +1,109 @@
+----- File: core/voxel_data/tests/test_unit_core_voxel_data_manager.cpp
+
+Test Name: VoxelDataManagerTest.DefaultConstruction
+Test Description: Tests VoxelDataManager default construction. Verifies default active resolution is 1cm, workspace size is 5m³, no voxels present, and memory usage tracking.
+
+Test Name: VoxelDataManagerTest.ConstructionWithoutEventDispatcher
+Test Description: Tests construction without event dispatcher. Verifies VoxelDataManager can operate without events, maintaining default settings.
+
+Test Name: VoxelDataManagerTest.BasicVoxelOperations
+Test Description: Tests basic voxel set/get/has operations. Verifies voxels can be placed, retrieved, and removed with proper event dispatching.
+
+Test Name: VoxelDataManagerTest.VoxelPositionOperations
+Test Description: Tests voxel operations using VoxelPosition objects. Verifies VoxelPosition wrapper works correctly for set/get/has operations.
+
+Test Name: VoxelDataManagerTest.WorldSpaceOperations
+Test Description: Tests voxel operations using world space coordinates. Verifies world-to-grid coordinate conversion and placement at world positions.
+
+Test Name: VoxelDataManagerTest.ResolutionManagement
+Test Description: Tests active resolution switching and event dispatching. Verifies resolution changes complete within 100ms and trigger appropriate events.
+
+Test Name: VoxelDataManagerTest.WorkspaceManagement
+Test Description: Tests workspace resizing functionality. Verifies workspace can be resized with bounds validation and event dispatching.
+
+Test Name: VoxelDataManagerTest.PositionValidation
+Test Description: Tests position validation for grid and world coordinates. Verifies Y>=0 constraint and workspace bounds are enforced.
+
+Test Name: VoxelDataManagerTest.MultipleResolutionVoxels
+Test Description: Tests voxel storage across all 10 resolution levels. Verifies each resolution (1cm to 512cm) can store voxels independently.
+
+Test Name: VoxelDataManagerTest.ClearOperations
+Test Description: Tests clearing voxels by resolution or all. Verifies clearActiveResolution, clearResolution, and clearAll work correctly.
+
+Test Name: VoxelDataManagerTest.MemoryManagement
+Test Description: Tests memory usage tracking and optimization. Verifies memory increases with voxels, can be optimized, and decreases when cleared.
+
+Test Name: VoxelDataManagerTest.GridAccess
+Test Description: Tests direct access to VoxelGrid objects. Verifies grids exist for all resolutions and invalid resolutions return null.
+
+Test Name: VoxelDataManagerTest.VoxelExport
+Test Description: Tests exporting voxels as lists. Verifies getAllVoxels returns correct voxels for specific or active resolution.
+
+Test Name: VoxelDataManagerTest.EventDispatcherManagement
+Test Description: Tests dynamic event dispatcher attachment/detachment. Verifies operations work without events and events resume when dispatcher reattached.
+
+Test Name: VoxelDataManagerTest.PerformanceMetrics
+Test Description: Tests performance metrics collection. Verifies total voxels, memory usage, and per-resolution statistics are tracked correctly.
+
+Test Name: VoxelDataManagerTest.RedundantOperations
+Test Description: Tests redundant voxel operations are rejected. Verifies setting same voxel to same value fails and doesn't trigger events.
+
+Test Name: VoxelDataManagerTest.OutOfBoundsOperations
+Test Description: Tests operations outside workspace bounds. Verifies out-of-bounds positions fail gracefully without events or voxel creation.
+
+Test Name: VoxelDataManagerTest.WorkspaceResizeWithVoxels
+Test Description: Tests workspace resizing with existing voxels. Verifies resize behavior when voxels would be outside new bounds.
+
+Test Name: VoxelDataManagerTest.LargeScaleOperations
+Test Description: Tests performance with many voxels. Verifies system handles hundreds of voxels across multiple resolutions efficiently.
+
+Test Name: VoxelDataManagerTest.IncrementValidation_ValidPositions
+Test Description: Tests valid 1cm increment position validation. Verifies integer grid positions and 1cm-aligned world positions are valid.
+
+Test Name: VoxelDataManagerTest.IncrementValidation_YConstraint
+Test Description: Tests Y>=0 placement constraint. Verifies positions with negative Y values are rejected for both grid and world coordinates.
+
+Test Name: VoxelDataManagerTest.IncrementValidation_InvalidWorldPositions
+Test Description: Tests invalid world position validation. Verifies positions not aligned to 1cm grid are properly rejected.
+
+Test Name: VoxelDataManagerTest.CollisionDetection_NoOverlap
+Test Description: Tests collision detection for non-overlapping voxels. Verifies wouldOverlap returns false for sufficiently separated positions.
+
+Test Name: VoxelDataManagerTest.CollisionDetection_SameSizeOverlap
+Test Description: Tests collision detection for same-size voxels. Verifies exact position overlap is detected and redundant operations fail.
+
+Test Name: VoxelDataManagerTest.CollisionDetection_DifferentSizeOverlap
+Test Description: Tests collision detection between different voxel sizes. Verifies overlap detection works correctly for mixed resolution scenarios.
+
+Test Name: VoxelDataManagerTest.CollisionDetection_MultipleResolutions
+Test Description: Tests collision detection with complex multi-resolution scenes. Verifies overlap checking works across all placed voxels.
+
+Test Name: VoxelDataManagerTest.AdjacentPositionCalculation_SameSize
+Test Description: Tests adjacent position calculation for same-size voxels. Verifies face-to-face alignment calculations for all six directions.
+
+Test Name: VoxelDataManagerTest.AdjacentPositionCalculation_DifferentSizes
+Test Description: Tests adjacent position calculation for different-size voxels. Verifies calculations handle size differences correctly.
+
+Test Name: VoxelDataManagerTest.WorkspaceBounds_CenteredOrigin
+Test Description: Tests workspace bounds with centered coordinate system. Verifies positions are validated against centered workspace correctly.
+
+Test Name: VoxelDataManagerTest.SetVoxel_ValidatesIncrement
+Test Description: Tests setVoxel validates all placement requirements. Verifies increment validation, Y constraint, and overlap detection.
+
+Test Name: VoxelDataManagerTest.SetVoxelAtWorldPos_ValidatesIncrement
+Test Description: Tests world position placement validation. Verifies 1cm increment alignment, Y constraint, and overlap detection for world coordinates.
+
+Test Name: VoxelDataManagerTest.ExactPositionPlacement_NoSnapToVoxelBoundaries
+Test Description: Tests voxels can be placed at any 1cm position without resolution-based snapping. Verifies new requirement for exact position placement.
+
+Test Name: VoxelDataManagerTest.ExactPositionPlacement_AllResolutionsSupported
+Test Description: Tests all voxel resolutions support arbitrary 1cm positions. Verifies no resolution enforces grid alignment.
+
+Test Name: VoxelDataManagerTest.ExactPositionPlacement_WorldCoordinateConsistency
+Test Description: Tests world coordinate placement at arbitrary positions. Verifies world positions correctly map to exact increment positions.
+
+Test Name: VoxelDataManagerTest.ExactPositionPlacement_CollisionDetectionAtExactPositions
+Test Description: Tests collision detection with exact position placement. Verifies overlap detection works correctly without position snapping.
+
+Test Name: VoxelDataManagerTest.ExactPositionPlacement_EventDispatchingAtExactPositions
+Test Description: Tests events contain exact positions without snapping. Verifies VoxelChangedEvent reports the exact placement position.

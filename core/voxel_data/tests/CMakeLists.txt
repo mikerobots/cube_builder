@@ -28,9 +28,6 @@ foreach(test_source ${VOXEL_DATA_TEST_SOURCES})
     # Link libraries
     target_link_libraries(${test_name}
         VoxelEditor_VoxelData
-        VoxelEditor_Math
-        VoxelEditor_Events
-        VoxelEditor_Memory
         GTest::gtest
         GTest::gtest_main
     )
@@ -59,9 +56,6 @@ foreach(test_source ${VOXEL_DATA_PERF_TEST_SOURCES})
     # Link libraries
     target_link_libraries(${test_name}
         VoxelEditor_VoxelData
-        VoxelEditor_Math
-        VoxelEditor_Events
-        VoxelEditor_Memory
         GTest::gtest
         GTest::gtest_main
     )
@@ -84,9 +78,6 @@ add_executable(VoxelEditor_VoxelData_Tests ${VOXEL_DATA_TEST_SOURCES})
 
 target_link_libraries(VoxelEditor_VoxelData_Tests
     VoxelEditor_VoxelData
-    VoxelEditor_Math
-    VoxelEditor_Events
-    VoxelEditor_Memory
     GTest::gtest
     GTest::gtest_main
 )

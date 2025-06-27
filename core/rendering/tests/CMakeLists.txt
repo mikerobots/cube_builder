@@ -42,12 +42,8 @@ foreach(test_source ${RENDERING_TEST_SOURCES})
     # Link libraries
     target_link_libraries(${test_name}
         VoxelEditor_Rendering
-        VoxelEditor_Math
-        VoxelEditor_Events
-        VoxelEditor_Camera
         VoxelEditor_SurfaceGen  # For SurfaceTypes
         VoxelEditor_VisualFeedback  # For HighlightRenderer
-        VoxelEditor_VoxelData  # For performance tests
         glad
         glfw  # Use the fetched GLFW target
         GTest::gtest
@@ -93,12 +89,8 @@ add_executable(VoxelEditor_Rendering_Tests ${RENDERING_TEST_SOURCES})
 # Link dependencies
 target_link_libraries(VoxelEditor_Rendering_Tests
     VoxelEditor_Rendering
-    VoxelEditor_Math
-    VoxelEditor_Events
-    VoxelEditor_Camera
     VoxelEditor_SurfaceGen  # For SurfaceTypes
     VoxelEditor_VisualFeedback  # For HighlightRenderer
-    VoxelEditor_VoxelData  # For performance tests
     glad
     glfw  # Use the fetched GLFW target
     GTest::gtest

@@ -1,0 +1,13 @@
+----- File: core/rendering/tests/test_unit_core_rendering_shader_attribute_validation.cpp
+
+Test Name: ShaderAttributeValidationTest.ValidateBasicVoxelShaderAttributes
+Test Description: Tests basic voxel shader attribute binding and layout. Validates position (location 0), normal (location 1), and color (location 2) attributes are properly bound and linked in basic shader program.
+
+Test Name: ShaderAttributeValidationTest.ValidateVertexBufferBinding
+Test Description: Tests vertex buffer attribute binding with test mesh. Creates triangle mesh with all vertex attributes, validates attribute enablement, checks data types, sizes, strides, and offsets for proper vertex array setup.
+
+Test Name: ShaderAttributeValidationTest.ValidateShaderUniformBinding
+Test Description: Tests shader uniform binding and setting. Validates required uniforms (model, view, projection) exist in basic shader and can be set without OpenGL errors.
+
+Test Name: ShaderAttributeValidationTest.ValidateShaderRenderPipeline
+Test Description: Tests complete render pipeline with attribute validation. Creates test triangle, sets up camera matrices, renders mesh with proper attribute binding, validates no OpenGL errors occur during full render cycle.

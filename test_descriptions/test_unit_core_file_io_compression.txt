@@ -1,0 +1,37 @@
+----- File: core/file_io/tests/test_unit_core_file_io_compression.cpp
+
+Test Name: CompressDecompressSmallData
+Test Description: Tests basic compression and decompression of small data (10 bytes), verifying data integrity after round-trip compression (REQ-8.2.3, REQ-7.3.4 for LZ4 compression).
+
+Test Name: CompressDecompressLargeData
+Test Description: Validates compression and decompression of larger data sets (10KB) with compressible patterns, ensuring data integrity is maintained (REQ-8.2.3, REQ-7.3.4).
+
+Test Name: CompressionLevels
+Test Description: Tests different compression levels (1-9), verifying that both low (fast) and high (better compression) levels produce valid compressed data that can be decompressed correctly.
+
+Test Name: EmptyDataCompression
+Test Description: Validates handling of empty data compression and decompression, ensuring the system gracefully handles null/zero-size inputs.
+
+Test Name: GetMaxCompressedSize
+Test Description: Tests the maximum compressed size calculation function, verifying it returns reasonable bounds (at least input size) for worst-case compression scenarios.
+
+Test Name: CompressionRatio
+Test Description: Validates compression ratio calculation, ensuring the ratio is positive and reasonable for compressible data patterns.
+
+Test Name: StreamCompression
+Test Description: Tests stream-based compression and decompression using stringstreams, verifying data integrity for 5KB of compressible data (REQ-8.2.3, REQ-7.3.4).
+
+Test Name: InvalidDecompression
+Test Description: Tests decompression behavior with invalid/corrupted compressed data, ensuring graceful handling without crashes.
+
+Test Name: WrongExpectedSize
+Test Description: Validates decompression behavior when provided with incorrect expected output size, testing error handling for size mismatches.
+
+Test Name: VoxelDataCompression
+Test Description: Tests compression of simulated voxel grid data including positions and colors, validating support for multi-resolution voxel storage (REQ-8.1.3, REQ-8.2.3).
+
+Test Name: LargeDataStressTest
+Test Description: Stress tests compression with various data sizes (100B to 100KB), validating memory efficiency and data integrity at scale (REQ-8.2.3, REQ-6.3.4).
+
+Test Name: CompressionHeaderValidation
+Test Description: Tests compression header validation, ensuring proper header structure and rejection of truncated compressed data missing header information.

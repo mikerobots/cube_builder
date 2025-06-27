@@ -4,6 +4,8 @@
 #include "Vector3i.h"
 #include "Vector2f.h"
 #include <type_traits>
+#include <string>
+#include <sstream>
 
 namespace VoxelEditor {
 namespace Math {
@@ -92,6 +94,18 @@ public:
     static WorldCoordinates unitY() { return WorldCoordinates(Vector3f::UnitY()); }
     static WorldCoordinates unitZ() { return WorldCoordinates(Vector3f::UnitZ()); }
 
+    // String conversion
+    std::string toString() const {
+        std::stringstream ss;
+        ss << "(" << m_value.x << ", " << m_value.y << ", " << m_value.z << ")";
+        return ss.str();
+    }
+    
+    // Implicit string conversion operator
+    operator std::string() const {
+        return toString();
+    }
+
 private:
     Vector3f m_value;
 };
@@ -172,6 +186,18 @@ public:
     static IncrementCoordinates unitY() { return IncrementCoordinates(Vector3i::UnitY()); }
     static IncrementCoordinates unitZ() { return IncrementCoordinates(Vector3i::UnitZ()); }
 
+    // String conversion
+    std::string toString() const {
+        std::stringstream ss;
+        ss << "(" << m_value.x << ", " << m_value.y << ", " << m_value.z << ")";
+        return ss.str();
+    }
+    
+    // Implicit string conversion operator
+    operator std::string() const {
+        return toString();
+    }
+
 private:
     Vector3i m_value;
 };
@@ -248,6 +274,18 @@ public:
     static ScreenCoordinates zero() { return ScreenCoordinates(Vector2f::zero()); }
     static ScreenCoordinates unitX() { return ScreenCoordinates(Vector2f::unitX()); }
     static ScreenCoordinates unitY() { return ScreenCoordinates(Vector2f::unitY()); }
+
+    // String conversion
+    std::string toString() const {
+        std::stringstream ss;
+        ss << "(" << m_value.x << ", " << m_value.y << ")";
+        return ss.str();
+    }
+    
+    // Implicit string conversion operator
+    operator std::string() const {
+        return toString();
+    }
 
 private:
     Vector2f m_value;

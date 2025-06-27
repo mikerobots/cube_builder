@@ -1,0 +1,31 @@
+----- File: core/file_io/tests/test_unit_core_file_io_binary_format.cpp
+
+Test Name: BinaryFormatTest.FileHeaderValidation
+Test Description: Tests FileHeader structure default values for custom binary format. Verifies magic number "CVEF", zero-initialized fields, and reserved bytes for future extensions.
+
+Test Name: BinaryFormatTest.HeaderWriteRead
+Test Description: Tests writing and reading file headers through project save/load. Verifies header is correctly written and validated during project operations with format versioning support.
+
+Test Name: BinaryFormatTest.InvalidMagicNumber
+Test Description: Tests header validation with incorrect magic number. Verifies that files with invalid magic numbers are properly rejected during read operations.
+
+Test Name: BinaryFormatTest.MinimalSaveLoad
+Test Description: Tests saving and loading a minimal project with default settings. Verifies basic round-trip functionality for empty projects without compression.
+
+Test Name: BinaryFormatTest.ProjectSaveLoadBasic
+Test Description: Tests complete project save and load cycle with metadata. Verifies project name, description, author, and workspace settings are preserved through binary format.
+
+Test Name: BinaryFormatTest.ChunkWriteRead
+Test Description: Tests chunk-based storage for custom data. Verifies that custom binary data chunks are correctly written and read back preserving data integrity.
+
+Test Name: BinaryFormatTest.EmptyProjectHandling
+Test Description: Tests handling of uninitialized empty projects. Verifies that attempting to save an invalid project returns appropriate error status.
+
+Test Name: BinaryFormatTest.FileValidation
+Test Description: Tests file validation functionality for saved projects. Verifies that properly saved project files pass validation checks including checksums.
+
+Test Name: BinaryFormatTest.SaveOptionsHandling
+Test Description: Tests different save option presets (Fast vs Compact). Verifies that save options affect file generation appropriately for speed vs size optimization.
+
+Test Name: BinaryFormatTest.LoadOptionsHandling
+Test Description: Tests different load option presets (Fast vs Safe). Verifies that both fast loading without validation and safe loading with validation work correctly.

@@ -1,0 +1,19 @@
+----- File: tests/integration/rendering/test_performance_rendering_shader_benchmark.cpp
+
+Test Name: FPSComparison
+Test Description: Benchmarks frame rate performance across different shader types (basic_voxel, enhanced_voxel, flat_voxel) using 500 voxel meshes. Measures and reports detailed FPS statistics and validates that at least one shader achieves 60+ FPS performance.
+
+Test Name: ShaderSwitchingOverhead
+Test Description: Measures performance overhead of rapid shader switching by comparing rendering with and without frequent shader changes. Tests with 100 meshes across 100 frames and validates that shader switching overhead stays below 50%.
+
+Test Name: VertexProcessingThroughput
+Test Description: Tests vertex processing performance by rendering increasing numbers of meshes (10-500) and calculating vertices processed per second. Validates that the system can handle at least 1 million vertices per second throughput.
+
+Test Name: ShaderVariantComparison
+Test Description: Comprehensive performance comparison across different scene complexities (Small: 50 meshes @120 FPS, Medium: 200 meshes @60 FPS, Large: 500 meshes @30 FPS). Tests all shader variants and validates performance meets expected targets.
+
+Test Name: FrameTimeConsistency
+Test Description: Analyzes frame time consistency by measuring frame time variance, detecting spikes, and calculating percentile metrics. Validates that 95% of frames stay within 1.5x average time and frame spikes occur in less than 3% of frames.
+
+Test Name: MemoryUsageBenchmark
+Test Description: Tests memory usage scaling with increasing mesh counts (100-2000 meshes). Estimates VRAM usage and validates that memory per mesh stays reasonable (<10KB) while maintaining 30+ FPS with moderate memory usage (<100MB).

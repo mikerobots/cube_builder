@@ -1,0 +1,10 @@
+----- File: apps/cli/tests/test_integration_interaction_voxel_face_clicking_simple.cpp
+
+Test Name: SelectsClosestVoxelToCamera
+Test Description: Tests FaceDetector selects closest voxel to camera by placing two 64cm voxels (at 0,0,0 and 64,0,0) and verifying ray from camera hits the closer one
+
+Test Name: HandlesMultipleVoxelsAlongRay
+Test Description: Tests FaceDetector handles multiple voxels along ray path by placing line of 5 voxels and verifying ray hits appropriate voxel in the sequence
+
+Test Name: PlacementBugScenario
+Test Description: Tests specific bug scenario with voxel at increment position (0,320,0) using 64cm voxels, verifying ray from isometric camera position can detect the voxel. This test validates the fix for the bug where rays must pass through the voxel's increment position for detection - rays that only pass through the voxel's bounding box but miss the increment position will not detect the voxel.

@@ -1,0 +1,82 @@
+----- File: apps/cli/tests/test_unit_cli_camera_command_validation.cpp
+
+Test Name: CameraViewPreset_Front_REQ_11_3_18
+Test Description: Tests camera front view preset command execution, verifying success feedback, view name in message, and valid camera position/target state after preset application.
+
+Test Name: CameraViewPreset_Back_REQ_11_3_18
+Test Description: Validates camera back view preset functionality, testing command success, feedback message content, and camera state validity after back view application.
+
+Test Name: CameraViewPreset_Left_REQ_11_3_18
+Test Description: Tests camera left view preset command, verifying successful execution, appropriate feedback messaging, and valid camera position/target after left view setup.
+
+Test Name: CameraViewPreset_Right_REQ_11_3_18
+Test Description: Validates camera right view preset functionality, testing command execution success, feedback message presence, and camera state consistency after right view preset.
+
+Test Name: CameraViewPreset_Top_REQ_11_3_18
+Test Description: Tests camera top view preset with additional validation that camera position Y is above target Y (looking down), verifying proper top-down view orientation.
+
+Test Name: CameraViewPreset_Bottom_REQ_11_3_18
+Test Description: Validates camera bottom view preset ensuring camera position Y is below target Y (looking up), testing proper bottom-up view orientation and state validity.
+
+Test Name: CameraViewPreset_Isometric_REQ_11_3_18
+Test Description: Tests camera isometric (iso) view preset, verifying command success, feedback messaging, and reasonable camera distance for OrbitCamera instances.
+
+Test Name: CameraViewPreset_Default_REQ_11_3_18
+Test Description: Validates camera default view preset (maps to isometric), testing command execution, appropriate feedback, and valid camera state after default view application.
+
+Test Name: CameraViewPreset_AllViews_StateConsistency_REQ_11_3_18
+Test Description: Comprehensive test of all camera view presets (front, back, left, right, top, bottom, iso, default) validating state consistency and position uniqueness across different views.
+
+Test Name: CameraViewPreset_InvalidPreset_REQ_11_3_18
+Test Description: Tests camera command with invalid view presets (unknown, perspective, orthographic, empty), verifying proper failure handling and error message provision.
+
+Test Name: CameraViewPreset_CaseInsensitive_REQ_11_3_18
+Test Description: Validates case sensitivity of camera view presets, testing that documented lowercase presets work while uppercase variants properly fail as case-sensitive commands.
+
+Test Name: CameraViewPreset_AliasCommand_REQ_11_3_18
+Test Description: Tests camera command using "view" alias instead of "camera", verifying alias functionality, feedback provision, and proper camera state changes.
+
+Test Name: ZoomCommand_ValidZoomFactors_REQ_11_3_19
+Test Description: Tests zoom command with valid factors (1.5 zoom in, 0.8 zoom out), verifying distance changes match expected calculations and proper feedback messaging.
+
+Test Name: ZoomCommand_MinimumDistanceLimit_REQ_11_3_19
+Test Description: Validates zoom command respects minimum distance constraints (0.5f), testing extreme zoom factors get clamped to minimum distance limit.
+
+Test Name: ZoomCommand_MaximumDistanceLimit_REQ_11_3_19
+Test Description: Tests zoom command respects maximum distance constraints (100.0f), verifying extreme zoom out factors get clamped to maximum distance limit.
+
+Test Name: ZoomCommand_InvalidZoomFactors_REQ_11_3_19
+Test Description: Validates zoom command rejects invalid factors (negative, zero), testing proper error handling and positive factor requirement messaging.
+
+Test Name: ZoomCommand_BoundaryValues_REQ_11_3_19
+Test Description: Tests zoom command boundary values (1.0 no change, very large/small factors), verifying clamping behavior and distance limit enforcement.
+
+Test Name: ZoomCommand_SequentialZooming_REQ_11_3_19
+Test Description: Validates sequential zoom operations (2x, 1.5x, 0.5x, 0.8x), testing cumulative zoom effects and distance bound enforcement throughout sequence.
+
+Test Name: ZoomCommand_AliasZ_REQ_11_3_19
+Test Description: Tests zoom command using "z" alias, verifying alias functionality, factor application accuracy, and proper feedback messaging.
+
+Test Name: ZoomCommand_MissingParameter_REQ_11_3_19
+Test Description: Validates zoom command without required parameter fails gracefully with appropriate error messaging about missing parameter requirement.
+
+Test Name: ZoomCommand_NonNumericParameter_REQ_11_3_19
+Test Description: Tests zoom command behavior with non-numeric parameters (abc, 1.5x), documenting actual parsing behavior and error handling approaches.
+
+Test Name: CameraCommand_InvalidViewParameters_REQ_11_3_20
+Test Description: Comprehensive test of camera command with invalid view parameters including case sensitivity, empty/space names, and multi-word presets with proper error messaging.
+
+Test Name: CameraCommand_MissingParameter_REQ_11_3_20
+Test Description: Tests camera command without required view parameter, verifying failure with error message indicating missing parameter requirement.
+
+Test Name: CameraCommand_ExtraParameters_REQ_11_3_20
+Test Description: Validates camera command behavior with extra parameters (front back, iso 1.5), documenting whether extra parameters are ignored or cause failure.
+
+Test Name: CameraCommand_NumericViewParameter_REQ_11_3_20
+Test Description: Tests camera command with numeric view parameters (1, 0, 123, -1, 1.5), verifying these invalid presets are properly rejected.
+
+Test Name: CameraCommand_SpecialCharacters_REQ_11_3_20
+Test Description: Validates camera command rejection of special characters and symbols (@front, #iso, front-view), ensuring proper error handling for invalid character usage.
+
+Test Name: CameraCommand_StateConsistencyAfterError_REQ_11_3_20
+Test Description: Tests camera state consistency after invalid commands, verifying camera position/target remain unchanged when invalid view commands fail.

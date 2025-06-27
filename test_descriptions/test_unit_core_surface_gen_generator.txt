@@ -1,0 +1,46 @@
+----- File: core/surface_gen/tests/test_unit_core_surface_gen_generator.cpp
+
+Test Name: BasicGeneration
+Test Description: Tests basic surface generation from voxel grid, verifying generated mesh is valid with proper vertex and triangle data structure for fundamental surface generation functionality.
+
+Test Name: PreviewMeshGeneration
+Test Description: Validates REQ-10.1.4 and REQ-10.1.5 for multi-resolution LOD support and real-time preview, testing preview mesh generation at different LOD levels with decreasing vertex counts.
+
+Test Name: ExportMeshGeneration
+Test Description: Tests REQ-10.1.6 for high-quality export meshes, validating mesh generation across all export quality levels (Draft, Standard, High, Maximum) for production output.
+
+Test Name: CustomSettings
+Test Description: Validates surface generation with custom settings including adaptive error, UV generation, normal generation, smoothing iterations, and simplification ratio for configurable output quality.
+
+Test Name: EmptyGrid
+Test Description: Tests surface generation from empty voxel grid, verifying generation produces valid but empty mesh with zero vertices and indices for edge case handling.
+
+Test Name: SingleVoxel
+Test Description: Validates surface generation from single voxel, testing cube mesh generation for minimal voxel data input with proper geometry output.
+
+Test Name: CacheEnabled
+Test Description: Tests surface generation caching functionality, verifying cache usage improves performance on repeated generation requests and tracks memory usage properly.
+
+Test Name: CacheDisabled
+Test Description: Validates surface generation without caching, ensuring no cache memory usage when caching is disabled and proper mesh generation without performance optimization.
+
+Test Name: AsyncGeneration
+Test Description: Tests asynchronous surface generation, verifying future-based mesh generation completes successfully within timeout for non-blocking generation operations.
+
+Test Name: MultipleAsyncGenerations
+Test Description: Validates concurrent asynchronous surface generation, testing multiple simultaneous generation requests complete successfully for parallel processing capability.
+
+Test Name: ProgressCallback
+Test Description: Tests progress reporting during surface generation, verifying callback invocation with increasing progress values (0.0 to 1.0) and status messages for user feedback.
+
+Test Name: VoxelDataChanged
+Test Description: Validates cache invalidation on voxel data changes, testing cache size reduction when notified of changed voxel regions for maintaining data consistency.
+
+Test Name: LODSettings
+Test Description: Tests REQ-10.1.4 LOD configuration, verifying LOD enable/disable functionality and proper LOD level calculation based on distance and bounding box parameters.
+
+Test Name: CacheMemoryLimit
+Test Description: Validates REQ-6.3.1 memory constraint compliance (4GB Meta Quest 3 limit), testing cache memory limitation enforcement and automatic cleanup when limit is exceeded.
+
+Test Name: ClearCache
+Test Description: Tests manual cache clearing functionality, verifying cache memory usage returns to zero after explicit cache clearing operation for memory management.

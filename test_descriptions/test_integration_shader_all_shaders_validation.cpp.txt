@@ -1,0 +1,19 @@
+----- File: tests/integration/rendering/test_integration_shader_all_shaders_validation.cpp
+
+Test Name: AllBuiltinShadersCompileAndRender
+Test Description: Tests all built-in shaders (basic, enhanced, flat) by loading them through the RenderEngine and rendering a test mesh. Validates that each shader compiles successfully and can render both triangles and lines without OpenGL errors.
+
+Test Name: GroundPlaneShaderValidation
+Test Description: Specifically tests the ground plane grid shader by enabling grid visibility and rendering the ground plane at the origin. Verifies the ground plane shader renders correctly without generating OpenGL errors.
+
+Test Name: AllShaderFilesValid
+Test Description: Scans the project directories to find all shader pairs (.vert/.frag files) and validates that each file exists, is readable, and starts with a valid GLSL directive (#version or comment). Reports the total number of shader pairs found.
+
+Test Name: ShaderAttributeRequirements
+Test Description: Verifies that VAO (Vertex Array Object) attribute setup matches shader requirements. Checks that position, normal, and color attributes are enabled while texture coordinate attribute is disabled, confirming the fix for a previous bug.
+
+Test Name: RapidShaderSwitching
+Test Description: Performance and correctness test that rapidly switches between different shaders (basic, enhanced, flat) and mesh types across 100 iterations. Tests alternating between normal and line rendering modes with rotating transforms and changing colors.
+
+Test Name: InvalidShaderHandling
+Test Description: Tests error recovery by attempting to render with an invalid shader ID (999999). Verifies the system handles the error gracefully without crashing, then confirms recovery by successfully rendering with a valid shader afterward.

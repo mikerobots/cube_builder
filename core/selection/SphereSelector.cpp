@@ -43,20 +43,60 @@ SelectionSet SphereSelector::selectFromSphere(const Math::Vector3f& center,
     // Get the voxel size in centimeters for stepping
     int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
     
-    // Align to voxel grid boundaries
-    Math::Vector3i minAligned = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution).value();
-    Math::Vector3i maxAligned = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution).value();
+    // Use direct coordinates without snapping to allow any 1cm position
+    Math::Vector3i minAligned = minIncrement.value();
+    Math::Vector3i maxAligned = maxIncrement.value();
     
-    // Check each voxel in range, stepping by voxel size
-    for (int x = minAligned.x; x <= maxAligned.x; x += voxelSizeCm) {
-        for (int y = minAligned.y; y <= maxAligned.y; y += voxelSizeCm) {
-            for (int z = minAligned.z; z <= maxAligned.z; z += voxelSizeCm) {
-                // Create voxel at this increment position
-                VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
-                
-                if (isVoxelInSphere(voxel, center, radius)) {
-                    if (!checkExistence || voxelExists(voxel)) {
-                        result.add(voxel);
+    // With the new requirements, voxels can be placed at any 1cm position
+    // We need to check all positions where a voxel might overlap the sphere
+    // Since a voxel extends voxelSize from its origin, we need to expand our search range
+    
+    // Expand the search range by voxel size to catch voxels that might overlap the sphere
+    int expandedMinX = minAligned.x - voxelSizeCm;
+    int expandedMinY = minAligned.y - voxelSizeCm;  
+    int expandedMinZ = minAligned.z - voxelSizeCm;
+    
+    // PERFORMANCE FIX: For very large spheres, limit the iteration range to prevent hanging
+    // Calculate the volume of positions we'd check to avoid excessive iteration
+    long rangeX = maxAligned.x - expandedMinX + 1;
+    long rangeY = maxAligned.y - expandedMinY + 1;
+    long rangeZ = maxAligned.z - expandedMinZ + 1;
+    long totalIterations = rangeX * rangeY * rangeZ;
+    
+    const long MAX_ITERATIONS = 1000000; // 1M iterations max to prevent hanging
+    
+    if (totalIterations > MAX_ITERATIONS) {
+        // For very large spheres, use a more efficient approach:
+        // Instead of checking every 1cm position, sample at a coarser resolution
+        // and then check if actual voxels exist in those regions
+        int stepSize = static_cast<int>(std::cbrt(totalIterations / MAX_ITERATIONS)) + 1;
+        
+        for (int x = expandedMinX; x <= maxAligned.x; x += stepSize) {
+            for (int y = expandedMinY; y <= maxAligned.y; y += stepSize) {
+                for (int z = expandedMinZ; z <= maxAligned.z; z += stepSize) {
+                    // Create voxel at this increment position
+                    VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
+                    
+                    if (isVoxelInSphere(voxel, center, radius)) {
+                        if (!checkExistence || voxelExists(voxel)) {
+                            result.add(voxel);
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        // For smaller spheres, check all 1cm positions as before
+        for (int x = expandedMinX; x <= maxAligned.x; x += 1) {
+            for (int y = expandedMinY; y <= maxAligned.y; y += 1) {
+                for (int z = expandedMinZ; z <= maxAligned.z; z += 1) {
+                    // Create voxel at this increment position
+                    VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
+                    
+                    if (isVoxelInSphere(voxel, center, radius)) {
+                        if (!checkExistence || voxelExists(voxel)) {
+                            result.add(voxel);
+                        }
                     }
                 }
             }
@@ -125,22 +165,53 @@ SelectionSet SphereSelector::selectEllipsoid(const Math::Vector3f& center,
         Math::WorldCoordinates(ellipsoidBounds.max)
     );
     
-    // Get the voxel size in centimeters for stepping
+    // Get the voxel size in centimeters for expanding search
     int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
     
-    // Align to voxel grid boundaries
-    Math::Vector3i minAligned = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution).value();
-    Math::Vector3i maxAligned = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution).value();
+    // Use direct coordinates without snapping to allow any 1cm position
+    Math::Vector3i minAligned = minIncrement.value();
+    Math::Vector3i maxAligned = maxIncrement.value();
     
-    // Check each voxel in range, stepping by voxel size
-    for (int x = minAligned.x; x <= maxAligned.x; x += voxelSizeCm) {
-        for (int y = minAligned.y; y <= maxAligned.y; y += voxelSizeCm) {
-            for (int z = minAligned.z; z <= maxAligned.z; z += voxelSizeCm) {
-                VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
-                
-                if (isVoxelInEllipsoid(voxel, center, radii, rotation)) {
-                    if (!checkExistence || voxelExists(voxel)) {
-                        result.add(voxel);
+    // Expand the search range by voxel size to catch voxels that might overlap
+    int expandedMinX = minAligned.x - voxelSizeCm;
+    int expandedMinY = minAligned.y - voxelSizeCm;
+    int expandedMinZ = minAligned.z - voxelSizeCm;
+    
+    // PERFORMANCE FIX: For very large ellipsoids, limit iteration to prevent hanging
+    long rangeX = maxAligned.x - expandedMinX + 1;
+    long rangeY = maxAligned.y - expandedMinY + 1;
+    long rangeZ = maxAligned.z - expandedMinZ + 1;
+    long totalIterations = rangeX * rangeY * rangeZ;
+    
+    const long MAX_ITERATIONS = 1000000; // 1M iterations max
+    
+    if (totalIterations > MAX_ITERATIONS) {
+        int stepSize = static_cast<int>(std::cbrt(totalIterations / MAX_ITERATIONS)) + 1;
+        
+        for (int x = expandedMinX; x <= maxAligned.x; x += stepSize) {
+            for (int y = expandedMinY; y <= maxAligned.y; y += stepSize) {
+                for (int z = expandedMinZ; z <= maxAligned.z; z += stepSize) {
+                    VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
+                    
+                    if (isVoxelInEllipsoid(voxel, center, radii, rotation)) {
+                        if (!checkExistence || voxelExists(voxel)) {
+                            result.add(voxel);
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        // Check each possible voxel position in 1cm increments
+        for (int x = expandedMinX; x <= maxAligned.x; x += 1) {
+            for (int y = expandedMinY; y <= maxAligned.y; y += 1) {
+                for (int z = expandedMinZ; z <= maxAligned.z; z += 1) {
+                    VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
+                    
+                    if (isVoxelInEllipsoid(voxel, center, radii, rotation)) {
+                        if (!checkExistence || voxelExists(voxel)) {
+                            result.add(voxel);
+                        }
                     }
                 }
             }
@@ -172,22 +243,53 @@ SelectionSet SphereSelector::selectHemisphere(const Math::Vector3f& center,
         Math::WorldCoordinates(hemisphereBounds.max)
     );
     
-    // Get the voxel size in centimeters for stepping
+    // Get the voxel size in centimeters for expanding search
     int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
     
-    // Align to voxel grid boundaries
-    Math::Vector3i minAligned = Math::CoordinateConverter::snapToVoxelResolution(minIncrement, resolution).value();
-    Math::Vector3i maxAligned = Math::CoordinateConverter::snapToVoxelResolution(maxIncrement, resolution).value();
+    // Use direct coordinates without snapping to allow any 1cm position
+    Math::Vector3i minAligned = minIncrement.value();
+    Math::Vector3i maxAligned = maxIncrement.value();
     
-    // Check each voxel in range, stepping by voxel size
-    for (int x = minAligned.x; x <= maxAligned.x; x += voxelSizeCm) {
-        for (int y = minAligned.y; y <= maxAligned.y; y += voxelSizeCm) {
-            for (int z = minAligned.z; z <= maxAligned.z; z += voxelSizeCm) {
-                VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
-                
-                if (isVoxelInHemisphere(voxel, center, radius, normalizedNormal)) {
-                    if (!checkExistence || voxelExists(voxel)) {
-                        result.add(voxel);
+    // Expand the search range by voxel size to catch voxels that might overlap
+    int expandedMinX = minAligned.x - voxelSizeCm;
+    int expandedMinY = minAligned.y - voxelSizeCm;
+    int expandedMinZ = minAligned.z - voxelSizeCm;
+    
+    // PERFORMANCE FIX: For very large hemispheres, limit iteration to prevent hanging
+    long rangeX = maxAligned.x - expandedMinX + 1;
+    long rangeY = maxAligned.y - expandedMinY + 1;
+    long rangeZ = maxAligned.z - expandedMinZ + 1;
+    long totalIterations = rangeX * rangeY * rangeZ;
+    
+    const long MAX_ITERATIONS = 1000000; // 1M iterations max
+    
+    if (totalIterations > MAX_ITERATIONS) {
+        int stepSize = static_cast<int>(std::cbrt(totalIterations / MAX_ITERATIONS)) + 1;
+        
+        for (int x = expandedMinX; x <= maxAligned.x; x += stepSize) {
+            for (int y = expandedMinY; y <= maxAligned.y; y += stepSize) {
+                for (int z = expandedMinZ; z <= maxAligned.z; z += stepSize) {
+                    VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
+                    
+                    if (isVoxelInHemisphere(voxel, center, radius, normalizedNormal)) {
+                        if (!checkExistence || voxelExists(voxel)) {
+                            result.add(voxel);
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        // Check each possible voxel position in 1cm increments
+        for (int x = expandedMinX; x <= maxAligned.x; x += 1) {
+            for (int y = expandedMinY; y <= maxAligned.y; y += 1) {
+                for (int z = expandedMinZ; z <= maxAligned.z; z += 1) {
+                    VoxelId voxel(Math::IncrementCoordinates(Math::Vector3i(x, y, z)), resolution);
+                    
+                    if (isVoxelInHemisphere(voxel, center, radius, normalizedNormal)) {
+                        if (!checkExistence || voxelExists(voxel)) {
+                            result.add(voxel);
+                        }
                     }
                 }
             }

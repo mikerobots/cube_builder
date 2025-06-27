@@ -1,0 +1,26 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at origin (0, 0, 0)
+Initialization complete!
+Type 'help' for available commands.
+
+> Resolution set to 2cm
+> Workspace resized to 5.000000x5.000000x5.000000 meters
+> Camera set to iso view
+> Voxel placed at (0, 0, 0)
+> Voxel placed at (2, 0, 0)
+> Voxel placed at (4, 0, 0)
+> Voxel placed at (6, 0, 0)
+> Voxel placed at (8, 0, 0)
+> Voxel placed at (10, 0, 0)
+> Voxel placed at (12, 0, 0)
+> Voxel placed at (14, 0, 0)
+> Voxel placed at (16, 0, 0)
+> Voxel placed at (18, 0, 0)
+> Command failed: mutex lock failed: Invalid argument
+> Goodbye!
+
+Shutting down...

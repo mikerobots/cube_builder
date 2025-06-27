@@ -107,10 +107,14 @@ Three distinct applications sharing the core library:
 - **Performance target**: <16ms response time for all interactions
 
 ### Surface Generation Strategy
-- **Dual Contouring algorithm**: Chosen for better feature preservation
+- **Primary Goal**: Transform blocky voxel creations into smooth, organic, printable 3D objects
+- **Dual Contouring algorithm**: Provides base mesh generation with topology preservation
+- **Progressive smoothing**: User-controllable smoothing levels (0-10+) to eliminate voxel appearance
+- **Topology preservation**: Maintains loops, holes, and complex geometry during smoothing
 - **Multi-resolution LOD**: Adaptive quality based on view distance
-- **Real-time preview**: Simplified meshes during editing
-- **High-quality export**: Full detail for final output
+- **Real-time preview**: Interactive smoothing preview during editing
+- **Printable output**: Watertight, manifold meshes suitable for 3D printing
+- **Design rationale**: Enable children to build with familiar voxel blocks, then transform into smooth toys/objects
 
 ### File Format Design
 - **Custom binary format**: Optimized for voxel data storage

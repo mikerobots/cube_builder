@@ -204,35 +204,8 @@ TEST_F(CoordinateConverterTest, SnapToIncrementGrid_BasicSnapping) {
     EXPECT_FLOAT_EQ(snapped.z(), -0.89f);
 }
 
-TEST_F(CoordinateConverterTest, SnapToVoxelResolution_4cmAlignment) {
-    // Test snapping increment coordinates to 4cm voxel boundaries
-    IncrementCoordinates unaligned(107, 215, -33);
-    IncrementCoordinates snapped = CoordinateConverter::snapToVoxelResolution(
-        unaligned, VoxelEditor::VoxelData::VoxelResolution::Size_4cm);
-    
-    // 4cm = 4cm, so should snap to multiples of 4 using floor division
-    // floor(107 / 4) = floor(26.75) = 26, so 26 * 4 = 104
-    // floor(215 / 4) = floor(53.75) = 53, so 53 * 4 = 212
-    // floor(-33 / 4) = floor(-8.25) = -9, so -9 * 4 = -36
-    EXPECT_EQ(snapped.x(), 104);
-    EXPECT_EQ(snapped.y(), 212);
-    EXPECT_EQ(snapped.z(), -36);
-}
-
-TEST_F(CoordinateConverterTest, SnapToVoxelResolution_16cmAlignment) {
-    // Test snapping to 16cm voxel boundaries
-    IncrementCoordinates unaligned(100, 200, -50);
-    IncrementCoordinates snapped = CoordinateConverter::snapToVoxelResolution(
-        unaligned, VoxelEditor::VoxelData::VoxelResolution::Size_16cm);
-    
-    // 16cm = 16cm, so should snap to multiples of 16 using floor division
-    // floor(100 / 16) = floor(6.25) = 6, so 6 * 16 = 96
-    // floor(200 / 16) = floor(12.5) = 12, so 12 * 16 = 192
-    // floor(-50 / 16) = floor(-3.125) = -4, so -4 * 16 = -64
-    EXPECT_EQ(snapped.x(), 96);
-    EXPECT_EQ(snapped.y(), 192);
-    EXPECT_EQ(snapped.z(), -64);
-}
+// Removed: SnapToVoxelResolution tests - function removed per requirements change
+// Voxels can now be placed at any 1cm position without resolution-based snapping
 
 TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_1cmVoxels) {
     // Test getting voxel center for 1cm voxels
@@ -260,32 +233,30 @@ TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_1cmVoxels) {
 
 TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_4cmVoxels) {
     // Test getting voxel center for 4cm voxels
+    // With no snapping, voxel position is the exact bottom-left-front corner
     IncrementCoordinates voxelPos(107, 215, -33);
     IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(
         voxelPos, VoxelEditor::VoxelData::VoxelResolution::Size_4cm);
     
     // 4cm voxels have 2cm centers
-    // 107: floor(107/4) = 26, so voxel at 26*4 = 104, center at 104 + 2 = 106
-    // 215: floor(215/4) = 53, so voxel at 53*4 = 212, center at 212 + 2 = 214
-    // -33: floor(-33/4) = -9, so voxel at -9*4 = -36, center at -36 + 2 = -34
-    EXPECT_EQ(center.x(), 106);
-    EXPECT_EQ(center.y(), 214);
-    EXPECT_EQ(center.z(), -34);
+    // For exact placement at (107,215,-33), center is at (107+2, 215+2, -33+2)
+    EXPECT_EQ(center.x(), 109);
+    EXPECT_EQ(center.y(), 217);
+    EXPECT_EQ(center.z(), -31);
 }
 
 TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_16cmVoxels) {
     // Test getting voxel center for 16cm voxels
+    // With no snapping, voxel position is the exact bottom-left-front corner
     IncrementCoordinates voxelPos(100, 200, -50);
     IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(
         voxelPos, VoxelEditor::VoxelData::VoxelResolution::Size_16cm);
     
     // 16cm voxels have 8cm centers
-    // 100: floor(100/16) = 6, so voxel at 6*16 = 96, center at 96 + 8 = 104
-    // 200: floor(200/16) = 12, so voxel at 12*16 = 192, center at 192 + 8 = 200
-    // -50: floor(-50/16) = -4, so voxel at -4*16 = -64, center at -64 + 8 = -56
-    EXPECT_EQ(center.x(), 104);
-    EXPECT_EQ(center.y(), 200);
-    EXPECT_EQ(center.z(), -56);
+    // For exact placement at (100,200,-50), center is at (100+8, 200+8, -50+8)
+    EXPECT_EQ(center.x(), 108);
+    EXPECT_EQ(center.y(), 208);
+    EXPECT_EQ(center.z(), -42);
 }
 
 // ==================== Edge Cases and Error Conditions ====================
@@ -322,9 +293,9 @@ TEST_F(CoordinateConverterTest, LargeValues_NoOverflow) {
     ExpectNearVector3f(large.value(), roundTrip.value(), 1e-5f);
 }
 
-TEST_F(CoordinateConverterTest, AllResolutions_ConsistentSnapping) {
-    // Test that all resolutions work consistently for snapping
-    // Use a coordinate close to origin that should stay within bounds for all resolutions
+TEST_F(CoordinateConverterTest, AllResolutions_ConsistentCenterCalculation) {
+    // Test that all resolutions work consistently for center calculation
+    // With no snapping, voxels can be placed at any 1cm position
     IncrementCoordinates testIncrement(50, 100, -20);
     
     std::vector<VoxelEditor::VoxelData::VoxelResolution> resolutions = {
@@ -335,17 +306,23 @@ TEST_F(CoordinateConverterTest, AllResolutions_ConsistentSnapping) {
     };
     
     for (auto res : resolutions) {
-        IncrementCoordinates snapped = CoordinateConverter::snapToVoxelResolution(testIncrement, res);
         IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(testIncrement, res);
         
-        // Snapped coordinates should work (may be outside bounds for large resolutions, which is expected)
-        // Just verify the operations don't crash and produce reasonable results
-        
-        // Center should be within the voxel size of the original position
+        // Center should be calculated from the exact position (no snapping)
         float voxelSize_cm = CoordinateConverter::getVoxelSizeMeters(res) * 100.0f;
-        EXPECT_LE(std::abs(center.x() - testIncrement.x()), voxelSize_cm);
-        EXPECT_LE(std::abs(center.y() - testIncrement.y()), voxelSize_cm);
-        EXPECT_LE(std::abs(center.z() - testIncrement.z()), voxelSize_cm);
+        int halfVoxel_cm = static_cast<int>(voxelSize_cm) / 2;
+        
+        if (res == VoxelEditor::VoxelData::VoxelResolution::Size_1cm) {
+            // For 1cm voxels, center is the same as the position
+            EXPECT_EQ(center.x(), testIncrement.x());
+            EXPECT_EQ(center.y(), testIncrement.y());
+            EXPECT_EQ(center.z(), testIncrement.z());
+        } else {
+            // For larger voxels, center is position + half voxel size
+            EXPECT_EQ(center.x(), testIncrement.x() + halfVoxel_cm);
+            EXPECT_EQ(center.y(), testIncrement.y() + halfVoxel_cm);
+            EXPECT_EQ(center.z(), testIncrement.z() + halfVoxel_cm);
+        }
     }
 }
 
@@ -379,4 +356,123 @@ TEST_F(CoordinateConverterTest, CoordinateSystemConsistency_NegativeValues) {
     // Verify round-trip
     WorldCoordinates worldBack = CoordinateConverter::incrementToWorld(incrementNeg);
     ExpectNearVector3f(worldNeg.value(), worldBack.value(), 1e-5f);
+}
+
+// ==================== Arbitrary 1cm Position Tests (Requirements Change) ====================
+
+TEST_F(CoordinateConverterTest, ArbitraryPositions_AllVoxelSizesSupported) {
+    // Test that voxels of any size can be placed at any 1cm increment position
+    // This verifies the new requirement: no resolution-based snapping
+    
+    std::vector<IncrementCoordinates> arbitrary1cmPositions = {
+        IncrementCoordinates(1, 1, 1),    // Odd positions
+        IncrementCoordinates(3, 7, 13),   // Prime numbers
+        IncrementCoordinates(17, 23, 31), // More primes
+        IncrementCoordinates(-5, 9, -11), // Mixed positive/negative
+        IncrementCoordinates(127, 251, -37) // Larger arbitrary positions
+    };
+    
+    std::vector<VoxelEditor::VoxelData::VoxelResolution> allResolutions = {
+        VoxelEditor::VoxelData::VoxelResolution::Size_1cm, VoxelEditor::VoxelData::VoxelResolution::Size_2cm, VoxelEditor::VoxelData::VoxelResolution::Size_4cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_8cm, VoxelEditor::VoxelData::VoxelResolution::Size_16cm, VoxelEditor::VoxelData::VoxelResolution::Size_32cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_64cm, VoxelEditor::VoxelData::VoxelResolution::Size_128cm, VoxelEditor::VoxelData::VoxelResolution::Size_256cm,
+        VoxelEditor::VoxelData::VoxelResolution::Size_512cm
+    };
+    
+    // Verify that every arbitrary position works with every voxel size
+    for (const auto& pos : arbitrary1cmPositions) {
+        for (auto resolution : allResolutions) {
+            // Convert to world and back to verify consistency
+            WorldCoordinates world = CoordinateConverter::incrementToWorld(pos);
+            IncrementCoordinates roundTrip = CoordinateConverter::worldToIncrement(world);
+            
+            // Should get back exactly the same position (no snapping)
+            EXPECT_EQ(roundTrip.x(), pos.x()) << "Failed for resolution " << static_cast<int>(resolution) 
+                                              << " at position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+            EXPECT_EQ(roundTrip.y(), pos.y()) << "Failed for resolution " << static_cast<int>(resolution) 
+                                              << " at position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+            EXPECT_EQ(roundTrip.z(), pos.z()) << "Failed for resolution " << static_cast<int>(resolution) 
+                                              << " at position (" << pos.x() << "," << pos.y() << "," << pos.z() << ")";
+        }
+    }
+}
+
+TEST_F(CoordinateConverterTest, ArbitraryPositions_NoResolutionBasedConstraints) {
+    // Test that coordinate system has no resolution-based constraints
+    // Previously, positions might have been restricted based on voxel size
+    // Now they should work for any 1cm increment regardless of voxel size
+    
+    // Test positions that would NOT align with various voxel grid sizes
+    IncrementCoordinates pos_notAlignedTo4cm(1, 3, 5);   // Not multiples of 4
+    IncrementCoordinates pos_notAlignedTo8cm(3, 5, 7);   // Not multiples of 8  
+    IncrementCoordinates pos_notAlignedTo16cm(7, 11, 13); // Not multiples of 16
+    IncrementCoordinates pos_notAlignedTo32cm(15, 17, 19); // Not multiples of 32
+    
+    std::vector<IncrementCoordinates> nonAlignedPositions = {
+        pos_notAlignedTo4cm, pos_notAlignedTo8cm, pos_notAlignedTo16cm, pos_notAlignedTo32cm
+    };
+    
+    // All these positions should work perfectly with coordinate conversion
+    for (const auto& pos : nonAlignedPositions) {
+        // Test world conversion roundtrip
+        WorldCoordinates world = CoordinateConverter::incrementToWorld(pos);
+        IncrementCoordinates roundTrip = CoordinateConverter::worldToIncrement(world);
+        
+        EXPECT_EQ(roundTrip.x(), pos.x());
+        EXPECT_EQ(roundTrip.y(), pos.y());
+        EXPECT_EQ(roundTrip.z(), pos.z());
+        
+        // Test validation with reasonable workspace
+        Vector3f largeWorkspace(10.0f, 10.0f, 10.0f); // 10m workspace
+        EXPECT_TRUE(CoordinateConverter::isValidIncrementCoordinate(pos, largeWorkspace));
+        EXPECT_TRUE(CoordinateConverter::isValidWorldCoordinate(world, largeWorkspace));
+    }
+}
+
+TEST_F(CoordinateConverterTest, ArbitraryPositions_VoxelCenterCalculation) {
+    // Test that voxel center calculation works for arbitrary starting positions
+    // This tests the updated getVoxelCenterIncrement that doesn't snap
+    
+    // Test with positions that are NOT aligned to voxel boundaries
+    IncrementCoordinates arbitraryPos(13, 27, -19); // Random 1cm position
+    
+    // Test different resolutions
+    IncrementCoordinates center2cm = CoordinateConverter::getVoxelCenterIncrement(
+        arbitraryPos, VoxelEditor::VoxelData::VoxelResolution::Size_2cm);
+    EXPECT_EQ(center2cm.x(), 14); // 13 + 1 (half of 2cm)
+    EXPECT_EQ(center2cm.y(), 28); // 27 + 1
+    EXPECT_EQ(center2cm.z(), -18); // -19 + 1
+    
+    IncrementCoordinates center8cm = CoordinateConverter::getVoxelCenterIncrement(
+        arbitraryPos, VoxelEditor::VoxelData::VoxelResolution::Size_8cm);
+    EXPECT_EQ(center8cm.x(), 17); // 13 + 4 (half of 8cm)
+    EXPECT_EQ(center8cm.y(), 31); // 27 + 4
+    EXPECT_EQ(center8cm.z(), -15); // -19 + 4
+    
+    IncrementCoordinates center32cm = CoordinateConverter::getVoxelCenterIncrement(
+        arbitraryPos, VoxelEditor::VoxelData::VoxelResolution::Size_32cm);
+    EXPECT_EQ(center32cm.x(), 29); // 13 + 16 (half of 32cm)
+    EXPECT_EQ(center32cm.y(), 43); // 27 + 16
+    EXPECT_EQ(center32cm.z(), -3); // -19 + 16
+}
+
+TEST_F(CoordinateConverterTest, ArbitraryPositions_SnapToIncrementGridOnly) {
+    // Test that snapToIncrementGrid only snaps to 1cm grid, not to resolution grids
+    
+    // Test coordinates with sub-centimeter precision
+    WorldCoordinates subCm1(1.234f, 2.678f, -3.456f);
+    WorldCoordinates snapped1 = CoordinateConverter::snapToIncrementGrid(subCm1);
+    
+    // Should snap to nearest 1cm
+    EXPECT_FLOAT_EQ(snapped1.x(), 1.23f);  // Rounds to 123cm = 1.23m
+    EXPECT_FLOAT_EQ(snapped1.y(), 2.68f);  // Rounds to 268cm = 2.68m  
+    EXPECT_FLOAT_EQ(snapped1.z(), -3.46f); // Rounds to -346cm = -3.46m
+    
+    // Test edge cases for rounding
+    WorldCoordinates edge1(0.004f, 0.006f, -0.004f);
+    WorldCoordinates snappedEdge1 = CoordinateConverter::snapToIncrementGrid(edge1);
+    
+    EXPECT_FLOAT_EQ(snappedEdge1.x(), 0.00f);  // Rounds down
+    EXPECT_FLOAT_EQ(snappedEdge1.y(), 0.01f);  // Rounds up
+    EXPECT_FLOAT_EQ(snappedEdge1.z(), 0.00f);  // Rounds down (to 0, not -0.01)
 }

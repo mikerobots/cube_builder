@@ -1,0 +1,46 @@
+----- File: core/camera/tests/test_unit_core_camera_camera.cpp
+
+Test Name: DefaultConstruction
+Test Description: Tests the default construction of Camera objects, verifying default values for position (0,0,5), target (0,0,0), up vector (0,1,0), field of view (45°), aspect ratio (16:9), near plane (0.1), and far plane (1000). Validates requirements REQ-CAM-1 and REQ-CAM-3.
+
+Test Name: PositionManagement
+Test Description: Tests camera position management including setting new positions, verifying the position is updated, events are dispatched with correct change type (POSITION), and that setting the same position doesn't trigger redundant events.
+
+Test Name: TargetManagement
+Test Description: Tests camera target (look-at point) management, verifying that setting a new target updates the value correctly and dispatches a CameraChangedEvent with POSITION change type.
+
+Test Name: UpVectorManagement
+Test Description: Tests camera up vector management, verifying that setting a new up vector updates the value correctly and dispatches a CameraChangedEvent with ROTATION change type.
+
+Test Name: ProjectionSettings
+Test Description: Tests projection-related settings including field of view (triggering ZOOM events), aspect ratio, and near/far plane distances, verifying all values are correctly updated. Validates requirement REQ-CAM-2 for multiple view projections.
+
+Test Name: DirectionVectors
+Test Description: Tests the calculation of camera direction vectors (forward, right, actual up), verifying they are correctly computed based on position, target, and up vector, maintaining proper orthogonality and Y-up orientation. Validates requirement REQ-CAM-3.
+
+Test Name: ViewMatrix
+Test Description: Tests view matrix generation, verifying the matrix has non-zero determinant (is valid) and that multiple calls return the same cached matrix for performance.
+
+Test Name: ProjectionMatrix
+Test Description: Tests projection matrix generation with specific FOV, aspect ratio, and near/far planes, verifying the matrix is valid and properly cached.
+
+Test Name: ViewProjectionMatrix
+Test Description: Tests the combined view-projection matrix calculation, verifying it equals the product of projection and view matrices in the correct order.
+
+Test Name: MatrixCaching
+Test Description: Tests the matrix caching system, verifying matrices are cached after first computation, cached versions are returned on subsequent calls, and caches are properly invalidated when relevant parameters change (position invalidates view matrix, FOV invalidates projection matrix).
+
+Test Name: ViewPresets
+Test Description: Tests camera view preset functionality, verifying FRONT preset positions camera at (0,0,5) and TOP preset at (0,5,0), both targeting origin. Validates requirements REQ-CAM-4 and REQ-9.2.2.
+
+Test Name: EventDispatcherManagement
+Test Description: Tests event dispatcher integration, verifying cameras work without event dispatchers (no crashes), events aren't sent when dispatcher is null, and events resume when dispatcher is restored. Validates requirement REQ-CAM-8.
+
+Test Name: EdgeCases
+Test Description: Tests edge cases including very small (1°) and large (179°) field of view values, extreme aspect ratios (0.1 to 10.0), and extreme near/far plane distances (0.001 to 100000).
+
+Test Name: ProjectionMatrixWithAspectRatio
+Test Description: Comprehensive test of projection matrix generation with different aspect ratios (1:1, 16:9, 9:16), verifying proper scaling factors, that wide aspects compress horizontal more than vertical, tall aspects compress vertical more than horizontal, and frustum shape changes appropriately with aspect ratio.
+
+Test Name: VectorNormalization
+Test Description: Tests that all camera direction vectors (forward, right, up) are properly normalized to unit length and maintain orthogonality to each other, regardless of camera position and target settings.

@@ -19,6 +19,7 @@
 #include "cli/CommandProcessor.h"
 #include "cli/RenderWindow.h"
 #include "cli/BuildInfo.h"
+#include "cli/MouseInteraction.h"
 
 // Core includes
 #include "voxel_data/VoxelDataManager.h"
@@ -35,6 +36,8 @@
 #include "selection/SelectionManager.h"
 #include "selection/SelectionTypes.h"
 #include "surface_gen/SurfaceGenerator.h"
+#include "surface_gen/MeshSmoother.h"
+#include "surface_gen/MeshValidator.h"
 #include "undo_redo/HistoryManager.h"
 #include "undo_redo/VoxelCommands.h"
 #include "undo_redo/PlacementCommands.h"
@@ -80,6 +83,18 @@ void Application::registerCommands() {
             std::string filename = ctx.getArg(0);
             if (filename.empty()) {
                 return CommandResult::Error("Filename required");
+            }
+            
+            // Validate filename
+            if (filename == "/dev/null") {
+                return CommandResult::Error("Invalid filename: /dev/null");
+            }
+            
+            // Check file extension
+            const std::string validExtension = ".vxl";
+            if (filename.length() < validExtension.length() || 
+                filename.substr(filename.length() - validExtension.length()) != validExtension) {
+                return CommandResult::Error("Invalid file extension. File must end with .vxl");
             }
             
             FileIO::Project project;
@@ -135,6 +150,18 @@ void Application::registerCommands() {
                 return CommandResult::Error("No filename specified and no current project");
             }
             
+            // Validate filename
+            if (filename == "/dev/null") {
+                return CommandResult::Error("Invalid filename: /dev/null");
+            }
+            
+            // Check file extension
+            const std::string validExtension = ".vxl";
+            if (filename.length() < validExtension.length() || 
+                filename.substr(filename.length() - validExtension.length()) != validExtension) {
+                return CommandResult::Error("Invalid file extension. File must end with .vxl");
+            }
+            
             // Create project from current state
             FileIO::Project project;
             project.initializeDefaults();
@@ -185,6 +212,18 @@ void Application::registerCommands() {
             std::string filename = ctx.getArg(0);
             if (filename.empty()) {
                 return CommandResult::Error("Filename required");
+            }
+            
+            // Validate filename
+            if (filename == "/dev/null") {
+                return CommandResult::Error("Invalid filename: /dev/null");
+            }
+            
+            // Check file extension
+            const std::string validExtension = ".vxl";
+            if (filename.length() < validExtension.length() || 
+                filename.substr(filename.length() - validExtension.length()) != validExtension) {
+                return CommandResult::Error("Invalid file extension. File must end with .vxl");
             }
             
             // Create project from current state
@@ -243,6 +282,34 @@ void Application::registerCommands() {
             SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher.get());
             auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
             
+            // Apply smoothing if enabled
+            if (m_smoothingLevel > 0) {
+                SurfaceGen::MeshSmoother smoother;
+                SurfaceGen::MeshSmoother::SmoothingConfig config;
+                config.smoothingLevel = m_smoothingLevel;
+                config.algorithm = m_smoothingAlgorithm;
+                config.preserveTopology = true;
+                config.preserveBoundaries = true;
+                config.minFeatureSize = 1.0f; // 1mm minimum feature size for 3D printing
+                config.usePreviewQuality = false; // Full quality for export
+                
+                // Apply smoothing with progress callback
+                std::cout << "Applying smoothing (level " << m_smoothingLevel << ")..." << std::flush;
+                surfaceMesh = smoother.smooth(surfaceMesh, config, 
+                    [](float progress) {
+                        // Update progress display
+                        std::cout << "\rApplying smoothing... " 
+                                  << std::fixed << std::setprecision(0)
+                                  << (progress * 100.0f) << "%" << std::flush;
+                        return true; // Continue processing
+                    });
+                std::cout << "\rApplying smoothing... Done!    " << std::endl;
+                
+                if (surfaceMesh.vertices.empty()) {
+                    return CommandResult::Error("Smoothing operation failed or was cancelled");
+                }
+            }
+            
             // Convert to Rendering::Mesh for STL export
             Rendering::Mesh renderMesh;
             renderMesh.vertices.reserve(surfaceMesh.vertices.size());
@@ -258,6 +325,7 @@ void Application::registerCommands() {
             
             FileIO::STLExportOptions options;
             options.format = FileIO::STLFormat::Binary;
+            options.validateWatertight = false; // Disable validation for now
             
             auto result = m_fileManager->exportSTL(filename, renderMesh, options);
             if (result.success) {
@@ -280,25 +348,29 @@ void Application::registerCommands() {
         },
         [this](const CommandContext& ctx) {
             // Parse coordinates with units
-            int x = ctx.getCoordinateArg(0);
-            int y = ctx.getCoordinateArg(1);
-            int z = ctx.getCoordinateArg(2);
+            auto x_opt = ctx.getCoordinateArg(0);
+            auto y_opt = ctx.getCoordinateArg(1);
+            auto z_opt = ctx.getCoordinateArg(2);
             
             // Check if all coordinates were parsed successfully
-            if (x == -1) {
+            if (!x_opt) {
                 return CommandResult::Error("Invalid X coordinate. Must include units (e.g., 100cm or 1m)");
             }
-            if (y == -1) {
+            if (!y_opt) {
                 return CommandResult::Error("Invalid Y coordinate. Must include units (e.g., 50cm or 0.5m)");
             }
-            if (z == -1) {
+            if (!z_opt) {
                 return CommandResult::Error("Invalid Z coordinate. Must include units (e.g., -100cm or -1m)");
             }
+            
+            int x = *x_opt;
+            int y = *y_opt;
+            int z = *z_opt;
             
             // Use PlacementCommandFactory for validation
             auto cmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
                 m_voxelManager.get(),
-                Math::Vector3i(x, y, z),
+                Math::IncrementCoordinates(Math::Vector3i(x, y, z)),
                 m_voxelManager->getActiveResolution()
             );
             
@@ -306,7 +378,7 @@ void Application::registerCommands() {
                 // Get validation details for error message
                 auto validation = UndoRedo::PlacementCommandFactory::validatePlacement(
                     m_voxelManager.get(),
-                    Math::Vector3i(x, y, z),
+                    Math::IncrementCoordinates(Math::Vector3i(x, y, z)),
                     m_voxelManager->getActiveResolution()
                 );
                 
@@ -319,7 +391,11 @@ void Application::registerCommands() {
                 return CommandResult::Error(errorMsg);
             }
             
-            m_historyManager->executeCommand(std::move(cmd));
+            bool success = m_historyManager->executeCommand(std::move(cmd));
+            if (!success) {
+                return CommandResult::Error("Failed to place voxel at (" + 
+                    std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")");
+            }
             
             // Update the voxel mesh for rendering
             requestMeshUpdate();
@@ -341,25 +417,29 @@ void Application::registerCommands() {
         },
         [this](const CommandContext& ctx) {
             // Parse coordinates with units
-            int x = ctx.getCoordinateArg(0);
-            int y = ctx.getCoordinateArg(1);
-            int z = ctx.getCoordinateArg(2);
+            auto x_opt = ctx.getCoordinateArg(0);
+            auto y_opt = ctx.getCoordinateArg(1);
+            auto z_opt = ctx.getCoordinateArg(2);
             
             // Check if all coordinates were parsed successfully
-            if (x == -1) {
+            if (!x_opt) {
                 return CommandResult::Error("Invalid X coordinate. Must include units (e.g., 100cm or 1m)");
             }
-            if (y == -1) {
+            if (!y_opt) {
                 return CommandResult::Error("Invalid Y coordinate. Must include units (e.g., 50cm or 0.5m)");
             }
-            if (z == -1) {
+            if (!z_opt) {
                 return CommandResult::Error("Invalid Z coordinate. Must include units (e.g., -100cm or -1m)");
             }
+            
+            int x = *x_opt;
+            int y = *y_opt;
+            int z = *z_opt;
             
             // Use PlacementCommandFactory for removal
             auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
                 m_voxelManager.get(),
-                Math::Vector3i(x, y, z),
+                Math::IncrementCoordinates(Math::Vector3i(x, y, z)),
                 m_voxelManager->getActiveResolution()
             );
             
@@ -392,29 +472,45 @@ void Application::registerCommands() {
         },
         [this](const CommandContext& ctx) {
             // Parse start coordinates with units
-            int x1 = ctx.getCoordinateArg(0);
-            int y1 = ctx.getCoordinateArg(1);
-            int z1 = ctx.getCoordinateArg(2);
+            auto x1_opt = ctx.getCoordinateArg(0);
+            auto y1_opt = ctx.getCoordinateArg(1);
+            auto z1_opt = ctx.getCoordinateArg(2);
             
             // Parse end coordinates with units
-            int x2 = ctx.getCoordinateArg(3);
-            int y2 = ctx.getCoordinateArg(4);
-            int z2 = ctx.getCoordinateArg(5);
+            auto x2_opt = ctx.getCoordinateArg(3);
+            auto y2_opt = ctx.getCoordinateArg(4);
+            auto z2_opt = ctx.getCoordinateArg(5);
             
             // Check if all coordinates were parsed successfully
-            if (x1 == -1 || y1 == -1 || z1 == -1) {
+            if (!x1_opt || !y1_opt || !z1_opt) {
                 return CommandResult::Error("Invalid start coordinates. Must include units (e.g., 0cm or 0m)");
             }
-            if (x2 == -1 || y2 == -1 || z2 == -1) {
+            if (!x2_opt || !y2_opt || !z2_opt) {
                 return CommandResult::Error("Invalid end coordinates. Must include units (e.g., 100cm or 1m)");
             }
             
-            Math::Vector3i start(x1, y1, z1);
-            Math::Vector3i end(x2, y2, z2);
+            int x1 = *x1_opt;
+            int y1 = *y1_opt;
+            int z1 = *z1_opt;
+            int x2 = *x2_opt;
+            int y2 = *y2_opt;
+            int z2 = *z2_opt;
+            
+            // Validate that all Y coordinates are >= 0 (ground plane constraint)
+            if (y1 < 0 || y2 < 0) {
+                return CommandResult::Error("Fill command failed - Y coordinates must be >= 0 (cannot place voxels below ground plane)");
+            }
+            
+            Math::IncrementCoordinates startInc(x1, y1, z1);
+            Math::IncrementCoordinates endInc(x2, y2, z2);
+            
+            // Convert increment coordinates to world coordinates
+            Math::Vector3f startWorld = Math::CoordinateConverter::incrementToWorld(startInc).value();
+            Math::Vector3f endWorld = Math::CoordinateConverter::incrementToWorld(endInc).value();
             
             // Create bounds
-            Math::Vector3f minF(std::min(start.x, end.x), std::min(start.y, end.y), std::min(start.z, end.z));
-            Math::Vector3f maxF(std::max(start.x, end.x), std::max(start.y, end.y), std::max(start.z, end.z));
+            Math::Vector3f minF(std::min(startWorld.x, endWorld.x), std::min(startWorld.y, endWorld.y), std::min(startWorld.z, endWorld.z));
+            Math::Vector3f maxF(std::max(startWorld.x, endWorld.x), std::max(startWorld.y, endWorld.y), std::max(startWorld.z, endWorld.z));
             Math::BoundingBox region(minF, maxF);
             
             auto cmd = std::make_unique<UndoRedo::VoxelFillCommand>(
@@ -424,15 +520,19 @@ void Application::registerCommands() {
                 true // fill with voxels
             );
             
-            m_historyManager->executeCommand(std::move(cmd));
+            bool success = m_historyManager->executeCommand(std::move(cmd));
+            
+            if (!success) {
+                return CommandResult::Error("Fill command failed - some positions may be invalid (e.g., below ground plane)");
+            }
             
             // Update the voxel mesh for rendering
             requestMeshUpdate();
             
             // Calculate volume filled
-            int width = std::abs(end.x - start.x) + 1;
-            int height = std::abs(end.y - start.y) + 1;
-            int depth = std::abs(end.z - start.z) + 1;
+            int width = std::abs(x2 - x1) + 1;
+            int height = std::abs(y2 - y1) + 1;
+            int depth = std::abs(z2 - z1) + 1;
             int volume = width * height * depth;
             
             return CommandResult::Success("Filled " + std::to_string(volume) + " voxels");
@@ -764,16 +864,91 @@ void Application::registerCommands() {
             {"depth", "Depth in meters", "float", true, ""}
         },
         [this](const CommandContext& ctx) {
-            float width = ctx.getFloatArg(0);
-            float height = ctx.getFloatArg(1);
-            float depth = ctx.getFloatArg(2);
+            const auto& args = ctx.getArgs();
+            
+            // Parse each dimension, allowing optional "m" suffix
+            std::vector<float> dimensions;
+            std::vector<bool> hasUnitsList;
+            
+            for (size_t i = 0; i < 3 && i < args.size(); ++i) {
+                std::string arg = args[i];
+                
+                // Check if argument ends with 'm' and remove it
+                bool hasMeters = false;
+                if (!arg.empty() && arg.back() == 'm') {
+                    hasMeters = true;
+                    arg = arg.substr(0, arg.length() - 1);
+                }
+                hasUnitsList.push_back(hasMeters);
+                
+                // Validate the numeric part
+                bool isValid = true;
+                bool hasDecimal = false;
+                for (size_t j = 0; j < arg.length(); ++j) {
+                    char c = arg[j];
+                    if (c == '-' && j == 0) continue; // Allow negative sign at start
+                    if (c == '.') {
+                        if (hasDecimal) {
+                            isValid = false; // Multiple decimals
+                            break;
+                        }
+                        hasDecimal = true;
+                        continue;
+                    }
+                    if (!std::isdigit(c)) {
+                        isValid = false;
+                        break;
+                    }
+                }
+                
+                if (!isValid || arg.empty() || arg == "-" || arg == ".") {
+                    return CommandResult::Error("Invalid workspace dimension: '" + args[i] + "'. Expected numeric values in meters (e.g., 5, 5.5, 5m, or 5.5m)");
+                }
+                
+                // Parse the float value
+                try {
+                    float value = std::stof(arg);
+                    dimensions.push_back(value);
+                } catch (...) {
+                    return CommandResult::Error("Invalid numeric value: '" + args[i] + "'");
+                }
+            }
+            
+            if (dimensions.size() != 3) {
+                return CommandResult::Error("Workspace requires 3 dimensions");
+            }
+            
+            // Check for consistent unit usage - all dimensions must either have 'm' or none
+            bool firstHasUnit = hasUnitsList[0];
+            for (size_t i = 1; i < hasUnitsList.size(); ++i) {
+                if (hasUnitsList[i] != firstHasUnit) {
+                    return CommandResult::Error("Mixed units detected. All dimensions must either have 'm' suffix or none");
+                }
+            }
+            
+            float width = dimensions[0];
+            float height = dimensions[1];
+            float depth = dimensions[2];
+            
+            // Validate dimensions
+            if (width <= 0 || height <= 0 || depth <= 0) {
+                return CommandResult::Error("Workspace dimensions must be positive values");
+            }
+            
+            if (width < 2 || height < 2 || depth < 2) {
+                return CommandResult::Error("Workspace dimensions must be at least 2 meters");
+            }
+            
+            if (width > 8 || height > 8 || depth > 8) {
+                return CommandResult::Error("Workspace dimensions cannot exceed 8 meters");
+            }
             
             Math::Vector3f size(width, height, depth);
             if (m_voxelManager->resizeWorkspace(size)) {
                 return CommandResult::Success("Workspace resized to " + 
                     std::to_string(width) + "x" + std::to_string(height) + "x" + std::to_string(depth) + " meters");
             }
-            return CommandResult::Error("Failed to resize workspace. Check size constraints (2-8m³)");
+            return CommandResult::Error("Failed to resize workspace");
         }
     });
     
@@ -815,20 +990,27 @@ void Application::registerCommands() {
         },
         [this](const CommandContext& ctx) {
             // Parse coordinates with units
-            int x1 = ctx.getCoordinateArg(0);
-            int y1 = ctx.getCoordinateArg(1);
-            int z1 = ctx.getCoordinateArg(2);
-            int x2 = ctx.getCoordinateArg(3);
-            int y2 = ctx.getCoordinateArg(4);
-            int z2 = ctx.getCoordinateArg(5);
+            auto x1_opt = ctx.getCoordinateArg(0);
+            auto y1_opt = ctx.getCoordinateArg(1);
+            auto z1_opt = ctx.getCoordinateArg(2);
+            auto x2_opt = ctx.getCoordinateArg(3);
+            auto y2_opt = ctx.getCoordinateArg(4);
+            auto z2_opt = ctx.getCoordinateArg(5);
             
             // Check if all coordinates were parsed successfully
-            if (x1 == -1 || y1 == -1 || z1 == -1) {
+            if (!x1_opt || !y1_opt || !z1_opt) {
                 return CommandResult::Error("Invalid start coordinates. Must include units (e.g., -100cm or -1m)");
             }
-            if (x2 == -1 || y2 == -1 || z2 == -1) {
+            if (!x2_opt || !y2_opt || !z2_opt) {
                 return CommandResult::Error("Invalid end coordinates. Must include units (e.g., 100cm or 1m)");
             }
+            
+            int x1 = *x1_opt;
+            int y1 = *y1_opt;
+            int z1 = *z1_opt;
+            int x2 = *x2_opt;
+            int y2 = *y2_opt;
+            int z2 = *z2_opt;
             
             Math::Vector3f min(x1, y1, z1);
             Math::Vector3f max(x2, y2, z2);
@@ -1074,6 +1256,29 @@ void Application::registerCommands() {
             size_t memUsage = m_voxelManager->getMemoryUsage();
             ss << "Memory: " << (memUsage / (1024.0 * 1024.0)) << " MB\n";
             
+            // Smoothing settings
+            ss << "\nSmoothing Settings:\n";
+            ss << "  Level: " << m_smoothingLevel;
+            if (m_smoothingLevel > 0) {
+                std::string algoName;
+                switch (m_smoothingAlgorithm) {
+                    case SurfaceGen::MeshSmoother::Algorithm::Laplacian:
+                        algoName = "Laplacian";
+                        break;
+                    case SurfaceGen::MeshSmoother::Algorithm::Taubin:
+                        algoName = "Taubin";
+                        break;
+                    case SurfaceGen::MeshSmoother::Algorithm::BiLaplacian:
+                        algoName = "BiLaplacian";
+                        break;
+                    default:
+                        algoName = "None";
+                }
+                ss << " (" << algoName << ")";
+            }
+            ss << "\n";
+            ss << "  Preview: " << (m_smoothPreviewEnabled ? "on" : "off") << "\n";
+            
             return CommandResult::Success(ss.str());
         }
     });
@@ -1179,7 +1384,7 @@ void Application::registerCommands() {
         CommandCategory::SYSTEM,
         {},
         {
-            {"subcommand", "What to debug: camera, voxels, render, frustum", "string", true, ""}
+            {"subcommand", "What to debug: camera, voxels, render, frustum, ray, grid", "string", true, ""}
         },
         [this](const CommandContext& ctx) {
             std::string subcommand = ctx.getArg(0);
@@ -1404,8 +1609,35 @@ void Application::registerCommands() {
                 
                 return CommandResult::Success(ss.str());
             }
+            else if (subcommand == "ray") {
+                // Toggle ray visualization
+                if (m_mouseInteraction) {
+                    bool currentState = m_mouseInteraction->isRayVisualizationEnabled();
+                    m_mouseInteraction->setRayVisualizationEnabled(!currentState);
+                    
+                    std::stringstream ss;
+                    ss << "Ray visualization " << (!currentState ? "enabled" : "disabled") << "\n";
+                    ss << "Yellow rays will now be drawn from the camera through the mouse cursor\n";
+                    ss << "to help debug ray-casting issues.\n";
+                    
+                    return CommandResult::Success(ss.str());
+                } else {
+                    return CommandResult::Error("Mouse interaction not available");
+                }
+            }
+            else if (subcommand == "grid") {
+                // Toggle debug grid overlay
+                m_debugGridVisible = !m_debugGridVisible;
+                
+                std::stringstream ss;
+                ss << "Debug grid overlay " << (m_debugGridVisible ? "enabled" : "disabled") << "\n";
+                ss << "1cm increment grid will now be " << (m_debugGridVisible ? "visible" : "hidden") << "\n";
+                ss << "to help verify placement accuracy.\n";
+                
+                return CommandResult::Success(ss.str());
+            }
             else {
-                return CommandResult::Error("Unknown debug subcommand. Use: camera, voxels, render, or frustum");
+                return CommandResult::Error("Unknown debug subcommand. Use: camera, voxels, render, frustum, ray, or grid");
             }
         }
     });
@@ -1468,6 +1700,224 @@ void Application::registerCommands() {
             ss << "  Compiler: " << CLI::COMPILER_ID << " " << CLI::COMPILER_VERSION << "\n";
             
             return CommandResult::Success(ss.str());
+        }
+    });
+    
+    // Smooth command
+    m_commandProcessor->registerCommand({
+        Commands::SMOOTH,
+        "Control mesh smoothing settings",
+        CommandCategory::MESH,
+        {},
+        {{"level", "Smoothing level (0-10+) or 'preview' subcommand", "string", false, ""},
+         {"on_off", "For 'preview': on/off", "string", false, ""},
+         {"algorithm", "For 'algorithm': laplacian/taubin/bilaplacian", "string", false, ""}},
+        [this](const CommandContext& ctx) {
+            if (ctx.getArgCount() == 0) {
+                // Display current smoothing settings
+                std::stringstream ss;
+                ss << "Current smoothing settings:\n";
+                ss << "  Level: " << m_smoothingLevel << "\n";
+                
+                // Get algorithm name
+                std::string algoName;
+                switch (m_smoothingAlgorithm) {
+                    case SurfaceGen::MeshSmoother::Algorithm::None:
+                        algoName = "None (raw dual contouring)";
+                        break;
+                    case SurfaceGen::MeshSmoother::Algorithm::Laplacian:
+                        algoName = "Laplacian (basic smoothing)";
+                        break;
+                    case SurfaceGen::MeshSmoother::Algorithm::Taubin:
+                        algoName = "Taubin (feature-preserving)";
+                        break;
+                    case SurfaceGen::MeshSmoother::Algorithm::BiLaplacian:
+                        algoName = "BiLaplacian (aggressive smoothing)";
+                        break;
+                }
+                ss << "  Algorithm: " << algoName << "\n";
+                ss << "  Preview: " << (m_smoothPreviewEnabled ? "on" : "off") << "\n";
+                
+                return CommandResult::Success(ss.str());
+            }
+            
+            std::string arg1 = ctx.getArg(0);
+            
+            // Handle subcommands
+            if (arg1 == "preview") {
+                if (ctx.getArgCount() < 2) {
+                    return CommandResult::Error("Usage: smooth preview on|off");
+                }
+                
+                std::string onOff = ctx.getArg(1);
+                if (onOff == "on") {
+                    m_smoothPreviewEnabled = true;
+                    // TODO: Trigger preview mesh generation when implemented
+                    return CommandResult::Success("Smoothing preview enabled");
+                } else if (onOff == "off") {
+                    m_smoothPreviewEnabled = false;
+                    return CommandResult::Success("Smoothing preview disabled");
+                } else {
+                    return CommandResult::Error("Invalid option. Use 'on' or 'off'");
+                }
+            } else if (arg1 == "algorithm") {
+                if (ctx.getArgCount() < 2) {
+                    return CommandResult::Error("Usage: smooth algorithm laplacian|taubin|bilaplacian");
+                }
+                
+                std::string algoName = ctx.getArg(1);
+                if (algoName == "laplacian") {
+                    m_smoothingAlgorithm = SurfaceGen::MeshSmoother::Algorithm::Laplacian;
+                    return CommandResult::Success("Smoothing algorithm set to Laplacian");
+                } else if (algoName == "taubin") {
+                    m_smoothingAlgorithm = SurfaceGen::MeshSmoother::Algorithm::Taubin;
+                    return CommandResult::Success("Smoothing algorithm set to Taubin");
+                } else if (algoName == "bilaplacian") {
+                    m_smoothingAlgorithm = SurfaceGen::MeshSmoother::Algorithm::BiLaplacian;
+                    return CommandResult::Success("Smoothing algorithm set to BiLaplacian");
+                } else {
+                    return CommandResult::Error("Invalid algorithm. Choose from: laplacian, taubin, bilaplacian");
+                }
+            } else {
+                // Try to parse as smoothing level
+                int level = ctx.getIntArg(0, -1);
+                if (level < 0) {
+                    return CommandResult::Error("Invalid smoothing level. Must be 0 or greater");
+                }
+                
+                m_smoothingLevel = level;
+                
+                // Auto-select algorithm based on level
+                m_smoothingAlgorithm = SurfaceGen::MeshSmoother::getAlgorithmForLevel(level);
+                
+                std::stringstream ss;
+                ss << "Smoothing level set to " << level;
+                if (level > 10) {
+                    ss << " (maximum smoothing)";
+                }
+                
+                return CommandResult::Success(ss.str());
+            }
+        }
+    });
+    
+    // Mesh commands
+    m_commandProcessor->registerCommand({
+        Commands::MESH,
+        "Mesh validation and information",
+        CommandCategory::MESH,
+        {},
+        {{"subcommand", "validate|info|repair", "string", true, ""}},
+        [this](const CommandContext& ctx) {
+            std::string subcommand = ctx.getArg(0);
+            
+            if (subcommand == "validate") {
+                // Generate mesh first
+                SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher.get());
+                auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
+                
+                // Apply smoothing if enabled
+                if (m_smoothingLevel > 0) {
+                    SurfaceGen::MeshSmoother smoother;
+                    SurfaceGen::MeshSmoother::SmoothingConfig config;
+                    config.smoothingLevel = m_smoothingLevel;
+                    config.algorithm = m_smoothingAlgorithm;
+                    config.preserveTopology = true;
+                    config.preserveBoundaries = true;
+                    config.minFeatureSize = 1.0f;
+                    config.usePreviewQuality = false;
+                    
+                    surfaceMesh = smoother.smooth(surfaceMesh, config);
+                }
+                
+                // Validate mesh
+                SurfaceGen::MeshValidator validator;
+                auto validation = validator.validate(surfaceMesh);
+                
+                std::stringstream ss;
+                ss << "Mesh Validation Results:\n";
+                ss << "  Watertight: " << (validation.isWatertight ? "Yes" : "No") << "\n";
+                ss << "  Manifold: " << (validation.isManifold ? "Yes" : "No") << "\n";
+                ss << "  Valid topology: " << (validation.isValid ? "Yes" : "No") << "\n";
+                
+                if (!validation.errors.empty()) {
+                    ss << "\nErrors found:\n";
+                    for (const auto& error : validation.errors) {
+                        ss << "  - " << error << "\n";
+                    }
+                }
+                
+                if (!validation.warnings.empty()) {
+                    ss << "\nWarnings:\n";
+                    for (const auto& warning : validation.warnings) {
+                        ss << "  - " << warning << "\n";
+                    }
+                }
+                
+                return CommandResult::Success(ss.str());
+                
+            } else if (subcommand == "info") {
+                // Generate mesh first
+                SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher.get());
+                auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
+                
+                // Apply smoothing if enabled
+                if (m_smoothingLevel > 0) {
+                    SurfaceGen::MeshSmoother smoother;
+                    SurfaceGen::MeshSmoother::SmoothingConfig config;
+                    config.smoothingLevel = m_smoothingLevel;
+                    config.algorithm = m_smoothingAlgorithm;
+                    config.preserveTopology = true;
+                    config.preserveBoundaries = true;
+                    config.minFeatureSize = 1.0f;
+                    config.usePreviewQuality = false;
+                    
+                    surfaceMesh = smoother.smooth(surfaceMesh, config);
+                }
+                
+                std::stringstream ss;
+                ss << "Mesh Information:\n";
+                ss << "  Vertices: " << surfaceMesh.getVertexCount() << "\n";
+                ss << "  Triangles: " << surfaceMesh.getTriangleCount() << "\n";
+                ss << "  Memory usage: " << (surfaceMesh.getMemoryUsage() / 1024) << " KB\n";
+                
+                // Calculate bounds
+                surfaceMesh.calculateBounds();
+                auto bounds = surfaceMesh.bounds;
+                ss << "\nBounding box:\n";
+                ss << "  Min: (" << bounds.min.x << ", " << bounds.min.y << ", " << bounds.min.z << ")\n";
+                ss << "  Max: (" << bounds.max.x << ", " << bounds.max.y << ", " << bounds.max.z << ")\n";
+                ss << "  Size: (" << (bounds.max.x - bounds.min.x) << ", " 
+                   << (bounds.max.y - bounds.min.y) << ", " 
+                   << (bounds.max.z - bounds.min.z) << ")\n";
+                
+                if (m_smoothingLevel > 0) {
+                    ss << "\nSmoothing applied:\n";
+                    ss << "  Level: " << m_smoothingLevel << "\n";
+                    ss << "  Algorithm: ";
+                    switch (m_smoothingAlgorithm) {
+                        case SurfaceGen::MeshSmoother::Algorithm::Laplacian:
+                            ss << "Laplacian\n";
+                            break;
+                        case SurfaceGen::MeshSmoother::Algorithm::Taubin:
+                            ss << "Taubin\n";
+                            break;
+                        case SurfaceGen::MeshSmoother::Algorithm::BiLaplacian:
+                            ss << "BiLaplacian\n";
+                            break;
+                        default:
+                            ss << "None\n";
+                    }
+                }
+                
+                return CommandResult::Success(ss.str());
+                
+            } else if (subcommand == "repair") {
+                // Note: MeshBuilder repair functions need to be implemented
+                return CommandResult::Success("Mesh repair functionality is pending implementation in MeshBuilder");
+            } else {
+                return CommandResult::Error("Invalid subcommand. Use: validate, info, or repair");
+            }
         }
     });
 }

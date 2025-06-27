@@ -112,12 +112,38 @@ std::unordered_set<uint64_t> DualContouringSparse::buildActiveCellSet(
                       << minY << "-" << maxY << ", " << minZ << "-" << maxZ << ")" << std::endl;
         }
         
-        // Add all cells in this range
-        // Work directly in increment coordinates to match base class
-        for (int z = minZ; z <= maxZ; ++z) {
-            for (int y = minY; y <= maxY; ++y) {
-                for (int x = minX; x <= maxX; ++x) {
-                    // Create increment coordinates and use base class cellKey function
+        // RADICAL PERFORMANCE FIX: Only add cells that are actually at voxel boundaries
+        // The problem is that we're adding way too many cells. We need to be much more selective.
+        // For a 4cm voxel (32 increments), we were adding 78,400 cells! 
+        // Instead, let's only add cells where voxels actually exist and a few neighbors
+        
+        // Dramatically reduce the range - only check immediate neighbors
+        int neighborRange = 1; // Only 1 cell in each direction
+        
+        int actualMinX = voxelPos.x - neighborRange;
+        int actualMinY = voxelPos.y - neighborRange; 
+        int actualMinZ = voxelPos.z - neighborRange;
+        int actualMaxX = voxelPos.x + neighborRange;
+        int actualMaxY = voxelPos.y + neighborRange;
+        int actualMaxZ = voxelPos.z + neighborRange;
+        
+        // Clamp to workspace bounds
+        actualMinX = std::max(-halfX_cm, actualMinX);
+        actualMinY = std::max(0, actualMinY);
+        actualMinZ = std::max(-halfZ_cm, actualMinZ);
+        actualMaxX = std::min(halfX_cm - 1, actualMaxX);
+        actualMaxY = std::min(dims.y - 1, actualMaxY);
+        actualMaxZ = std::min(halfZ_cm - 1, actualMaxZ);
+        
+        if (voxelCount < 3) {
+            std::cout << "  Reduced cell range: (" << actualMinX << "-" << actualMaxX << ", " 
+                      << actualMinY << "-" << actualMaxY << ", " << actualMinZ << "-" << actualMaxZ << ")" << std::endl;
+        }
+        
+        // This should only be a 3x3x3 = 27 cells instead of 78,400!
+        for (int z = actualMinZ; z <= actualMaxZ; ++z) {
+            for (int y = actualMinY; y <= actualMaxY; ++y) {
+                for (int x = actualMinX; x <= actualMaxX; ++x) {
                     Math::IncrementCoordinates cellPos(x, y, z);
                     activeCells.insert(cellKey(cellPos));
                 }
@@ -224,6 +250,28 @@ void DualContouringSparse::processCell(const Math::IncrementCoordinates& cellPos
         std::lock_guard<std::mutex> lock(m_cellDataMutex);
         m_cellData[cellKey(cellPos)] = cell;
     }
+}
+
+void DualContouringSparse::generateQuads() {
+    std::cout << "DualContouringSparse::generateQuads() starting with " << m_cellData.size() << " cells with intersections" << std::endl;
+    
+    int quadsGenerated = 0;
+    
+    // Only process quads for cells that have intersections
+    // This is much more efficient than iterating through the entire grid
+    for (const auto& [key, cell] : m_cellData) {
+        if (m_cancelled) return;
+        
+        const Math::IncrementCoordinates& base = cell.position;
+        
+        // Check all 6 face directions for this cell
+        for (int face = 0; face < 6; ++face) {
+            generateFaceQuad(base, face);
+            quadsGenerated++;
+        }
+    }
+    
+    std::cout << "DualContouringSparse::generateQuads() completed after checking " << quadsGenerated << " potential quads" << std::endl;
 }
 
 }

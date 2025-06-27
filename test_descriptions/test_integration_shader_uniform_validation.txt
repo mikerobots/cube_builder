@@ -1,0 +1,31 @@
+----- File: tests/integration/rendering/test_integration_shader_uniform_validation.cpp
+
+Test Name: ModelViewProjectionMatrices
+Test Description: Tests shader uniform handling for model, view, and projection matrices with different transformations (identity, translation, rotation, scale)
+
+Test Name: CameraPositionAffectsLighting
+Test Description: Validates that camera position changes affect lighting calculations by testing different camera positions and measuring brightness variations
+
+Test Name: LightDirectionChanges
+Test Description: Tests that different light directions produce different lighting effects by rendering with various light directions and analyzing brightness patterns
+
+Test Name: MaterialProperties
+Test Description: Tests material property uniforms (ambient, diffuse, specular, shininess) if supported by enhanced shaders - currently skipped as enhanced_voxel shader lacks material uniform support
+
+Test Name: UniformUpdatePerformance
+Test Description: Performance test for rapid uniform updates measuring the time to update 1000 uniform values and validating performance stays under 100 microseconds per update
+
+Test Name: VoxelCubeCreation
+Test Description: Helper test that creates a complete voxel cube mesh with proper vertex attributes (position, normal, color) and OpenGL buffer setup
+
+Test Name: FramebufferCapture
+Test Description: Tests framebuffer pixel capture functionality for visual validation and brightness analysis
+
+Test Name: ShaderUniformSetting
+Test Description: Tests setting various shader uniforms including matrices, vectors, and lighting parameters with proper type conversion
+
+Test Name: OpenGLBufferManagement
+Test Description: Validates proper creation, binding, and cleanup of OpenGL vertex array objects, vertex buffers, and element buffers
+
+Test Name: PixelAnalysisValidation
+Test Description: Tests pixel-based validation helpers for color distribution analysis and brightness measurement in rendered output

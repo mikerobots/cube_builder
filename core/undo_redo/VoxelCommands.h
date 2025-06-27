@@ -7,6 +7,7 @@
 #include "../voxel_data/VoxelDataManager.h"
 #include "../voxel_data/VoxelTypes.h"
 #include "../../foundation/math/Vector3i.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include "../../foundation/math/BoundingBox.h"
 
 namespace VoxelEditor {
@@ -16,7 +17,7 @@ namespace UndoRedo {
 class VoxelEditCommand : public Command {
 public:
     VoxelEditCommand(VoxelData::VoxelDataManager* voxelManager, 
-                     const Math::Vector3i& position, 
+                     const Math::IncrementCoordinates& position, 
                      VoxelData::VoxelResolution resolution, 
                      bool newValue);
     
@@ -31,7 +32,7 @@ public:
     
 private:
     VoxelData::VoxelDataManager* m_voxelManager;
-    Math::Vector3i m_position;
+    Math::IncrementCoordinates m_position;
     VoxelData::VoxelResolution m_resolution;
     bool m_oldValue;
     bool m_newValue;
@@ -41,12 +42,12 @@ private:
 class BulkVoxelEditCommand : public Command {
 public:
     struct VoxelChange {
-        Math::Vector3i position;
+        Math::IncrementCoordinates position;
         VoxelData::VoxelResolution resolution;
         bool oldValue;
         bool newValue;
         
-        VoxelChange(const Math::Vector3i& pos, VoxelData::VoxelResolution res, bool oldVal, bool newVal)
+        VoxelChange(const Math::IncrementCoordinates& pos, VoxelData::VoxelResolution res, bool oldVal, bool newVal)
             : position(pos), resolution(res), oldValue(oldVal), newValue(newVal) {}
     };
     
@@ -104,8 +105,8 @@ private:
 class VoxelCopyCommand : public Command {
 public:
     VoxelCopyCommand(VoxelData::VoxelDataManager* voxelManager,
-                     const std::vector<Math::Vector3i>& sourcePositions,
-                     const Math::Vector3i& offset,
+                     const std::vector<Math::IncrementCoordinates>& sourcePositions,
+                     const Math::IncrementCoordinates& offset,
                      VoxelData::VoxelResolution resolution);
     
     bool execute() override;
@@ -116,8 +117,8 @@ public:
     
 private:
     VoxelData::VoxelDataManager* m_voxelManager;
-    std::vector<Math::Vector3i> m_sourcePositions;
-    Math::Vector3i m_offset;
+    std::vector<Math::IncrementCoordinates> m_sourcePositions;
+    Math::IncrementCoordinates m_offset;
     VoxelData::VoxelResolution m_resolution;
     std::vector<BulkVoxelEditCommand::VoxelChange> m_changes;
 };
@@ -126,8 +127,8 @@ private:
 class VoxelMoveCommand : public Command {
 public:
     VoxelMoveCommand(VoxelData::VoxelDataManager* voxelManager,
-                     const std::vector<Math::Vector3i>& positions,
-                     const Math::Vector3i& offset,
+                     const std::vector<Math::IncrementCoordinates>& positions,
+                     const Math::IncrementCoordinates& offset,
                      VoxelData::VoxelResolution resolution);
     
     bool execute() override;
@@ -138,8 +139,8 @@ public:
     
 private:
     VoxelData::VoxelDataManager* m_voxelManager;
-    std::vector<Math::Vector3i> m_positions;
-    Math::Vector3i m_offset;
+    std::vector<Math::IncrementCoordinates> m_positions;
+    Math::IncrementCoordinates m_offset;
     VoxelData::VoxelResolution m_resolution;
     std::vector<BulkVoxelEditCommand::VoxelChange> m_sourceChanges;
     std::vector<BulkVoxelEditCommand::VoxelChange> m_destChanges;

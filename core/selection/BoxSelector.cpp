@@ -78,11 +78,10 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
     float voxelSizeMeters = VoxelData::getVoxelSize(resolution);
     int voxelSizeCm = static_cast<int>(voxelSizeMeters * 100.0f);
     
-    // Snap min/max to voxel boundaries
-    Math::IncrementCoordinates snappedMin = Math::CoordinateConverter::snapToVoxelResolution(
-        Math::IncrementCoordinates(actualMin), resolution);
-    Math::IncrementCoordinates snappedMax = Math::CoordinateConverter::snapToVoxelResolution(
-        Math::IncrementCoordinates(actualMax), resolution);
+    // Use direct coordinates without snapping to allow any 1cm position
+    Math::IncrementCoordinates snappedMin = Math::IncrementCoordinates(actualMin);
+    Math::IncrementCoordinates snappedMax = Math::IncrementCoordinates(actualMax);
+    
     
     // Additional safety check: limit maximum iterations to prevent hanging
     const int maxIterationsPerAxis = 1000; // Reasonable limit for any axis
@@ -117,10 +116,40 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
         }
     }
     
-    // Select voxels in range, stepping by voxel size
-    for (int x = snappedMin.x(); x <= snappedMax.x(); x += voxelSizeCm) {
-        for (int y = snappedMin.y(); y <= snappedMax.y(); y += voxelSizeCm) {
-            for (int z = snappedMin.z(); z <= snappedMax.z(); z += voxelSizeCm) {
+    // Select voxels in range - we need to check every position where a voxel could exist
+    // that would intersect with the selection box
+    // For each axis, we need to find all voxel positions that could potentially intersect
+    
+    // Expand the range to include any voxel that might intersect the box
+    // A voxel at position P with size S has bounds [P, P+S)
+    // For it to intersect the box [boxMin, boxMax], we need P < boxMax and P+S > boxMin
+    // This means P must be in range (boxMin - S, boxMax]
+    // We use boxMin - S + 1 because we want intersection, not just touching
+    int expandedMinX = snappedMin.x() - voxelSizeCm + 1;
+    int expandedMinY = snappedMin.y() - voxelSizeCm + 1;
+    int expandedMinZ = snappedMin.z() - voxelSizeCm + 1;
+    // We don't expand max because a voxel starting after boxMax won't intersect
+    int expandedMaxX = snappedMax.x();
+    int expandedMaxY = snappedMax.y();
+    int expandedMaxZ = snappedMax.z();
+    
+    // Safety check for iteration count
+    int totalIterations = (expandedMaxX - expandedMinX + 1) * 
+                         (expandedMaxY - expandedMinY + 1) * 
+                         (expandedMaxZ - expandedMinZ + 1);
+    const int maxTotalIterations = 1000000; // 100x100x100
+    
+    if (totalIterations > maxTotalIterations) {
+        std::string errorMsg = "BoxSelector: Too many iterations required (" + 
+            std::to_string(totalIterations) + "), aborting to prevent performance issues";
+        Logging::Logger::getInstance().error(errorMsg);
+        return result; // Return empty selection
+    }
+    
+    // Since voxels can be placed at any 1cm position, we iterate through all 1cm positions
+    for (int x = expandedMinX; x <= expandedMaxX; x += 1) {
+        for (int y = expandedMinY; y <= expandedMaxY; y += 1) {
+            for (int z = expandedMinZ; z <= expandedMaxZ; z += 1) {
                 VoxelId voxel(Math::Vector3i(x, y, z), resolution);
                 
                 if (isVoxelInBox(voxel, worldBox)) {
@@ -270,6 +299,7 @@ Math::BoundingBox BoxSelector::computeScreenBox(const Math::Vector2i& screenStar
 
 bool BoxSelector::isVoxelInBox(const VoxelId& voxel, const Math::BoundingBox& box) const {
     Math::BoundingBox voxelBounds = voxel.getBounds();
+    
     
     if (m_includePartial) {
         // Include if voxel intersects box

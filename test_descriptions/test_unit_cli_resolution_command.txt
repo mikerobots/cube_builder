@@ -1,0 +1,70 @@
+----- File: apps/cli/tests/test_unit_cli_resolution_command.cpp
+
+Test Name: AllValidResolutionValues_1cm_REQ_11_3_12
+Test Description: Tests resolution command with 1cm value, verifying state change and persistence per REQ-11.3.12
+
+Test Name: AllValidResolutionValues_4cm_REQ_11_3_12
+Test Description: Tests resolution command with 4cm value, verifying state change and persistence per REQ-11.3.12
+
+Test Name: AllValidResolutionValues_16cm_REQ_11_3_12
+Test Description: Tests resolution command with 16cm value, verifying state change and persistence per REQ-11.3.12
+
+Test Name: AllValidResolutionValues_64cm_REQ_11_3_12
+Test Description: Tests resolution command with 64cm value, verifying state change and persistence per REQ-11.3.12
+
+Test Name: AllValidResolutionValues_256cm_REQ_11_3_12
+Test Description: Tests resolution command with 256cm value, verifying state change and persistence per REQ-11.3.12
+
+Test Name: AllValidResolutionValues_Comprehensive_REQ_11_3_12
+Test Description: Tests all 5 valid resolution values (1cm, 4cm, 16cm, 64cm, 256cm) in sequence, verifying each change per REQ-11.3.12
+
+Test Name: ParameterValidation_ValidResolutionStrings_REQ_11_3_12
+Test Description: Tests string-to-enum conversion for all valid resolution values, verifying getVoxelSizeName mapping per REQ-11.3.12
+
+Test Name: StateConsistency_ResolutionPersistence_REQ_11_3_12
+Test Description: Tests that resolution changes persist and affect subsequent voxel placement operations per REQ-11.3.12
+
+Test Name: StateConsistency_ResolutionSequence_REQ_11_3_12
+Test Description: Tests multiple resolution changes in sequence maintain consistency and proper state transitions per REQ-11.3.12
+
+Test Name: ResolutionValidation_EnumBounds_REQ_11_3_12
+Test Description: Tests that all valid enum values (0 to COUNT-1) work correctly for resolution setting per REQ-11.3.12
+
+Test Name: ResolutionValidation_VoxelSizeCalculation_REQ_11_3_12
+Test Description: Tests voxel size calculations (0.01f to 2.56f meters) for all resolutions are correct per REQ-11.3.12
+
+Test Name: ResolutionSwitchingWithExistingVoxels_BasicSwitch_REQ_11_3_14
+Test Description: Tests switching resolution with existing voxels, verifying voxels persist at original resolution per REQ-11.3.14
+
+Test Name: ResolutionSwitchingWithExistingVoxels_MultipleVoxels_REQ_11_3_14
+Test Description: Tests resolution switching with multiple voxels at different resolutions, verifying persistence per REQ-11.3.14
+
+Test Name: ResolutionSwitchingWithExistingVoxels_NewPlacementUsesActiveResolution_REQ_11_3_14
+Test Description: Tests that new voxel placements use active resolution after switching, verifying proper placement behavior per REQ-11.3.14
+
+Test Name: ResolutionSwitchingWithExistingVoxels_ResolutionConsistency_REQ_11_3_14
+Test Description: Tests resolution switching maintains data consistency across all operations with existing voxels per REQ-11.3.14
+
+Test Name: ResolutionSwitchingWithExistingVoxels_VisualFeedbackConsistency_REQ_11_3_14
+Test Description: Tests visual feedback updates correctly when switching resolutions with existing voxels per REQ-11.3.14
+
+Test Name: InvalidResolutionValues_InvalidNumbers_REQ_11_3_13
+Test Description: Tests resolution command with invalid numeric values (3cm, 5cm, 0cm, 1024cm) returns proper error messages per REQ-11.3.13
+
+Test Name: InvalidResolutionValues_WrongUnits_REQ_11_3_13
+Test Description: Tests resolution command with wrong units (m, mm, inches, ft) returns proper error messages per REQ-11.3.13
+
+Test Name: InvalidResolutionValues_FormatIssues_REQ_11_3_13
+Test Description: Tests resolution command with format issues (uppercase, spacing, decimals, negative) returns proper error messages per REQ-11.3.13
+
+Test Name: InvalidResolutionValues_InvalidStrings_REQ_11_3_13
+Test Description: Tests resolution command with completely invalid strings (abc, small, large) returns proper error messages per REQ-11.3.13
+
+Test Name: InvalidResolutionValues_ErrorMessageContent_REQ_11_3_13
+Test Description: Tests error messages contain all valid resolution values and helpful guidance per REQ-11.3.13
+
+Test Name: InvalidResolutionValues_NoParameters_REQ_11_3_13
+Test Description: Tests resolution command with no parameters returns appropriate error message per REQ-11.3.13
+
+Test Name: InvalidResolutionValues_MultipleParameters_REQ_11_3_13
+Test Description: Tests resolution command with multiple parameters handles invalid first parameter correctly per REQ-11.3.13

@@ -9,20 +9,7 @@ add_executable(test_integration_verification_core_functionality
 # Link with all necessary libraries
 target_link_libraries(test_integration_verification_core_functionality
     VoxelEditor_CLI_Lib  # CLI application library
-    VoxelEditor_VoxelData
-    VoxelEditor_Rendering
-    VoxelEditor_Camera
-    VoxelEditor_Input
-    VoxelEditor_Selection
-    VoxelEditor_UndoRedo
-    VoxelEditor_VisualFeedback
-    VoxelEditor_Groups
-    VoxelEditor_FileIO
-    VoxelEditor_SurfaceGen
-    VoxelEditor_Math
-    VoxelEditor_Events
-    VoxelEditor_Memory
-    VoxelEditor_Logging
+    VoxelEditor_FileIO  # Top-level library that brings in most dependencies
     VoxelEditor_Config
     glad
     glfw

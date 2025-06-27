@@ -34,6 +34,24 @@
 2. **Voxel Size Selection**: Via `resolution <size>` command
 3. **Undo/Redo**: Supported with 5-10 operation limit
 
+### Resolution and Multi-Size Support
+1. **Resolution Independence**: Changing resolution does NOT clear existing voxels
+2. **Multi-Resolution Coexistence**: Voxels of different sizes can exist simultaneously
+3. **Resolution-Specific Counting**: `getVoxelCount()` returns count for current resolution only
+4. **Total Count Available**: Separate method available for counting across all resolutions
+
+### Workspace Resizing
+1. **Size Validation**: Workspace size must be between 2m and 8m
+2. **Shrinking Behavior**: Resizing smaller automatically removes voxels outside new bounds
+3. **Enlarging Behavior**: Resizing larger preserves all existing voxels
+4. **Atomic Operation**: Failed resize leaves workspace and voxels unchanged
+
+### Collision Detection and Fill Behavior
+1. **Multi-Resolution Collision**: Voxels of different resolutions cannot overlap in space
+2. **Fill Creates Multiple Voxels**: Fill command creates multiple voxels of current resolution size
+3. **Atomic Operations**: Failed commands (place, fill, etc.) make NO state changes
+4. **Fill Validation**: Fill fails if ANY position would create an overlap
+
 ---
 
 ## Requirements
@@ -143,6 +161,20 @@
   - *Subsystems: **Visual Feedback** (invalid state rendering), **Voxel Data** (validation results)*
 - **REQ-4.3.3**: Valid placements shall show green preview
   - *Subsystems: **Visual Feedback** (valid state rendering), **Voxel Data** (validation results)*
+- **REQ-4.3.4**: Collision detection shall apply between voxels of different resolutions
+  - *Subsystems: **Voxel Data** (multi-resolution collision detection)*
+- **REQ-4.3.5**: Failed placement or fill commands shall make no state changes (atomic operations)
+  - *Subsystems: **Voxel Data** (transaction safety), **Input** (atomic command execution)*
+
+#### 4.4 Fill Command Behavior
+- **REQ-4.4.1**: Fill command shall create multiple voxels of the current resolution size within the specified bounds
+  - *Subsystems: **CLI Application** (fill logic), **Voxel Data** (bulk voxel creation)*
+- **REQ-4.4.2**: Fill command shall respect collision detection and fail if any position would overlap existing voxels
+  - *Subsystems: **Voxel Data** (bulk collision detection), **CLI Application** (atomic fill)*
+- **REQ-4.4.3**: Fill bounds shall be inclusive and aligned to 1cm increments
+  - *Subsystems: **CLI Application** (bounds calculation), **Voxel Data** (position validation)*
+- **REQ-4.4.4**: Failed fill operations shall create no voxels (all-or-nothing behavior)
+  - *Subsystems: **Voxel Data** (transaction rollback), **CLI Application** (error handling)*
 
 ### 5. Interaction Model
 
@@ -171,6 +203,14 @@
   - *Subsystems: **Input** (command processing), **Voxel Data** (resolution switching)*
 - **REQ-5.3.3**: Available resolutions: 1cm, 2cm, 4cm, 8cm, 16cm, 32cm, 64cm, 128cm, 256cm, 512cm
   - *Subsystems: **Voxel Data** (resolution definitions)*
+- **REQ-5.3.4**: Changing resolution shall NOT clear or remove existing voxels
+  - *Subsystems: **Voxel Data** (resolution independence), **Input** (command behavior)*
+- **REQ-5.3.5**: Voxels of different resolutions shall coexist in the same workspace
+  - *Subsystems: **Voxel Data** (multi-resolution storage), **Rendering** (multi-resolution display)*
+- **REQ-5.3.6**: The voxel count query shall return counts for the currently active resolution only
+  - *Subsystems: **Voxel Data** (resolution-specific counting)*
+- **REQ-5.3.7**: A separate total voxel count query shall be available for counting across all resolutions
+  - *Subsystems: **Voxel Data** (cross-resolution counting)*
 
 #### 5.4 Modifier Keys
 - **REQ-5.4.1**: Shift key shall override auto-snap for same-size voxels
@@ -296,6 +336,18 @@
 - **REQ-9.2.6**: CLI shall support undo/redo commands
   - *Subsystems: **CLI Application** (command processing), **Undo/Redo** (history navigation)*
 
+#### 9.3 Workspace Command Behavior
+- **REQ-9.3.1**: Workspace resize command shall validate new dimensions (minimum 2m, maximum 8m)
+  - *Subsystems: **CLI Application** (validation), **Voxel Data** (bounds checking)*
+- **REQ-9.3.2**: Workspace resize to smaller dimensions shall automatically remove voxels outside the new bounds
+  - *Subsystems: **Voxel Data** (voxel removal), **CLI Application** (resize handling)*
+- **REQ-9.3.3**: Workspace resize to larger dimensions shall preserve all existing voxels
+  - *Subsystems: **Voxel Data** (voxel preservation), **CLI Application** (resize handling)*
+- **REQ-9.3.4**: Workspace resize failure shall leave the workspace and all voxels unchanged
+  - *Subsystems: **Voxel Data** (transaction safety), **CLI Application** (error handling)*
+- **REQ-9.3.5**: Workspace resize shall update the camera to maintain valid view of the workspace
+  - *Subsystems: **Camera** (view adjustment), **CLI Application** (camera update)*
+
 ### 10. Surface Generation Requirements
 
 #### 10.1 Algorithm Requirements
@@ -313,6 +365,20 @@
   - *Subsystems: **Surface Generation** (export quality)*
 - **REQ-10.1.7**: System shall preserve sharp edges for architectural details
   - *Subsystems: **Surface Generation** (edge preservation)*
+- **REQ-10.1.8**: System shall convert blocky voxel models into smooth, non-voxel-appearing surfaces
+  - *Subsystems: **Surface Generation** (smoothing algorithms)*
+- **REQ-10.1.9**: System shall preserve topology including loops, holes, and complex geometry during smoothing
+  - *Subsystems: **Surface Generation** (topology preservation)*
+- **REQ-10.1.10**: System shall provide user-controllable smoothing levels with at least 10 discrete settings (0=no smoothing to 10+=maximum smoothing)
+  - *Subsystems: **Surface Generation** (smoothing parameters), **CLI Application** (smoothing commands)*
+- **REQ-10.1.11**: System shall ensure printable output with watertight, manifold meshes
+  - *Subsystems: **Surface Generation** (mesh validation), **File I/O** (STL export)*
+- **REQ-10.1.12**: System shall provide real-time preview of smoothing effects during parameter adjustment
+  - *Subsystems: **Surface Generation** (preview update), **Rendering** (smooth mesh display)*
+- **REQ-10.1.13**: System shall support different smoothing algorithms (Laplacian, Taubin, etc.) for various effects
+  - *Subsystems: **Surface Generation** (algorithm selection)*
+- **REQ-10.1.14**: System shall maintain minimum feature size constraints for 3D printing (default 1mm)
+  - *Subsystems: **Surface Generation** (feature size validation)*
 
 ### 11. Testing and Validation Requirements
 

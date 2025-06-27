@@ -137,6 +137,10 @@ void VoxelMeshGenerator::addCube(std::vector<Vertex>& vertices,
                                 const Math::Vector3f& color) {
     uint32_t baseIndex = vertices.size();
     
+    // Interpret position as bottom-center of the cube
+    // Adjust cube center to be at (position.x, position.y + size/2, position.z)
+    Math::Vector3f cubeCenter(position.x, position.y + size * 0.5f, position.z);
+    
     // Add vertices for each face
     for (int face = 0; face < 6; ++face) {
         Math::Vector3f normal(s_faceNormals[face][0], 
@@ -148,9 +152,9 @@ void VoxelMeshGenerator::addCube(std::vector<Vertex>& vertices,
             int vertexIndex = s_cubeFaces[face][v];
             Vertex vertex;
             vertex.position = Math::Vector3f(
-                position.x + s_cubeVertices[vertexIndex][0] * size,
-                position.y + s_cubeVertices[vertexIndex][1] * size,
-                position.z + s_cubeVertices[vertexIndex][2] * size
+                cubeCenter.x + s_cubeVertices[vertexIndex][0] * size,
+                cubeCenter.y + s_cubeVertices[vertexIndex][1] * size,
+                cubeCenter.z + s_cubeVertices[vertexIndex][2] * size
             );
             vertex.normal = normal;
             vertex.color = color;
@@ -237,13 +241,17 @@ void VoxelMeshGenerator::addCubeEdges(std::vector<Vertex>& vertices,
                                      const Math::Vector3f& color) {
     uint32_t baseIndex = vertices.size();
     
+    // Interpret position as bottom-center of the cube
+    // Adjust cube center to be at (position.x, position.y + size/2, position.z)
+    Math::Vector3f cubeCenter(position.x, position.y + size * 0.5f, position.z);
+    
     // Add 8 unique vertices for the cube corners
     for (int i = 0; i < 8; ++i) {
         Vertex vertex;
         vertex.position = Math::Vector3f(
-            position.x + s_cubeVertices[i][0] * size,
-            position.y + s_cubeVertices[i][1] * size,
-            position.z + s_cubeVertices[i][2] * size
+            cubeCenter.x + s_cubeVertices[i][0] * size,
+            cubeCenter.y + s_cubeVertices[i][1] * size,
+            cubeCenter.z + s_cubeVertices[i][2] * size
         );
         vertex.normal = Math::Vector3f(0, 1, 0); // Dummy normal for lines
         vertex.color = color;

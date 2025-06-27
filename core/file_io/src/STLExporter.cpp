@@ -20,11 +20,13 @@ bool STLExporter::exportMesh(const std::string& filename, const Rendering::Mesh&
     
     auto startTime = std::chrono::steady_clock::now();
     
-    // Validate mesh
-    std::vector<std::string> issues;
-    if (!validateMesh(mesh, issues)) {
-        setError(FileError::InvalidFormat, "Invalid mesh: " + issues[0]);
-        return false;
+    // Validate mesh only if requested
+    if (options.validateWatertight) {
+        std::vector<std::string> issues;
+        if (!validateMesh(mesh, issues)) {
+            setError(FileError::InvalidFormat, "Invalid mesh: " + issues[0]);
+            return false;
+        }
     }
     
     // Preprocess mesh

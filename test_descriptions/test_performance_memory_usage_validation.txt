@@ -1,0 +1,19 @@
+----- File: tests/performance/test_performance_memory_usage_validation.cpp
+
+Test Name: VoxelPlacement_MemoryUsageWithinLimits_REQ_11_4_4
+Test Description: Validates REQ-11.4.4 memory usage limits during large-scale voxel placement (20x20x10 = 4,000 voxels), testing memory stays under 2GB limit with efficient sparse storage averaging <256 bytes per voxel.
+
+Test Name: UndoRedoHistory_MemoryUsageWithinLimits_REQ_11_4_4
+Test Description: Tests REQ-11.4.4 undo/redo history memory limits with 100 operations, verifying history memory stays under 512MB limit and averages <1024 bytes per operation for command storage.
+
+Test Name: FillOperation_SingleOperationMemoryLimit_REQ_11_4_4
+Test Description: Validates REQ-11.4.4 single operation memory limits for large fill operations (simulated with 1000 voxels), testing operations stay under 100MB limit and memory cleanup reclaims >50% after clear.
+
+Test Name: MultiResolution_MemoryUsageScaling_REQ_11_4_4
+Test Description: Tests REQ-11.4.4 memory usage scaling across resolutions (1cm, 4cm, 16cm, 64cm), verifying each resolution stays within limits and memory ratios between resolutions remain reasonable (<1000x difference).
+
+Test Name: WorkspaceResize_MemoryBehavior_REQ_11_4_4
+Test Description: Validates REQ-11.4.4 memory behavior during workspace resizing from 5x5x5m to 8x8x8m, testing memory increase stays <2x and >50% of placed voxels remain accessible after resize.
+
+Test Name: StressTest_ContinuousOperations_REQ_11_4_4
+Test Description: Stress tests REQ-11.4.4 for memory leaks with 200 continuous place/remove operations, verifying memory increase stays <50MB and growth ratio between snapshots stays <1.5x for stability.

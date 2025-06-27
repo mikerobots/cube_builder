@@ -1,0 +1,25 @@
+----- File: tests/integration/visual_feedback/test_integration_feedback_overlay_renderer.cpp
+
+Test Name: TextRendering
+Test Description: Tests basic text rendering functionality with default style, verifying no exceptions are thrown during text rendering process.
+
+Test Name: TextStyles
+Test Description: Tests all available text style factories (Default, Header, Debug, Warning, Error) to ensure each renders without error.
+
+Test Name: PerformanceMetrics
+Test Description: Performance test that renders 100 text elements and validates completion within 50ms requirement.
+
+Test Name: MemoryUsage
+Test Description: Tests memory usage stability across multiple frames with repeated text rendering to ensure no memory leaks.
+
+Test Name: GroundPlaneGridBasic
+Test Description: Tests basic ground plane grid rendering without dynamic opacity using orbital camera.
+
+Test Name: GroundPlaneGridDynamicOpacity
+Test Description: Tests ground plane grid rendering with both dynamic opacity enabled and disabled states.
+
+Test Name: FrameManagement
+Test Description: Tests proper frame lifecycle management with beginFrame/endFrame cycles across multiple iterations.
+
+Test Name: DifferentScreenSizes
+Test Description: Tests overlay rendering across various screen resolutions (800x600, 1920x1080, 2560x1440, 3840x2160).

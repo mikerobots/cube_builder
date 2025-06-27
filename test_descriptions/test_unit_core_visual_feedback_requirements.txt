@@ -1,0 +1,67 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_requirements.cpp
+
+Test Name: GridSize_REQ_1_1_1_Logic
+Test Description: Validates grid spacing is exactly 32cm and calculates expected grid lines for workspace per REQ-1.1.1
+
+Test Name: GridColor_REQ_1_1_3_Logic
+Test Description: Verifies grid color is RGB(180,180,180) at 35% opacity with valid color values per REQ-1.1.3
+
+Test Name: MajorGridLines_REQ_1_1_4_Logic
+Test Description: Tests major grid line spacing at 160cm intervals with brighter RGB(200,200,200) color per REQ-1.1.4
+
+Test Name: DynamicOpacity_REQ_1_2_2_Logic
+Test Description: Validates grid opacity increases to 65% within 2 grid squares of cursor during placement per REQ-1.2.2
+
+Test Name: GridScaling_REQ_6_2_2_Logic
+Test Description: Tests grid scaling calculations for various workspace sizes up to 8m x 8m per REQ-6.2.2
+
+Test Name: GroundPlanePreview_REQ_2_2_1_Logic
+Test Description: Verifies ground plane preview displays green outline with valid placement position (Y≥0) per REQ-2.2.1
+
+Test Name: PreviewSnapping_REQ_2_2_2_Logic
+Test Description: Tests preview snapping to nearest valid 1cm increment position for multiple test cases per REQ-2.2.2 and REQ-2.2.4
+
+Test Name: RealtimePreviewUpdate_REQ_2_2_3_Logic
+Test Description: Performance test ensuring 1000 preview position calculations complete in under 16ms per REQ-2.2.3, REQ-5.1.3, and REQ-6.1.2
+
+Test Name: PreviewColors_REQ_4_1_1_to_4_1_2_Logic
+Test Description: Validates green color for valid placement and red color for invalid placement preview logic per REQ-4.1.1, REQ-4.1.2, REQ-4.3.2, and REQ-4.3.3
+
+Test Name: FaceHighlighting_REQ_2_3_1_to_2_3_2_Logic
+Test Description: Tests face detection logic with ray casting to detect voxel faces and validate face highlighting per REQ-2.3.1 and REQ-2.3.2. Note: Ray casting requires the ray to pass through the voxel's increment position for proper detection - rays that only intersect the voxel's bounding box will not detect the face.
+
+Test Name: FaceHighlightColor_REQ_4_2_1_Logic
+Test Description: Verifies face highlighting uses yellow color (1,1,0) with proper highlight style per REQ-4.2.1
+
+Test Name: SingleFaceHighlight_REQ_4_2_2_Logic
+Test Description: Ensures only one face can be highlighted at a time through unique face IDs per REQ-4.2.2
+
+Test Name: HighlightVisibility_REQ_4_2_3_Logic
+Test Description: Tests face visibility calculation from multiple camera angles to ensure highlighting visibility per REQ-4.2.3
+
+Test Name: ShiftKeyOverride_REQ_3_1_2_and_5_4_1_Logic
+Test Description: Validates arbitrary 1cm increment positions are valid for placement with Shift key override per REQ-3.1.2 and REQ-5.4.1
+
+Test Name: PreviewPerformance_REQ_4_1_3_Logic
+Test Description: Performance test ensuring 1000 preview updates with color calculations complete in under 10ms per REQ-4.1.3
+
+Test Name: GridPerformance_REQ_6_1_1_Logic
+Test Description: Tests grid calculation performance for 60+ FPS requirement with 1000 iterations under 5ms per REQ-6.1.1
+
+Test Name: FaceHighlightPerformance_REQ_6_1_3_Logic
+Test Description: Validates face highlight calculations complete within one frame (1000 iterations under 5ms) per REQ-6.1.3
+
+Test Name: LargeVoxelCount_REQ_6_2_1_Logic
+Test Description: Tests system handles 10,000 voxel position validations in under 1 second per REQ-6.2.1
+
+Test Name: MemoryConstraints_REQ_6_3_3_Logic
+Test Description: Verifies component sizes and data structures use reasonable memory (under 512MB limit) per REQ-6.3.3
+
+Test Name: ComponentInitialization_REQ_7_1_3_Logic
+Test Description: Tests visual feedback components can initialize without OpenGL dependencies per REQ-7.1.3
+
+Test Name: PlacementPlaneSnapping_REQ_3_3_1_Logic
+Test Description: Validates placement preview calculations for different voxel resolutions (1cm to 128cm) per REQ-3.3.1
+
+Test Name: PlacementPlaneChange_REQ_3_3_4_Logic
+Test Description: Tests placement plane validation at different heights checking existing voxels per REQ-3.3.4

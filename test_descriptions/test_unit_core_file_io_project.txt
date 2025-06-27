@@ -1,0 +1,34 @@
+----- File: core/file_io/tests/test_unit_core_file_io_project.cpp
+
+Test Name: DefaultConstruction
+Test Description: Tests default construction of Project class verifying metadata is empty, pointers are null, and collections are empty
+
+Test Name: DefaultInitialization
+Test Description: Tests initializeDefaults() method creates all required components (voxelData, groupData, camera, currentSelection) with default workspace settings
+
+Test Name: ClearMethod
+Test Description: Tests clear() method resets all project data and re-initializes components to default state
+
+Test Name: IsValidMethod
+Test Description: Tests isValid() method correctly identifies valid projects (with all required components) and invalid projects (missing components)
+
+Test Name: UpdateMetadata
+Test Description: Tests updateMetadata() preserves creation timestamp while updating modification timestamp and version to current
+
+Test Name: CustomProperties
+Test Description: Tests setCustomProperty() and getCustomProperty() for storing/retrieving custom string properties with proper handling of non-existent keys
+
+Test Name: CustomData
+Test Description: Tests customData map for storing binary data as vectors of uint8_t
+
+Test Name: NamedSelections
+Test Description: Tests namedSelections vector for storing pairs of selection names and SelectionSet objects
+
+Test Name: CalculateSize
+Test Description: Tests calculateSize() method returns appropriate size estimates that increase when data is added to the project
+
+Test Name: WorkspaceSettings
+Test Description: Tests workspace settings including size (5x5x5m default), origin, default resolution (1cm), grid and axes visibility
+
+Test Name: SharedPointerBehavior
+Test Description: Tests shared pointer behavior when project components are shared between multiple Project instances

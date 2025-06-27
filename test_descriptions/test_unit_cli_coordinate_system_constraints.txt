@@ -1,0 +1,34 @@
+----- File: apps/cli/tests/test_unit_cli_coordinate_system_constraints.cpp
+
+Test Name: ValidCoordinateUnits_REQ_11_2_4
+Test Description: Tests valid coordinate unit formats (0cm, 100cm, -100cm, 0m, 1m, 2.5m) for proper parsing and acceptance in CLI command coordinate parameters.
+
+Test Name: InvalidCoordinateUnits_REQ_11_2_4
+Test Description: Validates rejection of invalid coordinate formats (missing units, wrong units like inches/feet, malformed syntax) ensuring proper coordinate format validation.
+
+Test Name: CoordinateUnitConversion_REQ_11_2_4
+Test Description: Tests unit conversion accuracy between centimeters and meters, verifying 1m=100cm, 0.5m=50cm, 2.5m=250cm conversions and negative value handling.
+
+Test Name: CenteredCoordinateSystem_REQ_11_2_4
+Test Description: Validates centered coordinate system support with negative X/Z values around origin (0,0,0), testing all quadrants and coordinate combinations.
+
+Test Name: GroundPlaneConstraint_REQ_11_2_4
+Test Description: Tests Y≥0 ground plane constraint, verifying acceptance of Y=0+ coordinates and rejection of Y<0 coordinates with appropriate error messages.
+
+Test Name: PlaceCommandCoordinates_REQ_11_2_4
+Test Description: Validates place command coordinate constraints including valid placements, invalid Y coordinates, missing units, insufficient coordinates, and workspace boundary violations.
+
+Test Name: DeleteCommandCoordinates_REQ_11_2_4
+Test Description: Tests delete command coordinate validation, ensuring proper handling of valid coordinates, invalid formats, and below-ground constraints with appropriate error handling.
+
+Test Name: FillCommandCoordinates_REQ_11_2_4
+Test Description: Validates fill command coordinate range constraints with valid/invalid Y coordinates, coordinate format validation, and edge cases like reversed ranges and single voxel fills.
+
+Test Name: DISABLED_SelectboxCommandCoordinates_REQ_11_2_4
+Test Description: Tests selectbox command coordinate constraints (currently disabled), validating selection box coordinate ranges, format validation, and Y constraint enforcement.
+
+Test Name: WorkspaceBoundaryValidation_REQ_11_2_4
+Test Description: Tests workspace boundary validation with 4m³ workspace (-2m to +2m), verifying coordinates within/outside bounds and appropriate boundary violation error messages.
+
+Test Name: CoordinateErrorMessageQuality_REQ_11_2_4
+Test Description: Validates quality of coordinate constraint violation error messages, ensuring helpful keywords (unit, ground, workspace, coordinate) appear in appropriate error scenarios.

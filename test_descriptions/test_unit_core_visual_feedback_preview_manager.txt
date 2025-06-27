@@ -1,0 +1,37 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_preview_manager.cpp
+
+Test Name: PreviewManagerTest.InitialState
+Test Description: Tests the initial state of the PreviewManager. Verifies that upon creation, there is no active preview, the manager is in a valid state, the preview position defaults to (0,0,0), and the preview resolution defaults to 1cm.
+
+Test Name: PreviewManagerTest.SetPreviewPosition
+Test Description: Tests setting preview position and resolution. Verifies that when a preview position and resolution are set, the manager correctly reports having a preview and accurately stores both the position and resolution values.
+
+Test Name: PreviewManagerTest.ValidationResultHandling
+Test Description: Tests handling of different validation results to control preview color. Verifies that the preview is marked as valid when validation succeeds, and invalid for various failure cases including Y below zero, overlapping voxels, and out of bounds positions.
+
+Test Name: PreviewManagerTest.ClearPreview
+Test Description: Tests the preview clearing functionality. Verifies that after setting a preview position, calling clearPreview() correctly removes the preview and the manager reports no active preview.
+
+Test Name: PreviewManagerTest.ColorConfiguration
+Test Description: Tests custom color configuration for valid and invalid previews. Verifies that the manager accepts custom colors for both valid (green) and invalid (red) preview states without throwing exceptions.
+
+Test Name: PreviewManagerTest.AnimationSettings
+Test Description: Tests animation settings and update functionality. Verifies that the preview manager can be configured with animation enabled, custom animation speed, and properly handles update calls with delta time values.
+
+Test Name: PreviewManagerTest.AutoClear
+Test Description: Tests the auto-clear functionality based on time. Verifies that if a preview remains unchanged for more than 1 second, it is automatically cleared to prevent stale previews from remaining visible.
+
+Test Name: PreviewManagerTest.MousePositionTracking
+Test Description: Tests mouse position tracking for auto-clear based on distance. Verifies that small mouse movements keep the preview active, while large movements (exceeding the auto-clear distance) automatically clear the preview.
+
+Test Name: PreviewManagerTest.MultipleResolutions
+Test Description: Tests preview functionality with multiple voxel resolutions. Verifies that the preview manager correctly handles all supported voxel sizes from 1cm to 64cm at various positions, maintaining accurate position and resolution information.
+
+Test Name: PreviewManagerTest.RenderingSettings
+Test Description: Tests various rendering configuration settings. Verifies that the preview manager accepts line width, animation state, and animation speed settings without throwing exceptions when a preview is active.
+
+Test Name: PreviewManagerTest.OutlineGenerationMock
+Test Description: Tests the render method with mock outline renderer. Verifies that the preview manager can render both valid and invalid previews through an OutlineRenderer without crashes, simulating rendering without requiring OpenGL context.
+
+Test Name: PreviewManagerTest.StateTransitions
+Test Description: Tests all possible state transitions in the preview manager. Verifies transitions between no preview/has preview states, valid/invalid states, and that all state changes are properly reflected in the manager's reported status.

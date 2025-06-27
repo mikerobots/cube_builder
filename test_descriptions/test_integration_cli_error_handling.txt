@@ -1,0 +1,40 @@
+----- File: apps/cli/tests/test_integration_cli_error_handling.cpp
+
+Test Name: CLIErrorHandlingTest.WorkspaceBoundaryTests
+Test Description: Tests workspace size boundary validation. Validates minimum (2m) and maximum (8m) workspace limits, rejects invalid values including zero, negative, NaN, and infinity values.
+
+Test Name: CLIErrorHandlingTest.VoxelPositionBoundaryTests
+Test Description: Tests voxel position boundary validation. Validates voxel placement within workspace bounds using centered coordinate system, tests boundary positions and out-of-bounds rejection.
+
+Test Name: CLIErrorHandlingTest.SelectionBoundaryTests
+Test Description: Tests selection boundary condition handling. Validates selection behavior with invalid bounding boxes, zero-size boxes, and extreme coordinates without crashing.
+
+Test Name: CLIErrorHandlingTest.FilePermissionErrors
+Test Description: Tests file permission error handling. Creates read-only file and validates graceful failure when attempting to save with proper error messaging.
+
+Test Name: CLIErrorHandlingTest.CorruptedFileHandling
+Test Description: Tests corrupted file handling. Creates file with invalid header and random binary data, validates graceful failure when loading with error messages.
+
+Test Name: CLIErrorHandlingTest.EmptyFileHandling
+Test Description: Tests empty file handling. Creates empty project file and validates graceful failure when loading with appropriate error messaging.
+
+Test Name: CLIErrorHandlingTest.InvalidFileExtensions
+Test Description: Tests invalid file extension handling. Validates behavior when saving/loading files with incorrect extensions, ensuring no crashes occur.
+
+Test Name: CLIErrorHandlingTest.DiskSpaceHandling
+Test Description: Tests disk space handling with large projects. Creates large voxel dataset (10,000 voxels) to test save operation behavior under storage constraints.
+
+Test Name: CLIErrorHandlingTest.MemoryStressTest
+Test Description: Tests memory handling under stress. Places large number of voxels (5,000) to validate memory tracking and proper resource management, skipped in CI environments.
+
+Test Name: CLIErrorHandlingTest.GroupErrorHandling
+Test Description: Tests group management error handling. Validates creation of empty groups, groups with invalid voxel IDs, operations on non-existent groups, and duplicate group names.
+
+Test Name: CLIErrorHandlingTest.CameraErrorHandling
+Test Description: Tests camera parameter error handling. Validates camera distance clamping for extreme values (very small, very large, zero, negative, NaN, infinity).
+
+Test Name: CLIErrorHandlingTest.ViewportErrorHandling
+Test Description: Tests viewport size error handling. Validates graceful handling of invalid viewport sizes including zero, negative, very small, and very large values.
+
+Test Name: CLIErrorHandlingTest.ConcurrentOperations
+Test Description: Tests basic thread safety with concurrent operations. Simulates concurrent voxel placements across multiple threads to validate thread-safe behavior and consistent state.

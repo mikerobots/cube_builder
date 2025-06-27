@@ -1,0 +1,58 @@
+----- File: core/file_io/tests/test_unit_core_file_io_binary_io.cpp
+
+Test Name: UInt8RoundTrip
+Test Description: Tests writing and reading uint8_t values through BinaryWriter/BinaryReader with validation of isValid() state
+
+Test Name: UInt16RoundTrip
+Test Description: Tests writing and reading uint16_t values (up to 65535) through binary I/O stream
+
+Test Name: UInt32RoundTrip
+Test Description: Tests writing and reading uint32_t values (up to 4294967295) through binary I/O stream
+
+Test Name: UInt64RoundTrip
+Test Description: Tests writing and reading uint64_t values (up to 18446744073709551615) through binary I/O stream
+
+Test Name: FloatRoundTrip
+Test Description: Tests writing and reading float values with floating-point precision verification
+
+Test Name: DoubleRoundTrip
+Test Description: Tests writing and reading double values with double precision verification
+
+Test Name: StringRoundTrip
+Test Description: Tests writing and reading string values including proper length encoding/decoding
+
+Test Name: EmptyStringRoundTrip
+Test Description: Tests writing and reading empty strings to verify edge case handling
+
+Test Name: Vector3fRoundTrip
+Test Description: Tests writing and reading Vector3f objects with all three components (x, y, z) preserved
+
+Test Name: Matrix4fRoundTrip
+Test Description: Tests writing and reading 4x4 matrices with all 16 elements preserved correctly
+
+Test Name: BytesRoundTrip
+Test Description: Tests writeBytes() and readBytes() for raw byte array data transfer
+
+Test Name: TemplateSpecializationWrite
+Test Description: Tests template specializations of write<T>() and read<T>() methods for various types
+
+Test Name: ArrayRoundTrip
+Test Description: Tests writeArray() and readArray<T>() for vector of uint32_t values with size preservation
+
+Test Name: EmptyArrayRoundTrip
+Test Description: Tests writing and reading empty arrays to verify proper handling of zero-size collections
+
+Test Name: ComplexDataRoundTrip
+Test Description: Tests writing and reading complex data structures including magic numbers, strings, floats, and arrays of Vector3f
+
+Test Name: ByteCountTracking
+Test Description: Tests getBytesWritten() and getBytesRead() accurately track byte counts during I/O operations
+
+Test Name: ErrorHandling
+Test Description: Tests error handling when reading from empty stream, verifying isValid() returns false after failed reads
+
+Test Name: IsAtEnd
+Test Description: Tests isAtEnd() method correctly identifies when reader reaches end of stream
+
+Test Name: Flush
+Test Description: Tests flush() method ensures data is written to stream and available for reading

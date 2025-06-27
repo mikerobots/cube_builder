@@ -1,0 +1,10 @@
+workspace 5.0 5.0 5.0
+resolution 64cm
+place 64cm 64cm 0cm
+place 0cm 64cm 64cm
+save output/headless/commands/test_project.vxl
+clear
+status
+load output/headless/commands/test_project.vxl
+status
+quit

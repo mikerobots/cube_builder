@@ -1,0 +1,16 @@
+----- File: apps/cli/tests/test_unit_cli_camera_commands.cpp
+
+Test Name: CameraCommand_AllViewPresets_REQ_11_3_18
+Test Description: Tests all predefined camera view positions (front, back, left, right, top, bottom, iso, default) with matrix validation and position sanity checks per REQ-11.3.18
+
+Test Name: CameraCommand_InvalidPreset_REQ_11_3_18
+Test Description: Tests camera command with invalid preset names (invalid, unknown, orthographic, isometric) returns proper error messages per REQ-11.3.18
+
+Test Name: CameraCommand_MissingPreset_REQ_11_3_18
+Test Description: Tests camera command without preset parameter returns appropriate error when required parameter is missing per REQ-11.3.18
+
+Test Name: CameraCommand_StateConsistency_REQ_11_3_18
+Test Description: Tests camera state consistency after multiple preset changes, verifying finite values and valid matrices per REQ-11.3.18
+
+Test Name: CameraCommand_AliasSupport_REQ_11_3_18
+Test Description: Tests that camera command aliases ('view' keyword) work correctly as alternatives to 'camera' command per REQ-11.3.18

@@ -98,7 +98,7 @@ protected:
         // 4. Place the voxel using the command system
         auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
             voxelManager.get(),
-            context.snappedIncrementPos.value(),
+            context.snappedIncrementPos.value(),  // Note: despite name, this is exact position with new requirements
             voxelManager->getActiveResolution(),
             true  // Place voxel
         );
@@ -160,21 +160,20 @@ TEST_F(GroundPlaneVoxelPlacementTest, TestClickVariousGroundPositions) {
     }
 }
 
-// Test that ground plane snapping works correctly
-TEST_F(GroundPlaneVoxelPlacementTest, TestGroundPlaneSnapping) {
-    // Click at position that should snap to nearest 1cm increment
-    Math::Vector3f clickPos(0.006f, 0.0f, 0.014f);  // Should snap to (0.01, 0, 0.01)
+// Test that ground plane placement works with exact 1cm increment positions
+TEST_F(GroundPlaneVoxelPlacementTest, TestGroundPlaneExactPositioning) {
+    // Click at exact 1cm increment positions - no snapping should occur
+    Math::Vector3f exactPos(0.01f, 0.0f, 0.02f);  // Exactly at 1cm, 0cm, 2cm
     
-    bool success = simulateGroundPlaneClick(clickPos);
-    ASSERT_TRUE(success) << "Failed to place voxel with snapping";
+    bool success = simulateGroundPlaneClick(exactPos);
+    ASSERT_TRUE(success) << "Failed to place voxel at exact position";
     
-    // Should snap to (1,0,1) in 1cm grid coordinates
-    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(1, 0, 1), VoxelData::VoxelResolution::Size_1cm))
-        << "Voxel should snap to (1,0,1) when clicking at (0.006, 0, 0.014)";
+    // Should be placed at exact grid coordinates (1,0,2)
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(1, 0, 2), VoxelData::VoxelResolution::Size_1cm))
+        << "Voxel should be at exact position (1,0,2) when clicking at (0.01, 0, 0.02)";
     
-    // Should NOT be at the exact click position
-    EXPECT_FALSE(voxelManager->getVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm))
-        << "Voxel should not be at origin due to snapping";
+    // Verify only one voxel was placed
+    EXPECT_EQ(voxelManager->getVoxelCount(), 1) << "Should have exactly 1 voxel";
 }
 
 // Test clicking near existing voxel vs ground plane
@@ -246,6 +245,48 @@ TEST_F(GroundPlaneVoxelPlacementTest, TestUndoRedoGroundPlacement) {
     EXPECT_EQ(voxelManager->getVoxelCount(), 1) << "Should have 1 voxel after redo";
     EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(2, 0, 3), VoxelData::VoxelResolution::Size_1cm))
         << "Voxel should be restored after redo";
+}
+
+// Test the new requirement: voxels of any size can be placed at any 1cm position
+TEST_F(GroundPlaneVoxelPlacementTest, TestArbitrarySizeVoxelsAtAnyPosition) {
+    // Test that larger voxels can be placed at positions that would have been invalid under old snapping rules
+    
+    // Set to 4cm resolution
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_4cm);
+    
+    // Place a 4cm voxel at position (1,0,1) - under old rules this would snap to (0,0,0)
+    // Under new rules, it should stay at (1,0,1)
+    Math::Vector3f nonAlignedPos(0.01f, 0.0f, 0.01f);  // 1cm, 0cm, 1cm in world space
+    bool success1 = simulateGroundPlaneClick(nonAlignedPos);
+    ASSERT_TRUE(success1) << "Failed to place 4cm voxel at non-aligned position";
+    
+    // Verify it was placed at exact position (1,0,1), not snapped to (0,0,0)
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(1, 0, 1), VoxelData::VoxelResolution::Size_4cm))
+        << "4cm voxel should be at exact position (1,0,1)";
+    EXPECT_FALSE(voxelManager->getVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_4cm))
+        << "4cm voxel should NOT be at (0,0,0) - no snapping should occur";
+    
+    // Place another 4cm voxel at (10,0,10) - non-overlapping position
+    // 4cm voxel at (1,0,1) extends to (5,0,5), so (10,0,10) to (14,0,14) won't overlap
+    Math::Vector3f anotherPos(0.10f, 0.0f, 0.10f);  // 10cm, 0cm, 10cm in world space
+    bool success2 = simulateGroundPlaneClick(anotherPos);
+    ASSERT_TRUE(success2) << "Failed to place second 4cm voxel at non-overlapping position";
+    
+    // Verify both voxels exist at their exact positions
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(10, 0, 10), VoxelData::VoxelResolution::Size_4cm))
+        << "Second 4cm voxel should be at exact position (10,0,10)";
+    EXPECT_EQ(voxelManager->getVoxelCount(), 2) << "Should have 2 voxels at exact positions";
+    
+    // Try with 16cm voxel at position (50,0,50) - well away from other voxels
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_16cm);
+    Math::Vector3f largeVoxelPos(0.50f, 0.0f, 0.50f);  // 50cm, 0cm, 50cm in world space
+    bool success3 = simulateGroundPlaneClick(largeVoxelPos);
+    ASSERT_TRUE(success3) << "Failed to place 16cm voxel at non-aligned position";
+    
+    EXPECT_TRUE(voxelManager->getVoxel(Math::Vector3i(50, 0, 50), VoxelData::VoxelResolution::Size_16cm))
+        << "16cm voxel should be at exact position (50,0,50)";
+    EXPECT_EQ(voxelManager->getVoxelCount(VoxelData::VoxelResolution::Size_16cm), 1) 
+        << "Should have 1 voxel in 16cm resolution";
 }
 
 } // namespace VoxelEditor

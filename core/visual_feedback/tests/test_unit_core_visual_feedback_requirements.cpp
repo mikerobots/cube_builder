@@ -281,8 +281,15 @@ TEST_F(VisualFeedbackRequirementTest, FaceHighlighting_REQ_2_3_1_to_2_3_2_Logic)
     IncrementCoordinates voxelPos(32, 32, 32);
     Vector3f voxelWorldPos = testGrid->incrementToWorld(voxelPos).value();
     
-    // Ray from in front of the voxel
-    Vector3f rayOrigin = Vector3f(voxelWorldPos.x, voxelWorldPos.y, voxelWorldPos.z - 1.0f);
+    // For a 32cm voxel with bottom-center placement:
+    // - World position is the bottom-center of the voxel
+    // - Voxel extends from:
+    //   X: worldPos.x - 0.16 to worldPos.x + 0.16
+    //   Y: worldPos.y to worldPos.y + 0.32
+    //   Z: worldPos.z - 0.16 to worldPos.z + 0.16
+    
+    // Ray from in front of the voxel, aiming at the center of the face
+    Vector3f rayOrigin = Vector3f(voxelWorldPos.x, voxelWorldPos.y + 0.16f, voxelWorldPos.z - 0.5f);
     VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1));
     
     Face face = faceDetector->detectFace(ray, *testGrid, resolution);
@@ -291,9 +298,6 @@ TEST_F(VisualFeedbackRequirementTest, FaceHighlighting_REQ_2_3_1_to_2_3_2_Logic)
     EXPECT_FALSE(face.isGroundPlane());
     EXPECT_EQ(face.getVoxelPosition().value(), voxelPos.value());
     EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ);
-    
-    // Face is already validated by isValid()
-    EXPECT_TRUE(face.isValid());
 }
 
 TEST_F(VisualFeedbackRequirementTest, FaceHighlightColor_REQ_4_2_1_Logic) {

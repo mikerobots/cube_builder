@@ -1,0 +1,46 @@
+----- File: foundation/config/tests/test_unit_foundation_config_section.cpp
+
+Test Name: BasicValueOperations
+Test Description: Tests basic setValue() and getValue() operations for all data types (int, float, string, bool) within a ConfigSection
+
+Test Name: DefaultValues
+Test Description: Tests getValue() with default parameters returns specified defaults when keys don't exist rather than throwing exceptions
+
+Test Name: HasValue
+Test Description: Tests hasValue() correctly identifies existing and non-existing keys within the section after setValue() operations
+
+Test Name: RemoveValue
+Test Description: Tests removeValue() functionality removes keys from section and handles removal of non-existent keys gracefully without crashing
+
+Test Name: GetKeys
+Test Description: Tests getKeys() returns complete list of value keys in the section with correct count and proper key enumeration
+
+Test Name: NestedSections
+Test Description: Tests creation and access of nested child sections via getSection(), ensuring same section name returns same object reference
+
+Test Name: SectionQueries
+Test Description: Tests hasSection() and getSectionNames() functionality for querying existence and listing of child sections
+
+Test Name: RemoveSection
+Test Description: Tests removeSection() removes child sections, making hasSection() return false for removed sections
+
+Test Name: PathBasedAccess
+Test Description: Tests path-based value access using dot notation (e.g., "level1.level2.key1") for both setValueByPath() and getValueByPath() with nested sections
+
+Test Name: PathBasedHasValue
+Test Description: Tests hasValueByPath() correctly identifies existing and non-existing nested paths using dot notation syntax
+
+Test Name: ChangeNotifications
+Test Description: Tests subscription-based change notifications when values are set or modified, providing callbacks with key, old value, and new value
+
+Test Name: Unsubscribe
+Test Description: Tests unsubscribe() functionality stops notifications for specific keys after subscription removal
+
+Test Name: SectionUtilities
+Test Description: Tests utility methods isEmpty(), size(), sectionCount(), and clear() for managing section state and content
+
+Test Name: SectionName
+Test Description: Tests getName() returns correct section name for root sections and child sections
+
+Test Name: ConstSectionAccess
+Test Description: Tests const access to sections via const ConfigSection pointer, ensuring getSection() works correctly for existing and non-existing sections

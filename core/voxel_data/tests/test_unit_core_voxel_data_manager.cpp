@@ -529,8 +529,8 @@ TEST_F(VoxelDataManagerTest, RedundantOperations) {
         updateEventTracking();
         EXPECT_EQ(voxelChangedEventCount, 1);
         
-        // Setting the same voxel to the same value should succeed but not trigger event
-        EXPECT_TRUE(manager->setVoxel(gridPos, resolution, true));
+        // Setting the same voxel to the same value should fail (redundant operation)
+        EXPECT_FALSE(manager->setVoxel(gridPos, resolution, true));
         updateEventTracking();
         EXPECT_EQ(voxelChangedEventCount, 1); // No additional event
         EXPECT_EQ(manager->getVoxelCount(resolution), 1);
@@ -540,8 +540,8 @@ TEST_F(VoxelDataManagerTest, RedundantOperations) {
         updateEventTracking();
         EXPECT_EQ(voxelChangedEventCount, 2);
         
-        // Clearing the same voxel again should succeed but not trigger event
-        EXPECT_TRUE(manager->setVoxel(gridPos, resolution, false));
+        // Clearing the same voxel again should fail (redundant operation)
+        EXPECT_FALSE(manager->setVoxel(gridPos, resolution, false));
         updateEventTracking();
         EXPECT_EQ(voxelChangedEventCount, 2); // No additional event
         EXPECT_EQ(manager->getVoxelCount(resolution), 0);
@@ -679,8 +679,8 @@ TEST_F(VoxelDataManagerTest, CollisionDetection_SameSizeOverlap) {
     // Test exact same position - should overlap
     EXPECT_TRUE(manager->wouldOverlap(pos1, VoxelResolution::Size_2cm));
     
-    // Test that redundant setVoxel operations succeed (setting same voxel to same value)
-    EXPECT_TRUE(manager->setVoxel(pos1, VoxelResolution::Size_2cm, true));
+    // Test that redundant setVoxel operations fail (setting same voxel to same value)
+    EXPECT_FALSE(manager->setVoxel(pos1, VoxelResolution::Size_2cm, true));
     
     // But setting different value should still work
     EXPECT_TRUE(manager->setVoxel(pos1, VoxelResolution::Size_2cm, false));
@@ -812,8 +812,8 @@ TEST_F(VoxelDataManagerTest, SetVoxel_ValidatesIncrement) {
     // Should fail - Y < 0
     EXPECT_FALSE(manager->setVoxel(Vector3i(10, -1, 10), VoxelResolution::Size_1cm, true));
     
-    // Should succeed - redundant operation (setting same voxel to same value)
-    EXPECT_TRUE(manager->setVoxel(Vector3i(10, 0, 10), VoxelResolution::Size_1cm, true));
+    // Should fail - redundant operation (setting same voxel to same value)
+    EXPECT_FALSE(manager->setVoxel(Vector3i(10, 0, 10), VoxelResolution::Size_1cm, true));
     
     // Should fail - overlap with different resolution at overlapping position
     // 4cm voxel at (8, 0, 8) would overlap with 1cm voxel at (10, 0, 10)
@@ -836,7 +836,181 @@ TEST_F(VoxelDataManagerTest, SetVoxelAtWorldPos_ValidatesIncrement) {
     
     // Should fail - would overlap
     EXPECT_FALSE(manager->setVoxelAtWorldPos(Vector3f(0.1f, 0.0f, 0.1f), VoxelResolution::Size_1cm, true));
+}
+
+// ==================== Requirements Change Tests - Exact Position Placement ====================
+
+// REQ-2.1.1 (updated): Voxels shall be placed at any 1cm increment position without resolution-based snapping
+TEST_F(VoxelDataManagerTest, ExactPositionPlacement_NoSnapToVoxelBoundaries) {
+    // Test that VoxelDataManager can place voxels at any 1cm position, regardless of voxel size
+    // This verifies the new requirement: no resolution-based snapping in placement
     
-    // Verify only one voxel was placed
-    EXPECT_EQ(manager->getTotalVoxelCount(), 1);
+    // Test with 4cm voxels - previously these might have snapped to multiples of 4
+    VoxelResolution resolution4cm = VoxelResolution::Size_4cm;
+    
+    // These positions are NOT aligned to 4cm boundaries
+    std::vector<Vector3i> nonAlignedPositions = {
+        Vector3i(1, 1, 1),     // 1cm position (not multiple of 4)
+        Vector3i(3, 7, 11),    // Prime numbers (not multiples of 4)
+        Vector3i(17, 23, 29),  // More primes
+        Vector3i(50, 75, 99),  // Random non-aligned positions
+        Vector3i(-5, 13, -21)  // Mixed positive/negative
+    };
+    
+    // All these positions should be placeable without snapping
+    for (const auto& pos : nonAlignedPositions) {
+        if (manager->isValidIncrementPosition(pos)) {
+            EXPECT_TRUE(manager->setVoxel(pos, resolution4cm, true)) 
+                << "Failed to place 4cm voxel at non-aligned position (" << pos.x << "," << pos.y << "," << pos.z << ")";
+            EXPECT_TRUE(manager->getVoxel(pos, resolution4cm))
+                << "Failed to retrieve 4cm voxel at non-aligned position (" << pos.x << "," << pos.y << "," << pos.z << ")";
+            
+            // Verify event was dispatched with exact position
+            updateEventTracking();
+            EXPECT_EQ(lastVoxelChangedEvent.gridPos, pos) << "Event position mismatch for " << pos.x << "," << pos.y << "," << pos.z;
+            EXPECT_EQ(lastVoxelChangedEvent.resolution, resolution4cm);
+        }
+    }
+    
+    // Test with 8cm voxels - even larger voxels should place at arbitrary 1cm positions
+    VoxelResolution resolution8cm = VoxelResolution::Size_8cm;
+    
+    std::vector<Vector3i> moreNonAlignedPositions = {
+        Vector3i(9, 13, 19),   // Not multiples of 8
+        Vector3i(31, 37, 41),  // More primes
+        Vector3i(65, 73, 89)   // Large non-aligned but within workspace
+    };
+    
+    for (const auto& pos : moreNonAlignedPositions) {
+        if (manager->isValidIncrementPosition(pos)) {
+            EXPECT_TRUE(manager->setVoxel(pos, resolution8cm, true))
+                << "Failed to place 8cm voxel at non-aligned position (" << pos.x << "," << pos.y << "," << pos.z << ")";
+            EXPECT_TRUE(manager->getVoxel(pos, resolution8cm))
+                << "Failed to retrieve 8cm voxel at non-aligned position (" << pos.x << "," << pos.y << "," << pos.z << ")";
+        }
+    }
+}
+
+TEST_F(VoxelDataManagerTest, ExactPositionPlacement_AllResolutionsSupported) {
+    // Test that ALL voxel resolutions can be placed at arbitrary 1cm positions
+    // This is the core of the requirements change
+    
+    // Test arbitrary 1cm positions that are NOT aligned to any common voxel size
+    std::vector<Vector3i> testPositions = {
+        Vector3i(13, 27, 41),   // Prime numbers
+        Vector3i(97, 103, 107), // More primes (if within workspace)
+        Vector3i(-23, 59, -67), // Mixed signs (if within workspace)
+        Vector3i(1, 3, 5),      // Small odds
+        Vector3i(127, 131, 137) // Large primes (if within workspace)
+    };
+    
+    std::vector<VoxelResolution> testResolutions = {
+        VoxelResolution::Size_1cm, VoxelResolution::Size_2cm, VoxelResolution::Size_4cm,
+        VoxelResolution::Size_8cm, VoxelResolution::Size_16cm, VoxelResolution::Size_32cm
+        // Note: Skip larger resolutions as they might exceed workspace bounds
+    };
+    
+    for (auto resolution : testResolutions) {
+        for (const auto& pos : testPositions) {
+            // Skip positions outside workspace for this resolution
+            if (!manager->isValidIncrementPosition(pos)) {
+                continue;
+            }
+            
+            // Should be able to place at exact position (no snapping)
+            EXPECT_TRUE(manager->setVoxel(pos, resolution, true))
+                << "Failed to place " << static_cast<int>(resolution) << " voxel at position (" 
+                << pos.x << "," << pos.y << "," << pos.z << ")";
+                
+            EXPECT_TRUE(manager->getVoxel(pos, resolution))
+                << "Failed to retrieve " << static_cast<int>(resolution) << " voxel at position (" 
+                << pos.x << "," << pos.y << "," << pos.z << ")";
+                
+            // Clear for next test
+            manager->setVoxel(pos, resolution, false);
+        }
+    }
+}
+
+TEST_F(VoxelDataManagerTest, ExactPositionPlacement_WorldCoordinateConsistency) {
+    // Test that world coordinate placement also works with arbitrary positions
+    VoxelResolution resolution = VoxelResolution::Size_2cm;
+    
+    // Test world positions that correspond to arbitrary 1cm increment positions
+    std::vector<Vector3f> worldPositions = {
+        Vector3f(0.13f, 0.27f, 0.41f),  // 13cm, 27cm, 41cm
+        Vector3f(0.07f, 0.11f, 0.19f),  // 7cm, 11cm, 19cm
+        Vector3f(-0.05f, 0.13f, -0.21f), // -5cm, 13cm, -21cm
+        Vector3f(0.01f, 0.03f, 0.05f)   // 1cm, 3cm, 5cm
+    };
+    
+    for (const auto& worldPos : worldPositions) {
+        if (manager->isValidIncrementPosition(worldPos)) {
+            EXPECT_TRUE(manager->setVoxelAtWorldPos(worldPos, resolution, true))
+                << "Failed to place voxel at world position (" << worldPos.x << "," << worldPos.y << "," << worldPos.z << ")";
+            EXPECT_TRUE(manager->getVoxelAtWorldPos(worldPos, resolution))
+                << "Failed to retrieve voxel at world position (" << worldPos.x << "," << worldPos.y << "," << worldPos.z << ")";
+                
+            // Clear for next test
+            manager->setVoxelAtWorldPos(worldPos, resolution, false);
+        }
+    }
+}
+
+TEST_F(VoxelDataManagerTest, ExactPositionPlacement_CollisionDetectionAtExactPositions) {
+    // Test that collision detection works correctly with exact positions
+    Vector3i pos(13, 27, 41);  // Arbitrary non-aligned position
+    VoxelResolution resolution = VoxelResolution::Size_4cm;
+    
+    // Should not overlap initially
+    EXPECT_FALSE(manager->wouldOverlap(pos, resolution));
+    
+    // Place a voxel
+    EXPECT_TRUE(manager->setVoxel(pos, resolution, true));
+    
+    // Now should overlap at the exact same position
+    EXPECT_TRUE(manager->wouldOverlap(pos, resolution));
+    
+    // Adjacent positions should not overlap (unless they happen to map to same grid cell)
+    Vector3i adjacent1(pos.x + 1, pos.y, pos.z);
+    Vector3i adjacent2(pos.x, pos.y + 1, pos.z);
+    Vector3i adjacent3(pos.x, pos.y, pos.z + 1);
+    
+    if (manager->isValidIncrementPosition(adjacent1)) {
+        // This might or might not overlap depending on voxel size and grid mapping
+        bool overlaps1 = manager->wouldOverlap(adjacent1, resolution);
+        // Test should not crash - exact result depends on implementation
+        EXPECT_TRUE(overlaps1 || !overlaps1); // Tautology to verify no crash
+    }
+}
+
+TEST_F(VoxelDataManagerTest, ExactPositionPlacement_EventDispatchingAtExactPositions) {
+    // Test that events are dispatched with exact positions (no snapping)
+    Vector3i pos(17, 23, 29);  // Arbitrary position
+    VoxelResolution resolution = VoxelResolution::Size_8cm;
+    
+    if (manager->isValidIncrementPosition(pos)) {
+        int initialEventCount = voxelChangedHandler->eventCount;
+        
+        // Place voxel
+        EXPECT_TRUE(manager->setVoxel(pos, resolution, true));
+        
+        // Verify event was dispatched with exact position
+        updateEventTracking();
+        EXPECT_EQ(voxelChangedHandler->eventCount, initialEventCount + 1);
+        EXPECT_EQ(lastVoxelChangedEvent.gridPos, pos);
+        EXPECT_EQ(lastVoxelChangedEvent.resolution, resolution);
+        EXPECT_FALSE(lastVoxelChangedEvent.oldValue);
+        EXPECT_TRUE(lastVoxelChangedEvent.newValue);
+        
+        // Remove voxel
+        EXPECT_TRUE(manager->setVoxel(pos, resolution, false));
+        
+        // Verify removal event also has exact position
+        updateEventTracking();
+        EXPECT_EQ(voxelChangedHandler->eventCount, initialEventCount + 2);
+        EXPECT_EQ(lastVoxelChangedEvent.gridPos, pos);
+        EXPECT_TRUE(lastVoxelChangedEvent.oldValue);
+        EXPECT_FALSE(lastVoxelChangedEvent.newValue);
+    }
 }

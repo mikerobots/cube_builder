@@ -1,0 +1,43 @@
+----- File: core/rendering/tests/test_unit_core_rendering_ground_plane_grid.cpp
+
+Test Name: DISABLED_Initialize
+Test Description: Tests GroundPlaneGrid initialization ensuring grid initializes successfully and is visible by default (disabled due to OpenGL context requirement)
+
+Test Name: GridCellSize
+Test Description: Tests grid cell size constant is 0.32f (32cm) as per requirement for 32cm x 32cm grid squares (REQ-1.1.1)
+
+Test Name: MajorLineInterval
+Test Description: Tests major line interval constant is 1.6f (160cm) for thicker grid lines every 5 cells (REQ-1.1.4)
+
+Test Name: VisibilityControl
+Test Description: Tests setVisible() and isVisible() methods for controlling grid visibility state
+
+Test Name: DISABLED_GridMeshGeneration5m
+Test Description: Tests grid mesh generation with 5m³ workspace calculating expected 17x17 grid lines with 3 major lines per direction (disabled due to initialization requirement)
+
+Test Name: DISABLED_GridMeshGeneration2m
+Test Description: Tests grid mesh generation with 2m³ workspace calculating expected 9x9 grid lines with 1 major line per direction (disabled due to initialization requirement)
+
+Test Name: DISABLED_GridMeshGeneration8m
+Test Description: Tests grid mesh generation with 8m³ workspace calculating expected 27x27 grid lines with 5 major lines per direction (disabled due to initialization requirement)
+
+Test Name: DISABLED_GridLinePositions
+Test Description: Tests grid line positions and spacing with 3.2m workspace verifying lines at multiples of 0.32m and major lines at -1.6m, 0m, +1.6m (disabled due to initialization requirement)
+
+Test Name: DISABLED_RenderWithoutCrash
+Test Description: Tests render() method doesn't crash with mock renderer, identity matrices, and cursor position set (disabled due to initialization requirement)
+
+Test Name: DISABLED_OpacityParameters
+Test Description: Tests setOpacityParameters() with custom values (0.2f, 0.8f) and default reset behavior (disabled due to initialization requirement)
+
+Test Name: DISABLED_NoRenderWhenInvisible
+Test Description: Tests that render() returns early without rendering when grid visibility is set to false (disabled due to initialization requirement)
+
+Test Name: DISABLED_GridCenteredAtOrigin
+Test Description: Tests grid is centered at origin (0,0,0) with symmetric 6.4m workspace extending from -3.2m to +3.2m (REQ-1.1.5) (disabled due to initialization requirement)
+
+Test Name: ShaderCompilation
+Test Description: Tests basic grid creation and visibility state changes without full OpenGL initialization
+
+Test Name: DISABLED_UpdateWithSameSize
+Test Description: Tests updateGridMesh() optimization when called with same workspace size (should be no-op) (disabled due to initialization requirement)

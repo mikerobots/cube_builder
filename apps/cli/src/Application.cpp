@@ -420,6 +420,18 @@ void Application::processInput() {
     }
 }
 
+void Application::update() {
+    // Update mouse interaction if available
+    if (m_mouseInteraction) {
+        m_mouseInteraction->update();
+    }
+    
+    // Process any pending events
+    if (m_renderWindow) {
+        m_renderWindow->pollEvents();
+    }
+}
+
 void Application::render() {
     if (m_headless || !m_renderWindow || !m_renderEngine) {
         return;
@@ -504,6 +516,20 @@ void Application::render() {
         
         // Render the feedback system (highlights, outlines, previews)
         m_feedbackRenderer->render(*m_cameraController->getCamera(), context);
+        
+        // Render debug grid overlay if enabled
+        if (m_debugGridVisible) {
+            auto& overlayRenderer = m_feedbackRenderer->getOverlayRenderer();
+            overlayRenderer.beginFrame(m_renderWindow->getWidth(), m_renderWindow->getHeight());
+            
+            // Render 1cm increment grid centered at origin
+            overlayRenderer.renderGrid(VoxelData::VoxelResolution::Size_1cm, 
+                                     Math::Vector3f(0.0f, 0.0f, 0.0f), 
+                                     10.0f, // 10 meter extent 
+                                     *m_cameraController->getCamera());
+            
+            overlayRenderer.endFrame();
+        }
     }
     
     // End frame and present

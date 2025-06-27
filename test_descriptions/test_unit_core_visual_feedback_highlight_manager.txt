@@ -1,0 +1,25 @@
+----- File: core/visual_feedback/tests/test_unit_core_visual_feedback_highlight_manager.cpp
+
+Test Name: SingleFaceHighlight
+Test Description: Verifies only one face is highlighted at a time by setting two different faces and confirming the second replaces the first per REQ-4.2.2
+
+Test Name: ClearHighlight
+Test Description: Tests highlight clearing functionality by setting a face highlight and then clearing it
+
+Test Name: HighlightSameFace
+Test Description: Validates that highlighting the same face multiple times is a no-op operation and maintains the highlight
+
+Test Name: InvalidFace
+Test Description: Tests invalid face handling where setting an invalid/default-constructed face clears any existing highlight
+
+Test Name: AnimationUpdate
+Test Description: Verifies animation updates don't crash and maintain highlight state through multiple 16ms update cycles per REQ-6.1.3
+
+Test Name: AnimationControl
+Test Description: Tests enabling and disabling animation without crashes and proper update functionality
+
+Test Name: FaceTransitions
+Test Description: Validates rapid face transitions with half-frame updates maintain proper state per REQ-2.3.1 and REQ-2.3.2
+
+Test Name: GroundPlaneFace
+Test Description: Tests highlighting of ground plane faces created from world coordinates

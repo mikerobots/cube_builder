@@ -1,0 +1,25 @@
+----- File: core/rendering/tests/test_unit_core_rendering_ground_plane_grid_dynamics.cpp
+
+Test Name: SetOpacityParameters
+Test Description: Tests setting opacity parameters (base, near, transition speed) without crashing
+
+Test Name: SetCursorPosition
+Test Description: Tests setting cursor position with various 3D coordinates
+
+Test Name: UpdateWithoutInit
+Test Description: Tests update method works without OpenGL initialization with various time steps
+
+Test Name: VisibilityToggle
+Test Description: Tests visibility toggle functionality with setVisible() and isVisible() methods
+
+Test Name: GridConstants
+Test Description: Tests static grid parameter constants (cell size 0.32f, major line interval 1.6f)
+
+Test Name: MultipleUpdatesWithMovement
+Test Description: Tests multiple updates simulating cursor movement from far above to on grid
+
+Test Name: UpdateEdgeCases
+Test Description: Tests edge cases including extreme positions, infinity values, large/negative time steps
+
+Test Name: UpdateGridMeshWithoutInit
+Test Description: Tests updateGridMesh handles various workspace sizes without OpenGL context

@@ -1,0 +1,40 @@
+----- File: core/undo_redo/tests/test_unit_core_undo_redo_requirements.cpp
+
+Test Name: PlacementCommand_LeftClickPlacement
+Test Description: Validates left-click voxel placement command creation and execution at 4cm-aligned position per REQ-5.1.1
+
+Test Name: RemovalCommand_RightClickRemoval
+Test Description: Tests right-click voxel removal command creation and execution for existing voxel per REQ-5.1.2
+
+Test Name: PlacementCommand_AdjacentPlacement
+Test Description: Verifies placement of voxel adjacent to existing voxel face per REQ-2.3.3
+
+Test Name: HistoryManager_OperationLimit
+Test Description: Tests history manager maintains 10 operation limit, removing oldest commands when exceeded
+
+Test Name: Command_ReversibleOperations
+Test Description: Validates Command pattern implementation with execute, undo, and redo functionality
+
+Test Name: CompositeCommand_ComplexOperations
+Test Description: Tests composite command for complex multi-step operations with atomic undo/redo
+
+Test Name: MemoryConstraints_ApplicationOverhead
+Test Description: Verifies memory usage stays well under 1GB limit for application overhead per REQ-6.3.4
+
+Test Name: StateSnapshot_LimitedHistory
+Test Description: Placeholder test for file format limited history storage (10-20 operations) per REQ-8.1.6
+
+Test Name: CLI_UndoRedoSupport
+Test Description: Tests undo/redo system provides necessary interface for CLI integration per REQ-9.2.6
+
+Test Name: Transaction_AtomicOperations
+Test Description: Validates transaction support for atomic operations with commit and auto-rollback
+
+Test Name: MemoryEfficiency_VRConstraints
+Test Description: Tests memory-efficient history with 20 operation limit and 50MB cap for VR constraints
+
+Test Name: PlacementValidation_PreventInvalidCommands
+Test Description: Verifies placement validation prevents command creation for below-ground and overlapping positions
+
+Test Name: Snapshots_EfficientStateRestoration
+Test Description: Tests snapshot system for efficient state restoration during undo/redo operations

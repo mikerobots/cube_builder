@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCES
     src/FeedbackTypes.cpp
     src/FaceDetector.cpp
+    src/GeometricFaceDetector.cpp
     src/HighlightRenderer.cpp
     src/HighlightManager.cpp
     src/OutlineRenderer.cpp
@@ -20,6 +21,7 @@ set(SOURCES
 set(HEADERS
     include/visual_feedback/FeedbackTypes.h
     include/visual_feedback/FaceDetector.h
+    include/visual_feedback/GeometricFaceDetector.h
     include/visual_feedback/HighlightRenderer.h
     include/visual_feedback/HighlightManager.h
     include/visual_feedback/OutlineRenderer.h

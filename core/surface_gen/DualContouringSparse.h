@@ -20,6 +20,9 @@ protected:
     // Override the edge extraction to use sparse traversal
     void extractEdgeIntersections(const VoxelData::VoxelGrid& grid) override;
     
+    // Override quad generation to use sparse traversal
+    void generateQuads() override;
+    
 private:
     // Build set of cells that need processing
     std::unordered_set<uint64_t> buildActiveCellSet(const VoxelData::VoxelGrid& grid);

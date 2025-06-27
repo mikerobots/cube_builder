@@ -1,18 +1,18 @@
-workspace 6 6 6
+workspace 6.0 6.0 6.0
 grid on
 view iso
 resolution 64cm
-place 200cm 0cm 200cm
-place 264cm 0cm 200cm
-place 200cm 0cm 264cm
+place 192cm 0cm 192cm
+place 256cm 0cm 192cm
+place 192cm 0cm 256cm
 screenshot output/rendering/integration/workflow_1.ppm
 resolution 32cm
-place 200cm 64cm 200cm
-place 232cm 64cm 200cm
-place 200cm 64cm 232cm
+place 192cm 64cm 192cm
+place 224cm 64cm 192cm
+place 192cm 64cm 224cm
 screenshot output/rendering/integration/workflow_2.ppm
 resolution 16cm
-place 216cm 96cm 216cm
+place 208cm 96cm 208cm
 screenshot output/rendering/integration/workflow_3.ppm
 undo
 undo

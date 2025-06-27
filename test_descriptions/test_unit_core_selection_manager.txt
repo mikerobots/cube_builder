@@ -1,0 +1,94 @@
+----- File: core/selection/tests/test_unit_core_selection_manager.cpp
+
+Test Name: InitialState
+Test Description: Tests SelectionManager initial state, verifying no selection exists, zero size, and empty selection set when first created, fulfilling the requirement for coordinating selection operations.
+
+Test Name: SelectVoxel
+Test Description: Validates single voxel selection, testing hasSelection flag, selection size tracking, and proper voxel containment checking for basic selection functionality.
+
+Test Name: DeselectVoxel
+Test Description: Tests voxel deselection from existing selection, verifying specific voxels can be removed while preserving others and maintaining correct selection size.
+
+Test Name: ToggleVoxel
+Test Description: Validates voxel toggle functionality, testing selection/deselection of voxels based on current state for convenient selection modification.
+
+Test Name: SelectNone
+Test Description: Tests complete selection clearing, verifying all voxels are deselected, hasSelection returns false, and selection size becomes zero.
+
+Test Name: SelectAll
+Test Description: Validates selectAll operation behavior without voxel manager, testing warning logging when voxel manager is not available for complete world selection.
+
+Test Name: SelectInverse
+Test Description: Tests selection inversion behavior without voxel manager, verifying current selection remains unchanged when voxel manager is not available.
+
+Test Name: SelectWithReplaceMode
+Test Description: Validates Replace selection mode, testing complete replacement of current selection with new SelectionSet while discarding previous selections.
+
+Test Name: SelectWithAddMode
+Test Description: Tests Add selection mode, verifying new voxels are added to existing selection while preserving previously selected voxels.
+
+Test Name: SelectWithSubtractMode
+Test Description: Validates Subtract selection mode, testing removal of specified voxels from current selection while preserving non-targeted voxels.
+
+Test Name: SelectWithIntersectMode
+Test Description: Tests Intersect selection mode, verifying selection is reduced to only voxels present in both current selection and new selection set.
+
+Test Name: SelectBox
+Test Description: Validates box-based region selection, testing selection of voxels within specified bounding box coordinates for rectangular selection operations.
+
+Test Name: SelectSphere
+Test Description: Tests sphere-based region selection, verifying selection of voxels within specified sphere center and radius for radial selection operations.
+
+Test Name: SelectCylinder
+Test Description: Validates cylinder-based region selection, testing selection of voxels within specified cylindrical volume defined by base, direction, radius, and height.
+
+Test Name: UndoRedo
+Test Description: Tests integration with undo/redo system for reversible selections, verifying selection history management, state restoration, and proper can-undo/can-redo tracking.
+
+Test Name: ClearHistory
+Test Description: Validates selection history clearing, testing removal of all undo/redo history and proper state reset for history management.
+
+Test Name: MaxHistorySize
+Test Description: Tests maximum history size enforcement, verifying history is limited to specified size and oldest entries are removed when limit is exceeded.
+
+Test Name: SaveAndLoadSelectionSet
+Test Description: Tests named selection set persistence (REQ-8.1.7), verifying selection state can be saved with names, cleared, and restored exactly for selection serialization.
+
+Test Name: GetSelectionSetNames
+Test Description: Validates retrieval of all saved selection set names, testing enumeration of stored selections for management and loading operations.
+
+Test Name: DeleteSelectionSet
+Test Description: Tests deletion of named selection sets, verifying sets can be removed and become unavailable for loading after deletion.
+
+Test Name: ClearSelectionSets
+Test Description: Validates clearing of all named selection sets, testing bulk removal of all saved selections for complete cleanup operations.
+
+Test Name: UnionWith
+Test Description: Tests union operation with another SelectionSet, verifying current selection is expanded to include all voxels from both sets.
+
+Test Name: IntersectWith
+Test Description: Validates intersection operation with another SelectionSet, testing reduction of current selection to only voxels present in both sets.
+
+Test Name: SubtractFrom
+Test Description: Tests subtraction operation with another SelectionSet, verifying removal of specified voxels from current selection while preserving others.
+
+Test Name: FilterSelection
+Test Description: Validates in-place selection filtering with predicates, testing modification of current selection to contain only voxels matching specified criteria.
+
+Test Name: GetFilteredSelection
+Test Description: Tests filtered selection retrieval without modifying current selection, verifying creation of new SelectionSet containing only matching voxels.
+
+Test Name: SelectionStyle
+Test Description: Validates selection style configuration for visual feedback, testing storage and retrieval of outline colors, animation settings, and other visual properties.
+
+Test Name: PreviewMode
+Test Description: Tests preview mode functionality, verifying preview state management, empty preview handling, apply/cancel operations, and mode toggling.
+
+Test Name: GetSelectionBounds
+Test Description: Validates selection bounds calculation for bounds checking, testing bounding box computation that encompasses all selected voxels across multiple positions.
+
+Test Name: GetSelectionStats
+Test Description: Tests selection statistics calculation, verifying voxel count aggregation, resolution-based counting, and proper statistics generation for multi-resolution selections.
+
+Test Name: GetSelectionCopy
+Test Description: Validates selection copying functionality, testing creation of independent SelectionSet copy that doesn't affect original selection when modified.

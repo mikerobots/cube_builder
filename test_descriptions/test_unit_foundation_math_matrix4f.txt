@@ -1,0 +1,85 @@
+----- File: foundation/math/tests/test_unit_foundation_math_matrix4f.cpp
+
+Test Name: DefaultConstructor
+Test Description: Tests default constructor creates identity matrix with 1s on diagonal and 0s elsewhere
+
+Test Name: ArrayConstructor
+Test Description: Tests constructing matrix from a 16-element float array, verifying all elements are copied correctly
+
+Test Name: ParameterConstructor
+Test Description: Tests constructing matrix using 16 individual float parameters
+
+Test Name: Identity
+Test Description: Tests identity() method resets matrix to identity and Identity() static method returns identity matrix
+
+Test Name: MatrixMultiplication
+Test Description: Tests matrix multiplication with identity matrix returns original matrix
+
+Test Name: VectorTransformation
+Test Description: Tests transforming a 3D point with translation matrix correctly translates the point
+
+Test Name: DirectionTransformation
+Test Description: Tests transformDirection() method which transforms vectors without translation, using 90-degree Z rotation
+
+Test Name: Transpose
+Test Description: Tests transposed() method correctly swaps rows and columns of the matrix
+
+Test Name: Determinant
+Test Description: Tests determinant calculation, verifying identity matrix has determinant of 1
+
+Test Name: Inversion
+Test Description: Tests matrix inversion by verifying M * M^-1 = Identity
+
+Test Name: TranslationMatrix
+Test Description: Tests translation matrix creation and getTranslation() extraction method
+
+Test Name: RotationX
+Test Description: Tests rotation matrix around X axis, rotating point (0,1,0) by 90 degrees to (0,0,1)
+
+Test Name: RotationY
+Test Description: Tests rotation matrix around Y axis, rotating point (1,0,0) by 90 degrees to (0,0,-1)
+
+Test Name: RotationZ
+Test Description: Tests rotation matrix around Z axis, rotating point (1,0,0) by 90 degrees to (0,1,0)
+
+Test Name: ArbitraryAxisRotation
+Test Description: Tests rotation around arbitrary axis using rotation() method, verifying against known Z-axis rotation
+
+Test Name: ScaleMatrix
+Test Description: Tests non-uniform scale matrix creation with different scale factors for each axis
+
+Test Name: UniformScale
+Test Description: Tests uniform scale matrix creation using single scale factor
+
+Test Name: PerspectiveProjection
+Test Description: Tests perspective projection matrix creation, verifying key matrix elements
+
+Test Name: OrthographicProjection
+Test Description: Tests orthographic projection matrix creation with specified bounds
+
+Test Name: LookAt
+Test Description: Tests lookAt() view matrix creation with basic eye, center, and up vectors
+
+Test Name: LookAt_DetailedValidation
+Test Description: Comprehensive tests of lookAt() including standard view, angled view, and isometric view validations
+
+Test Name: Equality
+Test Description: Tests matrix equality and inequality operators
+
+Test Name: IndexOperator
+Test Description: Tests array index operator for both reading and writing matrix elements
+
+Test Name: SetTranslation
+Test Description: Tests setTranslation() method updates translation components while preserving rotation
+
+Test Name: MatrixMultiplicationOrder_MVP
+Test Description: Tests correct Model-View-Projection multiplication order for OpenGL (P*V*M)
+
+Test Name: MatrixMultiplicationOrder_Associativity
+Test Description: Tests matrix multiplication associativity and non-commutativity properties
+
+Test Name: MatrixStorageOrder
+Test Description: Verifies row-major storage order and translation component locations
+
+Test Name: PerspectiveProjection_KnownValues
+Test Description: Tests perspective projection with specific FOV and verifies near/far plane mapping to NDC

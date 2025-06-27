@@ -1,0 +1,37 @@
+----- File: foundation/memory/tests/test_unit_foundation_memory_pool.cpp
+
+Test Name: BasicAllocation
+Test Description: Tests basic memory pool initialization with specific object size (sizeof(int)) and capacity (4), verifying initial state has 0 used and 4 free slots
+
+Test Name: AllocateAndDeallocate
+Test Description: Tests allocation and deallocation of memory blocks, verifying unique pointers are returned, used/free counts are correctly updated, and memory is properly recycled
+
+Test Name: AutoExpansion
+Test Description: Tests automatic pool expansion when allocating beyond initial capacity (2 slots), verifying the pool grows dynamically to accommodate additional allocations
+
+Test Name: MemoryAlignment
+Test Description: Tests that allocated memory blocks are properly aligned for the object type (double), ensuring memory addresses meet alignment requirements
+
+Test Name: InvalidPointerHandling
+Test Description: Tests pool's handling of invalid deallocation attempts including nullptr and pointers to memory not from the pool, verifying no crashes or corruption
+
+Test Name: Utilization
+Test Description: Tests getUtilization() calculation returning correct percentage of used slots (0.0 to 1.0), updating properly as memory is allocated and deallocated
+
+Test Name: Clear
+Test Description: Tests clear() method resets the pool to empty state, releasing all memory blocks and setting capacity to 0, used count to 0
+
+Test Name: Shrink
+Test Description: Tests shrink() method behavior after pool expansion, verifying it resets internal state while maintaining existing capacity for allocated blocks
+
+Test Name: Reserve
+Test Description: Tests reserve() pre-allocates memory for specified number of objects (10), increasing capacity without affecting used count
+
+Test Name: ObjectConstruction
+Test Description: Tests construct<T>() and destroy() methods for proper C++ object construction/destruction with parameters, tracking constructor/destructor call counts
+
+Test Name: TypedMemoryPool
+Test Description: Tests TypedMemoryPool<T> template wrapper providing type-safe allocation/deallocation, automatic construction/destruction, and proper object lifecycle management
+
+Test Name: ThreadSafety
+Test Description: Tests concurrent allocation/deallocation from multiple threads (4 threads, 100 allocations each), verifying no duplicate pointers and correct final state
