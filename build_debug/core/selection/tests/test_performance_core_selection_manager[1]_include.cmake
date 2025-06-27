@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/selection/tests/test_performance_core_selection_manager[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_debug/core/selection/tests/test_performance_core_selection_manager[1]_tests.cmake")
+else()
+  add_test(test_performance_core_selection_manager_NOT_BUILT test_performance_core_selection_manager_NOT_BUILT)
+endif()

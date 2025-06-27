@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/tests/integration/rendering/test_performance_rendering_shader_benchmark[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_debug/tests/integration/rendering/test_performance_rendering_shader_benchmark[1]_tests.cmake")
+else()
+  add_test(test_performance_rendering_shader_benchmark_NOT_BUILT test_performance_rendering_shader_benchmark_NOT_BUILT)
+endif()

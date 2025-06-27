@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests/test_integration_interaction_face_clicking[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests/test_integration_interaction_face_clicking[1]_tests.cmake")
+else()
+  add_test(test_integration_interaction_face_clicking_NOT_BUILT test_integration_interaction_face_clicking_NOT_BUILT)
+endif()

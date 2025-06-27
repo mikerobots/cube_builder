@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/surface_gen/tests/VoxelEditor_SurfaceGen_Tests[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_debug/core/surface_gen/tests/VoxelEditor_SurfaceGen_Tests[1]_tests.cmake")
+else()
+  add_test(VoxelEditor_SurfaceGen_Tests_NOT_BUILT VoxelEditor_SurfaceGen_Tests_NOT_BUILT)
+endif()

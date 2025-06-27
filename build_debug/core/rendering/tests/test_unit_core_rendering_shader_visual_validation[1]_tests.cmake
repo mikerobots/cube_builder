@@ -1,0 +1,5 @@
+add_test([=[ShaderVisualTest.BasicVoxelShaderRendering]=]  /Users/michaelhalloran/cube_edit/build_debug/bin/test_unit_core_rendering_shader_visual_validation [==[--gtest_filter=ShaderVisualTest.BasicVoxelShaderRendering]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[ShaderVisualTest.BasicVoxelShaderRendering]=]  PROPERTIES WORKING_DIRECTORY /Users/michaelhalloran/cube_edit/build_debug/core/rendering/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[ShaderVisualTest.FlatShadingValidation]=]  /Users/michaelhalloran/cube_edit/build_debug/bin/test_unit_core_rendering_shader_visual_validation [==[--gtest_filter=ShaderVisualTest.FlatShadingValidation]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[ShaderVisualTest.FlatShadingValidation]=]  PROPERTIES WORKING_DIRECTORY /Users/michaelhalloran/cube_edit/build_debug/core/rendering/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  test_unit_core_rendering_shader_visual_validation_TESTS ShaderVisualTest.BasicVoxelShaderRendering ShaderVisualTest.FlatShadingValidation)

@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/camera/tests/test_unit_core_camera_orbit_transformations[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_debug/core/camera/tests/test_unit_core_camera_orbit_transformations[1]_tests.cmake")
+else()
+  add_test(test_unit_core_camera_orbit_transformations_NOT_BUILT test_unit_core_camera_orbit_transformations_NOT_BUILT)
+endif()

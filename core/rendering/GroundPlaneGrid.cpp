@@ -29,7 +29,7 @@ GroundPlaneGrid::GroundPlaneGrid(ShaderManager* shaderManager, OpenGLRenderer* g
     , m_shaderManager(shaderManager)
     , m_glRenderer(glRenderer)
     , m_initialized(false)
-    , m_visible(false)
+    , m_visible(true)  // Grid is always visible per requirements
     , m_currentWorkspaceSize(0.0f, 0.0f, 0.0f)
     , m_baseOpacity(0.35f)
     , m_nearOpacity(0.65f)
@@ -197,7 +197,6 @@ void GroundPlaneGrid::generateGridMesh(const Vector3f& workspaceSize) {
     std::vector<GridVertex> vertices;
     
     const float cellSize = getGridCellSize();
-    const float majorInterval = getMajorLineInterval();
     
     // Calculate grid bounds (centered at origin)
     float halfSizeX = workspaceSize.x * 0.5f;

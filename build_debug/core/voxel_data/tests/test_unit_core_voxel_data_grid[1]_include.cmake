@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/voxel_data/tests/test_unit_core_voxel_data_grid[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_debug/core/voxel_data/tests/test_unit_core_voxel_data_grid[1]_tests.cmake")
+else()
+  add_test(test_unit_core_voxel_data_grid_NOT_BUILT test_unit_core_voxel_data_grid_NOT_BUILT)
+endif()

@@ -491,6 +491,7 @@
 /Users/michaelhalloran/cube_edit/build_ninja/apps/shader_test/CMakeFiles/install.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/shader_test/CMakeFiles/install/local.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/shader_test/CMakeFiles/install/strip.dir
+/Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_integration_shader_manager.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_integration_core_camera_cube_visibility.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_integration_core_camera_cube_visibility_simple.dir
 /Users/michaelhalloran/cube_edit/build_ninja/tests/integration/CMakeFiles/test_integration_core_ground_plane_voxel_placement.dir

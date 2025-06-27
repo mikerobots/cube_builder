@@ -1,5 +1,26 @@
 cmake_minimum_required(VERSION 3.10)
 
+# Shader Manager Integration Test
+add_executable(test_integration_shader_manager
+    test_integration_shader_manager.cpp
+)
+
+target_link_libraries(test_integration_shader_manager
+    VoxelEditor_Rendering
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+    glfw
+    glad
+    ${OPENGL_LIBRARIES}
+)
+
+# Add test
+add_test(NAME test_integration_shader_manager COMMAND test_integration_shader_manager)
+set_tests_properties(test_integration_shader_manager PROPERTIES
+    LABELS "integration;rendering;shader;opengl"
+)
+
 # Camera-Cube Visibility Tests (Google Test version)
 add_executable(test_integration_core_camera_cube_visibility
     test_integration_core_camera_cube_visibility.cpp
