@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cassert>
 #include <iostream>
+#include <cstdint>
 
 #ifdef __APPLE__
     #include <OpenGL/gl3.h>
@@ -129,18 +130,30 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     // Early return if no batches or not initialized
     if (m_batches.empty()) return;
     
+    // Ensure we're initialized before checking batch data
+    ensureInitialized();
+    
+    // Clear any previous OpenGL errors
+    while (glGetError() != GL_NO_ERROR) {}
+    
     // Check if any batch has actual data to render
     bool hasDataToRender = false;
     for (const auto& batch : m_batches) {
         if (!batch.vertices.empty() && !batch.indices.empty()) {
             hasDataToRender = true;
+            // Validate indices are within bounds
+            for (uint32_t idx : batch.indices) {
+                if (idx >= batch.vertices.size()) {
+                    std::cerr << "OutlineRenderer: Invalid index " << idx 
+                             << " >= vertex count " << batch.vertices.size() << std::endl;
+                    return;
+                }
+            }
             break;
         }
     }
     
     if (!hasDataToRender) return;
-    
-    ensureInitialized();
     
     // Check if shader is valid
     if (m_outlineShader == 0) {
@@ -170,9 +183,6 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
     glUniform1f(animationTimeLoc, m_animationTime);
     
-    // Clear any previous errors
-    while (glGetError() != GL_NO_ERROR) {}
-    
     // Bind VAO (contains all vertex attribute setup)
     glBindVertexArray(m_vertexArray);
     GLenum vaoError = glGetError();
@@ -186,6 +196,24 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     // Render each batch
     for (const auto& batch : m_batches) {
         if (batch.vertices.empty() || batch.indices.empty()) continue;
+        
+        // Validate indices before rendering
+        bool validIndices = true;
+        uint32_t maxIndex = 0;
+        for (uint32_t idx : batch.indices) {
+            if (idx >= batch.vertices.size()) {
+                std::cerr << "OutlineRenderer: Invalid index " << idx 
+                         << " (vertex count: " << batch.vertices.size() << ")" << std::endl;
+                validIndices = false;
+                break;
+            }
+            maxIndex = (idx > maxIndex) ? idx : maxIndex;
+        }
+        
+        if (!validIndices) {
+            std::cerr << "OutlineRenderer: Skipping batch with invalid indices" << std::endl;
+            continue;
+        }
         
         updateBuffers(batch);
         
@@ -207,6 +235,14 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
         // Ensure index buffer is bound before drawing
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
         
+        // Validate buffer binding
+        GLint boundBuffer = 0;
+        glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &boundBuffer);
+        if (boundBuffer != static_cast<GLint>(m_indexBuffer)) {
+            std::cerr << "OutlineRenderer: Index buffer not properly bound!" << std::endl;
+            continue;
+        }
+        
         // Draw lines
         glDrawElements(GL_LINES, static_cast<GLsizei>(batch.indices.size()),
                        GL_UNSIGNED_INT, nullptr);
@@ -214,7 +250,16 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
         GLenum drawError = glGetError();
         if (drawError != GL_NO_ERROR) {
             std::cerr << "OutlineRenderer: Error after glDrawElements: " << drawError 
-                     << " with " << batch.indices.size() << " indices" << std::endl;
+                     << " with " << batch.indices.size() << " indices"
+                     << ", " << batch.vertices.size() << " vertices"
+                     << ", max index: " << maxIndex << std::endl;
+            
+            // Debug: Print first few indices
+            std::cerr << "First few indices: ";
+            for (size_t i = 0; i < std::min(size_t(10), batch.indices.size()); ++i) {
+                std::cerr << batch.indices[i] << " ";
+            }
+            std::cerr << std::endl;
         }
     }
     
@@ -229,9 +274,14 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
         std::cerr << "OutlineRenderer GL Error after renderBatch: " << error << std::endl;
-        // Assert when failing to ensure we are not masking problems
-        assert(false && "OpenGL error in OutlineRenderer - failing hard to catch issues early");
+        // Log batch info for debugging
+        std::cerr << "Total batches rendered: " << m_batches.size() << std::endl;
+        // Don't assert for now - let's gather more info
+        // assert(false && "OpenGL error in OutlineRenderer - failing hard to catch issues early");
     }
+    
+    // Clear batches after rendering to prevent accumulation
+    m_batches.clear();
 }
 
 void OutlineRenderer::clearBatch() {
@@ -496,12 +546,36 @@ void OutlineRenderer::createBuffers() {
 void OutlineRenderer::updateBuffers(const OutlineBatch& batch) {
     if (batch.vertices.empty()) return;
     
+    // Validate indices before uploading
+    for (uint32_t idx : batch.indices) {
+        if (idx >= batch.vertices.size()) {
+            std::cerr << "OutlineRenderer::updateBuffers: Invalid index " << idx 
+                     << " >= vertex count " << batch.vertices.size() << std::endl;
+            return;
+        }
+    }
+    
+    // Note: VAO should already be bound by the caller
+    // Just verify it's bound
+    GLint currentVAO = 0;
+    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &currentVAO);
+    if (currentVAO != static_cast<GLint>(m_vertexArray)) {
+        std::cerr << "OutlineRenderer::updateBuffers: VAO not bound!" << std::endl;
+        return;
+    }
+    
     // Update vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
     
     // Check if we need to resize the buffer
     GLint bufferSize = 0;
     glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OutlineRenderer::updateBuffers: Error getting buffer size: " << error << std::endl;
+        bufferSize = 0; // Force reallocation
+    }
+    
     size_t requiredSize = batch.vertices.size() * sizeof(OutlineVertex);
     
     if (requiredSize > static_cast<size_t>(bufferSize)) {

@@ -44,14 +44,14 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                 // Create increment coordinates
                 auto incCoords = Math::IncrementCoordinates(Math::Vector3i(x, y, z));
                 
-                // Validate placement
-                if (!m_voxelManager->canPlaceVoxel(incCoords, m_voxelManager->getActiveResolution())) {
+                // Validate placement - check for overlaps
+                if (m_voxelManager->wouldOverlap(incCoords, m_voxelManager->getActiveResolution())) {
                     return CommandResult::Error("Cannot place voxel at position - collision detected");
                 }
                 
                 // Create placement command
                 auto cmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
-                    m_voxelManager.get(),
+                    m_voxelManager,
                     incCoords,
                     m_voxelManager->getActiveResolution()
                 );
@@ -61,7 +61,7 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                     requestMeshUpdate();
                     
                     std::stringstream ss;
-                    ss << "Placed " << VoxelData::toString(m_voxelManager->getActiveResolution()) 
+                    ss << "Placed " << VoxelData::getVoxelSizeName(m_voxelManager->getActiveResolution()) 
                        << " voxel at (" << x << "cm, " << y << "cm, " << z << "cm)";
                     return CommandResult::Success(ss.str());
                 }
@@ -84,7 +84,7 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                 int z = ctx.getIntArg(2);
                 
                 auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
-                    m_voxelManager.get(),
+                    m_voxelManager,
                     Math::IncrementCoordinates(Math::Vector3i(x, y, z)),
                     m_voxelManager->getActiveResolution()
                 );
@@ -132,13 +132,23 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                 Math::BoundingBox box(min, max);
                 
                 // Create fill command
-                auto cmd = std::make_unique<UndoRedo::FillVoxelsCommand>(
-                    m_voxelManager.get(),
+                auto cmd = std::make_unique<UndoRedo::VoxelFillCommand>(
+                    m_voxelManager,
                     box,
-                    m_voxelManager->getActiveResolution()
+                    m_voxelManager->getActiveResolution(),
+                    true  // fill with voxels (not remove)
                 );
                 
-                size_t count = cmd->getVoxelCount();
+                // Count voxels in the region for feedback
+                size_t count = 0;
+                int resSize = static_cast<int>(VoxelData::getVoxelSize(m_voxelManager->getActiveResolution()));
+                for (int x = min.x; x <= max.x; x += resSize) {
+                    for (int y = min.y; y <= max.y; y += resSize) {
+                        for (int z = min.z; z <= max.z; z += resSize) {
+                            count++;
+                        }
+                    }
+                }
                 
                 if (m_historyManager->executeCommand(std::move(cmd))) {
                     requestMeshUpdate();

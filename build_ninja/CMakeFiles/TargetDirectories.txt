@@ -447,7 +447,9 @@
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/install/local.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/CMakeFiles/install/strip.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_application.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_command_registry.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_command_sequences.dir
+/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_command_system.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_command_validation.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_commands.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_integration_cli_error_handling.dir

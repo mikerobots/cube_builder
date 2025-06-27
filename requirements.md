@@ -51,6 +51,7 @@
 2. **Fill Creates Multiple Voxels**: Fill command creates multiple voxels of current resolution size
 3. **Atomic Operations**: Failed commands (place, fill, etc.) make NO state changes
 4. **Fill Validation**: Fill fails if ANY position would create an overlap
+5. **Redundant Operations**: Operations that would not change state (placing where voxel exists, removing where no voxel exists) fail and return error
 
 ---
 
@@ -175,6 +176,8 @@
   - *Subsystems: **CLI Application** (bounds calculation), **Voxel Data** (position validation)*
 - **REQ-4.4.4**: Failed fill operations shall create no voxels (all-or-nothing behavior)
   - *Subsystems: **Voxel Data** (transaction rollback), **CLI Application** (error handling)*
+- **REQ-4.4.5**: Fill command shall fail if any voxel in the fill region already exists (redundant operation)
+  - *Subsystems: **Voxel Data** (redundant operation detection), **CLI Application** (pre-fill validation)*
 
 ### 5. Interaction Model
 
@@ -195,6 +198,9 @@
   - *Subsystems: **Voxel Data** (validation logic), **Input** (pre-placement checks)*
 - **REQ-5.2.3**: Only positions with Y ≥ 0 shall be valid
   - *Subsystems: **Voxel Data** (bounds checking), **Input** (position validation)*
+- **REQ-5.2.4**: Redundant operations (placing/removing at same position with same value) shall fail
+  - *Subsystems: **Voxel Data** (redundant operation detection), **Input** (operation validation)*
+  - *Note: This applies to all operations including place, remove, and fill commands*
 
 #### 5.3 Resolution Selection
 - **REQ-5.3.1**: Current voxel size controlled by active resolution setting

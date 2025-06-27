@@ -143,17 +143,17 @@ TEST_F(VoxelGridTest, PositionValidation) {
     VoxelGrid grid(resolution, workspaceSize);
     
     // Valid increment positions - for 5m workspace, range is:
-    // X: -250 to +250 cm, Y: 0 to 500 cm, Z: -250 to +250 cm
+    // X: -250 to +250 cm, Y: 0 to 500 cm (but must account for voxel size), Z: -250 to +250 cm
     EXPECT_TRUE(grid.isValidIncrementPosition(IncrementCoordinates(0, 0, 0)));     // Center
     EXPECT_TRUE(grid.isValidIncrementPosition(IncrementCoordinates(100, 250, 50))); // Mid-range
-    EXPECT_TRUE(grid.isValidIncrementPosition(IncrementCoordinates(250, 500, 250))); // Max edges
+    EXPECT_TRUE(grid.isValidIncrementPosition(IncrementCoordinates(250, 499, 250))); // Max edges (Y=499 + 1cm voxel = 500cm)
     EXPECT_TRUE(grid.isValidIncrementPosition(IncrementCoordinates(-250, 0, -250))); // Min edges
     
     // Invalid increment positions
     EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(0, -1, 0)));    // Below ground
     EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(251, 0, 0)));   // Beyond max X
     EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(-251, 0, 0)));  // Beyond min X
-    EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(0, 501, 0)));   // Beyond max Y
+    EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(0, 500, 0)));   // Y=500 + 1cm voxel = 501cm > workspace height
     EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(0, 0, 251)));   // Beyond max Z
     EXPECT_FALSE(grid.isValidIncrementPosition(IncrementCoordinates(0, 0, -251))); // Beyond min Z
     
@@ -176,12 +176,12 @@ TEST_F(VoxelGridTest, PositionValidation) {
 TEST_F(VoxelGridTest, OutOfBoundsOperations) {
     VoxelGrid grid(resolution, workspaceSize);
     
-    // Test increment coordinate bounds - for 5m workspace: X,Z: -250 to +250, Y: 0 to 500
+    // Test increment coordinate bounds - for 5m workspace: X,Z: -250 to +250, Y: 0 to 500 (accounting for voxel size)
     // Try to set voxels outside increment bounds
     EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(-251, 0, 0), true));  // Beyond min X
     EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(251, 0, 0), true));   // Beyond max X
     EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(0, -1, 0), true));    // Below ground
-    EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(0, 501, 0), true));   // Above max Y
+    EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(0, 500, 0), true));   // Y=500 + 1cm voxel = 501cm > workspace
     EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(0, 0, -251), true));  // Beyond min Z
     EXPECT_FALSE(grid.setVoxel(IncrementCoordinates(0, 0, 251), true));   // Beyond max Z
     
@@ -192,7 +192,7 @@ TEST_F(VoxelGridTest, OutOfBoundsOperations) {
     EXPECT_FALSE(grid.getVoxel(IncrementCoordinates(-251, 0, 0)));
     EXPECT_FALSE(grid.getVoxel(IncrementCoordinates(251, 0, 0)));
     EXPECT_FALSE(grid.getVoxel(IncrementCoordinates(0, -1, 0)));
-    EXPECT_FALSE(grid.getVoxel(IncrementCoordinates(0, 501, 0)));
+    EXPECT_FALSE(grid.getVoxel(IncrementCoordinates(0, 500, 0)));  // Y=500 is invalid for placement
 }
 
 TEST_F(VoxelGridTest, WorkspaceResizing) {
@@ -364,8 +364,9 @@ TEST_F(VoxelGridTest, StressTestLargeGrid) {
     size_t expectedVoxels = 0;
     
     // Fill every 40cm (10 x 4cm voxels) in each dimension to reduce memory usage
+    // Note: Y must account for voxel size - 4cm voxel at Y=796 has top at Y=800
     for (int x = -400; x <= 400; x += 40) {
-        for (int y = 0; y <= 800; y += 40) {
+        for (int y = 0; y <= 796; y += 40) {  // Max Y=796 + 4cm voxel = 800cm
             for (int z = -400; z <= 400; z += 40) {
                 IncrementCoordinates pos(x, y, z);
                 if (grid.setVoxel(pos, true)) {
@@ -380,7 +381,7 @@ TEST_F(VoxelGridTest, StressTestLargeGrid) {
     
     // Verify the voxels are correctly set
     for (int x = -400; x <= 400; x += 40) {
-        for (int y = 0; y <= 800; y += 40) {
+        for (int y = 0; y <= 796; y += 40) {  // Match the placement loop
             for (int z = -400; z <= 400; z += 40) {
                 IncrementCoordinates pos(x, y, z);
                 EXPECT_TRUE(grid.getVoxel(pos)) 

@@ -42,8 +42,8 @@ TEST_F(IntegrationOverlapDetectionTest, SameResolutionOverlapPrevention) {
     ASSERT_TRUE(voxelManager->setVoxel(pos, resolution, true));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1);
     
-    // Try to place another voxel at the same position - redundant operation succeeds
-    EXPECT_TRUE(voxelManager->setVoxel(pos, resolution, true));
+    // Try to place another voxel at the same position - redundant operation fails
+    EXPECT_FALSE(voxelManager->setVoxel(pos, resolution, true));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1);
     
     // Remove the voxel
@@ -130,16 +130,16 @@ TEST_F(IntegrationOverlapDetectionTest, RedundantOperationHandling) {
     // Place a voxel
     ASSERT_TRUE(voxelManager->setVoxel(pos, resolution, true));
     
-    // Try to place the same voxel again - should succeed (redundant operation)
-    EXPECT_TRUE(voxelManager->setVoxel(pos, resolution, true));
+    // Try to place the same voxel again - should fail (redundant operation)
+    EXPECT_FALSE(voxelManager->setVoxel(pos, resolution, true));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 1);
     
     // Remove the voxel
     EXPECT_TRUE(voxelManager->setVoxel(pos, resolution, false));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 0);
     
-    // Try to remove again - should succeed (redundant operation)
-    EXPECT_TRUE(voxelManager->setVoxel(pos, resolution, false));
+    // Try to remove again - should fail (redundant operation)
+    EXPECT_FALSE(voxelManager->setVoxel(pos, resolution, false));
     EXPECT_EQ(voxelManager->getVoxelCount(resolution), 0);
 }
 

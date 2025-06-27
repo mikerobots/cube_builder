@@ -230,9 +230,9 @@ TEST_F(CoreFunctionalityTest, UndoRedoOperational) {
     Vector3i pos1(0, 0, 0);
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_32cm;
     
-    // Create and execute a placement command
-    auto placementCmd = std::make_unique<UndoRedo::VoxelPlacementCommand>(
-        voxelManager, pos1, resolution
+    // Create and execute a placement command using the factory
+    auto placementCmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
+        voxelManager, Math::IncrementCoordinates(pos1), resolution
     );
     historyManager->executeCommand(std::move(placementCmd));
     
@@ -260,8 +260,8 @@ TEST_F(CoreFunctionalityTest, UndoRedoOperational) {
     Vector3i pos3(64, 0, 0);  // 64cm in X direction (aligned to 32cm grid)
     
     // Use VoxelEditCommand directly for simplicity
-    auto cmd2 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, pos2, resolution, true);
-    auto cmd3 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, pos3, resolution, true);
+    auto cmd2 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, Math::IncrementCoordinates(pos2), resolution, true);
+    auto cmd3 = std::make_unique<UndoRedo::VoxelEditCommand>(voxelManager, Math::IncrementCoordinates(pos3), resolution, true);
     
     historyManager->executeCommand(std::move(cmd2));
     historyManager->executeCommand(std::move(cmd3));
@@ -299,8 +299,8 @@ TEST_F(CoreFunctionalityTest, CompletePlacementWorkflow) {
     feedbackRenderer->renderVoxelPreview(previewPos, VoxelData::VoxelResolution::Size_32cm, green);
     
     // 3. Place voxel with command
-    auto placeCmd = std::make_unique<UndoRedo::VoxelPlacementCommand>(
-        voxelManager, previewPos, VoxelData::VoxelResolution::Size_32cm
+    auto placeCmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
+        voxelManager, Math::IncrementCoordinates(previewPos), VoxelData::VoxelResolution::Size_32cm
     );
     historyManager->executeCommand(std::move(placeCmd));
     
@@ -315,8 +315,8 @@ TEST_F(CoreFunctionalityTest, CompletePlacementWorkflow) {
     feedbackRenderer->renderVoxelPreview(previewPos, VoxelData::VoxelResolution::Size_32cm, red);
     
     // 7. Try to place at invalid position (should fail)
-    auto invalidCmd = std::make_unique<UndoRedo::VoxelPlacementCommand>(
-        voxelManager, previewPos, VoxelData::VoxelResolution::Size_32cm
+    auto invalidCmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
+        voxelManager, Math::IncrementCoordinates(previewPos), VoxelData::VoxelResolution::Size_32cm
     );
     // The command should fail to execute due to overlap
     EXPECT_FALSE(invalidCmd->execute());

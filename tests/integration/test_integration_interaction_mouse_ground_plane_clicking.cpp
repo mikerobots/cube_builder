@@ -114,7 +114,7 @@ protected:
         Input::PlacementContext context;
         if (face.isGroundPlane()) {
             context = Input::PlacementUtils::getSmartPlacementContext(
-                hitPoint,
+                Math::WorldCoordinates(hitPoint),
                 voxelManager->getActiveResolution(),
                 shiftPressed,
                 workspaceSize,
@@ -135,7 +135,7 @@ protected:
             }
             
             context = Input::PlacementUtils::getSmartPlacementContext(
-                hitPoint,
+                Math::WorldCoordinates(hitPoint),
                 voxelManager->getActiveResolution(),
                 shiftPressed,
                 workspaceSize,
@@ -162,7 +162,7 @@ protected:
         
         auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
             voxelManager.get(),
-            context.snappedIncrementPos.value(),
+            context.snappedIncrementPos,
             voxelManager->getActiveResolution(),
             true // add voxel
         );

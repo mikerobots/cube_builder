@@ -83,7 +83,7 @@ protected:
         bool shiftPressed = false; // Not using shift for this test
         
         Input::PlacementContext context = Input::PlacementUtils::getSmartPlacementContext(
-            hitPoint,
+            Math::WorldCoordinates(hitPoint),
             voxelManager->getActiveResolution(),
             shiftPressed,
             workspaceSize,
@@ -98,7 +98,7 @@ protected:
         // 4. Place the voxel using the command system
         auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
             voxelManager.get(),
-            context.snappedIncrementPos.value(),  // Note: despite name, this is exact position with new requirements
+            context.snappedIncrementPos,  // Note: despite name, this is exact position with new requirements
             voxelManager->getActiveResolution(),
             true  // Place voxel
         );

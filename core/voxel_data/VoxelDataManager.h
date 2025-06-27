@@ -66,8 +66,8 @@ public:
         
         // Handle redundant operations (setting same value as current)
         if (oldValue == value) {
-            // Redundant operation - succeed silently (no-op)
-            return true;
+            // Redundant operation - fail to indicate no change was made
+            return false;
         }
         
         // Check for overlaps if we're setting a voxel (not removing)

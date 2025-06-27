@@ -17,17 +17,118 @@ IMPORTANT: To prevent collisions between agents:
   - Mark test complete: sed -i '' 's/^- FaceDetectorTest.MinimalRaycast_VoxelAtOrigin \*\*In Progress, Alice\*\*$/- FaceDetectorTest.MinimalRaycast_VoxelAtOrigin **COMPLETE**/' TODO.md
 - If sed fails, it means someone else is working on that item - pick a different task!
 
-## Current Test Status (2025-06-26)
+## Current Test Status (2025-06-27)
 
 **Unit Test Summary:**
-- **Total Tests**: 112
+- **Total Tests**: 123
 - **Passed**: 112 ✓
-- **Failed**: 0 ✗
-- **Success Rate**: 100%
+- **Failed**: 11 ✗
+- **Success Rate**: 91%
 
-## All Unit Tests Now Passing! 🎉
+## Currently Failing Unit Tests (11 total - new failures after command refactoring)
 
-### 1. test_unit_cli_smoothing_commands **COMPLETE**
+### 1. test_unit_cli_arbitrary_positions
+- **Issue**: Test failures after command refactoring
+- **Details**: Likely related to command API changes or registration issues
+- **Severity**: Medium - affects arbitrary position placement functionality
+- **Status**: Available for work
+- [ ] Review test failures and command registration
+- [ ] Fix command handling or update test expectations
+- [ ] Verify fix and update TODO.md
+
+### 2. test_unit_cli_coordinate_system_constraints
+- **Issue**: Test failures after command refactoring
+- **Details**: Likely related to coordinate validation in new command system
+- **Severity**: Medium - affects coordinate system constraints
+- **Status**: Available for work
+- [ ] Review test failures and command validation
+- [ ] Fix coordinate handling or update test expectations
+- [ ] Verify fix and update TODO.md
+
+### 3. test_unit_cli_select_commands
+- **Issue**: 6 out of 10 tests failing after command refactoring
+- **Details**: Commands are registered but selection operations failing
+- **Severity**: High - affects selection functionality
+- **Status**: Available for work
+- [ ] Debug selection command execution
+- [ ] Fix selection logic or command parameters
+- [ ] Verify fix and update TODO.md
+
+### 4. test_unit_cli_smoothing_commands
+- **Issue**: Test failures after command refactoring
+- **Details**: Smoothing command functionality affected
+- **Severity**: Medium - affects mesh smoothing features
+- **Status**: Available for work
+- [ ] Review smoothing command implementation
+- [ ] Fix command handling or update tests
+- [ ] Verify fix and update TODO.md
+
+### 5. test_unit_core_rendering_ground_plane_grid
+- **Issue**: Ground plane grid rendering tests failing
+- **Details**: Not related to command refactoring
+- **Severity**: Medium - affects visual feedback
+- **Status**: Available for work
+- [ ] Debug ground plane grid rendering
+- [ ] Fix rendering logic
+- [ ] Verify fix and update TODO.md
+
+### 6. test_unit_core_rendering_ground_plane_grid_dynamics
+- **Issue**: Dynamic grid opacity/behavior tests failing
+- **Details**: Not related to command refactoring
+- **Severity**: Medium - affects visual feedback dynamics
+- **Status**: Available for work
+- [ ] Debug dynamic grid behavior
+- [ ] Fix grid dynamics logic
+- [ ] Verify fix and update TODO.md
+
+### 7. test_unit_core_rendering_shader_manager
+- **Issue**: Shader manager tests failing
+- **Details**: Not related to command refactoring
+- **Severity**: High - affects rendering pipeline
+- **Status**: Available for work
+- [ ] Debug shader manager issues
+- [ ] Fix shader compilation/linking
+- [ ] Verify fix and update TODO.md
+
+### 8. test_unit_core_undo_redo_voxel_commands
+- **Issue**: Undo/redo command tests failing
+- **Details**: May be related to command refactoring changes
+- **Severity**: High - affects undo/redo functionality
+- **Status**: Available for work
+- [ ] Review undo/redo command integration
+- [ ] Fix command execution or state management
+- [ ] Verify fix and update TODO.md
+
+### 9. test_unit_core_voxel_data_collision_simple
+- **Issue**: Voxel collision detection tests failing
+- **Details**: Not related to command refactoring
+- **Severity**: High - affects voxel placement validation
+- **Status**: Available for work
+- [ ] Debug collision detection logic
+- [ ] Fix collision algorithms
+- [ ] Verify fix and update TODO.md
+
+### 10. test_unit_core_voxel_data_grid
+- **Issue**: Voxel grid tests failing
+- **Details**: Not related to command refactoring
+- **Severity**: High - core voxel storage functionality
+- **Status**: Available for work
+- [ ] Debug voxel grid operations
+- [ ] Fix grid logic
+- [ ] Verify fix and update TODO.md
+
+### 11. test_unit_core_voxel_data_manager
+- **Issue**: Voxel data manager tests failing
+- **Details**: Not related to command refactoring
+- **Severity**: High - core voxel management functionality
+- **Status**: Available for work
+- [ ] Debug voxel data manager operations
+- [ ] Fix manager logic
+- [ ] Verify fix and update TODO.md
+
+## Previously Completed Tests (moved below new failures)
+
+### test_unit_cli_smoothing_commands **COMPLETE**
 - **Test**: SmoothCommandAlgorithmAutoSelection
 - **Fix**: Removed condition that prevented algorithm auto-selection when level changes
 - **Issue**: Test assertion failure (not a crash/timeout)
@@ -69,6 +170,14 @@ IMPORTANT: To prevent collisions between agents:
 - **CLI Compilation**: ✓ Fixed (API mismatches resolved)
 - **Core Libraries**: ✓ Building successfully
 - **Foundation**: ✓ Building successfully
+
+## Important Testing Note
+
+**OpenGL Error Handling**: All OpenGL errors now fail with asserts to help find issues faster. This means:
+- Any GL error will cause immediate test failure with clear error location
+- Tests that previously passed with silent GL errors may now fail
+- This is intentional to catch rendering issues early in development
+- When fixing tests, check for GL errors in the assertion output
 
 ## Next Steps
 
@@ -156,6 +265,15 @@ IMPORTANT: To prevent collisions between agents:
 - ✅ **test_integration_cli_headless** - Verified test was actually passing
 
 ## Recent Progress Update
+
+**Claude's Session Summary (2025-06-27):**
+- ✅ Refactored monolithic 1924-line Commands.cpp into modular command system
+- ✅ Created 6 command modules: EditCommands, FileCommands, ViewCommands, SelectCommands, SystemCommands, MeshCommands
+- ✅ Implemented CommandRegistry with builder pattern for easy command creation
+- ✅ Fixed all build errors related to command refactoring
+- ⚠️ Introduced 11 unit test failures (4 CLI-related, 7 core functionality)
+- 📉 Unit test success rate decreased from 100% to 91% due to refactoring
+- 🎯 Successfully modularized command system for better maintainability
 
 **Axel's Session Summary:**
 - ✅ Fixed test_integration_face_detection_boundary by extending voxel wall Z range

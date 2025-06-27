@@ -27,8 +27,8 @@ CommandModule::CommandModule(Application* app) : m_app(app) {
 }
 
 void CommandModule::requestMeshUpdate() {
-    if (m_renderWindow) {
-        m_renderWindow->requestMeshUpdate();
+    if (m_app) {
+        m_app->requestMeshUpdate();
     }
 }
 
