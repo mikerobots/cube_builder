@@ -6,9 +6,14 @@
 #include "camera/OrbitCamera.h"
 #include "rendering/RenderEngine.h"
 #include "voxel_data/VoxelDataManager.h"
+#include "voxel_data/VoxelTypes.h"
+#include "voxel_data/VoxelGrid.h"
 #include "math/BoundingBox.h"
+#include "math/CoordinateTypes.h"
+#include "math/Vector3f.h"
 #include <sstream>
 #include <iomanip>
+#include <vector>
 
 namespace VoxelEditor {
 
@@ -21,7 +26,7 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withCategory(CommandCategory::VIEW)
             .withAlias("view")
             .withArg("preset", "View preset (front/back/left/right/top/bottom/iso/default)", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string preset = ctx.getArg(0);
                 
                 Camera::ViewPreset viewPreset;
@@ -37,17 +42,17 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                     return CommandResult::Error("Unknown preset: " + preset);
                 }
                 
-                app->getCameraController()->setViewPreset(viewPreset);
+                m_cameraController->setViewPreset(viewPreset);
                 
                 // After setting preset, ensure camera stays at reasonable distance
                 if (viewPreset == Camera::ViewPreset::ISOMETRIC) {
-                    app->getCameraController()->getCamera()->setDistance(3.0f);
+                    m_cameraController->getCamera()->setDistance(3.0f);
                 }
                 
                 // Force camera matrix update by accessing them
                 // This ensures the lazy evaluation happens immediately
-                app->getCameraController()->getCamera()->getViewMatrix();
-                app->getCameraController()->getCamera()->getProjectionMatrix();
+                m_cameraController->getCamera()->getViewMatrix();
+                m_cameraController->getCamera()->getProjectionMatrix();
                 
                 return CommandResult::Success("Camera set to " + preset + " view");
             }),
@@ -59,17 +64,17 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withCategory(CommandCategory::VIEW)
             .withAlias("z")
             .withArg("factor", "Zoom factor (e.g., 1.5 to zoom in, 0.8 to zoom out)", "float", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 float factor = ctx.getFloatArg(0, 1.0f);
                 if (factor <= 0) {
                     return CommandResult::Error("Zoom factor must be positive");
                 }
                 
-                float currentDistance = app->getCameraController()->getCamera()->getDistance();
-                app->getCameraController()->getCamera()->setDistance(currentDistance / factor);
+                float currentDistance = m_cameraController->getCamera()->getDistance();
+                m_cameraController->getCamera()->setDistance(currentDistance / factor);
                 
                 // Force camera matrix update
-                app->getCameraController()->getCamera()->getViewMatrix();
+                m_cameraController->getCamera()->getViewMatrix();
                 
                 return CommandResult::Success("Zoomed by factor " + std::to_string(factor));
             }),
@@ -82,17 +87,17 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withAlias("rot")
             .withArg("x", "X rotation in degrees", "float", true)
             .withArg("y", "Y rotation in degrees", "float", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 float deltaX = ctx.getFloatArg(0, 0.0f);
                 float deltaY = ctx.getFloatArg(1, 0.0f);
                 
-                dynamic_cast<Camera::OrbitCamera*>(app->getCameraController()->getCamera())->orbit(
+                dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera())->orbit(
                     deltaX,
                     deltaY
                 );
                 
                 // Force camera matrix update
-                app->getCameraController()->getCamera()->getViewMatrix();
+                m_cameraController->getCamera()->getViewMatrix();
                 
                 return CommandResult::Success("Camera rotated");
             }),
@@ -103,12 +108,12 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withDescription("Reset camera to default view")
             .withCategory(CommandCategory::VIEW)
             .withAlias("reset")
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                app->getCameraController()->setViewPreset(Camera::ViewPreset::ISOMETRIC);
+            .withHandler([this](const CommandContext& ctx) {
+                m_cameraController->setViewPreset(Camera::ViewPreset::ISOMETRIC);
                 
                 // Force camera matrix update
-                app->getCameraController()->getCamera()->getViewMatrix();
-                app->getCameraController()->getCamera()->getProjectionMatrix();
+                m_cameraController->getCamera()->getViewMatrix();
+                m_cameraController->getCamera()->getProjectionMatrix();
                 
                 return CommandResult::Success("Camera reset to default view");
             }),
@@ -120,15 +125,15 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withCategory(CommandCategory::VIEW)
             .withAlias("groundplane")
             .withArg("state", "on/off/toggle (optional)", "string", false, "toggle")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Check if we're in headless mode
-                if (!app->getRenderEngine()) {
+                if (!m_renderEngine) {
                     return CommandResult::Error("Grid command not available in headless mode");
                 }
                 
                 std::string state = ctx.getArg(0, "toggle");
                 
-                bool currentState = app->getRenderEngine()->isGroundPlaneGridVisible();
+                bool currentState = m_renderEngine->isGroundPlaneGridVisible();
                 bool newState;
                 
                 if (state == "on") {
@@ -141,11 +146,11 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                     return CommandResult::Error("Invalid state. Use 'on', 'off', or 'toggle'");
                 }
                 
-                app->getRenderEngine()->setGroundPlaneGridVisible(newState);
+                m_renderEngine->setGroundPlaneGridVisible(newState);
                 
                 // Update the ground plane grid with workspace size if turning on
                 if (newState) {
-                    app->getRenderEngine()->updateGroundPlaneGrid(app->getVoxelManager()->getWorkspaceSize());
+                    m_renderEngine->updateGroundPlaneGrid(m_voxelManager->getWorkspaceSize());
                 }
                 
                 return CommandResult::Success("Ground plane grid " + std::string(newState ? "enabled" : "disabled"));
@@ -159,7 +164,7 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withAlias("focus")
             .withAlias("home")
             .withArg("target", "Center target (origin/voxels/x,y,z)", "string", false, "voxels")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string target = ctx.getArgCount() > 0 ? ctx.getArg(0) : "voxels";
                 
                 Math::WorldCoordinates focusPoint;
@@ -172,12 +177,12 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                     Math::BoundingBox bounds;
                     bool hasVoxels = false;
                     
-                    auto* grid = app->getVoxelManager()->getGrid(app->getVoxelManager()->getActiveResolution());
+                    auto* grid = m_voxelManager->getGrid(m_voxelManager->getActiveResolution());
                     if (grid) {
-                        float voxelSize = VoxelData::getVoxelSize(app->getVoxelManager()->getActiveResolution());
+                        float voxelSize = VoxelData::getVoxelSize(m_voxelManager->getActiveResolution());
                         
                         // Use VoxelDataManager's getAllVoxels() for proper coordinate handling
-                        auto allVoxels = app->getVoxelManager()->getAllVoxels();
+                        auto allVoxels = m_voxelManager->getAllVoxels();
                         for (const auto& voxel : allVoxels) {
                             // Use grid->gridToWorld() for proper coordinate conversion
                             Math::Vector3f voxelCenter = grid->incrementToWorld(voxel.incrementPos).value();
@@ -220,7 +225,7 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                 }
                 
                 // Set camera target to focus point
-                auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(app->getCameraController()->getCamera());
+                auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
                 if (orbitCamera) {
                     orbitCamera->setTarget(focusPoint);
                     orbitCamera->focusOn(focusPoint);
@@ -238,8 +243,8 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withCategory(CommandCategory::VIEW)
             .withAlias("cam-info")
             .withAlias("ci")
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(app->getCameraController()->getCamera());
+            .withHandler([this](const CommandContext& ctx) {
+                auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
                 if (orbitCamera) {
                     auto pos = orbitCamera->getPosition();
                     auto target = orbitCamera->getTarget();
@@ -267,9 +272,9 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withDescription("Switch between shader modes or list available shaders")
             .withCategory(CommandCategory::VIEW)
             .withArg("mode", "Shader mode: basic, enhanced, flat, or 'list' to show all", "string", false, "list")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Check if we're in headless mode
-                if (!app->getRenderEngine()) {
+                if (!m_renderEngine) {
                     return CommandResult::Error("Shader command not available in headless mode");
                 }
                 
@@ -285,14 +290,14 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                     
                     // Show current shader
                     std::string currentShader = "unknown";
-                    auto currentShaderId = app->getDefaultShaderId();
+                    auto currentShaderId = m_app->getDefaultShaderId();
                     if (currentShaderId != Rendering::InvalidId) {
                         // Check which shader is currently active
-                        if (currentShaderId == app->getRenderEngine()->getBuiltinShader("basic")) {
+                        if (currentShaderId == m_renderEngine->getBuiltinShader("basic")) {
                             currentShader = "basic";
-                        } else if (currentShaderId == app->getRenderEngine()->getBuiltinShader("enhanced")) {
+                        } else if (currentShaderId == m_renderEngine->getBuiltinShader("enhanced")) {
                             currentShader = "enhanced";
-                        } else if (currentShaderId == app->getRenderEngine()->getBuiltinShader("flat")) {
+                        } else if (currentShaderId == m_renderEngine->getBuiltinShader("flat")) {
                             currentShader = "flat";
                         }
                     }
@@ -313,16 +318,16 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                 }
                 
                 // Get the shader ID from render engine
-                auto shaderId = app->getRenderEngine()->getBuiltinShader(shaderName);
+                auto shaderId = m_renderEngine->getBuiltinShader(shaderName);
                 if (shaderId == Rendering::InvalidId) {
                     return CommandResult::Error("Shader '" + shaderName + "' not found");
                 }
                 
                 // Set as default shader
-                app->setDefaultShaderId(shaderId);
+                m_app->setDefaultShaderId(shaderId);
                 
                 // Update the voxel mesh to trigger re-render with new shader
-                app->requestMeshUpdate();
+                requestMeshUpdate();
                 
                 return CommandResult::Success("Shader mode set to: " + mode);
             }),
@@ -333,10 +338,10 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withDescription("Toggle edge/wireframe overlay rendering")
             .withCategory(CommandCategory::VIEW)
             .withArg("state", "on/off to enable/disable edges, or 'toggle' to switch", "string", false, "toggle")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string state = ctx.getArgCount() > 0 ? ctx.getArg(0) : "toggle";
                 
-                bool currentState = app->getShowEdges();
+                bool currentState = m_app->getShowEdges();
                 bool newState;
                 
                 if (state == "toggle") {
@@ -349,10 +354,10 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                     return CommandResult::Error("Invalid state. Use: on, off, or toggle");
                 }
                 
-                app->setShowEdges(newState);
+                m_app->setShowEdges(newState);
                 
                 // Trigger re-render
-                app->requestMeshUpdate();
+                requestMeshUpdate();
                 
                 return CommandResult::Success("Edge rendering " + std::string(newState ? "enabled" : "disabled"));
             }),
@@ -365,9 +370,9 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
             .withAlias("ss")
             .withAlias("capture")
             .withArg("filename", "Output filename (.png)", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Check if we're in headless mode
-                if (!app->getRenderWindow() || !app->getRenderEngine()) {
+                if (!m_renderWindow || !m_renderEngine) {
                     return CommandResult::Error("Screenshot command not available in headless mode");
                 }
                 
@@ -382,9 +387,12 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                 }
                 
                 // Render the scene before taking screenshot
-                app->render();
+                m_app->render();
                 
-                if (app->getRenderWindow()->saveScreenshot(filename)) {
+                // Don't swap before screenshot - read from back buffer
+                // m_renderWindow->swapBuffers();
+                
+                if (m_renderWindow->saveScreenshot(filename)) {
                     return CommandResult::Success("Screenshot saved: " + filename);
                 }
                 return CommandResult::Error("Failed to save screenshot");

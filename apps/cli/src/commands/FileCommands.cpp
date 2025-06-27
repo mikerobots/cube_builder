@@ -3,21 +3,26 @@
 #include "cli/CommandProcessor.h"
 #include "cli/CommandTypes.h"
 #include "voxel_data/VoxelDataManager.h"
+#include "voxel_data/VoxelTypes.h"
 #include "selection/SelectionManager.h"
 #include "groups/GroupManager.h"
 #include "undo_redo/HistoryManager.h"
 #include "camera/CameraController.h"
+#include "camera/Camera.h"
 #include "camera/OrbitCamera.h"
 #include "file_io/FileManager.h"
 #include "file_io/STLExporter.h"
 #include "file_io/Project.h"
 #include "file_io/FileTypes.h"
+#include "surface_gen/SurfaceGenerator.h"
+#include "surface_gen/MeshSmoother.h"
+#include "rendering/RenderTypes.h"
 #include <thread>
 #include <chrono>
 #include <ctime>
 #include <iomanip>
 #include <sstream>
-#include <sstream>
+#include <cstdlib>
 
 namespace VoxelEditor {
 
@@ -42,20 +47,18 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
             .withName(Commands::NEW)
             .withDescription("Create a new project")
             .withCategory(CommandCategory::FILE)
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                app->getVoxelManager()->clearAll();
-                app->getSelectionManager()->selectNone();
-                
+            .withHandler([this](const CommandContext& ctx) {
+                m_voxelManager->clearAll();
+                m_selectionManager->selectNone();
                 // Clear all groups
-                auto groupIds = app->getGroupManager()->getAllGroupIds();
+                auto groupIds = m_groupManager->getAllGroupIds();
                 for (auto id : groupIds) {
-                    app->getGroupManager()->deleteGroup(id);
+                    m_groupManager->deleteGroup(id);
                 }
-                
-                app->getHistoryManager()->clearHistory();
-                app->setCurrentProject("");
-                app->getCameraController()->setViewPreset(Camera::ViewPreset::ISOMETRIC);
-                
+                m_historyManager->clearHistory();
+                m_currentProject.clear();
+                m_app->setCurrentProject("");
+                m_cameraController->setViewPreset(Camera::ViewPreset::ISOMETRIC);
                 return CommandResult::Success("New project created.");
             }),
             
@@ -66,29 +69,63 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
             .withCategory(CommandCategory::FILE)
             .withAlias("load")
             .withArg("filename", "Path to project file", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string filename = ctx.getArg(0);
+                if (filename.empty()) {
+                    return CommandResult::Error("Filename required");
+                }
                 
-                if (!isValidFilename(filename, ".vxl")) {
-                    return CommandResult::Error("Invalid filename. File must end with .vxl");
+                // Validate filename
+                if (filename == "/dev/null") {
+                    return CommandResult::Error("Invalid filename: /dev/null");
+                }
+                
+                // Check file extension
+                const std::string validExtension = ".vxl";
+                if (filename.length() < validExtension.length() || 
+                    filename.substr(filename.length() - validExtension.length()) != validExtension) {
+                    return CommandResult::Error("Invalid file extension. File must end with .vxl");
                 }
                 
                 FileIO::Project project;
-                auto result = app->getFileManager()->loadProject(filename, project);
-                
-                if (!result.success) {
-                    return CommandResult::Error("Failed to open project: " + result.message);
+                FileIO::LoadOptions options;
+                auto result = m_fileManager->loadProject(filename, project, options);
+                if (result.success) {
+                    // Clear current voxel data
+                    for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                        auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                        auto voxels = m_voxelManager->getAllVoxels(resolution);
+                        for (const auto& voxelPos : voxels) {
+                            m_voxelManager->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, false);
+                        }
+                    }
+                    
+                    // Copy loaded voxel data to app's voxel manager
+                    for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                        auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                        auto voxels = project.voxelData->getAllVoxels(resolution);
+                        for (const auto& voxelPos : voxels) {
+                            m_voxelManager->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
+                        }
+                    }
+                    
+                    // Restore workspace settings
+                    m_voxelManager->resizeWorkspace(project.workspace.size);
+                    m_voxelManager->setActiveResolution(project.workspace.defaultResolution);
+                    
+                    // Restore camera state
+                    if (m_cameraController && m_cameraController->getCamera() && project.camera) {
+                        auto appCamera = m_cameraController->getCamera();
+                        appCamera->setPosition(project.camera->getPosition());
+                        appCamera->setTarget(project.camera->getTarget());
+                        appCamera->setDistance(project.camera->getDistance());
+                    }
+                    
+                    m_currentProject = filename;
+                    m_app->setCurrentProject(filename);
+                    return CommandResult::Success("Project loaded: " + filename);
                 }
-                
-                // Clear current state
-                app->getVoxelManager()->clearAll();
-                app->getSelectionManager()->selectNone();
-                
-                // Apply loaded project data
-                // ... (rest of implementation)
-                
-                app->setCurrentProject(filename);
-                return CommandResult::Success("Project loaded from: " + filename);
+                return CommandResult::Error("Failed to load project: " + filename);
             }),
             
         // SAVE command
@@ -96,108 +133,195 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
             .withName(Commands::SAVE)
             .withDescription("Save the current project")
             .withCategory(CommandCategory::FILE)
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                const std::string& currentProject = app->getCurrentProject();
-                
-                if (currentProject.empty()) {
-                    return CommandResult::Error("No project file specified. Use 'save <filename>' or 'save_as'");
+            .withArg("filename", "Path to save file (optional)", "string", false)
+            .withHandler([this](const CommandContext& ctx) {
+                std::string filename = ctx.getArg(0, m_currentProject);
+                if (filename.empty()) {
+                    return CommandResult::Error("No filename specified and no current project");
                 }
                 
-                // Create project data
+                // Validate filename
+                if (filename == "/dev/null") {
+                    return CommandResult::Error("Invalid filename: /dev/null");
+                }
+                
+                // Check file extension
+                const std::string validExtension = ".vxl";
+                if (filename.length() < validExtension.length() || 
+                    filename.substr(filename.length() - validExtension.length()) != validExtension) {
+                    return CommandResult::Error("Invalid file extension. File must end with .vxl");
+                }
+                
+                // Create project from current state
                 FileIO::Project project;
-                project.metadata.name = currentProject;
-                project.metadata.description = "VoxelEditor Project";
-                project.metadata.version = FileIO::FileVersion{1, 0, 0};
+                project.initializeDefaults();
                 
-                // Add timestamp
-                auto now = std::chrono::system_clock::now();
-                project.metadata.created = now;
-                project.metadata.modified = now;
-                
-                // Gather project data
-                project.voxelData = app->getVoxelManager();
-                project.camera = std::make_shared<Camera::OrbitCamera>(*app->getCameraController()->getCamera());
-                
-                // Attempt to save
-                auto result = app->getFileManager()->saveProject(currentProject, project);
-                
-                if (!result.success) {
-                    return CommandResult::Error("Failed to save project: " + result.message);
+                // Populate project with current application state
+                // Copy voxel data
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                    auto voxels = m_voxelManager->getAllVoxels(resolution);
+                    for (const auto& voxelPos : voxels) {
+                        project.voxelData->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
+                    }
                 }
                 
-                return CommandResult::Success("Project saved to: " + currentProject);
+                // Set workspace size
+                project.workspace.size = m_voxelManager->getWorkspaceSize();
+                project.workspace.defaultResolution = m_voxelManager->getActiveResolution();
+                
+                // Copy camera state
+                if (m_cameraController && m_cameraController->getCamera()) {
+                    auto appCamera = m_cameraController->getCamera();
+                    project.camera->setPosition(appCamera->getPosition());
+                    project.camera->setTarget(appCamera->getTarget());
+                    project.camera->setDistance(appCamera->getDistance());
+                }
+                
+                // Set metadata
+                project.setName("Voxel Editor Project");
+                project.setAuthor(std::getenv("USER") ? std::getenv("USER") : "Unknown");
+                
+                FileIO::SaveOptions options;
+                auto result = m_fileManager->saveProject(filename, project, options);
+                if (result.success) {
+                    m_currentProject = filename;
+                    m_app->setCurrentProject(filename);
+                    return CommandResult::Success("Project saved: " + filename);
+                }
+                return CommandResult::Error("Failed to save project");
             }),
             
         // SAVE_AS command
         CommandRegistration()
             .withName(Commands::SAVE_AS)
-            .withDescription("Save project with a new name")
+            .withDescription("Save the project with a new name")
             .withCategory(CommandCategory::FILE)
-            .withArg("filename", "New filename for the project", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withArg("filename", "Path to save file", "string", true)
+            .withHandler([this](const CommandContext& ctx) {
                 std::string filename = ctx.getArg(0);
-                
-                if (!isValidFilename(filename, ".vxl")) {
-                    return CommandResult::Error("Invalid filename. File must end with .vxl");
+                if (filename.empty()) {
+                    return CommandResult::Error("Filename required");
                 }
                 
-                // Set as current project and delegate to save
-                app->setCurrentProject(filename);
-                
-                // Call save handler
-                CommandContext saveCtx(app, Commands::SAVE, {});
-                auto saveHandler = CommandRegistry::getInstance().findHandler(Commands::SAVE);
-                if (saveHandler) {
-                    return saveHandler(app, saveCtx);
+                // Validate filename
+                if (filename == "/dev/null") {
+                    return CommandResult::Error("Invalid filename: /dev/null");
                 }
                 
-                return CommandResult::Error("Internal error: Save handler not found");
+                // Check file extension
+                const std::string validExtension = ".vxl";
+                if (filename.length() < validExtension.length() || 
+                    filename.substr(filename.length() - validExtension.length()) != validExtension) {
+                    return CommandResult::Error("Invalid file extension. File must end with .vxl");
+                }
+                
+                // Create project from current state
+                FileIO::Project project;
+                project.initializeDefaults();
+                
+                // Populate project with current application state
+                // Copy voxel data
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    auto resolution = static_cast<VoxelData::VoxelResolution>(i);
+                    auto voxels = m_voxelManager->getAllVoxels(resolution);
+                    for (const auto& voxelPos : voxels) {
+                        project.voxelData->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
+                    }
+                }
+                
+                // Set workspace size
+                project.workspace.size = m_voxelManager->getWorkspaceSize();
+                project.workspace.defaultResolution = m_voxelManager->getActiveResolution();
+                
+                // Copy camera state
+                if (m_cameraController && m_cameraController->getCamera()) {
+                    auto appCamera = m_cameraController->getCamera();
+                    project.camera->setPosition(appCamera->getPosition());
+                    project.camera->setTarget(appCamera->getTarget());
+                    project.camera->setDistance(appCamera->getDistance());
+                }
+                
+                // Set metadata
+                project.setName("Voxel Editor Project");
+                project.setAuthor(std::getenv("USER") ? std::getenv("USER") : "Unknown");
+                
+                FileIO::SaveOptions options;
+                auto result = m_fileManager->saveProject(filename, project, options);
+                if (result.success) {
+                    m_currentProject = filename;
+                    m_app->setCurrentProject(filename);
+                    return CommandResult::Success("Project saved as: " + filename);
+                }
+                return CommandResult::Error("Failed to save project");
             }),
             
         // EXPORT command
         CommandRegistration()
             .withName(Commands::EXPORT)
-            .withDescription("Export voxel model to various formats")
+            .withDescription("Export to STL format")
             .withCategory(CommandCategory::FILE)
-            .withArg("filename", "Output filename", "string", true)
-            .withArg("format", "Export format (stl, obj, ply)", "string", false, "stl")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withArg("filename", "Path to STL file", "string", true)
+            .withHandler([this](const CommandContext& ctx) {
                 std::string filename = ctx.getArg(0);
-                std::string format = ctx.getArg(1);
-                
                 if (filename.empty()) {
                     return CommandResult::Error("Filename required");
                 }
                 
-                // Currently only STL is supported
-                if (format != "stl") {
-                    return CommandResult::Error("Unsupported format. Currently only 'stl' is supported.");
-                }
-                
-                // Ensure filename has correct extension
-                const std::string stlExt = ".stl";
-                if (filename.length() < stlExt.length() || 
-                    filename.substr(filename.length() - stlExt.length()) != stlExt) {
-                    filename += stlExt;
-                }
-                
                 // Generate surface mesh
-                auto surfaceGen = app->getSurfaceGenerator();
-                auto mesh = surfaceGen->generateSurface(*app->getVoxelManager());
+                SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                 
-                if (!mesh || mesh->triangles.empty()) {
-                    return CommandResult::Error("No geometry to export. Place some voxels first.");
+                // Apply smoothing if enabled
+                if (m_app->getSmoothingLevel() > 0) {
+                    SurfaceGen::MeshSmoother smoother;
+                    SurfaceGen::MeshSmoother::SmoothingConfig config;
+                    config.smoothingLevel = m_app->getSmoothingLevel();
+                    config.algorithm = m_app->getSmoothingAlgorithm();
+                    config.preserveTopology = true;
+                    config.preserveBoundaries = true;
+                    config.minFeatureSize = 1.0f; // 1mm minimum feature size for 3D printing
+                    config.usePreviewQuality = false; // Full quality for export
+                    
+                    // Apply smoothing with progress callback
+                    std::cout << "Applying smoothing (level " << m_app->getSmoothingLevel() << ")..." << std::flush;
+                    surfaceMesh = smoother.smooth(surfaceMesh, config, 
+                        [](float progress) {
+                            // Update progress display
+                            std::cout << "\rApplying smoothing... " 
+                                      << std::fixed << std::setprecision(0)
+                                      << (progress * 100.0f) << "%" << std::flush;
+                            return true; // Continue processing
+                        });
+                    std::cout << "\rApplying smoothing... Done!    " << std::endl;
+                    
+                    if (surfaceMesh.vertices.empty()) {
+                        return CommandResult::Error("Smoothing operation failed or was cancelled");
+                    }
                 }
                 
-                // Export to STL
-                FileIO::STLExporter exporter;
-                if (!exporter.exportBinary(filename, *mesh)) {
-                    return CommandResult::Error("Failed to export STL file");
+                // Convert to Rendering::Mesh for STL export
+                Rendering::Mesh renderMesh;
+                renderMesh.vertices.reserve(surfaceMesh.vertices.size());
+                for (size_t i = 0; i < surfaceMesh.vertices.size(); ++i) {
+                    Rendering::Vertex vertex;
+                    vertex.position = surfaceMesh.vertices[i];
+                    if (i < surfaceMesh.normals.size()) {
+                        vertex.normal = surfaceMesh.normals[i];
+                    }
+                    renderMesh.vertices.push_back(vertex);
                 }
+                renderMesh.indices = surfaceMesh.indices;
                 
-                std::stringstream ss;
-                ss << "Exported " << mesh->triangles.size() << " triangles to: " << filename;
-                return CommandResult::Success(ss.str());
+                FileIO::STLExportOptions options;
+                options.format = FileIO::STLFormat::Binary;
+                options.validateWatertight = false; // Disable validation for now
+                
+                auto result = m_fileManager->exportSTL(filename, renderMesh, options);
+                if (result.success) {
+                    return CommandResult::Success("Exported to: " + filename);
+                }
+                return CommandResult::Error("Failed to export STL");
             })
     };
 }

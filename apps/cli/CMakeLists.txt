@@ -53,6 +53,7 @@ set(CLI_LIB_SOURCES
     # Command registry system
     src/CommandRegistry.cpp
     src/CommandModule.cpp
+    src/CommandModuleInit.cpp
     # Modular command files
     src/commands/EditCommands.cpp
     src/commands/FileCommands.cpp

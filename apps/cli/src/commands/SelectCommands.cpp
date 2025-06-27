@@ -2,6 +2,7 @@
 #include "cli/Application.h"
 #include "cli/CommandTypes.h"
 #include "voxel_data/VoxelDataManager.h"
+#include "voxel_data/VoxelTypes.h"
 #include "selection/SelectionManager.h"
 #include "selection/SelectionTypes.h"
 #include "groups/GroupManager.h"
@@ -11,11 +12,13 @@
 #include "undo_redo/PlacementCommands.h"
 #include "math/CoordinateTypes.h"
 #include "math/BoundingBox.h"
+#include "math/Vector3f.h"
 #include <sstream>
 #include <iomanip>
 #include <set>
 #include <map>
 #include <unordered_map>
+#include <vector>
 
 namespace VoxelEditor {
 
@@ -30,12 +33,12 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withArg("x", "X coordinate", "int", true)
             .withArg("y", "Y coordinate", "int", true)
             .withArg("z", "Z coordinate", "int", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 Math::Vector3i pos(ctx.getIntArg(0), ctx.getIntArg(1), ctx.getIntArg(2));
                 
-                if (app->getVoxelManager()->hasVoxel(pos, app->getVoxelManager()->getActiveResolution())) {
-                    Selection::VoxelId id(pos, app->getVoxelManager()->getActiveResolution());
-                    app->getSelectionManager()->selectVoxel(id);
+                if (m_voxelManager->hasVoxel(pos, m_voxelManager->getActiveResolution())) {
+                    Selection::VoxelId id(pos, m_voxelManager->getActiveResolution());
+                    m_selectionManager->selectVoxel(id);
                     return CommandResult::Success("Voxel selected");
                 }
                 return CommandResult::Error("No voxel at position");
@@ -53,7 +56,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withArg("x2", "End X with units (e.g. 100cm or 1m)", "coordinate", true)
             .withArg("y2", "End Y with units (e.g. 200cm or 2m)", "coordinate", true)
             .withArg("z2", "End Z with units (e.g. 100cm or 1m)", "coordinate", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Parse coordinates with units
                 auto x1_opt = ctx.getCoordinateArg(0);
                 auto y1_opt = ctx.getCoordinateArg(1);
@@ -81,8 +84,8 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 Math::Vector3f max(x2, y2, z2);
                 
                 Math::BoundingBox box(min, max);
-                app->getSelectionManager()->selectBox(box, app->getVoxelManager()->getActiveResolution());
-                size_t count = app->getSelectionManager()->getSelectionSize();
+                m_selectionManager->selectBox(box, m_voxelManager->getActiveResolution());
+                size_t count = m_selectionManager->getSelectionSize();
                 
                 return CommandResult::Success("Selected " + std::to_string(count) + " voxels");
             }),
@@ -97,7 +100,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withArg("y", "Center Y with units (e.g. 50cm or 0.5m)", "coordinate", true)
             .withArg("z", "Center Z with units (e.g. 0cm or 0m)", "coordinate", true)
             .withArg("radius", "Radius with units (e.g. 100cm or 1m)", "coordinate", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Parse coordinates with units
                 auto x_opt = ctx.getCoordinateArg(0);
                 auto y_opt = ctx.getCoordinateArg(1);
@@ -122,9 +125,9 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 }
                 
                 Math::Vector3f center(x, y, z);
-                app->getSelectionManager()->selectSphere(center, static_cast<float>(radius), 
-                                                       app->getVoxelManager()->getActiveResolution());
-                size_t count = app->getSelectionManager()->getSelectionSize();
+                m_selectionManager->selectSphere(center, static_cast<float>(radius), 
+                                                       m_voxelManager->getActiveResolution());
+                size_t count = m_selectionManager->getSelectionSize();
                 
                 return CommandResult::Success("Selected " + std::to_string(count) + " voxels");
             }),
@@ -135,9 +138,9 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withDescription("Select all voxels")
             .withCategory(CommandCategory::SELECT)
             .withAlias("selall")
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                app->getSelectionManager()->selectAll();
-                size_t count = app->getSelectionManager()->getSelectionSize();
+            .withHandler([this](const CommandContext& ctx) {
+                m_selectionManager->selectAll();
+                size_t count = m_selectionManager->getSelectionSize();
                 return CommandResult::Success("Selected " + std::to_string(count) + " voxels");
             }),
             
@@ -147,8 +150,8 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withDescription("Clear selection")
             .withCategory(CommandCategory::SELECT)
             .withAliases({"selnone", "deselect"})
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                app->getSelectionManager()->selectNone();
+            .withHandler([this](const CommandContext& ctx) {
+                m_selectionManager->selectNone();
                 return CommandResult::Success("Selection cleared");
             }),
             
@@ -159,7 +162,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withCategory(CommandCategory::SELECT)
             .withAlias("selres")
             .withArg("size", "Resolution (1cm, 2cm, 4cm, 8cm, 16cm, 32cm, 64cm, 128cm, 256cm, 512cm)", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string size = ctx.getArg(0);
                 
                 VoxelData::VoxelResolution resolution;
@@ -178,16 +181,16 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 }
                 
                 // Get all voxels of the specified resolution
-                auto voxels = app->getVoxelManager()->getAllVoxels(resolution);
+                auto voxels = m_voxelManager->getAllVoxels(resolution);
                 
                 // Clear current selection and select all voxels of this resolution
-                app->getSelectionManager()->selectNone();
+                m_selectionManager->selectNone();
                 for (const auto& voxelPos : voxels) {
                     Selection::VoxelId id(voxelPos.incrementPos.value(), voxelPos.resolution);
-                    app->getSelectionManager()->selectVoxel(id);
+                    m_selectionManager->selectVoxel(id);
                 }
                 
-                size_t count = app->getSelectionManager()->getSelectionSize();
+                size_t count = m_selectionManager->getSelectionSize();
                 return CommandResult::Success("Selected " + std::to_string(count) + " voxels at " + size + " resolution");
             }),
             
@@ -197,26 +200,26 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withDescription("Invert current selection")
             .withCategory(CommandCategory::SELECT)
             .withAlias("selinvert")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Get current selection
-                auto currentSelection = app->getSelectionManager()->getSelection();
+                auto currentSelection = m_selectionManager->getSelection();
                 std::set<Selection::VoxelId> currentSet(currentSelection.begin(), currentSelection.end());
                 
                 // Clear selection
-                app->getSelectionManager()->selectNone();
+                m_selectionManager->selectNone();
                 
                 // Get all voxels
-                auto allVoxels = app->getVoxelManager()->getAllVoxels();
+                auto allVoxels = m_voxelManager->getAllVoxels();
                 
                 // Select all voxels that were not in the original selection
                 for (const auto& voxelPos : allVoxels) {
                     Selection::VoxelId id(voxelPos.incrementPos.value(), voxelPos.resolution);
                     if (currentSet.find(id) == currentSet.end()) {
-                        app->getSelectionManager()->selectVoxel(id);
+                        m_selectionManager->selectVoxel(id);
                     }
                 }
                 
-                size_t count = app->getSelectionManager()->getSelectionSize();
+                size_t count = m_selectionManager->getSelectionSize();
                 return CommandResult::Success("Inverted selection: " + std::to_string(count) + " voxels selected");
             }),
             
@@ -226,8 +229,8 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withDescription("Show selection information")
             .withCategory(CommandCategory::SELECT)
             .withAliases({"selinfo", "si"})
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                size_t count = app->getSelectionManager()->getSelectionSize();
+            .withHandler([this](const CommandContext& ctx) {
+                size_t count = m_selectionManager->getSelectionSize();
                 
                 if (count == 0) {
                     return CommandResult::Success("No voxels selected");
@@ -239,7 +242,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 
                 // Count voxels by resolution
                 std::map<VoxelData::VoxelResolution, size_t> resolutionCounts;
-                auto selection = app->getSelectionManager()->getSelection();
+                auto selection = m_selectionManager->getSelection();
                 
                 for (const auto& voxel : selection) {
                     resolutionCounts[voxel.resolution]++;
@@ -284,8 +287,8 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withDescription("Delete all selected voxels")
             .withCategory(CommandCategory::SELECT)
             .withAliases({"delsel", "ds"})
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                auto selection = app->getSelectionManager()->getSelection();
+            .withHandler([this](const CommandContext& ctx) {
+                auto selection = m_selectionManager->getSelection();
                 
                 if (selection.empty()) {
                     return CommandResult::Error("No voxels selected");
@@ -305,18 +308,18 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 }
                 
                 auto bulkCmd = std::make_unique<UndoRedo::BulkVoxelEditCommand>(
-                    app->getVoxelManager(),
+                    m_voxelManager,
                     changes
                 );
                 
                 size_t count = selection.size();
                 
-                if (app->getHistoryManager()->executeCommand(std::move(bulkCmd))) {
+                if (m_historyManager->executeCommand(std::move(bulkCmd))) {
                     // Clear selection after deletion
-                    app->getSelectionManager()->selectNone();
+                    m_selectionManager->selectNone();
                     
                     // Update the voxel mesh
-                    app->requestMeshUpdate();
+                    requestMeshUpdate();
                     
                     return CommandResult::Success("Deleted " + std::to_string(count) + " selected voxels");
                 }
@@ -331,13 +334,13 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withCategory(CommandCategory::SELECT)
             .withAliases({"groupsel", "gs"})
             .withArg("name", "Group name", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string name = ctx.getArg(0);
                 if (name.empty()) {
                     return CommandResult::Error("Group name required");
                 }
                 
-                auto selection = app->getSelectionManager()->getSelection();
+                auto selection = m_selectionManager->getSelection();
                 if (selection.empty()) {
                     return CommandResult::Error("No voxels selected");
                 }
@@ -349,7 +352,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                     groupVoxels.emplace_back(voxel.position, voxel.resolution);
                 }
                 
-                Groups::GroupId id = app->getGroupManager()->createGroup(name, groupVoxels);
+                Groups::GroupId id = m_groupManager->createGroup(name, groupVoxels);
                 if (id != Groups::INVALID_GROUP_ID) {
                     return CommandResult::Success("Created group '" + name + "' with " + 
                         std::to_string(groupVoxels.size()) + " voxels");

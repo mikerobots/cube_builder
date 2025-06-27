@@ -50,6 +50,8 @@ namespace VoxelEditor {
 // Forward declaration for simple validation command
 CommandResult executeSimpleValidateCommand(const CommandContext& ctx);
 
+// DEPRECATED: This function is replaced by the new CommandRegistry system
+/*
 void Application::registerCommands() {
     // File Operations
     m_commandProcessor->registerCommand({
@@ -1920,6 +1922,13 @@ void Application::registerCommands() {
             }
         }
     });
+}
+*/
+
+// New registerCommands implementation - delegates to CommandRegistry
+void Application::registerCommands() {
+    // This method is no longer used - commands are registered through CommandRegistry
+    // The CommandRegistry system is initialized in Application::initialize()
 }
 
 } // namespace VoxelEditor

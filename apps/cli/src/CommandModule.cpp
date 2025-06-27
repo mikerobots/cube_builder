@@ -1,5 +1,14 @@
 #include "cli/CommandRegistry.h"
 #include "cli/Application.h"
+#include "cli/RenderWindow.h"
+#include "voxel_data/VoxelDataManager.h"
+#include "undo_redo/HistoryManager.h"
+#include "camera/CameraController.h"
+#include "rendering/RenderEngine.h"
+#include "selection/SelectionManager.h"
+#include "groups/GroupManager.h"
+#include "file_io/FileManager.h"
+#include "events/EventDispatcher.h"
 
 namespace VoxelEditor {
 
@@ -18,8 +27,8 @@ CommandModule::CommandModule(Application* app) : m_app(app) {
 }
 
 void CommandModule::requestMeshUpdate() {
-    if (m_app) {
-        m_app->requestMeshUpdate();
+    if (m_renderWindow) {
+        m_renderWindow->requestMeshUpdate();
     }
 }
 

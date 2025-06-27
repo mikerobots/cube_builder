@@ -21,6 +21,7 @@
 // Application headers
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
+#include "cli/CommandRegistry.h"
 #include "cli/RenderWindow.h"
 #include "cli/MouseInteraction.h"
 #include "cli/VoxelMeshGenerator.h"
@@ -91,7 +92,10 @@ bool Application::initialize(int argc, char* argv[]) {
         return false;
     }
     
-    registerCommands();
+    // Use the new command registry system
+    std::cout << "Application::initialize() - Calling CommandRegistry::registerAllCommands" << std::endl;
+    CommandRegistry::getInstance().registerAllCommands(this, m_commandProcessor.get());
+    std::cout << "Application::initialize() - Command registration complete" << std::endl;
     
     m_running = true;
     

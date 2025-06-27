@@ -28,6 +28,9 @@ public:
             m_fileManager = app->getFileManager();
             m_eventDispatcher = app->getEventDispatcher();
             m_renderWindow = app->getRenderWindow();
+            
+            // Sync current project with application
+            m_currentProject = app->getCurrentProject();
         }
     }
     

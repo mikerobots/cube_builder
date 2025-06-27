@@ -6,13 +6,20 @@
 #include "cli/MouseInteraction.h"
 #include "voxel_data/VoxelDataManager.h"
 #include "voxel_data/VoxelTypes.h"
+#include "voxel_data/VoxelGrid.h"
 #include "camera/CameraController.h"
 #include "camera/Camera.h"
 #include "camera/OrbitCamera.h"
 #include "rendering/RenderEngine.h"
+#include "rendering/RenderTypes.h"
 #include "selection/SelectionManager.h"
 #include "groups/GroupManager.h"
+#include "undo_redo/HistoryManager.h"
 #include "surface_gen/MeshSmoother.h"
+#include "math/CoordinateTypes.h"
+#include "math/Vector3f.h"
+#include "math/Vector4f.h"
+#include "math/Matrix4f.h"
 #include <sstream>
 #include <iomanip>
 #include <thread>
@@ -33,9 +40,9 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withDescription("Show available commands")
             .withCategory(CommandCategory::HELP)
             .withArg("command", "Command to show help for (optional)", "string", false, "")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) -> CommandResult {
                 std::string command = ctx.getArg(0, "");
-                return app->getCommandProcessor()->getHelp(command);
+                return CommandResult::Success(m_app->getCommandProcessor()->getHelp(command));
             }),
             
         // STATUS command
@@ -45,48 +52,48 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("info")
             .withAlias("stats")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::stringstream ss;
                 ss << "Voxel Editor Status\n";
                 ss << "==================\n";
                 
                 // Project info
-                if (!app->getCurrentProject().empty()) {
-                    ss << "Project: " << app->getCurrentProject() << "\n";
+                if (!m_app->getCurrentProject().empty()) {
+                    ss << "Project: " << m_app->getCurrentProject() << "\n";
                 } else {
                     ss << "Project: <unsaved>\n";
                 }
                 
                 // Resolution
-                auto res = app->getVoxelManager()->getActiveResolution();
+                auto res = m_voxelManager->getActiveResolution();
                 ss << "Resolution: " << VoxelData::getVoxelSizeName(res) << "\n";
                 
                 // Workspace
-                auto wsSize = app->getVoxelManager()->getWorkspaceSize();
+                auto wsSize = m_voxelManager->getWorkspaceSize();
                 ss << "Workspace: " << wsSize.x << "x" << wsSize.y << "x" << wsSize.z << " meters\n";
                 
                 // Voxel count
-                size_t voxelCount = app->getVoxelManager()->getVoxelCount();
+                size_t voxelCount = m_voxelManager->getVoxelCount();
                 ss << "Voxels: " << voxelCount << "\n";
                 
                 // Selection
-                size_t selCount = app->getSelectionManager()->getSelectionSize();
+                size_t selCount = m_selectionManager->getSelectionSize();
                 ss << "Selected: " << selCount << " voxels\n";
                 
                 // Groups
-                auto groupIds = app->getGroupManager()->getAllGroupIds();
+                auto groupIds = m_groupManager->getAllGroupIds();
                 ss << "Groups: " << groupIds.size() << "\n";
                 
                 // Memory
-                size_t memUsage = app->getVoxelManager()->getMemoryUsage();
+                size_t memUsage = m_voxelManager->getMemoryUsage();
                 ss << "Memory: " << (memUsage / (1024.0 * 1024.0)) << " MB\n";
                 
                 // Smoothing settings
                 ss << "\nSmoothing Settings:\n";
-                ss << "  Level: " << app->getSmoothingLevel();
-                if (app->getSmoothingLevel() > 0) {
+                ss << "  Level: " << m_app->getSmoothingLevel();
+                if (m_app->getSmoothingLevel() > 0) {
                     std::string algoName;
-                    switch (app->getSmoothingAlgorithm()) {
+                    switch (m_app->getSmoothingAlgorithm()) {
                         case SurfaceGen::MeshSmoother::Algorithm::Laplacian:
                             algoName = "Laplacian";
                             break;
@@ -102,7 +109,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << " (" << algoName << ")";
                 }
                 ss << "\n";
-                ss << "  Preview: " << (app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
+                ss << "  Preview: " << (m_app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
                 
                 return CommandResult::Success(ss.str());
             }),
@@ -113,7 +120,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withDescription("Debug commands for troubleshooting")
             .withCategory(CommandCategory::SYSTEM)
             .withArg("subcommand", "What to debug: camera, voxels, render, frustum, ray, grid", "string", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string subcommand = ctx.getArg(0);
                 
                 if (subcommand == "camera") {
@@ -121,7 +128,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "Camera Debug Info\n";
                     ss << "================\n";
                     
-                    auto camera = app->getCameraController()->getCamera();
+                    auto camera = m_cameraController->getCamera();
                     auto pos = camera->getPosition();
                     auto target = camera->getTarget();
                     auto up = camera->getUp();
@@ -167,20 +174,20 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "Voxel Debug Info\n";
                     ss << "===============\n";
                     
-                    size_t voxelCount = app->getVoxelManager()->getVoxelCount();
+                    size_t voxelCount = m_voxelManager->getVoxelCount();
                     ss << "Total voxels: " << voxelCount << "\n";
                     
-                    auto resolution = app->getVoxelManager()->getActiveResolution();
+                    auto resolution = m_voxelManager->getActiveResolution();
                     float voxelSize = VoxelData::getVoxelSize(resolution);
                     ss << "Resolution: " << VoxelData::getVoxelSizeName(resolution) 
                        << " (" << voxelSize << "m)\n";
                     
-                    auto wsSize = app->getVoxelManager()->getWorkspaceSize();
+                    auto wsSize = m_voxelManager->getWorkspaceSize();
                     ss << "Workspace size: " << wsSize.x << " x " << wsSize.y << " x " << wsSize.z << " meters\n";
                     
                     // List first 10 voxels
                     if (voxelCount > 0) {
-                        auto allVoxels = app->getVoxelManager()->getAllVoxels();
+                        auto allVoxels = m_voxelManager->getAllVoxels();
                         size_t displayCount = std::min(size_t(10), allVoxels.size());
                         ss << "\nFirst " << displayCount << " voxels:\n";
                         
@@ -188,7 +195,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                             const auto& voxelPos = allVoxels[i];
                             
                             // Use grid->gridToWorld() for proper coordinate conversion
-                            const VoxelData::VoxelGrid* grid = app->getVoxelManager()->getGrid(voxelPos.resolution);
+                            const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(voxelPos.resolution);
                             Math::WorldCoordinates worldPos = grid ? grid->incrementToWorld(voxelPos.incrementPos) : Math::WorldCoordinates::zero();
                             
                             ss << "  [" << i << "] Grid(" << voxelPos.incrementPos.x() << "," << voxelPos.incrementPos.y() 
@@ -204,11 +211,11 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "Render Debug Info\n";
                     ss << "================\n";
                     
-                    if (!app->getRenderEngine()) {
+                    if (!m_renderEngine) {
                         return CommandResult::Error("Render engine not initialized");
                     }
                     
-                    auto stats = app->getRenderEngine()->getRenderStats();
+                    auto stats = m_renderEngine->getRenderStats();
                     ss << "FPS: " << stats.fps << "\n";
                     ss << "Frame time: " << stats.frameTime << " ms\n";
                     ss << "Draw calls: " << stats.drawCalls << "\n";
@@ -216,15 +223,10 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "Vertices: " << stats.verticesProcessed << "\n";
                     
                     // RenderEngine handles OpenGL error checking internally
-                    ss << "\nRender engine status: " << (app->getRenderEngine()->isInitialized() ? "Initialized" : "Not initialized") << "\n";
+                    ss << "\nRender engine status: " << (m_renderEngine->isInitialized() ? "Initialized" : "Not initialized") << "\n";
                     
-                    // Check if we have meshes
-                    ss << "\nVoxel meshes: " << app->getVoxelMeshCount() << "\n";
-                    for (size_t i = 0; i < app->getVoxelMeshCount(); i++) {
-                        auto meshInfo = app->getVoxelMeshInfo(i);
-                        ss << "  Mesh " << i << ": " << meshInfo.vertexCount 
-                           << " vertices, " << meshInfo.indexCount << " indices\n";
-                    }
+                    // Note: Access to voxel meshes would need to be exposed via Application
+                    ss << "\nVoxel mesh information not available in this context\n";
                     
                     return CommandResult::Success(ss.str());
                 }
@@ -233,7 +235,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "Frustum Debug Info\n";
                     ss << "==================\n";
                     
-                    auto camera = app->getCameraController()->getCamera();
+                    auto camera = m_cameraController->getCamera();
                     auto viewProj = camera->getViewProjectionMatrix();
                     
                     // Test if workspace center is visible (origin in centered coordinate system)
@@ -257,14 +259,14 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     }
                     
                     // Test first voxel if any
-                    if (app->getVoxelManager()->getVoxelCount() > 0) {
-                        auto allVoxels = app->getVoxelManager()->getAllVoxels();
+                    if (m_voxelManager->getVoxelCount() > 0) {
+                        auto allVoxels = m_voxelManager->getAllVoxels();
                         if (!allVoxels.empty()) {
                             const auto& voxelPos = allVoxels[0];
                             float voxelSize = VoxelData::getVoxelSize(voxelPos.resolution);
                             
                             // Use grid->gridToWorld() for proper coordinate conversion
-                            const VoxelData::VoxelGrid* grid = app->getVoxelManager()->getGrid(voxelPos.resolution);
+                            const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(voxelPos.resolution);
                             Math::WorldCoordinates worldPos = grid ? grid->incrementToWorld(voxelPos.incrementPos) : Math::WorldCoordinates::zero();
                             Math::Vector4f clipPos = viewProj * Math::Vector4f(worldPos.x(), worldPos.y(), worldPos.z(), 1.0f);
                             
@@ -291,7 +293,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                 }
                 else if (subcommand == "triangle") {
                     // Check if we're in headless mode
-                    if (!app->getRenderEngine()) {
+                    if (!m_renderEngine) {
                         return CommandResult::Error("Triangle debug command not available in headless mode");
                     }
                     
@@ -315,33 +317,33 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     triangleMesh.indices = {0, 1, 2};
                     
                     // Clear and render
-                    app->getRenderEngine()->beginFrame();
-                    app->getRenderEngine()->clear(Rendering::ClearFlags::All, Rendering::Color(0.2f, 0.2f, 0.2f, 1.0f));
+                    m_renderEngine->beginFrame();
+                    m_renderEngine->clear(Rendering::ClearFlags::All, Rendering::Color(0.2f, 0.2f, 0.2f, 1.0f));
                     
                     // Set identity transform and basic material
                     Rendering::Transform transform;
                     Rendering::Material material;
                     material.albedo = Rendering::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red
-                    material.shader = app->getRenderEngine()->getBuiltinShader("basic");
+                    material.shader = m_renderEngine->getBuiltinShader("basic");
                     
-                    app->getRenderEngine()->renderMesh(triangleMesh, transform, material);
-                    app->getRenderEngine()->endFrame();
-                    app->getRenderEngine()->present();
+                    m_renderEngine->renderMesh(triangleMesh, transform, material);
+                    m_renderEngine->endFrame();
+                    m_renderEngine->present();
                     
                     ss << "Triangle rendered using core rendering system\n";
                     
                     // Save screenshot for verification
                     std::string screenshotFile = "debug_triangle.ppm";
-                    app->getRenderWindow()->saveScreenshot(screenshotFile);
+                    m_renderWindow->saveScreenshot(screenshotFile);
                     ss << "Screenshot saved to: " << screenshotFile << "\n";
                     
                     return CommandResult::Success(ss.str());
                 }
                 else if (subcommand == "ray") {
                     // Toggle ray visualization
-                    if (app->getMouseInteraction()) {
-                        bool currentState = app->getMouseInteraction()->isRayVisualizationEnabled();
-                        app->getMouseInteraction()->setRayVisualizationEnabled(!currentState);
+                    if (m_app->getMouseInteraction()) {
+                        bool currentState = m_app->getMouseInteraction()->isRayVisualizationEnabled();
+                        m_app->getMouseInteraction()->setRayVisualizationEnabled(!currentState);
                         
                         std::stringstream ss;
                         ss << "Ray visualization " << (!currentState ? "enabled" : "disabled") << "\n";
@@ -354,16 +356,8 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     }
                 }
                 else if (subcommand == "grid") {
-                    // Toggle debug grid overlay
-                    bool currentState = app->isDebugGridVisible();
-                    app->setDebugGridVisible(!currentState);
-                    
-                    std::stringstream ss;
-                    ss << "Debug grid overlay " << (!currentState ? "enabled" : "disabled") << "\n";
-                    ss << "1cm increment grid will now be " << (!currentState ? "visible" : "hidden") << "\n";
-                    ss << "to help verify placement accuracy.\n";
-                    
-                    return CommandResult::Success(ss.str());
+                    // Toggle debug grid overlay - not implemented in this version
+                    return CommandResult::Error("Debug grid overlay feature not yet implemented");
                 }
                 else {
                     return CommandResult::Error("Unknown debug subcommand. Use: camera, voxels, render, frustum, ray, or grid");
@@ -375,7 +369,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withName(Commands::QUIT)
             .withDescription("Exit the application")
             .withCategory(CommandCategory::SYSTEM)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 return CommandResult::Exit("Goodbye!");
             }),
             
@@ -384,7 +378,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withName(Commands::EXIT)
             .withDescription("Exit the application")
             .withCategory(CommandCategory::SYSTEM)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 return CommandResult::Exit("Goodbye!");
             }),
             
@@ -393,10 +387,9 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withName("version")
             .withDescription("Show version information")
             .withCategory(CommandCategory::SYSTEM)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 // Redirect to build command
-                CommandContext buildCtx(app, "build", {});
-                return app->getCommandProcessor()->executeCommand("build", {});
+                return m_app->getCommandProcessor()->executeCommand("build", {});
             }),
             
         // WORKSPACE info command
@@ -405,9 +398,9 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withDescription("Show workspace information")
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("ws-info")
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                auto wsSize = app->getVoxelManager()->getWorkspaceSize();
-                auto resolution = app->getVoxelManager()->getActiveResolution();
+            .withHandler([this](const CommandContext& ctx) {
+                auto wsSize = m_voxelManager->getWorkspaceSize();
+                auto resolution = m_voxelManager->getActiveResolution();
                 float voxelSize = VoxelData::getVoxelSize(resolution);
                 
                 std::stringstream ss;
@@ -440,24 +433,24 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withDescription("Show current settings")
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("config")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::stringstream ss;
                 ss << "Current Settings\n";
                 ss << "===============\n";
                 
                 // Display settings
                 ss << "\nDisplay:\n";
-                ss << "  Show edges: " << (app->getShowEdges() ? "on" : "off") << "\n";
-                ss << "  Debug grid: " << (app->isDebugGridVisible() ? "on" : "off") << "\n";
-                if (app->getRenderEngine()) {
-                    ss << "  Ground plane grid: " << (app->getRenderEngine()->isGroundPlaneGridVisible() ? "on" : "off") << "\n";
+                ss << "  Show edges: " << (m_app->getShowEdges() ? "on" : "off") << "\n";
+                ss << "  Debug grid: off\n"; // Not implemented in this version
+                if (m_renderEngine) {
+                    ss << "  Ground plane grid: " << (m_renderEngine->isGroundPlaneGridVisible() ? "on" : "off") << "\n";
                 }
                 
                 // Smoothing settings
                 ss << "\nSmoothing:\n";
-                ss << "  Level: " << app->getSmoothingLevel() << "\n";
+                ss << "  Level: " << m_app->getSmoothingLevel() << "\n";
                 ss << "  Algorithm: ";
-                switch (app->getSmoothingAlgorithm()) {
+                switch (m_app->getSmoothingAlgorithm()) {
                     case SurfaceGen::MeshSmoother::Algorithm::None:
                         ss << "None\n";
                         break;
@@ -471,14 +464,14 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                         ss << "BiLaplacian\n";
                         break;
                 }
-                ss << "  Preview: " << (app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
+                ss << "  Preview: " << (m_app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
                 
                 // Voxel settings
                 ss << "\nVoxel:\n";
-                ss << "  Active resolution: " << VoxelData::getVoxelSizeName(app->getVoxelManager()->getActiveResolution()) << "\n";
+                ss << "  Active resolution: " << VoxelData::getVoxelSizeName(m_voxelManager->getActiveResolution()) << "\n";
                 
                 // Camera settings
-                auto camera = app->getCameraController()->getCamera();
+                auto camera = m_cameraController->getCamera();
                 ss << "\nCamera:\n";
                 ss << "  FOV: " << camera->getFieldOfView() << "°\n";
                 ss << "  Near plane: " << camera->getNearPlane() << "m\n";
@@ -494,7 +487,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("bench")
             .withAlias("perf")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::stringstream ss;
                 ss << "Running performance benchmarks...\n\n";
                 
@@ -507,8 +500,8 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                         int x = (i % 10) * 10;
                         int y = ((i / 10) % 10) * 10;
                         int z = ((i / 100) % 10) * 10;
-                        app->getVoxelManager()->setVoxel(Math::IncrementCoordinates(x, y, z), 
-                                                       app->getVoxelManager()->getActiveResolution(), 
+                        m_voxelManager->setVoxel(Math::IncrementCoordinates(x, y, z), 
+                                                       m_voxelManager->getActiveResolution(), 
                                                        true);
                     }
                     
@@ -521,7 +514,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "  " << (numOps * 1000000.0 / duration.count()) << " ops/second\n\n";
                     
                     // Clean up
-                    app->getVoxelManager()->clearAll();
+                    m_voxelManager->clearAll();
                 }
                 
                 // Benchmark 2: Mesh generation
@@ -530,19 +523,19 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     for (int x = -50; x <= 50; x += 10) {
                         for (int y = 0; y <= 50; y += 10) {
                             for (int z = -50; z <= 50; z += 10) {
-                                app->getVoxelManager()->setVoxel(Math::IncrementCoordinates(x, y, z), 
-                                                               app->getVoxelManager()->getActiveResolution(), 
+                                m_voxelManager->setVoxel(Math::IncrementCoordinates(x, y, z), 
+                                                               m_voxelManager->getActiveResolution(), 
                                                                true);
                             }
                         }
                     }
                     
                     auto start = std::chrono::high_resolution_clock::now();
-                    app->requestMeshUpdate();
+                    requestMeshUpdate();
                     auto end = std::chrono::high_resolution_clock::now();
                     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
                     
-                    size_t voxelCount = app->getVoxelManager()->getVoxelCount();
+                    size_t voxelCount = m_voxelManager->getVoxelCount();
                     ss << "Mesh Generation:\n";
                     ss << "  " << voxelCount << " voxels processed in " << duration.count() << " ms\n";
                     if (duration.count() > 0) {
@@ -550,18 +543,20 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     }
                     
                     // Clean up
-                    app->getVoxelManager()->clearAll();
+                    m_voxelManager->clearAll();
                 }
                 
                 // Benchmark 3: Ray casting (if not headless)
-                if (app->getRenderWindow()) {
+                // TODO: Add ray casting benchmark once screenToRay is implemented
+                /*
+                if (m_renderWindow) {
                     auto start = std::chrono::high_resolution_clock::now();
                     const int numRays = 10000;
                     
                     for (int i = 0; i < numRays; ++i) {
                         float x = (i % 100) / 100.0f;
                         float y = (i / 100) / 100.0f;
-                        app->getCameraController()->getCamera()->screenToRay(x, y);
+                        m_cameraController->getCamera()->screenToRay(x, y);
                     }
                     
                     auto end = std::chrono::high_resolution_clock::now();
@@ -572,6 +567,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     ss << "  " << (duration.count() / numRays) << " µs per ray\n";
                     ss << "  " << (numRays * 1000000.0 / duration.count()) << " rays/second\n";
                 }
+                */
                 
                 ss << "\nBenchmark complete.";
                 return CommandResult::Success(ss.str());
@@ -583,7 +579,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withDescription("Show detailed debug information")
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("dbg-info")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::stringstream ss;
                 ss << "Detailed Debug Information\n";
                 ss << "=========================\n\n";
@@ -610,7 +606,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                     << "\n";
                 
                 // OpenGL info (if not headless)
-                if (app->getRenderWindow()) {
+                if (m_renderWindow) {
                     ss << "\nOpenGL:\n";
                     // These would normally be retrieved via glGetString but we'll keep it simple
                     ss << "  Context created successfully\n";
@@ -618,20 +614,20 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                 
                 // Memory info
                 ss << "\nMemory:\n";
-                ss << "  Voxel data: " << (app->getVoxelManager()->getMemoryUsage() / 1024.0) << " KB\n";
-                ss << "  Total voxels: " << app->getVoxelManager()->getVoxelCount() << "\n";
+                ss << "  Voxel data: " << (m_voxelManager->getMemoryUsage() / 1024.0) << " KB\n";
+                ss << "  Total voxels: " << m_voxelManager->getVoxelCount() << "\n";
                 
                 // Component status
                 ss << "\nComponents:\n";
-                ss << "  VoxelManager: " << (app->getVoxelManager() ? "OK" : "ERROR") << "\n";
-                ss << "  CameraController: " << (app->getCameraController() ? "OK" : "ERROR") << "\n";
-                ss << "  CommandProcessor: " << (app->getCommandProcessor() ? "OK" : "ERROR") << "\n";
-                ss << "  SelectionManager: " << (app->getSelectionManager() ? "OK" : "ERROR") << "\n";
-                ss << "  GroupManager: " << (app->getGroupManager() ? "OK" : "ERROR") << "\n";
-                ss << "  HistoryManager: " << (app->getHistoryManager() ? "OK" : "ERROR") << "\n";
-                ss << "  FileManager: " << (app->getFileManager() ? "OK" : "ERROR") << "\n";
-                ss << "  RenderEngine: " << (app->getRenderEngine() ? "OK" : "N/A (headless)") << "\n";
-                ss << "  RenderWindow: " << (app->getRenderWindow() ? "OK" : "N/A (headless)") << "\n";
+                ss << "  VoxelManager: " << (m_voxelManager ? "OK" : "ERROR") << "\n";
+                ss << "  CameraController: " << (m_cameraController ? "OK" : "ERROR") << "\n";
+                ss << "  CommandProcessor: " << (m_app->getCommandProcessor() ? "OK" : "ERROR") << "\n";
+                ss << "  SelectionManager: " << (m_selectionManager ? "OK" : "ERROR") << "\n";
+                ss << "  GroupManager: " << (m_groupManager ? "OK" : "ERROR") << "\n";
+                ss << "  HistoryManager: " << (m_historyManager ? "OK" : "ERROR") << "\n";
+                ss << "  FileManager: " << (m_fileManager ? "OK" : "ERROR") << "\n";
+                ss << "  RenderEngine: " << (m_renderEngine ? "OK" : "N/A (headless)") << "\n";
+                ss << "  RenderWindow: " << (m_renderWindow ? "OK" : "N/A (headless)") << "\n";
                 
                 return CommandResult::Success(ss.str());
             }),
@@ -644,7 +640,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withAlias("wait")
             .withAlias("pause")
             .withArg("seconds", "Number of seconds to sleep", "float", true)
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 float seconds = ctx.getFloatArg(0, 1.0f);
                 if (seconds < 0 || seconds > 10) {
                     return CommandResult::Error("Sleep time must be between 0 and 10 seconds");
@@ -661,7 +657,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("check")
             .withAlias("diag")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 return executeSimpleValidateCommand(ctx);
             }),
             
@@ -672,7 +668,7 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("buildinfo")
             .withAlias("version")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::stringstream ss;
                 ss << "Voxel Editor Build Information\n";
                 ss << "==============================\n";
@@ -721,11 +717,11 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withDescription("Clear all voxels")
             .withCategory(CommandCategory::SYSTEM)
             .withAlias("cls")
-            .withHandler([](Application* app, const CommandContext& ctx) {
-                app->getVoxelManager()->clearAll();
-                app->getSelectionManager()->selectNone();
-                app->getHistoryManager()->clearHistory();
-                app->requestMeshUpdate();
+            .withHandler([this](const CommandContext& ctx) {
+                m_voxelManager->clearAll();
+                m_selectionManager->selectNone();
+                m_historyManager->clearHistory();
+                requestMeshUpdate();
                 return CommandResult::Success("All voxels cleared");
             })
     };

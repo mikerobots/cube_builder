@@ -133,9 +133,11 @@ public:
     void clear() {
         m_modules.clear();
     }
+    
+    // Constructor made public for testing
+    CommandRegistry() = default;
 
 private:
-    CommandRegistry() = default;
     std::vector<std::unique_ptr<ICommandModule>> m_modules;
 };
 
@@ -149,8 +151,9 @@ private:
     namespace { \
         struct ModuleClass##Registrar { \
             ModuleClass##Registrar() { \
-                CommandRegistry::getInstance().registerModule( \
-                    std::make_unique<ModuleClass>()); \
+                CommandModuleRegistrar::registerFactory([]() -> std::unique_ptr<ICommandModule> { \
+                    return std::make_unique<ModuleClass>(); \
+                }); \
             } \
         }; \
         static ModuleClass##Registrar s_##ModuleClass##Registrar; \

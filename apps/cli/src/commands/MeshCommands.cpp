@@ -30,16 +30,16 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
             .withArg("level", "Smoothing level (0-10+) or 'preview' subcommand", "string", false, "")
             .withArg("on_off", "For 'preview': on/off", "string", false, "")
             .withArg("algorithm", "For 'algorithm': laplacian/taubin/bilaplacian", "string", false, "")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 if (ctx.getArgCount() == 0) {
                     // Display current smoothing settings
                     std::stringstream ss;
                     ss << "Current smoothing settings:\n";
-                    ss << "  Level: " << app->getSmoothingLevel() << "\n";
+                    ss << "  Level: " << m_app->getSmoothingLevel() << "\n";
                     
                     // Get algorithm name
                     std::string algoName;
-                    switch (app->getSmoothingAlgorithm()) {
+                    switch (m_app->getSmoothingAlgorithm()) {
                         case SurfaceGen::MeshSmoother::Algorithm::None:
                             algoName = "None (raw dual contouring)";
                             break;
@@ -54,7 +54,7 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                             break;
                     }
                     ss << "  Algorithm: " << algoName << "\n";
-                    ss << "  Preview: " << (app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
+                    ss << "  Preview: " << (m_app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
                     
                     return CommandResult::Success(ss.str());
                 }
@@ -69,11 +69,11 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                     
                     std::string onOff = ctx.getArg(1);
                     if (onOff == "on") {
-                        app->setSmoothPreviewEnabled(true);
+                        m_app->setSmoothPreviewEnabled(true);
                         // TODO: Trigger preview mesh generation when implemented
                         return CommandResult::Success("Smoothing preview enabled");
                     } else if (onOff == "off") {
-                        app->setSmoothPreviewEnabled(false);
+                        m_app->setSmoothPreviewEnabled(false);
                         return CommandResult::Success("Smoothing preview disabled");
                     } else {
                         return CommandResult::Error("Invalid option. Use 'on' or 'off'");
@@ -85,13 +85,13 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                     
                     std::string algoName = ctx.getArg(1);
                     if (algoName == "laplacian") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Laplacian);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Laplacian);
                         return CommandResult::Success("Smoothing algorithm set to Laplacian");
                     } else if (algoName == "taubin") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Taubin);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Taubin);
                         return CommandResult::Success("Smoothing algorithm set to Taubin");
                     } else if (algoName == "bilaplacian") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::BiLaplacian);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::BiLaplacian);
                         return CommandResult::Success("Smoothing algorithm set to BiLaplacian");
                     } else {
                         return CommandResult::Error("Invalid algorithm. Choose from: laplacian, taubin, bilaplacian");
@@ -103,10 +103,10 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                         return CommandResult::Error("Invalid smoothing level. Must be 0 or greater");
                     }
                     
-                    app->setSmoothingLevel(level);
+                    m_app->setSmoothingLevel(level);
                     
                     // Auto-select algorithm based on level
-                    app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::getAlgorithmForLevel(level));
+                    m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::getAlgorithmForLevel(level));
                     
                     std::stringstream ss;
                     ss << "Smoothing level set to " << level;
@@ -125,23 +125,20 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
             .withCategory(CommandCategory::MESH)
             .withAlias("mesh-info")
             .withArg("subcommand", "validate|info|repair", "string", true, "")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string subcommand = ctx.getArg(0);
-                
-                auto* voxelManager = app->getVoxelManager();
-                auto* eventDispatcher = app->getEventDispatcher();
                 
                 if (subcommand == "validate" || subcommand == "mesh-validate") {
                     // Generate mesh first
-                    SurfaceGen::SurfaceGenerator surfaceGen(eventDispatcher);
-                    auto surfaceMesh = surfaceGen.generateMultiResMesh(*voxelManager, voxelManager->getActiveResolution());
+                    SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                    auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                     
                     // Apply smoothing if enabled
-                    if (app->getSmoothingLevel() > 0) {
+                    if (m_app->getSmoothingLevel() > 0) {
                         SurfaceGen::MeshSmoother smoother;
                         SurfaceGen::MeshSmoother::SmoothingConfig config;
-                        config.smoothingLevel = app->getSmoothingLevel();
-                        config.algorithm = app->getSmoothingAlgorithm();
+                        config.smoothingLevel = m_app->getSmoothingLevel();
+                        config.algorithm = m_app->getSmoothingAlgorithm();
                         config.preserveTopology = true;
                         config.preserveBoundaries = true;
                         config.minFeatureSize = 1.0f;
@@ -178,15 +175,15 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                     
                 } else if (subcommand == "info" || subcommand == "mesh-info") {
                     // Generate mesh first
-                    SurfaceGen::SurfaceGenerator surfaceGen(eventDispatcher);
-                    auto surfaceMesh = surfaceGen.generateMultiResMesh(*voxelManager, voxelManager->getActiveResolution());
+                    SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                    auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                     
                     // Apply smoothing if enabled
-                    if (app->getSmoothingLevel() > 0) {
+                    if (m_app->getSmoothingLevel() > 0) {
                         SurfaceGen::MeshSmoother smoother;
                         SurfaceGen::MeshSmoother::SmoothingConfig config;
-                        config.smoothingLevel = app->getSmoothingLevel();
-                        config.algorithm = app->getSmoothingAlgorithm();
+                        config.smoothingLevel = m_app->getSmoothingLevel();
+                        config.algorithm = m_app->getSmoothingAlgorithm();
                         config.preserveTopology = true;
                         config.preserveBoundaries = true;
                         config.minFeatureSize = 1.0f;
@@ -211,11 +208,11 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                        << (bounds.max.y - bounds.min.y) << ", " 
                        << (bounds.max.z - bounds.min.z) << ")\n";
                     
-                    if (app->getSmoothingLevel() > 0) {
+                    if (m_app->getSmoothingLevel() > 0) {
                         ss << "\nSmoothing applied:\n";
-                        ss << "  Level: " << app->getSmoothingLevel() << "\n";
+                        ss << "  Level: " << m_app->getSmoothingLevel() << "\n";
                         ss << "  Algorithm: ";
-                        switch (app->getSmoothingAlgorithm()) {
+                        switch (m_app->getSmoothingAlgorithm()) {
                             case SurfaceGen::MeshSmoother::Algorithm::Laplacian:
                                 ss << "Laplacian\n";
                                 break;
@@ -247,33 +244,29 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
             .withCategory(CommandCategory::MESH)
             .withArg("filename", "Output filename with extension (.stl, .obj)", "string", true, "")
             .withArg("format", "Export format (auto-detect from extension if not specified)", "string", false, "")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string filename = ctx.getArg(0);
                 if (filename.empty()) {
                     return CommandResult::Error("Filename required");
                 }
                 
-                auto* voxelManager = app->getVoxelManager();
-                auto* eventDispatcher = app->getEventDispatcher();
-                auto* fileManager = app->getFileManager();
-                
                 // Generate surface mesh
-                SurfaceGen::SurfaceGenerator surfaceGen(eventDispatcher);
-                auto surfaceMesh = surfaceGen.generateMultiResMesh(*voxelManager, voxelManager->getActiveResolution());
+                SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                 
                 // Apply smoothing if enabled
-                if (app->getSmoothingLevel() > 0) {
+                if (m_app->getSmoothingLevel() > 0) {
                     SurfaceGen::MeshSmoother smoother;
                     SurfaceGen::MeshSmoother::SmoothingConfig config;
-                    config.smoothingLevel = app->getSmoothingLevel();
-                    config.algorithm = app->getSmoothingAlgorithm();
+                    config.smoothingLevel = m_app->getSmoothingLevel();
+                    config.algorithm = m_app->getSmoothingAlgorithm();
                     config.preserveTopology = true;
                     config.preserveBoundaries = true;
                     config.minFeatureSize = 1.0f; // 1mm minimum feature size for 3D printing
                     config.usePreviewQuality = false; // Full quality for export
                     
                     // Apply smoothing with progress callback
-                    std::cout << "Applying smoothing (level " << app->getSmoothingLevel() << ")..." << std::flush;
+                    std::cout << "Applying smoothing (level " << m_app->getSmoothingLevel() << ")..." << std::flush;
                     surfaceMesh = smoother.smooth(surfaceMesh, config, 
                         [](float progress) {
                             // Update progress display
@@ -320,11 +313,11 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                     options.format = FileIO::STLFormat::Binary;
                     options.validateWatertight = false; // Disable validation for now
                     
-                    auto result = fileManager->exportSTL(filename, renderMesh, options);
+                    auto result = m_fileManager->exportSTL(filename, renderMesh, options);
                     if (result.success) {
                         return CommandResult::Success("Exported to: " + filename);
                     }
-                    return CommandResult::Error("Failed to export STL: " + result.errorMessage);
+                    return CommandResult::Error("Failed to export STL: " + result.message);
                 } else if (format == "obj") {
                     // TODO: Implement OBJ export when available
                     return CommandResult::Error("OBJ export not yet implemented");
@@ -339,16 +332,16 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
             .withDescription("Preview surface generation with current settings")
             .withCategory(CommandCategory::MESH)
             .withArg("enable", "on/off to enable/disable preview mode", "string", false, "on")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 std::string enable = ctx.getArg(0, "on");
                 
                 if (enable == "on") {
-                    app->setSmoothPreviewEnabled(true);
-                    app->requestMeshUpdate(); // Trigger mesh regeneration
+                    m_app->setSmoothPreviewEnabled(true);
+                    requestMeshUpdate(); // Trigger mesh regeneration
                     return CommandResult::Success("Surface preview enabled. Mesh will update in real-time.");
                 } else if (enable == "off") {
-                    app->setSmoothPreviewEnabled(false);
-                    app->requestMeshUpdate(); // Trigger mesh regeneration
+                    m_app->setSmoothPreviewEnabled(false);
+                    requestMeshUpdate(); // Trigger mesh regeneration
                     return CommandResult::Success("Surface preview disabled. Using standard voxel rendering.");
                 } else {
                     return CommandResult::Error("Invalid option. Use 'on' or 'off'");
@@ -362,15 +355,15 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
             .withCategory(CommandCategory::MESH)
             .withArg("setting", "Setting name (quality, algorithm, topology)", "string", false, "")
             .withArg("value", "Setting value", "string", false, "")
-            .withHandler([](Application* app, const CommandContext& ctx) {
+            .withHandler([this](const CommandContext& ctx) {
                 if (ctx.getArgCount() == 0) {
                     // Display all current settings
                     std::stringstream ss;
                     ss << "Surface Generation Settings:\n";
                     ss << "\nSmoothing:\n";
-                    ss << "  Level: " << app->getSmoothingLevel() << "\n";
+                    ss << "  Level: " << m_app->getSmoothingLevel() << "\n";
                     ss << "  Algorithm: ";
-                    switch (app->getSmoothingAlgorithm()) {
+                    switch (m_app->getSmoothingAlgorithm()) {
                         case SurfaceGen::MeshSmoother::Algorithm::None:
                             ss << "None\n";
                             break;
@@ -384,7 +377,7 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                             ss << "BiLaplacian\n";
                             break;
                     }
-                    ss << "  Preview Mode: " << (app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
+                    ss << "  Preview Mode: " << (m_app->isSmoothPreviewEnabled() ? "on" : "off") << "\n";
                     
                     ss << "\nQuality Settings:\n";
                     ss << "  Topology Preservation: enabled\n";
@@ -399,32 +392,32 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                 
                 if (setting == "quality") {
                     if (value == "low") {
-                        app->setSmoothingLevel(2);
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Laplacian);
+                        m_app->setSmoothingLevel(2);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Laplacian);
                         return CommandResult::Success("Surface quality set to low (fast generation)");
                     } else if (value == "medium") {
-                        app->setSmoothingLevel(5);
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Taubin);
+                        m_app->setSmoothingLevel(5);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Taubin);
                         return CommandResult::Success("Surface quality set to medium (balanced)");
                     } else if (value == "high") {
-                        app->setSmoothingLevel(10);
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::BiLaplacian);
+                        m_app->setSmoothingLevel(10);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::BiLaplacian);
                         return CommandResult::Success("Surface quality set to high (best quality)");
                     } else {
                         return CommandResult::Error("Invalid quality level. Use: low, medium, or high");
                     }
                 } else if (setting == "algorithm") {
                     if (value == "none") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::None);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::None);
                         return CommandResult::Success("Surface algorithm set to none (raw dual contouring)");
                     } else if (value == "laplacian") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Laplacian);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Laplacian);
                         return CommandResult::Success("Surface algorithm set to Laplacian");
                     } else if (value == "taubin") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Taubin);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::Taubin);
                         return CommandResult::Success("Surface algorithm set to Taubin");
                     } else if (value == "bilaplacian") {
-                        app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::BiLaplacian);
+                        m_app->setSmoothingAlgorithm(SurfaceGen::MeshSmoother::Algorithm::BiLaplacian);
                         return CommandResult::Success("Surface algorithm set to BiLaplacian");
                     } else {
                         return CommandResult::Error("Invalid algorithm. Use: none, laplacian, taubin, or bilaplacian");

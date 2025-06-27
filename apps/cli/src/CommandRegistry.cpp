@@ -17,6 +17,11 @@ void CommandModuleRegistrar::registerFactory(std::function<std::unique_ptr<IComm
 }
 
 void CommandRegistry::registerAllCommands(Application* app, CommandProcessor* processor) {
+    // Clear any previous modules to avoid duplicates
+    m_modules.clear();
+    
+    std::cout << "CommandRegistry: Starting registration with " << getModuleFactories().size() << " factories" << std::endl;
+    
     // First, create instances of all auto-registered modules
     for (const auto& factory : getModuleFactories()) {
         auto module = factory();
@@ -64,9 +69,7 @@ void CommandRegistry::registerAllCommands(Application* app, CommandProcessor* pr
         totalCommands += module->getCommands().size();
     }
     
-    std::stringstream ss;
-    ss << "Registered " << totalCommands << " commands from " << m_modules.size() << " modules";
-    LOG_INFO(ss.str());
+    std::cout << "Registered " << totalCommands << " commands from " << m_modules.size() << " modules" << std::endl;
 }
 
 } // namespace VoxelEditor
