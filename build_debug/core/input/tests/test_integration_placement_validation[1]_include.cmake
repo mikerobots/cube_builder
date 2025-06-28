@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/input/tests/test_integration_placement_validation[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/core/input/tests/test_integration_placement_validation[1]_tests.cmake")
-else()
-  add_test(test_integration_placement_validation_NOT_BUILT test_integration_placement_validation_NOT_BUILT)
-endif()

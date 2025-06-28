@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests/test_stress_rapid_click_placement[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests/test_stress_rapid_click_placement[1]_tests.cmake")
-else()
-  add_test(test_stress_rapid_click_placement_NOT_BUILT test_stress_rapid_click_placement_NOT_BUILT)
-endif()

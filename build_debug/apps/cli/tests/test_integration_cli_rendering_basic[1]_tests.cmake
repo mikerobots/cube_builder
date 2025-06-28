@@ -1,7 +1,0 @@
-add_test([=[CLIBasicRenderingTest.WindowCreationTest]=]  /Users/michaelhalloran/cube_edit/build_debug/bin/test_integration_cli_rendering_basic [==[--gtest_filter=CLIBasicRenderingTest.WindowCreationTest]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[CLIBasicRenderingTest.WindowCreationTest]=]  PROPERTIES WORKING_DIRECTORY /Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[CLIBasicRenderingTest.BasicRenderLoopTest]=]  /Users/michaelhalloran/cube_edit/build_debug/bin/test_integration_cli_rendering_basic [==[--gtest_filter=CLIBasicRenderingTest.BasicRenderLoopTest]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[CLIBasicRenderingTest.BasicRenderLoopTest]=]  PROPERTIES WORKING_DIRECTORY /Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[CLIBasicRenderingTest.FramebufferTest]=]  /Users/michaelhalloran/cube_edit/build_debug/bin/test_integration_cli_rendering_basic [==[--gtest_filter=CLIBasicRenderingTest.FramebufferTest]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[CLIBasicRenderingTest.FramebufferTest]=]  PROPERTIES WORKING_DIRECTORY /Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set(  test_integration_cli_rendering_basic_TESTS CLIBasicRenderingTest.WindowCreationTest CLIBasicRenderingTest.BasicRenderLoopTest CLIBasicRenderingTest.FramebufferTest)

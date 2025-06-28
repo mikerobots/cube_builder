@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/tests/integration/rendering/test_integration_shader_uniform_validation[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/tests/integration/rendering/test_integration_shader_uniform_validation[1]_tests.cmake")
-else()
-  add_test(test_integration_shader_uniform_validation_NOT_BUILT test_integration_shader_uniform_validation_NOT_BUILT)
-endif()

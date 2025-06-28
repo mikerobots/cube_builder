@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/visual_feedback/tests/VoxelEditor_VisualFeedback_Tests[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/core/visual_feedback/tests/VoxelEditor_VisualFeedback_Tests[1]_tests.cmake")
-else()
-  add_test(VoxelEditor_VisualFeedback_Tests_NOT_BUILT VoxelEditor_VisualFeedback_Tests_NOT_BUILT)
-endif()

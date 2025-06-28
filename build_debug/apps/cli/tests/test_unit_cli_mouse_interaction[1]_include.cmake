@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests/test_unit_cli_mouse_interaction[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/apps/cli/tests/test_unit_cli_mouse_interaction[1]_tests.cmake")
-else()
-  add_test(test_unit_cli_mouse_interaction_NOT_BUILT test_unit_cli_mouse_interaction_NOT_BUILT)
-endif()

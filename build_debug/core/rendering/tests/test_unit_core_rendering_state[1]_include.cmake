@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/rendering/tests/test_unit_core_rendering_state[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/core/rendering/tests/test_unit_core_rendering_state[1]_tests.cmake")
-else()
-  add_test(test_unit_core_rendering_state_NOT_BUILT test_unit_core_rendering_state_NOT_BUILT)
-endif()

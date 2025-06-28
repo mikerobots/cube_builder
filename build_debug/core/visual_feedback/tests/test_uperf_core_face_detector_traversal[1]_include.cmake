@@ -1,5 +1,0 @@
-if(EXISTS "/Users/michaelhalloran/cube_edit/build_debug/core/visual_feedback/tests/test_uperf_core_face_detector_traversal[1]_tests.cmake")
-  include("/Users/michaelhalloran/cube_edit/build_debug/core/visual_feedback/tests/test_uperf_core_face_detector_traversal[1]_tests.cmake")
-else()
-  add_test(test_uperf_core_face_detector_traversal_NOT_BUILT test_uperf_core_face_detector_traversal_NOT_BUILT)
-endif()
