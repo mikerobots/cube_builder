@@ -41,25 +41,19 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                 int y = *y_opt;
                 int z = *z_opt;
                 
-                // Validate Y >= 0 (ground plane constraint)
-                if (y < 0) {
-                    return CommandResult::Error("Cannot place voxel below ground plane (Y must be >= 0)");
-                }
-                
                 // Create increment coordinates
                 auto incCoords = Math::IncrementCoordinates(Math::Vector3i(x, y, z));
                 
-                // Check if position is within workspace bounds
-                if (!m_voxelManager->isValidPosition(incCoords, m_voxelManager->getActiveResolution())) {
-                    return CommandResult::Error("Cannot place voxel outside workspace bounds");
+                // Validate placement first to get detailed error message
+                auto validation = UndoRedo::PlacementCommandFactory::validatePlacement(
+                    m_voxelManager, incCoords, m_voxelManager->getActiveResolution()
+                );
+                
+                if (!validation.valid) {
+                    return CommandResult::Error(validation.errors.empty() ? "Invalid placement" : validation.errors[0]);
                 }
                 
-                // Validate placement - check for overlaps
-                if (m_voxelManager->wouldOverlap(incCoords, m_voxelManager->getActiveResolution())) {
-                    return CommandResult::Error("Cannot place voxel at position - collision detected");
-                }
-                
-                // Create placement command
+                // Create placement command (validation already passed)
                 auto cmd = UndoRedo::PlacementCommandFactory::createPlacementCommand(
                     m_voxelManager,
                     incCoords,
@@ -132,14 +126,22 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                 int y = *y_opt;
                 int z = *z_opt;
                 
-                // Validate Y >= 0 (ground plane constraint)
-                if (y < 0) {
-                    return CommandResult::Error("Cannot delete below ground plane (Y must be >= 0)");
+                // Create increment coordinates
+                auto incCoords = Math::IncrementCoordinates(Math::Vector3i(x, y, z));
+                
+                // Validate removal first to get detailed error message
+                auto validation = UndoRedo::PlacementCommandFactory::validateRemoval(
+                    m_voxelManager, incCoords, m_voxelManager->getActiveResolution()
+                );
+                
+                if (!validation.valid) {
+                    return CommandResult::Error(validation.errors.empty() ? "Invalid removal" : validation.errors[0]);
                 }
                 
+                // Create removal command (validation already passed)
                 auto cmd = UndoRedo::PlacementCommandFactory::createRemovalCommand(
                     m_voxelManager,
-                    Math::IncrementCoordinates(Math::Vector3i(x, y, z)),
+                    incCoords,
                     m_voxelManager->getActiveResolution()
                 );
                 
@@ -170,11 +172,6 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
                 int x2 = ctx.getIntArg(3);
                 int y2 = ctx.getIntArg(4);
                 int z2 = ctx.getIntArg(5);
-                
-                // Validate Y >= 0 (ground plane constraint)
-                if (y1 < 0 || y2 < 0) {
-                    return CommandResult::Error("Cannot fill below ground plane (Y must be >= 0)");
-                }
                 
                 // Calculate bounds - convert from centimeters to meters
                 // Fill command receives integer centimeter values, but BoundingBox needs meters
