@@ -5,12 +5,14 @@
 #include <mutex>
 #include <vector>
 #include <cmath>
+#include <sstream>
 
 #include "VoxelTypes.h"
 #include "VoxelGrid.h"
 #include "WorkspaceManager.h"
 #include "../../foundation/events/EventDispatcher.h"
 #include "../../foundation/events/CommonEvents.h"
+#include "../../foundation/math/BoundingBox.h"
 #include "../input/PlacementValidation.h"
 
 namespace VoxelEditor {
@@ -19,6 +21,67 @@ namespace VoxelData {
 // Configuration constants
 constexpr size_t DEFAULT_OCTREE_POOL_SIZE = 1024;
 constexpr size_t COLLISION_SEARCH_VOLUME_THRESHOLD = 1000;
+
+// Position validation result structure
+struct PositionValidation {
+    bool valid = false;
+    bool withinBounds = false;
+    bool aboveGroundPlane = false;
+    bool alignedToGrid = false;
+    bool noOverlap = true;
+    std::string errorMessage;
+    
+    // Constructor for convenience
+    PositionValidation() = default;
+    PositionValidation(bool v, const std::string& msg = "") 
+        : valid(v), errorMessage(msg) {}
+};
+
+// Region fill result structure
+struct FillResult {
+    bool success = false;
+    size_t voxelsFilled = 0;
+    size_t voxelsSkipped = 0;
+    size_t totalPositions = 0;
+    std::string errorMessage;
+    
+    // Per-failure type counts
+    size_t failedBelowGround = 0;
+    size_t failedOutOfBounds = 0;
+    size_t failedOverlap = 0;
+    size_t failedNotAligned = 0;
+};
+
+// Region query result structure
+struct RegionQuery {
+    size_t voxelCount = 0;
+    bool isEmpty = true;
+    Math::BoundingBox actualBounds;  // Actual bounds of voxels in region
+    std::vector<VoxelPosition> voxels;  // Optional: filled if requested
+};
+
+// Batch operation structures
+struct VoxelChange {
+    Math::IncrementCoordinates position;
+    VoxelResolution resolution;
+    bool oldValue;
+    bool newValue;
+    
+    VoxelChange(const Math::IncrementCoordinates& pos, VoxelResolution res, bool old, bool newVal)
+        : position(pos), resolution(res), oldValue(old), newValue(newVal) {}
+};
+
+struct BatchResult {
+    bool success = false;
+    size_t totalOperations = 0;
+    size_t successfulOperations = 0;
+    size_t failedOperations = 0;
+    std::string errorMessage;
+    
+    // Detailed failure tracking
+    std::vector<size_t> failedIndices;  // Indices of failed operations
+    std::vector<std::string> failureReasons;  // Reasons for failures
+};
 
 class VoxelDataManager {
 public:
@@ -511,6 +574,97 @@ public:
         m_workspaceManager->setEventDispatcher(eventDispatcher);
     }
     
+    // Comprehensive position validation API
+    PositionValidation validatePosition(const Math::IncrementCoordinates& pos, 
+                                       VoxelResolution resolution,
+                                       bool checkOverlap = true) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return validatePositionInternal(pos, resolution, checkOverlap);
+    }
+    
+    PositionValidation validatePosition(const Math::WorldCoordinates& worldPos,
+                                       VoxelResolution resolution,
+                                       bool checkOverlap = true) const {
+        auto incPos = Math::CoordinateConverter::worldToIncrement(worldPos);
+        return validatePosition(incPos, resolution, checkOverlap);
+    }
+    
+    // Individual validation helper methods
+    bool isWithinWorkspaceBounds(const Math::IncrementCoordinates& pos) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return isWithinWorkspaceBoundsInternal(pos);
+    }
+    
+    bool isAboveGroundPlane(const Math::IncrementCoordinates& pos) const {
+        return pos.y() >= 0;
+    }
+    
+    bool isAlignedToGrid(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
+        return isAlignedToGridInternal(pos, resolution);
+    }
+    
+    // Position utility methods
+    Math::IncrementCoordinates snapToGrid(const Math::IncrementCoordinates& pos, 
+                                          VoxelResolution resolution) const {
+        return snapToGridInternal(pos, resolution);
+    }
+    
+    Math::IncrementCoordinates clampToWorkspace(const Math::IncrementCoordinates& pos) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return clampToWorkspaceInternal(pos);
+    }
+    
+    // Region operations API
+    FillResult fillRegion(const Math::BoundingBox& region,
+                         VoxelResolution resolution,
+                         bool fillValue = true) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return fillRegionInternal(region, resolution, fillValue);
+    }
+    
+    bool canFillRegion(const Math::BoundingBox& region,
+                      VoxelResolution resolution) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return canFillRegionInternal(region, resolution);
+    }
+    
+    bool isRegionEmpty(const Math::BoundingBox& region) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return isRegionEmptyInternal(region);
+    }
+    
+    RegionQuery queryRegion(const Math::BoundingBox& region,
+                           bool includeVoxelList = false) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return queryRegionInternal(region, includeVoxelList);
+    }
+    
+    std::vector<VoxelPosition> getVoxelsInRegion(const Math::BoundingBox& region) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return getVoxelsInRegionInternal(region);
+    }
+    
+    // Batch operations API
+    BatchResult batchSetVoxels(const std::vector<VoxelChange>& changes) {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return batchSetVoxelsInternal(changes);
+    }
+    
+    bool batchValidate(const std::vector<VoxelChange>& changes,
+                      std::vector<PositionValidation>& validationResults) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return batchValidateInternal(changes, validationResults);
+    }
+    
+    // Convenience method for creating batch changes
+    std::vector<VoxelChange> createBatchChanges(
+        const std::vector<Math::IncrementCoordinates>& positions,
+        VoxelResolution resolution,
+        bool newValue) const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return createBatchChangesInternal(positions, resolution, newValue);
+    }
+    
     // Performance metrics
     struct PerformanceMetrics {
         size_t totalVoxels;
@@ -585,6 +739,98 @@ private:
             Events::VoxelChangedEvent event(position.value(), resolution, oldValue, newValue);
             m_eventDispatcher->dispatch(event);
         }
+    }
+    
+    // Internal validation methods (must be called with lock already held)
+    PositionValidation validatePositionInternal(const Math::IncrementCoordinates& pos,
+                                               VoxelResolution resolution,
+                                               bool checkOverlap) const {
+        PositionValidation result;
+        
+        // Check if above ground plane
+        result.aboveGroundPlane = isAboveGroundPlane(pos);
+        if (!result.aboveGroundPlane) {
+            result.errorMessage = "Position is below ground plane (Y must be >= 0)";
+            return result;
+        }
+        
+        // Check if within workspace bounds
+        result.withinBounds = isWithinWorkspaceBoundsInternal(pos);
+        if (!result.withinBounds) {
+            result.errorMessage = "Position is outside workspace bounds";
+            return result;
+        }
+        
+        // Check if aligned to grid
+        result.alignedToGrid = isAlignedToGridInternal(pos, resolution);
+        if (!result.alignedToGrid) {
+            result.errorMessage = "Position is not aligned to voxel grid";
+            return result;
+        }
+        
+        // Check for overlaps if requested
+        if (checkOverlap) {
+            result.noOverlap = !wouldOverlapInternal(pos, resolution);
+            if (!result.noOverlap) {
+                result.errorMessage = "Position would overlap with existing voxel";
+                return result;
+            }
+        }
+        
+        // All checks passed
+        result.valid = true;
+        result.errorMessage.clear();
+        return result;
+    }
+    
+    bool isWithinWorkspaceBoundsInternal(const Math::IncrementCoordinates& pos) const {
+        // Convert to world coordinates for bounds checking
+        Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(pos);
+        return m_workspaceManager->isPositionValid(worldPos.value());
+    }
+    
+    bool isAlignedToGridInternal(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
+        // Get voxel size in increments
+        float voxelSizeMeters = getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+        
+        // Check if position is aligned to voxel grid
+        return (pos.x() % voxelSizeIncrements == 0) &&
+               (pos.y() % voxelSizeIncrements == 0) &&
+               (pos.z() % voxelSizeIncrements == 0);
+    }
+    
+    Math::IncrementCoordinates snapToGridInternal(const Math::IncrementCoordinates& pos,
+                                                  VoxelResolution resolution) const {
+        // Get voxel size in increments
+        float voxelSizeMeters = getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+        
+        // Snap to nearest grid position
+        int snappedX = (pos.x() / voxelSizeIncrements) * voxelSizeIncrements;
+        int snappedY = (pos.y() / voxelSizeIncrements) * voxelSizeIncrements;
+        int snappedZ = (pos.z() / voxelSizeIncrements) * voxelSizeIncrements;
+        
+        return Math::IncrementCoordinates(snappedX, snappedY, snappedZ);
+    }
+    
+    Math::IncrementCoordinates clampToWorkspaceInternal(const Math::IncrementCoordinates& pos) const {
+        // Get workspace bounds in world coordinates
+        Math::Vector3f workspaceSize = m_workspaceManager->getSize();
+        Math::Vector3f halfSize = workspaceSize * 0.5f;
+        
+        // Convert to world coordinates
+        Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(pos);
+        
+        // Clamp to workspace bounds
+        float clampedX = std::max(-halfSize.x, std::min(halfSize.x, worldPos.value().x));
+        float clampedY = std::max(0.0f, std::min(workspaceSize.y, worldPos.value().y));
+        float clampedZ = std::max(-halfSize.z, std::min(halfSize.z, worldPos.value().z));
+        
+        // Convert back to increment coordinates
+        return Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(clampedX, clampedY, clampedZ)
+        );
     }
     
     // Internal collision detection without lock (must be called with lock already held)
@@ -664,6 +910,347 @@ private:
         }
         
         return false; // No overlap detected
+    }
+    
+    // Internal region operation methods (must be called with lock already held)
+    FillResult fillRegionInternal(const Math::BoundingBox& region,
+                                 VoxelResolution resolution,
+                                 bool fillValue) {
+        FillResult result;
+        
+        // Convert world bounds to increment coordinates
+        Math::IncrementCoordinates minInc = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(region.min)
+        );
+        Math::IncrementCoordinates maxInc = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(region.max)
+        );
+        
+        // Get voxel size for alignment
+        float voxelSizeMeters = getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+        
+        // Align bounds to voxel grid
+        int alignedMinX = (minInc.x() / voxelSizeIncrements) * voxelSizeIncrements;
+        int alignedMinY = (minInc.y() / voxelSizeIncrements) * voxelSizeIncrements;
+        int alignedMinZ = (minInc.z() / voxelSizeIncrements) * voxelSizeIncrements;
+        
+        // If min is not aligned, round up to next valid position
+        if (alignedMinX < minInc.x()) alignedMinX += voxelSizeIncrements;
+        if (alignedMinY < minInc.y()) alignedMinY += voxelSizeIncrements;
+        if (alignedMinZ < minInc.z()) alignedMinZ += voxelSizeIncrements;
+        
+        // Quick empty region check for fill operations
+        bool hasAnyVoxels = false;
+        if (fillValue && !hasAnyVoxels) {
+            hasAnyVoxels = !isRegionEmptyInternal(region);
+        }
+        
+        // Iterate through all positions in the aligned region
+        for (int x = alignedMinX; x <= maxInc.x(); x += voxelSizeIncrements) {
+            for (int y = alignedMinY; y <= maxInc.y(); y += voxelSizeIncrements) {
+                for (int z = alignedMinZ; z <= maxInc.z(); z += voxelSizeIncrements) {
+                    result.totalPositions++;
+                    
+                    Math::IncrementCoordinates pos(x, y, z);
+                    
+                    // Validate position (skip overlap checks for performance)
+                    auto validation = validatePositionInternal(pos, resolution, false);
+                    
+                    if (!validation.valid) {
+                        result.voxelsSkipped++;
+                        
+                        // Track failure reasons
+                        if (!validation.aboveGroundPlane) result.failedBelowGround++;
+                        else if (!validation.withinBounds) result.failedOutOfBounds++;
+                        else if (!validation.alignedToGrid) result.failedNotAligned++;
+                        else if (!validation.noOverlap) result.failedOverlap++;
+                        
+                        continue;
+                    }
+                    
+                    // Check if we need to change the voxel using direct grid access
+                    VoxelGrid* grid = getGrid(resolution);
+                    if (!grid) {
+                        result.voxelsSkipped++;
+                        continue;
+                    }
+                    
+                    bool currentValue = grid->getVoxel(pos);
+                    if (currentValue == fillValue) {
+                        result.voxelsSkipped++;
+                        continue;
+                    }
+                    
+                    // Set the voxel using direct grid access
+                    if (grid->setVoxel(pos, fillValue)) {
+                        result.voxelsFilled++;
+                        // Dispatch event manually since we're bypassing the public setVoxel
+                        dispatchVoxelChangedEvent(pos, resolution, currentValue, fillValue);
+                    } else {
+                        result.voxelsSkipped++;
+                    }
+                }
+            }
+        }
+        
+        // Set result status
+        result.success = (result.voxelsSkipped == 0) || 
+                        (result.voxelsFilled > 0 && result.totalPositions == result.voxelsFilled + result.voxelsSkipped);
+        
+        // Build error message if there were failures
+        if (!result.success && result.voxelsSkipped > 0) {
+            std::stringstream ss;
+            ss << "Fill operation partially failed: ";
+            if (result.failedBelowGround > 0) ss << result.failedBelowGround << " below ground, ";
+            if (result.failedOutOfBounds > 0) ss << result.failedOutOfBounds << " out of bounds, ";
+            if (result.failedOverlap > 0) ss << result.failedOverlap << " would overlap, ";
+            if (result.failedNotAligned > 0) ss << result.failedNotAligned << " not aligned";
+            result.errorMessage = ss.str();
+        }
+        
+        return result;
+    }
+    
+    bool canFillRegionInternal(const Math::BoundingBox& region, VoxelResolution resolution) const {
+        // Convert bounds and check if any position would fail
+        Math::IncrementCoordinates minInc = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(region.min)
+        );
+        Math::IncrementCoordinates maxInc = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(region.max)
+        );
+        
+        // Get voxel size for alignment
+        float voxelSizeMeters = getVoxelSize(resolution);
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+        
+        // Quick boundary checks
+        if (minInc.y() < 0) return false;  // Below ground
+        
+        // Check a few sample positions for quick rejection
+        std::vector<Math::IncrementCoordinates> samplePoints = {
+            minInc,
+            maxInc,
+            Math::IncrementCoordinates((minInc.x() + maxInc.x()) / 2,
+                                     (minInc.y() + maxInc.y()) / 2,
+                                     (minInc.z() + maxInc.z()) / 2)
+        };
+        
+        for (const auto& pos : samplePoints) {
+            auto validation = validatePositionInternal(pos, resolution, true);
+            if (!validation.valid) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    bool isRegionEmptyInternal(const Math::BoundingBox& region) const {
+        // Check all resolutions for any voxels in the region
+        for (int i = 0; i < static_cast<int>(VoxelResolution::COUNT); ++i) {
+            VoxelResolution res = static_cast<VoxelResolution>(i);
+            const VoxelGrid* grid = getGrid(res);
+            if (!grid || grid->getVoxelCount() == 0) continue;
+            
+            // Get all voxels and check if any are in the region
+            auto voxels = grid->getAllVoxels();
+            for (const auto& voxel : voxels) {
+                Math::Vector3f voxelMin, voxelMax;
+                voxel.getWorldBounds(voxelMin, voxelMax);
+                
+                // Check AABB intersection
+                if (region.intersects(Math::BoundingBox(voxelMin, voxelMax))) {
+                    return false;  // Found a voxel in the region
+                }
+            }
+        }
+        
+        return true;  // No voxels found
+    }
+    
+    RegionQuery queryRegionInternal(const Math::BoundingBox& region, bool includeVoxelList) const {
+        RegionQuery query;
+        query.actualBounds = Math::BoundingBox();  // Invalid bounds initially
+        
+        bool firstVoxel = true;
+        
+        // Check all resolutions
+        for (int i = 0; i < static_cast<int>(VoxelResolution::COUNT); ++i) {
+            VoxelResolution res = static_cast<VoxelResolution>(i);
+            const VoxelGrid* grid = getGrid(res);
+            if (!grid || grid->getVoxelCount() == 0) continue;
+            
+            // Get all voxels and check if they're in the region
+            auto voxels = grid->getAllVoxels();
+            for (const auto& voxel : voxels) {
+                Math::Vector3f voxelMin, voxelMax;
+                voxel.getWorldBounds(voxelMin, voxelMax);
+                Math::BoundingBox voxelBounds(voxelMin, voxelMax);
+                
+                // Check if voxel intersects the query region
+                if (region.intersects(voxelBounds)) {
+                    query.voxelCount++;
+                    query.isEmpty = false;
+                    
+                    // Update actual bounds
+                    if (firstVoxel) {
+                        query.actualBounds = voxelBounds;
+                        firstVoxel = false;
+                    } else {
+                        query.actualBounds.expandToInclude(voxelBounds);
+                    }
+                    
+                    // Add to voxel list if requested
+                    if (includeVoxelList) {
+                        query.voxels.push_back(voxel);
+                    }
+                }
+            }
+        }
+        
+        return query;
+    }
+    
+    std::vector<VoxelPosition> getVoxelsInRegionInternal(const Math::BoundingBox& region) const {
+        auto query = queryRegionInternal(region, true);
+        return query.voxels;
+    }
+    
+    // Internal batch operation methods (must be called with lock already held)
+    BatchResult batchSetVoxelsInternal(const std::vector<VoxelChange>& changes) {
+        BatchResult result;
+        result.totalOperations = changes.size();
+        
+        // Pre-validate all changes first for atomicity
+        std::vector<PositionValidation> validations;
+        validations.reserve(changes.size());
+        
+        for (size_t i = 0; i < changes.size(); ++i) {
+            const auto& change = changes[i];
+            auto validation = validatePositionInternal(change.position, change.resolution, change.newValue);
+            validations.push_back(validation);
+            
+            if (!validation.valid) {
+                result.failedOperations++;
+                result.failedIndices.push_back(i);
+                result.failureReasons.push_back(validation.errorMessage);
+            }
+        }
+        
+        // If any validation failed, abort the entire operation (atomicity)
+        if (result.failedOperations > 0) {
+            result.errorMessage = "Batch validation failed for " + 
+                                std::to_string(result.failedOperations) + " operations";
+            return result;
+        }
+        
+        // All validations passed, now perform the actual changes
+        std::vector<VoxelChange> appliedChanges;  // For rollback if needed
+        appliedChanges.reserve(changes.size());
+        
+        for (size_t i = 0; i < changes.size(); ++i) {
+            const auto& change = changes[i];
+            
+            // Get current value for rollback using internal non-locking method
+            VoxelGrid* grid = getGrid(change.resolution);
+            if (!grid) {
+                result.failedOperations++;
+                result.failedIndices.push_back(i);
+                result.failureReasons.push_back("Invalid resolution");
+                
+                // Rollback all applied changes
+                for (const auto& appliedChange : appliedChanges) {
+                    VoxelGrid* rollbackGrid = getGrid(appliedChange.resolution);
+                    if (rollbackGrid) {
+                        rollbackGrid->setVoxel(appliedChange.position, appliedChange.oldValue);
+                    }
+                }
+                
+                result.errorMessage = "Batch operation failed at operation " + 
+                                    std::to_string(i) + ", all changes rolled back";
+                result.successfulOperations = 0;
+                return result;
+            }
+            
+            bool currentValue = grid->getVoxel(change.position);
+            
+            // Only apply if there's actually a change
+            if (currentValue != change.newValue) {
+                if (grid->setVoxel(change.position, change.newValue)) {
+                    result.successfulOperations++;
+                    appliedChanges.emplace_back(change.position, change.resolution, 
+                                              currentValue, change.newValue);
+                    
+                    // Dispatch event manually since we're bypassing the public setVoxel
+                    dispatchVoxelChangedEvent(change.position, change.resolution, currentValue, change.newValue);
+                } else {
+                    // Unexpected failure - rollback all changes
+                    result.failedOperations++;
+                    result.failedIndices.push_back(i);
+                    result.failureReasons.push_back("Unexpected setVoxel failure");
+                    
+                    // Rollback all applied changes
+                    for (const auto& appliedChange : appliedChanges) {
+                        VoxelGrid* rollbackGrid = getGrid(appliedChange.resolution);
+                        if (rollbackGrid) {
+                            rollbackGrid->setVoxel(appliedChange.position, appliedChange.oldValue);
+                            // Dispatch rollback event
+                            dispatchVoxelChangedEvent(appliedChange.position, appliedChange.resolution, appliedChange.newValue, appliedChange.oldValue);
+                        }
+                    }
+                    
+                    result.errorMessage = "Batch operation failed at operation " + 
+                                        std::to_string(i) + ", all changes rolled back";
+                    result.successfulOperations = 0;
+                    return result;
+                }
+            } else {
+                // No change needed, but count as successful
+                result.successfulOperations++;
+            }
+        }
+        
+        result.success = (result.failedOperations == 0);
+        return result;
+    }
+    
+    bool batchValidateInternal(const std::vector<VoxelChange>& changes,
+                              std::vector<PositionValidation>& validationResults) const {
+        validationResults.clear();
+        validationResults.reserve(changes.size());
+        
+        bool allValid = true;
+        
+        for (const auto& change : changes) {
+            auto validation = validatePositionInternal(change.position, change.resolution, change.newValue);
+            validationResults.push_back(validation);
+            
+            if (!validation.valid) {
+                allValid = false;
+            }
+        }
+        
+        return allValid;
+    }
+    
+    std::vector<VoxelChange> createBatchChangesInternal(
+        const std::vector<Math::IncrementCoordinates>& positions,
+        VoxelResolution resolution,
+        bool newValue) const {
+        
+        std::vector<VoxelChange> changes;
+        changes.reserve(positions.size());
+        
+        for (const auto& pos : positions) {
+            // Use internal non-locking version to avoid deadlock
+            const VoxelGrid* grid = getGrid(resolution);
+            bool currentValue = (grid != nullptr) ? grid->getVoxel(pos) : false;
+            changes.emplace_back(pos, resolution, currentValue, newValue);
+        }
+        
+        return changes;
     }
 };
 

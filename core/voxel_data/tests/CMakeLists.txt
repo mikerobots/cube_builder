@@ -2,9 +2,12 @@ find_package(GTest REQUIRED)
 
 # List of test source files
 set(VOXEL_DATA_TEST_SOURCES
+    test_unit_core_voxel_data_batch_operations.cpp
     test_unit_core_voxel_data_collision_simple.cpp
     test_unit_core_voxel_data_grid.cpp
     test_unit_core_voxel_data_manager.cpp
+    test_unit_core_voxel_data_position_validation.cpp
+    test_unit_core_voxel_data_region_operations.cpp
     test_unit_core_voxel_data_requirements.cpp
     test_unit_core_voxel_data_sparse_octree.cpp
     test_unit_core_voxel_data_types.cpp
