@@ -201,12 +201,11 @@ TEST_F(VoxelCommandsTest, VoxelFillCommand_FillRegion) {
     // Get initial count
     size_t initialCount = voxelManager->getVoxelCount(resolution);
     
-    // Execute fill - this will return false because many positions aren't 4cm-aligned
+    // Execute fill - this will now succeed because we skip non-aligned positions
     bool executeResult = cmd.execute();
     
-    // The command returns false because not all positions could have voxels placed
-    // This is expected behavior when filling with voxels larger than 1cm
-    // We'll verify that the correct voxels were still placed
+    // The command should succeed since it only attempts to fill aligned positions
+    EXPECT_TRUE(executeResult);
     
     EXPECT_EQ(cmd.getName(), "Fill Voxels");
     
@@ -258,34 +257,18 @@ TEST_F(VoxelCommandsTest, VoxelFillCommand_UndoRestoresPrevious) {
     bool afterExecute = voxelManager->hasVoxel(testPos, resolution);
     std::cout << "After execute: voxel exists = " << afterExecute << std::endl;
     
-    // The fill command will return false because it tries to place voxels at all
-    // positions in the region (0-8), but only position 0 is valid for 8cm voxels.
-    // This is expected behavior - the command "fails" but still places valid voxels.
+    // The fill command will succeed now because it only tries aligned positions
+    // For an 8cm voxel, position (0,0,0) is aligned and valid
+    EXPECT_TRUE(executeResult);
+    EXPECT_TRUE(afterExecute);
     
-    // Since execute() returns false, m_executed is false, so undo() won't work.
-    // This is a design issue with VoxelFillCommand - it should track partial success.
-    // For now, we'll adjust the test to match the current behavior.
+    // Since execute() succeeded, undo() should work
+    bool undoResult = cmd.undo();
+    EXPECT_TRUE(undoResult);
     
-    if (afterExecute) {
-        // The voxel was placed successfully
-        EXPECT_TRUE(afterExecute);
-        
-        // Execute returned false because not all positions could be filled
-        EXPECT_FALSE(executeResult);
-        
-        // Since execute() returned false, undo() will also return false
-        bool undoResult = cmd.undo();
-        EXPECT_FALSE(undoResult);
-        
-        // And the voxel will remain because undo didn't execute
-        bool afterUndo = voxelManager->hasVoxel(testPos, resolution);
-        EXPECT_TRUE(afterUndo);
-        
-        // Manually remove the voxel to clean up
-        voxelManager->setVoxel(testPos, resolution, false);
-    } else {
-        FAIL() << "Voxel was not placed by fill command";
-    }
+    // And the voxel should be removed
+    bool afterUndo = voxelManager->hasVoxel(testPos, resolution);
+    EXPECT_FALSE(afterUndo);
 }
 
 // ===== VoxelCopyCommand Tests =====

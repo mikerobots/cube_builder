@@ -354,6 +354,20 @@
 - **REQ-9.3.5**: Workspace resize shall update the camera to maintain valid view of the workspace
   - *Subsystems: **Camera** (view adjustment), **CLI Application** (camera update)*
 
+#### 9.4 Error Handling and User Feedback
+- **REQ-9.4.1**: All commands shall provide specific, actionable error messages when operations fail
+  - *Subsystems: **CLI Application** (error reporting), **All Core Subsystems** (error generation)*
+- **REQ-9.4.2**: Error messages shall clearly indicate the nature of the failure and suggest corrective actions
+  - *Subsystems: **CLI Application** (message formatting), **All Core Subsystems** (detailed error info)*
+- **REQ-9.4.3**: Commands that modify state shall report what was attempted and why it failed
+  - *Subsystems: **CLI Application** (command feedback), **Voxel Data** (validation feedback)*
+- **REQ-9.4.4**: Batch operations (like fill) shall report specific failures (e.g., "X voxels failed due to overlap")
+  - *Subsystems: **CLI Application** (batch reporting), **Voxel Data** (detailed validation)*
+- **REQ-9.4.5**: Coordinate-based commands shall specify which coordinate constraint was violated
+  - *Subsystems: **CLI Application** (coordinate validation), **Input** (constraint checking)*
+- **REQ-9.4.6**: Resource constraint violations shall include current limits (e.g., "Workspace bounds: -250cm to 250cm")
+  - *Subsystems: **CLI Application** (limit reporting), **Voxel Data** (bounds information)*
+
 ### 10. Surface Generation Requirements
 
 #### 10.1 Algorithm Requirements

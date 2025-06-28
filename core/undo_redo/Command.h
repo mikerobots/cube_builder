@@ -73,9 +73,14 @@ public:
     std::chrono::high_resolution_clock::time_point getTimestamp() const { return m_timestamp; }
     bool hasExecuted() const { return m_executed; }
     
+    // Error information
+    const std::string& getLastError() const { return m_lastError; }
+    void clearLastError() { m_lastError.clear(); }
+    
 protected:
     std::chrono::high_resolution_clock::time_point m_timestamp = std::chrono::high_resolution_clock::now();
     bool m_executed = false;
+    std::string m_lastError;  // Populated when execute() or undo() fails
 };
 
 }

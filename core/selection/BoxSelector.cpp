@@ -32,6 +32,19 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
                                         bool checkExistence) {
     SelectionSet result;
     
+    // If checking existence, use a more efficient approach
+    if (checkExistence && m_voxelManager) {
+        // Get all existing voxels of this resolution and filter by box
+        auto allVoxels = m_voxelManager->getAllVoxels(resolution);
+        for (const auto& voxelPos : allVoxels) {
+            VoxelId voxel(voxelPos.incrementPos, voxelPos.resolution);
+            if (isVoxelInBox(voxel, worldBox)) {
+                result.add(voxel);
+            }
+        }
+        return result;
+    }
+    
     // Get workspace size for coordinate conversion
     Math::Vector3f workspaceSize(5.0f, 5.0f, 5.0f); // Default workspace size
     if (m_voxelManager) {
@@ -133,10 +146,11 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
     int expandedMaxY = snappedMax.y();
     int expandedMaxZ = snappedMax.z();
     
+    
     // Safety check for iteration count
-    int totalIterations = (expandedMaxX - expandedMinX + 1) * 
-                         (expandedMaxY - expandedMinY + 1) * 
-                         (expandedMaxZ - expandedMinZ + 1);
+    int totalIterations = ((expandedMaxX - expandedMinX) / voxelSizeCm + 1) * 
+                         ((expandedMaxY - expandedMinY) / voxelSizeCm + 1) * 
+                         ((expandedMaxZ - expandedMinZ) / voxelSizeCm + 1);
     const int maxTotalIterations = 1000000; // 100x100x100
     
     if (totalIterations > maxTotalIterations) {
@@ -146,10 +160,17 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
         return result; // Return empty selection
     }
     
-    // Since voxels can be placed at any 1cm position, we iterate through all 1cm positions
-    for (int x = expandedMinX; x <= expandedMaxX; x += 1) {
-        for (int y = expandedMinY; y <= expandedMaxY; y += 1) {
-            for (int z = expandedMinZ; z <= expandedMaxZ; z += 1) {
+    // Iterate through positions aligned to the voxel resolution
+    // Voxels can only exist at positions that are multiples of their size
+    // Start from aligned position
+    int alignedMinX = (expandedMinX / voxelSizeCm) * voxelSizeCm;
+    int alignedMinY = (expandedMinY / voxelSizeCm) * voxelSizeCm;
+    int alignedMinZ = (expandedMinZ / voxelSizeCm) * voxelSizeCm;
+    
+    
+    for (int x = alignedMinX; x <= expandedMaxX; x += voxelSizeCm) {
+        for (int y = alignedMinY; y <= expandedMaxY; y += voxelSizeCm) {
+            for (int z = alignedMinZ; z <= expandedMaxZ; z += voxelSizeCm) {
                 VoxelId voxel(Math::Vector3i(x, y, z), resolution);
                 
                 if (isVoxelInBox(voxel, worldBox)) {

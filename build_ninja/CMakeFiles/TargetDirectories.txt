@@ -471,7 +471,6 @@
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_unit_cli_select_commands.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_unit_cli_mouse_interaction.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_unit_cli_ray_generation_accuracy.dir
-/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test_unit_cli_smoothing_commands.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/test.dir
 /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/CMakeFiles/edit_cache.dir

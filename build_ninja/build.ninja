@@ -10927,42 +10927,6 @@ build bin/test_unit_cli_ray_generation_accuracy apps/cli/tests/test_unit_cli_ray
   TARGET_PDB = test_unit_cli_ray_generation_accuracy.dbg
 
 # =============================================================================
-# Object build statements for EXECUTABLE target test_stress_rapid_click_placement
-
-
-#############################################
-# Order-only phony target for test_stress_rapid_click_placement
-
-build cmake_object_order_depends_target_test_stress_rapid_click_placement: phony || cmake_object_order_depends_target_VoxelEditor_CLI_Lib cmake_object_order_depends_target_VoxelEditor_Groups cmake_object_order_depends_target_VoxelEditor_Input cmake_object_order_depends_target_VoxelEditor_Rendering cmake_object_order_depends_target_VoxelEditor_Selection cmake_object_order_depends_target_VoxelEditor_SurfaceGen cmake_object_order_depends_target_VoxelEditor_UndoRedo cmake_object_order_depends_target_VoxelEditor_VoxelData cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_gtest cmake_object_order_depends_target_gtest_main
-
-build apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir/test_stress_rapid_click_placement.cpp.o: CXX_COMPILER__test_stress_rapid_click_placement_Debug /Users/michaelhalloran/cube_edit/apps/cli/tests/test_stress_rapid_click_placement.cpp || cmake_object_order_depends_target_test_stress_rapid_click_placement
-  DEP_FILE = apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir/test_stress_rapid_click_placement.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wno-deprecated-volatile -std=c++20
-  INCLUDES = -I/Users/michaelhalloran/cube_edit -I/Users/michaelhalloran/cube_edit/foundation -I/Users/michaelhalloran/cube_edit/core -I/Users/michaelhalloran/cube_edit/apps -I/Users/michaelhalloran/cube_edit/external/glad/include -I/Users/michaelhalloran/cube_edit/apps/cli/tests/../include -I/Users/michaelhalloran/cube_edit/apps/cli/include -I/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/include -I/Users/michaelhalloran/cube_edit/core/voxel_data -I/Users/michaelhalloran/cube_edit/foundation/math -I/Users/michaelhalloran/cube_edit/foundation/events -I/Users/michaelhalloran/cube_edit/foundation/memory -I/Users/michaelhalloran/cube_edit/core/camera -I/Users/michaelhalloran/cube_edit/core/rendering -I/Users/michaelhalloran/cube_edit/foundation/logging -I/Users/michaelhalloran/cube_edit/core/input -I/Users/michaelhalloran/cube_edit/core/visual_feedback/include -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../rendering -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../voxel_data -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../selection -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../camera -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../input -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/math -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/events -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/memory -I/Users/michaelhalloran/cube_edit/core/visual_feedback/../../foundation/logging -I/Users/michaelhalloran/cube_edit/core/selection/../.. -I/Users/michaelhalloran/cube_edit/core/file_io/include -I/Users/michaelhalloran/cube_edit/core/file_io/../rendering -I/Users/michaelhalloran/cube_edit/core/file_io/../voxel_data -I/Users/michaelhalloran/cube_edit/core/file_io/../selection -I/Users/michaelhalloran/cube_edit/core/file_io/../camera -I/Users/michaelhalloran/cube_edit/core/file_io/../groups -I/Users/michaelhalloran/cube_edit/core/file_io/../visual_feedback -I/Users/michaelhalloran/cube_edit/core/file_io/../../foundation/math -I/Users/michaelhalloran/cube_edit/core/file_io/../../foundation/events -I/Users/michaelhalloran/cube_edit/core/file_io/../../foundation/memory -I/Users/michaelhalloran/cube_edit/core/file_io/../../foundation/logging -I/Users/michaelhalloran/cube_edit/core/groups/include -I/Users/michaelhalloran/cube_edit/core/groups/.. -I/Users/michaelhalloran/cube_edit/core/groups/../../foundation -I/Users/michaelhalloran/cube_edit/core/undo_redo/../.. -I/Users/michaelhalloran/cube_edit/core/surface_gen/../.. -I/Users/michaelhalloran/cube_edit/foundation/config -I/Users/michaelhalloran/cube_edit/build_ninja/_deps/glfw-src/include -I/Users/michaelhalloran/cube_edit/build_ninja/_deps/glm-src/glm/.. -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest/include -isystem /Users/michaelhalloran/cube_edit/build_ninja/_deps/googletest-src/googletest -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks
-  OBJECT_DIR = apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir
-  OBJECT_FILE_DIR = apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target test_stress_rapid_click_placement
-
-
-#############################################
-# Link the executable bin/test_stress_rapid_click_placement
-
-build bin/test_stress_rapid_click_placement apps/cli/tests/test_stress_rapid_click_placement[1]_tests.cmake | ${cmake_ninja_workdir}apps/cli/tests/test_stress_rapid_click_placement[1]_tests.cmake: CXX_EXECUTABLE_LINKER__test_stress_rapid_click_placement_Debug apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir/test_stress_rapid_click_placement.cpp.o | lib/libVoxelEditor_CLI_Lib.a lib/libVoxelEditor_VoxelData.a lib/libVoxelEditor_Input.a lib/libVoxelEditor_VisualFeedback.a lib/libVoxelEditor_UndoRedo.a lib/libgtest.a lib/libgtest_main.a lib/libglfw3.a /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd lib/libVoxelEditor_Input.a lib/libVoxelEditor_VisualFeedback.a lib/libVoxelEditor_Input.a lib/libVoxelEditor_VisualFeedback.a lib/libVoxelEditor_SurfaceGen.a lib/libVoxelEditor_Selection.a lib/libVoxelEditor_FileIO.a lib/libVoxelEditor_Selection.a lib/libVoxelEditor_FileIO.a lib/libVoxelEditor_Groups.a lib/libVoxelEditor_Rendering.a lib/libVoxelEditor_VoxelData.a lib/libglad.a lib/libgtest.a || lib/libVoxelEditor_CLI_Lib.a lib/libVoxelEditor_Groups.a lib/libVoxelEditor_Input.a lib/libVoxelEditor_Rendering.a lib/libVoxelEditor_Selection.a lib/libVoxelEditor_SurfaceGen.a lib/libVoxelEditor_UndoRedo.a lib/libVoxelEditor_VoxelData.a lib/libglad.a lib/libglfw3.a lib/libgtest.a lib/libgtest_main.a
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
-  LINK_FLAGS = -Wl,-no_warn_duplicate_libraries
-  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/lz4/lib  lib/libVoxelEditor_CLI_Lib.a  lib/libVoxelEditor_VoxelData.a  lib/libVoxelEditor_Input.a  lib/libVoxelEditor_VisualFeedback.a  lib/libVoxelEditor_UndoRedo.a  lib/libgtest.a  lib/libgtest_main.a  lib/libglfw3.a  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd  lib/libVoxelEditor_Input.a  lib/libVoxelEditor_VisualFeedback.a  lib/libVoxelEditor_Input.a  lib/libVoxelEditor_VisualFeedback.a  -framework CoreFoundation  lib/libVoxelEditor_SurfaceGen.a  lib/libVoxelEditor_Selection.a  lib/libVoxelEditor_FileIO.a  lib/libVoxelEditor_Selection.a  lib/libVoxelEditor_FileIO.a  lib/libVoxelEditor_Groups.a  lib/libVoxelEditor_Rendering.a  lib/libVoxelEditor_VoxelData.a  -Xlinker -framework -Xlinker OpenGL  -llz4  lib/libglad.a  -framework OpenGL  -framework Cocoa  -framework IOKit  -framework CoreVideo  lib/libgtest.a
-  LINK_PATH = -L/opt/homebrew/opt/lz4/lib
-  OBJECT_DIR = apps/cli/tests/CMakeFiles/test_stress_rapid_click_placement.dir
-  POST_BUILD = cd /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests && /opt/homebrew/lib/python3.9/site-packages/cmake/data/bin/cmake -D TEST_TARGET=test_stress_rapid_click_placement -D TEST_EXECUTABLE=/Users/michaelhalloran/cube_edit/build_ninja/bin/test_stress_rapid_click_placement -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=test_stress_rapid_click_placement_TESTS -D CTEST_FILE=/Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests/test_stress_rapid_click_placement[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /opt/homebrew/lib/python3.9/site-packages/cmake/data/share/cmake-3.25/Modules/GoogleTestAddTests.cmake
-  PRE_LINK = :
-  RESTAT = 1
-  TARGET_FILE = bin/test_stress_rapid_click_placement
-  TARGET_PDB = test_stress_rapid_click_placement.dbg
-
-# =============================================================================
 # Object build statements for EXECUTABLE target test_unit_cli_smoothing_commands
 
 
@@ -13038,8 +13002,6 @@ build test_performance_rendering_shader_benchmark: phony bin/test_performance_re
 
 build test_stress_core_rendering_engine: phony bin/test_stress_core_rendering_engine
 
-build test_stress_rapid_click_placement: phony bin/test_stress_rapid_click_placement
-
 build test_unit_cli_arbitrary_positions: phony bin/test_unit_cli_arbitrary_positions
 
 build test_unit_cli_coordinate_system_constraints: phony bin/test_unit_cli_coordinate_system_constraints
@@ -13347,7 +13309,7 @@ build apps/cli/all: phony lib/libVoxelEditor_CLI_Lib.a bin/VoxelEditor_CLI apps/
 #############################################
 # Folder: /Users/michaelhalloran/cube_edit/build_ninja/apps/cli/tests
 
-build apps/cli/tests/all: phony bin/test_integration_cli_application bin/test_integration_cli_command_registry bin/test_integration_cli_command_sequences bin/test_integration_cli_command_system bin/test_integration_cli_command_validation bin/test_integration_cli_commands bin/test_integration_cli_error_handling bin/test_integration_cli_headless bin/test_integration_cli_ray_visualization bin/test_integration_cli_rendering bin/test_integration_cli_rendering_basic bin/test_integration_cli_smoothing_export bin/test_integration_cli_undo_redo_chains bin/test_integration_interaction_click_voxel_placement bin/test_integration_interaction_face_clicking bin/test_integration_interaction_mouse_ray_movement bin/test_integration_interaction_voxel_face_clicking bin/test_integration_interaction_voxel_face_clicking_simple bin/test_integration_interaction_zoom_behavior bin/test_unit_cli_voxel_mesh_generator bin/test_unit_cli_coordinate_system_constraints bin/test_unit_cli_arbitrary_positions bin/test_unit_cli_select_commands bin/test_unit_cli_mouse_interaction bin/test_unit_cli_ray_generation_accuracy bin/test_stress_rapid_click_placement bin/test_unit_cli_smoothing_commands
+build apps/cli/tests/all: phony bin/test_integration_cli_application bin/test_integration_cli_command_registry bin/test_integration_cli_command_sequences bin/test_integration_cli_command_system bin/test_integration_cli_command_validation bin/test_integration_cli_commands bin/test_integration_cli_error_handling bin/test_integration_cli_headless bin/test_integration_cli_ray_visualization bin/test_integration_cli_rendering bin/test_integration_cli_rendering_basic bin/test_integration_cli_smoothing_export bin/test_integration_cli_undo_redo_chains bin/test_integration_interaction_click_voxel_placement bin/test_integration_interaction_face_clicking bin/test_integration_interaction_mouse_ray_movement bin/test_integration_interaction_voxel_face_clicking bin/test_integration_interaction_voxel_face_clicking_simple bin/test_integration_interaction_zoom_behavior bin/test_unit_cli_voxel_mesh_generator bin/test_unit_cli_coordinate_system_constraints bin/test_unit_cli_arbitrary_positions bin/test_unit_cli_select_commands bin/test_unit_cli_mouse_interaction bin/test_unit_cli_ray_generation_accuracy bin/test_unit_cli_smoothing_commands
 
 # =============================================================================
 

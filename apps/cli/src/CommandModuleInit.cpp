@@ -12,21 +12,29 @@ namespace VoxelEditor {
 
 // Force the linker to include command module symbols
 void forceCommandModuleInitialization() {
-    // Create temporary instances to force static initializers
-    volatile EditCommands* edit = nullptr;
-    volatile FileCommands* file = nullptr;
-    volatile ViewCommands* view = nullptr;
-    volatile SelectCommands* select = nullptr;
-    volatile SystemCommands* system = nullptr;
-    volatile MeshCommands* mesh = nullptr;
+    // Force references to each command module's static initializer
+    // by creating actual instances (even if we immediately delete them)
+    // This ensures the static initializers in each translation unit run
     
-    // Reference the types to prevent optimization
-    (void)edit;
-    (void)file;
-    (void)view;
-    (void)select;
-    (void)system;
-    (void)mesh;
+    // The key is to reference something from each module that will
+    // force the linker to include the entire object file
+    auto* edit = new EditCommands();
+    delete edit;
+    
+    auto* file = new FileCommands();
+    delete file;
+    
+    auto* view = new ViewCommands();
+    delete view;
+    
+    auto* select = new SelectCommands();
+    delete select;
+    
+    auto* system = new SystemCommands();
+    delete system;
+    
+    auto* mesh = new MeshCommands();
+    delete mesh;
 }
 
 } // namespace VoxelEditor

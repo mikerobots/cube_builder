@@ -25,6 +25,9 @@ bool HistoryManager::executeCommand(std::unique_ptr<Command> command) {
     
     std::lock_guard<std::mutex> lock(m_mutex);
     
+    // Clear the last failed command error
+    m_lastFailedCommandError.clear();
+    
     // Validate command
     auto validation = command->validate();
     if (!validation.valid) {
@@ -48,12 +51,15 @@ bool HistoryManager::executeCommand(std::unique_ptr<Command> command) {
     } catch (const std::exception& e) {
         // // Logging::Logger::getInstance().error("HistoryManager: Command execution failed: " + 
         //                                    std::string(e.what()));
+        m_lastFailedCommandError = std::string(e.what());
         return false;
     }
     
     if (!success) {
         // // Logging::Logger::getInstance().error("HistoryManager: Command execution returned false: " + 
         //                                    command->getName());
+        // Store the error from the failed command
+        m_lastFailedCommandError = command->getLastError();
         return false;
     }
     
@@ -280,6 +286,13 @@ std::string HistoryManager::getLastExecutedCommand() const {
     }
     
     return m_undoStack.back()->getName();
+}
+
+std::string HistoryManager::getLastCommandError() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    
+    // Return the error from the last failed command attempt
+    return m_lastFailedCommandError;
 }
 
 void HistoryManager::beginTransaction(const std::string& name) {

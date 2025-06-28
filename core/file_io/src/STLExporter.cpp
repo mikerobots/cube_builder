@@ -97,6 +97,16 @@ bool STLExporter::validateMesh(const Rendering::Mesh& mesh, std::vector<std::str
         return false;
     }
     
+    // Check for out-of-bounds indices
+    size_t maxIndex = mesh.vertices.size() - 1;
+    for (size_t i = 0; i < mesh.indices.size(); i++) {
+        if (mesh.indices[i] > maxIndex) {
+            issues.push_back("Index out of bounds: " + std::to_string(mesh.indices[i]) + 
+                           " (max valid index: " + std::to_string(maxIndex) + ")");
+            return false;
+        }
+    }
+    
     // Check for degenerate triangles
     if (hasDegenerateTriangles(mesh)) {
         issues.push_back("Mesh contains degenerate triangles");
@@ -142,6 +152,14 @@ bool STLExporter::exportBinarySTL(const std::string& filename, const Rendering::
     
     // Write triangles
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
+        // Bounds check
+        if (mesh.indices[i] >= mesh.vertices.size() ||
+            mesh.indices[i + 1] >= mesh.vertices.size() ||
+            mesh.indices[i + 2] >= mesh.vertices.size()) {
+            setError(FileError::InvalidFormat, "Index out of bounds during export");
+            return false;
+        }
+        
         const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position.value();
         const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position.value();
         const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position.value();
@@ -166,6 +184,14 @@ bool STLExporter::exportASCIISTL(const std::string& filename, const Rendering::M
     
     // Write triangles
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
+        // Bounds check
+        if (mesh.indices[i] >= mesh.vertices.size() ||
+            mesh.indices[i + 1] >= mesh.vertices.size() ||
+            mesh.indices[i + 2] >= mesh.vertices.size()) {
+            setError(FileError::InvalidFormat, "Index out of bounds during export");
+            return false;
+        }
+        
         const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position.value();
         const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position.value();
         const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position.value();
@@ -383,6 +409,14 @@ bool STLExporter::hasDegenerateTriangles(const Rendering::Mesh& mesh) const {
     const float epsilon = 1e-6f;
     
     for (size_t i = 0; i < mesh.indices.size(); i += 3) {
+        // Bounds check - should already be validated but be safe
+        if (mesh.indices[i] >= mesh.vertices.size() ||
+            mesh.indices[i + 1] >= mesh.vertices.size() ||
+            mesh.indices[i + 2] >= mesh.vertices.size()) {
+            // Invalid indices mean we can't check for degenerate triangles
+            return false;
+        }
+        
         const Math::Vector3f& v0 = mesh.vertices[mesh.indices[i]].position.value();
         const Math::Vector3f& v1 = mesh.vertices[mesh.indices[i + 1]].position.value();
         const Math::Vector3f& v2 = mesh.vertices[mesh.indices[i + 2]].position.value();

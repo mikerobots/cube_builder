@@ -22,6 +22,7 @@
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
 #include "cli/CommandRegistry.h"
+#include "cli/CommandModuleInit.h"
 #include "cli/RenderWindow.h"
 #include "cli/MouseInteraction.h"
 #include "cli/VoxelMeshGenerator.h"
@@ -91,6 +92,9 @@ bool Application::initialize(int argc, char* argv[]) {
     if (!initializeCLI()) {
         return false;
     }
+    
+    // Force command module initialization before registering commands
+    forceCommandModuleInitialization();
     
     // Use the new command registry system
     std::cout << "Application::initialize() - Calling CommandRegistry::registerAllCommands" << std::endl;

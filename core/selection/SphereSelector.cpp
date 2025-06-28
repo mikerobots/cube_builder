@@ -20,6 +20,19 @@ SelectionSet SphereSelector::selectFromSphere(const Math::Vector3f& center,
                                             bool checkExistence) {
     SelectionSet result;
     
+    // If checking existence, use a more efficient approach
+    if (checkExistence && m_voxelManager) {
+        // Get all existing voxels of this resolution and filter by sphere
+        auto allVoxels = m_voxelManager->getAllVoxels(resolution);
+        for (const auto& voxelPos : allVoxels) {
+            VoxelId voxel(voxelPos.incrementPos, voxelPos.resolution);
+            if (isVoxelInSphere(voxel, center, radius)) {
+                result.add(voxel);
+            }
+        }
+        return result;
+    }
+    
     // Special case: zero radius with includePartial=false should return empty set
     if (radius == 0.0f && !m_includePartial) {
         return result;

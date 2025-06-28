@@ -5,6 +5,8 @@
 #include "voxel_data/VoxelTypes.h"
 #include "selection/SelectionManager.h"
 #include "selection/SelectionTypes.h"
+#include "selection/BoxSelector.h"
+#include "selection/SphereSelector.h"
 #include "groups/GroupManager.h"
 #include "groups/GroupTypes.h"
 #include "undo_redo/HistoryManager.h"
@@ -35,11 +37,16 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
             .withArg("z", "Z coordinate", "int", true)
             .withHandler([this](const CommandContext& ctx) {
                 Math::Vector3i pos(ctx.getIntArg(0), ctx.getIntArg(1), ctx.getIntArg(2));
+                Math::IncrementCoordinates incCoords(pos);
                 
-                if (m_voxelManager->hasVoxel(pos, m_voxelManager->getActiveResolution())) {
-                    Selection::VoxelId id(pos, m_voxelManager->getActiveResolution());
-                    m_selectionManager->selectVoxel(id);
-                    return CommandResult::Success("Voxel selected");
+                // Check all resolutions for a voxel at this position
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    VoxelData::VoxelResolution res = static_cast<VoxelData::VoxelResolution>(i);
+                    if (m_voxelManager->hasVoxel(incCoords, res)) {
+                        Selection::VoxelId id(incCoords, res);
+                        m_selectionManager->selectVoxel(id);
+                        return CommandResult::Success("Voxel selected");
+                    }
                 }
                 return CommandResult::Error("No voxel at position");
             }),
@@ -80,11 +87,32 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 int y2 = *y2_opt;
                 int z2 = *z2_opt;
                 
-                Math::Vector3f min(x1, y1, z1);
-                Math::Vector3f max(x2, y2, z2);
+                // Convert from increment coordinates (cm) to world coordinates (m)
+                Math::Vector3f min(x1 / 100.0f, y1 / 100.0f, z1 / 100.0f);
+                Math::Vector3f max(x2 / 100.0f, y2 / 100.0f, z2 / 100.0f);
                 
                 Math::BoundingBox box(min, max);
-                m_selectionManager->selectBox(box, m_voxelManager->getActiveResolution());
+                
+                // Clear current selection
+                m_selectionManager->selectNone();
+                
+                // Accumulate selections across all resolutions
+                Selection::SelectionSet combinedSelection;
+                
+                // Select voxels of all resolutions that intersect with the box
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    VoxelData::VoxelResolution res = static_cast<VoxelData::VoxelResolution>(i);
+                    
+                    // Get box selection for this resolution
+                    Selection::BoxSelector boxSelector(m_voxelManager);
+                    auto resolutionSelection = boxSelector.selectFromWorld(box, res, true);
+                    
+                    // Add to combined selection
+                    combinedSelection.unite(resolutionSelection);
+                }
+                
+                // Apply the combined selection
+                m_selectionManager->select(combinedSelection, Selection::SelectionMode::Replace);
                 size_t count = m_selectionManager->getSelectionSize();
                 
                 return CommandResult::Success("Selected " + std::to_string(count) + " voxels");
@@ -124,9 +152,30 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                     return CommandResult::Error("Radius must be positive");
                 }
                 
-                Math::Vector3f center(x, y, z);
-                m_selectionManager->selectSphere(center, static_cast<float>(radius), 
-                                                       m_voxelManager->getActiveResolution());
+                // Convert from increment coordinates (cm) to world coordinates (m)
+                Math::Vector3f center(x / 100.0f, y / 100.0f, z / 100.0f);
+                float radiusMeters = radius / 100.0f;
+                
+                // Clear current selection
+                m_selectionManager->selectNone();
+                
+                // Accumulate selections across all resolutions
+                Selection::SelectionSet combinedSelection;
+                
+                // Select voxels of all resolutions that are within the sphere
+                for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+                    VoxelData::VoxelResolution res = static_cast<VoxelData::VoxelResolution>(i);
+                    
+                    // Get sphere selection for this resolution
+                    Selection::SphereSelector sphereSelector(m_voxelManager);
+                    auto resolutionSelection = sphereSelector.selectFromSphere(center, radiusMeters, res, true);
+                    
+                    // Add to combined selection
+                    combinedSelection.unite(resolutionSelection);
+                }
+                
+                // Apply the combined selection
+                m_selectionManager->select(combinedSelection, Selection::SelectionMode::Replace);
                 size_t count = m_selectionManager->getSelectionSize();
                 
                 return CommandResult::Success("Selected " + std::to_string(count) + " voxels");
@@ -186,7 +235,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 // Clear current selection and select all voxels of this resolution
                 m_selectionManager->selectNone();
                 for (const auto& voxelPos : voxels) {
-                    Selection::VoxelId id(voxelPos.incrementPos.value(), voxelPos.resolution);
+                    Selection::VoxelId id(voxelPos.incrementPos, voxelPos.resolution);
                     m_selectionManager->selectVoxel(id);
                 }
                 
@@ -213,7 +262,7 @@ std::vector<CommandRegistration> SelectCommands::getCommands() {
                 
                 // Select all voxels that were not in the original selection
                 for (const auto& voxelPos : allVoxels) {
-                    Selection::VoxelId id(voxelPos.incrementPos.value(), voxelPos.resolution);
+                    Selection::VoxelId id(voxelPos.incrementPos, voxelPos.resolution);
                     if (currentSet.find(id) == currentSet.end()) {
                         m_selectionManager->selectVoxel(id);
                     }

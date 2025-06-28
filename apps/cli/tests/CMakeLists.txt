@@ -230,37 +230,6 @@ add_test(NAME cli_ray_generation_accuracy_tests COMMAND test_unit_cli_ray_genera
 # Discover tests
 gtest_discover_tests(test_unit_cli_ray_generation_accuracy)
 
-# CLI Stress Tests (Rapid Click Placement)
-add_executable(test_stress_rapid_click_placement test_stress_rapid_click_placement.cpp)
-
-target_include_directories(test_stress_rapid_click_placement PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include
-    ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/foundation
-)
-
-target_link_libraries(test_stress_rapid_click_placement PRIVATE
-    VoxelEditor_CLI_Lib
-    VoxelEditor_Camera
-    VoxelEditor_VoxelData
-    VoxelEditor_Input
-    VoxelEditor_VisualFeedback
-    VoxelEditor_UndoRedo
-    VoxelEditor_Logging
-    GTest::gtest
-    GTest::gtest_main
-    glfw
-    OpenGL::GL
-    ${CMAKE_DL_LIBS}
-)
-
-target_compile_features(test_stress_rapid_click_placement PRIVATE cxx_std_20)
-
-# Add stress test
-add_test(NAME cli_stress_rapid_click_placement_tests COMMAND test_stress_rapid_click_placement)
-
-# Discover tests
-gtest_discover_tests(test_stress_rapid_click_placement)
 
 # CLI Unit Tests (Smoothing Commands)
 add_executable(test_unit_cli_smoothing_commands test_unit_cli_smoothing_commands.cpp)

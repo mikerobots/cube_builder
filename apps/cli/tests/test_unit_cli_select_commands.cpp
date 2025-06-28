@@ -30,6 +30,9 @@ protected:
         app->setHeadless(true);
         ASSERT_TRUE(app->initialize(0, nullptr));
         
+        // Set resolution to 1cm for initial voxels
+        app->getCommandProcessor()->execute("resolution 1cm");
+        
         // Place some test voxels
         app->getCommandProcessor()->execute("place 0cm 0cm 0cm");
         app->getCommandProcessor()->execute("place 100cm 0cm 0cm");
@@ -40,6 +43,7 @@ protected:
         app->getCommandProcessor()->execute("resolution 4cm");
         app->getCommandProcessor()->execute("place 200cm 0cm 0cm");
         app->getCommandProcessor()->execute("place 0cm 200cm 0cm");
+        
     }
     
     void TearDown() override {

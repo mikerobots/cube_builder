@@ -73,6 +73,7 @@ public:
     std::vector<std::string> getUndoHistory() const;
     std::vector<std::string> getRedoHistory() const;
     std::string getLastExecutedCommand() const;
+    std::string getLastCommandError() const;
     
     // Grouping and transactions
     void beginTransaction(const std::string& name);
@@ -114,6 +115,9 @@ private:
     std::unique_ptr<StateSnapshot> m_baseSnapshot;
     std::vector<std::unique_ptr<StateSnapshot>> m_snapshots;
     size_t m_maxSnapshots = 5;
+    
+    // Error tracking
+    std::string m_lastFailedCommandError;
     
     // Thread safety
     mutable std::mutex m_mutex;
