@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="1" failures="0" disabled="0" errors="0" time="0.001" timestamp="2025-06-22T08:55:15.141" name="AllTests">
-  <testsuite name="ResolutionCommandTest" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.001" timestamp="2025-06-22T08:55:15.141">
-    <testcase name="AllValidResolutionValues_1cm_REQ_11_3_12" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_unit_cli_resolution_command.cpp" line="53" status="run" result="completed" time="0.001" timestamp="2025-06-22T08:55:15.141" classname="ResolutionCommandTest" />
-  </testsuite>
-</testsuites>
