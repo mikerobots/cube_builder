@@ -524,7 +524,9 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
     }
     
     // Final validation - ensure position is valid
-    if (!m_voxelManager->isValidPosition(snappedPos, resolution)) {
+    Math::IncrementCoordinates snappedIncCoords(snappedPos);
+    auto validation = m_voxelManager->validatePosition(snappedIncCoords, resolution);
+    if (!validation.valid) {
         // Only log as warning if this is an actual click, not just hover preview
         static int warningCount = 0;
         if (warningCount++ < 5) { // Limit logging to avoid spam
@@ -605,9 +607,9 @@ void MouseInteraction::updateHoverState() {
         Math::Vector3i previewPosVec(m_previewPos.x, m_previewPos.y, m_previewPos.z);
         
         // Check if preview position is valid for current resolution
-        bool validPosition = m_voxelManager->isValidPosition(previewPosVec, currentResolution) &&
-                           m_voxelManager->isValidIncrementPosition(previewPosVec) &&
-                           !m_voxelManager->wouldOverlap(previewPosVec, currentResolution);
+        Math::IncrementCoordinates previewIncCoords(previewPosVec);
+        auto validation = m_voxelManager->validatePosition(previewIncCoords, currentResolution);
+        bool validPosition = validation.valid;
         
         // Render preview with appropriate color based on validation
         Rendering::Color previewColor = validPosition ? 

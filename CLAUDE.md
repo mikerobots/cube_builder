@@ -229,5 +229,4 @@ test. Challenge all assumptions.
 DON'T BE A YES MAN! CHALLENGE ME IF I AM ASKING YOU TO DO SOMETHING
 THAT IS SUBPAR OR DOESN'T MAKE SENSE!
 
-### VoxelDataManager Modification Policy
-**CRITICAL**: DO NOT modify VoxelDataManager.h or its implementation unless explicitly requested. The VoxelDataManager has undergone extensive refactoring with comprehensive APIs for position validation, region operations, and batch operations. Any changes risk breaking the carefully designed architecture and comprehensive test coverage (61 tests covering all functionality). Only modify VoxelDataManager when specifically instructed to do so.
+**CRITICAL**: Completed subsystem directories are locked. Don't unlock. 

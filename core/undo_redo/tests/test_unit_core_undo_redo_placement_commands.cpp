@@ -144,7 +144,7 @@ TEST_F(PlacementCommandsTest, ValidatePlacement_BelowGroundPlane) {
     
     EXPECT_FALSE(result.valid);
     EXPECT_FALSE(result.errors.empty());
-    EXPECT_EQ(result.errors[0], "Cannot place voxels below ground plane (Y < 0)");
+    EXPECT_EQ(result.errors[0], "Position is below ground plane (Y must be >= 0)");
 }
 
 TEST_F(PlacementCommandsTest, ValidatePlacement_WouldOverlap) {

@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="4" failures="1" disabled="0" errors="0" time="0.001" timestamp="2025-06-26T20:24:34.873" name="AllTests">
-  <testsuite name="PreviewAccuracyTest" tests="4" failures="1" disabled="0" skipped="0" errors="0" time="0.001" timestamp="2025-06-26T20:24:34.873">
-    <testcase name="GroundPlanePreviewMatchesPlacement" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="78" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.873" classname="PreviewAccuracyTest" />
-    <testcase name="VoxelFacePreviewMatchesPlacement" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="118" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.874" classname="PreviewAccuracyTest">
-      <failure message="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158&#x0A;Value of: isAdjacent&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Top face: Position should be adjacent to reference voxel. Got: (2,4,2), Expected adjacent to: (0,0,0)" type=""><![CDATA[/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158
-Value of: isAdjacent
-  Actual: false
-Expected: true
-Top face: Position should be adjacent to reference voxel. Got: (2,4,2), Expected adjacent to: (0,0,0)]]></failure>
-      <failure message="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158&#x0A;Value of: isAdjacent&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Right face: Position should be adjacent to reference voxel. Got: (4,2,2), Expected adjacent to: (0,0,0)" type=""><![CDATA[/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158
-Value of: isAdjacent
-  Actual: false
-Expected: true
-Right face: Position should be adjacent to reference voxel. Got: (4,2,2), Expected adjacent to: (0,0,0)]]></failure>
-      <failure message="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158&#x0A;Value of: isAdjacent&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Front face: Position should be adjacent to reference voxel. Got: (2,2,4), Expected adjacent to: (0,0,0)" type=""><![CDATA[/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp:158
-Value of: isAdjacent
-  Actual: false
-Expected: true
-Front face: Position should be adjacent to reference voxel. Got: (2,2,4), Expected adjacent to: (0,0,0)]]></failure>
-    </testcase>
-    <testcase name="MultipleResolutionsPreviewAccuracy" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="173" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.874" classname="PreviewAccuracyTest" />
-    <testcase name="BoundaryConditionsPreviewAccuracy" file="/Users/michaelhalloran/cube_edit/tests/integration/test_integration_preview_accuracy.cpp" line="208" status="run" result="completed" time="0" timestamp="2025-06-26T20:24:34.874" classname="PreviewAccuracyTest" />
+<testsuites tests="18" failures="0" disabled="0" errors="0" time="2.028" timestamp="2025-06-28T12:24:48.038" name="AllTests">
+  <testsuite name="FileManagerTest" tests="18" failures="0" disabled="0" skipped="0" errors="0" time="2.028" timestamp="2025-06-28T12:24:48.038">
+    <testcase name="SaveAndLoadProject" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="49" status="run" result="completed" time="0.001" timestamp="2025-06-28T12:24:48.038" classname="FileManagerTest" />
+    <testcase name="SaveToInvalidPath" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="79" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.040" classname="FileManagerTest" />
+    <testcase name="LoadNonExistentFile" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="92" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.040" classname="FileManagerTest" />
+    <testcase name="SaveOptionsFast" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="104" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.040" classname="FileManagerTest" />
+    <testcase name="SaveOptionsCompact" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="119" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.041" classname="FileManagerTest" />
+    <testcase name="ExportSTL" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="133" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.041" classname="FileManagerTest" />
+    <testcase name="ExportMultipleSTL" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="154" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.041" classname="FileManagerTest" />
+    <testcase name="FileInfo" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="182" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.042" classname="FileManagerTest" />
+    <testcase name="RecentFiles" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="198" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.042" classname="FileManagerTest" />
+    <testcase name="ValidateProjectFile" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="225" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.042" classname="FileManagerTest" />
+    <testcase name="GetFileVersion" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="241" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:48.043" classname="FileManagerTest" />
+    <testcase name="ProgressCallback" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="254" status="run" result="completed" time="0.004" timestamp="2025-06-28T12:24:48.043" classname="FileManagerTest" />
+    <testcase name="AutoSaveBasic" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="284" status="run" result="completed" time="2.009" timestamp="2025-06-28T12:24:48.048" classname="FileManagerTest" />
+    <testcase name="BackupCreation" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="312" status="run" result="completed" time="0.002" timestamp="2025-06-28T12:24:50.057" classname="FileManagerTest" />
+    <testcase name="CompressionSettings" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="339" status="run" result="completed" time="0.003" timestamp="2025-06-28T12:24:50.060" classname="FileManagerTest" />
+    <testcase name="Statistics" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="367" status="run" result="completed" time="0.001" timestamp="2025-06-28T12:24:50.064" classname="FileManagerTest" />
+    <testcase name="ErrorHandling" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="391" status="run" result="completed" time="0" timestamp="2025-06-28T12:24:50.065" classname="FileManagerTest" />
+    <testcase name="ConcurrentAccess" file="/Users/michaelhalloran/cube_edit/core/file_io/tests/test_unit_core_file_io_file_manager.cpp" line="405" status="run" result="completed" time="0.001" timestamp="2025-06-28T12:24:50.065" classname="FileManagerTest" />
   </testsuite>
 </testsuites>

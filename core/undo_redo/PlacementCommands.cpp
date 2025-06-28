@@ -74,46 +74,12 @@ ValidationResult PlacementCommandFactory::validatePlacement(
         return result;
     }
     
-    // Get workspace size for bounds checking
-    Math::Vector3f workspaceSize = voxelManager->getWorkspaceSize();
+    // Use the new comprehensive validation API
+    auto validation = voxelManager->validatePosition(position, resolution, true); // Check overlap for placement
     
-    // Convert Vector3i to IncrementCoordinates for validation
-    Math::IncrementCoordinates incrementPos(position);
-    
-    // Use proper placement validation from Input module
-    Input::PlacementValidationResult placementResult = 
-        Input::PlacementUtils::validatePlacement(incrementPos, resolution, workspaceSize);
-    
-    switch (placementResult) {
-        case Input::PlacementValidationResult::InvalidPosition:
-            result.addError("Invalid position coordinates");
-            break;
-        case Input::PlacementValidationResult::InvalidYBelowZero:
-            result.addError("Cannot place voxels below ground plane (Y < 0)");
-            break;
-        case Input::PlacementValidationResult::InvalidOutOfBounds:
-            result.addError("Position is outside workspace bounds");
-            break;
-        case Input::PlacementValidationResult::InvalidOverlap:
-            result.addError("Position would overlap with existing voxel");
-            break;
-        case Input::PlacementValidationResult::Valid:
-            // Continue with additional checks
-            break;
-    }
-    
-    // Check if position is valid for 1cm increments
-    if (!voxelManager->isValidIncrementPosition(position)) {
-        result.addError("Position is not aligned to 1cm increments");
-    }
-    
-    // NOTE: Grid alignment check removed per new requirements
-    // Voxels can now be placed at any 1cm increment position regardless of their size
-    // The 1cm increment validation is already done by isValidIncrementPosition() above
-    
-    // Check if position would overlap with existing voxel
-    if (voxelManager->wouldOverlap(position, resolution)) {
-        result.addError("Position would overlap with existing voxel");
+    if (!validation.valid) {
+        result.addError(validation.errorMessage);
+        return result;
     }
     
     // Check if voxel already exists at this position
@@ -133,6 +99,14 @@ ValidationResult PlacementCommandFactory::validateRemoval(
     
     if (!voxelManager) {
         result.addError("VoxelDataManager is null");
+        return result;
+    }
+    
+    // Use the new validation API (no overlap check needed for removal)
+    auto validation = voxelManager->validatePosition(position, resolution, false);
+    
+    if (!validation.valid) {
+        result.addError(validation.errorMessage);
         return result;
     }
     

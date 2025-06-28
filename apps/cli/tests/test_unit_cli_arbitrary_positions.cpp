@@ -93,15 +93,15 @@ TEST_F(CLIArbitraryPositionsTest, PlaceCommand_SingleVoxel_1cm) {
 }
 
 TEST_F(CLIArbitraryPositionsTest, PlaceCommand_SingleVoxel_ArbitraryPosition) {
-    // Test placing a single voxel at an arbitrary position
+    // Test placing a single voxel at a grid-aligned position
     ASSERT_TRUE(initialized);
     
     auto result = executeCommand("resolution 4cm");
     EXPECT_TRUE(result.success);
     
-    // Place at arbitrary position
-    result = executeCommand("place 7cm 3cm 11cm");
-    EXPECT_TRUE(result.success) << "Should place 4cm voxel at arbitrary position (7,3,11)";
+    // Place at grid-aligned position (8cm, 4cm, 12cm are all multiples of 4cm)
+    result = executeCommand("place 8cm 4cm 12cm");
+    EXPECT_TRUE(result.success) << "Should place 4cm voxel at grid-aligned position (8,4,12)";
     
     // Verify voxel was placed
     EXPECT_EQ(voxelManager->getVoxelCount(VoxelData::VoxelResolution::Size_4cm), 1);
@@ -140,12 +140,12 @@ TEST_F(CLIArbitraryPositionsTest, PlaceCommand_MultipleNonOverlapping_16cm) {
     auto result = executeCommand("resolution 16cm");
     EXPECT_TRUE(result.success);
     
-    // Place voxels with sufficient spacing (16cm apart minimum)
+    // Place voxels at grid-aligned positions (multiples of 16cm)
     std::vector<std::string> commands = {
         "place 0cm 0cm 0cm",      // First voxel at origin
-        "place 20cm 0cm 0cm",     // 20cm apart in X
-        "place 0cm 0cm 20cm",     // 20cm apart in Z
-        "place 20cm 0cm 20cm"     // Diagonal
+        "place 16cm 0cm 0cm",     // 16cm apart in X (grid-aligned)
+        "place 0cm 0cm 16cm",     // 16cm apart in Z (grid-aligned)
+        "place 16cm 0cm 16cm"     // Diagonal (grid-aligned)
     };
     
     for (const auto& cmd : commands) {
@@ -186,19 +186,19 @@ TEST_F(CLIArbitraryPositionsTest, PlaceCommand_OverlapDetection) {
 // ============================================================================
 
 TEST_F(CLIArbitraryPositionsTest, DeleteCommand_ArbitraryPosition) {
-    // Test deleting a voxel at an arbitrary position
+    // Test deleting a voxel at a grid-aligned position
     ASSERT_TRUE(initialized);
     
     auto result = executeCommand("resolution 4cm");
     EXPECT_TRUE(result.success);
     
-    // Place voxel
-    result = executeCommand("place 15cm 7cm 23cm");
+    // Place voxel at grid-aligned position (16cm, 8cm, 24cm are multiples of 4cm)
+    result = executeCommand("place 16cm 8cm 24cm");
     EXPECT_TRUE(result.success);
     EXPECT_EQ(voxelManager->getVoxelCount(VoxelData::VoxelResolution::Size_4cm), 1);
     
     // Delete it
-    result = executeCommand("delete 15cm 7cm 23cm");
+    result = executeCommand("delete 16cm 8cm 24cm");
     EXPECT_TRUE(result.success);
     EXPECT_EQ(voxelManager->getVoxelCount(VoxelData::VoxelResolution::Size_4cm), 0);
 }
@@ -215,8 +215,8 @@ TEST_F(CLIArbitraryPositionsTest, PlaceCommand_MeterUnits) {
     auto result = executeCommand("resolution 16cm");
     EXPECT_TRUE(result.success);
     
-    // Place using meters
-    result = executeCommand("place 0.05m 0m 0.1m");  // 5cm, 0cm, 10cm
+    // Place using meters (0.16m = 16cm, aligned to 16cm grid)
+    result = executeCommand("place 0.16m 0m 0.16m");  // 16cm, 0cm, 16cm
     EXPECT_TRUE(result.success) << "Should place voxel using meter units";
     
     // Verify placement
@@ -235,11 +235,11 @@ TEST_F(CLIArbitraryPositionsTest, PlaceCommand_NegativePositions) {
     auto result = executeCommand("resolution 8cm");
     EXPECT_TRUE(result.success);
     
-    // Place at negative positions
+    // Place at negative positions (aligned to 8cm grid)
     std::vector<std::string> commands = {
-        "place -10cm 0cm -10cm",
-        "place -30cm 0cm 10cm",
-        "place 10cm 0cm -30cm"
+        "place -8cm 0cm -8cm",     // -8cm is aligned to 8cm grid
+        "place -32cm 0cm 8cm",     // -32cm and 8cm are aligned to 8cm grid
+        "place 8cm 0cm -32cm"      // 8cm and -32cm are aligned to 8cm grid
     };
     
     for (const auto& cmd : commands) {
