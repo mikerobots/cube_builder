@@ -200,21 +200,19 @@ protected:
                 newPos.x, newPos.y, newPos.z);
         }
         
-        // Final validation - ensure position is valid
-        if (!voxelManager->isValidPosition(snappedPos, resolution)) {
+        // Final validation using new VoxelDataManager API
+        auto validation = voxelManager->validatePosition(Math::IncrementCoordinates(snappedPos), resolution);
+        if (!validation.valid) {
             Logging::Logger::getInstance().debugfc("ClickTest",
-                "Position %d,%d,%d is invalid, using fallback",
-                snappedPos.x, snappedPos.y, snappedPos.z);
+                "Position %d,%d,%d is invalid: %s, using fallback",
+                snappedPos.x, snappedPos.y, snappedPos.z, validation.errorMessage.c_str());
             
             // Fallback: use simple adjacent position calculation
             if (face.isGroundPlane()) {
-                snappedPos.y = 0;
-                // Clamp to workspace bounds
-                float voxelSizeF = getVoxelSize(resolution);
-                int maxIncrement = static_cast<int>(workspaceSize.x / voxelSizeF) / 2;
-                int minIncrement = -maxIncrement;
-                snappedPos.x = std::max(minIncrement, std::min(snappedPos.x, maxIncrement - 1));
-                snappedPos.z = std::max(minIncrement, std::min(snappedPos.z, maxIncrement - 1));
+                // Use VoxelDataManager's clampToWorkspace for proper bounds
+                Math::IncrementCoordinates clamped = voxelManager->clampToWorkspace(Math::IncrementCoordinates(snappedPos));
+                clamped = Math::IncrementCoordinates(clamped.x(), 0, clamped.z()); // Ensure on ground
+                snappedPos = clamped.value();
             } else {
                 Math::Vector3i clickedVoxel = face.getVoxelPosition().value();
                 Math::Vector3i newPos = voxelManager->getAdjacentPosition(

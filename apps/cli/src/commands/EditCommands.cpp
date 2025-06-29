@@ -166,12 +166,45 @@ std::vector<CommandRegistration> EditCommands::getCommands() {
             .withArg("y2", "End Y", "int", true)
             .withArg("z2", "End Z", "int", true)
             .withHandler([this](const CommandContext& ctx) {
-                int x1 = ctx.getIntArg(0);
-                int y1 = ctx.getIntArg(1);
-                int z1 = ctx.getIntArg(2);
-                int x2 = ctx.getIntArg(3);
-                int y2 = ctx.getIntArg(4);
-                int z2 = ctx.getIntArg(5);
+                // Validate that we can parse all coordinates
+                if (ctx.getArgCount() < 6) {
+                    return CommandResult::Error("Insufficient parameters. fill <x1:int> <y1:int> <z1:int> <x2:int> <y2:int> <z2:int> (aliases: f)");
+                }
+                
+                // Try to parse each coordinate and check for valid integers
+                std::vector<int> coords;
+                std::vector<std::string> coordNames = {"x1", "y1", "z1", "x2", "y2", "z2"};
+                
+                for (size_t i = 0; i < 6; ++i) {
+                    const std::string& arg = ctx.getArg(i);
+                    try {
+                        size_t idx = 0;
+                        int value = std::stoi(arg, &idx);
+                        // Check if the entire string was consumed (no extra characters)
+                        if (idx != arg.length()) {
+                            return CommandResult::Error("Invalid coordinate format for " + coordNames[i] + 
+                                                      ". Expected integer value, got: " + arg);
+                        }
+                        coords.push_back(value);
+                    } catch (const std::invalid_argument&) {
+                        return CommandResult::Error("Invalid coordinate format for " + coordNames[i] + 
+                                                  ". Expected integer value, got: " + arg);
+                    } catch (const std::out_of_range&) {
+                        return CommandResult::Error("Coordinate value out of range for " + coordNames[i] + ": " + arg);
+                    }
+                }
+                
+                int x1 = coords[0];
+                int y1 = coords[1];
+                int z1 = coords[2];
+                int x2 = coords[3];
+                int y2 = coords[4];
+                int z2 = coords[5];
+                
+                // Check for ground plane violations
+                if (y1 < 0 || y2 < 0) {
+                    return CommandResult::Error("Y coordinates cannot be below ground plane (Y < 0)");
+                }
                 
                 // Calculate bounds - convert from centimeters to meters
                 // Fill command receives integer centimeter values, but BoundingBox needs meters

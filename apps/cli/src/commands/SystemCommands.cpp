@@ -711,6 +711,43 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
                 return CommandResult::Success(ss.str());
             }),
             
+        // WORKSPACE command
+        CommandRegistration()
+            .withName("workspace")
+            .withDescription("Set workspace dimensions")
+            .withCategory(CommandCategory::SYSTEM)
+            .withAlias("ws")
+            .withArg("width", "Width in meters (2-8m)", "float", true)
+            .withArg("height", "Height in meters (2-8m)", "float", true)
+            .withArg("depth", "Depth in meters (2-8m)", "float", true)
+            .withHandler([this](const CommandContext& ctx) {
+                float width = ctx.getFloatArg(0);
+                float height = ctx.getFloatArg(1);
+                float depth = ctx.getFloatArg(2);
+                
+                // Validate dimensions
+                const float MIN_SIZE = 2.0f;
+                const float MAX_SIZE = 8.0f;
+                
+                if (width < MIN_SIZE || width > MAX_SIZE ||
+                    height < MIN_SIZE || height > MAX_SIZE ||
+                    depth < MIN_SIZE || depth > MAX_SIZE) {
+                    return CommandResult::Error("Workspace dimensions must be between 2m and 8m");
+                }
+                
+                // Resize workspace
+                m_voxelManager->resizeWorkspace(Math::Vector3f(width, height, depth));
+                
+                // Update ground plane grid if rendering is enabled
+                if (m_renderEngine) {
+                    m_renderEngine->updateGroundPlaneGrid(Math::Vector3f(width, height, depth));
+                }
+                
+                std::stringstream ss;
+                ss << "Workspace resized to " << width << "x" << height << "x" << depth << " meters";
+                return CommandResult::Success(ss.str());
+            }),
+            
         // CLEAR command
         CommandRegistration()
             .withName(Commands::CLEAR)

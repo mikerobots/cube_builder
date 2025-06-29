@@ -133,7 +133,6 @@ TEST_F(CameraCommandsTest, CameraCommand_InvalidPreset_REQ_11_3_18) {
         "perspective",
         "side",
         "diagonal",
-        "",
         "123",
         "frontal",  // close to "front" but not exact
         "isometric" // close to "iso" but not exact
@@ -145,11 +144,42 @@ TEST_F(CameraCommandsTest, CameraCommand_InvalidPreset_REQ_11_3_18) {
         
         // Command should fail for invalid presets
         EXPECT_FALSE(result.success) 
-            << "Camera command should fail for invalid preset: " << invalidPreset;
+            << "Camera command should fail for invalid preset: '" << invalidPreset << "'";
         
         // Error message should mention the unknown preset
         EXPECT_NE(result.message.find("Unknown"), std::string::npos)
-            << "Error message should mention 'Unknown' for preset: " << invalidPreset
+            << "Error message should mention 'Unknown' for preset: '" << invalidPreset << "'"
+            << " - Got message: " << result.message;
+    }
+    
+    // Test with quoted empty string
+    {
+        std::string command = "camera \"\"";
+        auto result = commandProcessor->execute(command);
+        
+        // Command should fail for empty preset
+        EXPECT_FALSE(result.success) 
+            << "Camera command should fail for empty preset";
+        
+        // Error message should mention unknown preset for quoted empty string
+        EXPECT_NE(result.message.find("Unknown"), std::string::npos)
+            << "Error message should mention 'Unknown' for empty preset"
+            << " - Got message: " << result.message;
+    }
+    
+    // Special case: empty string argument
+    // This triggers "Insufficient arguments" error before the handler can check
+    {
+        std::string command = "camera ";
+        auto result = commandProcessor->execute(command);
+        
+        // Command should fail for empty preset
+        EXPECT_FALSE(result.success) 
+            << "Camera command should fail for empty preset";
+        
+        // Error message should mention insufficient arguments for empty string
+        EXPECT_NE(result.message.find("Insufficient arguments"), std::string::npos)
+            << "Error message should mention 'Insufficient arguments' for empty preset"
             << " - Got message: " << result.message;
     }
 }

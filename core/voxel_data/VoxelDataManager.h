@@ -599,15 +599,6 @@ public:
         return pos.y() >= 0;
     }
     
-    bool isAlignedToGrid(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
-        return isAlignedToGridInternal(pos, resolution);
-    }
-    
-    // Position utility methods
-    Math::IncrementCoordinates snapToGrid(const Math::IncrementCoordinates& pos, 
-                                          VoxelResolution resolution) const {
-        return snapToGridInternal(pos, resolution);
-    }
     
     Math::IncrementCoordinates clampToWorkspace(const Math::IncrementCoordinates& pos) const {
         std::lock_guard<std::mutex> lock(m_mutex);
@@ -754,19 +745,22 @@ private:
             return result;
         }
         
-        // Check if within workspace bounds
+        // Check if placement position is within workspace bounds
         result.withinBounds = isWithinWorkspaceBoundsInternal(pos);
         if (!result.withinBounds) {
             result.errorMessage = "Position is outside workspace bounds";
             return result;
         }
         
-        // Check if aligned to grid
-        result.alignedToGrid = isAlignedToGridInternal(pos, resolution);
-        if (!result.alignedToGrid) {
-            result.errorMessage = "Position is not aligned to voxel grid";
+        // Check if entire voxel extent would fit within workspace bounds
+        if (!isVoxelExtentWithinBoundsInternal(pos, resolution)) {
+            result.withinBounds = false;
+            result.errorMessage = "Voxel would extend outside workspace bounds";
             return result;
         }
+        
+        // All 1cm increment positions are valid (no resolution-based grid alignment)
+        result.alignedToGrid = true;
         
         // Check for overlaps if requested
         if (checkOverlap) {
@@ -789,30 +783,35 @@ private:
         return m_workspaceManager->isPositionValid(worldPos.value());
     }
     
-    bool isAlignedToGridInternal(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
-        // Get voxel size in increments
-        float voxelSizeMeters = getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+    bool isVoxelExtentWithinBoundsInternal(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
+        // Check if entire voxel extent would fit within workspace bounds
+        Math::WorldCoordinates worldBottomCenter = Math::CoordinateConverter::incrementToWorld(pos);
+        float voxelSize = getVoxelSize(resolution);
+        float halfSize = voxelSize * 0.5f;
         
-        // Check if position is aligned to voxel grid
-        return (pos.x() % voxelSizeIncrements == 0) &&
-               (pos.y() % voxelSizeIncrements == 0) &&
-               (pos.z() % voxelSizeIncrements == 0);
+        // Calculate voxel bounds (bottom-center coordinate system)
+        Math::Vector3f voxelMin(
+            worldBottomCenter.value().x - halfSize,
+            worldBottomCenter.value().y,  // Bottom at placement Y
+            worldBottomCenter.value().z - halfSize
+        );
+        Math::Vector3f voxelMax(
+            worldBottomCenter.value().x + halfSize,
+            worldBottomCenter.value().y + voxelSize,  // Top at Y + voxelSize
+            worldBottomCenter.value().z + halfSize
+        );
+        
+        // Get workspace bounds
+        Math::Vector3f workspaceSize = m_workspaceManager->getSize();
+        Math::Vector3f workspaceMin(-workspaceSize.x * 0.5f, 0.0f, -workspaceSize.z * 0.5f);
+        Math::Vector3f workspaceMax(workspaceSize.x * 0.5f, workspaceSize.y, workspaceSize.z * 0.5f);
+        
+        // Check if voxel is completely within workspace bounds
+        return voxelMin.x >= workspaceMin.x && voxelMax.x <= workspaceMax.x &&
+               voxelMin.y >= workspaceMin.y && voxelMax.y <= workspaceMax.y &&
+               voxelMin.z >= workspaceMin.z && voxelMax.z <= workspaceMax.z;
     }
     
-    Math::IncrementCoordinates snapToGridInternal(const Math::IncrementCoordinates& pos,
-                                                  VoxelResolution resolution) const {
-        // Get voxel size in increments
-        float voxelSizeMeters = getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
-        
-        // Snap to nearest grid position
-        int snappedX = (pos.x() / voxelSizeIncrements) * voxelSizeIncrements;
-        int snappedY = (pos.y() / voxelSizeIncrements) * voxelSizeIncrements;
-        int snappedZ = (pos.z() / voxelSizeIncrements) * voxelSizeIncrements;
-        
-        return Math::IncrementCoordinates(snappedX, snappedY, snappedZ);
-    }
     
     Math::IncrementCoordinates clampToWorkspaceInternal(const Math::IncrementCoordinates& pos) const {
         // Get workspace bounds in world coordinates

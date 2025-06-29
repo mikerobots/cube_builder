@@ -71,7 +71,21 @@ TEST_F(ResolutionCommandTest, AllValidResolutionValues_1cm_REQ_11_3_12) {
     }
 }
 
-// Size_4cm test removed - not in 5-resolution system
+TEST_F(ResolutionCommandTest, AllValidResolutionValues_2cm_REQ_11_3_12) {
+    // Test resolution command with 2cm value
+    EXPECT_TRUE(initialized) << "Application must be initialized for this test";
+    
+    VoxelData::VoxelResolution initialResolution = voxelManager->getActiveResolution();
+    VoxelData::VoxelResolution targetResolution = VoxelData::VoxelResolution::Size_2cm;
+    
+    voxelManager->setActiveResolution(targetResolution);
+    
+    verifyResolutionChange(targetResolution);
+    
+    if (initialResolution != targetResolution) {
+        EXPECT_NE(voxelManager->getActiveResolution(), initialResolution);
+    }
+}
 
 TEST_F(ResolutionCommandTest, AllValidResolutionValues_4cm_REQ_11_3_12) {
     // Test resolution command with 4cm value
@@ -89,7 +103,21 @@ TEST_F(ResolutionCommandTest, AllValidResolutionValues_4cm_REQ_11_3_12) {
     }
 }
 
-// Size_16cm test removed - not in 5-resolution system
+TEST_F(ResolutionCommandTest, AllValidResolutionValues_8cm_REQ_11_3_12) {
+    // Test resolution command with 8cm value
+    EXPECT_TRUE(initialized) << "Application must be initialized for this test";
+    
+    VoxelData::VoxelResolution initialResolution = voxelManager->getActiveResolution();
+    VoxelData::VoxelResolution targetResolution = VoxelData::VoxelResolution::Size_8cm;
+    
+    voxelManager->setActiveResolution(targetResolution);
+    
+    verifyResolutionChange(targetResolution);
+    
+    if (initialResolution != targetResolution) {
+        EXPECT_NE(voxelManager->getActiveResolution(), initialResolution);
+    }
+}
 
 TEST_F(ResolutionCommandTest, AllValidResolutionValues_16cm_REQ_11_3_12) {
     // Test resolution command with 16cm value
@@ -107,7 +135,21 @@ TEST_F(ResolutionCommandTest, AllValidResolutionValues_16cm_REQ_11_3_12) {
     }
 }
 
-// Size_64cm test removed - not in 5-resolution system
+TEST_F(ResolutionCommandTest, AllValidResolutionValues_32cm_REQ_11_3_12) {
+    // Test resolution command with 32cm value
+    EXPECT_TRUE(initialized) << "Application must be initialized for this test";
+    
+    VoxelData::VoxelResolution initialResolution = voxelManager->getActiveResolution();
+    VoxelData::VoxelResolution targetResolution = VoxelData::VoxelResolution::Size_32cm;
+    
+    voxelManager->setActiveResolution(targetResolution);
+    
+    verifyResolutionChange(targetResolution);
+    
+    if (initialResolution != targetResolution) {
+        EXPECT_NE(voxelManager->getActiveResolution(), initialResolution);
+    }
+}
 
 TEST_F(ResolutionCommandTest, AllValidResolutionValues_64cm_REQ_11_3_12) {
     // Test resolution command with 64cm value
@@ -125,7 +167,21 @@ TEST_F(ResolutionCommandTest, AllValidResolutionValues_64cm_REQ_11_3_12) {
     }
 }
 
-// Size_256cm test removed - not in 5-resolution system
+TEST_F(ResolutionCommandTest, AllValidResolutionValues_128cm_REQ_11_3_12) {
+    // Test resolution command with 128cm value
+    EXPECT_TRUE(initialized) << "Application must be initialized for this test";
+    
+    VoxelData::VoxelResolution initialResolution = voxelManager->getActiveResolution();
+    VoxelData::VoxelResolution targetResolution = VoxelData::VoxelResolution::Size_128cm;
+    
+    voxelManager->setActiveResolution(targetResolution);
+    
+    verifyResolutionChange(targetResolution);
+    
+    if (initialResolution != targetResolution) {
+        EXPECT_NE(voxelManager->getActiveResolution(), initialResolution);
+    }
+}
 
 TEST_F(ResolutionCommandTest, AllValidResolutionValues_256cm_REQ_11_3_12) {
     // Test resolution command with 256cm value
@@ -143,7 +199,21 @@ TEST_F(ResolutionCommandTest, AllValidResolutionValues_256cm_REQ_11_3_12) {
     }
 }
 
-// Size_256cm test removed - not in 5-resolution system
+TEST_F(ResolutionCommandTest, AllValidResolutionValues_512cm_REQ_11_3_12) {
+    // Test resolution command with 512cm value
+    EXPECT_TRUE(initialized) << "Application must be initialized for this test";
+    
+    VoxelData::VoxelResolution initialResolution = voxelManager->getActiveResolution();
+    VoxelData::VoxelResolution targetResolution = VoxelData::VoxelResolution::Size_512cm;
+    
+    voxelManager->setActiveResolution(targetResolution);
+    
+    verifyResolutionChange(targetResolution);
+    
+    if (initialResolution != targetResolution) {
+        EXPECT_NE(voxelManager->getActiveResolution(), initialResolution);
+    }
+}
 
 // ============================================================================
 // Comprehensive Resolution Testing - All Values in One Test
@@ -153,16 +223,21 @@ TEST_F(ResolutionCommandTest, AllValidResolutionValues_Comprehensive_REQ_11_3_12
     // Test all valid resolution values in sequence
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
-    // Define all valid resolutions as per requirement (5-resolution system)
+    // Define all valid resolutions as per requirement (10-resolution system)
     std::vector<VoxelData::VoxelResolution> validResolutions = {
         VoxelData::VoxelResolution::Size_1cm,
+        VoxelData::VoxelResolution::Size_2cm,
         VoxelData::VoxelResolution::Size_4cm,
+        VoxelData::VoxelResolution::Size_8cm,
         VoxelData::VoxelResolution::Size_16cm,
+        VoxelData::VoxelResolution::Size_32cm,
         VoxelData::VoxelResolution::Size_64cm,
-        VoxelData::VoxelResolution::Size_256cm
+        VoxelData::VoxelResolution::Size_128cm,
+        VoxelData::VoxelResolution::Size_256cm,
+        VoxelData::VoxelResolution::Size_512cm
     };
     
-    // Verify we have exactly 5 resolutions as per VoxelResolution::COUNT
+    // Verify we have exactly 10 resolutions as per VoxelResolution::COUNT
     EXPECT_EQ(validResolutions.size(), static_cast<size_t>(VoxelData::VoxelResolution::COUNT))
         << "Should test all " << static_cast<int>(VoxelData::VoxelResolution::COUNT) << " resolution values";
     
@@ -197,10 +272,15 @@ TEST_F(ResolutionCommandTest, ParameterValidation_ValidResolutionStrings_REQ_11_
     
     std::vector<ResolutionMapping> resolutionMappings = {
         {"1cm", VoxelData::VoxelResolution::Size_1cm},
+        {"2cm", VoxelData::VoxelResolution::Size_2cm},
         {"4cm", VoxelData::VoxelResolution::Size_4cm},
+        {"8cm", VoxelData::VoxelResolution::Size_8cm},
         {"16cm", VoxelData::VoxelResolution::Size_16cm},
+        {"32cm", VoxelData::VoxelResolution::Size_32cm},
         {"64cm", VoxelData::VoxelResolution::Size_64cm},
-        {"256cm", VoxelData::VoxelResolution::Size_256cm}
+        {"128cm", VoxelData::VoxelResolution::Size_128cm},
+        {"256cm", VoxelData::VoxelResolution::Size_256cm},
+        {"512cm", VoxelData::VoxelResolution::Size_512cm}
     };
     
     for (const auto& mapping : resolutionMappings) {
@@ -236,7 +316,7 @@ TEST_F(ResolutionCommandTest, StateConsistency_ResolutionPersistence_REQ_11_3_12
     EXPECT_EQ(currentResolution, testResolution) << "Resolution should persist after setting";
     
     // Place a voxel and verify it uses the correct resolution
-    Math::Vector3i position(0, 0, 0);
+    Math::IncrementCoordinates position(0, 0, 0);
     bool placed = voxelManager->setVoxel(position, testResolution, true);
     EXPECT_TRUE(placed) << "Should be able to place voxel with current resolution";
     
@@ -314,10 +394,15 @@ TEST_F(ResolutionCommandTest, ResolutionValidation_VoxelSizeCalculation_REQ_11_3
     
     std::vector<ResolutionSizeMapping> sizeMappings = {
         {VoxelData::VoxelResolution::Size_1cm, 0.01f},
+        {VoxelData::VoxelResolution::Size_2cm, 0.02f},
         {VoxelData::VoxelResolution::Size_4cm, 0.04f},
+        {VoxelData::VoxelResolution::Size_8cm, 0.08f},
         {VoxelData::VoxelResolution::Size_16cm, 0.16f},
+        {VoxelData::VoxelResolution::Size_32cm, 0.32f},
         {VoxelData::VoxelResolution::Size_64cm, 0.64f},
-        {VoxelData::VoxelResolution::Size_256cm, 2.56f}
+        {VoxelData::VoxelResolution::Size_128cm, 1.28f},
+        {VoxelData::VoxelResolution::Size_256cm, 2.56f},
+        {VoxelData::VoxelResolution::Size_512cm, 5.12f}
     };
     
     for (const auto& mapping : sizeMappings) {
@@ -344,7 +429,7 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_BasicSwitch_
     VoxelData::VoxelResolution initialResolution = VoxelData::VoxelResolution::Size_4cm;
     voxelManager->setActiveResolution(initialResolution);
     
-    Math::Vector3i voxelPosition(0, 0, 0);
+    Math::IncrementCoordinates voxelPosition(0, 0, 0);
     bool placed = voxelManager->setVoxel(voxelPosition, initialResolution, true);
     EXPECT_TRUE(placed) << "Should be able to place voxel at initial resolution";
     
@@ -378,11 +463,11 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_MultipleVoxe
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
     // Place voxels at different resolutions (spaced far apart to avoid collision)
-    std::vector<std::pair<Math::Vector3i, VoxelData::VoxelResolution>> voxelsToPlace = {
-        {Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm},
-        {Math::Vector3i(100, 0, 0), VoxelData::VoxelResolution::Size_4cm},
-        {Math::Vector3i(0, 100, 0), VoxelData::VoxelResolution::Size_16cm},
-        {Math::Vector3i(-100, 0, 0), VoxelData::VoxelResolution::Size_64cm}
+    std::vector<std::pair<Math::IncrementCoordinates, VoxelData::VoxelResolution>> voxelsToPlace = {
+        {Math::IncrementCoordinates(0, 0, 0), VoxelData::VoxelResolution::Size_1cm},
+        {Math::IncrementCoordinates(100, 0, 0), VoxelData::VoxelResolution::Size_4cm},
+        {Math::IncrementCoordinates(0, 100, 0), VoxelData::VoxelResolution::Size_16cm},
+        {Math::IncrementCoordinates(-100, 0, 0), VoxelData::VoxelResolution::Size_64cm}
     };
     
     // Place all voxels
@@ -437,7 +522,7 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_NewPlacement
     VoxelData::VoxelResolution initialResolution = VoxelData::VoxelResolution::Size_4cm;
     voxelManager->setActiveResolution(initialResolution);
     
-    Math::Vector3i firstPosition(0, 0, 0);
+    Math::IncrementCoordinates firstPosition(0, 0, 0);
     bool placed1 = voxelManager->setVoxel(firstPosition, initialResolution, true);
     EXPECT_TRUE(placed1) << "Should place first voxel at initial resolution";
     
@@ -446,7 +531,7 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_NewPlacement
     voxelManager->setActiveResolution(newResolution);
     
     // Place new voxel at different position using active resolution
-    Math::Vector3i secondPosition(100, 0, 0);
+    Math::IncrementCoordinates secondPosition(100, 0, 0);
     bool placed2 = voxelManager->setVoxel(secondPosition, newResolution, true);
     EXPECT_TRUE(placed2) << "Should place second voxel at new active resolution";
     
@@ -475,7 +560,7 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_ResolutionCo
     
     // Place first voxel at res1
     voxelManager->setActiveResolution(res1);
-    Math::Vector3i pos1(0, 0, 0);
+    Math::IncrementCoordinates pos1(0, 0, 0);
     bool placed1 = voxelManager->setVoxel(pos1, res1, true);
     EXPECT_TRUE(placed1) << "Should place first voxel at 8cm resolution";
     
@@ -485,7 +570,7 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_ResolutionCo
     
     // Switch to res2 and place second voxel
     voxelManager->setActiveResolution(res2);
-    Math::Vector3i pos2(100, 0, 0);
+    Math::IncrementCoordinates pos2(100, 0, 0);
     bool placed2 = voxelManager->setVoxel(pos2, res2, true);
     EXPECT_TRUE(placed2) << "Should place second voxel at 16cm resolution";
     
@@ -519,13 +604,13 @@ TEST_F(ResolutionCommandTest, ResolutionSwitchingWithExistingVoxels_VisualFeedba
     
     // Place small voxel
     voxelManager->setActiveResolution(smallRes);
-    Math::Vector3i smallVoxelPos(0, 0, 0);
+    Math::IncrementCoordinates smallVoxelPos(0, 0, 0);
     bool placedSmall = voxelManager->setVoxel(smallVoxelPos, smallRes, true);
     EXPECT_TRUE(placedSmall) << "Should place small voxel";
     
     // Place large voxel
     voxelManager->setActiveResolution(largeRes);
-    Math::Vector3i largeVoxelPos(100, 0, 0);
+    Math::IncrementCoordinates largeVoxelPos(100, 0, 0);
     bool placedLarge = voxelManager->setVoxel(largeVoxelPos, largeRes, true);
     EXPECT_TRUE(placedLarge) << "Should place large voxel";
     
@@ -669,8 +754,11 @@ TEST_F(ResolutionCommandTest, InvalidResolutionValues_FormatIssues_REQ_11_3_13) 
         EXPECT_FALSE(result.success) 
             << "Command 'resolution " << invalidValue << "' should fail";
         
-        EXPECT_TRUE(result.message.find("Invalid resolution") != std::string::npos)
-            << "Error message should mention 'Invalid resolution' for value: " << invalidValue
+        // For "1 cm" with space, the error is "Too many arguments" which is also correct
+        bool hasValidError = (result.message.find("Invalid resolution") != std::string::npos) ||
+                           (result.message.find("Too many arguments") != std::string::npos);
+        EXPECT_TRUE(hasValidError)
+            << "Error message should mention 'Invalid resolution' or 'Too many arguments' for value: " << invalidValue
             << "\nActual error message: " << result.message;
         
         VoxelData::VoxelResolution currentResolution = voxelManager->getActiveResolution();
@@ -731,7 +819,8 @@ TEST_F(ResolutionCommandTest, InvalidResolutionValues_ErrorMessageContent_REQ_11
     
     // Verify error message contains all valid resolution values
     std::vector<std::string> expectedValues = {
-        "1cm", "4cm", "16cm", "64cm", "256cm"
+        "1cm", "2cm", "4cm", "8cm", "16cm", 
+        "32cm", "64cm", "128cm", "256cm", "512cm"
     };
     
     for (const std::string& expectedValue : expectedValues) {

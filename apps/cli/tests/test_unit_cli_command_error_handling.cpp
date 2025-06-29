@@ -134,11 +134,13 @@ TEST_F(CommandErrorHandlingTest, PlaceCommand_ErrorMessages_REQ_11_5_2) {
                 result3.message.find("negative") != std::string::npos)
         << "Error should mention ground plane constraint: " << result3.message;
     
-    // Test case 4: Extra parameters should be ignored (lenient parsing)
+    // Test case 4: Extra parameters should cause an error (strict parsing)
     auto result4 = commandProcessor->execute("place 0cm 0cm 0cm extra params");
-    EXPECT_TRUE(result4.success) << "Place command should succeed and ignore extra parameters";
-    EXPECT_FALSE(result4.message.empty()) << "Success message should be provided";
-    EXPECT_NE(result4.message.find("placed"), std::string::npos) << "Success message should mention placement: " << result4.message;
+    EXPECT_FALSE(result4.success) << "Place command should fail with extra parameters";
+    EXPECT_FALSE(result4.message.empty()) << "Error message should be provided";
+    EXPECT_TRUE(result4.message.find("Too many") != std::string::npos ||
+                result4.message.find("arguments") != std::string::npos) 
+        << "Error should mention too many arguments: " << result4.message;
 }
 
 TEST_F(CommandErrorHandlingTest, FillCommand_ErrorMessages_REQ_11_5_2) {
@@ -150,13 +152,13 @@ TEST_F(CommandErrorHandlingTest, FillCommand_ErrorMessages_REQ_11_5_2) {
     auto result1 = commandProcessor->execute("fill 0cm 0cm");
     EXPECT_FALSE(result1.success) << "Fill command should fail with insufficient parameters";
     EXPECT_FALSE(result1.message.empty()) << "Error message should provide guidance";
-    EXPECT_TRUE(result1.message.find("parameter") != std::string::npos ||
-                result1.message.find("coordinate") != std::string::npos ||
+    EXPECT_TRUE(result1.message.find("argument") != std::string::npos ||
+                result1.message.find("parameter") != std::string::npos ||
                 result1.message.find("require") != std::string::npos)
-        << "Error should mention parameter requirements: " << result1.message;
+        << "Error should mention missing arguments: " << result1.message;
     
     // Test case 2: Invalid coordinate format
-    auto result2 = commandProcessor->execute("fill 0cm 0cm 0cm invalid 0cm 0cm");
+    auto result2 = commandProcessor->execute("fill 0 0 0 invalid 0 0");
     EXPECT_FALSE(result2.success) << "Fill command should fail with invalid coordinates";
     EXPECT_FALSE(result2.message.empty()) << "Error message should provide guidance";
     EXPECT_TRUE(result2.message.find("coordinate") != std::string::npos ||
@@ -166,7 +168,7 @@ TEST_F(CommandErrorHandlingTest, FillCommand_ErrorMessages_REQ_11_5_2) {
     
     // Test case 3: Ground plane violation
     // The fill command correctly rejects Y < 0 coordinates per REQ-11.3.10
-    auto result3 = commandProcessor->execute("fill 0cm -10cm 0cm 10cm 0cm 10cm");
+    auto result3 = commandProcessor->execute("fill 0 -10 0 10 0 10");
     EXPECT_FALSE(result3.success) << "Fill command should fail for Y < 0";
     EXPECT_FALSE(result3.message.empty()) << "Error message should be provided";
     EXPECT_TRUE(result3.message.find("ground") != std::string::npos ||
@@ -334,7 +336,7 @@ TEST_F(CommandErrorHandlingTest, FillCommand_StateConsistency_REQ_11_5_3) {
         << "System state should remain unchanged after parameter error";
     
     // Test case 2: Invalid coordinates should not change state
-    auto result2 = commandProcessor->execute("fill 0cm 0cm 0cm invalid 0cm 0cm");
+    auto result2 = commandProcessor->execute("fill 0 0 0 invalid 0 0");
     EXPECT_FALSE(result2.success);
     SystemState stateAfterError2(this);
     EXPECT_TRUE(initialState == stateAfterError2)
@@ -342,7 +344,7 @@ TEST_F(CommandErrorHandlingTest, FillCommand_StateConsistency_REQ_11_5_3) {
     
     // Test case 3: Ground plane coordinates - current implementation allows this
     // NOTE: This documents current behavior (potential requirement mismatch with REQ-11.3.10)
-    auto result3 = commandProcessor->execute("fill 0cm -10cm 0cm 10cm 0cm 10cm");
+    auto result3 = commandProcessor->execute("fill 0 -10 0 10 0 10");
     SystemState stateAfterFill(this);
     if (result3.success) {
         // Current implementation succeeds and changes voxel count

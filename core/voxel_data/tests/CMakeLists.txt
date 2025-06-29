@@ -4,6 +4,7 @@ find_package(GTest REQUIRED)
 set(VOXEL_DATA_TEST_SOURCES
     test_unit_core_voxel_data_batch_operations.cpp
     test_unit_core_voxel_data_collision_simple.cpp
+    test_unit_core_voxel_data_extent_validation.cpp
     test_unit_core_voxel_data_grid.cpp
     test_unit_core_voxel_data_manager.cpp
     test_unit_core_voxel_data_position_validation.cpp

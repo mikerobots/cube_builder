@@ -205,12 +205,12 @@ TEST_F(PreviewPositioningTest, ExactPositionPreview_PlacementValidation) {
         // Test preview at exact same position (should be invalid due to overlap)
         previewManager->setPreviewPosition(existingVoxelPos, VoxelResolution::Size_4cm);
         
-        // Validate placement using PlacementUtils
-        auto validationResult = PlacementUtils::validatePlacement(
-            IncrementCoordinates(existingVoxelPos), VoxelResolution::Size_4cm, voxelManager->getWorkspaceSize());
+        // Use new VoxelDataManager validation API
+        auto validation = voxelManager->validatePosition(
+            IncrementCoordinates(existingVoxelPos), VoxelResolution::Size_4cm);
         
         // Update preview with validation result
-        previewManager->setValidationResult(validationResult);
+        previewManager->setValidationResult(validation.valid ? PlacementValidationResult::Valid : PlacementValidationResult::Invalid);
         
         // Verify preview still shows exact position but with invalid state
         EXPECT_TRUE(previewManager->hasPreview());
@@ -222,9 +222,9 @@ TEST_F(PreviewPositioningTest, ExactPositionPreview_PlacementValidation) {
         if (voxelManager->isValidIncrementPosition(adjacentPos)) {
             previewManager->setPreviewPosition(adjacentPos, VoxelResolution::Size_4cm);
             
-            auto adjacentValidation = PlacementUtils::validatePlacement(
-                IncrementCoordinates(adjacentPos), VoxelResolution::Size_4cm, voxelManager->getWorkspaceSize());
-            previewManager->setValidationResult(adjacentValidation);
+            auto adjacentValidation = voxelManager->validatePosition(
+                IncrementCoordinates(adjacentPos), VoxelResolution::Size_4cm);
+            previewManager->setValidationResult(adjacentValidation.valid ? PlacementValidationResult::Valid : PlacementValidationResult::Invalid);
             
             EXPECT_TRUE(previewManager->hasPreview());
             EXPECT_EQ(previewManager->getPreviewPosition(), adjacentPos);

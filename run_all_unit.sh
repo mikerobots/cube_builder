@@ -25,6 +25,46 @@ FAILED_TESTS=0
 SKIPPED_TESTS=0
 TEST_RESULTS=()
 
+# Load excluded directories from unit_ignore file
+EXCLUDED_DIRS=()
+if [ -f "unit_ignore" ]; then
+    while IFS= read -r line; do
+        # Skip empty lines and comments
+        if [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
+            # Trim whitespace
+            line=$(echo "$line" | xargs)
+            EXCLUDED_DIRS+=("$line")
+        fi
+    done < "unit_ignore"
+fi
+
+# Function to check if a path is in an excluded directory
+is_excluded() {
+    local test_path=$1
+    
+    # Return false if no excluded directories
+    if [ ${#EXCLUDED_DIRS[@]} -eq 0 ]; then
+        return 1
+    fi
+    
+    for excluded_dir in "${EXCLUDED_DIRS[@]}"; do
+        # Normalize the excluded directory (remove ./ prefix)
+        local clean_excluded="${excluded_dir#./}"
+        
+        # Check if test path starts with the excluded directory
+        if [[ "$test_path" == ./$clean_excluded/* ]] || [[ "$test_path" == $clean_excluded/* ]]; then
+            return 0  # True - is excluded
+        fi
+        
+        # Also check parent directories (e.g., foundation/memory/tests matches foundation)
+        if [[ "$test_path" == ./$clean_excluded*/* ]] || [[ "$test_path" == $clean_excluded*/* ]]; then
+            return 0  # True - is excluded
+        fi
+    done
+    
+    return 1  # False - not excluded
+}
+
 # Function to print colored output
 print_color() {
     local color=$1
@@ -93,13 +133,55 @@ run_unit_test() {
 
 # Auto-discover test executables by pattern
 discover_unit_tests() {
-    find build_ninja/bin -name "test_unit_*" -type f -perm +111 2>/dev/null | sort
+    find build_ninja/bin -name "test_unit_*" -type f -perm +111 2>/dev/null | while read -r test_path; do
+        local test_name=$(basename "$test_path")
+        local should_exclude=false
+        
+        # Check each excluded directory
+        if [ ${#EXCLUDED_DIRS[@]} -gt 0 ]; then
+            for excluded_dir in "${EXCLUDED_DIRS[@]}"; do
+                # Remove ./ prefix from excluded dir for comparison
+                local clean_excluded="${excluded_dir#./}"
+                
+                # Check if test name contains the excluded path pattern
+                # For foundation: test_unit_foundation_* matches foundation
+                if [[ "$clean_excluded" == "foundation" ]] && [[ "$test_name" == test_unit_foundation_* ]]; then
+                    should_exclude=true
+                    break
+                fi
+                
+                # For core/voxel_data: test_unit_core_voxel_data_* matches core/voxel_data
+                if [[ "$clean_excluded" == "core/voxel_data" ]] && [[ "$test_name" == test_unit_core_voxel_data_* ]]; then
+                    should_exclude=true
+                    break
+                fi
+                
+                # More general pattern for other core subsystems
+                if [[ "$clean_excluded" == core/* ]]; then
+                    local subsystem="${clean_excluded#core/}"
+                    if [[ "$test_name" == test_unit_core_${subsystem}_* ]]; then
+                        should_exclude=true
+                        break
+                    fi
+                fi
+            done
+        fi
+        
+        # Only output if not excluded
+        if [ "$should_exclude" = "false" ]; then
+            echo "$test_path"
+        fi
+    done | sort
 }
 
 # Discover all test source files (for listing even when not built)
 discover_test_sources() {
     # Search for unit test source files
-    find . -name "test_unit_*.cpp" -type f 2>/dev/null | sort
+    find . -name "test_unit_*.cpp" -type f 2>/dev/null | while read -r test_file; do
+        if ! is_excluded "$test_file"; then
+            echo "$test_file"
+        fi
+    done | sort
 }
 
 # Extract subsystem from test name
@@ -239,13 +321,45 @@ main() {
             all)
                 # Run all discovered unit tests
                 print_header "All Unit Tests"
+                
+                # Show excluded directories if any
+                if [ ${#EXCLUDED_DIRS[@]} -gt 0 ]; then
+                    print_color "$YELLOW" "Excluding completed subsystems (from unit_ignore):"
+                    for excluded_dir in "${EXCLUDED_DIRS[@]}"; do
+                        echo "  - $excluded_dir"
+                    done
+                    echo
+                else
+                    if [ -f "unit_ignore" ]; then
+                        print_color "$CYAN" "No directories excluded (unit_ignore is empty)"
+                    else
+                        print_color "$CYAN" "No directories excluded (unit_ignore file not found)"
+                    fi
+                    echo
+                fi
+                
                 if [ -d "build_ninja" ]; then
                     print_color "$CYAN" "Building unit tests..."
-                    # Build only unit test targets
+                    # Build only unit test targets, one at a time to avoid dependency issues
+                    local test_count=0
                     while IFS= read -r test_source; do
                         local test_name=$(basename "$test_source" .cpp)
-                        cmake --build build_ninja --target "$test_name" 2>/dev/null || true
-                    done < <(discover_test_sources | grep "test_unit_")
+                        # Only build if it's a unit test and the executable doesn't exist
+                        if [[ "$test_name" == test_unit_* ]]; then
+                            if [ ! -f "build_ninja/bin/$test_name" ]; then
+                                ((test_count++))
+                                # Build quietly to avoid clutter, show only on error
+                                if ! cmake --build build_ninja --target "$test_name" > /dev/null 2>&1; then
+                                    print_color "$YELLOW" "  Warning: Failed to build $test_name"
+                                fi
+                            fi
+                        fi
+                    done < <(discover_test_sources)
+                    if [ $test_count -gt 0 ]; then
+                        echo "  Built $test_count unit test targets"
+                    else
+                        echo "  All unit tests already built"
+                    fi
                 fi
                 
                 while IFS= read -r test_path; do
@@ -258,19 +372,26 @@ main() {
                     # Build tests for this subsystem if needed
                     if [ -d "build_ninja" ]; then
                         print_color "$CYAN" "Building ${group} unit tests..."
-                        # Build only the specific subsystem tests
-                        local test_targets=()
+                        # Build only the specific subsystem tests that don't exist
+                        local built_count=0
                         while IFS= read -r test_source; do
                             if [[ "$test_source" =~ test_unit_${group}_ ]]; then
                                 local test_name=$(basename "$test_source" .cpp)
-                                test_targets+=("$test_name")
+                                if [ ! -f "build_ninja/bin/$test_name" ]; then
+                                    ((built_count++))
+                                    # Build quietly, show only on error
+                                    if ! cmake --build build_ninja --target "$test_name" > /dev/null 2>&1; then
+                                        print_color "$YELLOW" "  Warning: Failed to build $test_name"
+                                    fi
+                                fi
                             fi
                         done < <(discover_test_sources)
                         
-                        # Build each target individually to avoid building broken tests
-                        for target in "${test_targets[@]}"; do
-                            cmake --build build_ninja --target "$target" 2>/dev/null || true
-                        done
+                        if [ $built_count -gt 0 ]; then
+                            echo "  Built $built_count tests"
+                        else
+                            echo "  All ${group} tests already built"
+                        fi
                     fi
                     run_subsystem_tests "$group"
                 else

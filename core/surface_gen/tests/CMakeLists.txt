@@ -10,6 +10,7 @@ set(SURFACE_GEN_TEST_SOURCES
     test_unit_core_surface_gen_topology_preserver.cpp
     test_unit_core_surface_gen_mesh_validator.cpp
     test_unit_core_surface_gen_performance.cpp
+    test_unit_core_surface_gen_preview.cpp
     test_unit_core_surface_gen_requirements.cpp
     test_unit_core_surface_gen_settings.cpp
     test_unit_core_surface_gen_types.cpp

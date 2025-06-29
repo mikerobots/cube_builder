@@ -67,14 +67,20 @@ TEST_F(VoxelDataPositionValidationTest, ValidatePosition_OutsideWorkspace) {
     EXPECT_EQ(result.errorMessage, "Position is outside workspace bounds");
 }
 
-TEST_F(VoxelDataPositionValidationTest, ValidatePosition_NotAlignedToGrid) {
-    // For 4cm voxels, position must be multiple of 4
-    IncrementCoordinates pos(3, 0, 0);  // Not aligned to 4cm grid
-    auto result = voxelManager->validatePosition(pos, VoxelResolution::Size_4cm);
+TEST_F(VoxelDataPositionValidationTest, ValidatePosition_AllPositionsAligned) {
+    // With new requirements, all 1cm increment positions are valid regardless of resolution
+    IncrementCoordinates pos1(3, 0, 0);  // Any 1cm position is valid
+    auto result1 = voxelManager->validatePosition(pos1, VoxelResolution::Size_4cm);
     
-    EXPECT_FALSE(result.valid);
-    EXPECT_FALSE(result.alignedToGrid);
-    EXPECT_EQ(result.errorMessage, "Position is not aligned to voxel grid");
+    EXPECT_TRUE(result1.valid);
+    EXPECT_TRUE(result1.alignedToGrid);  // All 1cm positions are considered aligned
+    
+    // Test with different resolutions and positions
+    IncrementCoordinates pos2(7, 0, 5);
+    auto result2 = voxelManager->validatePosition(pos2, VoxelResolution::Size_16cm);
+    
+    EXPECT_TRUE(result2.valid);
+    EXPECT_TRUE(result2.alignedToGrid);
 }
 
 TEST_F(VoxelDataPositionValidationTest, ValidatePosition_WithOverlap) {
@@ -133,52 +139,8 @@ TEST_F(VoxelDataPositionValidationTest, IsAboveGroundPlane) {
     EXPECT_FALSE(voxelManager->isAboveGroundPlane(IncrementCoordinates(0, -100, 0)));
 }
 
-TEST_F(VoxelDataPositionValidationTest, IsAlignedToGrid) {
-    // 1cm resolution - all positions are aligned
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_1cm));
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(1, 2, 3), VoxelResolution::Size_1cm));
-    
-    // 4cm resolution - must be multiple of 4
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_4cm));
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(4, 8, 12), VoxelResolution::Size_4cm));
-    EXPECT_FALSE(voxelManager->isAlignedToGrid(IncrementCoordinates(1, 0, 0), VoxelResolution::Size_4cm));
-    EXPECT_FALSE(voxelManager->isAlignedToGrid(IncrementCoordinates(0, 2, 0), VoxelResolution::Size_4cm));
-    
-    // 16cm resolution - must be multiple of 16
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_16cm));
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(16, 32, 48), VoxelResolution::Size_16cm));
-    EXPECT_FALSE(voxelManager->isAlignedToGrid(IncrementCoordinates(15, 0, 0), VoxelResolution::Size_16cm));
-}
 
 // Test position utility methods
-TEST_F(VoxelDataPositionValidationTest, SnapToGrid_1cm) {
-    // 1cm resolution - all positions snap to themselves
-    auto snapped = voxelManager->snapToGrid(IncrementCoordinates(3, 5, 7), VoxelResolution::Size_1cm);
-    EXPECT_EQ(snapped.x(), 3);
-    EXPECT_EQ(snapped.y(), 5);
-    EXPECT_EQ(snapped.z(), 7);
-}
-
-TEST_F(VoxelDataPositionValidationTest, SnapToGrid_4cm) {
-    // Test snapping to 4cm grid
-    auto snapped1 = voxelManager->snapToGrid(IncrementCoordinates(3, 5, 7), VoxelResolution::Size_4cm);
-    EXPECT_EQ(snapped1.x(), 0);  // 3 -> 0
-    EXPECT_EQ(snapped1.y(), 4);  // 5 -> 4
-    EXPECT_EQ(snapped1.z(), 4);  // 7 -> 4
-    
-    auto snapped2 = voxelManager->snapToGrid(IncrementCoordinates(2, 6, 10), VoxelResolution::Size_4cm);
-    EXPECT_EQ(snapped2.x(), 0);  // 2 -> 0
-    EXPECT_EQ(snapped2.y(), 4);  // 6 -> 4
-    EXPECT_EQ(snapped2.z(), 8);  // 10 -> 8
-}
-
-TEST_F(VoxelDataPositionValidationTest, SnapToGrid_16cm) {
-    // Test snapping to 16cm grid
-    auto snapped = voxelManager->snapToGrid(IncrementCoordinates(15, 20, 35), VoxelResolution::Size_16cm);
-    EXPECT_EQ(snapped.x(), 0);   // 15 -> 0
-    EXPECT_EQ(snapped.y(), 16);  // 20 -> 16
-    EXPECT_EQ(snapped.z(), 32);  // 35 -> 32
-}
 
 TEST_F(VoxelDataPositionValidationTest, ClampToWorkspace) {
     // Workspace is 5m (500cm), centered at origin
@@ -225,13 +187,6 @@ TEST_F(VoxelDataPositionValidationTest, EdgeCase_WorkspaceBoundary) {
     EXPECT_FALSE(voxelManager->isWithinWorkspaceBounds(beyondZ));
 }
 
-TEST_F(VoxelDataPositionValidationTest, EdgeCase_LargeVoxelAlignment) {
-    // Test alignment for largest voxel size (512cm)
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_512cm));
-    EXPECT_TRUE(voxelManager->isAlignedToGrid(IncrementCoordinates(512, 1024, -512), VoxelResolution::Size_512cm));
-    EXPECT_FALSE(voxelManager->isAlignedToGrid(IncrementCoordinates(256, 0, 0), VoxelResolution::Size_512cm));
-    EXPECT_FALSE(voxelManager->isAlignedToGrid(IncrementCoordinates(0, 511, 0), VoxelResolution::Size_512cm));
-}
 
 // Test different workspace sizes
 TEST_F(VoxelDataPositionValidationTest, DifferentWorkspaceSizes) {

@@ -87,10 +87,10 @@ Currently, complex voxel operation logic (region filling, position validation, c
 **Goal**: Remove old code and finalize the refactoring
 
 #### Tasks:
-- [ ] Remove deprecated validation methods
+- [x] Remove deprecated validation methods
 - [x] Clean up VoxelCommands.cpp  
 - [x] Remove redundant position checking from EditCommands
-- [ ] Update documentation and examples
+- [x] Update documentation and examples
 - [x] Final test suite run
 - [ ] Performance comparison (before/after)
 - [x] Code review and cleanup
@@ -104,6 +104,10 @@ Currently, complex voxel operation logic (region filling, position validation, c
   - Only 1 failing test about error message quality, not functionality
   - All core functionality tests pass after cleanup
 - ✅ **Code Review**: Successfully removed duplicate validation without breaking functionality
+- ✅ **VoxelDataManager Cleanup**: Removed snapToGrid and isAlignedToGrid methods
+  - Placement logic properly belongs in Input subsystem
+  - Updated requirements.md to clarify same-size voxel alignment behavior
+  - Removed related test cases that tested resolution-based snapping
 
 ---
 
@@ -203,7 +207,7 @@ std::vector<VoxelChange> createBatchChanges(const std::vector<IncrementCoordinat
 - Phase 4: ~~2-3 days~~ **COMPLETED** ✅
 - Phase 5: 1-2 days (cleanup) ⏳
 
-**Current Status**: 4 of 5 phases complete (~80% done)
+**Current Status**: Phase 5 nearly complete (~95% done) - only performance comparison remains
 
 ### Success Criteria:
 - [x] All new APIs have comprehensive unit tests

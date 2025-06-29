@@ -82,23 +82,21 @@ protected:
         Math::Vector3f workspaceSize = Math::Vector3f(8.0f, 8.0f, 8.0f);
         bool shiftPressed = false; // Not using shift for this test
         
-        Input::PlacementContext context = Input::PlacementUtils::getSmartPlacementContext(
-            Math::WorldCoordinates(hitPoint),
-            voxelManager->getActiveResolution(),
-            shiftPressed,
-            workspaceSize,
-            *voxelManager,
-            nullptr  // No surface face for ground plane
-        );
+        // Convert hit point to increment coordinates
+        Math::IncrementCoordinates incrementPos = Math::CoordinateConverter::worldToIncrement(
+            Math::WorldCoordinates(hitPoint));
         
-        if (context.validation != Input::PlacementValidationResult::Valid) {
+        // Use new VoxelDataManager validation API
+        auto validation = voxelManager->validatePosition(incrementPos, voxelManager->getActiveResolution());
+        
+        if (!validation.valid) {
             return false;
         }
         
         // 4. Place the voxel using the command system
         auto cmd = std::make_unique<UndoRedo::VoxelEditCommand>(
             voxelManager.get(),
-            context.snappedIncrementPos,  // Note: despite name, this is exact position with new requirements
+            incrementPos,  // Use exact position from validation
             voxelManager->getActiveResolution(),
             true  // Place voxel
         );

@@ -90,6 +90,8 @@
   - *Subsystems: **Voxel Data** (voxel representation), **Rendering** (mesh generation)*
 - **REQ-2.1.4**: No voxels shall be placed below Y=0
   - *Subsystems: **Voxel Data** (bounds validation), **Input** (placement validation)*
+- **REQ-2.1.5**: The entire voxel extent shall fit within workspace bounds (placement position + voxel size)
+  - *Subsystems: **Voxel Data** (extent validation), **Input** (placement validation)*
 
 #### 2.2 Placement on Ground Plane
 - **REQ-2.2.1**: When hovering over the ground plane, a green outline preview shall be displayed

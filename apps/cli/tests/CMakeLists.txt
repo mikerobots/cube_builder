@@ -3,6 +3,9 @@ find_package(GTest REQUIRED)
 # Auto-discover CLI and interaction integration test files
 file(GLOB CLI_INTEGRATION_TEST_FILES "test_integration_cli_*.cpp" "test_integration_interaction_*.cpp")
 
+# Auto-discover CLI unit test files
+file(GLOB CLI_UNIT_TEST_FILES "test_unit_cli_*.cpp")
+
 # Function to determine appropriate libraries for each test
 function(get_test_libraries TEST_NAME OUT_LIBRARIES)
     # Default libraries for all tests
@@ -254,3 +257,33 @@ add_test(NAME cli_smoothing_commands_tests COMMAND test_unit_cli_smoothing_comma
 
 # Discover tests
 gtest_discover_tests(test_unit_cli_smoothing_commands)
+
+# Create executables for auto-discovered unit tests
+foreach(TEST_FILE ${CLI_UNIT_TEST_FILES})
+    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
+    
+    # Skip if already manually defined above
+    if(NOT TARGET ${TEST_NAME})
+        message(STATUS "Creating auto-discovered CLI unit test: ${TEST_NAME}")
+        
+        add_executable(${TEST_NAME} ${TEST_FILE})
+        
+        target_include_directories(${TEST_NAME} PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../include
+            ${CMAKE_SOURCE_DIR}/core
+            ${CMAKE_SOURCE_DIR}/foundation
+        )
+        
+        # Get appropriate libraries for this test
+        get_test_libraries(${TEST_NAME} TEST_LIBS)
+        target_link_libraries(${TEST_NAME} PRIVATE ${TEST_LIBS})
+        
+        target_compile_features(${TEST_NAME} PRIVATE cxx_std_20)
+        
+        # Add test
+        add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+        
+        # Discover Google Tests
+        gtest_discover_tests(${TEST_NAME})
+    endif()
+endforeach()

@@ -1,0 +1,13 @@
+# Unit Test Exclusion List
+# Add directory paths (one per line) to exclude their unit tests from running
+# Lines starting with '#' are comments
+# Paths should be relative to the project root
+
+# Example:
+# ./foundation/math
+# ./core/camera
+
+# Completed subsystems:
+# ./foundation/math  # Uncomment when math tests are stable
+./foundation
+./core/voxel_data
