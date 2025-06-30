@@ -190,41 +190,48 @@ public:
     static Quaternion lookRotation(const Vector3f& forward, const Vector3f& up = Vector3f::UnitY()) {
         Vector3f f = forward.normalized();
         Vector3f u = up.normalized();
-        Vector3f r = f.cross(u).normalized();
-        u = r.cross(f);
+        Vector3f r = u.cross(f).normalized();
+        u = f.cross(r).normalized();
         
-        float trace = r.x + u.y + f.z;
+        // Create rotation matrix from basis vectors
+        // r = right, u = up, f = forward
+        float m00 = r.x, m01 = r.y, m02 = r.z;
+        float m10 = u.x, m11 = u.y, m12 = u.z;
+        float m20 = f.x, m21 = f.y, m22 = f.z;
+        
+        // Convert rotation matrix to quaternion
+        float trace = m00 + m11 + m22;
         if (trace > 0.0f) {
-            float s = std::sqrt(trace + 1.0f) * 2.0f;
+            float s = 0.5f / std::sqrt(trace + 1.0f);
             return Quaternion(
-                (u.z - f.y) / s,
-                (f.x - r.z) / s,
-                (r.y - u.x) / s,
-                0.25f * s
+                (m21 - m12) * s,
+                (m02 - m20) * s,
+                (m10 - m01) * s,
+                0.25f / s
             );
-        } else if (r.x > u.y && r.x > f.z) {
-            float s = std::sqrt(1.0f + r.x - u.y - f.z) * 2.0f;
+        } else if (m00 > m11 && m00 > m22) {
+            float s = 2.0f * std::sqrt(1.0f + m00 - m11 - m22);
             return Quaternion(
                 0.25f * s,
-                (r.y + u.x) / s,
-                (f.x + r.z) / s,
-                (u.z - f.y) / s
+                (m01 + m10) / s,
+                (m02 + m20) / s,
+                (m21 - m12) / s
             );
-        } else if (u.y > f.z) {
-            float s = std::sqrt(1.0f + u.y - r.x - f.z) * 2.0f;
+        } else if (m11 > m22) {
+            float s = 2.0f * std::sqrt(1.0f + m11 - m00 - m22);
             return Quaternion(
-                (r.y + u.x) / s,
+                (m01 + m10) / s,
                 0.25f * s,
-                (u.z + f.y) / s,
-                (f.x - r.z) / s
+                (m12 + m21) / s,
+                (m02 - m20) / s
             );
         } else {
-            float s = std::sqrt(1.0f + f.z - r.x - u.y) * 2.0f;
+            float s = 2.0f * std::sqrt(1.0f + m22 - m00 - m11);
             return Quaternion(
-                (f.x + r.z) / s,
-                (u.z + f.y) / s,
+                (m02 + m20) / s,
+                (m12 + m21) / s,
                 0.25f * s,
-                (r.y - u.x) / s
+                (m10 - m01) / s
             );
         }
     }
