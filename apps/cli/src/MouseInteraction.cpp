@@ -472,14 +472,28 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
         // For voxel faces, calculate hit point based on face center
         Math::Vector3i voxelPos = face.getVoxelPosition().value();
         Math::Vector3f voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(voxelPos)).value();
-        float voxelSize = getVoxelSize(resolution);
+        // IMPORTANT: Use the clicked voxel's size, not the active resolution's size!
+        float clickedVoxelSize = getVoxelSize(face.getResolution());
         
-        // Get face center position
-        hitPoint = voxelWorldPos + Math::Vector3f(voxelSize * 0.5f, voxelSize * 0.5f, voxelSize * 0.5f);
-        
-        // Offset hit point to the face surface
+        // For proper same-size voxel alignment, we want to maintain the clicked voxel's
+        // position in the non-normal axes. Only offset along the face normal.
         Math::Vector3f normal = face.getNormal();
-        hitPoint += normal * (voxelSize * 0.5f);
+        
+        // Start with the clicked voxel's position (bottom-center)
+        hitPoint = voxelWorldPos;
+        
+        // Only offset in the direction of the face normal
+        // This ensures adjacent voxels align perfectly
+        if (std::abs(normal.y) > 0.5f) {
+            // For top/bottom faces, offset Y to the face
+            hitPoint.y += (normal.y > 0) ? clickedVoxelSize : 0;
+        } else if (std::abs(normal.x) > 0.5f) {
+            // For left/right faces, offset X to the face
+            hitPoint.x += (normal.x > 0) ? clickedVoxelSize : 0;
+        } else if (std::abs(normal.z) > 0.5f) {
+            // For front/back faces, offset Z to the face
+            hitPoint.z += (normal.z > 0) ? clickedVoxelSize : 0;
+        }
     }
     
     Math::Vector3i snappedPos;
