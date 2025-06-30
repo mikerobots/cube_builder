@@ -536,22 +536,24 @@ public:
     // Enhancement: Adjacent position calculation
     Math::IncrementCoordinates getAdjacentPosition(const Math::IncrementCoordinates& pos, FaceDirection face, 
                                      VoxelResolution sourceRes, VoxelResolution targetRes) const {
-        (void)sourceRes; // Currently unused - all voxels stored at 1cm granularity
-        (void)targetRes; // Currently unused - all voxels stored at 1cm granularity
-        // In the new coordinate system, all voxels are stored at 1cm increment granularity
-        // Adjacent voxels are always 1 increment apart regardless of resolution
-        // The resolution only affects rendering and collision detection
+        // Calculate the offset based on the source voxel resolution
+        // When placing adjacent to a voxel, we need to offset by the source voxel's size
+        // to ensure the new voxel is placed properly adjacent without overlap
         
         std::lock_guard<std::mutex> lock(m_mutex);
         
+        // Get the size of the source voxel in increments (1cm units)
+        float sourceVoxelSizeMeters = getVoxelSize(sourceRes);
+        int offsetIncrements = static_cast<int>(sourceVoxelSizeMeters * 100.0f); // Convert meters to cm
+        
         Math::IncrementCoordinates offset(0, 0, 0);
         switch (face) {
-            case FaceDirection::PosX: offset = Math::IncrementCoordinates(1, 0, 0); break;
-            case FaceDirection::NegX: offset = Math::IncrementCoordinates(-1, 0, 0); break;
-            case FaceDirection::PosY: offset = Math::IncrementCoordinates(0, 1, 0); break;
-            case FaceDirection::NegY: offset = Math::IncrementCoordinates(0, -1, 0); break;
-            case FaceDirection::PosZ: offset = Math::IncrementCoordinates(0, 0, 1); break;
-            case FaceDirection::NegZ: offset = Math::IncrementCoordinates(0, 0, -1); break;
+            case FaceDirection::PosX: offset = Math::IncrementCoordinates(offsetIncrements, 0, 0); break;
+            case FaceDirection::NegX: offset = Math::IncrementCoordinates(-offsetIncrements, 0, 0); break;
+            case FaceDirection::PosY: offset = Math::IncrementCoordinates(0, offsetIncrements, 0); break;
+            case FaceDirection::NegY: offset = Math::IncrementCoordinates(0, -offsetIncrements, 0); break;
+            case FaceDirection::PosZ: offset = Math::IncrementCoordinates(0, 0, offsetIncrements); break;
+            case FaceDirection::NegZ: offset = Math::IncrementCoordinates(0, 0, -offsetIncrements); break;
         }
         
         return pos + offset;
@@ -836,7 +838,7 @@ private:
     // Note: pos parameter is expected to be in IncrementCoordinates
     bool wouldOverlapInternal(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
         // Check if placing a voxel at this position would overlap with existing voxels
-        // Optimized version that uses spatial queries to reduce checks
+        // Allow smaller voxels to be placed on/within larger voxels for detailed work
         
         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
             "wouldOverlapInternal: checking increment position (%d, %d, %d) with resolution %d",
@@ -899,10 +901,24 @@ private:
                 bool overlaps = overlapsX && overlapsY && overlapsZ;
                 
                 if (overlaps) {
+                    // Check if we should allow this overlap
+                    // Allow smaller voxels to be placed on/within larger voxels
+                    float existingVoxelSize = getVoxelSize(checkRes);
+                    
+                    // If the new voxel is smaller than the existing voxel, allow the placement
+                    if (voxelSize < existingVoxelSize) {
+                        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                            "Allowing smaller voxel (%dcm) to be placed on/within larger voxel (%dcm)",
+                            static_cast<int>(voxelSize * 100), static_cast<int>(existingVoxelSize * 100));
+                        continue; // Skip this overlap check, allow placement
+                    }
+                    
+                    // Otherwise, prevent the overlap (same size or larger voxel trying to overlap)
                     Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                        "Overlap detected: new voxel at (%d,%d,%d) overlaps with existing voxel at (%d,%d,%d)",
-                        pos.x(), pos.y(), pos.z(), 
-                        voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z());
+                        "Overlap detected: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d) size %dcm",
+                        pos.x(), pos.y(), pos.z(), static_cast<int>(voxelSize * 100),
+                        voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
+                        static_cast<int>(existingVoxelSize * 100));
                     return true; // Would overlap
                 }
             }

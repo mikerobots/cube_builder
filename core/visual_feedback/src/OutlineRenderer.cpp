@@ -1,10 +1,12 @@
 #include "../include/visual_feedback/OutlineRenderer.h"
+#include "../../../foundation/math/CoordinateConverter.h"
 #include <algorithm>
 #include <map>
 #include <cstddef>
 #include <cassert>
 #include <iostream>
 #include <cstdint>
+#include <cmath>
 
 #ifdef __APPLE__
     #include <OpenGL/gl3.h>
@@ -180,7 +182,9 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
     Math::Matrix4f mvpMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
     
     // Set common uniforms
-    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
+    // Our Matrix4f uses row-major order, but OpenGL expects column-major
+    // So we need to transpose when uploading (GL_TRUE)
+    glUniformMatrix4fv(mvpLoc, 1, GL_TRUE, mvpMatrix.data());
     glUniform1f(animationTimeLoc, m_animationTime);
     
     // Bind VAO (contains all vertex attribute setup)
@@ -224,8 +228,12 @@ void OutlineRenderer::renderBatch(const Camera::Camera& camera) {
             continue;
         }
         
-        // Set line width
-        glLineWidth(batch.style.lineWidth);
+        // Set line width - clamp to supported range
+        // On many OpenGL Core Profile implementations, especially macOS, only 1.0 is supported
+        GLfloat lineWidthRange[2];
+        glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidthRange);
+        float clampedWidth = std::max(lineWidthRange[0], std::min(batch.style.lineWidth, lineWidthRange[1]));
+        glLineWidth(clampedWidth);
         
         // Set pattern uniforms
         glUniform1f(patternScaleLoc, m_patternScale);
@@ -335,23 +343,23 @@ void OutlineRenderer::addBox(const Math::BoundingBox& box, const Rendering::Colo
         Math::Vector3f(box.min.x, box.max.y, box.max.z)  // 7
     };
     
-    // Bottom face
+    // Bottom face (Y=min): corners 0,1,4,5
     addLineSegment(corners[0], corners[1], color);
-    addLineSegment(corners[1], corners[2], color);
-    addLineSegment(corners[2], corners[3], color);
-    addLineSegment(corners[3], corners[0], color);
-    
-    // Top face
-    addLineSegment(corners[4], corners[5], color);
-    addLineSegment(corners[5], corners[6], color);
-    addLineSegment(corners[6], corners[7], color);
-    addLineSegment(corners[7], corners[4], color);
-    
-    // Vertical edges
-    addLineSegment(corners[0], corners[4], color);
     addLineSegment(corners[1], corners[5], color);
+    addLineSegment(corners[5], corners[4], color);
+    addLineSegment(corners[4], corners[0], color);
+    
+    // Top face (Y=max): corners 2,3,6,7
+    addLineSegment(corners[3], corners[2], color);
     addLineSegment(corners[2], corners[6], color);
-    addLineSegment(corners[3], corners[7], color);
+    addLineSegment(corners[6], corners[7], color);
+    addLineSegment(corners[7], corners[3], color);
+    
+    // Vertical edges (connect bottom to top)
+    addLineSegment(corners[0], corners[3], color);
+    addLineSegment(corners[1], corners[2], color);
+    addLineSegment(corners[4], corners[7], color);
+    addLineSegment(corners[5], corners[6], color);
 }
 
 void OutlineRenderer::addVoxelEdges(const Math::Vector3i& position, 
@@ -359,17 +367,27 @@ void OutlineRenderer::addVoxelEdges(const Math::Vector3i& position,
                                    const Rendering::Color& color) {
     float voxelSize = VoxelData::getVoxelSize(resolution);
     
-    // Convert grid coordinates to world coordinates using centered coordinate system
-    float workspaceSize = 5.0f; // Default workspace size
-    float halfWorkspace = workspaceSize * 0.5f;
+    // Convert increment coordinates to world coordinates using proper coordinate converter
+    Math::IncrementCoordinates incrementPos(position.x, position.y, position.z);
+    Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(incrementPos);
+    Math::Vector3f basePos = worldPos.value();
     
-    Math::Vector3f basePos(
-        position.x * voxelSize - halfWorkspace,
-        position.y * voxelSize,
-        position.z * voxelSize - halfWorkspace
+    // Voxels use bottom-center positioning:
+    // - X and Z are centered, so we need to offset by -voxelSize/2 to get the min corner
+    // - Y starts at the bottom, so basePos.y is already the min Y
+    Math::Vector3f minCorner(
+        basePos.x - voxelSize * 0.5f,
+        basePos.y,
+        basePos.z - voxelSize * 0.5f
     );
     
-    Math::BoundingBox voxelBox(basePos, basePos + Math::Vector3f(voxelSize, voxelSize, voxelSize));
+    Math::Vector3f maxCorner(
+        basePos.x + voxelSize * 0.5f,
+        basePos.y + voxelSize,
+        basePos.z + voxelSize * 0.5f
+    );
+    
+    Math::BoundingBox voxelBox(minCorner, maxCorner);
     addBox(voxelBox, color);
 }
 
@@ -723,22 +741,30 @@ std::vector<Math::Vector3f> VoxelOutlineGenerator::generateVoxelEdges(
     std::vector<Math::Vector3f> edges;
     float voxelSize = getVoxelSize(resolution);
     
-    Math::Vector3f basePos(
-        position.x * voxelSize,
-        position.y * voxelSize,
-        position.z * voxelSize
+    // Convert increment coordinates to world coordinates for bottom-center positioning
+    // Note: This assumes position is in increment coordinates
+    Math::IncrementCoordinates incrementPos(position.x, position.y, position.z);
+    Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(incrementPos);
+    Math::Vector3f basePos = worldPos.value();
+    
+    // Calculate corners with bottom-center positioning
+    // X and Z are centered, Y starts at bottom
+    Math::Vector3f minCorner(
+        basePos.x - voxelSize * 0.5f,
+        basePos.y,
+        basePos.z - voxelSize * 0.5f
     );
     
     // Generate 12 edges of a cube
     Math::Vector3f corners[8] = {
-        basePos + Math::Vector3f(0, 0, 0),
-        basePos + Math::Vector3f(voxelSize, 0, 0),
-        basePos + Math::Vector3f(voxelSize, voxelSize, 0),
-        basePos + Math::Vector3f(0, voxelSize, 0),
-        basePos + Math::Vector3f(0, 0, voxelSize),
-        basePos + Math::Vector3f(voxelSize, 0, voxelSize),
-        basePos + Math::Vector3f(voxelSize, voxelSize, voxelSize),
-        basePos + Math::Vector3f(0, voxelSize, voxelSize)
+        minCorner,                                                          // 0: min corner
+        minCorner + Math::Vector3f(voxelSize, 0, 0),                      // 1: +X
+        minCorner + Math::Vector3f(voxelSize, voxelSize, 0),              // 2: +X+Y
+        minCorner + Math::Vector3f(0, voxelSize, 0),                      // 3: +Y
+        minCorner + Math::Vector3f(0, 0, voxelSize),                      // 4: +Z
+        minCorner + Math::Vector3f(voxelSize, 0, voxelSize),              // 5: +X+Z
+        minCorner + Math::Vector3f(voxelSize, voxelSize, voxelSize),      // 6: +X+Y+Z
+        minCorner + Math::Vector3f(0, voxelSize, voxelSize)               // 7: +Y+Z
     };
     
     // Bottom face edges

@@ -945,7 +945,9 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
         std::cerr << "OverlayRenderer: Warning - mvpMatrix uniform not found in line shader" << std::endl;
     }
     Math::Matrix4f mvpMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
-    glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
+    // Our Matrix4f uses row-major order, but OpenGL expects column-major
+    // So we need to transpose when uploading (GL_TRUE)
+    glUniformMatrix4fv(mvpLoc, 1, GL_TRUE, mvpMatrix.data());
     error = glGetError();
     if (error != GL_NO_ERROR) {
         std::cerr << "OverlayRenderer: GL error after setting uniforms: " << error << std::endl;

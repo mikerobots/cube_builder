@@ -734,56 +734,69 @@ TEST_F(VoxelDataManagerTest, AdjacentPositionCalculation_SameSize) {
     Vector3i sourcePos(10, 5, 10);
     VoxelResolution resolution = VoxelResolution::Size_2cm;
     
+    // For 2cm voxels, the offset should be 2 increments in each direction
     // Test all face directions
     Vector3i posX = manager->getAdjacentPosition(sourcePos, FaceDirection::PosX, resolution, resolution);
-    EXPECT_EQ(posX, Vector3i(11, 5, 10));
+    EXPECT_EQ(posX, Vector3i(12, 5, 10)); // 10 + 2 = 12
     
     Vector3i negX = manager->getAdjacentPosition(sourcePos, FaceDirection::NegX, resolution, resolution);
-    EXPECT_EQ(negX, Vector3i(9, 5, 10));
+    EXPECT_EQ(negX, Vector3i(8, 5, 10)); // 10 - 2 = 8
     
     Vector3i posY = manager->getAdjacentPosition(sourcePos, FaceDirection::PosY, resolution, resolution);
-    EXPECT_EQ(posY, Vector3i(10, 6, 10));
+    EXPECT_EQ(posY, Vector3i(10, 7, 10)); // 5 + 2 = 7
     
     Vector3i negY = manager->getAdjacentPosition(sourcePos, FaceDirection::NegY, resolution, resolution);
-    EXPECT_EQ(negY, Vector3i(10, 4, 10));
+    EXPECT_EQ(negY, Vector3i(10, 3, 10)); // 5 - 2 = 3
     
     Vector3i posZ = manager->getAdjacentPosition(sourcePos, FaceDirection::PosZ, resolution, resolution);
-    EXPECT_EQ(posZ, Vector3i(10, 5, 11));
+    EXPECT_EQ(posZ, Vector3i(10, 5, 12)); // 10 + 2 = 12
     
     Vector3i negZ = manager->getAdjacentPosition(sourcePos, FaceDirection::NegZ, resolution, resolution);
-    EXPECT_EQ(negZ, Vector3i(10, 5, 9));
+    EXPECT_EQ(negZ, Vector3i(10, 5, 8)); // 10 - 2 = 8
 }
 
 TEST_F(VoxelDataManagerTest, AdjacentPositionCalculation_DifferentSizes) {
     // Test adjacent position calculation with centered coordinate system
-    // Focus on the core functionality rather than exact coordinate values
+    // The offset should be based on the SOURCE voxel size (the voxel we're clicking on)
     
-    Vector3i largePos(62, 12, 62); // 4cm voxel using known working coordinates
+    // Test 1: Clicking on a 4cm voxel face
+    Vector3i largePos(62, 12, 62); // 4cm voxel position
     VoxelResolution largeRes = VoxelResolution::Size_4cm;
     VoxelResolution smallRes = VoxelResolution::Size_1cm;
     
-    // Test that adjacent position calculation doesn't crash and returns valid positions
+    // When clicking on a 4cm voxel, offset should be 4 increments regardless of target resolution
     Vector3i smallPosX = manager->getAdjacentPosition(largePos, FaceDirection::PosX, largeRes, smallRes);
+    EXPECT_EQ(smallPosX, Vector3i(66, 12, 62)); // 62 + 4 = 66
+    
     Vector3i smallPosNegX = manager->getAdjacentPosition(largePos, FaceDirection::NegX, largeRes, smallRes);
+    EXPECT_EQ(smallPosNegX, Vector3i(58, 12, 62)); // 62 - 4 = 58
+    
     Vector3i smallPosY = manager->getAdjacentPosition(largePos, FaceDirection::PosY, largeRes, smallRes);
+    EXPECT_EQ(smallPosY, Vector3i(62, 16, 62)); // 12 + 4 = 16
+    
     Vector3i smallPosZ = manager->getAdjacentPosition(largePos, FaceDirection::PosZ, largeRes, smallRes);
+    EXPECT_EQ(smallPosZ, Vector3i(62, 12, 66)); // 62 + 4 = 66
     
-    // Verify that different directions give different results
-    EXPECT_NE(smallPosX, smallPosNegX); // +X and -X should be different
-    EXPECT_NE(smallPosX, smallPosY);    // +X and +Y should be different
-    EXPECT_NE(smallPosX, smallPosZ);    // +X and +Z should be different
+    // Test 2: Clicking on a 1cm voxel face
+    Vector3i smallPos(150, 50, 150); // 1cm voxel position
     
-    // Test reverse: placing larger voxel next to smaller voxel
-    Vector3i smallPos(150, 50, 150); // 1cm voxel within workspace bounds
+    // When clicking on a 1cm voxel, offset should be 1 increment regardless of target resolution
     Vector3i largePosX = manager->getAdjacentPosition(smallPos, FaceDirection::PosX, smallRes, largeRes);
+    EXPECT_EQ(largePosX, Vector3i(151, 50, 150)); // 150 + 1 = 151
+    
     Vector3i largePosNegX = manager->getAdjacentPosition(smallPos, FaceDirection::NegX, smallRes, largeRes);
+    EXPECT_EQ(largePosNegX, Vector3i(149, 50, 150)); // 150 - 1 = 149
     
-    // Verify different directions give different results
-    EXPECT_NE(largePosX, largePosNegX);
+    // Test 3: Clicking on a 32cm voxel (like in the integration test)
+    Vector3i voxel32cm(0, 0, 0);
+    VoxelResolution res32cm = VoxelResolution::Size_32cm;
     
-    // Verify the calculation is deterministic (same input gives same output)
-    Vector3i largePosX2 = manager->getAdjacentPosition(smallPos, FaceDirection::PosX, smallRes, largeRes);
-    EXPECT_EQ(largePosX, largePosX2);
+    // When clicking on a 32cm voxel, offset should be 32 increments
+    Vector3i adjacentPosX = manager->getAdjacentPosition(voxel32cm, FaceDirection::PosX, res32cm, res32cm);
+    EXPECT_EQ(adjacentPosX, Vector3i(32, 0, 0)); // 0 + 32 = 32
+    
+    Vector3i adjacentNegX = manager->getAdjacentPosition(voxel32cm, FaceDirection::NegX, res32cm, res32cm);
+    EXPECT_EQ(adjacentNegX, Vector3i(-32, 0, 0)); // 0 - 32 = -32
 }
 
 TEST_F(VoxelDataManagerTest, WorkspaceBounds_CenteredOrigin) {

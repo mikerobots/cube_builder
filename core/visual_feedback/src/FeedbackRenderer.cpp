@@ -202,6 +202,15 @@ void FeedbackRenderer::renderMemoryUsage(size_t used, size_t total) {
     // m_overlay->renderMemoryUsage(used, total, Vector2f(10, 100));
 }
 
+void FeedbackRenderer::renderOutlineBox(const Math::BoundingBox& box, const Rendering::Color& color) {
+    if (!m_enabled) return;
+    
+    OutlineStyle style = OutlineStyle::VoxelPreview();
+    style.color = color;
+    
+    m_outliner->renderBoxOutline(box, style);
+}
+
 void FeedbackRenderer::update(float deltaTime) {
     if (!m_enabled) return;
     

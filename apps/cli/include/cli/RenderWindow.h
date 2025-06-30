@@ -74,6 +74,9 @@ public:
     // OpenGL context
     void makeContextCurrent();
     
+    // Get the underlying GLFW window handle
+    GLFWwindow* getWindow() const { return m_window; }
+    
     // Screenshot functionality
     bool saveScreenshot(const std::string& filename);
     

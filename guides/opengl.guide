@@ -1,0 +1,175 @@
+# OpenGL Integration Guide
+
+This guide documents important OpenGL conventions and common pitfalls when integrating OpenGL with the voxel editor codebase.
+
+## Matrix Conventions
+
+### Row-Major vs Column-Major
+
+One of the most common sources of rendering bugs is the mismatch between matrix storage order and OpenGL's expectations.
+
+#### Our Matrix Storage (Matrix4f)
+```cpp
+// Matrix4f stores data in ROW-MAJOR order
+// Element m[row * 4 + col] represents matrix[row][col]
+Matrix4f(
+    float m00, float m01, float m02, float m03,  // Row 0
+    float m10, float m11, float m12, float m13,  // Row 1
+    float m20, float m21, float m22, float m23,  // Row 2
+    float m30, float m31, float m32, float m33   // Row 3
+) {
+    m[0] = m00; m[1] = m01; m[2] = m02; m[3] = m03;
+    m[4] = m10; m[5] = m11; m[6] = m12; m[7] = m13;
+    m[8] = m20; m[9] = m21; m[10] = m22; m[11] = m23;
+    m[12] = m30; m[13] = m31; m[14] = m32; m[15] = m33;
+}
+```
+
+#### OpenGL's Expectation
+- OpenGL expects matrices in **COLUMN-MAJOR** order
+- When uploading matrices to shaders, you must handle this difference
+
+### Correct Matrix Upload
+
+#### CORRECT: Using GL_TRUE to transpose
+```cpp
+// Our Matrix4f uses row-major order, but OpenGL expects column-major
+// So we need to transpose when uploading (GL_TRUE)
+Math::Matrix4f mvpMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
+glUniformMatrix4fv(mvpLoc, 1, GL_TRUE, mvpMatrix.data());
+```
+
+#### INCORRECT: Using GL_FALSE
+```cpp
+// WRONG! This assumes the matrix is already in column-major format
+glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, mvpMatrix.data());
+```
+
+### Symptoms of Matrix Transpose Issues
+
+When the transpose flag is incorrect, you may observe:
+- Axes appear swapped (e.g., X movement affects Z position)
+- Rotations occur around the wrong axis
+- Objects appear in unexpected positions
+- Mouse interactions don't align with visual elements
+
+### Real-World Example: Overlay Rendering Bug
+
+We discovered this issue when the ground plane overlay wasn't following the mouse correctly:
+
+1. **Grid rendering** (via OpenGLRenderer) correctly used `GL_TRUE`
+2. **Overlay rendering** (OutlineRenderer, OverlayRenderer) incorrectly used `GL_FALSE`
+3. This caused the overlay to appear with swapped axes compared to the grid
+
+## Shader Conventions
+
+### Vertex Shader MVP Transform
+```glsl
+#version 330 core
+layout(location = 0) in vec3 position;
+
+uniform mat4 mvpMatrix;
+
+void main() {
+    gl_Position = mvpMatrix * vec4(position, 1.0);
+}
+```
+
+### Inline vs File-Based Shaders
+
+The codebase uses both approaches:
+
+1. **File-based shaders** (e.g., ground_plane.vert/frag)
+   - Located in `core/rendering/shaders/`
+   - Copied to build directories during compilation
+   - Loaded at runtime via ShaderManager
+
+2. **Inline shaders** (embedded in C++ code)
+   - Used by overlay renderers for simplicity
+   - Defined as string literals in the source code
+   - Compiled at runtime
+
+Both approaches must follow the same conventions for matrix handling.
+
+## Coordinate System Transformations
+
+### Pipeline Overview
+1. **Model Space** → Local object coordinates
+2. **World Space** → After model transform (centered at origin)
+3. **View Space** → After view transform (camera-relative)
+4. **Clip Space** → After projection transform
+5. **Screen Space** → After viewport transform
+
+### Top View Specific Considerations
+
+In top view (camera looking down Y-axis):
+- Camera position: (0, distance, 0)
+- Camera target: (0, 0, 0)
+- Up vector: (0, 0, -1) for proper orientation
+- Mouse Y movement maps to world Z (not world Y)
+
+## Common Pitfalls and Solutions
+
+### 1. Matrix Upload
+**Problem**: Using wrong transpose flag in glUniformMatrix4fv
+**Solution**: Always use GL_TRUE when uploading row-major matrices
+
+### 2. Vertex Attribute Setup
+**Problem**: Incorrect stride or offset in glVertexAttribPointer
+**Solution**: Use sizeof(VertexStruct) for stride, offsetof() for offsets
+
+### 3. State Management
+**Problem**: OpenGL state leaking between renderers
+**Solution**: Always restore state after rendering (depth test, blending, etc.)
+
+### 4. Shader Compilation
+**Problem**: Shaders compile on one platform but fail on another
+**Solution**: Always check compilation/linking status and log errors
+
+## Best Practices
+
+### 1. Consistent Matrix Handling
+- All matrix uploads should use the same convention
+- Document whether matrices are row-major or column-major
+- Use helper functions/classes for matrix operations
+
+### 2. Error Checking
+```cpp
+GLenum error = glGetError();
+if (error != GL_NO_ERROR) {
+    std::cerr << "OpenGL error: " << error << std::endl;
+}
+```
+
+### 3. Shader Validation
+- Always check shader compilation status
+- Log shader info logs for debugging
+- Test shaders on different platforms/drivers
+
+### 4. Resource Management
+- Use RAII for OpenGL resources (VAOs, VBOs, shaders)
+- Clean up resources in destructors
+- Check for valid OpenGL context before operations
+
+## Debugging Tips
+
+### 1. RenderDoc
+- Use RenderDoc to capture and inspect frames
+- Check matrix values in constant buffers
+- Verify vertex data and transformations
+
+### 2. Matrix Visualization
+- Temporarily render coordinate axes to verify transformations
+- Log matrix values at key points in the pipeline
+- Compare working (grid) vs broken (overlay) implementations
+
+### 3. Incremental Testing
+- Test transformations with simple geometry first
+- Verify each stage of the transformation pipeline
+- Use known test cases (e.g., identity matrices)
+
+## References
+
+- OpenGL Specification: https://www.opengl.org/documentation/
+- Matrix FAQ: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
+- GLSL Specification: https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language

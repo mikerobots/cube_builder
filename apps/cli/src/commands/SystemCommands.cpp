@@ -42,7 +42,14 @@ std::vector<CommandRegistration> SystemCommands::getCommands() {
             .withArg("command", "Command to show help for (optional)", "string", false, "")
             .withHandler([this](const CommandContext& ctx) -> CommandResult {
                 std::string command = ctx.getArg(0, "");
-                return CommandResult::Success(m_app->getCommandProcessor()->getHelp(command));
+                
+                if (command.empty()) {
+                    // No command specified, show general help
+                    return CommandResult::Success(m_app->getCommandProcessor()->getHelp());
+                } else {
+                    // Show help for specific command
+                    return CommandResult::Success(m_app->getCommandProcessor()->getHelp(command));
+                }
             }),
             
         // STATUS command

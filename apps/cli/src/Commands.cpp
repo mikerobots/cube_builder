@@ -850,6 +850,10 @@ void Application::registerCommands() {
             }
             
             m_voxelManager->setActiveResolution(resolution);
+            
+            // Request mesh update to ensure all voxels are still rendered
+            m_app->requestMeshUpdate();
+            
             return CommandResult::Success("Resolution set to " + size);
         }
     });

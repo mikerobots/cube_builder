@@ -158,16 +158,18 @@
   - *Subsystems: **Visual Feedback** (depth testing), **Camera** (view independence)*
 
 #### 4.3 Placement Validation
-- **REQ-4.3.1**: System shall prevent overlapping voxel placements
+- **REQ-4.3.1**: System shall prevent overlapping voxel placements of same or larger size
   - *Subsystems: **Voxel Data** (collision detection), **Input** (validation logic)*
 - **REQ-4.3.2**: Invalid placement attempts shall show red preview
   - *Subsystems: **Visual Feedback** (invalid state rendering), **Voxel Data** (validation results)*
 - **REQ-4.3.3**: Valid placements shall show green preview
   - *Subsystems: **Visual Feedback** (valid state rendering), **Voxel Data** (validation results)*
-- **REQ-4.3.4**: Collision detection shall apply between voxels of different resolutions
+- **REQ-4.3.4**: Collision detection shall apply between voxels of different resolutions (smaller voxels allowed on larger ones)
   - *Subsystems: **Voxel Data** (multi-resolution collision detection)*
 - **REQ-4.3.5**: Failed placement or fill commands shall make no state changes (atomic operations)
   - *Subsystems: **Voxel Data** (transaction safety), **Input** (atomic command execution)*
+- **REQ-4.3.6**: Smaller voxels may be placed on or within larger voxels for detailed work
+  - *Subsystems: **Voxel Data** (overlap rules), **Input** (placement logic)*
 
 #### 4.4 Fill Command Behavior
 - **REQ-4.4.1**: Fill command shall create multiple voxels of the current resolution size within the specified bounds
@@ -194,7 +196,7 @@
   - *Subsystems: **Input** (ray generation), **Visual Feedback** (FaceDetector), **Camera** (ray transformation)*
 
 #### 5.2 Placement Rules
-- **REQ-5.2.1**: Voxels shall not overlap with existing voxels
+- **REQ-5.2.1**: Voxels shall not overlap with existing voxels of same or smaller size
   - *Subsystems: **Voxel Data** (collision detection), **Input** (validation)*
 - **REQ-5.2.2**: System shall validate placement before allowing it
   - *Subsystems: **Voxel Data** (validation logic), **Input** (pre-placement checks)*

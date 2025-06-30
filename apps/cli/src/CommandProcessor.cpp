@@ -289,48 +289,9 @@ std::string CommandProcessor::resolveAlias(const std::string& name) const {
 }
 
 void CommandProcessor::registerBuiltinCommands() {
-    // Help commands
-    registerCommand({
-        Commands::HELP,
-        "Show available commands or command help",
-        CommandCategory::HELP,
-        {"h", "?"},
-        {{"command", "Command to get help for", "string", false, ""}},
-        [this](const CommandContext& ctx) {
-            if (ctx.getArgCount() > 0) {
-                return CommandResult::Success(getHelp(ctx.getArg(0)));
-            }
-            return CommandResult::Success(getHelp());
-        }
-    });
-    
-    // System commands
-    registerCommand({
-        Commands::QUIT,
-        "Exit the application",
-        CommandCategory::SYSTEM,
-        {"exit", "q"},
-        {},
-        [](const CommandContext& ctx) {
-            return CommandResult::Exit();
-        }
-    });
-    
-    registerCommand({
-        Commands::CLEAR,
-        "Clear the screen",
-        CommandCategory::SYSTEM,
-        {"cls"},
-        {},
-        [](const CommandContext& ctx) {
-            #ifdef _WIN32
-                system("cls");
-            #else
-                system("clear");
-            #endif
-            return CommandResult::Success();
-        }
-    });
+    // Note: All commands are now registered via command modules
+    // This method is kept for backward compatibility but doesn't register any commands
+    // to avoid duplicates with the module system
 }
 
 } // namespace VoxelEditor

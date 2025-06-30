@@ -208,6 +208,52 @@ set_tests_properties(test_integration_feedback_shadow_placement PROPERTIES
     LABELS "integration;feedback;shadow"
 )
 
+# OutlineRenderer Integration Test
+add_executable(test_integration_visual_feedback_outline_renderer
+    visual_feedback/test_integration_visual_feedback_outline_renderer.cpp
+)
+
+target_link_libraries(test_integration_visual_feedback_outline_renderer
+    VoxelEditor_VisualFeedback
+    VoxelEditor_VoxelData
+    VoxelEditor_Camera
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_visual_feedback_outline_renderer COMMAND test_integration_visual_feedback_outline_renderer)
+set_tests_properties(test_integration_visual_feedback_outline_renderer PROPERTIES
+    LABELS "integration;feedback;outline;rendering"
+)
+
+# OutlineRenderer Debug Test
+add_executable(test_integration_visual_feedback_outline_renderer_debug
+    visual_feedback/test_integration_visual_feedback_outline_renderer_debug.cpp
+)
+
+target_link_libraries(test_integration_visual_feedback_outline_renderer_debug
+    VoxelEditor_VisualFeedback
+    VoxelEditor_VoxelData
+    VoxelEditor_Camera
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_visual_feedback_outline_renderer_debug COMMAND test_integration_visual_feedback_outline_renderer_debug)
+set_tests_properties(test_integration_visual_feedback_outline_renderer_debug PROPERTIES
+    LABELS "integration;feedback;outline;debug"
+)
+
 # Enhanced Shader Validation Integration Test
 add_executable(test_integration_rendering_enhanced_shader_validation
     rendering/test_integration_rendering_enhanced_shader_validation.cpp
@@ -605,6 +651,8 @@ set_tests_properties(
     test_integration_feedback_renderer_components
     test_integration_feedback_requirements_validation
     test_integration_feedback_shadow_placement
+    test_integration_visual_feedback_outline_renderer
+    test_integration_visual_feedback_outline_renderer_debug
     test_integration_rendering_enhanced_shader_validation
     test_integration_visual_shader_output_validation
     test_integration_rendering_shader_rendering_comprehensive
@@ -697,5 +745,30 @@ target_compile_definitions(test_integration_grid_overlay PRIVATE
 add_test(NAME test_integration_grid_overlay COMMAND test_integration_grid_overlay)
 set_tests_properties(test_integration_grid_overlay PROPERTIES
     LABELS "integration;grid;overlay;visual"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Overlay Rendering Position Test
+add_executable(test_integration_overlay_rendering_positions
+    test_integration_overlay_rendering_positions.cpp
+)
+
+target_link_libraries(test_integration_overlay_rendering_positions
+    VoxelEditor_VisualFeedback
+    VoxelEditor_Rendering
+    VoxelEditor_Camera
+    VoxelEditor_VoxelData
+    VoxelEditor_Events
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_overlay_rendering_positions COMMAND test_integration_overlay_rendering_positions)
+set_tests_properties(test_integration_overlay_rendering_positions PROPERTIES
+    LABELS "integration;overlay;rendering;position"
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )

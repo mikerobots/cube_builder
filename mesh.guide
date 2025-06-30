@@ -1,0 +1,228 @@
+# Mesh Generation Guide - Units and Axes Handling
+
+This guide explains how to properly generate mesh data for overlays in the voxel editor, using the ground plane grid as a reference implementation.
+
+## Core Concepts
+
+### 1. Coordinate System
+- **Origin**: (0, 0, 0) is at the center of the workspace
+- **Axes**: 
+  - X-axis: Left (-) to Right (+)
+  - Y-axis: Down (0) to Up (+) - Y=0 is the ground plane
+  - Z-axis: Back (-) to Front (+)
+- **Units**: All coordinates are in meters (float) in world space
+
+### 2. Unit Conversions
+```cpp
+// Voxel sizes are in meters
+const float gridSize = 0.32f;  // 32cm grid
+const float majorGridInterval = 1.60f;  // 160cm major lines
+
+// Convert from increment coordinates (integer cm) to world coordinates (float meters)
+Math::IncrementCoordinates incrementPos(32, 0, 32);  // 32cm in each direction
+Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(incrementPos);
+// Result: worldPos = (0.32f, 0.0f, 0.32f)
+```
+
+### 3. Ground Plane Grid Reference Implementation
+
+The ground plane grid (from `GroundPlaneGrid.cpp`) demonstrates proper mesh generation:
+
+```cpp
+void generateGridMesh(const Vector3f& workspaceSize) {
+    const float cellSize = 0.32f;  // 32cm cells
+    
+    // Calculate grid bounds (centered at origin)
+    float halfSizeX = workspaceSize.x * 0.5f;
+    float halfSizeZ = workspaceSize.z * 0.5f;
+    
+    // Round to nearest cell boundary
+    int cellsX = static_cast<int>(std::ceil(halfSizeX / cellSize));
+    int cellsZ = static_cast<int>(std::ceil(halfSizeZ / cellSize));
+    
+    // Actual grid bounds
+    float minX = -cellsX * cellSize;
+    float maxX = cellsX * cellSize;
+    float minZ = -cellsZ * cellSize;
+    float maxZ = cellsZ * cellSize;
+    
+    // Generate lines parallel to X axis (running east-west)
+    for (int i = -cellsZ; i <= cellsZ; ++i) {
+        float z = i * cellSize;
+        // Line from (minX, 0, z) to (maxX, 0, z)
+        vertices.push_back({minX, 0.0f, z});
+        vertices.push_back({maxX, 0.0f, z});
+    }
+    
+    // Generate lines parallel to Z axis (running north-south)  
+    for (int i = -cellsX; i <= cellsX; ++i) {
+        float x = i * cellSize;
+        // Line from (x, 0, minZ) to (x, 0, maxZ)
+        vertices.push_back({x, 0.0f, minZ});
+        vertices.push_back({x, 0.0f, maxZ});
+    }
+}
+```
+
+### 4. Overlay Renderer Line Generation
+
+The overlay renderer (`OverlayRenderer.cpp`) uses a similar approach:
+
+```cpp
+void generateGroundPlaneGridLines(const Math::Vector3f& center, float extent, 
+                                  const Math::Vector3f& cursorPos, bool enableDynamicOpacity) {
+    const float gridSize = 0.32f; // 32cm
+    
+    int gridCount = static_cast<int>(extent / gridSize);
+    float halfExtent = gridCount * gridSize * 0.5f;
+    
+    // Generate grid lines in XZ plane at Y=0 (ground plane)
+    for (int i = -gridCount; i <= gridCount; ++i) {
+        float offset = i * gridSize;
+        
+        // Lines parallel to X axis (running east-west)
+        addLine(
+            Math::Vector3f(center.x - halfExtent, 0.0f, center.z + offset),
+            Math::Vector3f(center.x + halfExtent, 0.0f, center.z + offset),
+            lineColor
+        );
+        
+        // Lines parallel to Z axis (running north-south)  
+        addLine(
+            Math::Vector3f(center.x + offset, 0.0f, center.z - halfExtent),
+            Math::Vector3f(center.x + offset, 0.0f, center.z + halfExtent),
+            lineColor
+        );
+    }
+}
+```
+
+## Key Principles for Correct Mesh Generation
+
+### 1. Always Use World Coordinates
+- Never use raw integer positions without conversion
+- Always convert IncrementCoordinates to WorldCoordinates
+- All mesh vertices should be in meters (float)
+
+### 2. Respect the Centered Coordinate System
+- The workspace is centered at (0, 0, 0)
+- For a 5m workspace: X and Z range from -2.5 to +2.5
+- Y=0 is the ground plane
+
+### 3. Proper Axis Alignment
+- **X-axis lines**: Vary Z coordinate, keep X ranging from min to max
+- **Z-axis lines**: Vary X coordinate, keep Z ranging from min to max
+- **Ground plane**: Always at Y=0
+
+### 4. Box/Cube Generation
+
+For generating box outlines (like voxel previews):
+
+```cpp
+// Correct box corner ordering (following OpenGL convention)
+// Bottom face (Y=min): 0,1,5,4
+// Top face (Y=max): 3,2,6,7
+Vector3f corners[8] = {
+    {min.x, min.y, min.z}, // 0: left-bottom-back
+    {max.x, min.y, min.z}, // 1: right-bottom-back
+    {max.x, max.y, min.z}, // 2: right-top-back
+    {min.x, max.y, min.z}, // 3: left-top-back
+    {min.x, min.y, max.z}, // 4: left-bottom-front
+    {max.x, min.y, max.z}, // 5: right-bottom-front
+    {max.x, max.y, max.z}, // 6: right-top-front
+    {min.x, max.y, max.z}  // 7: left-top-front
+};
+
+// Connect bottom face (Y=min)
+addLine(corners[0], corners[1]); // back edge
+addLine(corners[1], corners[5]); // right edge
+addLine(corners[5], corners[4]); // front edge
+addLine(corners[4], corners[0]); // left edge
+
+// Connect top face (Y=max)
+addLine(corners[3], corners[2]); // back edge
+addLine(corners[2], corners[6]); // right edge
+addLine(corners[6], corners[7]); // front edge
+addLine(corners[7], corners[3]); // left edge
+
+// Connect vertical edges
+addLine(corners[0], corners[3]);
+addLine(corners[1], corners[2]);
+addLine(corners[5], corners[6]);
+addLine(corners[4], corners[7]);
+```
+
+### 5. Mouse to World Coordinate Mapping
+
+In top view (camera looking down Y-axis):
+- Mouse X movement → World X movement
+- Mouse Y movement → World Z movement (NOT Y!)
+- World Y remains constant (e.g., Y=0 for ground plane)
+
+```cpp
+// Example: Convert mouse position to world position on ground plane
+float ndcX = (2.0f * mouseX) / screenWidth - 1.0f;
+float ndcY = 1.0f - (2.0f * mouseY) / screenHeight;  // Flip Y
+
+// In orthographic top view:
+float orthoSize = 5.0f;
+float aspectRatio = screenWidth / screenHeight;
+float worldX = ndcX * orthoSize * aspectRatio * 0.5f;
+float worldZ = -ndcY * orthoSize * 0.5f;  // Note: screen Y maps to world Z
+float worldY = 0.0f;  // Ground plane
+```
+
+## Common Pitfalls to Avoid
+
+1. **Wrong Coordinate System**: Using old non-centered coordinates
+2. **Unit Confusion**: Mixing centimeters and meters
+3. **Axis Confusion**: Mapping mouse Y to world Y instead of world Z in top view
+4. **Box Corner Ordering**: Connecting wrong vertices (e.g., mixing top and bottom corners)
+5. **Hardcoded Values**: Using fixed workspace sizes instead of dynamic values
+
+## Testing Your Mesh Generation
+
+1. **Visual Verification**: 
+   - Grid lines should align with placed voxels
+   - Outlines should match mouse position exactly
+   - Box corners should connect correctly
+
+2. **Unit Tests**:
+   - Test coordinate conversions
+   - Verify mesh vertex positions
+   - Check axis alignments
+
+3. **Integration Tests**:
+   - Capture screenshots and verify pixel positions
+   - Test in all camera views (top, front, side, iso)
+   - Verify mouse-to-world mapping
+
+## Example: Fixing the Outline Rendering
+
+If the outline appears in the wrong position:
+
+1. Check coordinate conversion:
+```cpp
+// WRONG: Using hardcoded transformation
+float x = (position.x / 100.0f - halfWorkspace);
+
+// CORRECT: Using proper conversion
+Math::IncrementCoordinates incrementPos(position.x, position.y, position.z);
+Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(incrementPos);
+```
+
+2. Verify axis mapping in different views:
+```cpp
+// In top view:
+// Screen X → World X
+// Screen Y → World Z (NOT World Y!)
+```
+
+3. Ensure consistent units throughout:
+```cpp
+// All world coordinates in meters
+float voxelSize = VoxelData::getVoxelSize(resolution);  // Returns meters
+Math::BoundingBox box(worldPos, worldPos + Vector3f(voxelSize, voxelSize, voxelSize));
+```
+
+This guide should be used as a reference when implementing any mesh generation for overlays, ensuring consistent and correct positioning across the entire application.

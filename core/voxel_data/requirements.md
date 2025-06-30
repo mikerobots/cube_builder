@@ -40,15 +40,16 @@ The Voxel Data subsystem manages multi-resolution voxel storage, workspace bound
 ### Collision Detection and Spatial Queries
 - **REQ-3.3.2**: Placement plane shall maintain height while preview overlaps any voxel at current height
 - **REQ-3.3.3**: When multiple voxels at different heights are under cursor, highest takes precedence
-- **REQ-4.3.1**: System shall prevent overlapping voxel placements
-- **REQ-5.2.1**: Voxels shall not overlap with existing voxels
+- **REQ-4.3.1**: System shall prevent overlapping voxel placements of same or larger size
+- **REQ-5.2.1**: Voxels shall not overlap with existing voxels of same or smaller size
 - **REQ-5.2.2**: System shall validate placement before allowing it
+- **REQ-5.2.5**: Smaller voxels may be placed on or within larger voxels for detailed work
 
 ### Validation and Error Handling
 - **REQ-4.1.2**: Invalid placements shall show red outline preview
 - **REQ-4.3.2**: Invalid placement attempts shall show red preview
 - **REQ-4.3.3**: Valid placements shall show green preview
-- **REQ-4.3.4**: Collision detection shall apply between voxels of different resolutions
+- **REQ-4.3.4**: Collision detection shall apply between voxels of different resolutions (smaller voxels allowed on larger ones)
 - **REQ-4.3.5**: Failed placement or fill commands shall make no state changes (atomic operations)
 - **REQ-5.2.4**: Redundant operations (placing/removing at same position with same value) shall fail
 

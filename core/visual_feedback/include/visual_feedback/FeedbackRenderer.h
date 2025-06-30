@@ -73,6 +73,9 @@ public:
     void clearDebugRay() { m_debugRayEnabled = false; }
     bool isDebugRayEnabled() const { return m_debugRayEnabled; }
     
+    // Direct outline rendering
+    void renderOutlineBox(const Math::BoundingBox& box, const Rendering::Color& color);
+    
     // Validation methods
     bool validateFace(const Face& face) const;
     bool validatePreviewPosition(const Math::Vector3i& position, VoxelData::VoxelResolution resolution) const;

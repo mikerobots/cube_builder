@@ -36,6 +36,16 @@ cmake -B build_relwithdebinfo -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build build_relwithdebinfo
 ```
 
+### Rebuild CLI
+
+```bash
+# Rebuild CLI only
+cd build_ninja && cmake --build . --target VoxelEditor_CLI
+
+# Run CLI
+./execute_command.sh ./build_ninja/bin/VoxelEditor_CLI
+```
+
 ## Testing
 
 ### Unified Test Runner (Recommended)

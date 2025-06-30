@@ -27,6 +27,7 @@
 #include "undo_redo/PlacementCommands.h"
 #include "math/Ray.h"
 #include "math/BoundingBox.h"
+#include "math/CoordinateConverter.h"
 #include "logging/Logger.h"
 #include "camera/OrbitCamera.h"
 #include "math/CoordinateTypes.h"
@@ -121,7 +122,7 @@ void MouseInteraction::onMouseMove(float x, float y) {
         // Convert pixel movement to degrees (orbit expects degrees based on the OrbitCamera code)
         // Reduce sensitivity for more controlled movement
         float sensitivity = 0.2f;  // degrees per pixel
-        float deltaYaw = delta.x * sensitivity;    // Positive X movement = rotate right
+        float deltaYaw = -delta.x * sensitivity;   // Negative for intuitive rotation (drag right = rotate left)
         float deltaPitch = delta.y * sensitivity;  // Positive Y movement = rotate down
         
         auto* orbitCamera = dynamic_cast<Camera::OrbitCamera*>(m_cameraController->getCamera());
@@ -233,9 +234,16 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
     bool cmdPressed = false;
     bool shiftPressed = false;
     
-    // In headless mode, we can't query key states, so we'll assume no modifiers
-    // Note: we cannot call ANY GLFW functions if GLFW is not initialized
-    // In headless mode, GLFW is not initialized at all, so we skip key state queries entirely
+    // Only query key states if we have a valid GLFW context (not in headless mode)
+    if (m_renderWindow && m_renderWindow->getWindow()) {
+        GLFWwindow* window = m_renderWindow->getWindow();
+        ctrlPressed = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
+                     glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
+        cmdPressed = glfwGetKey(window, GLFW_KEY_LEFT_SUPER) == GLFW_PRESS ||
+                    glfwGetKey(window, GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS;
+        shiftPressed = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                      glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    }
     
     // On macOS, treat Cmd as Ctrl for consistency
     bool modifierPressed = ctrlPressed || cmdPressed;
@@ -259,8 +267,7 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
                 m_dragStart = m_mousePos;
                 m_orbitMode = true;
                 
-                // Auto-center on voxels when starting orbit
-                centerCameraOnVoxels();
+                // Don't auto-center - rotate around current target like SolidWorks
                 
                 Logging::Logger::getInstance().debug("MouseInteraction", "Starting orbit mode");
             } else {
@@ -283,8 +290,7 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
             m_dragStart = m_mousePos;
             m_orbitMode = true;
             
-            // Auto-center on voxels when starting orbit
-            centerCameraOnVoxels();
+            // Don't auto-center - rotate around current target like SolidWorks
         } else {
             m_orbitMode = false;
         }
@@ -628,7 +634,62 @@ void MouseInteraction::updateHoverState() {
         // Render preview with appropriate color based on validation
         Rendering::Color previewColor = validPosition ? 
             Rendering::Color::Green() : Rendering::Color::Red();
-        m_feedbackRenderer->renderVoxelPreview(previewPosVec, currentResolution, previewColor);
+        
+        // For ground plane, show outline at snapped grid position
+        if (m_hoverFace.isGroundPlane()) {
+            Math::WorldCoordinates hitPoint = m_hoverFace.getGroundPlaneHitPoint();
+            float voxelSize = VoxelData::getVoxelSize(currentResolution);
+            
+            // Snap the hit point to the grid (similar to how grid lines are aligned)
+            Math::Vector3f hitPos = hitPoint.value();
+            
+            // Snap to grid cells - round to nearest voxel center
+            // The voxel system uses bottom-center positioning, so we need to:
+            // 1. Find which voxel cell the hit point is in
+            // 2. Calculate the bottom-center position of that cell
+            
+            // For a voxel at increment position (ix, iy, iz), its world position is:
+            // worldX = ix * 0.01m (since increments are in cm)
+            // This is the center of the voxel on X and Z axes
+            
+            // Convert world position to increment coordinates and back to get proper snapping
+            Math::IncrementCoordinates hitIncrement = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(hitPos));
+            
+            // For ground plane, always snap to 1cm increments for fine control
+            // This allows precise placement regardless of the active voxel resolution
+            int snappedIncrementX = hitIncrement.x();  // Already in 1cm increments
+            int snappedIncrementZ = hitIncrement.z();  // Already in 1cm increments
+            
+            // Convert back to world coordinates
+            Math::WorldCoordinates snappedWorld = Math::CoordinateConverter::incrementToWorld(
+                Math::IncrementCoordinates(snappedIncrementX, 0, snappedIncrementZ));
+            
+            float snappedX = snappedWorld.x();
+            float snappedZ = snappedWorld.z();
+            float snappedY = 0.0f; // Ground plane is always at Y=0
+            
+            // Create a bounding box centered on X/Z but starting at Y
+            // This matches how voxels are positioned (bottom-center)
+            Math::Vector3f bottomCenter(snappedX, snappedY, snappedZ);
+            Math::BoundingBox outlineBox(
+                Math::Vector3f(bottomCenter.x - voxelSize * 0.5f, bottomCenter.y, bottomCenter.z - voxelSize * 0.5f),
+                Math::Vector3f(bottomCenter.x + voxelSize * 0.5f, bottomCenter.y + voxelSize, bottomCenter.z + voxelSize * 0.5f)
+            );
+            
+            // Debug logging
+            Logging::Logger::getInstance().debugfc("MouseInteraction",
+                "Ground plane outline: worldHit=(%.3f,%.3f,%.3f) snapped=(%.3f,%.3f,%.3f) boxMin=(%.3f,%.3f,%.3f) boxMax=(%.3f,%.3f,%.3f)",
+                hitPoint.x(), hitPoint.y(), hitPoint.z(),
+                snappedX, snappedY, snappedZ,
+                outlineBox.min.x, outlineBox.min.y, outlineBox.min.z,
+                outlineBox.max.x, outlineBox.max.y, outlineBox.max.z);
+            
+            // Render the outline box at the snapped grid position
+            m_feedbackRenderer->renderOutlineBox(outlineBox, previewColor);
+        } else {
+            // For voxel faces, show outline at snapped position
+            m_feedbackRenderer->renderVoxelPreview(previewPosVec, currentResolution, previewColor);
+        }
     } else {
         if (m_hasHoverFace) {
             Logging::Logger::getInstance().debug("MouseInteraction", "Stopped hovering over face");

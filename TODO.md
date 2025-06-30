@@ -1,41 +1,53 @@
-## Fix Failing Unit Tests
-Please mark in progress when working. Don't select tasks in progress by others. 
+## CRITICAL: Test System Integrity Check Required
 
-### Overview
-Three unit tests related to face detection need to be fixed.
+**WARNING**: There are serious concerns about the test system integrity. We need to verify that:
+1. Tests are actually being rebuilt when we make changes
+2. Test assertions are properly failing when they should
+3. The build system is not cached/stale
 
-### Tests to fix
-- [x] **test_unit_core_face_detector_traversal** - Face detector traversal functionality [Agent: Nexus]
-  **Status**: FIXED - All 12 tests passing
-  **Theory**: The face detector was not correctly handling rays that start inside voxels. The test expected that rays starting inside a voxel should detect the exit face in the ray direction, but the detector returned invalid faces for these cases.
-  **Analysis**: The issue was that the optimized brute force ray traversal didn't explicitly check if the ray started inside a voxel. The code would iterate along the ray path starting from t=0, but wouldn't properly detect when the ray origin was already inside a voxel.
-  **Resolution**: Added explicit check at the beginning of raycastVoxelGrid() to detect if the ray starts inside a voxel. The fix checks the voxel at the ray origin and nearby positions (to handle edge cases), and if a voxel is found, it calculates the exit face using voxelTMax. This ensures rays starting inside voxels correctly detect the exit face in the ray direction.
+### Discovered Issues with test_unit_core_visual_feedback_face_detector
 
-- [x] **test_unit_core_visual_feedback_face_detector** - Visual feedback face detector [Agent: Vertex]
-  **Status**: PASSING - All 25 tests pass
-  **Theory**: The test was potentially failing due to issues with ray-voxel intersection detection for non-aligned voxels and rays starting inside voxels.
-  **Analysis**: After examining the test output, all 25 tests in this suite are now passing. The FaceDetector implementation correctly handles:
-    - Basic ray-voxel intersection for aligned and non-aligned voxels
-    - Rays starting from inside voxels (detecting exit faces) - test RayFromInside passes
-    - Ground plane detection for placement preview
-    - Face direction determination from all 6 cardinal directions
-    - Placement position calculation with proper voxel size offsets
-    - Region-based face detection for multiple voxels
-    - Mixed scenarios with both aligned and non-aligned voxels
-  **Recommendation**: No changes needed - test is passing. The fix was already applied (starting ray traversal from t=0 to ensure voxels at ray origin are checked).
+**Current Status**: All 25 tests report as PASSING, but there's a hidden failure!
 
-- [x] **test_unit_face_direction_accuracy** - Face direction accuracy validation [Agent: Apex]
-  **Status**: FIXED - All 6 tests passing
-  **Theory**: The face detector was not correctly handling rays that start inside voxels. The test `RaysFromInsideVoxelDetectExitFace` expected that rays starting from the center of a voxel should detect the exit face in the ray direction, but the detector returned invalid faces due to backface culling.
-  **Analysis**: The issue was in the GeometricFaceDetector::rayPlaneIntersection() method which had aggressive backface culling that prevented rays from hitting faces from behind. For rays starting inside voxels, hitting "backfaces" is exactly what we want to detect exit faces.
-  **Resolution**: Modified the backface culling logic to be selective - for hits within 10cm of the ray origin (covering rays inside voxels), allow backface hits. For hits further away, apply standard backface culling. This allows rays starting inside voxels to detect their exit faces while maintaining proper culling for distant intersections.
-  **Recommendation**: The fix also created regressions in related tests, requiring further refinement to balance exit face detection with proper face direction selection.
+**The Problem**:
+- The `RayFromInside` test has debug output showing it expects `PositiveX` but gets `NegativeX`
+- However, the test still passes because the assertion is inside an if-block:
+  ```cpp
+  if (face.isValid()) {
+      EXPECT_EQ(face.getDirection(), VoxelEditor::VisualFeedback::FaceDirection::PositiveX);
+  }
+  ```
+- This means the assertion fails but doesn't fail the overall test
+- This is a TEST DESIGN BUG that hides real failures
 
-### Common reasons why things may fail
-- We made redundant operations fail. This was intentional.
-- We updated to a reduced set of resolutions.
-- We added asserts for OpenGL failures so we can catch issues.
-- We moved our y axis so the base of voxels are at y=0.
-- We made our units have strict types.
+**Evidence**:
+```
+RayFromInside test:
+Voxel at increment (32,32,32) = world (0.32,0.32,0.32)
+Voxel size: 0.32m
+Ray origin: (0.32, 0.48, 0.32)
+Ray origin in increment: (32, 48, 32)
+Detected face direction: 1
+Expected: PositiveX (0)
+Actual: NegativeX
+[       OK ] FaceDetectorTest.RayFromInside (0 ms)  <-- Test passes despite assertion failure!
+```
 
+### Required Actions
 
+1. **Verify Build System**:
+   - Clean rebuild: `rm -rf build_ninja && cmake -B build_ninja -G Ninja -DCMAKE_BUILD_TYPE=Debug && cmake --build build_ninja`
+   - Verify timestamps on binaries match source file changes
+   - Check if ccache or other caching is interfering
+
+2. **Fix Test Design Issues**:
+   - Move assertions outside of conditional blocks
+   - Add explicit FAIL() calls when expected conditions aren't met
+   - Review all tests for similar hidden failures
+
+3. **Investigate Face Detection Bug**:
+   - Ray starting inside voxel going +X should detect PositiveX exit face
+   - Currently detects NegativeX (opposite direction)
+   - This is a real bug being hidden by poor test design
+
+### DO NOT PROCEED with other fixes until we verify test system integrity!
