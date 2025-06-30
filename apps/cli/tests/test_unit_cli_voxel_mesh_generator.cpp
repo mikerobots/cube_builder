@@ -394,5 +394,50 @@ TEST_F(VoxelMeshGeneratorTest, FaceNormalOrientation) {
     EXPECT_EQ(negZ, 4); // Front face
 }
 
+// Test 11: Multi-resolution rendering - ALL voxels should be rendered regardless of active resolution
+TEST_F(VoxelMeshGeneratorTest, MultiResolutionRendering) {
+    // Place voxels at different resolutions
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_1cm);
+    Math::Vector3i pos1cm(0, 0, 0);
+    ASSERT_TRUE(voxelManager->setVoxel(pos1cm, VoxelData::VoxelResolution::Size_1cm, true));
+    
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_4cm);
+    Math::Vector3i pos4cm(100, 0, 0);  // Far enough apart to avoid collision
+    ASSERT_TRUE(voxelManager->setVoxel(pos4cm, VoxelData::VoxelResolution::Size_4cm, true));
+    
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_16cm);
+    Math::Vector3i pos16cm(0, 100, 0);  // Far enough apart to avoid collision
+    ASSERT_TRUE(voxelManager->setVoxel(pos16cm, VoxelData::VoxelResolution::Size_16cm, true));
+    
+    // Now change active resolution to something else
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_64cm);
+    
+    // Generate mesh - should render ALL voxels, not just 64cm ones
+    auto mesh = meshGenerator->generateCubeMesh(*voxelManager);
+    
+    // Should have 3 cubes worth of vertices (24 vertices per cube)
+    EXPECT_EQ(mesh.vertices.size(), 24 * 3) << "Mesh should contain all 3 voxels from different resolutions";
+    EXPECT_EQ(mesh.indices.size(), 36 * 3) << "Mesh should contain indices for all 3 voxels";
+    
+    // Verify edge mesh also renders all voxels
+    auto edgeMesh = meshGenerator->generateEdgeMesh(*voxelManager);
+    
+    // Edge mesh has 8 vertices per cube and 24 indices per cube (12 edges * 2 vertices per edge)
+    EXPECT_EQ(edgeMesh.vertices.size(), 8 * 3) << "Edge mesh should contain all 3 voxels";
+    EXPECT_EQ(edgeMesh.indices.size(), 24 * 3) << "Edge mesh should contain indices for all 3 voxels";
+}
+
+// Test 12: Empty scene at different resolutions
+TEST_F(VoxelMeshGeneratorTest, EmptySceneAllResolutions) {
+    // Don't place any voxels, just change active resolution
+    voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_64cm);
+    
+    // Generate mesh - should be empty
+    auto mesh = meshGenerator->generateCubeMesh(*voxelManager);
+    
+    EXPECT_EQ(mesh.vertices.size(), 0) << "Empty scene should generate no vertices";
+    EXPECT_EQ(mesh.indices.size(), 0) << "Empty scene should generate no indices";
+}
+
 } // namespace Tests
 } // namespace VoxelEditor

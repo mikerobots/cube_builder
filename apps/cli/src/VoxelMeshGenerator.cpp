@@ -51,49 +51,58 @@ Rendering::Mesh VoxelMeshGenerator::generateCubeMesh(const VoxelData::VoxelDataM
     // Create mesh (declare early for error returns)
     Rendering::Mesh mesh;
     
-    // Get active resolution
-    auto resolution = voxelData.getActiveResolution();
-    float voxelSize = VoxelData::getVoxelSize(resolution);
-    
     Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
-        "Generating mesh for resolution: %d, voxel size: %.2f", static_cast<int>(resolution), voxelSize);
+        "Generating mesh for all voxels across all resolutions");
     
-    // Get all voxels at current resolution
-    auto voxelPositions = voxelData.getAllVoxels(resolution);
-    
-    Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
-        "Found %zu voxels to render", voxelPositions.size());
-    
-    // Get the voxel grid for proper coordinate conversion
-    const VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
-    if (!grid) {
-        Logging::Logger::getInstance().error("VoxelMeshGenerator", "Failed to get grid for resolution");
-        return mesh;
-    }
-    
-    // Generate cube for each voxel
-    int voxelCount = 0;
-    for (const auto& voxelPos : voxelPositions) {
-        // Convert voxel grid coordinates to world position using grid's coordinate system
-        Math::WorldCoordinates worldCoords = grid->incrementToWorld(voxelPos.incrementPos);
-        Math::Vector3f worldPos(worldCoords.x(), worldCoords.y(), worldCoords.z());
+    // Iterate through all resolutions to render ALL voxels, not just active resolution
+    size_t totalVoxelCount = 0;
+    for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(i);
+        float voxelSize = VoxelData::getVoxelSize(resolution);
         
-        if (voxelCount < 3) {
+        // Get all voxels at this resolution
+        auto voxelPositions = voxelData.getAllVoxels(resolution);
+        
+        if (!voxelPositions.empty()) {
             Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
-                "  Voxel %d at grid pos (%d, %d, %d) -> world pos (%.3f, %.3f, %.3f)",
-                voxelCount, voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
-                worldPos.x, worldPos.y, worldPos.z);
-            Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
-                "  VoxelSize: %.3f, Scale: %.3f, Final size: %.3f",
-                voxelSize, 0.95f, voxelSize * 0.95f);
+                "Resolution %d: Found %zu voxels to render (size: %.2f)", 
+                i, voxelPositions.size(), voxelSize);
         }
         
-        // Use red color as expected by tests
-        Math::Vector3f color(1.0f, 0.0f, 0.0f);  // Red
+        // Get the voxel grid for proper coordinate conversion
+        const VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
+        if (!grid && !voxelPositions.empty()) {
+            Logging::Logger::getInstance().errorfc("VoxelMeshGenerator", 
+                "Failed to get grid for resolution %d", i);
+            continue;
+        }
         
-        addCube(vertices, indices, worldPos, voxelSize * 0.95f, color); // Slight gap between cubes
-        voxelCount++;
+        // Generate cube for each voxel at this resolution
+        for (const auto& voxelPos : voxelPositions) {
+            // Convert voxel grid coordinates to world position using grid's coordinate system
+            Math::WorldCoordinates worldCoords = grid->incrementToWorld(voxelPos.incrementPos);
+            Math::Vector3f worldPos(worldCoords.x(), worldCoords.y(), worldCoords.z());
+            
+            if (totalVoxelCount < 3) {
+                Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
+                    "  Voxel %zu at grid pos (%d, %d, %d) -> world pos (%.3f, %.3f, %.3f)",
+                    totalVoxelCount, voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
+                    worldPos.x, worldPos.y, worldPos.z);
+                Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
+                    "  VoxelSize: %.3f, Scale: %.3f, Final size: %.3f",
+                    voxelSize, 0.95f, voxelSize * 0.95f);
+            }
+            
+            // Use red color as expected by tests
+            Math::Vector3f color(1.0f, 0.0f, 0.0f);  // Red
+            
+            addCube(vertices, indices, worldPos, voxelSize * 0.95f, color); // Slight gap between cubes
+            totalVoxelCount++;
+        }
     }
+    
+    Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
+        "Total voxels rendered: %zu", totalVoxelCount);
     
     if (!vertices.empty()) {
         // Convert our vertices to the format expected by Rendering::Mesh
@@ -181,33 +190,40 @@ Rendering::Mesh VoxelMeshGenerator::generateEdgeMesh(const VoxelData::VoxelDataM
     // Create mesh (declare early for error returns)
     Rendering::Mesh mesh;
     
-    // Get active resolution
-    auto resolution = voxelData.getActiveResolution();
-    float voxelSize = VoxelData::getVoxelSize(resolution);
-    
     Logging::Logger::getInstance().debugfc("VoxelMeshGenerator",
-        "Generating edge mesh for resolution: %d, voxel size: %.2f", static_cast<int>(resolution), voxelSize);
+        "Generating edge mesh for all voxels across all resolutions");
     
-    // Get all voxels at current resolution
-    auto voxelPositions = voxelData.getAllVoxels(resolution);
-    
-    // Get the voxel grid for proper coordinate conversion
-    const VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
-    if (!grid) {
-        Logging::Logger::getInstance().error("VoxelMeshGenerator", "Failed to get grid for resolution");
-        return mesh;
-    }
-    
-    // Generate edge lines for each voxel
-    for (const auto& voxelPos : voxelPositions) {
-        // Convert voxel grid coordinates to world position using grid's coordinate system
-        Math::WorldCoordinates worldCoords = grid->incrementToWorld(voxelPos.incrementPos);
-        Math::Vector3f worldPos(worldCoords.x(), worldCoords.y(), worldCoords.z());
+    // Iterate through all resolutions to render ALL voxels, not just active resolution
+    for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(i);
+        float voxelSize = VoxelData::getVoxelSize(resolution);
         
-        // Use black color for edges
-        Math::Vector3f edgeColor(0.1f, 0.1f, 0.1f);  // Very dark gray
+        // Get all voxels at this resolution
+        auto voxelPositions = voxelData.getAllVoxels(resolution);
         
-        addCubeEdges(vertices, indices, worldPos, voxelSize * 0.95f, edgeColor);
+        if (voxelPositions.empty()) {
+            continue;
+        }
+        
+        // Get the voxel grid for proper coordinate conversion
+        const VoxelData::VoxelGrid* grid = voxelData.getGrid(resolution);
+        if (!grid) {
+            Logging::Logger::getInstance().errorfc("VoxelMeshGenerator", 
+                "Failed to get grid for resolution %d", i);
+            continue;
+        }
+        
+        // Generate edge lines for each voxel at this resolution
+        for (const auto& voxelPos : voxelPositions) {
+            // Convert voxel grid coordinates to world position using grid's coordinate system
+            Math::WorldCoordinates worldCoords = grid->incrementToWorld(voxelPos.incrementPos);
+            Math::Vector3f worldPos(worldCoords.x(), worldCoords.y(), worldCoords.z());
+            
+            // Use black color for edges
+            Math::Vector3f edgeColor(0.1f, 0.1f, 0.1f);  // Very dark gray
+            
+            addCubeEdges(vertices, indices, worldPos, voxelSize * 0.95f, edgeColor);
+        }
     }
     
     if (!vertices.empty()) {
