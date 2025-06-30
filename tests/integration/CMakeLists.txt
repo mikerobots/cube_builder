@@ -116,23 +116,23 @@ set_tests_properties(test_integration_interaction_mouse_boundary_clicking PROPER
     LABELS "integration;interaction;mouse"
 )
 
-# Workspace Boundary Placement Test - DISABLED (missing source file)
-# add_executable(test_integration_core_workspace_boundary_placement
-#     test_integration_core_workspace_boundary_placement.cpp
-# )
+# Workspace Boundary Placement Test
+add_executable(test_integration_core_workspace_boundary_placement
+    test_integration_core_workspace_boundary_placement.cpp
+)
 
-# target_link_libraries(test_integration_core_workspace_boundary_placement
-#     VoxelEditor_VoxelData
-#     VoxelEditor_Logging
-#     gtest
-#     gtest_main
-# )
-# 
-# # Add test
-# add_test(NAME test_integration_core_workspace_boundary_placement COMMAND test_integration_core_workspace_boundary_placement)
-# set_tests_properties(test_integration_core_workspace_boundary_placement PROPERTIES
-#     LABELS "integration;core;workspace"
-# )
+target_link_libraries(test_integration_core_workspace_boundary_placement
+    VoxelEditor_VoxelData
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+# Add test
+add_test(NAME test_integration_core_workspace_boundary_placement COMMAND test_integration_core_workspace_boundary_placement)
+set_tests_properties(test_integration_core_workspace_boundary_placement PROPERTIES
+    LABELS "integration;core;workspace"
+)
 
 # Visual Feedback Integration Tests (OpenGL-dependent)
 add_executable(test_integration_feedback_overlay_renderer
@@ -185,6 +185,27 @@ target_link_libraries(test_integration_feedback_requirements_validation
 add_test(NAME test_integration_feedback_requirements_validation COMMAND test_integration_feedback_requirements_validation)
 set_tests_properties(test_integration_feedback_requirements_validation PROPERTIES
     LABELS "integration;feedback;validation"
+)
+
+add_executable(test_integration_feedback_shadow_placement
+    visual_feedback/test_integration_feedback_shadow_placement.cpp
+)
+
+target_link_libraries(test_integration_feedback_shadow_placement
+    VoxelEditor_VisualFeedback
+    VoxelEditor_VoxelData
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    glfw
+    glad
+    OpenGL::GL
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_feedback_shadow_placement COMMAND test_integration_feedback_shadow_placement)
+set_tests_properties(test_integration_feedback_shadow_placement PROPERTIES
+    LABELS "integration;feedback;shadow"
 )
 
 # Enhanced Shader Validation Integration Test
@@ -482,24 +503,24 @@ set_tests_properties(test_integration_debug_192cm PROPERTIES
 #     LABELS "integration;core;voxel"
 # )
 
-# Coordinate Consistency Integration Test - DISABLED (missing source file)
-# add_executable(test_integration_coordinate_consistency
-#     test_integration_coordinate_consistency.cpp
-# )
-# 
-# target_link_libraries(test_integration_coordinate_consistency
-#     VoxelEditor_VoxelData
-#     VoxelEditor_Input
-#     VoxelEditor_Math
-#     VoxelEditor_Logging
-#     gtest
-#     gtest_main
-# )
-# 
-# add_test(NAME test_integration_coordinate_consistency COMMAND test_integration_coordinate_consistency)
-# set_tests_properties(test_integration_coordinate_consistency PROPERTIES
-#     LABELS "integration;core;coordinate"
-# )
+# Coordinate Consistency Integration Test
+add_executable(test_integration_coordinate_consistency
+    test_integration_coordinate_consistency.cpp
+)
+
+target_link_libraries(test_integration_coordinate_consistency
+    VoxelEditor_VoxelData
+    VoxelEditor_Input
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_coordinate_consistency COMMAND test_integration_coordinate_consistency)
+set_tests_properties(test_integration_coordinate_consistency PROPERTIES
+    LABELS "integration;core;coordinate"
+)
 
 # Preview Positioning Integration Test
 add_executable(test_integration_preview_positioning
@@ -579,10 +600,11 @@ set_tests_properties(
     test_integration_core_ground_plane_voxel_placement
     test_integration_interaction_mouse_ground_plane_clicking
     test_integration_interaction_mouse_boundary_clicking
-    # test_integration_core_workspace_boundary_placement  # DISABLED - missing source
+    test_integration_core_workspace_boundary_placement
     test_integration_feedback_overlay_renderer
     test_integration_feedback_renderer_components
     test_integration_feedback_requirements_validation
+    test_integration_feedback_shadow_placement
     test_integration_rendering_enhanced_shader_validation
     test_integration_visual_shader_output_validation
     test_integration_rendering_shader_rendering_comprehensive
@@ -593,10 +615,10 @@ set_tests_properties(
     test_integration_debug_192cm
     # test_integration_ground_plane_constraint  # DISABLED - missing source
     # test_integration_overlap_detection  # DISABLED - missing source
+    test_integration_coordinate_consistency
     test_integration_preview_positioning
     test_integration_face_to_face_alignment
     test_integration_face_click_pipeline
-    # test_integration_coordinate_consistency  # DISABLED - missing source
     PROPERTIES WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 

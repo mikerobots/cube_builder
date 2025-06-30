@@ -1,4 +1,5 @@
 #include "../include/visual_feedback/GeometricFaceDetector.h"
+#include "../../foundation/logging/Logger.h"
 #include <cmath>
 #include <algorithm>
 
@@ -68,8 +69,18 @@ std::optional<float> GeometricFaceDetector::rayPlaneIntersection(const Ray& ray,
     float t = toPlane.dot(planeNormal) / denom;
     
     // Only consider intersections in front of the ray
-    if (t < 0) {
+    if (t <= 0) {
         return std::nullopt;
+    }
+    
+    // Apply selective backface culling: 
+    // - For hits very close to ray origin (t < small epsilon), allow backface hits
+    //   This handles rays starting inside or very close to face surfaces
+    // - For hits further away, apply standard backface culling
+    // Ray hits front of face when ray direction and normal point in opposite directions (denom < 0)
+    const float epsilon = 0.1f; // 10cm tolerance - large enough to handle rays inside voxels
+    if (t > epsilon && denom > 0) {
+        return std::nullopt;  // Ray is hitting the back of the face from far away, ignore it
     }
     
     return t;
@@ -105,12 +116,33 @@ std::optional<RayFaceHit> GeometricFaceDetector::detectClosestFace(const Ray& ra
     std::optional<RayFaceHit> closestHit;
     float minDistance = std::numeric_limits<float>::infinity();
     
+    // Debug logging
+    Logging::Logger& logger = Logging::Logger::getInstance();
+    
     for (const auto& face : faces) {
         RayFaceHit hit = rayFaceIntersection(ray, face);
-        if (hit.hit && hit.distance < minDistance) {
-            minDistance = hit.distance;
-            closestHit = hit;
+        if (hit.hit) {
+            // Log face hits for debugging
+            if (face.id >= 0 && face.id < 6) {
+                const char* faceNames[] = {"+X", "-X", "+Y", "-Y", "+Z", "-Z"};
+                logger.debugfc("GeometricFaceDetector", 
+                    "Ray hit face %d (%s) at distance %.3f, normal: (%.3f, %.3f, %.3f)",
+                    face.id, faceNames[face.id % 6], hit.distance,
+                    face.normal.x, face.normal.y, face.normal.z);
+            }
+            
+            if (hit.distance < minDistance) {
+                minDistance = hit.distance;
+                closestHit = hit;
+            }
         }
+    }
+    
+    if (closestHit.has_value() && closestHit->faceId >= 0 && closestHit->faceId < 6) {
+        const char* faceNames[] = {"+X", "-X", "+Y", "-Y", "+Z", "-Z"};
+        logger.debugfc("GeometricFaceDetector", 
+            "Closest face selected: %d (%s) at distance %.3f",
+            closestHit->faceId, faceNames[closestHit->faceId % 6], closestHit->distance);
     }
     
     return closestHit;

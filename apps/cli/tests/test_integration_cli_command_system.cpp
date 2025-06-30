@@ -65,8 +65,8 @@ TEST_F(CommandSystemTest, AllCommandsRegistered) {
                 output.find("6 modules") != std::string::npos) 
         << "Should have 6 command modules. Output: " << output;
     
-    EXPECT_TRUE(output.find("49 commands") != std::string::npos) 
-        << "Should have registered 49 commands. Output: " << output;
+    EXPECT_TRUE(output.find("51 commands") != std::string::npos) 
+        << "Should have registered 51 commands. Output: " << output;
     
     // Verify help shows all command categories
     std::string help = processor.getHelp();
@@ -103,10 +103,19 @@ TEST_F(CommandSystemTest, AllCommandsRegistered) {
     EXPECT_TRUE(help.find("mesh") != std::string::npos) << "Missing mesh command";
 }
 
-TEST_F(CommandSystemTest, DISABLED_CommandExecution) {
-    // DISABLED: Application constructor hangs in test environment (likely OpenGL initialization)
-    // This test validates that commands can be executed
+TEST_F(CommandSystemTest, CommandExecution) {
+    // Test validates that commands can be executed
     Application app;
+    
+    // Initialize in headless mode to avoid OpenGL issues
+    char arg0[] = "test";
+    char arg1[] = "--headless";
+    char* argv[] = {arg0, arg1, nullptr};
+    int argc = 2;
+    
+    ASSERT_TRUE(app.initialize(argc, argv)) << "Application should initialize in headless mode";
+    ASSERT_TRUE(app.isHeadless()) << "Application should be in headless mode";
+    
     CommandProcessor processor(&app);
     
     // Register all commands
@@ -121,10 +130,19 @@ TEST_F(CommandSystemTest, DISABLED_CommandExecution) {
     EXPECT_TRUE(statusResult.success) << "Status command should succeed";
 }
 
-TEST_F(CommandSystemTest, DISABLED_CommandAliases) {
-    // DISABLED: Application constructor hangs in test environment (likely OpenGL initialization)
-    // This test validates that command aliases work
+TEST_F(CommandSystemTest, CommandAliases) {
+    // Test validates that command aliases work
     Application app;
+    
+    // Initialize in headless mode to avoid OpenGL issues
+    char arg0[] = "test";
+    char arg1[] = "--headless";
+    char* argv[] = {arg0, arg1, nullptr};
+    int argc = 2;
+    
+    ASSERT_TRUE(app.initialize(argc, argv)) << "Application should initialize in headless mode";
+    ASSERT_TRUE(app.isHeadless()) << "Application should be in headless mode";
+    
     CommandProcessor processor(&app);
     
     // Register all commands

@@ -347,8 +347,8 @@
 #### 9.3 Workspace Command Behavior
 - **REQ-9.3.1**: Workspace resize command shall validate new dimensions (minimum 2m, maximum 8m)
   - *Subsystems: **CLI Application** (validation), **Voxel Data** (bounds checking)*
-- **REQ-9.3.2**: Workspace resize to smaller dimensions shall automatically remove voxels outside the new bounds
-  - *Subsystems: **Voxel Data** (voxel removal), **CLI Application** (resize handling)*
+- **REQ-9.3.6**: Workspace resize to smaller dimensions shall fail if any voxels would be outside the new bounds
+  - *Subsystems: **Voxel Data** (voxel validation), **CLI Application** (resize handling)*
 - **REQ-9.3.3**: Workspace resize to larger dimensions shall preserve all existing voxels
   - *Subsystems: **Voxel Data** (voxel preservation), **CLI Application** (resize handling)*
 - **REQ-9.3.4**: Workspace resize failure shall leave the workspace and all voxels unchanged

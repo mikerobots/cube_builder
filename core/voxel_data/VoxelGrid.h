@@ -260,10 +260,30 @@ public:
         );
         
         // Check if any voxels would be lost
+        // Need to check if voxels would be outside the new centered workspace bounds
         bool wouldLoseVoxels = false;
         auto positions = m_octree->getAllVoxels();
-        for (const auto& pos : positions) {
-            if (pos.x >= newDimensions.x || pos.y >= newDimensions.y || pos.z >= newDimensions.z) {
+        
+        // Calculate new bounds in grid coordinates (accounting for centered coordinate system)
+        int newHalfX_cm = static_cast<int>(newSize.x * 100.0f / 2.0f);
+        int newHalfZ_cm = static_cast<int>(newSize.z * 100.0f / 2.0f);
+        int newMaxY_cm = static_cast<int>(newSize.y * 100.0f);
+        
+        for (const auto& gridPos : positions) {
+            // Convert grid position back to increment coordinates
+            int halfX_cm = static_cast<int>(m_workspaceSize.x * 100.0f / 2.0f);
+            int halfZ_cm = static_cast<int>(m_workspaceSize.z * 100.0f / 2.0f);
+            
+            Math::IncrementCoordinates incrementPos(
+                gridPos.x - halfX_cm,
+                gridPos.y,
+                gridPos.z - halfZ_cm
+            );
+            
+            // Check if this position would be within new bounds
+            if (std::abs(incrementPos.x()) > newHalfX_cm ||
+                incrementPos.y() >= newMaxY_cm ||
+                std::abs(incrementPos.z()) > newHalfZ_cm) {
                 wouldLoseVoxels = true;
                 break;
             }
@@ -272,9 +292,6 @@ public:
         if (wouldLoseVoxels) {
             return false;
         }
-        
-        m_workspaceSize = newSize;
-        m_gridDimensions = newDimensions;
         
         // Recalculate octree depth for new dimensions and recreate octree
         int maxDim = std::max({newDimensions.x, newDimensions.y, newDimensions.z});
@@ -293,12 +310,37 @@ public:
         auto newOctree = std::make_unique<SparseOctree>(depth);
         
         // Transfer existing voxels to new octree
-        for (const auto& pos : positions) {
-            newOctree->setVoxel(pos, true);
+        // Need to convert from old grid coordinates to increment, then to new grid coordinates
+        for (const auto& oldGridPos : positions) {
+            // Convert old grid position back to increment coordinates
+            int oldHalfX_cm = static_cast<int>(m_workspaceSize.x * 100.0f / 2.0f);
+            int oldHalfZ_cm = static_cast<int>(m_workspaceSize.z * 100.0f / 2.0f);
+            
+            Math::IncrementCoordinates incrementPos(
+                oldGridPos.x - oldHalfX_cm,
+                oldGridPos.y,
+                oldGridPos.z - oldHalfZ_cm
+            );
+            
+            // Convert increment coordinates to new grid coordinates
+            int newHalfX_cm = static_cast<int>(newSize.x * 100.0f / 2.0f);
+            int newHalfZ_cm = static_cast<int>(newSize.z * 100.0f / 2.0f);
+            
+            Math::Vector3i newGridPos(
+                incrementPos.x() + newHalfX_cm,
+                incrementPos.y(),
+                incrementPos.z() + newHalfZ_cm
+            );
+            
+            newOctree->setVoxel(newGridPos, true);
         }
         
         // Replace the old octree
         m_octree = std::move(newOctree);
+        
+        // Update workspace size and grid dimensions after successful transfer
+        m_workspaceSize = newSize;
+        m_gridDimensions = newDimensions;
         
         return true;
     }

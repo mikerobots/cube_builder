@@ -159,8 +159,8 @@ TEST_F(CommandRegistryTest, DirectModuleRegistration) {
     testRegistry.registerAllCommands(m_app.get(), &testProcessor);
     std::string output = testing::internal::GetCapturedStdout();
     
-    // Verify registration worked
-    EXPECT_TRUE(output.find("49 commands") != std::string::npos) 
+    // Verify registration worked - expecting 51 commands now
+    EXPECT_TRUE(output.find("51 commands") != std::string::npos) 
         << "Should have registered many commands. Output: " << output;
     EXPECT_TRUE(output.find("6 modules") != std::string::npos) 
         << "Should have 6 modules. Output: " << output;

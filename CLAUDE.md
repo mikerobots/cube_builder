@@ -48,6 +48,8 @@ cmake --build build_relwithdebinfo
 
 Test needs OpenGL, read ./guides/opengl_integration_test.md
 
+If a test is failing, double check requirements.md to see if it needs to change.
+
 ### Test Runners
 ```bash
 # Unit tests only
@@ -169,17 +171,6 @@ Remote repository available - after committing changes:
 git push -u origin master
 ```
 
-## Documentation
-
-### Code Documentation
-```bash
-# Generate Doxygen documentation
-doxygen Doxyfile
-
-# View documentation
-open docs/html/index.html      # HTML docs
-open docs/latex/refman.pdf     # PDF docs
-```
 
 ### Key Documentation Files
 - **ARCHITECTURE.md**: Detailed subsystem architecture
@@ -229,4 +220,7 @@ test. Challenge all assumptions.
 DON'T BE A YES MAN! CHALLENGE ME IF I AM ASKING YOU TO DO SOMETHING
 THAT IS SUBPAR OR DOESN'T MAKE SENSE!
 
-**CRITICAL**: Completed subsystem directories are locked. Don't unlock. 
+**CRITICAL**: Completed subsystem directories are locked. Don't unlock.
+
+DON'T ADD SKIPS TO FIX TESTS!!!
+We are in the process of fixing integration tests. DON'T RUN THE CLI!

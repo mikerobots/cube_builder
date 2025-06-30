@@ -909,7 +909,12 @@ void Application::registerCommands() {
                 
                 // Parse the float value
                 try {
-                    float value = std::stof(arg);
+                    size_t idx = 0;
+                    float value = std::stof(arg, &idx);
+                    // Check that the entire string was consumed
+                    if (idx != arg.length()) {
+                        return CommandResult::Error("Invalid numeric value: '" + args[i] + "'");
+                    }
                     dimensions.push_back(value);
                 } catch (...) {
                     return CommandResult::Error("Invalid numeric value: '" + args[i] + "'");

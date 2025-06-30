@@ -226,7 +226,8 @@ float MeshValidator::calculateMinimumFeatureSize(const Mesh& mesh) {
     
     // Could also check for thin triangles, small angles, etc.
     
-    return minFeatureSize;
+    // Convert from meters to millimeters
+    return minFeatureSize * 1000.0f;
 }
 
 std::vector<uint32_t> MeshValidator::findDegenerateTriangles(const Mesh& mesh) {

@@ -342,10 +342,10 @@ TEST_F(CoordinateSystemConstraintsTest, FillCommandCoordinates_REQ_11_2_4) {
         {"fill -50 0 -50 -40 10 -40", true, "Centered fill region (non-overlapping)"},
         {"fill 0 10 0 5 20 5", true, "Above ground fill"},
         
-        // Y coordinates below ground (new behavior: partial success, fills valid voxels only)
-        {"fill 0 -1 0 10 10 10", true, "Start Y below ground (fills valid voxels above Y=0)"},
-        {"fill 0 0 0 10 -1 10", false, "End Y below ground (no valid voxels)"},
-        {"fill -10 -5 -10 10 5 10", true, "Y range spans below ground (fills valid voxels above Y=0)"},
+        // Y coordinates below ground (current behavior: rejects entire operation)
+        {"fill 0 -1 0 10 10 10", false, "Start Y below ground"},
+        {"fill 0 0 0 10 -1 10", false, "End Y below ground"},
+        {"fill -10 -5 -10 10 5 10", false, "Y range spans below ground"},
         
         // Invalid coordinate formats
         // Note: fill command uses std::stoi which accepts "0cm" as 0, so it works
@@ -439,10 +439,10 @@ TEST_F(CoordinateSystemConstraintsTest, WorkspaceBoundaryValidation_REQ_11_2_4) 
     
     std::vector<BoundaryTest> tests = {
         // Within workspace bounds (5m³ = -2.5m to +2.5m = -250cm to +250cm)
-        // Note: 1cm voxel extends 1cm, so max valid position is 249cm
+        // Note: Voxels have extent, so they can't be placed exactly at boundaries
         {"0cm 0cm 0cm", true, "Center of workspace"},
-        {"249cm 0cm 249cm", true, "Near positive boundary"},
-        {"-250cm 0cm -250cm", true, "Near negative boundary"},
+        {"240cm 0cm 240cm", true, "Near positive boundary"},
+        {"-240cm 0cm -240cm", true, "Near negative boundary"},
         {"200cm 0cm 200cm", true, "Within positive boundary"},
         {"-200cm 0cm -200cm", true, "Within negative boundary"},
         

@@ -210,7 +210,7 @@ TEST_F(PreviewPositioningTest, ExactPositionPreview_PlacementValidation) {
             IncrementCoordinates(existingVoxelPos), VoxelResolution::Size_4cm);
         
         // Update preview with validation result
-        previewManager->setValidationResult(validation.valid ? PlacementValidationResult::Valid : PlacementValidationResult::Invalid);
+        previewManager->setValidationResult(validation.valid ? PlacementValidationResult::Valid : PlacementValidationResult::InvalidOverlap);
         
         // Verify preview still shows exact position but with invalid state
         EXPECT_TRUE(previewManager->hasPreview());
@@ -224,7 +224,7 @@ TEST_F(PreviewPositioningTest, ExactPositionPreview_PlacementValidation) {
             
             auto adjacentValidation = voxelManager->validatePosition(
                 IncrementCoordinates(adjacentPos), VoxelResolution::Size_4cm);
-            previewManager->setValidationResult(adjacentValidation.valid ? PlacementValidationResult::Valid : PlacementValidationResult::Invalid);
+            previewManager->setValidationResult(adjacentValidation.valid ? PlacementValidationResult::Valid : PlacementValidationResult::InvalidOverlap);
             
             EXPECT_TRUE(previewManager->hasPreview());
             EXPECT_EQ(previewManager->getPreviewPosition(), adjacentPos);

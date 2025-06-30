@@ -12,6 +12,7 @@
 #include "camera/CameraController.h"
 #include "voxel_data/VoxelDataManager.h"
 #include "logging/Logger.h"
+#include "math/CoordinateTypes.h"
 
 namespace VoxelEditor {
 
@@ -112,86 +113,49 @@ protected:
     Camera::CameraController* m_cameraController = nullptr;
 };
 
-TEST_F(GridOverlayTest, DebugGridOffByDefault) {
-    // Grid should be disabled by default
+TEST_F(GridOverlayTest, GroundPlaneGridVisible) {
+    // Ground plane grid should be visible by default
     // Update and render to ensure initial state
     m_app->update();
     m_app->render();
     
-    // Capture framebuffer - should not have many grid pixels
+    // Capture framebuffer - should have ground plane grid pixels
     auto pixels = captureFramebuffer();
-    int gridPixelsBefore = countGridPixels(pixels);
+    int gridPixels = countGridPixels(pixels);
     
-    saveDebugScreenshot("test_grid_default_off.ppm");
+    saveDebugScreenshot("test_ground_plane_grid.ppm");
     
-    // Should have minimal grid pixels when disabled
-    EXPECT_LT(gridPixelsBefore, 1000) << "Too many grid-like pixels when grid should be off";
+    // Should have some grid pixels from the ground plane grid
+    EXPECT_GT(gridPixels, 100) << "Ground plane grid should be visible";
 }
 
-TEST_F(GridOverlayTest, CanToggleGridOverlay) {
-    // Test toggling grid overlay on and off via command
+TEST_F(GridOverlayTest, GroundPlaneGridConsistency) {
+    // Test that ground plane grid remains consistent across renders
     
-    // Initially off
+    // Initial render
     m_app->update();
     m_app->render();
-    auto pixelsBefore = captureFramebuffer();
-    int gridPixelsBefore = countGridPixels(pixelsBefore);
+    auto pixelsFirst = captureFramebuffer();
+    int gridPixelsFirst = countGridPixels(pixelsFirst);
     
-    // Enable grid
-    auto result = m_commandProcessor->execute("debug grid");
-    EXPECT_TRUE(result.success) << "Failed to execute debug grid command";
-    EXPECT_TRUE(result.message.find("enabled") != std::string::npos) 
-        << "Grid should be enabled, message: " << result.message;
-    
-    // Debug: Check if the application's debug grid flag is set
-    std::cout << "Debug grid command result: " << result.message << std::endl;
-    
-    // Update and render with grid enabled
+    // Render again without changes
     m_app->update();
     m_app->render();
+    auto pixelsSecond = captureFramebuffer();
+    int gridPixelsSecond = countGridPixels(pixelsSecond);
     
-    // Ensure the render is complete
-    glFinish();
+    saveDebugScreenshot("test_grid_consistency.ppm");
     
-    auto pixelsAfterEnable = captureFramebuffer();
-    int gridPixelsAfterEnable = countGridPixels(pixelsAfterEnable);
-    
-    saveDebugScreenshot("test_grid_enabled.ppm");
-    
-    std::cout << "Grid pixels before: " << gridPixelsBefore << std::endl;
-    std::cout << "Grid pixels after enable: " << gridPixelsAfterEnable << std::endl;
-    
-    // Should have more grid pixels when enabled, but allow a lower threshold since grid is transparent
-    EXPECT_GT(gridPixelsAfterEnable, gridPixelsBefore + 10) 
-        << "Grid pixels should increase when grid is enabled (before: " << gridPixelsBefore 
-        << ", after: " << gridPixelsAfterEnable << ")";
-    
-    // Disable grid again
-    result = m_commandProcessor->execute("debug grid");
-    EXPECT_TRUE(result.success) << "Failed to execute debug grid command";
-    EXPECT_TRUE(result.message.find("disabled") != std::string::npos) 
-        << "Grid should be disabled, message: " << result.message;
-    
-    // Update and render with grid disabled
-    m_app->update();
-    m_app->render();
-    auto pixelsAfterDisable = captureFramebuffer();
-    int gridPixelsAfterDisable = countGridPixels(pixelsAfterDisable);
-    
-    saveDebugScreenshot("test_grid_disabled.ppm");
-    
-    // Should return to original state (allow small tolerance)
-    EXPECT_LT(gridPixelsAfterDisable, gridPixelsAfterEnable - 5) 
-        << "Grid pixels should decrease when grid is disabled (enabled: " << gridPixelsAfterEnable 
-        << ", disabled: " << gridPixelsAfterDisable << ")";
+    // Grid pixel count should be consistent across renders (allow small tolerance)
+    EXPECT_NEAR(gridPixelsFirst, gridPixelsSecond, 50) 
+        << "Grid rendering should be consistent (first: " << gridPixelsFirst 
+        << ", second: " << gridPixelsSecond << ")";
 }
 
-TEST_F(GridOverlayTest, GridVisibleAtDifferentZoomLevels) {
-    // Test that grid is visible at different camera distances
+TEST_F(GridOverlayTest, GroundPlaneGridVisibleAtDifferentZoomLevels) {
+    // Test that ground plane grid is visible at different camera distances
     
-    // Enable grid
-    auto result = m_commandProcessor->execute("debug grid");
-    EXPECT_TRUE(result.success);
+    // Ground plane grid is always visible, no need to enable
     
     // Test at different zoom levels
     std::vector<float> zoomLevels = {2.0f, 5.0f, 10.0f, 20.0f};
@@ -217,15 +181,14 @@ TEST_F(GridOverlayTest, GridVisibleAtDifferentZoomLevels) {
     }
 }
 
-TEST_F(GridOverlayTest, GridAlignsWithVoxelPlacements) {
-    // Test that the grid aligns with 1cm voxel placements
+TEST_F(GridOverlayTest, GroundPlaneGridAlignsWithVoxelPlacements) {
+    // Test that the ground plane grid aligns with 1cm voxel placements
     
-    // Enable grid and set resolution to 1cm
-    m_commandProcessor->execute("debug grid");
+    // Ground plane grid is always visible, just set resolution to 1cm
     m_commandProcessor->execute("resolution 1cm");
     
     // Place a voxel at origin
-    m_voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm, true);
+    m_voxelManager->setVoxel(Math::IncrementCoordinates(0, 0, 0), VoxelData::VoxelResolution::Size_1cm, true);
     m_app->requestMeshUpdate();
     
     // Set camera to good viewing position
@@ -246,9 +209,9 @@ TEST_F(GridOverlayTest, GridAlignsWithVoxelPlacements) {
     EXPECT_GT(gridPixels, 500) << "Grid should be visible with voxel placement";
     
     // Place more voxels at 1cm increments to verify alignment
-    m_voxelManager->setVoxel(Math::Vector3i(1, 0, 0), VoxelData::VoxelResolution::Size_1cm, true);
-    m_voxelManager->setVoxel(Math::Vector3i(0, 1, 0), VoxelData::VoxelResolution::Size_1cm, true);
-    m_voxelManager->setVoxel(Math::Vector3i(0, 0, 1), VoxelData::VoxelResolution::Size_1cm, true);
+    m_voxelManager->setVoxel(Math::IncrementCoordinates(1, 0, 0), VoxelData::VoxelResolution::Size_1cm, true);
+    m_voxelManager->setVoxel(Math::IncrementCoordinates(0, 1, 0), VoxelData::VoxelResolution::Size_1cm, true);
+    m_voxelManager->setVoxel(Math::IncrementCoordinates(0, 0, 1), VoxelData::VoxelResolution::Size_1cm, true);
     m_app->requestMeshUpdate();
     
     // Update and render again
@@ -263,11 +226,10 @@ TEST_F(GridOverlayTest, GridAlignsWithVoxelPlacements) {
     EXPECT_GT(gridPixels, 400) << "Grid should remain visible with multiple voxels";
 }
 
-TEST_F(GridOverlayTest, GridShowsOnecentimeterIncrements) {
-    // Test that the grid specifically shows 1cm increments regardless of current resolution
+TEST_F(GridOverlayTest, GroundPlaneGridShowsConsistentIncrements) {
+    // Test that the ground plane grid shows consistent increments regardless of current resolution
     
-    // Enable grid and set a larger resolution (should still show 1cm grid)
-    m_commandProcessor->execute("debug grid");
+    // Set a larger resolution (ground plane grid should remain consistent)
     m_commandProcessor->execute("resolution 32cm");
     
     // Set camera close enough to see fine detail
@@ -282,9 +244,9 @@ TEST_F(GridOverlayTest, GridShowsOnecentimeterIncrements) {
     auto pixels = captureFramebuffer();
     int gridPixels = countGridPixels(pixels);
     
-    saveDebugScreenshot("test_grid_1cm_increments.ppm");
+    saveDebugScreenshot("test_grid_consistent_increments.ppm");
     
-    EXPECT_GT(gridPixels, 1000) << "Fine 1cm grid should be visible even with larger voxel resolution";
+    EXPECT_GT(gridPixels, 1000) << "Ground plane grid should be visible even with larger voxel resolution";
 }
 
 } // namespace VoxelEditor

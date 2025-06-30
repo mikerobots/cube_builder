@@ -507,386 +507,222 @@ TEST_F(WorkspaceCommandValidationTest, WorkspaceVolumeConstraints_REQ_11_3_16) {
 // REQ-11.3.17: Workspace command shall test workspace resizing with existing voxels
 // ============================================================================
 
-TEST_F(WorkspaceCommandValidationTest, DISABLED_WorkspaceResizeWithExistingVoxels_PreservationWithinBounds_REQ_11_3_17) {
-    // Test that voxels within new workspace bounds are preserved during resize
+TEST_F(WorkspaceCommandValidationTest, WorkspaceResizeWithVoxels_ShouldSucceedWhenAllVoxelsWithinNewBounds) {
+    // REQ-9.3.6: Workspace resize to smaller dimensions shall fail if any voxels would be outside the new bounds
+    // This test verifies resize succeeds when all voxels remain within new bounds
     
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
     auto voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
     
-    // Start with a larger workspace (6x6x6 meters)
-    Math::Vector3f initialSize(6.0f, 6.0f, 6.0f);
-    bool setupResult = voxelManager->resizeWorkspace(initialSize);
-    ASSERT_TRUE(setupResult) << "Initial workspace setup should succeed";
+    // Start with 6x6x6 meters workspace
+    ASSERT_TRUE(voxelManager->resizeWorkspace(6.0f));
     
-    // Set resolution for precise voxel placement
-    voxelManager->setActiveResolution(VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
+    // Use smaller voxels for more precise placement
+    voxelManager->setActiveResolution(VoxelEditor::VoxelData::VoxelResolution::Size_16cm);
     
-    // Place voxels at various positions within the initial workspace
+    // Place voxels that will be within 4x4x4 bounds (4m = 400cm, bounds are -200cm to +200cm)
+    // With 16cm voxels, we need to ensure the voxel extent stays within bounds
     std::vector<Math::Vector3i> voxelPositions = {
         Math::Vector3i(0, 0, 0),      // Center
-        Math::Vector3i(32, 0, 32),    // Near center, positive quadrant
-        Math::Vector3i(-32, 0, -32),  // Near center, negative quadrant
-        Math::Vector3i(64, 0, 0),     // Further from center but within future bounds
-        Math::Vector3i(0, 32, 64)     // Mixed coordinates within future bounds
+        Math::Vector3i(100, 0, 100),  // 1m from center, well within 4x4x4
+        Math::Vector3i(-100, 0, -100),// 1m from center, well within 4x4x4
+        Math::Vector3i(150, 0, 0),    // 1.5m from center on X, within 4x4x4
     };
     
-    // Place all voxels and verify they exist
     for (const auto& pos : voxelPositions) {
-        bool placed = voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true);
-        ASSERT_TRUE(placed) << "Should be able to place voxel at position " 
-                           << pos.x << "," << pos.y << "," << pos.z;
-        
-        bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-        ASSERT_TRUE(exists) << "Voxel should exist after placement";
+        bool result = voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_16cm, true);
+        ASSERT_TRUE(result) << "Failed to place voxel at (" << pos.x << ", " << pos.y << ", " << pos.z << ")";
     }
     
-    // Resize workspace to smaller size (4x4x4 meters) - all placed voxels should still be within bounds
-    Math::Vector3f newSize(4.0f, 4.0f, 4.0f);
-    bool resizeResult = voxelManager->resizeWorkspace(newSize);
-    EXPECT_TRUE(resizeResult) << "Workspace resize should succeed";
+    // Resize to 4x4x4 - should succeed as all voxels are within bounds
+    EXPECT_TRUE(voxelManager->resizeWorkspace(4.0f)) << "Resize should succeed when all voxels within new bounds";
+    EXPECT_EQ(voxelManager->getWorkspaceSize(), Math::Vector3f(4.0f, 4.0f, 4.0f));
     
-    // Verify workspace size changed
-    Math::Vector3f actualSize = voxelManager->getWorkspaceSize();
-    EXPECT_EQ(actualSize, newSize) << "Workspace size should be updated";
-    
-    // Verify all voxels within the new bounds are preserved
+    // Verify all voxels still exist
     for (const auto& pos : voxelPositions) {
-        bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-        EXPECT_TRUE(exists) << "Voxel at " << pos.x << "," << pos.y << "," << pos.z 
-                           << " should be preserved after workspace resize";
+        EXPECT_TRUE(voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_16cm));
     }
-    
-    // Verify total voxel count is preserved
-    size_t expectedCount = voxelPositions.size();
-    size_t actualCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(actualCount, expectedCount) << "All voxels should be preserved after resize";
 }
 
-TEST_F(WorkspaceCommandValidationTest, DISABLED_WorkspaceResizeWithExistingVoxels_RemovalOutsideBounds_REQ_11_3_17) {
-    // Test that voxels outside new workspace bounds are handled during resize
+TEST_F(WorkspaceCommandValidationTest, WorkspaceResizeWithVoxels_ShouldFailWhenVoxelsOutsideNewBounds) {
+    // REQ-9.3.6: Workspace resize to smaller dimensions shall fail if any voxels would be outside the new bounds
+    // This test verifies resize fails when voxels would be outside new bounds
     
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
     auto voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
     
-    // Start with a large workspace (8x8x8 meters)
-    Math::Vector3f initialSize(8.0f, 8.0f, 8.0f);
-    bool setupResult = voxelManager->resizeWorkspace(initialSize);
-    ASSERT_TRUE(setupResult) << "Initial workspace setup should succeed";
+    // Start with 8x8x8 meters workspace
+    ASSERT_TRUE(voxelManager->resizeWorkspace(8.0f));
+    Math::Vector3f originalSize = voxelManager->getWorkspaceSize();
     
-    // Set resolution for precise voxel placement
+    // Place voxels - some would be outside 3x3x3 bounds
     voxelManager->setActiveResolution(VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-    
-    // Place voxels - some within future bounds, some outside
-    std::vector<std::pair<Math::Vector3i, bool>> voxelData = {
-        // Voxels that will be within new 3x3x3 workspace bounds (-1.5m to +1.5m)
-        {Math::Vector3i(0, 0, 0), true},      // Center - should be preserved
-        {Math::Vector3i(32, 0, 32), true},    // Within bounds - should be preserved
-        {Math::Vector3i(-32, 0, -32), true},  // Within bounds - should be preserved
-        
-        // Voxels that will be outside new 3x3x3 workspace bounds
-        {Math::Vector3i(192, 0, 0), false},   // Far positive X - outside bounds
-        {Math::Vector3i(-192, 0, 0), false},  // Far negative X - outside bounds
-        {Math::Vector3i(0, 0, 224), false},   // Far positive Z - outside bounds
-        {Math::Vector3i(0, 0, -224), false},  // Far negative Z - outside bounds
-        {Math::Vector3i(256, 0, 256), false}  // Far corner - outside bounds
+    std::vector<Math::Vector3i> voxelPositions = {
+        Math::Vector3i(0, 0, 0),      // Center - within 3x3x3
+        Math::Vector3i(192, 0, 0),    // Outside 3x3x3 bounds
+        Math::Vector3i(0, 0, 224),    // Outside 3x3x3 bounds
     };
     
-    // Place all voxels and verify they exist
-    for (const auto& voxelInfo : voxelData) {
-        const Math::Vector3i& pos = voxelInfo.first;
-        bool placed = voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true);
-        ASSERT_TRUE(placed) << "Should be able to place voxel at position " 
-                           << pos.x << "," << pos.y << "," << pos.z;
-        
-        bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-        ASSERT_TRUE(exists) << "Voxel should exist after placement";
+    for (const auto& pos : voxelPositions) {
+        ASSERT_TRUE(voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true));
     }
     
-    // Verify initial voxel count
     size_t initialVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(initialVoxelCount, voxelData.size()) << "All voxels should be placed initially";
     
-    // Resize workspace to smaller size (3x3x3 meters)
-    Math::Vector3f newSize(3.0f, 3.0f, 3.0f);
-    bool resizeResult = voxelManager->resizeWorkspace(newSize);
-    EXPECT_TRUE(resizeResult) << "Workspace resize should succeed";
+    // Try to resize to 3x3x3 - should FAIL because voxels would be outside bounds
+    EXPECT_FALSE(voxelManager->resizeWorkspace(3.0f)) << "Resize should fail when voxels would be outside new bounds";
     
-    // Verify workspace size changed
-    Math::Vector3f actualSize = voxelManager->getWorkspaceSize();
-    EXPECT_EQ(actualSize, newSize) << "Workspace size should be updated";
+    // Verify workspace size unchanged
+    EXPECT_EQ(voxelManager->getWorkspaceSize(), originalSize) << "Workspace size should remain unchanged after failed resize";
     
-    // Verify voxel preservation/removal based on new bounds
-    size_t expectedPreservedCount = 0;
-    for (const auto& voxelInfo : voxelData) {
-        const Math::Vector3i& pos = voxelInfo.first;
-        bool shouldBePreserved = voxelInfo.second;
-        
-        bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-        
-        if (shouldBePreserved) {
-            EXPECT_TRUE(exists) << "Voxel at " << pos.x << "," << pos.y << "," << pos.z 
-                               << " should be preserved (within new bounds)";
-            expectedPreservedCount++;
-        } else {
-            EXPECT_FALSE(exists) << "Voxel at " << pos.x << "," << pos.y << "," << pos.z 
-                                << " should be removed (outside new bounds)";
-        }
+    // Verify all voxels still exist
+    EXPECT_EQ(voxelManager->getVoxelCount(), initialVoxelCount) << "All voxels should be preserved after failed resize";
+    for (const auto& pos : voxelPositions) {
+        EXPECT_TRUE(voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm));
     }
-    
-    // Verify total voxel count reflects preservation/removal
-    size_t finalVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(finalVoxelCount, expectedPreservedCount) 
-        << "Voxel count should reflect only preserved voxels";
 }
 
-TEST_F(WorkspaceCommandValidationTest, DISABLED_WorkspaceResizeWithExistingVoxels_EnlargementPreservation_REQ_11_3_17) {
-    // Test that all voxels are preserved when enlarging workspace
+TEST_F(WorkspaceCommandValidationTest, WorkspaceResizeWithVoxels_EnlargementShouldAlwaysSucceed) {
+    // REQ-9.3.3: Workspace resize to larger dimensions shall preserve all existing voxels
+    // This test verifies enlargement always succeeds and preserves all voxels
     
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
     auto voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
     
-    // Start with smaller workspace (3x3x3 meters)
-    Math::Vector3f initialSize(3.0f, 3.0f, 3.0f);
-    bool setupResult = voxelManager->resizeWorkspace(initialSize);
-    ASSERT_TRUE(setupResult) << "Initial workspace setup should succeed";
+    // Start with 3x3x3 meters workspace
+    ASSERT_TRUE(voxelManager->resizeWorkspace(3.0f));
     
-    // Set resolution for precise voxel placement
-    voxelManager->setActiveResolution(VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
+    // Use 16cm voxels for better control
+    voxelManager->setActiveResolution(VoxelEditor::VoxelData::VoxelResolution::Size_16cm);
     
-    // Place voxels throughout the initial workspace
+    // Place voxels throughout 3x3x3 workspace (bounds: -150cm to +150cm)
     std::vector<Math::Vector3i> voxelPositions = {
         Math::Vector3i(0, 0, 0),      // Center
-        Math::Vector3i(32, 0, 32),    // Near positive edge
-        Math::Vector3i(-32, 0, -32),  // Near negative edge
-        Math::Vector3i(64, 0, 0),     // Near positive X boundary
-        Math::Vector3i(-64, 0, 0),    // Near negative X boundary
-        Math::Vector3i(0, 32, 64),    // Mixed coordinates
-        Math::Vector3i(-32, 0, 64),   // Mixed negative/positive
-        Math::Vector3i(96, 0, -64)    // Near corner boundaries
+        Math::Vector3i(100, 0, 0),    // 1m from center
+        Math::Vector3i(-100, 0, 0),   // -1m from center
+        Math::Vector3i(0, 50, 100),   // Mixed coordinates
     };
     
-    // Place all voxels and verify they exist
     for (const auto& pos : voxelPositions) {
-        bool placed = voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true);
-        ASSERT_TRUE(placed) << "Should be able to place voxel at position " 
-                           << pos.x << "," << pos.y << "," << pos.z;
-        
-        bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-        ASSERT_TRUE(exists) << "Voxel should exist after placement";
+        bool result = voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_16cm, true);
+        ASSERT_TRUE(result) << "Failed to place voxel at (" << pos.x << ", " << pos.y << ", " << pos.z << ")";
     }
     
-    // Record initial voxel count
     size_t initialVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(initialVoxelCount, voxelPositions.size()) << "All voxels should be placed";
     
-    // Enlarge workspace (7x7x7 meters)
-    Math::Vector3f newSize(7.0f, 7.0f, 7.0f);
-    bool resizeResult = voxelManager->resizeWorkspace(newSize);
-    EXPECT_TRUE(resizeResult) << "Workspace enlargement should succeed";
+    // Enlarge to 7x7x7 - should always succeed
+    EXPECT_TRUE(voxelManager->resizeWorkspace(7.0f)) << "Workspace enlargement should always succeed";
+    EXPECT_EQ(voxelManager->getWorkspaceSize(), Math::Vector3f(7.0f, 7.0f, 7.0f));
     
-    // Verify workspace size changed
-    Math::Vector3f actualSize = voxelManager->getWorkspaceSize();
-    EXPECT_EQ(actualSize, newSize) << "Workspace size should be updated";
-    
-    // Verify all voxels are preserved during enlargement
+    // Verify all voxels preserved
+    EXPECT_EQ(voxelManager->getVoxelCount(), initialVoxelCount) << "All voxels should be preserved during enlargement";
     for (const auto& pos : voxelPositions) {
-        bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-        EXPECT_TRUE(exists) << "Voxel at " << pos.x << "," << pos.y << "," << pos.z 
-                           << " should be preserved during workspace enlargement";
+        EXPECT_TRUE(voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_16cm));
     }
     
-    // Verify voxel count remains the same
-    size_t finalVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(finalVoxelCount, initialVoxelCount) 
-        << "All voxels should be preserved during workspace enlargement";
-    
-    // Verify we can place new voxels in the expanded area
-    Math::Vector3i newPos(224, 0, 224); // Should be within enlarged workspace but not original
-    bool newPlaced = voxelManager->setVoxel(newPos, VoxelData::VoxelResolution::Size_64cm, true);
-    EXPECT_TRUE(newPlaced) << "Should be able to place voxels in expanded workspace area";
-    
-    bool newExists = voxelManager->hasVoxel(newPos, VoxelData::VoxelResolution::Size_64cm);
-    EXPECT_TRUE(newExists) << "New voxel should exist in expanded area";
-    
-    // Verify total count increased by one
-    size_t updatedVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(updatedVoxelCount, initialVoxelCount + 1) 
-        << "Voxel count should increase after placing in expanded area";
+    // Verify we can place voxels in expanded area (7x7x7 bounds: -350cm to +350cm)
+    Math::Vector3i newPos(300, 0, 300); // Within 7x7x7 but outside original 3x3x3
+    EXPECT_TRUE(voxelManager->setVoxel(newPos, VoxelData::VoxelResolution::Size_16cm, true));
 }
 
-TEST_F(WorkspaceCommandValidationTest, DISABLED_WorkspaceResizeWithExistingVoxels_MultipleResolutions_REQ_11_3_17) {
-    // Test workspace resize with existing voxels at multiple resolutions
+TEST_F(WorkspaceCommandValidationTest, WorkspaceResizeWithVoxels_MultipleResolutionsShouldFailWhenAnyOutsideBounds) {
+    // REQ-9.3.6: Workspace resize shall fail if ANY voxels (regardless of resolution) would be outside bounds
     
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
     auto voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
     
-    // Start with large workspace (6x6x6 meters)
-    Math::Vector3f initialSize(6.0f, 6.0f, 6.0f);
-    bool setupResult = voxelManager->resizeWorkspace(initialSize);
-    ASSERT_TRUE(setupResult) << "Initial workspace setup should succeed";
+    // Start with 6x6x6 meters workspace
+    ASSERT_TRUE(voxelManager->resizeWorkspace(6.0f));
+    Math::Vector3f originalSize = voxelManager->getWorkspaceSize();
     
     // Place voxels at different resolutions
     struct VoxelTestData {
         Math::Vector3i position;
         VoxelEditor::VoxelData::VoxelResolution resolution;
-        bool shouldBePreserved; // After resize to 4x4x4
+        bool withinNewBounds; // Within 4x4x4?
     };
     
     std::vector<VoxelTestData> voxels = {
-        // Voxels within future 4x4x4 bounds
+        // Within 4x4x4 bounds
         {Math::Vector3i(0, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_16cm, true},
         {Math::Vector3i(32, 0, 32), VoxelEditor::VoxelData::VoxelResolution::Size_16cm, true},
-        {Math::Vector3i(-32, 0, -32), VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true},
-        {Math::Vector3i(64, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_4cm, true},
-        
-        // Voxels outside future 4x4x4 bounds
+        // Outside 4x4x4 bounds
         {Math::Vector3i(224, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_16cm, false},
-        {Math::Vector3i(-224, 0, 0), VoxelEditor::VoxelData::VoxelResolution::Size_16cm, false},
         {Math::Vector3i(0, 0, 256), VoxelEditor::VoxelData::VoxelResolution::Size_64cm, false}
     };
     
-    // Place all voxels at their respective resolutions
+    // Place all voxels
     for (const auto& voxel : voxels) {
         voxelManager->setActiveResolution(voxel.resolution);
-        bool placed = voxelManager->setVoxel(voxel.position, voxel.resolution, true);
-        ASSERT_TRUE(placed) << "Should be able to place voxel at " 
-                           << voxel.position.x << "," << voxel.position.y << "," << voxel.position.z
-                           << " with resolution " << VoxelEditor::VoxelData::getVoxelSizeName(voxel.resolution);
-        
-        bool exists = voxelManager->hasVoxel(voxel.position, voxel.resolution);
-        ASSERT_TRUE(exists) << "Voxel should exist after placement";
+        ASSERT_TRUE(voxelManager->setVoxel(voxel.position, voxel.resolution, true));
     }
     
-    // Record initial voxel count
-    size_t initialVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(initialVoxelCount, voxels.size()) << "All voxels should be placed";
+    size_t initialVoxelCount = voxelManager->getTotalVoxelCount();
     
-    // Resize workspace to 4x4x4 meters
-    Math::Vector3f newSize(4.0f, 4.0f, 4.0f);
-    bool resizeResult = voxelManager->resizeWorkspace(newSize);
-    EXPECT_TRUE(resizeResult) << "Workspace resize should succeed";
+    // Try to resize to 4x4x4 - should FAIL because some voxels are outside
+    EXPECT_FALSE(voxelManager->resizeWorkspace(4.0f)) << "Resize should fail when any voxel would be outside bounds";
     
-    // Verify workspace size changed
-    Math::Vector3f actualSize = voxelManager->getWorkspaceSize();
-    EXPECT_EQ(actualSize, newSize) << "Workspace size should be updated";
+    // Verify nothing changed
+    EXPECT_EQ(voxelManager->getWorkspaceSize(), originalSize);
+    EXPECT_EQ(voxelManager->getTotalVoxelCount(), initialVoxelCount);
     
-    // Verify voxel preservation based on position and bounds
-    size_t expectedPreservedCount = 0;
+    // Verify all voxels still exist
     for (const auto& voxel : voxels) {
-        bool exists = voxelManager->hasVoxel(voxel.position, voxel.resolution);
-        
-        if (voxel.shouldBePreserved) {
-            EXPECT_TRUE(exists) << "Voxel at " << voxel.position.x << "," << voxel.position.y 
-                               << "," << voxel.position.z << " (" 
-                               << VoxelEditor::VoxelData::getVoxelSizeName(voxel.resolution) 
-                               << ") should be preserved";
-            expectedPreservedCount++;
-        } else {
-            EXPECT_FALSE(exists) << "Voxel at " << voxel.position.x << "," << voxel.position.y 
-                                << "," << voxel.position.z << " (" 
-                                << VoxelEditor::VoxelData::getVoxelSizeName(voxel.resolution) 
-                                << ") should be removed";
-        }
+        EXPECT_TRUE(voxelManager->hasVoxel(voxel.position, voxel.resolution));
     }
-    
-    // Verify final voxel count
-    size_t finalVoxelCount = voxelManager->getVoxelCount();
-    EXPECT_EQ(finalVoxelCount, expectedPreservedCount) 
-        << "Final voxel count should match expected preserved count";
 }
 
-TEST_F(WorkspaceCommandValidationTest, DISABLED_WorkspaceResizeWithExistingVoxels_StateConsistency_REQ_11_3_17) {
-    // Test that workspace resize maintains data consistency with existing voxels
+TEST_F(WorkspaceCommandValidationTest, WorkspaceResizeWithVoxels_TransactionSafety) {
+    // REQ-9.3.4: Workspace resize failure shall leave the workspace and all voxels unchanged
     
     EXPECT_TRUE(initialized) << "Application must be initialized for this test";
     
     auto voxelManager = std::make_unique<VoxelData::VoxelDataManager>();
     
-    // Start with default workspace (5x5x5 meters)
-    Math::Vector3f initialSize(5.0f, 5.0f, 5.0f);
-    bool setupResult = voxelManager->resizeWorkspace(initialSize);
-    ASSERT_TRUE(setupResult) << "Initial workspace setup should succeed";
+    // Start with 5x5x5 meters workspace
+    ASSERT_TRUE(voxelManager->resizeWorkspace(5.0f));
+    Math::Vector3f originalSize = voxelManager->getWorkspaceSize();
     
-    // Set up a complex voxel arrangement
+    // Place voxels - some would be outside 3x3x3 bounds
     voxelManager->setActiveResolution(VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-    
-    std::vector<Math::Vector3i> initialVoxels = {
-        Math::Vector3i(0, 0, 0),      // Center
-        Math::Vector3i(32, 0, 0),     // East
-        Math::Vector3i(-32, 0, 0),    // West  
-        Math::Vector3i(0, 32, 0),     // Up
-        Math::Vector3i(0, 0, 32),     // North
-        Math::Vector3i(0, 0, -32),    // South
-        Math::Vector3i(64, 0, 64),    // Northeast corner
-        Math::Vector3i(-64, 0, -64)   // Southwest corner
+    std::vector<Math::Vector3i> voxelPositions = {
+        Math::Vector3i(0, 0, 0),      // Center - within 3x3x3
+        Math::Vector3i(160, 0, 0),    // Outside 3x3x3 bounds
+        Math::Vector3i(0, 0, 180),    // Outside 3x3x3 bounds
     };
     
-    // Place initial voxels
-    for (const auto& pos : initialVoxels) {
-        bool placed = voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true);
-        ASSERT_TRUE(placed) << "Should be able to place initial voxel";
+    for (const auto& pos : voxelPositions) {
+        ASSERT_TRUE(voxelManager->setVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm, true));
     }
     
-    // Perform sequence of workspace resizes and verify consistency
-    std::vector<Math::Vector3f> resizeSequence = {
-        Math::Vector3f(3.0f, 3.0f, 3.0f),  // Shrink - some voxels may be lost
-        Math::Vector3f(7.0f, 7.0f, 7.0f),  // Expand - all remaining voxels should persist
-        Math::Vector3f(4.0f, 4.0f, 4.0f),  // Shrink again - verify consistent behavior
-        Math::Vector3f(6.0f, 6.0f, 6.0f)   // Final expansion
-    };
+    size_t originalVoxelCount = voxelManager->getVoxelCount();
     
-    size_t previousVoxelCount = voxelManager->getVoxelCount();
+    // Try multiple failed resize attempts
+    std::vector<float> failedSizes = {3.0f, 2.5f, 2.0f};
     
-    for (size_t i = 0; i < resizeSequence.size(); ++i) {
-        const Math::Vector3f& targetSize = resizeSequence[i];
+    for (float size : failedSizes) {
+        // Attempt resize that should fail
+        EXPECT_FALSE(voxelManager->resizeWorkspace(size)) << "Resize to " << size << "m should fail";
         
-        // Perform resize
-        bool resizeResult = voxelManager->resizeWorkspace(targetSize);
-        EXPECT_TRUE(resizeResult) << "Resize " << i << " should succeed";
+        // Verify nothing changed
+        EXPECT_EQ(voxelManager->getWorkspaceSize(), originalSize) << "Workspace size should remain unchanged";
+        EXPECT_EQ(voxelManager->getVoxelCount(), originalVoxelCount) << "Voxel count should remain unchanged";
         
-        // Verify workspace size
-        Math::Vector3f actualSize = voxelManager->getWorkspaceSize();
-        EXPECT_EQ(actualSize, targetSize) << "Workspace size should match target in step " << i;
-        
-        // Check voxel consistency
-        size_t currentVoxelCount = voxelManager->getVoxelCount();
-        
-        // For expansions, voxel count should not decrease
-        if (i > 0 && targetSize.x >= resizeSequence[i-1].x && 
-            targetSize.y >= resizeSequence[i-1].y && 
-            targetSize.z >= resizeSequence[i-1].z) {
-            EXPECT_GE(currentVoxelCount, previousVoxelCount) 
-                << "Voxel count should not decrease during workspace expansion in step " << i;
+        // Verify all voxels still exist
+        for (const auto& pos : voxelPositions) {
+            EXPECT_TRUE(voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm))
+                << "Voxel at " << pos.x << "," << pos.y << "," << pos.z << " should still exist";
         }
-        
-        // Verify remaining voxels are at valid positions
-        for (const auto& pos : initialVoxels) {
-            bool exists = voxelManager->hasVoxel(pos, VoxelEditor::VoxelData::VoxelResolution::Size_64cm);
-            if (exists) {
-                // If voxel exists, it should be within current workspace bounds
-                float halfWidth = targetSize.x / 2.0f;
-                float halfHeight = targetSize.y / 2.0f;
-                float halfDepth = targetSize.z / 2.0f;
-                
-                float posX = pos.x / 100.0f; // Convert cm to meters
-                float posY = pos.y / 100.0f;
-                float posZ = pos.z / 100.0f;
-                
-                EXPECT_GE(posX, -halfWidth) << "Voxel X should be within workspace bounds";
-                EXPECT_LE(posX, halfWidth) << "Voxel X should be within workspace bounds";
-                EXPECT_GE(posY, 0.0f) << "Voxel Y should be above ground plane";
-                EXPECT_LE(posY, halfHeight) << "Voxel Y should be within workspace bounds";
-                EXPECT_GE(posZ, -halfDepth) << "Voxel Z should be within workspace bounds";
-                EXPECT_LE(posZ, halfDepth) << "Voxel Z should be within workspace bounds";
-            }
-        }
-        
-        previousVoxelCount = currentVoxelCount;
     }
+    
+    // Now do a successful resize (enlargement)
+    EXPECT_TRUE(voxelManager->resizeWorkspace(7.0f)) << "Enlargement should succeed";
+    EXPECT_EQ(voxelManager->getWorkspaceSize(), Math::Vector3f(7.0f, 7.0f, 7.0f));
+    EXPECT_EQ(voxelManager->getVoxelCount(), originalVoxelCount) << "All voxels preserved during enlargement";
 }
 
 } // namespace Tests

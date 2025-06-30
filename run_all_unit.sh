@@ -107,6 +107,45 @@ run_unit_test() {
     local test_executable=$1
     local test_name=$(basename "$test_executable")
     
+    # If the test binary doesn't exist, try to build it (only for unit tests)
+    if [ ! -f "$test_executable" ] && [[ "$test_name" == test_unit_* ]]; then
+        print_color "$CYAN" "  Building missing test: $test_name"
+        
+        # Check if build_ninja directory exists
+        if [ ! -d "build_ninja" ]; then
+            print_color "$RED" "  Error: build_ninja directory not found"
+            print_result "$test_name" "FAIL" "0"
+            echo "  Build failure: build directory missing"
+            return
+        fi
+        
+        # Try to build the specific test target
+        local build_start_time=$(date +%s)
+        if cmake --build build_ninja --target "$test_name" > "/tmp/${test_name}_build.log" 2>&1; then
+            print_color "$GREEN" "  Successfully built $test_name"
+        else
+            local build_end_time=$(date +%s)
+            local build_duration=$((build_end_time - build_start_time))
+            print_color "$RED" "  Failed to build $test_name"
+            print_result "$test_name" "FAIL" "$build_duration"
+            echo "  Build error output:"
+            tail -n 20 "/tmp/${test_name}_build.log" | sed 's/^/    /'
+            echo "  Full build log saved to: /tmp/${test_name}_build.log"
+            return
+        fi
+        
+        # Check again if the executable was created
+        if [ ! -f "$test_executable" ]; then
+            local build_end_time=$(date +%s)
+            local build_duration=$((build_end_time - build_start_time))
+            print_color "$RED" "  Build succeeded but executable not found: $test_executable"
+            print_result "$test_name" "FAIL" "$build_duration"
+            echo "  Build failure: executable not created"
+            return
+        fi
+    fi
+    
+    # If still no executable (non-unit test), skip
     if [ ! -f "$test_executable" ]; then
         print_result "$test_name" "SKIP" "0"
         return
@@ -133,7 +172,10 @@ run_unit_test() {
 
 # Auto-discover test executables by pattern
 discover_unit_tests() {
-    find build_ninja/bin -name "test_unit_*" -type f -perm +111 2>/dev/null | while read -r test_path; do
+    # First, find already built executables
+    {
+        find build_ninja/bin -name "test_unit_*" -type f -perm +111 2>/dev/null || true
+    } | while read -r test_path; do
         local test_name=$(basename "$test_path")
         local should_exclude=false
         
@@ -171,7 +213,18 @@ discover_unit_tests() {
         if [ "$should_exclude" = "false" ]; then
             echo "$test_path"
         fi
-    done | sort
+    done
+    
+    # Also find source files for tests that haven't been built yet
+    discover_test_sources | while read -r test_source; do
+        local test_name=$(basename "$test_source" .cpp)
+        local expected_binary="build_ninja/bin/$test_name"
+        
+        # Only add if binary doesn't already exist (to avoid duplicates)
+        if [ ! -f "$expected_binary" ]; then
+            echo "$expected_binary"
+        fi
+    done | sort | uniq
 }
 
 # Discover all test source files (for listing even when not built)
@@ -261,7 +314,7 @@ list_groups() {
     printf "  ${BOLD}Information:${NC}\n"
     printf "    $0 list                  - Show all unit test files\n"
     echo
-    printf "  ${BOLD}Note:${NC} Tests are built automatically when you run them\n"
+    printf "  ${BOLD}Note:${NC} Unit tests are built automatically when run if not found\n"
 }
 
 # Function to print test summary
@@ -338,29 +391,7 @@ main() {
                     echo
                 fi
                 
-                if [ -d "build_ninja" ]; then
-                    print_color "$CYAN" "Building unit tests..."
-                    # Build only unit test targets, one at a time to avoid dependency issues
-                    local test_count=0
-                    while IFS= read -r test_source; do
-                        local test_name=$(basename "$test_source" .cpp)
-                        # Only build if it's a unit test and the executable doesn't exist
-                        if [[ "$test_name" == test_unit_* ]]; then
-                            if [ ! -f "build_ninja/bin/$test_name" ]; then
-                                ((test_count++))
-                                # Build quietly to avoid clutter, show only on error
-                                if ! cmake --build build_ninja --target "$test_name" > /dev/null 2>&1; then
-                                    print_color "$YELLOW" "  Warning: Failed to build $test_name"
-                                fi
-                            fi
-                        fi
-                    done < <(discover_test_sources)
-                    if [ $test_count -gt 0 ]; then
-                        echo "  Built $test_count unit test targets"
-                    else
-                        echo "  All unit tests already built"
-                    fi
-                fi
+                # Unit tests will be built on-demand when run
                 
                 while IFS= read -r test_path; do
                     run_unit_test "$test_path"
@@ -369,30 +400,7 @@ main() {
             *)
                 # Try to run as a subsystem
                 if discover_subsystems | grep -q "^${group}$"; then
-                    # Build tests for this subsystem if needed
-                    if [ -d "build_ninja" ]; then
-                        print_color "$CYAN" "Building ${group} unit tests..."
-                        # Build only the specific subsystem tests that don't exist
-                        local built_count=0
-                        while IFS= read -r test_source; do
-                            if [[ "$test_source" =~ test_unit_${group}_ ]]; then
-                                local test_name=$(basename "$test_source" .cpp)
-                                if [ ! -f "build_ninja/bin/$test_name" ]; then
-                                    ((built_count++))
-                                    # Build quietly, show only on error
-                                    if ! cmake --build build_ninja --target "$test_name" > /dev/null 2>&1; then
-                                        print_color "$YELLOW" "  Warning: Failed to build $test_name"
-                                    fi
-                                fi
-                            fi
-                        done < <(discover_test_sources)
-                        
-                        if [ $built_count -gt 0 ]; then
-                            echo "  Built $built_count tests"
-                        else
-                            echo "  All ${group} tests already built"
-                        fi
-                    fi
+                    # Unit tests will be built on-demand when run
                     run_subsystem_tests "$group"
                 else
                     print_color "$RED" "Unknown subsystem: $group"

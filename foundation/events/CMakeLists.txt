@@ -19,6 +19,6 @@ target_link_libraries(VoxelEditor_Events INTERFACE
 
 target_compile_features(VoxelEditor_Events INTERFACE cxx_std_20)
 
-if(BUILD_TESTS)
+if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

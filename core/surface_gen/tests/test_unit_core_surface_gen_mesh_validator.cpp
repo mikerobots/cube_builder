@@ -143,15 +143,15 @@ TEST_F(MeshValidatorTest, ManifoldValidation) {
 TEST_F(MeshValidatorTest, MinimumFeatureSizeDetection) {
     MeshValidator validator;
     
-    // Test normal cube (edge length = 1.0)
+    // Test normal cube (edge length = 1.0 meters = 1000mm)
     Mesh cube = createWatertightCube();
     float minFeature = validator.calculateMinimumFeatureSize(cube);
-    EXPECT_FLOAT_EQ(minFeature, 1.0f);
+    EXPECT_FLOAT_EQ(minFeature, 1000.0f);  // 1.0m = 1000mm
     
-    // Test mesh with small features
+    // Test mesh with small features (0.0001m = 0.1mm)
     Mesh smallFeatures = createMeshWithSmallFeatures();
     float smallMinFeature = validator.calculateMinimumFeatureSize(smallFeatures);
-    EXPECT_LT(smallMinFeature, 0.001f);
+    EXPECT_FLOAT_EQ(smallMinFeature, 0.1f);  // 0.0001m = 0.1mm
 }
 
 // Test degenerate triangle detection

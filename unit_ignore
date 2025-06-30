@@ -9,5 +9,3 @@
 
 # Completed subsystems:
 # ./foundation/math  # Uncomment when math tests are stable
-./foundation
-./core/voxel_data

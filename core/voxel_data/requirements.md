@@ -65,7 +65,7 @@ The Voxel Data subsystem manages multi-resolution voxel storage, workspace bound
 - **REQ-8.1.4**: Format shall store current active resolution level
 
 ### Workspace Resizing Behavior
-- **REQ-9.3.2**: Workspace resize to smaller dimensions shall automatically remove voxels outside the new bounds
+- **REQ-9.3.6**: Workspace resize to smaller dimensions shall fail if any voxels would be outside the new bounds
 - **REQ-9.3.3**: Workspace resize to larger dimensions shall preserve all existing voxels
 - **REQ-9.3.4**: Workspace resize failure shall leave the workspace and all voxels unchanged
 

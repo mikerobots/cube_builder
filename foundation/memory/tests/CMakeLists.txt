@@ -1,19 +1,5 @@
-find_package(GTest REQUIRED)
+# Include the test helpers
+include(${CMAKE_SOURCE_DIR}/cmake/TestHelpers.cmake)
 
-set(MEMORY_TEST_SOURCES
-    test_unit_foundation_memory_pool.cpp
-    test_unit_foundation_memory_tracker.cpp
-)
-
-add_executable(test_unit_foundation_memory ${MEMORY_TEST_SOURCES})
-
-target_link_libraries(test_unit_foundation_memory
-    VoxelEditor_Memory
-    GTest::gtest
-    GTest::gtest_main
-)
-
-target_compile_features(test_unit_foundation_memory PRIVATE cxx_std_20)
-
-include(GoogleTest)
-gtest_discover_tests(test_unit_foundation_memory)
+# Automatically create test executables for all test_unit_*.cpp files
+create_unit_tests(TARGET_LINK_LIBRARIES VoxelEditor_Memory)

@@ -1,10 +1,17 @@
 #include <gtest/gtest.h>
+#include <GLFW/glfw3.h>
 #include "../../core/rendering/ShaderManager.h"
 #include "../../core/rendering/OpenGLRenderer.h"
 #include "../../core/rendering/RenderTypes.h"
 #include "../../foundation/logging/Logger.h"
 #include <memory>
 #include <string>
+
+#ifdef __APPLE__
+#include "../../core/rendering/MacOSGLLoader.h"
+#else
+#include <glad/glad.h>
+#endif
 
 namespace VoxelEditor {
 namespace Rendering {
@@ -18,23 +25,47 @@ protected:
         logger.clearOutputs();
         logger.addOutput(std::make_unique<Logging::ConsoleOutput>("Test"));
         
-        // Create real OpenGL renderer - will have proper context in integration environment
+        // Initialize GLFW
+        ASSERT_TRUE(glfwInit()) << "Failed to initialize GLFW";
+        
+        // Configure GLFW for OpenGL 3.3 Core Profile
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Hidden for automated testing
+        
+        #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        #endif
+        
+        // Create window
+        window = glfwCreateWindow(640, 480, "Shader Manager Test", nullptr, nullptr);
+        ASSERT_NE(window, nullptr) << "Failed to create GLFW window";
+        
+        glfwMakeContextCurrent(window);
+        
+        #ifndef __APPLE__
+        // Initialize GLAD (not needed on macOS)
+        ASSERT_TRUE(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) << "Failed to initialize GLAD";
+        #else
+        // Load OpenGL extensions on macOS
+        ASSERT_TRUE(LoadOpenGLExtensions()) << "Failed to load OpenGL extensions on macOS";
+        #endif
+        
+        // Clear any GL errors from initialization
+        while (glGetError() != GL_NO_ERROR) {}
+        
+        // Create real OpenGL renderer
         renderer = std::make_unique<OpenGLRenderer>();
         
         // Initialize with test configuration
         RenderConfig config;
         config.windowWidth = 640;
         config.windowHeight = 480;
-        config.windowTitle = "ShaderManager Integration Test";
         config.vsync = false;
         config.samples = 1;
-        config.openGLMajor = 3;
-        config.openGLMinor = 3;
-        config.useCompatProfile = false;
         
-        if (!renderer->initializeContext(config)) {
-            GTEST_SKIP() << "OpenGL context initialization failed - skipping test";
-        }
+        ASSERT_TRUE(renderer->initializeContext(config)) << "Failed to initialize OpenGL renderer";
         
         shaderManager = std::make_unique<ShaderManager>();
     }
@@ -45,8 +76,13 @@ protected:
             renderer->destroyContext();
         }
         renderer.reset();
+        if (window) {
+            glfwDestroyWindow(window);
+        }
+        glfwTerminate();
     }
     
+    GLFWwindow* window = nullptr;
     std::unique_ptr<OpenGLRenderer> renderer;
     std::unique_ptr<ShaderManager> shaderManager;
 };
@@ -215,72 +251,10 @@ TEST_F(IntegrationShaderManagerTest, BasicAttributesShader) {
     EXPECT_EQ(shaderManager->getShader("attributes_shader"), shader);
 }
 
-// Test shader compilation error handling
-TEST_F(IntegrationShaderManagerTest, ShaderCompilationErrorHandling) {
-    // Vertex shader with syntax error
-    const std::string errorVertex = R"(
-        #version 330 core
-        layout(location = 0) in vec3 a_position
-        // Missing semicolon above
-        void main() {
-            gl_Position = vec4(a_position, 1.0);
-        }
-    )";
-    
-    const std::string validFragment = R"(
-        #version 330 core
-        out vec4 FragColor;
-        void main() {
-            FragColor = vec4(1.0);
-        }
-    )";
-    
-    // This should fail compilation
-    ShaderId shader = shaderManager->createShaderFromSource(
-        "error_shader",
-        errorVertex,
-        validFragment,
-        renderer.get()
-    );
-    
-    EXPECT_EQ(shader, InvalidId) << "Shader with syntax error should fail to compile";
-}
-
-// Test shader linking error handling
-TEST_F(IntegrationShaderManagerTest, ShaderLinkingErrorHandling) {
-    // Vertex shader with output varying
-    const std::string vertexWithVarying = R"(
-        #version 330 core
-        layout(location = 0) in vec3 a_position;
-        out vec4 v_color;
-        
-        void main() {
-            gl_Position = vec4(a_position, 1.0);
-            v_color = vec4(1.0, 0.0, 0.0, 1.0);
-        }
-    )";
-    
-    // Fragment shader expecting different varying
-    const std::string fragmentWrongVarying = R"(
-        #version 330 core
-        in vec3 v_normal; // Mismatched varying
-        out vec4 FragColor;
-        
-        void main() {
-            FragColor = vec4(v_normal, 1.0);
-        }
-    )";
-    
-    // This should fail linking
-    ShaderId shader = shaderManager->createShaderFromSource(
-        "link_error_shader",
-        vertexWithVarying,
-        fragmentWrongVarying,
-        renderer.get()
-    );
-    
-    EXPECT_EQ(shader, InvalidId) << "Shader with mismatched varyings should fail to link";
-}
+// NOTE: Error handling tests removed due to new "fail hard" assertion policy
+// The OpenGLRenderer now asserts on shader compilation/linking failures
+// instead of gracefully returning InvalidId. This is intentional to catch
+// issues early in development.
 
 } // namespace Rendering
 } // namespace VoxelEditor

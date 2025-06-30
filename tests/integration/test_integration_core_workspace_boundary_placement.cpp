@@ -5,6 +5,8 @@
 #include "voxel_data/VoxelTypes.h"
 #include "math/Vector3f.h"
 #include "math/Vector3i.h"
+#include "math/CoordinateTypes.h"
+#include "math/CoordinateConverter.h"
 #include "events/EventDispatcher.h"
 #include "logging/Logger.h"
 #include <sstream>
@@ -39,7 +41,7 @@ protected:
     
     void setupTestWorkspace() {
         // Create a 3x3x3 meter workspace with 8cm resolution
-        // This should allow placement from (-1.5m, -1.5m, -1.5m) to (1.5m, 1.5m, 1.5m)
+        // Centered coordinate system: X/Z from -1.5m to 1.5m, Y from 0 to 3m
         voxelManager->resizeWorkspace(Math::Vector3f(3.0f, 3.0f, 3.0f));
         voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
         
@@ -49,14 +51,14 @@ protected:
     }
     
     bool attemptPlacement(float x, float y, float z) {
-        // Convert cm to meters
-        Math::Vector3f worldPos(x / 100.0f, y / 100.0f, z / 100.0f);
+        // Create increment coordinates directly (already in cm)
+        Math::IncrementCoordinates incCoords(static_cast<int>(x), static_cast<int>(y), static_cast<int>(z));
         
-        std::cout << "Attempting placement at: (" << worldPos.x << ", " << worldPos.y << ", " << worldPos.z << ")" << std::endl;
+        std::cout << "Attempting placement at: (" << x << "cm, " << y << "cm, " << z << "cm)" << std::endl;
         
-        // Try to place voxel using world position API
+        // Try to place voxel using increment coordinates
         try {
-            bool result = voxelManager->setVoxelAtWorldPos(worldPos, true);
+            bool result = voxelManager->setVoxel(incCoords, voxelManager->getActiveResolution(), true);
             std::cout << "Result: " << (result ? "success" : "failed") << std::endl;
             return result;
         } catch (const std::exception& e) {
@@ -71,8 +73,8 @@ protected:
     
     // Helper to check if a voxel exists at the given position
     bool voxelExistsAt(float x, float y, float z) {
-        Math::Vector3f worldPos(x / 100.0f, y / 100.0f, z / 100.0f);
-        return voxelManager->hasVoxelAtWorldPos(worldPos);
+        Math::IncrementCoordinates incCoords(static_cast<int>(x), static_cast<int>(y), static_cast<int>(z));
+        return voxelManager->hasVoxel(incCoords, voxelManager->getActiveResolution());
     }
     
     std::unique_ptr<Events::EventDispatcher> eventDispatcher;
@@ -81,20 +83,19 @@ protected:
 
 // Test simple placement first
 TEST_F(WorkspaceBoundaryTest, SimplePlacement) {
-    // Test a single simple placement using grid coordinates
-    VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_8cm;
-    Math::Vector3i gridPos(0, 0, 0);
+    // Test a single simple placement at origin
+    Math::IncrementCoordinates origin(0, 0, 0);
     
-    std::cout << "Testing setVoxel at grid position (0,0,0)" << std::endl;
-    bool success = voxelManager->setVoxel(gridPos, resolution, true);
+    std::cout << "Testing setVoxel at origin (0,0,0)" << std::endl;
+    bool success = voxelManager->setVoxel(origin, voxelManager->getActiveResolution(), true);
     std::cout << "setVoxel result: " << (success ? "success" : "failed") << std::endl;
     
-    EXPECT_TRUE(success) << "Failed to place voxel at grid origin";
+    EXPECT_TRUE(success) << "Failed to place voxel at origin";
     
-    // Now test world position API at a different location
-    std::cout << "Testing world position API at centered coordinates" << std::endl;
-    bool worldSuccess = attemptPlacement(-144.0f, 8.0f, -144.0f);
-    EXPECT_TRUE(worldSuccess) << "Failed to place voxel at (-144,8,-144)";
+    // Now test placement at a different location
+    std::cout << "Testing placement at boundary coordinates" << std::endl;
+    bool boundarySuccess = attemptPlacement(-142.0f, 0.0f, -142.0f);
+    EXPECT_TRUE(boundarySuccess) << "Failed to place voxel at (-142,0,-142)";
 }
 
 // Test corner placements within workspace bounds
@@ -105,10 +106,14 @@ TEST_F(WorkspaceBoundaryTest, CornerPlacements) {
     // Y: 0 to 3m (not centered)
     // With 8cm resolution, we need positions to be on the grid
     
-    const float minPosXZ = -144.0f;  // -144cm = -1.44m (near -1.5m boundary)
-    const float maxPosXZ = 144.0f;   // 144cm = 1.44m (near +1.5m boundary)
-    const float minPosY = 8.0f;      // 8cm = 0.08m (first valid Y position)
-    const float maxPosY = 296.0f;    // 296cm = 2.96m (near 3m boundary)
+    // With 8cm voxels, we need to ensure the entire voxel fits within bounds
+    // X/Z: workspace is -150cm to 150cm, voxel size is 8cm
+    // So max position is 150 - 8 = 142cm (voxel extends to 150cm)
+    // Y: workspace is 0 to 300cm, so max position is 300 - 8 = 292cm
+    const float minPosXZ = -142.0f;  // -142cm (voxel extends to -150cm)
+    const float maxPosXZ = 142.0f;   // 142cm (voxel extends to 150cm)
+    const float minPosY = 0.0f;      // 0cm = ground plane
+    const float maxPosY = 292.0f;    // 292cm (voxel extends to 300cm)
     const float midPos = 0.0f;       // 0cm = center for X/Z axes
     
     std::vector<Math::Vector3f> corners = {
@@ -139,12 +144,12 @@ TEST_F(WorkspaceBoundaryTest, CornerPlacements) {
 TEST_F(WorkspaceBoundaryTest, EdgeMidpointPlacements) {
     // Clear any existing voxels from previous tests
     voxelManager->clearAll();
-    const float minPosXZ = -144.0f;  // -144cm for X/Z
-    const float maxPosXZ = 144.0f;   // 144cm for X/Z
-    const float minPosY = 8.0f;      // 8cm for Y
-    const float maxPosY = 296.0f;    // 296cm for Y 
+    const float minPosXZ = -142.0f;  // -142cm for X/Z (accounting for 8cm voxel size)
+    const float maxPosXZ = 142.0f;   // 142cm for X/Z (accounting for 8cm voxel size)
+    const float minPosY = 0.0f;      // 0cm for Y
+    const float maxPosY = 292.0f;    // 292cm for Y (accounting for 8cm voxel size)
     const float midPosXZ = 0.0f;     // 0cm = center for X/Z
-    const float midPosY = 152.0f;    // 152cm = middle for Y
+    const float midPosY = 146.0f;    // 146cm = middle for Y
     
     std::vector<Math::Vector3f> edgeMidpoints = {
         // X-axis aligned edges
@@ -157,7 +162,7 @@ TEST_F(WorkspaceBoundaryTest, EdgeMidpointPlacements) {
         
         // Z-axis aligned edges (use different Y values to avoid collision)
         {minPosXZ, minPosY, midPosXZ}, {minPosXZ, maxPosY, midPosXZ},
-        {maxPosXZ, 24.0f, midPosXZ}, {maxPosXZ, 280.0f, midPosXZ}
+        {maxPosXZ, 24.0f, midPosXZ}, {maxPosXZ, 268.0f, midPosXZ}
     };
     
     for (size_t i = 0; i < edgeMidpoints.size(); ++i) {
@@ -171,12 +176,12 @@ TEST_F(WorkspaceBoundaryTest, EdgeMidpointPlacements) {
 TEST_F(WorkspaceBoundaryTest, FaceCenterPlacements) {
     // Clear any existing voxels from previous tests
     voxelManager->clearAll();
-    const float minPosXZ = -144.0f;  // -144cm for X/Z (centered)
-    const float maxPosXZ = 144.0f;   // 144cm for X/Z (centered)
-    const float minPosY = 8.0f;      // 8cm for Y (not centered)
-    const float maxPosY = 296.0f;    // 296cm for Y (not centered)
+    const float minPosXZ = -142.0f;  // -142cm for X/Z (accounting for voxel size)
+    const float maxPosXZ = 142.0f;   // 142cm for X/Z (accounting for voxel size)
+    const float minPosY = 0.0f;      // 0cm for Y (ground plane)
+    const float maxPosY = 292.0f;    // 292cm for Y (accounting for voxel size)
     const float midPosXZ = 0.0f;     // 0cm = center for X/Z
-    const float midPosY = 152.0f;    // 152cm = middle for Y
+    const float midPosY = 146.0f;    // 146cm = middle for Y
     
     std::vector<Math::Vector3f> faceCenters = {
         {minPosXZ, midPosY, 0.0f},     // Near X face (center Z)
@@ -217,8 +222,8 @@ TEST_F(WorkspaceBoundaryTest, OutOfBoundsPlacementsShouldFail) {
 
 // Test workspace resizing updates boundaries correctly
 TEST_F(WorkspaceBoundaryTest, WorkspaceResizingUpdatesBoundaries) {
-    // Place at current boundary (144cm for X/Z in 3m workspace)
-    bool success1 = attemptPlacement(144.0f, 8.0f, 144.0f);
+    // Place at current boundary (142cm for X/Z in 3m workspace, accounting for 8cm voxel)
+    bool success1 = attemptPlacement(142.0f, 0.0f, 142.0f);
     EXPECT_TRUE(success1) << "Should place at 3x3x3 boundary";
     
     // Clear voxels before resizing to avoid blocking the resize
@@ -245,9 +250,9 @@ TEST_F(WorkspaceBoundaryTest, ResolutionAffectsBoundarySnapping) {
     // With 4cm resolution
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_4cm);
     
-    // 144cm is 36 * 4cm, so it's on the grid and at X/Z boundary
-    bool success1 = attemptPlacement(144.0f, 4.0f, 144.0f);
-    EXPECT_TRUE(success1) << "Should place at 144cm with 4cm resolution";
+    // 146cm would put voxel edge at 150cm boundary with 4cm voxel
+    bool success1 = attemptPlacement(146.0f, 0.0f, 146.0f);
+    EXPECT_TRUE(success1) << "Should place at 146cm with 4cm resolution";
     
     // Clear voxels before switching resolution to avoid overlaps
     voxelManager->clearAll();
@@ -255,18 +260,17 @@ TEST_F(WorkspaceBoundaryTest, ResolutionAffectsBoundarySnapping) {
     // With 16cm resolution
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_16cm);
     
-    // 144cm is 9 * 16cm, so it's on the grid
-    bool success2 = attemptPlacement(144.0f, 16.0f, -144.0f);
+    // 134cm would put voxel edge at 150cm boundary with 16cm voxel
+    bool success2 = attemptPlacement(134.0f, 0.0f, -134.0f);
     EXPECT_TRUE(success2) << "Should place at boundary with 16cm resolution";
     
-    // Try to place at 140cm which will be snapped to grid
-    bool success3 = attemptPlacement(140.0f, 16.0f, 16.0f);
-    EXPECT_TRUE(success3) << "Should place at 140cm with 16cm resolution";
+    // Try to place at 100cm which is well within bounds
+    bool success3 = attemptPlacement(100.0f, 0.0f, 16.0f);
+    EXPECT_TRUE(success3) << "Should place at 100cm with 16cm resolution";
     
     // The voxel was placed at the requested position  
-    // Note: With 16cm resolution, 140cm may snap to the nearest grid position
-    EXPECT_TRUE(voxelExistsAt(140.0f, 16.0f, 16.0f) || voxelExistsAt(144.0f, 16.0f, 16.0f) || voxelExistsAt(128.0f, 16.0f, 16.0f)) 
-        << "Voxel should exist at or near placed position";
+    EXPECT_TRUE(voxelExistsAt(100.0f, 0.0f, 16.0f)) 
+        << "Voxel should exist at placed position";
 }
 
 // Test that center placement always works
@@ -284,8 +288,8 @@ TEST_F(WorkspaceBoundaryTest, CenterPlacementAlwaysWorks) {
         SCOPED_TRACE("Testing center placement with resolution: " + std::to_string(static_cast<int>(res)));
         
         voxelManager->setActiveResolution(res);
-        // Place at workspace center (0cm for X/Z, 150cm for Y in 3m workspace)
-        bool success = attemptPlacement(0.0f, 150.0f, 0.0f);
+        // Place at workspace center (0cm for X/Z, 146cm for Y in 3m workspace)
+        bool success = attemptPlacement(0.0f, 146.0f, 0.0f);
         EXPECT_TRUE(success) << "Center placement should always work";
         
         // Clear for next test
@@ -302,15 +306,15 @@ TEST_F(WorkspaceBoundaryTest, MaximumWorkspaceBoundaries) {
     // For 8x8x8 workspace, boundaries are:
     // X/Z: -400cm to +400cm (centered)
     // Y: 0 to 800cm (not centered)
-    // Nearest 8cm grid points inside: ±392cm for X/Z, 792cm for Y
-    bool success1 = attemptPlacement(392.0f, 8.0f, -392.0f);
+    // With 8cm voxels, max positions are: ±392cm for X/Z, 792cm for Y
+    bool success1 = attemptPlacement(392.0f, 0.0f, -392.0f);
     EXPECT_TRUE(success1) << "Should place at X/Z boundary of maximum workspace";
     
     bool success2 = attemptPlacement(-392.0f, 792.0f, 392.0f);
     EXPECT_TRUE(success2) << "Should place at Y boundary of maximum workspace";
     
     bool success3 = attemptPlacement(0.0f, 400.0f, 392.0f);
-    EXPECT_TRUE(success3) << "Should place at Z boundary of maximum workspace";
+    EXPECT_TRUE(success3) << "Should place at mid Y with Z boundary of maximum workspace";
 }
 
 // Test asymmetric workspace boundaries
@@ -319,19 +323,19 @@ TEST_F(WorkspaceBoundaryTest, AsymmetricWorkspaceBoundaries) {
     voxelManager->resizeWorkspace(Math::Vector3f(4.0f, 2.0f, 6.0f)); // 4m x 2m x 6m
     voxelManager->setActiveResolution(VoxelData::VoxelResolution::Size_8cm);
     
-    // X boundaries: -200cm to +200cm (centered), nearest grid inside: ±192cm
-    bool successX1 = attemptPlacement(-192.0f, 8.0f, 0.0f);   // Near boundary
-    bool successX2 = attemptPlacement(192.0f, 8.0f, 0.0f);    // Far boundary
+    // X boundaries: -200cm to +200cm (centered), max position with 8cm voxel: ±192cm
+    bool successX1 = attemptPlacement(-192.0f, 0.0f, 0.0f);   // Near boundary
+    bool successX2 = attemptPlacement(192.0f, 0.0f, 0.0f);    // Far boundary
     EXPECT_TRUE(successX1 && successX2) << "Should place at X boundaries of 4m workspace";
     
-    // Y boundaries: 0 to 200cm, nearest grid inside: 192cm (24 * 8cm)
-    bool successY1 = attemptPlacement(0.0f, 8.0f, 16.0f);     // Ground level
+    // Y boundaries: 0 to 200cm, max position with 8cm voxel: 192cm
+    bool successY1 = attemptPlacement(0.0f, 0.0f, 16.0f);     // Ground level
     bool successY2 = attemptPlacement(0.0f, 192.0f, 16.0f);   // Upper boundary
     EXPECT_TRUE(successY1 && successY2) << "Should place at Y boundaries of 2m workspace";
     
-    // Z boundaries: -300cm to +300cm (centered), nearest grid inside: ±296cm
-    bool successZ1 = attemptPlacement(24.0f, 8.0f, -296.0f);  // Near boundary
-    bool successZ2 = attemptPlacement(24.0f, 8.0f, 296.0f);   // Far boundary
+    // Z boundaries: -300cm to +300cm (centered), max position with 8cm voxel: ±292cm
+    bool successZ1 = attemptPlacement(24.0f, 0.0f, -292.0f);  // Near boundary
+    bool successZ2 = attemptPlacement(24.0f, 0.0f, 292.0f);   // Far boundary
     EXPECT_TRUE(successZ1 && successZ2) << "Should place at Z boundaries of 6m workspace";
 }
 

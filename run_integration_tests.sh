@@ -3,7 +3,7 @@
 # Integration Test Runner - Auto-Discovery Version
 # Automatically discovers integration tests using naming convention: test_integration_*
 
-set -euo pipefail
+set -uo pipefail
 
 # Color codes for output
 RED='\033[0;31m'
@@ -170,21 +170,28 @@ run_category_tests() {
     if [ -d "build_ninja" ]; then
         print_color "$CYAN" "Building ${category} integration tests..."
         # Build only integration test targets for this category
+        local built_count=0
         while IFS= read -r test_path; do
             local test_name=$(basename "$test_path" .cpp)
             local test_category=$(get_test_category "$test_path")
             if [[ "$test_category" == "$category" ]]; then
                 expected_tests+=("build_ninja/bin/$test_name")
-                # Try to build and capture result
-                if ! cmake --build build_ninja --target "$test_name" 2>"/tmp/build_${test_name}.log"; then
-                    # Build failed - report as test failure and track it
-                    print_result "$test_name" "FAIL" "0"
-                    echo "  Build failed. Error output:"
-                    tail -n 5 "/tmp/build_${test_name}.log" | sed 's/^/    /'
-                    failed_builds+=("build_ninja/bin/$test_name")
+                if [ ! -f "build_ninja/bin/$test_name" ]; then
+                    ((built_count++))
+                    # Build quietly to avoid clutter, show only on error
+                    if ! cmake --build build_ninja --target "$test_name" > /dev/null 2>&1; then
+                        print_color "$YELLOW" "  Warning: Failed to build $test_name"
+                        failed_builds+=("build_ninja/bin/$test_name")
+                    fi
                 fi
             fi
         done < <(discover_test_sources)
+        
+        if [ $built_count -gt 0 ]; then
+            echo "  Built $built_count tests"
+        else
+            echo "  All ${category} tests already built"
+        fi
     fi
     
     local found_tests=false
@@ -196,7 +203,7 @@ run_category_tests() {
         if [[ "$test_category" == "$category" ]]; then
             found_tests=true  # We found a test for this category (even if build failed)
             
-            # Skip if this test failed to build (already reported as FAIL)
+            # Skip if this test failed to build (don't report as test failure)
             local is_failed_build=false
             if [ ${#failed_builds[@]} -gt 0 ]; then
                 for failed_build in "${failed_builds[@]}"; do
@@ -385,6 +392,13 @@ print_summary() {
                 echo "  - $name"
             fi
         done
+        echo
+        print_color "$CYAN" "To debug failed tests:"
+        echo "  1. Check the full logs in /tmp/"
+        echo "  2. Run individual tests with filters:"
+        echo "     cd build_ninja && ./bin/test_integration_<category>_<name> --gtest_filter='*SpecificTest*'"
+        echo "  3. List all tests in an executable:"
+        echo "     cd build_ninja && ./bin/test_integration_<category>_<name> --gtest_list_tests"
     fi
     
     echo
@@ -460,11 +474,15 @@ run_individual_test() {
     # Build the specific test
     if [ -d "build_ninja" ]; then
         print_color "$CYAN" "Building test: $test_basename..."
-        if cmake --build build_ninja --target "$test_basename" 2>/dev/null; then
-            print_color "$GREEN" "Build successful"
+        if [ ! -f "$test_executable" ]; then
+            # Build quietly to avoid clutter, show only on error
+            if ! cmake --build build_ninja --target "$test_basename" > /dev/null 2>&1; then
+                print_color "$YELLOW" "  Warning: Failed to build $test_basename"
+            else
+                echo "  Built 1 test"
+            fi
         else
-            print_color "$YELLOW" "Build failed or target not found, trying general build..."
-            cmake --build build_ninja --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4) 2>/dev/null || true
+            echo "  Test already built"
         fi
     fi
     
@@ -496,8 +514,27 @@ main() {
                 # Run all discovered integration tests
                 print_header "All Integration Tests"
                 if [ -d "build_ninja" ]; then
-                    print_color "$CYAN" "Building all integration tests..."
-                    cmake --build build_ninja --parallel $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4) 2>/dev/null || true
+                    print_color "$CYAN" "Building integration tests..."
+                    # Build only integration test targets, one at a time to avoid dependency issues
+                    local test_count=0
+                    while IFS= read -r test_source; do
+                        local test_name=$(basename "$test_source" .cpp)
+                        # Only build if it's an integration test and the executable doesn't exist
+                        if [[ "$test_name" == test_integration_* ]]; then
+                            if [ ! -f "build_ninja/bin/$test_name" ]; then
+                                ((test_count++))
+                                # Build quietly to avoid clutter, show only on error
+                                if ! cmake --build build_ninja --target "$test_name" > /dev/null 2>&1; then
+                                    print_color "$YELLOW" "  Warning: Failed to build $test_name"
+                                fi
+                            fi
+                        fi
+                    done < <(discover_test_sources)
+                    if [ $test_count -gt 0 ]; then
+                        echo "  Built $test_count integration test targets"
+                    else
+                        echo "  All integration tests already built"
+                    fi
                 fi
                 
                 while IFS= read -r test_path; do

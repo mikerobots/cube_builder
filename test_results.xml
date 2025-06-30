@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="15" failures="5" disabled="0" errors="0" time="0.032" timestamp="2025-06-29T09:14:03.265" name="AllTests">
+  <testsuite name="CommandSequenceIntegrationTest" tests="15" failures="5" disabled="0" skipped="0" errors="0" time="0.032" timestamp="2025-06-29T09:14:03.265">
+    <testcase name="VoxelPlacementSequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="66" status="run" result="completed" time="0.006" timestamp="2025-06-29T09:14:03.265" classname="CommandSequenceIntegrationTest" />
+    <testcase name="ResolutionChangeSequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="112" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.271" classname="CommandSequenceIntegrationTest" />
+    <testcase name="CameraWorkspaceSequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="145" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.273" classname="CommandSequenceIntegrationTest">
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:184&#x0A;The difference between currentWorkspaceSize.x and 4.0f is 2, which exceeds 0.01f, where&#x0A;currentWorkspaceSize.x evaluates to 6,&#x0A;4.0f evaluates to 4, and&#x0A;0.01f evaluates to 0.0099999997764825821.&#x0A;Workspace X should be 4m" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:184
+The difference between currentWorkspaceSize.x and 4.0f is 2, which exceeds 0.01f, where
+currentWorkspaceSize.x evaluates to 6,
+4.0f evaluates to 4, and
+0.01f evaluates to 0.0099999997764825821.
+Workspace X should be 4m]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:185&#x0A;The difference between currentWorkspaceSize.y and 4.0f is 2, which exceeds 0.01f, where&#x0A;currentWorkspaceSize.y evaluates to 6,&#x0A;4.0f evaluates to 4, and&#x0A;0.01f evaluates to 0.0099999997764825821.&#x0A;Workspace Y should be 4m" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:185
+The difference between currentWorkspaceSize.y and 4.0f is 2, which exceeds 0.01f, where
+currentWorkspaceSize.y evaluates to 6,
+4.0f evaluates to 4, and
+0.01f evaluates to 0.0099999997764825821.
+Workspace Y should be 4m]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:186&#x0A;The difference between currentWorkspaceSize.z and 4.0f is 2, which exceeds 0.01f, where&#x0A;currentWorkspaceSize.z evaluates to 6,&#x0A;4.0f evaluates to 4, and&#x0A;0.01f evaluates to 0.0099999997764825821.&#x0A;Workspace Z should be 4m" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:186
+The difference between currentWorkspaceSize.z and 4.0f is 2, which exceeds 0.01f, where
+currentWorkspaceSize.z evaluates to 6,
+4.0f evaluates to 4, and
+0.01f evaluates to 0.0099999997764825821.
+Workspace Z should be 4m]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:193&#x0A;Value of: voxelManager-&gt;hasVoxel(Math::Vector3i(250, 0, 250), resolution)&#x0A;  Actual: true&#x0A;Expected: false&#x0A;Voxel at (250,0,250) should be removed (outside 4m bounds) per REQ-9.3.2" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:193
+Value of: voxelManager->hasVoxel(Math::Vector3i(250, 0, 250), resolution)
+  Actual: true
+Expected: false
+Voxel at (250,0,250) should be removed (outside 4m bounds) per REQ-9.3.2]]></failure>
+    </testcase>
+    <testcase name="FillRemoveSequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="218" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.275" classname="CommandSequenceIntegrationTest">
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:56&#x0A;Value of: result.success&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Small fill - Command 1 should succeed: &apos;fill 0cm 0cm 0cm 2cm 2cm 2cm&apos;. Error: Invalid coordinate format for x1. Expected integer value, got: 0cm" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:56
+Value of: result.success
+  Actual: false
+Expected: true
+Small fill - Command 1 should succeed: 'fill 0cm 0cm 0cm 2cm 2cm 2cm'. Error: Invalid coordinate format for x1. Expected integer value, got: 0cm]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:255&#x0A;Expected: (finalCount) &gt;= (27U), actual: 2 vs 27&#x0A;Should have at least 27 voxels after fill" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:255
+Expected: (finalCount) >= (27U), actual: 2 vs 27
+Should have at least 27 voxels after fill]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:56&#x0A;Value of: result.success&#x0A;  Actual: false&#x0A;Expected: true&#x0A;Remove - Command 1 should succeed: &apos;remove 1cm 1cm 1cm&apos;. Error: No voxel exists at this position to remove" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:56
+Value of: result.success
+  Actual: false
+Expected: true
+Remove - Command 1 should succeed: 'remove 1cm 1cm 1cm'. Error: No voxel exists at this position to remove]]></failure>
+    </testcase>
+    <testcase name="UndoRedoSequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="269" status="run" result="completed" time="0.002" timestamp="2025-06-29T09:14:03.276" classname="CommandSequenceIntegrationTest" />
+    <testcase name="ComplexMixedSequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="314" status="run" result="completed" time="0.002" timestamp="2025-06-29T09:14:03.278" classname="CommandSequenceIntegrationTest" />
+    <testcase name="ErrorRecoverySequence_StateConsistency_REQ_11_4_1" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="387" status="run" result="completed" time="0.002" timestamp="2025-06-29T09:14:03.281" classname="CommandSequenceIntegrationTest" />
+    <testcase name="PlaceRemoveInteraction_OverlapEffect_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="479" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.284" classname="CommandSequenceIntegrationTest" />
+    <testcase name="ResolutionPlaceInteraction_MultiResolution_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="510" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.285" classname="CommandSequenceIntegrationTest" />
+    <testcase name="FillPlaceInteraction_OverlapDetection_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="568" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.287" classname="CommandSequenceIntegrationTest">
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:585&#x0A;Value of: result2.success&#x0A;  Actual: false&#x0A;Expected: true" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:585
+Value of: result2.success
+  Actual: false
+Expected: true]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:588&#x0A;Expected: (countAfterFill) &gt; (0U), actual: 0 vs 0&#x0A;Fill should create voxels" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:588
+Expected: (countAfterFill) > (0U), actual: 0 vs 0
+Fill should create voxels]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:592&#x0A;Value of: result3.success&#x0A;  Actual: true&#x0A;Expected: false&#x0A;Individual place should fail in filled region due to collision" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:592
+Value of: result3.success
+  Actual: true
+Expected: false
+Individual place should fail in filled region due to collision]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:606&#x0A;Expected equality of these values:&#x0A;  finalCount&#x0A;    Which is: 2&#x0A;  countAfterFill + 1&#x0A;    Which is: 1&#x0A;Should have fill voxels plus one additional" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:606
+Expected equality of these values:
+  finalCount
+    Which is: 2
+  countAfterFill + 1
+    Which is: 1
+Should have fill voxels plus one additional]]></failure>
+    </testcase>
+    <testcase name="WorkspacePlaceInteraction_BoundsEffect_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="609" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.288" classname="CommandSequenceIntegrationTest">
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:646&#x0A;The difference between currentWorkspace.x and 4.0f is 4, which exceeds 0.01f, where&#x0A;currentWorkspace.x evaluates to 8,&#x0A;4.0f evaluates to 4, and&#x0A;0.01f evaluates to 0.0099999997764825821.&#x0A;Workspace should be reduced to 4m" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:646
+The difference between currentWorkspace.x and 4.0f is 4, which exceeds 0.01f, where
+currentWorkspace.x evaluates to 8,
+4.0f evaluates to 4, and
+0.01f evaluates to 0.0099999997764825821.
+Workspace should be reduced to 4m]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:650&#x0A;Value of: voxelManager-&gt;hasVoxel(Math::Vector3i(300, 0, 300), resolution)&#x0A;  Actual: true&#x0A;Expected: false&#x0A;Voxel outside new bounds should be removed per REQ-9.3.2" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:650
+Value of: voxelManager->hasVoxel(Math::Vector3i(300, 0, 300), resolution)
+  Actual: true
+Expected: false
+Voxel outside new bounds should be removed per REQ-9.3.2]]></failure>
+    </testcase>
+    <testcase name="CameraResolutionInteraction_ViewEffect_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="660" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.290" classname="CommandSequenceIntegrationTest" />
+    <testcase name="UndoPlaceInteraction_StateReversion_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="707" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.292" classname="CommandSequenceIntegrationTest" />
+    <testcase name="FillResolutionInteraction_GridAlignment_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="768" status="run" result="completed" time="0.001" timestamp="2025-06-29T09:14:03.294" classname="CommandSequenceIntegrationTest">
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:785&#x0A;Value of: result2.success&#x0A;  Actual: false&#x0A;Expected: true" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:785
+Value of: result2.success
+  Actual: false
+Expected: true]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:788&#x0A;Expected: (countAfterFirstFill) &gt; (0U), actual: 0 vs 0&#x0A;First fill should create voxels" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:788
+Expected: (countAfterFirstFill) > (0U), actual: 0 vs 0
+First fill should create voxels]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:806&#x0A;Value of: voxelManager-&gt;hasVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm)&#x0A;  Actual: false&#x0A;Expected: true&#x0A;1cm voxels should still exist after failed fill" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:806
+Value of: voxelManager->hasVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_1cm)
+  Actual: false
+Expected: true
+1cm voxels should still exist after failed fill]]></failure>
+      <failure message="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:808&#x0A;Value of: voxelManager-&gt;hasVoxel(Math::Vector3i(4, 4, 4), VoxelData::VoxelResolution::Size_1cm)&#x0A;  Actual: false&#x0A;Expected: true&#x0A;1cm voxels at corner should still exist" type=""><![CDATA[/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp:808
+Value of: voxelManager->hasVoxel(Math::Vector3i(4, 4, 4), VoxelData::VoxelResolution::Size_1cm)
+  Actual: false
+Expected: true
+1cm voxels at corner should still exist]]></failure>
+    </testcase>
+    <testcase name="ComplexInteractionChain_MultipleEffects_REQ_11_4_2" file="/Users/michaelhalloran/cube_edit/apps/cli/tests/test_integration_cli_command_sequences.cpp" line="822" status="run" result="completed" time="0.002" timestamp="2025-06-29T09:14:03.295" classname="CommandSequenceIntegrationTest" />
+  </testsuite>
+</testsuites>

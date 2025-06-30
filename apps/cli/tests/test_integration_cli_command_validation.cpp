@@ -142,9 +142,9 @@ TEST_F(CommandValidationIntegrationTest, FillCommand_InvalidParameters_REQ_11_5_
         {"fill 0 0 0 4 invalid 4", "Non-numeric Y2"},
         {"fill 0 0 0 4 4 invalid", "Non-numeric Z2"},
         // Mixed units are actually allowed - removed from invalid list
-        {"fill 0cm -4cm 0cm 4cm 4cm 4cm", "Below ground plane Y1"},
-        {"fill 0cm 0cm 0cm 4cm -4cm 4cm", "Below ground plane Y2"},
-        {"fill 1000000cm 0cm 0cm 1000004cm 4cm 4cm", "Extremely large coordinates"}
+        {"fill 0 -4 0 4 4 4", "Below ground plane Y1"},
+        {"fill 0 0 0 4 -4 4", "Below ground plane Y2"},
+        {"fill 1000000 0 0 1000004 4 4", "Extremely large coordinates"}
     };
     
     for (const auto& [command, description] : invalidFillCommands) {
@@ -226,8 +226,8 @@ TEST_F(CommandValidationIntegrationTest, WorkspaceCommand_InvalidParameters_REQ_
         {"workspace 100 5 5", "Too large workspace X"},
         {"workspace 5 100 5", "Too large workspace Y"},
         {"workspace 5 5 100", "Too large workspace Z"},
-        {"workspace 5m 5 5", "Mixed units"},
-        {"workspace 5cm 5m 5m", "Mixed units"},
+        {"workspace 5 5 five", "Non-numeric parameter"},
+        {"workspace abc 5 5", "Invalid non-numeric format"},
         {"workspace 5 5 5 extra", "Too many parameters"}
     };
     
@@ -451,7 +451,7 @@ TEST_F(CommandValidationIntegrationTest, StateConsistency_AfterInvalidCommands_R
     auto result1 = commandProcessor->execute("resolution 4cm");
     EXPECT_TRUE(result1.success);
     
-    auto result2 = commandProcessor->execute("workspace 6m 6m 6m");
+    auto result2 = commandProcessor->execute("workspace 6 6 6");
     EXPECT_TRUE(result2.success);
     
     auto result3 = commandProcessor->execute("place 0cm 0cm 0cm");
@@ -582,12 +582,12 @@ TEST_F(CommandValidationIntegrationTest, FillCommandFailure_ResourceCleanup_REQ_
     
     // Attempt many failing fill commands
     std::vector<std::string> failingFillCommands = {
-        "fill 0cm -100cm 0cm 4cm 4cm 4cm",  // Below ground plane
-        "fill invalid 0cm 0cm 4cm 4cm 4cm", // Invalid coordinate
-        "fill 0cm 0cm 0cm",                 // Missing parameters
-        "fill",                             // Missing all parameters
-        "fill 0cm 0cm 0cm 4cm -4cm 4cm",    // End Y below ground
-        "fill 1000000cm 0cm 0cm 1000004cm 4cm 4cm" // Out of bounds
+        "fill 0 -100 0 4 4 4",      // Below ground plane
+        "fill invalid 0 0 4 4 4",   // Invalid coordinate
+        "fill 0 0 0",               // Missing parameters
+        "fill",                     // Missing all parameters
+        "fill 0 0 0 4 -4 4",        // End Y below ground
+        "fill 1000000 0 0 1000004 4 4" // Out of bounds
     };
     
     for (int i = 0; i < 50; ++i) {  // Repeat to stress test memory
@@ -603,12 +603,33 @@ TEST_F(CommandValidationIntegrationTest, FillCommandFailure_ResourceCleanup_REQ_
         << "Voxel count should not change after failed fill commands";
     
     // Verify system is still functional
-    auto validResult = commandProcessor->execute("fill 0cm 0cm 0cm 4cm 4cm 4cm");
-    EXPECT_TRUE(validResult.success) << "Valid fill should work after failures";
+    // First check workspace and resolution are still valid
+    auto statusResult = commandProcessor->execute("status");
+    EXPECT_TRUE(statusResult.success) << "Status command should work";
+    
+    // Check the workspace size is still valid
+    Math::Vector3f workspaceSize = voxelManager->getWorkspaceSize();
+    std::cout << "Workspace size after stress test: " << workspaceSize.x << "x" << workspaceSize.y << "x" << workspaceSize.z << "m" << std::endl;
+    
+    // Check resolution is still 1cm
+    VoxelData::VoxelResolution currentRes = voxelManager->getActiveResolution();
+    EXPECT_EQ(currentRes, VoxelData::VoxelResolution::Size_1cm) << "Resolution should still be 1cm";
+    
+    // Reset the workspace to a known state
+    auto workspaceReset = commandProcessor->execute("workspace 5 5 5");
+    EXPECT_TRUE(workspaceReset.success) << "Workspace reset should succeed: " << workspaceReset.message;
+    
+    // Try a simple place command to verify basic functionality
+    auto placeResult = commandProcessor->execute("place 0cm 0cm 0cm");
+    EXPECT_TRUE(placeResult.success) << "Place should work: " << placeResult.message;
+    
+    auto validResult = commandProcessor->execute("fill 0 0 0 10 10 10");
+    EXPECT_TRUE(validResult.success) << "Valid fill should work after failures. Error: " << validResult.message;
     
     uint32_t afterValidCount = voxelManager->getVoxelCount();
     EXPECT_GT(afterValidCount, initialVoxelCount) 
-        << "Valid fill should create voxels after failure stress test";
+        << "Valid fill should create voxels after failure stress test. Initial: " 
+        << initialVoxelCount << ", After: " << afterValidCount;
 }
 
 TEST_F(CommandValidationIntegrationTest, ResolutionCommandFailure_ResourceCleanup_REQ_11_5_4) {
@@ -825,7 +846,7 @@ TEST_F(CommandValidationIntegrationTest, MixedCommandFailures_ResourceCleanup_RE
     // Set up initial state
     auto result1 = commandProcessor->execute("resolution 4cm");
     EXPECT_TRUE(result1.success);
-    auto result2 = commandProcessor->execute("workspace 6m 6m 6m");
+    auto result2 = commandProcessor->execute("workspace 6 6 6");
     EXPECT_TRUE(result2.success);
     auto result3 = commandProcessor->execute("camera iso");
     EXPECT_TRUE(result3.success);
