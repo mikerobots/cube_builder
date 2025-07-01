@@ -3,6 +3,7 @@
 #include "../include/visual_feedback/FeedbackTypes.h"
 #include "../../voxel_data/VoxelTypes.h"
 #include "../../rendering/RenderTypes.h"
+#include "../../../foundation/math/CoordinateConverter.h"
 
 using namespace VoxelEditor;
 using namespace VoxelEditor::VisualFeedback;
@@ -43,9 +44,16 @@ TEST_F(OutlineRendererPreviewTest, VoxelOutlineGeneration) {
         
         // Verify edges are at correct distance based on voxel size
         float voxelSize = VoxelData::getVoxelSize(resolution);
-        float baseX = position.x * voxelSize;
-        float baseY = position.y * voxelSize;
-        float baseZ = position.z * voxelSize;
+        
+        // Use proper coordinate conversion like the actual implementation
+        Math::IncrementCoordinates incrementPos(position.x, position.y, position.z);
+        Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(incrementPos);
+        Math::Vector3f basePos = worldPos.value();
+        
+        // Voxels use bottom-center positioning (same as in addVoxelEdges)
+        float baseX = basePos.x - voxelSize * 0.5f;  // Min X corner
+        float baseY = basePos.y;                      // Bottom Y
+        float baseZ = basePos.z - voxelSize * 0.5f;  // Min Z corner
         
         // Check that all points are within voxel bounds
         for (const auto& point : edges) {

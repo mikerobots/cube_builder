@@ -569,9 +569,9 @@ TEST_F(PlacementValidationTest, AllVoxelSizesOnGroundPlane1cmIncrements) {
                 IncrementCoordinates snapped = PlacementUtils::snapToValidIncrement(worldPos);
                 
                 // Verify snapping is correct
-                EXPECT_EQ(snapped.x(), static_cast<int>(std::round(xPos * 100)));
+                EXPECT_EQ(snapped.x(), static_cast<int>(std::round(xPos * CoordinateConverter::METERS_TO_CM)));
                 EXPECT_EQ(snapped.y(), 0);
-                EXPECT_EQ(snapped.z(), static_cast<int>(std::round(zPos * 100)));
+                EXPECT_EQ(snapped.z(), static_cast<int>(std::round(zPos * CoordinateConverter::METERS_TO_CM)));
                 
                 // Also verify through the full placement context with shift
                 // Use a workspace size appropriate for the voxel
@@ -586,9 +586,9 @@ TEST_F(PlacementValidationTest, AllVoxelSizesOnGroundPlane1cmIncrements) {
                     worldPos, resolution, true, workspaceForVoxel);
                 
                 // With shift, should snap to 1cm increments regardless of voxel size
-                EXPECT_EQ(context.snappedIncrementPos.x(), static_cast<int>(std::round(xPos * 100)));
+                EXPECT_EQ(context.snappedIncrementPos.x(), static_cast<int>(std::round(xPos * CoordinateConverter::METERS_TO_CM)));
                 EXPECT_EQ(context.snappedIncrementPos.y(), 0);
-                EXPECT_EQ(context.snappedIncrementPos.z(), static_cast<int>(std::round(zPos * 100)));
+                EXPECT_EQ(context.snappedIncrementPos.z(), static_cast<int>(std::round(zPos * CoordinateConverter::METERS_TO_CM)));
             }
         }
     }

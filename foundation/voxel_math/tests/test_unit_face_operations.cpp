@@ -23,17 +23,17 @@ protected:
 
 // Test face normal retrieval
 TEST_F(FaceOperationsTest, GetFaceNormal) {
-    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::PositiveX), 
+    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::PosX), 
                            Vector3f(1.0f, 0.0f, 0.0f)));
-    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::NegativeX), 
+    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::NegX), 
                            Vector3f(-1.0f, 0.0f, 0.0f)));
-    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::PositiveY), 
+    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::PosY), 
                            Vector3f(0.0f, 1.0f, 0.0f)));
-    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::NegativeY), 
+    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::NegY), 
                            Vector3f(0.0f, -1.0f, 0.0f)));
-    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::PositiveZ), 
+    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::PosZ), 
                            Vector3f(0.0f, 0.0f, 1.0f)));
-    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::NegativeZ), 
+    EXPECT_TRUE(approxEqual(FaceOperations::getFaceNormal(VoxelData::FaceDirection::NegZ), 
                            Vector3f(0.0f, 0.0f, -1.0f)));
 }
 
@@ -41,34 +41,34 @@ TEST_F(FaceOperationsTest, GetFaceNormal) {
 TEST_F(FaceOperationsTest, GetFaceOffset) {
     int voxelSize = 16;  // 16cm
     
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PositiveX, voxelSize), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PosX, voxelSize), 
               Vector3i(16, 0, 0));
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::NegativeX, voxelSize), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::NegX, voxelSize), 
               Vector3i(-16, 0, 0));
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PositiveY, voxelSize), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PosY, voxelSize), 
               Vector3i(0, 16, 0));
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::NegativeY, voxelSize), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::NegY, voxelSize), 
               Vector3i(0, -16, 0));
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PositiveZ, voxelSize), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PosZ, voxelSize), 
               Vector3i(0, 0, 16));
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::NegativeZ, voxelSize), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::NegZ, voxelSize), 
               Vector3i(0, 0, -16));
 }
 
 // Test opposite face retrieval
 TEST_F(FaceOperationsTest, GetOppositeFace) {
-    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::PositiveX), 
-              VoxelData::FaceDirection::NegativeX);
-    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::NegativeX), 
-              VoxelData::FaceDirection::PositiveX);
-    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::PositiveY), 
-              VoxelData::FaceDirection::NegativeY);
-    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::NegativeY), 
-              VoxelData::FaceDirection::PositiveY);
-    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::PositiveZ), 
-              VoxelData::FaceDirection::NegativeZ);
-    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::NegativeZ), 
-              VoxelData::FaceDirection::PositiveZ);
+    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::PosX), 
+              VoxelData::FaceDirection::NegX);
+    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::NegX), 
+              VoxelData::FaceDirection::PosX);
+    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::PosY), 
+              VoxelData::FaceDirection::NegY);
+    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::NegY), 
+              VoxelData::FaceDirection::PosY);
+    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::PosZ), 
+              VoxelData::FaceDirection::NegZ);
+    EXPECT_EQ(FaceOperations::getOppositeFace(VoxelData::FaceDirection::NegZ), 
+              VoxelData::FaceDirection::PosZ);
 }
 
 // Test face determination from hit point
@@ -82,60 +82,60 @@ TEST_F(FaceOperationsTest, DetermineFaceFromHit) {
     // Hit on positive X face (right)
     WorldCoordinates hitPosX(Vector3f(0.16f, 0.16f, 0.0f));
     EXPECT_EQ(FaceOperations::determineFaceFromHit(hitPosX, bounds, epsilon), 
-              VoxelData::FaceDirection::PositiveX);
+              VoxelData::FaceDirection::PosX);
     
     // Hit on negative X face (left)
     WorldCoordinates hitNegX(Vector3f(-0.16f, 0.16f, 0.0f));
     EXPECT_EQ(FaceOperations::determineFaceFromHit(hitNegX, bounds, epsilon), 
-              VoxelData::FaceDirection::NegativeX);
+              VoxelData::FaceDirection::NegX);
     
     // Hit on positive Y face (top)
     WorldCoordinates hitPosY(Vector3f(0.0f, 0.32f, 0.0f));
     EXPECT_EQ(FaceOperations::determineFaceFromHit(hitPosY, bounds, epsilon), 
-              VoxelData::FaceDirection::PositiveY);
+              VoxelData::FaceDirection::PosY);
     
     // Hit on negative Y face (bottom)
     WorldCoordinates hitNegY(Vector3f(0.0f, 0.0f, 0.0f));
     EXPECT_EQ(FaceOperations::determineFaceFromHit(hitNegY, bounds, epsilon), 
-              VoxelData::FaceDirection::NegativeY);
+              VoxelData::FaceDirection::NegY);
     
     // Hit on positive Z face (back)
     WorldCoordinates hitPosZ(Vector3f(0.0f, 0.16f, 0.16f));
     EXPECT_EQ(FaceOperations::determineFaceFromHit(hitPosZ, bounds, epsilon), 
-              VoxelData::FaceDirection::PositiveZ);
+              VoxelData::FaceDirection::PosZ);
     
     // Hit on negative Z face (front)
     WorldCoordinates hitNegZ(Vector3f(0.0f, 0.16f, -0.16f));
     EXPECT_EQ(FaceOperations::determineFaceFromHit(hitNegZ, bounds, epsilon), 
-              VoxelData::FaceDirection::NegativeZ);
+              VoxelData::FaceDirection::NegZ);
 }
 
 // Test face determination from ray direction
 TEST_F(FaceOperationsTest, DetermineFaceFromRayDirection) {
     // Test primary directions
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(Vector3f(1.0f, 0.0f, 0.0f)), 
-              VoxelData::FaceDirection::PositiveX);
+              VoxelData::FaceDirection::PosX);
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(Vector3f(-1.0f, 0.0f, 0.0f)), 
-              VoxelData::FaceDirection::NegativeX);
+              VoxelData::FaceDirection::NegX);
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(Vector3f(0.0f, 1.0f, 0.0f)), 
-              VoxelData::FaceDirection::PositiveY);
+              VoxelData::FaceDirection::PosY);
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(Vector3f(0.0f, -1.0f, 0.0f)), 
-              VoxelData::FaceDirection::NegativeY);
+              VoxelData::FaceDirection::NegY);
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(Vector3f(0.0f, 0.0f, 1.0f)), 
-              VoxelData::FaceDirection::PositiveZ);
+              VoxelData::FaceDirection::PosZ);
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(Vector3f(0.0f, 0.0f, -1.0f)), 
-              VoxelData::FaceDirection::NegativeZ);
+              VoxelData::FaceDirection::NegZ);
     
     // Test diagonal directions
     Vector3f diagonal(1.0f, 0.5f, 0.5f);
     diagonal.normalize();
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(diagonal), 
-              VoxelData::FaceDirection::PositiveX);  // X is dominant
+              VoxelData::FaceDirection::PosX);  // X is dominant
     
     Vector3f mostlyY(0.5f, 1.0f, 0.5f);
     mostlyY.normalize();
     EXPECT_EQ(FaceOperations::determineFaceFromRayDirection(mostlyY), 
-              VoxelData::FaceDirection::PositiveY);  // Y is dominant
+              VoxelData::FaceDirection::PosY);  // Y is dominant
 }
 
 // Test placement position calculation
@@ -144,17 +144,17 @@ TEST_F(FaceOperationsTest, CalculatePlacementPosition) {
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_16cm;
     
     // Test placement on each face
-    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::PositiveX, resolution),
+    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::PosX, resolution),
               IncrementCoordinates(48, 64, 96));
-    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::NegativeX, resolution),
+    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::NegX, resolution),
               IncrementCoordinates(16, 64, 96));
-    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::PositiveY, resolution),
+    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::PosY, resolution),
               IncrementCoordinates(32, 80, 96));
-    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::NegativeY, resolution),
+    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::NegY, resolution),
               IncrementCoordinates(32, 48, 96));
-    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::PositiveZ, resolution),
+    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::PosZ, resolution),
               IncrementCoordinates(32, 64, 112));
-    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::NegativeZ, resolution),
+    EXPECT_EQ(FaceOperations::calculatePlacementPosition(voxelPos, VoxelData::FaceDirection::NegZ, resolution),
               IncrementCoordinates(32, 64, 80));
 }
 
@@ -187,32 +187,32 @@ TEST_F(FaceOperationsTest, GetAllFaceOffsets) {
 
 // Test face direction to index conversion
 TEST_F(FaceOperationsTest, FaceDirectionToIndex) {
-    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::PositiveX), 0);
-    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::NegativeX), 1);
-    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::PositiveY), 2);
-    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::NegativeY), 3);
-    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::PositiveZ), 4);
-    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::NegativeZ), 5);
+    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::PosX), 0);
+    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::NegX), 1);
+    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::PosY), 2);
+    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::NegY), 3);
+    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::PosZ), 4);
+    EXPECT_EQ(FaceOperations::faceDirectionToIndex(VoxelData::FaceDirection::NegZ), 5);
 }
 
 // Test index to face direction conversion
 TEST_F(FaceOperationsTest, IndexToFaceDirection) {
-    EXPECT_EQ(FaceOperations::indexToFaceDirection(0), VoxelData::FaceDirection::PositiveX);
-    EXPECT_EQ(FaceOperations::indexToFaceDirection(1), VoxelData::FaceDirection::NegativeX);
-    EXPECT_EQ(FaceOperations::indexToFaceDirection(2), VoxelData::FaceDirection::PositiveY);
-    EXPECT_EQ(FaceOperations::indexToFaceDirection(3), VoxelData::FaceDirection::NegativeY);
-    EXPECT_EQ(FaceOperations::indexToFaceDirection(4), VoxelData::FaceDirection::PositiveZ);
-    EXPECT_EQ(FaceOperations::indexToFaceDirection(5), VoxelData::FaceDirection::NegativeZ);
+    EXPECT_EQ(FaceOperations::indexToFaceDirection(0), VoxelData::FaceDirection::PosX);
+    EXPECT_EQ(FaceOperations::indexToFaceDirection(1), VoxelData::FaceDirection::NegX);
+    EXPECT_EQ(FaceOperations::indexToFaceDirection(2), VoxelData::FaceDirection::PosY);
+    EXPECT_EQ(FaceOperations::indexToFaceDirection(3), VoxelData::FaceDirection::NegY);
+    EXPECT_EQ(FaceOperations::indexToFaceDirection(4), VoxelData::FaceDirection::PosZ);
+    EXPECT_EQ(FaceOperations::indexToFaceDirection(5), VoxelData::FaceDirection::NegZ);
 }
 
 // Test face direction names
 TEST_F(FaceOperationsTest, GetFaceDirectionName) {
-    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::PositiveX), "PositiveX");
-    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::NegativeX), "NegativeX");
-    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::PositiveY), "PositiveY");
-    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::NegativeY), "NegativeY");
-    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::PositiveZ), "PositiveZ");
-    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::NegativeZ), "NegativeZ");
+    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::PosX), "PosX");
+    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::NegX), "NegX");
+    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::PosY), "PosY");
+    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::NegY), "NegY");
+    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::PosZ), "PosZ");
+    EXPECT_STREQ(FaceOperations::getFaceDirectionName(VoxelData::FaceDirection::NegZ), "NegZ");
 }
 
 // Test edge cases
@@ -224,13 +224,13 @@ TEST_F(FaceOperationsTest, EdgeCases) {
     WorldCoordinates cornerHit(Vector3f(0.16f, 0.32f, 0.16f));
     VoxelData::FaceDirection face = FaceOperations::determineFaceFromHit(cornerHit, bounds, 0.01f);
     // Any of the three faces (PositiveX, PositiveY, PositiveZ) would be valid
-    EXPECT_TRUE(face == VoxelData::FaceDirection::PositiveX || 
-                face == VoxelData::FaceDirection::PositiveY || 
-                face == VoxelData::FaceDirection::PositiveZ);
+    EXPECT_TRUE(face == VoxelData::FaceDirection::PosX || 
+                face == VoxelData::FaceDirection::PosY || 
+                face == VoxelData::FaceDirection::PosZ);
     
     // Test face offset with different voxel sizes
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PositiveX, 1), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PosX, 1), 
               Vector3i(1, 0, 0));  // 1cm voxel
-    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PositiveX, 512), 
+    EXPECT_EQ(FaceOperations::getFaceOffset(VoxelData::FaceDirection::PosX, 512), 
               Vector3i(512, 0, 0));  // 512cm voxel
 }

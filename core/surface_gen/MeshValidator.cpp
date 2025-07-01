@@ -1,4 +1,5 @@
 #include "MeshValidator.h"
+#include "foundation/math/CoordinateConverter.h"
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -227,7 +228,8 @@ float MeshValidator::calculateMinimumFeatureSize(const Mesh& mesh) {
     // Could also check for thin triangles, small angles, etc.
     
     // Convert from meters to millimeters
-    return minFeatureSize * 1000.0f;
+    static constexpr float METERS_TO_MM = 1000.0f;
+    return minFeatureSize * METERS_TO_MM;
 }
 
 std::vector<uint32_t> MeshValidator::findDegenerateTriangles(const Mesh& mesh) {

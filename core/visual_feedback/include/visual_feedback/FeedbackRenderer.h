@@ -142,6 +142,13 @@ private:
     VoxelData::VoxelResolution m_previewResolution;
     Math::BoundingBox m_workspaceBounds;
     
+    // Grid rendering state
+    bool m_pendingGridRender;
+    Math::Vector3f m_gridCenter;
+    float m_gridExtent;
+    Math::Vector3f m_gridCursorPos;
+    bool m_gridDynamicOpacity;
+    
     // Group data (temporary - should come from Groups system)
     struct GroupData {
         std::vector<VoxelId> voxels;

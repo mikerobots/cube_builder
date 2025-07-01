@@ -89,7 +89,7 @@ SelectionSet BoxSelector::selectFromWorld(const Math::BoundingBox& worldBox,
     
     // Get voxel size in centimeters for the given resolution
     float voxelSizeMeters = VoxelData::getVoxelSize(resolution);
-    int voxelSizeCm = static_cast<int>(voxelSizeMeters * 100.0f);
+    int voxelSizeCm = static_cast<int>(voxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM);
     
     // Use direct coordinates without snapping to allow any 1cm position
     Math::IncrementCoordinates snappedMin = Math::IncrementCoordinates(actualMin);

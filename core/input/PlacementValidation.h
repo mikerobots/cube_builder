@@ -20,9 +20,6 @@ namespace VoxelEditor {
 namespace VoxelEditor {
 namespace Input {
 
-// 1cm increment size for world grid
-constexpr float INCREMENT_SIZE = 0.01f;
-
 // Result of placement validation
 enum class PlacementValidationResult {
     Valid,              // Placement is valid
@@ -102,10 +99,6 @@ public:
     
     // Validate if a world position is valid for increment placement
     static bool isValidForIncrementPlacement(const Math::WorldCoordinates& worldPos, VoxelData::VoxelResolution resolution);
-    
-private:
-    // 1cm in world units
-    static constexpr float INCREMENT_SIZE = 0.01f;
 };
 
 }

@@ -75,6 +75,30 @@ protected:
         return count;
     }
     
+    // Helper to count any bright pixels for debugging
+    int countBrightPixels(const std::vector<unsigned char>& pixels) {
+        int count = 0;
+        for (size_t i = 0; i < pixels.size(); i += 4) {
+            // Check for any pixel with high intensity
+            if (pixels[i] > 100 || pixels[i+1] > 100 || pixels[i+2] > 100) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    // Helper to count yellow-ish pixels with broader criteria
+    int countYellowishPixels(const std::vector<unsigned char>& pixels) {
+        int count = 0;
+        for (size_t i = 0; i < pixels.size(); i += 4) {
+            // Broader yellow detection: high red and green, lower blue
+            if (pixels[i] > 150 && pixels[i+1] > 150 && pixels[i+2] < 100) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
     // Helper to save debug screenshot
     void saveDebugScreenshot(const std::string& filename) {
         int width = m_renderWindow->getWidth();
@@ -130,6 +154,10 @@ TEST_F(RayVisualizationTest, RayAppearsWhenEnabled) {
     ASSERT_NE(mouseInteraction, nullptr);
     mouseInteraction->setRayVisualizationEnabled(true);
     
+    // Place a voxel at origin to have something to point at
+    m_voxelManager->setVoxel(Math::Vector3i(0, 0, 0), VoxelData::VoxelResolution::Size_32cm, true);
+    m_app->requestMeshUpdate();
+    
     // Move mouse to center of screen
     int centerX = m_renderWindow->getWidth() / 2;
     int centerY = m_renderWindow->getHeight() / 2;
@@ -142,10 +170,16 @@ TEST_F(RayVisualizationTest, RayAppearsWhenEnabled) {
     // Capture framebuffer and check for yellow pixels
     auto pixels = captureFramebuffer();
     int yellowPixelsBefore = countYellowPixels(pixels);
+    int yellowishPixelsBefore = countYellowishPixels(pixels);
+    int brightPixelsBefore = countBrightPixels(pixels);
+    
+    std::cout << "Ray visualization enabled: yellow=" << yellowPixelsBefore 
+              << ", yellowish=" << yellowishPixelsBefore
+              << ", bright=" << brightPixelsBefore << std::endl;
     
     // The ray should be visible, so we expect some yellow pixels
     EXPECT_GT(yellowPixelsBefore, 0) 
-        << "No yellow pixels found when ray visualization is enabled";
+        << "No yellow pixels found when ray visualization is enabled. Bright pixels: " << brightPixelsBefore;
     
     // Save screenshot for debugging
     saveDebugScreenshot("test_ray_visible.ppm");

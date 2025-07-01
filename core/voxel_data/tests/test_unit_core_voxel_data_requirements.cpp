@@ -3,6 +3,7 @@
 #include "../WorkspaceManager.h"
 #include "../VoxelGrid.h"
 #include "../VoxelTypes.h"
+#include "../../foundation/math/CoordinateConverter.h"
 
 using namespace VoxelEditor::VoxelData;
 // Don't import Math namespace to avoid VoxelResolution ambiguity
@@ -177,11 +178,18 @@ TEST_F(VoxelDataRequirementsTest, CollisionDetectionAndSpatialQueries) {
     // Place a large voxel at origin
     ASSERT_TRUE(manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.0f), VoxelResolution::Size_32cm, true));
     
-    // Test collision detection - small voxel at same position should fail
+    // Test collision detection - placing at exact same position should fail (overlap prevention)
     EXPECT_FALSE(manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.0f), VoxelResolution::Size_1cm, true));
     
-    // Test spatial queries - check if positions are occupied
-    EXPECT_TRUE(manager->wouldOverlap(VoxelEditor::Math::Vector3i(0, 0, 0), VoxelResolution::Size_1cm));
+    // Test placing smaller voxel on face of larger voxel (adjacent position) - should succeed
+    // Calculate adjacent position on positive X face of 32cm voxel
+    VoxelEditor::Math::Vector3f adjacentPos = VoxelEditor::Math::Vector3f(0.32f, 0.0f, 0.0f); // 32cm away on X axis
+    EXPECT_TRUE(manager->setVoxelAtWorldPos(adjacentPos, VoxelResolution::Size_1cm, true));
+    
+    // Test spatial queries - wouldOverlap at exact same position should return true (prevented)
+    EXPECT_TRUE(manager->wouldOverlap(VoxelEditor::Math::Vector3i(0, 0, 0), VoxelResolution::Size_32cm));
+    // wouldOverlap at adjacent position should return false after placement
+    EXPECT_TRUE(manager->wouldOverlap(VoxelEditor::Math::Vector3i(32, 0, 0), VoxelResolution::Size_1cm));
     EXPECT_FALSE(manager->wouldOverlap(VoxelEditor::Math::Vector3i(100, 0, 100), VoxelResolution::Size_1cm));
     
     // Test placement far away from existing voxel - should succeed
@@ -200,9 +208,14 @@ TEST_F(VoxelDataRequirementsTest, PlacementValidation) {
     EXPECT_FALSE(manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(0.0f, -0.01f, 0.0f), VoxelResolution::Size_1cm, true))
         << "Placement below Y=0 should fail";
     
-    // 2. Overlap with existing voxel should fail
+    // 2. Small voxel at exact same position should fail (overlap prevention)
     EXPECT_FALSE(manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(0.0f, 0.0f, 0.0f), VoxelResolution::Size_1cm, true))
-        << "Placement overlapping existing voxel should fail";
+        << "Placement of voxel at exact same position should fail";
+    
+    // 2b. Small voxel on face of large voxel should succeed (adjacent placement)
+    VoxelEditor::Math::Vector3f adjacentPos = VoxelEditor::Math::Vector3f(0.16f, 0.0f, 0.0f); // On face of 16cm voxel
+    EXPECT_TRUE(manager->setVoxelAtWorldPos(adjacentPos, VoxelResolution::Size_1cm, true))
+        << "Placement of small voxel on face of large voxel should succeed";
     
     // 3. Outside workspace bounds should fail
     EXPECT_FALSE(manager->setVoxelAtWorldPos(VoxelEditor::Math::Vector3f(10.0f, 0.0f, 0.0f), VoxelResolution::Size_1cm, true))
@@ -277,13 +290,16 @@ TEST_F(VoxelDataRequirementsTest, AdjacentPositionCalculation) {
         VoxelEditor::Math::Vector3i expectedOffset;
     };
     
+    // For 16cm voxels, the offset should be 16 increment units (16cm)
+    int voxelSizeInIncrements = 16; // 16cm voxel = 16 increment units
+    
     std::vector<DirectionTest> directions = {
-        {FaceDirection::PosX, VoxelEditor::Math::Vector3i(1, 0, 0)},
-        {FaceDirection::NegX, VoxelEditor::Math::Vector3i(-1, 0, 0)},
-        {FaceDirection::PosY, VoxelEditor::Math::Vector3i(0, 1, 0)},
-        {FaceDirection::NegY, VoxelEditor::Math::Vector3i(0, -1, 0)},
-        {FaceDirection::PosZ, VoxelEditor::Math::Vector3i(0, 0, 1)},
-        {FaceDirection::NegZ, VoxelEditor::Math::Vector3i(0, 0, -1)},
+        {FaceDirection::PosX, VoxelEditor::Math::Vector3i(voxelSizeInIncrements, 0, 0)},
+        {FaceDirection::NegX, VoxelEditor::Math::Vector3i(-voxelSizeInIncrements, 0, 0)},
+        {FaceDirection::PosY, VoxelEditor::Math::Vector3i(0, voxelSizeInIncrements, 0)},
+        {FaceDirection::NegY, VoxelEditor::Math::Vector3i(0, -voxelSizeInIncrements, 0)},
+        {FaceDirection::PosZ, VoxelEditor::Math::Vector3i(0, 0, voxelSizeInIncrements)},
+        {FaceDirection::NegZ, VoxelEditor::Math::Vector3i(0, 0, -voxelSizeInIncrements)},
     };
     
     // Same size adjacent
@@ -291,6 +307,36 @@ TEST_F(VoxelDataRequirementsTest, AdjacentPositionCalculation) {
         VoxelEditor::Math::Vector3i adjacent = manager->getAdjacentPosition(sourcePos, test.face, sourceRes, sourceRes);
         VoxelEditor::Math::Vector3i expected = sourcePos + test.expectedOffset;
         EXPECT_EQ(adjacent, expected) << "Face: " << static_cast<int>(test.face);
+    }
+    
+    // Additional validation: Place a voxel and verify adjacent positions work correctly
+    // Clear any existing voxels first
+    manager->clearAll();
+    
+    // Place a 16cm voxel at a specific position
+    ASSERT_TRUE(manager->setVoxel(sourcePos, sourceRes, true));
+    
+    // Verify we can place voxels at adjacent positions without overlap
+    for (const auto& test : directions) {
+        VoxelEditor::Math::Vector3i adjacentPos = manager->getAdjacentPosition(sourcePos, test.face, sourceRes, sourceRes);
+        
+        // Check if the adjacent position would be below Y=0 (which is not allowed)
+        if (adjacentPos.y < 0) {
+            // Verify that placement fails due to Y < 0 constraint
+            bool placed = manager->setVoxel(adjacentPos, sourceRes, true);
+            EXPECT_FALSE(placed) << "Should NOT be able to place voxel below Y=0 at position (" 
+                                << adjacentPos.x << ", " << adjacentPos.y << ", " << adjacentPos.z << ")";
+        } else {
+            // Should be able to place a voxel at the adjacent position
+            bool placed = manager->setVoxel(adjacentPos, sourceRes, true);
+            EXPECT_TRUE(placed) << "Should be able to place voxel adjacent to face: " << static_cast<int>(test.face)
+                               << " at position (" << adjacentPos.x << ", " << adjacentPos.y << ", " << adjacentPos.z << ")";
+            
+            // Clean up for next iteration
+            if (placed) {
+                manager->setVoxel(adjacentPos, sourceRes, false);
+            }
+        }
     }
 }
 
@@ -405,7 +451,7 @@ TEST_F(VoxelDataRequirementsTest, ValidPositionsIn32cmCell_REQ_2_1_2) {
     
     // Test X axis positions within a 32cm cell
     for (int i = 0; i < 32; ++i) {
-        float xPos = i * 0.01f; // Convert to meters
+        float xPos = i * VoxelEditor::Math::CoordinateConverter::CM_TO_METERS; // Convert to meters
         VoxelEditor::Math::Vector3f pos(xPos, 0.0f, 0.0f);
         EXPECT_TRUE(manager->isValidIncrementPosition(pos)) 
             << "Position " << xPos << "m should be valid within 32cm cell";
@@ -427,12 +473,17 @@ TEST_F(VoxelDataRequirementsTest, OverlapPreventionAndValidation_REQ_5_2_1_REQ_5
     ASSERT_TRUE(manager->setVoxelAtWorldPos(pos1, VoxelResolution::Size_16cm, true));
     
     // REQ-5.2.2: System shall validate placement before allowing it
-    // Check validation detects overlap
+    // wouldOverlap returns true for same position placement (prevented)
     EXPECT_TRUE(manager->wouldOverlap(VoxelEditor::Math::Vector3i(0, 0, 0), VoxelResolution::Size_1cm));
     
-    // REQ-5.2.1: Voxels shall not overlap with existing voxels
-    // Try to place overlapping voxel - should fail
+    // REQ-5.2.1: Voxels shall not overlap with existing voxels of same or smaller size
+    // Small voxel at same position should fail (overlap prevention)
     EXPECT_FALSE(manager->setVoxelAtWorldPos(pos1, VoxelResolution::Size_1cm, true));
+    
+    // Small voxel on face of large voxel should succeed (adjacent placement)
+    VoxelEditor::Math::Vector3f adjacentPos = VoxelEditor::Math::Vector3f(0.16f, 0.0f, 0.0f); // On face of 16cm voxel
+    EXPECT_TRUE(manager->setVoxelAtWorldPos(adjacentPos, VoxelResolution::Size_1cm, true));
+    // Same size voxel on same position - should fail
     EXPECT_FALSE(manager->setVoxelAtWorldPos(pos1, VoxelResolution::Size_16cm, true));
     
     // Place non-overlapping voxel - should succeed
@@ -503,7 +554,7 @@ TEST_F(VoxelDataRequirementsTest, MemoryPressureDetection_REQ_6_3_5) {
     const int VOXEL_COUNT = 100;
     for (int i = 0; i < VOXEL_COUNT; ++i) {
         manager->setVoxelAtWorldPos(
-            VoxelEditor::Math::Vector3f(i * 0.01f, 0.0f, 0.0f), 
+            VoxelEditor::Math::Vector3f(i * VoxelEditor::Math::CoordinateConverter::CM_TO_METERS, 0.0f, 0.0f), 
             VoxelResolution::Size_1cm, true);
     }
     

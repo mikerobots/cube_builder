@@ -2,7 +2,7 @@
 #include "../include/voxel_math/VoxelCollision.h"
 #include "../include/voxel_math/VoxelGrid.h"
 #include "../../../core/voxel_data/VoxelGrid.h"
-#include "../../../core/voxel_data/MultiResolutionVoxelGrid.h"
+#include "../../../core/voxel_data/VoxelDataManager.h"
 #include <memory>
 
 using namespace VoxelEditor;
@@ -13,16 +13,21 @@ protected:
     void SetUp() override {
         // Create a test grid with workspace size
         workspaceSize = Vector3f(5.0f, 5.0f, 5.0f);
-        multiResGrid = std::make_unique<VoxelData::MultiResolutionVoxelGrid>(workspaceSize);
+        dataManager = std::make_unique<VoxelData::VoxelDataManager>();
         
-        // Get the grid for current resolution
-        multiResGrid->setActiveResolution(VoxelData::VoxelResolution::Size_32cm);
-        grid = &multiResGrid->getGrid(VoxelData::VoxelResolution::Size_32cm);
+        // Set workspace size
+        dataManager->resizeWorkspace(workspaceSize);
+        
+        // Set the active resolution
+        dataManager->setActiveResolution(VoxelData::VoxelResolution::Size_32cm);
+        
+        // Create a standalone grid for testing collision functions that expect a VoxelGrid
+        grid = std::make_unique<VoxelData::VoxelGrid>(VoxelData::VoxelResolution::Size_32cm, workspaceSize);
     }
     
     Vector3f workspaceSize;
-    std::unique_ptr<VoxelData::MultiResolutionVoxelGrid> multiResGrid;
-    VoxelData::VoxelGrid* grid;
+    std::unique_ptr<VoxelData::VoxelDataManager> dataManager;
+    std::unique_ptr<VoxelData::VoxelGrid> grid;
 };
 
 // Test basic collision between two voxels
@@ -92,11 +97,11 @@ TEST_F(VoxelCollisionTest, GetCollidingVoxels) {
     grid->setVoxel(IncrementCoordinates(16, 0, 0), true);
     grid->setVoxel(IncrementCoordinates(32, 0, 0), true);
     
-    // Check for collisions with a voxel that overlaps two existing voxels
+    // Check for collisions with a voxel that overlaps all three existing voxels
     auto colliding = VoxelCollision::getCollidingVoxels(
         IncrementCoordinates(8, 0, 0), VoxelData::VoxelResolution::Size_32cm, *grid);
     
-    EXPECT_EQ(colliding.size(), 2);  // Should collide with first two voxels
+    EXPECT_EQ(colliding.size(), 3);  // Should collide with all three voxels
 }
 
 // Test getting voxels in region
@@ -107,13 +112,13 @@ TEST_F(VoxelCollisionTest, GetVoxelsInRegion) {
     grid->setVoxel(IncrementCoordinates(64, 0, 0), true);
     grid->setVoxel(IncrementCoordinates(100, 0, 0), true);
     
-    // Create a search region
-    VoxelBounds region(WorldCoordinates(Vector3f(0.0f, 0.0f, 0.0f)), 1.0f);  // 1m cube
+    // Create a search region - VoxelBounds uses bottom-center position and size
+    VoxelBounds region(IncrementCoordinates(50, 0, 50), 1.0f);  // 1m cube centered at (0.5, 0.5, 0.5)
     
     auto voxelsInRegion = VoxelCollision::getVoxelsInRegion(region, *grid);
     
-    // Should find the first 3 voxels (0, 32, 64 cm positions)
-    EXPECT_EQ(voxelsInRegion.size(), 3);
+    // Should find all 4 voxels (0, 32, 64, 100 cm positions) - all are within the 100cm region
+    EXPECT_EQ(voxelsInRegion.size(), 4);
 }
 
 // Test finding nearest free position
@@ -219,11 +224,11 @@ TEST_F(VoxelCollisionTest, EdgeCases) {
         IncrementCoordinates(200, 0, 200), VoxelData::VoxelResolution::Size_512cm));
     
     // Empty grid operations
-    VoxelData::VoxelGrid emptyGrid(workspaceSize, VoxelData::VoxelResolution::Size_32cm);
+    VoxelData::VoxelGrid emptyGrid(VoxelData::VoxelResolution::Size_32cm, workspaceSize);
     EXPECT_FALSE(VoxelCollision::checkCollisionWithGrid(
         IncrementCoordinates(0, 0, 0), VoxelData::VoxelResolution::Size_32cm, emptyGrid));
     
     auto emptyRegionVoxels = VoxelCollision::getVoxelsInRegion(
-        VoxelBounds(WorldCoordinates(Vector3f(0, 0, 0)), 1.0f), emptyGrid);
+        VoxelBounds(IncrementCoordinates(50, 0, 50), 1.0f), emptyGrid);
     EXPECT_TRUE(emptyRegionVoxels.empty());
 }

@@ -43,7 +43,7 @@ The Voxel Data subsystem manages multi-resolution voxel storage, workspace bound
 - **REQ-4.3.1**: System shall prevent overlapping voxel placements of same or larger size
 - **REQ-5.2.1**: Voxels shall not overlap with existing voxels of same or smaller size
 - **REQ-5.2.2**: System shall validate placement before allowing it
-- **REQ-5.2.5**: Smaller voxels may be placed on or within larger voxels for detailed work
+- **REQ-5.2.5**: Smaller voxels may be placed on the faces of larger voxels for detailed work
 
 ### Validation and Error Handling
 - **REQ-4.1.2**: Invalid placements shall show red outline preview

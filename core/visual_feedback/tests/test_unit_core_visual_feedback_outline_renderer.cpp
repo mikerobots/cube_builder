@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/visual_feedback/OutlineRenderer.h"
+#include "../../../foundation/math/CoordinateConverter.h"
 
 using namespace VoxelEditor::VisualFeedback;
 using namespace VoxelEditor::Math;
@@ -104,10 +105,27 @@ TEST_F(OutlineRendererTest, VoxelOutlineGenerator) {
     // Should have 24 points (12 edges * 2 points each)
     EXPECT_EQ(edges.size(), 24);
     
-    // Test that edges form a valid cube
+    // Test that edges form a valid cube using proper coordinate conversion
     float voxelSize = getVoxelSize(resolution);
-    Vector3f expectedMin(position.x * voxelSize, position.y * voxelSize, position.z * voxelSize);
-    Vector3f expectedMax = expectedMin + Vector3f(voxelSize, voxelSize, voxelSize);
+    
+    // Convert increment coordinates to world coordinates using CoordinateConverter
+    VoxelEditor::Math::IncrementCoordinates incrementPos(position.x, position.y, position.z);
+    VoxelEditor::Math::WorldCoordinates worldPos = VoxelEditor::Math::CoordinateConverter::incrementToWorld(incrementPos);
+    Vector3f basePos = worldPos.value();
+    
+    // Calculate expected bounds with bottom-center positioning
+    // X and Z are centered, Y starts at bottom
+    Vector3f expectedMin(
+        basePos.x - voxelSize * 0.5f,
+        basePos.y,
+        basePos.z - voxelSize * 0.5f
+    );
+    
+    Vector3f expectedMax(
+        basePos.x + voxelSize * 0.5f,
+        basePos.y + voxelSize,
+        basePos.z + voxelSize * 0.5f
+    );
     
     // Check that all points are within the expected bounds
     for (const auto& point : edges) {

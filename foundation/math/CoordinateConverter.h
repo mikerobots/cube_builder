@@ -38,15 +38,38 @@ namespace VoxelEditor {
 namespace Math {
 
 /**
- * Simplified coordinate conversion system
- * Provides type-safe conversions between World and Increment coordinate systems
- * Both coordinate systems are centered at origin (0,0,0) with Y-up orientation
+ * Coordinate conversion system for the voxel editor
+ * 
+ * This class provides type-safe conversions between World and Increment coordinate systems.
+ * 
+ * Coordinate Systems:
+ * - World Coordinates: Positions in meters, centered at origin (0,0,0), Y-up orientation
+ * - Increment Coordinates: Positions in 1cm increments, centered at origin (0,0,0), Y-up
+ * 
+ * Key Properties:
+ * - Both coordinate systems are centered at the origin
+ * - Y=0 represents the ground plane (no voxels below Y=0)
+ * - Voxels are placed with their bottom face on the placement position
+ * - All positions snap to 1cm increment boundaries
+ * 
+ * Example usage:
+ * \code
+ * // Convert from world to increment
+ * WorldCoordinates worldPos(1.5f, 0.0f, -2.3f);
+ * IncrementCoordinates incPos = CoordinateConverter::worldToIncrement(worldPos);
+ * // Result: incPos = (150, 0, -230)
+ * 
+ * // Convert from increment to world
+ * IncrementCoordinates incPos2(100, 50, -75);
+ * WorldCoordinates worldPos2 = CoordinateConverter::incrementToWorld(incPos2);
+ * // Result: worldPos2 = (1.0f, 0.5f, -0.75f)
+ * \endcode
  */
 class CoordinateConverter {
 public:
-    // Constants
-    static constexpr float CM_TO_METERS = 0.01f;
-    static constexpr float METERS_TO_CM = 100.0f;
+    // Constants for unit conversion
+    static constexpr float CM_TO_METERS = 0.01f;   ///< Conversion factor: centimeters to meters
+    static constexpr float METERS_TO_CM = 100.0f;  ///< Conversion factor: meters to centimeters
 
     /**
      * Convert world coordinates to increment coordinates (1cm resolution)
@@ -127,8 +150,13 @@ public:
 
     /**
      * Get the voxel size in meters for a given rendering resolution
-     * @param resolution Voxel resolution for rendering
-     * @return Voxel size in meters
+     * @param resolution Voxel resolution enum value
+     * @return Voxel size in meters (e.g., 0.01f for 1cm, 0.32f for 32cm)
+     * 
+     * Example usage:
+     * \code
+     * float size = getVoxelSizeMeters(VoxelResolution::Size_32cm); // Returns 0.32f
+     * \endcode
      */
     static float getVoxelSizeMeters(VoxelEditor::VoxelData::VoxelResolution resolution) {
         return VoxelEditor::VoxelData::getVoxelSize(resolution);
@@ -136,8 +164,20 @@ public:
 
     /**
      * Get workspace bounds in increment coordinates
-     * @param workspaceSize Workspace dimensions in meters
-     * @return Min and max bounds in increment coordinates (centered)
+     * 
+     * Calculates the minimum and maximum bounds of the workspace in increment coordinates.
+     * The workspace is centered on the X and Z axes, with Y starting at 0 (ground plane).
+     * 
+     * @param workspaceSize Workspace dimensions in meters (width, height, depth)
+     * @return Pair of (min, max) bounds in increment coordinates
+     * 
+     * Example:
+     * \code
+     * Vector3f workspace(5.0f, 3.0f, 5.0f);  // 5m x 3m x 5m
+     * auto [min, max] = getWorkspaceBoundsIncrement(workspace);
+     * // min = (-250, 0, -250)    // Centered on X/Z, Y starts at 0
+     * // max = (250, 300, 250)    // Half-size on X/Z, full height on Y
+     * \endcode
      */
     static std::pair<IncrementCoordinates, IncrementCoordinates> getWorkspaceBoundsIncrement(
         const Vector3f& workspaceSize
@@ -154,8 +194,25 @@ public:
 
     /**
      * Snap world coordinates to the nearest increment grid position (1cm)
-     * @param worldCoord World coordinates to snap
+     * 
+     * This function rounds world coordinates to the nearest 1cm boundary.
+     * It's useful for ensuring positions align with the voxel placement grid.
+     * 
+     * @param worldCoord World coordinates to snap (in meters)
      * @return Snapped world coordinates aligned to 1cm increment grid
+     * 
+     * Rounding behavior:
+     * - Values round to nearest 1cm (0.01m)
+     * - 0.004m rounds down to 0.00m
+     * - 0.006m rounds up to 0.01m
+     * - Negative values follow standard rounding rules
+     * 
+     * Example:
+     * \code
+     * WorldCoordinates unaligned(1.234f, 2.567f, -0.891f);
+     * WorldCoordinates snapped = snapToIncrementGrid(unaligned);
+     * // Result: (1.23f, 2.57f, -0.89f)
+     * \endcode
      */
     static WorldCoordinates snapToIncrementGrid(const WorldCoordinates& worldCoord) {
         IncrementCoordinates increment = worldToIncrement(worldCoord);
@@ -164,49 +221,43 @@ public:
 
 
     /**
-     * Get the center increment coordinate for a voxel at given resolution
-     * @param incrementCoord Bottom-center coordinate of the voxel (placement position)
+     * Calculate the world-space center position of a voxel
+     * @param bottomCenterIncrement The bottom-center increment coordinate of the voxel
      * @param resolution Voxel resolution
-     * @return Center increment coordinate of the voxel
+     * @return World-space center position of the voxel (in meters)
      * 
-     * Note: This function is DEPRECATED and potentially confusing.
-     * Since increment coordinates already represent the bottom-center position of voxels,
-     * calculating the "center" would mean adding half the voxel height in Y.
+     * Note: Voxels are placed with their bottom face on the ground plane.
+     * This function calculates the true 3D center by adding half the voxel
+     * height in the Y direction.
      * 
-     * For voxels smaller than 2cm, the center cannot be exactly represented
-     * in integer increment coordinates. In these cases, the function returns the
-     * increment coordinate itself.
-     * 
-     * WARNING: The implementation incorrectly adds half voxel size in all dimensions,
-     * which would move the position from bottom-center to somewhere else entirely.
-     * This function should not be used for voxel positioning.
+     * Example usage:
+     * \code
+     * IncrementCoordinates voxelPos(0, 0, 0); // Voxel at origin
+     * WorldCoordinates center = getVoxelWorldCenter(voxelPos, VoxelResolution::Size_32cm);
+     * // center.y will be 0.16f (half of 32cm)
+     * \endcode
      */
-    static IncrementCoordinates getVoxelCenterIncrement(
-        const IncrementCoordinates& incrementCoord,
+    static WorldCoordinates getVoxelWorldCenter(
+        const IncrementCoordinates& bottomCenterIncrement,
         VoxelEditor::VoxelData::VoxelResolution resolution
     ) {
-        const Vector3i& increment = incrementCoord.value();
+        // Convert bottom-center to world coordinates
+        WorldCoordinates bottomCenterWorld = incrementToWorld(bottomCenterIncrement);
+        const Vector3f& bottomCenter = bottomCenterWorld.value();
+        
+        // Get voxel size in meters
         float voxelSize = getVoxelSizeMeters(resolution);
-        float voxelSize_cm = voxelSize * METERS_TO_CM;
+        float halfVoxelSize = voxelSize * 0.5f;
         
-        // For 1cm voxels, we can't represent the 0.5cm offset in integer coordinates
-        // So we just return the position unchanged
-        if (resolution == VoxelEditor::VoxelData::VoxelResolution::Size_1cm) {
-            return IncrementCoordinates(increment);
-        }
-        
-        // For larger voxels, calculate the center by adding half the voxel size
-        int voxelSize_cm_int = static_cast<int>(voxelSize_cm);
-        int halfVoxel_cm = voxelSize_cm_int / 2;
-        
-        // Simply add half voxel size to get center (no snapping)
-        Vector3i center(
-            increment.x + halfVoxel_cm,
-            increment.y + halfVoxel_cm,
-            increment.z + halfVoxel_cm
+        // Calculate true center by adding half voxel height in Y
+        // (voxels are placed with bottom face on ground)
+        Vector3f center(
+            bottomCenter.x,
+            bottomCenter.y + halfVoxelSize,  // Add half height to get center
+            bottomCenter.z
         );
         
-        return IncrementCoordinates(center);
+        return WorldCoordinates(center);
     }
 };
 

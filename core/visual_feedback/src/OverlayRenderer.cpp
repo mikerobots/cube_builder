@@ -216,11 +216,12 @@ void OverlayRenderer::renderRaycast(const Ray& ray, float length, const Renderin
                                    const Camera::Camera& camera) {
     if (!m_frameActive) return;
     
-    Math::Vector3f end = ray.origin.value() + ray.direction * length;
+    // Create a simple test ray that should definitely be visible
+    // For debugging: render a short diagonal line in world space near origin
+    Math::Vector3f start(-1.0f, 0.0f, -1.0f);  // Fixed position in world
+    Math::Vector3f end(1.0f, 0.0f, 1.0f);      // Fixed position in world
     
-    // Debug output removed - ray visualization working correctly
-    
-    addLine(ray.origin.value(), end, color);
+    addLine(start, end, color);
     flushLineBatch(camera);
 }
 
@@ -730,7 +731,8 @@ void OverlayRenderer::initializeLineRenderer() {
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    m_lineRenderer.depthTest = true;
+    // Keep overlay lines rendering on top (no depth test) as set in constructor
+    // m_lineRenderer.depthTest remains false from constructor
 }
 
 void OverlayRenderer::renderTextQuad(const std::string& text, const Math::Vector2f& position, 
@@ -948,6 +950,7 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
     // Our Matrix4f uses row-major order, but OpenGL expects column-major
     // So we need to transpose when uploading (GL_TRUE)
     glUniformMatrix4fv(mvpLoc, 1, GL_TRUE, mvpMatrix.data());
+    
     error = glGetError();
     if (error != GL_NO_ERROR) {
         std::cerr << "OverlayRenderer: GL error after setting uniforms: " << error << std::endl;
@@ -967,6 +970,7 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
         interleavedData.push_back(m_lineRenderer.colors[i].b);
         interleavedData.push_back(m_lineRenderer.colors[i].a);
     }
+    
     
     // Bind VAO (contains all vertex attribute setup)
     glBindVertexArray(m_lineRenderer.vertexArray);
@@ -1002,6 +1006,9 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
     // Enable blending for lines
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    // Set line width for better visibility
+    glLineWidth(3.0f);
     error = glGetError();
     if (error != GL_NO_ERROR) {
         std::cerr << "OverlayRenderer: GL error after setting blend state: " << error << std::endl;

@@ -127,7 +127,7 @@ Math::IncrementCoordinates FaceDetector::calculatePlacementPosition(const Face& 
     Math::Vector3i offset(0, 0, 0);
     
     // Calculate the voxel size in centimeters for proper offset
-    int voxelSize_cm = static_cast<int>(VoxelData::getVoxelSize(face.getResolution()) * 100.0f);
+    int voxelSize_cm = static_cast<int>(VoxelData::getVoxelSize(face.getResolution()) * Math::CoordinateConverter::METERS_TO_CM);
     
     switch (face.getDirection()) {
         case FaceDirection::PositiveX: offset.x = voxelSize_cm; break;
@@ -281,7 +281,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
             // not just the exact increment coordinate at the ray point
             
             // Calculate voxel size in centimeters
-            int voxelSizeCm = static_cast<int>(voxelSize * 100.0f); // 16cm for Size_16cm resolution
+            int voxelSizeCm = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM); // 16cm for Size_16cm resolution
             
             // Check voxel positions that could contain this world point
             // For 16cm voxels, check the voxel grid positions around this point
@@ -553,7 +553,7 @@ bool FaceDetector::rayIntersectsBox(const Ray& ray, const Math::BoundingBox& box
 void FaceDetector::initializeTraversal(const Ray& ray, const Math::WorldCoordinates& gridMin, 
                                       float voxelSize, VoxelData::VoxelResolution resolution, GridTraversal& traversal) const {
     // Calculate voxel size in centimeters for increment coordinate stepping
-    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
+    int voxelSizeCm = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
     
     // Convert ray origin to increment coordinates and snap to voxel grid boundaries
     Math::IncrementCoordinates rayIncrement = Math::CoordinateConverter::worldToIncrement(ray.origin);

@@ -207,56 +207,55 @@ TEST_F(CoordinateConverterTest, SnapToIncrementGrid_BasicSnapping) {
 // Removed: SnapToVoxelResolution tests - function removed per requirements change
 // Voxels can now be placed at any 1cm position without resolution-based snapping
 
-TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_1cmVoxels) {
-    // Test getting voxel center for 1cm voxels
-    // For 1cm voxels, we can't represent the 0.5cm offset in integer coordinates
-    // So the function should return the input position unchanged
+TEST_F(CoordinateConverterTest, GetVoxelWorldCenter_1cmVoxels) {
+    // Test getting voxel world center for 1cm voxels
+    // Voxels are placed with bottom face on ground plane
     IncrementCoordinates voxelPos(0, 0, 0);
-    IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center = CoordinateConverter::getVoxelWorldCenter(
         voxelPos, VoxelEditor::VoxelData::VoxelResolution::Size_1cm);
     
-    // For 1cm voxels, the function returns the position unchanged
-    EXPECT_EQ(center.x(), 0);
-    EXPECT_EQ(center.y(), 0);
-    EXPECT_EQ(center.z(), 0);
+    // For 1cm voxel at origin, center should be at Y=0.005m
+    EXPECT_FLOAT_EQ(center.x(), 0.0f);
+    EXPECT_FLOAT_EQ(center.y(), 0.005f);  // Half of 1cm
+    EXPECT_FLOAT_EQ(center.z(), 0.0f);
     
     // Test another position
     IncrementCoordinates voxelPos2(5, 10, -3);
-    IncrementCoordinates center2 = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center2 = CoordinateConverter::getVoxelWorldCenter(
         voxelPos2, VoxelEditor::VoxelData::VoxelResolution::Size_1cm);
     
-    // Should return unchanged
-    EXPECT_EQ(center2.x(), 5);
-    EXPECT_EQ(center2.y(), 10);
-    EXPECT_EQ(center2.z(), -3);
+    // Center should be offset by half voxel height
+    EXPECT_FLOAT_EQ(center2.x(), 0.05f);   // 5cm
+    EXPECT_FLOAT_EQ(center2.y(), 0.105f);  // 10cm + 0.5cm
+    EXPECT_FLOAT_EQ(center2.z(), -0.03f);  // -3cm
 }
 
-TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_4cmVoxels) {
-    // Test getting voxel center for 4cm voxels
-    // With no snapping, voxel position is the exact bottom-left-front corner
+TEST_F(CoordinateConverterTest, GetVoxelWorldCenter_4cmVoxels) {
+    // Test getting voxel world center for 4cm voxels
     IncrementCoordinates voxelPos(107, 215, -33);
-    IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center = CoordinateConverter::getVoxelWorldCenter(
         voxelPos, VoxelEditor::VoxelData::VoxelResolution::Size_4cm);
     
-    // 4cm voxels have 2cm centers
-    // For exact placement at (107,215,-33), center is at (107+2, 215+2, -33+2)
-    EXPECT_EQ(center.x(), 109);
-    EXPECT_EQ(center.y(), 217);
-    EXPECT_EQ(center.z(), -31);
+    // Center should be at bottom-center position + half voxel height in Y
+    // 107cm = 1.07m, 215cm = 2.15m, -33cm = -0.33m
+    // Y center = 2.15m + 0.02m (half of 4cm) = 2.17m
+    EXPECT_FLOAT_EQ(center.x(), 1.07f);
+    EXPECT_FLOAT_EQ(center.y(), 2.17f);   // 2.15 + 0.02
+    EXPECT_FLOAT_EQ(center.z(), -0.33f);
 }
 
-TEST_F(CoordinateConverterTest, GetVoxelCenterIncrement_16cmVoxels) {
-    // Test getting voxel center for 16cm voxels
-    // With no snapping, voxel position is the exact bottom-left-front corner
+TEST_F(CoordinateConverterTest, GetVoxelWorldCenter_16cmVoxels) {
+    // Test getting voxel world center for 16cm voxels
     IncrementCoordinates voxelPos(100, 200, -50);
-    IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center = CoordinateConverter::getVoxelWorldCenter(
         voxelPos, VoxelEditor::VoxelData::VoxelResolution::Size_16cm);
     
-    // 16cm voxels have 8cm centers
-    // For exact placement at (100,200,-50), center is at (100+8, 200+8, -50+8)
-    EXPECT_EQ(center.x(), 108);
-    EXPECT_EQ(center.y(), 208);
-    EXPECT_EQ(center.z(), -42);
+    // Center should be at bottom-center position + half voxel height in Y
+    // 100cm = 1.0m, 200cm = 2.0m, -50cm = -0.5m
+    // Y center = 2.0m + 0.08m (half of 16cm) = 2.08m
+    EXPECT_FLOAT_EQ(center.x(), 1.0f);
+    EXPECT_FLOAT_EQ(center.y(), 2.08f);   // 2.0 + 0.08
+    EXPECT_FLOAT_EQ(center.z(), -0.5f);
 }
 
 // ==================== Edge Cases and Error Conditions ====================
@@ -294,8 +293,7 @@ TEST_F(CoordinateConverterTest, LargeValues_NoOverflow) {
 }
 
 TEST_F(CoordinateConverterTest, AllResolutions_ConsistentCenterCalculation) {
-    // Test that all resolutions work consistently for center calculation
-    // With no snapping, voxels can be placed at any 1cm position
+    // Test that all resolutions work consistently for world center calculation
     IncrementCoordinates testIncrement(50, 100, -20);
     
     std::vector<VoxelEditor::VoxelData::VoxelResolution> resolutions = {
@@ -306,23 +304,16 @@ TEST_F(CoordinateConverterTest, AllResolutions_ConsistentCenterCalculation) {
     };
     
     for (auto res : resolutions) {
-        IncrementCoordinates center = CoordinateConverter::getVoxelCenterIncrement(testIncrement, res);
+        WorldCoordinates center = CoordinateConverter::getVoxelWorldCenter(testIncrement, res);
         
-        // Center should be calculated from the exact position (no snapping)
-        float voxelSize_cm = CoordinateConverter::getVoxelSizeMeters(res) * 100.0f;
-        int halfVoxel_cm = static_cast<int>(voxelSize_cm) / 2;
+        // Get expected center position
+        WorldCoordinates bottomCenter = CoordinateConverter::incrementToWorld(testIncrement);
+        float halfVoxelHeight = CoordinateConverter::getVoxelSizeMeters(res) * 0.5f;
         
-        if (res == VoxelEditor::VoxelData::VoxelResolution::Size_1cm) {
-            // For 1cm voxels, center is the same as the position
-            EXPECT_EQ(center.x(), testIncrement.x());
-            EXPECT_EQ(center.y(), testIncrement.y());
-            EXPECT_EQ(center.z(), testIncrement.z());
-        } else {
-            // For larger voxels, center is position + half voxel size
-            EXPECT_EQ(center.x(), testIncrement.x() + halfVoxel_cm);
-            EXPECT_EQ(center.y(), testIncrement.y() + halfVoxel_cm);
-            EXPECT_EQ(center.z(), testIncrement.z() + halfVoxel_cm);
-        }
+        // Center should be at bottom-center position + half voxel height in Y
+        EXPECT_FLOAT_EQ(center.x(), bottomCenter.x());
+        EXPECT_FLOAT_EQ(center.y(), bottomCenter.y() + halfVoxelHeight);
+        EXPECT_FLOAT_EQ(center.z(), bottomCenter.z());
     }
 }
 
@@ -430,30 +421,33 @@ TEST_F(CoordinateConverterTest, ArbitraryPositions_NoResolutionBasedConstraints)
 }
 
 TEST_F(CoordinateConverterTest, ArbitraryPositions_VoxelCenterCalculation) {
-    // Test that voxel center calculation works for arbitrary starting positions
-    // This tests the updated getVoxelCenterIncrement that doesn't snap
+    // Test that voxel world center calculation works for arbitrary starting positions
+    // Voxels are placed with bottom face on ground, center is at half height in Y
     
     // Test with positions that are NOT aligned to voxel boundaries
     IncrementCoordinates arbitraryPos(13, 27, -19); // Random 1cm position
     
     // Test different resolutions
-    IncrementCoordinates center2cm = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center2cm = CoordinateConverter::getVoxelWorldCenter(
         arbitraryPos, VoxelEditor::VoxelData::VoxelResolution::Size_2cm);
-    EXPECT_EQ(center2cm.x(), 14); // 13 + 1 (half of 2cm)
-    EXPECT_EQ(center2cm.y(), 28); // 27 + 1
-    EXPECT_EQ(center2cm.z(), -18); // -19 + 1
+    // Bottom center at (0.13, 0.27, -0.19)m, add half of 2cm (0.01m) in Y
+    EXPECT_FLOAT_EQ(center2cm.x(), 0.13f);
+    EXPECT_FLOAT_EQ(center2cm.y(), 0.28f);  // 0.27 + 0.01
+    EXPECT_FLOAT_EQ(center2cm.z(), -0.19f);
     
-    IncrementCoordinates center8cm = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center8cm = CoordinateConverter::getVoxelWorldCenter(
         arbitraryPos, VoxelEditor::VoxelData::VoxelResolution::Size_8cm);
-    EXPECT_EQ(center8cm.x(), 17); // 13 + 4 (half of 8cm)
-    EXPECT_EQ(center8cm.y(), 31); // 27 + 4
-    EXPECT_EQ(center8cm.z(), -15); // -19 + 4
+    // Bottom center at (0.13, 0.27, -0.19)m, add half of 8cm (0.04m) in Y
+    EXPECT_FLOAT_EQ(center8cm.x(), 0.13f);
+    EXPECT_FLOAT_EQ(center8cm.y(), 0.31f);  // 0.27 + 0.04
+    EXPECT_FLOAT_EQ(center8cm.z(), -0.19f);
     
-    IncrementCoordinates center32cm = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center32cm = CoordinateConverter::getVoxelWorldCenter(
         arbitraryPos, VoxelEditor::VoxelData::VoxelResolution::Size_32cm);
-    EXPECT_EQ(center32cm.x(), 29); // 13 + 16 (half of 32cm)
-    EXPECT_EQ(center32cm.y(), 43); // 27 + 16
-    EXPECT_EQ(center32cm.z(), -3); // -19 + 16
+    // Bottom center at (0.13, 0.27, -0.19)m, add half of 32cm (0.16m) in Y
+    EXPECT_FLOAT_EQ(center32cm.x(), 0.13f);
+    EXPECT_FLOAT_EQ(center32cm.y(), 0.43f);  // 0.27 + 0.16
+    EXPECT_FLOAT_EQ(center32cm.z(), -0.19f);
 }
 
 TEST_F(CoordinateConverterTest, ArbitraryPositions_SnapToIncrementGridOnly) {

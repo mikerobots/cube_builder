@@ -67,12 +67,9 @@ protected:
             float offset = i * gridSize;
             
             // Determine if this is a major grid line
-            // BUG: This logic fails due to floating-point precision errors
-            // When i=5, offset = 5 * 0.32 = 1.6, but fmod(1.6, 1.6) != 0 due to precision
-            bool isMajorLine = (std::abs(offset) < 0.001f) || 
-                              (std::abs(std::fmod(offset, majorGridInterval)) < 0.001f);
-            
-            // CORRECT IMPLEMENTATION would be: bool isMajorLine = (i % 5) == 0;
+            // Fixed: Use integer modulo instead of floating-point to avoid precision errors
+            // Major grid lines occur every 5 grid squares (160cm / 32cm = 5)
+            bool isMajorLine = (i % 5) == 0;
             
             // Calculate distance to cursor for dynamic opacity
             float distanceToX = enableDynamicOpacity ? 
@@ -196,17 +193,14 @@ TEST_F(GroundPlaneGeometryTest, MajorGridLines160cm) {
     EXPECT_NEAR(centerLineColor.g, 200.0f/255.0f, 0.001f);
     EXPECT_NEAR(centerLineColor.b, 200.0f/255.0f, 0.001f);
     
-    // BUG: Lines at ±1.60, ±3.20, ±4.80 should be major but aren't
-    // This is due to floating-point precision errors in the modulo calculation
-    // The implementation uses: fmod(i * 0.32, 1.60) < 0.001
-    // But when i=5, offset = 5 * 0.32 = 1.6, and fmod(1.6, 1.6) != 0 due to precision
+    // Lines at ±1.60, ±3.20, ±4.80 should be major
+    // Fixed: Now using integer modulo to avoid floating-point precision issues
     
-    // Test reveals the bug: line at 1.60 is not marked as major
+    // Test that line at 1.60 is marked as major
     Color majorLineColor = getLineColorAt(1.60f, true);
     
-    // This test SHOULD pass but currently fails, revealing the bug
-    EXPECT_NEAR(majorLineColor.r, 200.0f/255.0f, 0.001f) 
-        << "BUG: Major grid line at 1.60m not detected due to floating-point precision";
+    // This test should now pass
+    EXPECT_NEAR(majorLineColor.r, 200.0f/255.0f, 0.001f);
     EXPECT_NEAR(majorLineColor.g, 200.0f/255.0f, 0.001f);
     EXPECT_NEAR(majorLineColor.b, 200.0f/255.0f, 0.001f);
     

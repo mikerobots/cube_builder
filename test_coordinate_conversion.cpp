@@ -24,10 +24,10 @@ int main() {
     // When converted back: 4 * 32cm = 128cm = 1.28m (not 1.5m!)
     
     float worldPos = 1.5f;
-    float cm = worldPos * 100.0f;  // 150cm
+    float cm = worldPos * CoordinateConverter::METERS_TO_CM;  // 150cm
     float increments = cm / 32.0f;  // 4.6875
     int roundedInc = static_cast<int>(increments);  // 4
-    float backToWorld = (roundedInc * 32.0f) / 100.0f;  // 1.28m
+    float backToWorld = (roundedInc * 32.0f) * CoordinateConverter::CM_TO_METERS;  // 1.28m
     
     std::cout << "\nDetailed calculation:\n";
     std::cout << "World: " << worldPos << "m\n";

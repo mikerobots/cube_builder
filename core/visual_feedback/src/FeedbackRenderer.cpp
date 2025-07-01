@@ -18,6 +18,9 @@ FeedbackRenderer::FeedbackRenderer(Rendering::RenderEngine* renderEngine)
     , m_animationSpeed(1.0f)
     , m_renderOrder(1000)
     , m_previewResolution(VoxelData::VoxelResolution::Size_32cm)
+    , m_pendingGridRender(false)
+    , m_gridExtent(0.0f)
+    , m_gridDynamicOpacity(false)
     , m_memoryUsed(0)
     , m_memoryTotal(0) {
     
@@ -178,9 +181,12 @@ void FeedbackRenderer::renderGroundPlaneGridEnhanced(const Math::Vector3f& cente
                                                     const Math::Vector3f& cursorPos, bool enableDynamicOpacity) {
     if (!m_enabled || !m_workspaceVisualizationEnabled) return;
     
-    // This would be rendered during the overlay pass
-    // The actual implementation is in OverlayRenderer::renderGroundPlaneGrid
-    // m_overlay->renderGroundPlaneGrid(center, extent, cursorPos, enableDynamicOpacity, camera);
+    // Store grid parameters for rendering during the overlay pass
+    m_pendingGridRender = true;
+    m_gridCenter = center;
+    m_gridExtent = extent;
+    m_gridCursorPos = cursorPos;
+    m_gridDynamicOpacity = enableDynamicOpacity;
 }
 
 void FeedbackRenderer::renderPerformanceMetrics(const RenderStats& stats) {
@@ -258,9 +264,16 @@ void FeedbackRenderer::setDebugRay(const Ray& ray, bool enabled) {
 }
 
 void FeedbackRenderer::renderOverlays(const Camera::Camera& camera, const Rendering::RenderContext& context) {
+    // Render ground plane grid if pending
+    if (m_pendingGridRender && m_workspaceVisualizationEnabled) {
+        m_overlay->renderGroundPlaneGrid(m_gridCenter, m_gridExtent, m_gridCursorPos, m_gridDynamicOpacity, camera);
+        m_pendingGridRender = false; // Clear after rendering
+    }
+    
     // Render debug ray if enabled
     if (m_debugRayEnabled) {
-        m_overlay->renderRaycast(m_debugRay, 100.0f, Rendering::Color(1.0f, 1.0f, 0.0f, 1.0f), camera);
+        // Make ray shorter and brighter for better visibility
+        m_overlay->renderRaycast(m_debugRay, 10.0f, Rendering::Color(1.0f, 1.0f, 0.0f, 1.0f), camera);
     }
     
     if (m_workspaceVisualizationEnabled) {

@@ -544,7 +544,7 @@ public:
         
         // Get the size of the source voxel in increments (1cm units)
         float sourceVoxelSizeMeters = getVoxelSize(sourceRes);
-        int offsetIncrements = static_cast<int>(sourceVoxelSizeMeters * 100.0f); // Convert meters to cm
+        int offsetIncrements = static_cast<int>(sourceVoxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM); // Convert meters to cm
         
         Math::IncrementCoordinates offset(0, 0, 0);
         switch (face) {
@@ -901,24 +901,35 @@ private:
                 bool overlaps = overlapsX && overlapsY && overlapsZ;
                 
                 if (overlaps) {
-                    // Check if we should allow this overlap
-                    // Allow smaller voxels to be placed on/within larger voxels
+                    // Check if this is an exact position match (same increment coordinates)
+                    if (pos.x() == voxelPos.incrementPos.x() && 
+                        pos.y() == voxelPos.incrementPos.y() && 
+                        pos.z() == voxelPos.incrementPos.z()) {
+                        // Same position should always overlap, regardless of size
+                        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                            "Overlap detected: exact position match at (%d,%d,%d)",
+                            pos.x(), pos.y(), pos.z());
+                        return true; // Would overlap
+                    }
+                    
+                    // Check if we should allow this overlap for detailed work
+                    // Allow smaller voxels to be placed on/within larger voxels when not at exact same position
                     float existingVoxelSize = getVoxelSize(checkRes);
                     
                     // If the new voxel is smaller than the existing voxel, allow the placement
                     if (voxelSize < existingVoxelSize) {
                         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
                             "Allowing smaller voxel (%dcm) to be placed on/within larger voxel (%dcm)",
-                            static_cast<int>(voxelSize * 100), static_cast<int>(existingVoxelSize * 100));
+                            static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM), static_cast<int>(existingVoxelSize * Math::CoordinateConverter::METERS_TO_CM));
                         continue; // Skip this overlap check, allow placement
                     }
                     
                     // Otherwise, prevent the overlap (same size or larger voxel trying to overlap)
                     Logging::Logger::getInstance().debugfc("VoxelDataManager", 
                         "Overlap detected: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d) size %dcm",
-                        pos.x(), pos.y(), pos.z(), static_cast<int>(voxelSize * 100),
+                        pos.x(), pos.y(), pos.z(), static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM),
                         voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
-                        static_cast<int>(existingVoxelSize * 100));
+                        static_cast<int>(existingVoxelSize * Math::CoordinateConverter::METERS_TO_CM));
                     return true; // Would overlap
                 }
             }
@@ -943,7 +954,7 @@ private:
         
         // Get voxel size for alignment
         float voxelSizeMeters = getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM);
         
         // Align bounds to voxel grid
         int alignedMinX = (minInc.x() / voxelSizeIncrements) * voxelSizeIncrements;
@@ -1038,7 +1049,7 @@ private:
         
         // Get voxel size for alignment
         float voxelSizeMeters = getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f);
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM);
         
         // Quick boundary checks
         if (minInc.y() < 0) return false;  // Below ground

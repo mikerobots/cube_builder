@@ -28,9 +28,10 @@ bool VoxelCollision::boundsOverlap(const VoxelBounds& bounds1, const VoxelBounds
     
     // Check for separation along each axis
     // If separated along any axis, they don't overlap
-    return !(max1.x < min2.x || min1.x > max2.x ||
-             max1.y < min2.y || min1.y > max2.y ||
-             max1.z < min2.z || min1.z > max2.z);
+    // Use <= and >= to consider touching voxels as NOT overlapping
+    return !(max1.x <= min2.x || min1.x >= max2.x ||
+             max1.y <= min2.y || min1.y >= max2.y ||
+             max1.z <= min2.z || min1.z >= max2.z);
 }
 
 bool VoxelCollision::checkCollisionWithGrid(const IncrementCoordinates& pos,

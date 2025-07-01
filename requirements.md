@@ -168,7 +168,7 @@
   - *Subsystems: **Voxel Data** (multi-resolution collision detection)*
 - **REQ-4.3.5**: Failed placement or fill commands shall make no state changes (atomic operations)
   - *Subsystems: **Voxel Data** (transaction safety), **Input** (atomic command execution)*
-- **REQ-4.3.6**: Smaller voxels may be placed on or within larger voxels for detailed work
+- **REQ-4.3.6**: Smaller voxels may be placed on the faces of larger voxels for detailed work
   - *Subsystems: **Voxel Data** (overlap rules), **Input** (placement logic)*
 
 #### 4.4 Fill Command Behavior

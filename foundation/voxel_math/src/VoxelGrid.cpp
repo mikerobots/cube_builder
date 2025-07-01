@@ -28,22 +28,30 @@ IncrementCoordinates VoxelGrid::snapToVoxelGrid(const IncrementCoordinates& incr
     int voxelSizeCm = getVoxelSizeCm(resolution);
     const Vector3i& pos = increment.value();
     
-    // Snap each component to the nearest voxel grid position
-    // Use integer division and multiplication to snap to grid
+    // Snap X and Z to floor (snap down for positive, towards -infinity for negative)
     int snappedX = (pos.x / voxelSizeCm) * voxelSizeCm;
-    int snappedY = (pos.y / voxelSizeCm) * voxelSizeCm;
     int snappedZ = (pos.z / voxelSizeCm) * voxelSizeCm;
     
-    // Handle negative coordinates correctly
-    // When position is negative and not aligned, we need to subtract one more voxel size
+    // Handle negative X and Z coordinates correctly
     if (pos.x < 0 && pos.x % voxelSizeCm != 0) {
         snappedX -= voxelSizeCm;
     }
-    if (pos.y < 0 && pos.y % voxelSizeCm != 0) {
-        snappedY -= voxelSizeCm;
-    }
     if (pos.z < 0 && pos.z % voxelSizeCm != 0) {
         snappedZ -= voxelSizeCm;
+    }
+    
+    // For Y-axis: Always round UP to ensure voxels stay above ground
+    // This is because voxels are positioned with their bottom at the Y coordinate
+    int snappedY;
+    if (pos.y >= 0) {
+        // For positive Y, round up if not already aligned
+        snappedY = ((pos.y + voxelSizeCm - 1) / voxelSizeCm) * voxelSizeCm;
+    } else {
+        // For negative Y, still use floor division
+        snappedY = (pos.y / voxelSizeCm) * voxelSizeCm;
+        if (pos.y < 0 && pos.y % voxelSizeCm != 0) {
+            snappedY -= voxelSizeCm;
+        }
     }
     
     return IncrementCoordinates(snappedX, snappedY, snappedZ);

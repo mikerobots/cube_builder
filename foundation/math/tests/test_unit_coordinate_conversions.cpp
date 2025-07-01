@@ -221,25 +221,30 @@ TEST_F(CoordinateConversionsTest, SnapToIncrementGrid) {
 
 // Test voxel center calculation
 TEST_F(CoordinateConversionsTest, VoxelCenterCalculation) {
-    // For 1cm voxels, center can't be represented in integer coordinates
+    // Test world-space center calculation for voxels
+    // Voxels are placed with their bottom face on the ground plane
+    
+    // For 1cm voxel at origin, center should be at Y=0.005m (half of 1cm)
     IncrementCoordinates pos1cm(0, 0, 0);
-    IncrementCoordinates center1cm = CoordinateConverter::getVoxelCenterIncrement(
+    WorldCoordinates center1cm = CoordinateConverter::getVoxelWorldCenter(
         pos1cm, VoxelResolution::Size_1cm);
-    EXPECT_EQ(center1cm, pos1cm) << "1cm voxel center should be same as position";
+    EXPECT_FLOAT_EQ(center1cm.x(), 0.0f);
+    EXPECT_FLOAT_EQ(center1cm.y(), 0.005f);  // Half of 1cm = 0.005m
+    EXPECT_FLOAT_EQ(center1cm.z(), 0.0f);
     
-    // For 2cm voxels, center is +1cm in each direction
-    IncrementCoordinates pos2cm(0, 0, 0);
-    IncrementCoordinates center2cm = CoordinateConverter::getVoxelCenterIncrement(
-        pos2cm, VoxelResolution::Size_2cm);
-    EXPECT_EQ(center2cm.x(), 1);
-    EXPECT_EQ(center2cm.y(), 1);
-    EXPECT_EQ(center2cm.z(), 1);
+    // For 32cm voxel at origin, center should be at Y=0.16m (half of 32cm)
+    IncrementCoordinates pos32cm(0, 0, 0);
+    WorldCoordinates center32cm = CoordinateConverter::getVoxelWorldCenter(
+        pos32cm, VoxelResolution::Size_32cm);
+    EXPECT_FLOAT_EQ(center32cm.x(), 0.0f);
+    EXPECT_FLOAT_EQ(center32cm.y(), 0.16f);  // Half of 32cm = 0.16m
+    EXPECT_FLOAT_EQ(center32cm.z(), 0.0f);
     
-    // For 4cm voxels, center is +2cm in each direction
-    IncrementCoordinates pos4cm(10, 20, 30);
-    IncrementCoordinates center4cm = CoordinateConverter::getVoxelCenterIncrement(
-        pos4cm, VoxelResolution::Size_4cm);
-    EXPECT_EQ(center4cm.x(), 12);
-    EXPECT_EQ(center4cm.y(), 22);
-    EXPECT_EQ(center4cm.z(), 32);
+    // For 64cm voxel at position (100, 50, -200), center calculation
+    IncrementCoordinates pos64cm(100, 50, -200);
+    WorldCoordinates center64cm = CoordinateConverter::getVoxelWorldCenter(
+        pos64cm, VoxelResolution::Size_64cm);
+    EXPECT_FLOAT_EQ(center64cm.x(), 1.0f);   // 100cm = 1m
+    EXPECT_FLOAT_EQ(center64cm.y(), 0.82f);  // 50cm + 32cm (half of 64cm) = 0.82m
+    EXPECT_FLOAT_EQ(center64cm.z(), -2.0f);  // -200cm = -2m
 }

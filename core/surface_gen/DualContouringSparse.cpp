@@ -1,5 +1,6 @@
 #include "DualContouringSparse.h"
 #include "../../foundation/logging/Logger.h"
+#include "../../foundation/math/CoordinateConverter.h"
 #include <algorithm>
 #include <vector>
 #include <future>
@@ -72,7 +73,7 @@ std::unordered_set<uint64_t> DualContouringSparse::buildActiveCellSet(
         
         // Get voxel size for this specific voxel
         float voxelSizeMeters = VoxelData::getVoxelSize(voxel.resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * 100.0f); // Convert to increments (cm)
+        int voxelSizeIncrements = static_cast<int>(voxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM); // Convert to increments (cm)
         
         if (voxelCount < 3) {
             logger.debugfc("DualContouringSparse", "Voxel %d at increment pos (%d,%d,%d), size %d increments",
@@ -96,9 +97,9 @@ std::unordered_set<uint64_t> DualContouringSparse::buildActiveCellSet(
         // A voxel affects cells in a range around its position
         
         // Calculate workspace bounds in increment coordinates
-        Math::Vector3f workspaceSize = Math::Vector3f(dims.x * 0.01f, dims.y * 0.01f, dims.z * 0.01f);
-        int halfX_cm = static_cast<int>(workspaceSize.x * 100.0f / 2.0f);
-        int halfZ_cm = static_cast<int>(workspaceSize.z * 100.0f / 2.0f);
+        Math::Vector3f workspaceSize = Math::Vector3f(dims.x * Math::CoordinateConverter::CM_TO_METERS, dims.y * Math::CoordinateConverter::CM_TO_METERS, dims.z * Math::CoordinateConverter::CM_TO_METERS);
+        int halfX_cm = static_cast<int>(workspaceSize.x * Math::CoordinateConverter::METERS_TO_CM / 2.0f);
+        int halfZ_cm = static_cast<int>(workspaceSize.z * Math::CoordinateConverter::METERS_TO_CM / 2.0f);
         
         int minX = std::max(-halfX_cm, voxelPos.x - voxelSizeIncrements);
         int minY = std::max(0, voxelPos.y - voxelSizeIncrements);

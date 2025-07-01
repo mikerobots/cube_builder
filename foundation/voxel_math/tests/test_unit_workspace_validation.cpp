@@ -104,15 +104,16 @@ TEST_F(WorkspaceValidationTest, VoxelFitsInBounds) {
         VoxelData::VoxelResolution::Size_32cm, 
         defaultBounds));
     
-    // Test large voxel (512cm) - should not fit at edges
-    EXPECT_TRUE(WorkspaceValidation::voxelFitsInBounds(
+    // Test large voxel (512cm = 5.12m) - cannot fit in 5m workspace
+    EXPECT_FALSE(WorkspaceValidation::voxelFitsInBounds(
         IncrementCoordinates(0, 0, 0), 
         VoxelData::VoxelResolution::Size_512cm, 
         defaultBounds));
     
-    EXPECT_FALSE(WorkspaceValidation::voxelFitsInBounds(
-        IncrementCoordinates(100, 0, 0),  // Would extend past bounds
-        VoxelData::VoxelResolution::Size_512cm, 
+    // Test 256cm voxel (2.56m) - should fit at origin
+    EXPECT_TRUE(WorkspaceValidation::voxelFitsInBounds(
+        IncrementCoordinates(0, 0, 0), 
+        VoxelData::VoxelResolution::Size_256cm, 
         defaultBounds));
 }
 
@@ -167,10 +168,10 @@ TEST_F(WorkspaceValidationTest, GroundPlaneOperations) {
 
 // Test maximum fitting voxel size
 TEST_F(WorkspaceValidationTest, GetMaxFittingVoxelSize) {
-    // At origin, largest voxel should fit
+    // At origin, largest voxel that fits is 256cm (2.56m < 5m workspace)
     auto maxSize = WorkspaceValidation::getMaxFittingVoxelSize(IncrementCoordinates(0, 0, 0), defaultBounds);
     EXPECT_TRUE(maxSize.has_value());
-    EXPECT_EQ(maxSize.value(), VoxelData::VoxelResolution::Size_512cm);
+    EXPECT_EQ(maxSize.value(), VoxelData::VoxelResolution::Size_256cm);
     
     // Near edge, only smaller voxels fit
     auto edgeSize = WorkspaceValidation::getMaxFittingVoxelSize(IncrementCoordinates(240, 0, 0), defaultBounds);

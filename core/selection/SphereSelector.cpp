@@ -54,7 +54,7 @@ SelectionSet SphereSelector::selectFromSphere(const Math::Vector3f& center,
     );
     
     // Get the voxel size in centimeters for stepping
-    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
+    int voxelSizeCm = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
     
     // Use direct coordinates without snapping to allow any 1cm position
     Math::Vector3i minAligned = minIncrement.value();
@@ -179,7 +179,7 @@ SelectionSet SphereSelector::selectEllipsoid(const Math::Vector3f& center,
     );
     
     // Get the voxel size in centimeters for expanding search
-    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
+    int voxelSizeCm = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
     
     // Use direct coordinates without snapping to allow any 1cm position
     Math::Vector3i minAligned = minIncrement.value();
@@ -257,7 +257,7 @@ SelectionSet SphereSelector::selectHemisphere(const Math::Vector3f& center,
     );
     
     // Get the voxel size in centimeters for expanding search
-    int voxelSizeCm = static_cast<int>(voxelSize * 100.0f);
+    int voxelSizeCm = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
     
     // Use direct coordinates without snapping to allow any 1cm position
     Math::Vector3i minAligned = minIncrement.value();

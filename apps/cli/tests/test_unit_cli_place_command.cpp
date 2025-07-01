@@ -6,6 +6,7 @@
 #include "voxel_data/VoxelTypes.h"
 #include "undo_redo/PlacementCommands.h"
 #include "foundation/math/CoordinateTypes.h"
+#include "foundation/math/CoordinateConverter.h"
 #include <sstream>
 #include <memory>
 
@@ -244,7 +245,7 @@ TEST_F(PlaceCommandTest, AllResolutions_LargeVoxelWorkspaceLimits_REQ_11_3_5) {
         }
         
         // Test ground plane constraint for large voxels too
-        Math::IncrementCoordinates belowGround(0, -static_cast<int>(voxelSize * 100), 0);
+        Math::IncrementCoordinates belowGround(0, -static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM), 0);
         auto belowValidation = UndoRedo::PlacementCommandFactory::validatePlacement(
             voxelManager.get(), belowGround, resolution);
         

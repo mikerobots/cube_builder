@@ -42,9 +42,9 @@ TEST_F(Debug192cmTest, Debug192cmPlacement) {
     std::cout << "Default workspace size: " << workspaceSize.x << "x" << workspaceSize.y << "x" << workspaceSize.z << " meters" << std::endl;
     
     // Calculate bounds just like PlacementValidation.cpp does
-    int halfX_cm = static_cast<int>(workspaceSize.x * 100.0f * 0.5f);
-    int halfZ_cm = static_cast<int>(workspaceSize.z * 100.0f * 0.5f);
-    int height_cm = static_cast<int>(workspaceSize.y * 100.0f);
+    int halfX_cm = static_cast<int>(workspaceSize.x * Math::CoordinateConverter::METERS_TO_CM * 0.5f);
+    int halfZ_cm = static_cast<int>(workspaceSize.z * Math::CoordinateConverter::METERS_TO_CM * 0.5f);
+    int height_cm = static_cast<int>(workspaceSize.y * Math::CoordinateConverter::METERS_TO_CM);
     
     std::cout << "Calculated bounds:" << std::endl;
     std::cout << "  X: -" << halfX_cm << " to +" << halfX_cm << " cm" << std::endl;
@@ -81,7 +81,7 @@ TEST_F(Debug192cmTest, Debug192cmPlacement) {
     
     // Manual bounds check calculation to verify the logic
     float voxelSize = VoxelData::getVoxelSize(resolution);
-    int voxelSize_cm = static_cast<int>(voxelSize * 100.0f);
+    int voxelSize_cm = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
     
     std::cout << "\nManual bounds check for position (192, 0, 0):" << std::endl;
     std::cout << "  Voxel size: " << voxelSize_cm << " cm" << std::endl;

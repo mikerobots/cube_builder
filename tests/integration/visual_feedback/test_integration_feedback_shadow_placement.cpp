@@ -23,6 +23,7 @@
 #include "math/Ray.h"
 #include "math/Vector3f.h"
 #include "math/Matrix4f.h"
+#include "math/CoordinateConverter.h"
 #include "events/EventDispatcher.h"
 #include "logging/Logger.h"
 
@@ -418,7 +419,7 @@ TEST_F(ShadowPlacementTest, PreviewWithDifferentVoxelSizes) {
             << "Preview resolution should match active resolution";
             
         // Expected Y position should be voxel size in cm
-        int expectedY = static_cast<int>(VoxelData::getVoxelSize(resolution) * 100.0f);
+        int expectedY = static_cast<int>(VoxelData::getVoxelSize(resolution) * Math::CoordinateConverter::METERS_TO_CM);
         Math::Vector3i pos = previewManager->getPreviewPosition();
         EXPECT_EQ(pos.y, expectedY) 
             << "Preview Y position incorrect for resolution " 
@@ -426,7 +427,7 @@ TEST_F(ShadowPlacementTest, PreviewWithDifferentVoxelSizes) {
             
         logger().debugfc("ShadowTest",
             "Resolution %dcm - Preview at (%d, %d, %d)",
-            static_cast<int>(VoxelData::getVoxelSize(resolution) * 100.0f),
+            static_cast<int>(VoxelData::getVoxelSize(resolution) * Math::CoordinateConverter::METERS_TO_CM),
             pos.x, pos.y, pos.z);
     }
 }

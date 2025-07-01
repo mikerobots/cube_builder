@@ -102,52 +102,70 @@ print_result() {
     TEST_RESULTS+=("$test_name|$status|$duration")
 }
 
+# Function to build all unit tests that need to be run
+build_unit_tests() {
+    local subsystem_filter=$1  # Optional: specific subsystem (e.g., "core", "foundation")
+    
+    print_color "$CYAN" "Building unit tests..."
+    
+    # Check if build_ninja directory exists
+    if [ ! -d "build_ninja" ]; then
+        print_color "$RED" "Error: build_ninja directory not found"
+        return 1
+    fi
+    
+    # Collect all unit test targets that need to be built
+    local test_targets=()
+    
+    # Find all unit test source files and extract target names
+    while IFS= read -r test_source; do
+        local test_name=$(basename "$test_source" .cpp)
+        
+        # Apply subsystem filter if specified
+        if [ -n "$subsystem_filter" ] && [ "$subsystem_filter" != "all" ]; then
+            local test_subsystem=$(get_test_subsystem "$test_name")
+            if [[ "$test_subsystem" != "$subsystem_filter" ]]; then
+                continue
+            fi
+        fi
+        
+        test_targets+=("$test_name")
+    done < <(discover_test_sources)
+    
+    if [ ${#test_targets[@]} -eq 0 ]; then
+        print_color "$YELLOW" "No unit test targets found to build"
+        return 0
+    fi
+    
+    print_color "$CYAN" "Building ${#test_targets[@]} unit test targets..."
+    
+    # Build all unit test targets in one cmake command for efficiency
+    local build_start_time=$(date +%s)
+    if cmake --build build_ninja --target "${test_targets[@]}" > "/tmp/unit_tests_build.log" 2>&1; then
+        local build_end_time=$(date +%s)
+        local build_duration=$((build_end_time - build_start_time))
+        print_color "$GREEN" "Successfully built all unit tests (${build_duration}s)"
+        return 0
+    else
+        local build_end_time=$(date +%s)
+        local build_duration=$((build_end_time - build_start_time))
+        print_color "$RED" "Failed to build some unit tests (${build_duration}s)"
+        echo "Build error output:"
+        tail -n 20 "/tmp/unit_tests_build.log" | sed 's/^/  /'
+        echo "Full build log saved to: /tmp/unit_tests_build.log"
+        return 1
+    fi
+}
+
 # Function to run a unit test executable
 run_unit_test() {
     local test_executable=$1
     local test_name=$(basename "$test_executable")
     
-    # If the test binary doesn't exist, try to build it (only for unit tests)
-    if [ ! -f "$test_executable" ] && [[ "$test_name" == test_unit_* ]]; then
-        print_color "$CYAN" "  Building missing test: $test_name"
-        
-        # Check if build_ninja directory exists
-        if [ ! -d "build_ninja" ]; then
-            print_color "$RED" "  Error: build_ninja directory not found"
-            print_result "$test_name" "FAIL" "0"
-            echo "  Build failure: build directory missing"
-            return
-        fi
-        
-        # Try to build the specific test target
-        local build_start_time=$(date +%s)
-        if cmake --build build_ninja --target "$test_name" > "/tmp/${test_name}_build.log" 2>&1; then
-            print_color "$GREEN" "  Successfully built $test_name"
-        else
-            local build_end_time=$(date +%s)
-            local build_duration=$((build_end_time - build_start_time))
-            print_color "$RED" "  Failed to build $test_name"
-            print_result "$test_name" "FAIL" "$build_duration"
-            echo "  Build error output:"
-            tail -n 20 "/tmp/${test_name}_build.log" | sed 's/^/    /'
-            echo "  Full build log saved to: /tmp/${test_name}_build.log"
-            return
-        fi
-        
-        # Check again if the executable was created
-        if [ ! -f "$test_executable" ]; then
-            local build_end_time=$(date +%s)
-            local build_duration=$((build_end_time - build_start_time))
-            print_color "$RED" "  Build succeeded but executable not found: $test_executable"
-            print_result "$test_name" "FAIL" "$build_duration"
-            echo "  Build failure: executable not created"
-            return
-        fi
-    fi
-    
-    # If still no executable (non-unit test), skip
+    # If no executable exists, skip (build should have happened earlier)
     if [ ! -f "$test_executable" ]; then
         print_result "$test_name" "SKIP" "0"
+        echo "  Executable not found: $test_executable"
         return
     fi
     
@@ -263,6 +281,13 @@ discover_subsystems() {
 run_subsystem_tests() {
     local subsystem=$1
     print_header "$(echo "$subsystem" | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}') Unit Tests"
+    
+    # Build unit tests for this subsystem first
+    if ! build_unit_tests "$subsystem"; then
+        print_color "$RED" "Build failed for subsystem: $subsystem. Stopping test execution."
+        return 1
+    fi
+    echo
     
     local found_tests=false
     while IFS= read -r test_path; do
@@ -391,7 +416,12 @@ main() {
                     echo
                 fi
                 
-                # Unit tests will be built on-demand when run
+                # Build all unit tests first to ensure they're up-to-date
+                if ! build_unit_tests "all"; then
+                    print_color "$RED" "Build failed. Stopping test execution."
+                    exit 1
+                fi
+                echo
                 
                 while IFS= read -r test_path; do
                     run_unit_test "$test_path"
@@ -400,7 +430,6 @@ main() {
             *)
                 # Try to run as a subsystem
                 if discover_subsystems | grep -q "^${group}$"; then
-                    # Unit tests will be built on-demand when run
                     run_subsystem_tests "$group"
                 else
                     print_color "$RED" "Unknown subsystem: $group"

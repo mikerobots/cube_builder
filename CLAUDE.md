@@ -20,7 +20,6 @@ This is a **multi-platform voxel editor** with a sophisticated 3-layer architect
 **IMPORTANT**: For development and debugging, use Debug builds to maximize compile speed and debuggability. Only use Release/RelWithDebInfo for final performance testing.
 
 ```bash
-# Debug Build (RECOMMENDED FOR DEVELOPMENT)
 # Fastest compilation, best debugging experience, no optimizations
 cmake -B build_debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
 cmake --build build_debug
@@ -221,7 +220,7 @@ they were written for not 0,0 being the center, and we will most
 likely need to rewrite for the current coordinate system where 0,0 is
 the center.
 
-If you are updating requirements documents, don't change the IDs!!!
+If you are updating requirements documents, don't change the IDs!
 
 If you are in charge of making a test work, that most likely means the
 underlying code is broken, not the test. Sometimes it can be the
@@ -234,3 +233,5 @@ THAT IS SUBPAR OR DOESN'T MAKE SENSE!
 
 DON'T ADD SKIPS TO FIX TESTS!!!
 We are in the process of fixing integration tests. DON'T RUN THE CLI!
+
+If I have told you to work on the TODO.md list. Don't request feedback until all items on the list are done! Keep working on the list!

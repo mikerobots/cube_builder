@@ -160,17 +160,17 @@ TEST_F(VoxelGridTest, VoxelSizeGetters) {
 TEST_F(VoxelGridTest, FaceDirectionOffset) {
     int voxelSize = 16;  // 16cm
     
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PositiveX, voxelSize), 
+    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PosX, voxelSize), 
               Vector3i(16, 0, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegativeX, voxelSize), 
+    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegX, voxelSize), 
               Vector3i(-16, 0, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PositiveY, voxelSize), 
+    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PosY, voxelSize), 
               Vector3i(0, 16, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegativeY, voxelSize), 
+    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegY, voxelSize), 
               Vector3i(0, -16, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PositiveZ, voxelSize), 
+    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PosZ, voxelSize), 
               Vector3i(0, 0, 16));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegativeZ, voxelSize), 
+    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegZ, voxelSize), 
               Vector3i(0, 0, -16));
 }
 
@@ -180,17 +180,17 @@ TEST_F(VoxelGridTest, GetAdjacentPosition) {
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_16cm;
     
     // Test each direction
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PositiveX, resolution),
+    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PosX, resolution),
               IncrementCoordinates(48, 64, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegativeX, resolution),
+    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegX, resolution),
               IncrementCoordinates(16, 64, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PositiveY, resolution),
+    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PosY, resolution),
               IncrementCoordinates(32, 80, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegativeY, resolution),
+    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegY, resolution),
               IncrementCoordinates(32, 48, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PositiveZ, resolution),
+    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PosZ, resolution),
               IncrementCoordinates(32, 64, 112));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegativeZ, resolution),
+    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegZ, resolution),
               IncrementCoordinates(32, 64, 80));
 }
 
@@ -224,9 +224,9 @@ TEST_F(VoxelGridTest, EdgeCases) {
     {
         IncrementCoordinates pos(300, 400, 500);
         IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(pos, VoxelData::VoxelResolution::Size_512cm);
-        EXPECT_EQ(result.x(), 0);    // 300cm snaps to 0cm
-        EXPECT_EQ(result.y(), 512);  // 400cm snaps to 512cm
-        EXPECT_EQ(result.z(), 512);  // 500cm snaps to 512cm
+        EXPECT_EQ(result.x(), 0);    // 300cm snaps to 0cm (floor: 300/512=0)
+        EXPECT_EQ(result.y(), 512);  // 400cm snaps to 512cm (Y rounds up)
+        EXPECT_EQ(result.z(), 0);    // 500cm snaps to 0cm (floor: 500/512=0)
     }
     
     // Test origin

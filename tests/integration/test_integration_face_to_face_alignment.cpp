@@ -240,7 +240,7 @@ TEST_F(FaceToFaceAlignmentTest, AlignmentWorksForAllVoxelSizes) {
         
         // REQ-3.1.1: Should create perfect edge alignment for any voxel size
         EXPECT_TRUE(haveAlignedEdges(basePos, calculatedPos, resolution))
-            << "Edge alignment should work for " << static_cast<int>(VoxelData::getVoxelSize(resolution) * 100) << "cm voxels";
+            << "Edge alignment should work for " << static_cast<int>(VoxelData::getVoxelSize(resolution) * Math::CoordinateConverter::METERS_TO_CM) << "cm voxels";
         
         // Verify the distance is exactly one voxel size
         int voxelSize_cm = static_cast<int>(VoxelData::getVoxelSize(resolution) * 100.0f);

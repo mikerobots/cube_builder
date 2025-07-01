@@ -196,7 +196,7 @@ std::vector<Math::IncrementCoordinates> PlaneDetector::searchVoxelsInCylinder(co
     
     // Convert to increment coordinates for comparison
     Math::IncrementCoordinates centerIncrement = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(centerPos));
-    int radiusIncrementSquared = static_cast<int>(radius * 100) * static_cast<int>(radius * 100);
+    int radiusIncrementSquared = static_cast<int>(radius * Math::CoordinateConverter::METERS_TO_CM) * static_cast<int>(radius * Math::CoordinateConverter::METERS_TO_CM);
     
     // Use a set to avoid duplicate positions
     std::set<Math::IncrementCoordinates> uniqueVoxels;
@@ -297,7 +297,7 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelAtPositio
         }
         
         float voxelSize = VoxelData::getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
+        int voxelSizeIncrements = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
         
         // Get all voxels of this resolution
         auto voxelsOfResolution = m_voxelManager->getAllVoxels(resolution);
@@ -334,7 +334,7 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelInRadius(
     }
     
     // OPTIMIZED APPROACH: Check existing voxels within radius instead of grid search
-    int radiusIncrements = static_cast<int>(searchRadius * 100);
+    int radiusIncrements = static_cast<int>(searchRadius * Math::CoordinateConverter::METERS_TO_CM);
     int radiusSquared = radiusIncrements * radiusIncrements;
     
     // Only check resolutions that actually have voxels
@@ -345,7 +345,7 @@ std::optional<PlaneDetector::VoxelInfo> PlaneDetector::findHighestVoxelInRadius(
         }
         
         float voxelSize = VoxelData::getVoxelSize(resolution);
-        int voxelSizeIncrements = static_cast<int>(voxelSize * 100);
+        int voxelSizeIncrements = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
         
         // Get all voxels of this resolution
         auto voxelsOfResolution = m_voxelManager->getAllVoxels(resolution);

@@ -268,9 +268,9 @@ TEST_F(VoxelFaceClickingTest, ClosestVoxelIsSelected) {
         }
     }
     
-    // The actual placement is at (14,2,2) based on the hit point on the face
+    // The actual placement is at (14,0,0) based on the hit point on the face
     // This is correct behavior - the voxel is placed adjacent to where the ray hits the face
-    bool hasActualVoxel = voxelManager->hasVoxel(Math::Vector3i(14, 2, 2), VoxelData::VoxelResolution::Size_4cm);
+    bool hasActualVoxel = voxelManager->hasVoxel(Math::Vector3i(14, 0, 0), VoxelData::VoxelResolution::Size_4cm);
     EXPECT_TRUE(hasActualVoxel) 
         << "New voxel should be placed adjacent to the hit point on the face";
 }

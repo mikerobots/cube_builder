@@ -38,12 +38,12 @@ PlacementValidationResult PlacementUtils::validatePlacement(const Math::Incremen
     // Check if the entire voxel fits within workspace bounds
     // Get the voxel size in centimeters
     float voxelSizeMeters = VoxelData::getVoxelSize(resolution);
-    int voxelSizeCm = static_cast<int>(voxelSizeMeters * 100.0f);
+    int voxelSizeCm = static_cast<int>(voxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM);
     
     // Convert workspace bounds to increment coordinates
-    int halfX_cm = static_cast<int>(workspaceSize.x * 100.0f * 0.5f);
-    int halfZ_cm = static_cast<int>(workspaceSize.z * 100.0f * 0.5f);
-    int height_cm = static_cast<int>(workspaceSize.y * 100.0f);
+    int halfX_cm = static_cast<int>(workspaceSize.x * Math::CoordinateConverter::METERS_TO_CM * 0.5f);
+    int halfZ_cm = static_cast<int>(workspaceSize.z * Math::CoordinateConverter::METERS_TO_CM * 0.5f);
+    int height_cm = static_cast<int>(workspaceSize.y * Math::CoordinateConverter::METERS_TO_CM);
     
     // Check if voxel position is within bounds (centered coordinate system)
     if (incrementPos.x() < -halfX_cm || incrementPos.x() > halfX_cm ||
@@ -205,42 +205,54 @@ Math::IncrementCoordinates PlacementUtils::snapToSurfaceFaceGrid(const Math::Wor
         case FaceDirection::NegX:
             // Y and Z must be within surface face bounds
             if (gridWorldPos.y < surfaceFaceMin.y) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), static_cast<int>(std::round(surfaceFaceMin.y / INCREMENT_SIZE)), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.y, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
             } else if (gridWorldPos.y + placementVoxelSize > surfaceFaceMax.y) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), static_cast<int>(std::round((surfaceFaceMax.y - placementVoxelSize) / INCREMENT_SIZE)), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.y - placementVoxelSize, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
             }
             if (gridWorldPos.z < surfaceFaceMin.z) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), static_cast<int>(std::round(surfaceFaceMin.z / INCREMENT_SIZE)));
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.z));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
             } else if (gridWorldPos.z + placementVoxelSize > surfaceFaceMax.z) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), static_cast<int>(std::round((surfaceFaceMax.z - placementVoxelSize) / INCREMENT_SIZE)));
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.z - placementVoxelSize));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
             }
             break;
         case FaceDirection::PosY:
         case FaceDirection::NegY:
             // X and Z must be within surface face bounds
             if (gridWorldPos.x < surfaceFaceMin.x) {
-                incrementPos = Math::IncrementCoordinates(static_cast<int>(std::round(surfaceFaceMin.x / INCREMENT_SIZE)), incrementPos.y(), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMin.x, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
             } else if (gridWorldPos.x + placementVoxelSize > surfaceFaceMax.x) {
-                incrementPos = Math::IncrementCoordinates(static_cast<int>(std::round((surfaceFaceMax.x - placementVoxelSize) / INCREMENT_SIZE)), incrementPos.y(), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMax.x - placementVoxelSize, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
             }
             if (gridWorldPos.z < surfaceFaceMin.z) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), static_cast<int>(std::round(surfaceFaceMin.z / INCREMENT_SIZE)));
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.z));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
             } else if (gridWorldPos.z + placementVoxelSize > surfaceFaceMax.z) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), static_cast<int>(std::round((surfaceFaceMax.z - placementVoxelSize) / INCREMENT_SIZE)));
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.z - placementVoxelSize));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
             }
             break;
         case FaceDirection::PosZ:
         case FaceDirection::NegZ:
             // X and Y must be within surface face bounds
             if (gridWorldPos.x < surfaceFaceMin.x) {
-                incrementPos = Math::IncrementCoordinates(static_cast<int>(std::round(surfaceFaceMin.x / INCREMENT_SIZE)), incrementPos.y(), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMin.x, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
             } else if (gridWorldPos.x + placementVoxelSize > surfaceFaceMax.x) {
-                incrementPos = Math::IncrementCoordinates(static_cast<int>(std::round((surfaceFaceMax.x - placementVoxelSize) / INCREMENT_SIZE)), incrementPos.y(), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMax.x - placementVoxelSize, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
             }
             if (gridWorldPos.y < surfaceFaceMin.y) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), static_cast<int>(std::round(surfaceFaceMin.y / INCREMENT_SIZE)), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.y, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
             } else if (gridWorldPos.y + placementVoxelSize > surfaceFaceMax.y) {
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), static_cast<int>(std::round((surfaceFaceMax.y - placementVoxelSize) / INCREMENT_SIZE)), incrementPos.z());
+                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.y - placementVoxelSize, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
+                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
             }
             break;
     }
