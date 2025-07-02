@@ -272,7 +272,8 @@ void FeedbackRenderer::renderOverlays(const Camera::Camera& camera, const Render
     
     // Render debug ray if enabled
     if (m_debugRayEnabled) {
-        // Make ray shorter and brighter for better visibility
+        // Ray length adjusted to stay within camera view frustum
+        // Camera is ~7.5 units from origin, so 10 units covers the visible scene
         m_overlay->renderRaycast(m_debugRay, 10.0f, Rendering::Color(1.0f, 1.0f, 0.0f, 1.0f), camera);
     }
     

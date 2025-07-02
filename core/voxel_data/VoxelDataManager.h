@@ -838,32 +838,31 @@ private:
     // Note: pos parameter is expected to be in IncrementCoordinates
     bool wouldOverlapInternal(const Math::IncrementCoordinates& pos, VoxelResolution resolution) const {
         // Check if placing a voxel at this position would overlap with existing voxels
-        // Allow smaller voxels to be placed on/within larger voxels for detailed work
+        // Using the same algorithm as VoxelCollision::checkCollision but implemented inline
+        // to avoid header include issues
         
         Logging::Logger::getInstance().debugfc("VoxelDataManager", 
             "wouldOverlapInternal: checking increment position (%d, %d, %d) with resolution %d",
             pos.x(), pos.y(), pos.z(), static_cast<int>(resolution));
         
-        // Convert increment position to world space (bottom-center coordinate)
-        Math::WorldCoordinates worldBottomCenter = Math::CoordinateConverter::incrementToWorld(pos);
+        // Get the size of the voxel we're trying to place
         float voxelSize = getVoxelSize(resolution);
         float halfSize = voxelSize * 0.5f;
         
-        // Calculate bounds where worldBottomCenter is at the bottom face center
-        Math::Vector3f worldMin = Math::Vector3f(
-            worldBottomCenter.value().x - halfSize, 
-            worldBottomCenter.value().y,              // Bottom at placement Y
-            worldBottomCenter.value().z - halfSize
-        );
-        Math::Vector3f worldMax = Math::Vector3f(
-            worldBottomCenter.value().x + halfSize, 
-            worldBottomCenter.value().y + voxelSize,  // Top at placement Y + voxelSize
-            worldBottomCenter.value().z + halfSize
-        );
+        // Convert to world coordinates for bounds calculation
+        Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(pos);
         
-        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-            "World bounds: min=(%.3f, %.3f, %.3f) max=(%.3f, %.3f, %.3f)",
-            worldMin.x, worldMin.y, worldMin.z, worldMax.x, worldMax.y, worldMax.z);
+        // Calculate bounds for the voxel we're trying to place (bottom-center coordinate system)
+        Math::Vector3f newVoxelMin(
+            worldPos.value().x - halfSize,
+            worldPos.value().y,  // Bottom at Y
+            worldPos.value().z - halfSize
+        );
+        Math::Vector3f newVoxelMax(
+            worldPos.value().x + halfSize,
+            worldPos.value().y + voxelSize,  // Top at Y + size
+            worldPos.value().z + halfSize
+        );
         
         // Check each resolution level for overlaps
         for (int i = 0; i < static_cast<int>(VoxelResolution::COUNT); ++i) {
@@ -875,61 +874,24 @@ private:
                 "Checking against resolution %d with %zu voxels",
                 i, grid->getVoxelCount());
             
-            // Convert world bounds to increment coordinates for this resolution
-            Math::IncrementCoordinates minIncCheck = Math::CoordinateConverter::worldToIncrement(
-                Math::WorldCoordinates(worldMin));
-            Math::IncrementCoordinates maxIncCheck = Math::CoordinateConverter::worldToIncrement(
-                Math::WorldCoordinates(worldMax));
-            
-            Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                "Increment check bounds: min=(%d, %d, %d) max=(%d, %d, %d)",
-                minIncCheck.x(), minIncCheck.y(), minIncCheck.z(),
-                maxIncCheck.x(), maxIncCheck.y(), maxIncCheck.z());
-            
-            // Always use getAllVoxels approach for consistency and correctness
+            // Get all voxels in this resolution level
             auto voxels = grid->getAllVoxels();
             for (const auto& voxelPos : voxels) {
-                // Use the VoxelPosition's getWorldBounds method for correct bottom-center bounds
-                Math::Vector3f voxelMin, voxelMax;
-                voxelPos.getWorldBounds(voxelMin, voxelMax);
+                // Calculate bounds for the existing voxel
+                Math::Vector3f existingMin, existingMax;
+                voxelPos.getWorldBounds(existingMin, existingMax);
                 
-                // Check for overlap (AABB intersection) with epsilon tolerance for floating-point precision
-                const float epsilon = 1e-6f; // Small tolerance for floating-point comparisons
-                bool overlapsX = (worldMin.x + epsilon) < voxelMax.x && (worldMax.x - epsilon) > voxelMin.x;
-                bool overlapsY = (worldMin.y + epsilon) < voxelMax.y && (worldMax.y - epsilon) > voxelMin.y;
-                bool overlapsZ = (worldMin.z + epsilon) < voxelMax.z && (worldMax.z - epsilon) > voxelMin.z;
-                bool overlaps = overlapsX && overlapsY && overlapsZ;
+                // Check for AABB overlap (same algorithm as VoxelCollision::boundsOverlap)
+                bool overlaps = (newVoxelMin.x < existingMax.x && newVoxelMax.x > existingMin.x) &&
+                               (newVoxelMin.y < existingMax.y && newVoxelMax.y > existingMin.y) &&
+                               (newVoxelMin.z < existingMax.z && newVoxelMax.z > existingMin.z);
                 
                 if (overlaps) {
-                    // Check if this is an exact position match (same increment coordinates)
-                    if (pos.x() == voxelPos.incrementPos.x() && 
-                        pos.y() == voxelPos.incrementPos.y() && 
-                        pos.z() == voxelPos.incrementPos.z()) {
-                        // Same position should always overlap, regardless of size
-                        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                            "Overlap detected: exact position match at (%d,%d,%d)",
-                            pos.x(), pos.y(), pos.z());
-                        return true; // Would overlap
-                    }
-                    
-                    // Check if we should allow this overlap for detailed work
-                    // Allow smaller voxels to be placed on/within larger voxels when not at exact same position
-                    float existingVoxelSize = getVoxelSize(checkRes);
-                    
-                    // If the new voxel is smaller than the existing voxel, allow the placement
-                    if (voxelSize < existingVoxelSize) {
-                        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                            "Allowing smaller voxel (%dcm) to be placed on/within larger voxel (%dcm)",
-                            static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM), static_cast<int>(existingVoxelSize * Math::CoordinateConverter::METERS_TO_CM));
-                        continue; // Skip this overlap check, allow placement
-                    }
-                    
-                    // Otherwise, prevent the overlap (same size or larger voxel trying to overlap)
                     Logging::Logger::getInstance().debugfc("VoxelDataManager", 
                         "Overlap detected: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d) size %dcm",
                         pos.x(), pos.y(), pos.z(), static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM),
                         voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
-                        static_cast<int>(existingVoxelSize * Math::CoordinateConverter::METERS_TO_CM));
+                        static_cast<int>(getVoxelSize(voxelPos.resolution) * Math::CoordinateConverter::METERS_TO_CM));
                     return true; // Would overlap
                 }
             }

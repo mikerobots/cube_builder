@@ -69,6 +69,13 @@ TEST_F(VoxelCollisionTest, DifferentSizeCollision) {
     EXPECT_FALSE(VoxelCollision::checkCollision(
         IncrementCoordinates(0, 0, 0), VoxelData::VoxelResolution::Size_16cm,
         IncrementCoordinates(16, 0, 0), VoxelData::VoxelResolution::Size_16cm));
+    
+    // 64cm voxel at origin with 32cm voxel at (30,30,0) - should collide
+    // 64cm voxel extends from 0 to 64 in each dimension
+    // 32cm voxel at (30,30,0) extends from 30 to 62 - overlaps!
+    EXPECT_TRUE(VoxelCollision::checkCollision(
+        IncrementCoordinates(0, 0, 0), VoxelData::VoxelResolution::Size_64cm,
+        IncrementCoordinates(30, 30, 0), VoxelData::VoxelResolution::Size_32cm));
 }
 
 // Test collision with grid

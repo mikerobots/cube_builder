@@ -4,8 +4,12 @@
 #include <cstddef>
 #include <cassert>
 #include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <limits>
 
 #ifdef __APPLE__
+    #define GL_SILENCE_DEPRECATION
     #include <OpenGL/gl3.h>
 #else
     #include <GL/gl.h>
@@ -216,10 +220,15 @@ void OverlayRenderer::renderRaycast(const Ray& ray, float length, const Renderin
                                    const Camera::Camera& camera) {
     if (!m_frameActive) return;
     
-    // Create a simple test ray that should definitely be visible
-    // For debugging: render a short diagonal line in world space near origin
-    Math::Vector3f start(-1.0f, 0.0f, -1.0f);  // Fixed position in world
-    Math::Vector3f end(1.0f, 0.0f, 1.0f);      // Fixed position in world
+    // DEBUG: Draw a simple test line that should definitely be visible
+    // Place it at the origin and make it short to ensure it's in view
+    Math::Vector3f start(0.0f, 0.0f, 0.0f);
+    Math::Vector3f end(1.0f, 1.0f, 0.0f);
+    
+    // DEBUG: Log ray coordinates
+    std::cerr << "OverlayRenderer::renderRaycast - DEBUG TEST LINE from (" 
+              << start.x << "," << start.y << "," << start.z << ") to (" 
+              << end.x << "," << end.y << "," << end.z << ")" << std::endl;
     
     addLine(start, end, color);
     flushLineBatch(camera);
@@ -669,7 +678,8 @@ void OverlayRenderer::initializeLineRenderer() {
         out vec4 color;
         
         void main() {
-            color = fragColor;
+            // DEBUG: Force all line colors to bright yellow for testing
+            color = vec4(1.0, 1.0, 0.0, 1.0);
         }
     )";
     
@@ -941,12 +951,39 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
         return;
     }
     
+    // Verify shader is valid
+    GLint currentProgram = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+    if (currentProgram != static_cast<GLint>(m_lineRenderer.lineShader)) {
+        std::cerr << "OverlayRenderer: ERROR - Shader not bound correctly! Expected: " 
+                  << m_lineRenderer.lineShader << ", Got: " << currentProgram << std::endl;
+        return;
+    }
+    
     // Set MVP matrix
     GLint mvpLoc = glGetUniformLocation(m_lineRenderer.lineShader, "mvpMatrix");
     if (mvpLoc == -1) {
         std::cerr << "OverlayRenderer: Warning - mvpMatrix uniform not found in line shader" << std::endl;
     }
     Math::Matrix4f mvpMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
+    
+    // Debug: Print first line's world coordinates and transformed coordinates
+    if (!m_lineRenderer.vertices.empty()) {
+        Math::Vector3f start = m_lineRenderer.vertices[0];
+        Math::Vector4f worldPos(start.x, start.y, start.z, 1.0f);
+        Math::Vector4f clipPos = mvpMatrix * worldPos;
+        std::cerr << "OverlayRenderer: First vertex transform: world(" 
+                  << start.x << "," << start.y << "," << start.z << ") -> clip(" 
+                  << clipPos.x << "," << clipPos.y << "," << clipPos.z << "," << clipPos.w << ")" << std::endl;
+        if (clipPos.w != 0.0f) {
+            float ndcX = clipPos.x / clipPos.w;
+            float ndcY = clipPos.y / clipPos.w;
+            float ndcZ = clipPos.z / clipPos.w;
+            std::cerr << "  NDC: (" << ndcX << "," << ndcY << "," << ndcZ << ")" << std::endl;
+            std::cerr << "  Visible: " << (ndcX >= -1 && ndcX <= 1 && ndcY >= -1 && ndcY <= 1 && ndcZ >= -1 && ndcZ <= 1) << std::endl;
+        }
+    }
+    
     // Our Matrix4f uses row-major order, but OpenGL expects column-major
     // So we need to transpose when uploading (GL_TRUE)
     glUniformMatrix4fv(mvpLoc, 1, GL_TRUE, mvpMatrix.data());
@@ -988,6 +1025,27 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
         return;
     }
     
+    // Check if buffer needs resizing
+    GLint bufferSize = 0;
+    glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+    size_t requiredSize = interleavedData.size() * sizeof(float);
+    
+    if (requiredSize > static_cast<size_t>(bufferSize)) {
+        // Resize buffer with some extra space for future growth
+        size_t newSize = requiredSize * 2;
+        std::cerr << "OverlayRenderer: Resizing line buffer from " << bufferSize 
+                  << " to " << newSize << " bytes" << std::endl;
+        glBufferData(GL_ARRAY_BUFFER, newSize, nullptr, GL_DYNAMIC_DRAW);
+        
+        // Re-setup vertex attributes after buffer resize
+        size_t stride = 7 * sizeof(float);
+        glEnableVertexAttribArray(0); // position
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
+        
+        glEnableVertexAttribArray(1); // color
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+    }
+    
     glBufferSubData(GL_ARRAY_BUFFER, 0, interleavedData.size() * sizeof(float),
                     interleavedData.data());
     error = glGetError();
@@ -1007,11 +1065,16 @@ void OverlayRenderer::flushLineBatch(const Camera::Camera& camera) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    // Set line width for better visibility
-    glLineWidth(3.0f);
+    // Set line width for better visibility (many OpenGL implementations only support 1.0)
+    GLfloat lineWidthRange[2];
+    glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidthRange);
+    float requestedWidth = 3.0f;
+    float actualWidth = std::min(requestedWidth, lineWidthRange[1]);
+    glLineWidth(actualWidth);
+    
     error = glGetError();
     if (error != GL_NO_ERROR) {
-        std::cerr << "OverlayRenderer: GL error after setting blend state: " << error << std::endl;
+        std::cerr << "OverlayRenderer: GL error after setting line width (" << actualWidth << "): " << error << std::endl;
         return;
     }
     

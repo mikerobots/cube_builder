@@ -729,6 +729,32 @@ TEST_F(VoxelDataManagerTest, CollisionDetection_MultipleResolutions) {
     EXPECT_FALSE(manager->wouldOverlap(Vector3i(50, 0, 50), VoxelResolution::Size_1cm));
 }
 
+TEST_F(VoxelDataManagerTest, CollisionDetection_64cmAnd32cmOverlap) {
+    // Test the specific case: 64cm voxel at (0,0,0) and 32cm voxel at (30,30,0)
+    // This should fail due to overlap
+    
+    // Place 64cm voxel at origin
+    EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_64cm, true));
+    
+    // Check that 64cm voxel was placed
+    EXPECT_TRUE(manager->getVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_64cm));
+    
+    // Try to place 32cm voxel at (30,30,0) - should fail due to overlap
+    // 64cm voxel extends from 0 to 64 in each dimension
+    // 32cm voxel at (30,30,0) would extend from 30 to 62 - overlaps!
+    EXPECT_FALSE(manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, true));
+    
+    // Verify the 32cm voxel was not placed
+    EXPECT_FALSE(manager->getVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
+    
+    // Verify wouldOverlap returns true for this case
+    EXPECT_TRUE(manager->wouldOverlap(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
+    
+    // Test edge case: 32cm voxel at (64,64,0) should NOT overlap (just touching)
+    EXPECT_FALSE(manager->wouldOverlap(IncrementCoordinates(64, 64, 0), VoxelResolution::Size_32cm));
+    EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(64, 64, 0), VoxelResolution::Size_32cm, true));
+}
+
 // REQ-3.1.1: Same-size voxels shall auto-snap to perfect alignment by default
 TEST_F(VoxelDataManagerTest, AdjacentPositionCalculation_SameSize) {
     Vector3i sourcePos(10, 5, 10);

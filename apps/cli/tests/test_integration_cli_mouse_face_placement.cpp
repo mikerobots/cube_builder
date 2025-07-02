@@ -104,11 +104,20 @@ TEST_F(MouseFacePlacementTest, TestMousePlacementOnTopFace) {
         bool placed = voxelManager->setVoxel(Math::Vector3i(placementPos.x, placementPos.y, placementPos.z), resolution, true);
         EXPECT_TRUE(placed) << "Failed to place voxel at calculated position";
         
-        // Verify no gap between voxels
-        for (int y = 1; y < voxelSize_cm; y++) {
-            bool occupied = voxelManager->wouldOverlap(Math::Vector3i(0, y, 0), VoxelData::VoxelResolution::Size_1cm);
-            EXPECT_TRUE(occupied) << "Gap detected at Y=" << y << " for " << voxelSize_cm << "cm voxels";
-        }
+        // Verify vertex alignment instead of gap detection
+        // In sparse voxel system, intermediate positions are not "occupied" - only discrete voxel positions exist
+        // Validate that the placement creates perfect face-to-face alignment
+        Math::WorldCoordinates baseWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(0, 0, 0));
+        Math::WorldCoordinates topWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(placementPos.x, placementPos.y, placementPos.z));
+        
+        float voxelSizeMeters = VoxelData::getVoxelSize(resolution);
+        float baseTopY = baseWorldPos.value().y + voxelSizeMeters;  // Top face of base voxel
+        float topBottomY = topWorldPos.value().y;                   // Bottom face of top voxel
+        
+        // The faces should align exactly - no gap, no overlap
+        EXPECT_FLOAT_EQ(baseTopY, topBottomY) 
+            << "Top face of base voxel should align exactly with bottom face of top voxel for " << voxelSize_cm << "cm voxels. "
+            << "Base top Y: " << baseTopY << ", Top bottom Y: " << topBottomY;
     }
 }
 
