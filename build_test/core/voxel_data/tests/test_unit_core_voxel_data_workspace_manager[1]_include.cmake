@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/core/voxel_data/tests/test_unit_core_voxel_data_workspace_manager[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/core/voxel_data/tests/test_unit_core_voxel_data_workspace_manager[1]_tests.cmake")
+else()
+  add_test(test_unit_core_voxel_data_workspace_manager_NOT_BUILT test_unit_core_voxel_data_workspace_manager_NOT_BUILT)
+endif()

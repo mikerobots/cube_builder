@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/tests/integration/rendering/test_integration_shader_comprehensive_validation[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/tests/integration/rendering/test_integration_shader_comprehensive_validation[1]_tests.cmake")
+else()
+  add_test(test_integration_shader_comprehensive_validation_NOT_BUILT test_integration_shader_comprehensive_validation_NOT_BUILT)
+endif()

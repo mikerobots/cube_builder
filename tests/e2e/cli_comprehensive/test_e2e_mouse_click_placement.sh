@@ -32,7 +32,7 @@ initialize_test() {
     cd "$OUTPUT_DIR"
     
     # Clean up any existing project files
-    rm -f "$TEST_PROJECT" "${TEST_PROJECT%.vox}"_*.bak.vox
+    rm -f "$TEST_PROJECT" "${TEST_PROJECT%.vxl}"_*.bak.vxl
     
     echo -e "${GREEN}Initialized test environment in $OUTPUT_DIR${NC}"
     return 0

@@ -74,7 +74,7 @@ EOF
     
     # Analyze colors
     echo "Analyzing colors for $res resolution..."
-    ../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
+    ../../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
     
     # Count non-background pixels (assuming background is black or very dark)
     # This helps us validate that larger resolutions create more visible pixels

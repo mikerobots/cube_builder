@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/apps/cli/tests/test_integration_cli_command_sequences[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/apps/cli/tests/test_integration_cli_command_sequences[1]_tests.cmake")
+else()
+  add_test(test_integration_cli_command_sequences_NOT_BUILT test_integration_cli_command_sequences_NOT_BUILT)
+endif()

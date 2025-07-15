@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/core/surface_gen/tests/test_integration_surface_gen_smoothing_pipeline[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/core/surface_gen/tests/test_integration_surface_gen_smoothing_pipeline[1]_tests.cmake")
+else()
+  add_test(test_integration_surface_gen_smoothing_pipeline_NOT_BUILT test_integration_surface_gen_smoothing_pipeline_NOT_BUILT)
+endif()

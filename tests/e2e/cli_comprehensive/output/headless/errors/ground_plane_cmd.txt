@@ -1,0 +1,8 @@
+workspace 5.0 5.0 5.0
+resolution 16cm
+place 96cm -1cm 96cm
+place 96cm -50cm 96cm
+place 96cm 0cm 96cm
+place 96cm 48cm 96cm
+status
+quit

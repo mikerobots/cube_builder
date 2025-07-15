@@ -71,7 +71,7 @@ EOF
     
     # Analyze colors
     echo "Analyzing colors for $mode render mode..."
-    ../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
+    ../../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
     
     # Count unique colors and non-background pixels
     UNIQUE_COLORS=$(grep "Unique colors:" "$COLORS_FILE" | grep -oE '[0-9]+$')

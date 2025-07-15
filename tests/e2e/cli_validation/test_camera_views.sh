@@ -65,7 +65,7 @@ EOF
     
     # Analyze colors
     echo "Analyzing colors for $view view..."
-    ../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
+    ../../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
     
     # Check if voxels are actually visible from this view
     UNIQUE_COLORS=$(grep "Unique colors:" "$COLORS_FILE" | grep -oE '[0-9]+$')

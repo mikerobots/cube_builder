@@ -1,0 +1,10 @@
+workspace 3 3 3
+resolution 16cm
+place 0cm 0cm 0cm
+place 16cm 0cm 0cm
+place 284cm 0cm 0cm
+place 300cm 0cm 0cm
+place 0cm 0cm 284cm
+place 0cm 0cm 300cm
+status
+quit

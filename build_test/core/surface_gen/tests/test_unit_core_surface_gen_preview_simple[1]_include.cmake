@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/core/surface_gen/tests/test_unit_core_surface_gen_preview_simple[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/core/surface_gen/tests/test_unit_core_surface_gen_preview_simple[1]_tests.cmake")
+else()
+  add_test(test_unit_core_surface_gen_preview_simple_NOT_BUILT test_unit_core_surface_gen_preview_simple_NOT_BUILT)
+endif()

@@ -1,1 +1,23 @@
-timeout: failed to run command ‘../../build_ninja/bin/VoxelEditor_CLI’: No such file or directory
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at origin (0, 0, 0)
+Application::initialize() - Calling CommandRegistry::registerAllCommands
+CommandRegistry: Starting registration with 6 factories
+Registered 51 commands from 6 modules
+Application::initialize() - Command registration complete
+Initialization complete!
+Type 'help' for available commands.
+
+> Grid command not available in headless mode
+> Grid command not available in headless mode
+> Grid command not available in headless mode
+> Grid command not available in headless mode
+> Grid command not available in headless mode
+> Grid command not available in headless mode
+> Grid command not available in headless mode
+> Goodbye!
+
+Shutting down...

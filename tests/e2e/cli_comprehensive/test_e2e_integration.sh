@@ -33,10 +33,10 @@ screenshot $TEST_DIR/workflow_undo.ppm
 redo
 redo
 screenshot $TEST_DIR/workflow_redo.ppm
-save $TEST_DIR/workflow_project.vox
+save $TEST_DIR/workflow_project.vxl
 clear
 screenshot $TEST_DIR/workflow_clear.ppm
-load $TEST_DIR/workflow_project.vox
+load $TEST_DIR/workflow_project.vxl
 screenshot $TEST_DIR/workflow_loaded.ppm
 export $TEST_DIR/workflow_export.stl
 status
@@ -251,17 +251,17 @@ place 96cm 0cm 96cm
 place 128cm 0cm 96cm
 place 96cm 0cm 128cm
 place 64cm 64cm 64cm
-save $TEST_DIR/format_test.vox
+save $TEST_DIR/format_test.vxl
 export $TEST_DIR/format_test.stl
 screenshot $TEST_DIR/format_original.ppm
 clear
-load $TEST_DIR/format_test.vox
+load $TEST_DIR/format_test.vxl
 screenshot $TEST_DIR/format_loaded.ppm
 quit
 EOF
 
 if execute_cli "$TEST_DIR/file_format_cmd.txt" 30; then
-    if [ -f "$TEST_DIR/format_test.vox" ] && [ -f "$TEST_DIR/format_test.stl" ]; then
+    if [ -f "$TEST_DIR/format_test.vxl" ] && [ -f "$TEST_DIR/format_test.stl" ]; then
         # Compare original and loaded screenshots
         if analyze_screenshot "$TEST_DIR/format_original" "$TEST_DIR/format_orig_analysis.txt" && \
            analyze_screenshot "$TEST_DIR/format_loaded" "$TEST_DIR/format_load_analysis.txt"; then

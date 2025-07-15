@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/tests/verification/test_integration_verification_core_functionality[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/tests/verification/test_integration_verification_core_functionality[1]_tests.cmake")
+else()
+  add_test(test_integration_verification_core_functionality_NOT_BUILT test_integration_verification_core_functionality_NOT_BUILT)
+endif()

@@ -1,0 +1,16 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/michaelhalloran/cube_edit/build_test/_deps/eigen3-src/test/linearstructure.cpp"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"BuildOfficial"
+		],
+		"name" : "linearstructure_10"
+	}
+}

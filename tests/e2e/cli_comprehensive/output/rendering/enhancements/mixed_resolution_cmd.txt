@@ -1,0 +1,15 @@
+workspace 8 8 8
+view iso
+resolution 128cm
+place 128cm 0cm 128cm
+resolution 64cm
+place 128cm 128cm 128cm
+resolution 32cm
+place 128cm 192cm 128cm
+resolution 16cm
+place 128cm 224cm 128cm
+resolution 8cm
+place 128cm 240cm 128cm
+zoom 1.2
+screenshot output/rendering/enhancements/mixed_resolutions.ppm
+quit

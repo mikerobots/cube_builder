@@ -1,0 +1,3 @@
+resolution 16cm
+status
+quit

@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/core/selection/tests/test_unit_core_selection_box_selector[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/core/selection/tests/test_unit_core_selection_box_selector[1]_tests.cmake")
+else()
+  add_test(test_unit_core_selection_box_selector_NOT_BUILT test_unit_core_selection_box_selector_NOT_BUILT)
+endif()

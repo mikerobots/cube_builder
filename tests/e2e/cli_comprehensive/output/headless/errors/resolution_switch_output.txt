@@ -1,0 +1,37 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at origin (0, 0, 0)
+Application::initialize() - Calling CommandRegistry::registerAllCommands
+CommandRegistry: Starting registration with 6 factories
+Registered 51 commands from 6 modules
+Application::initialize() - Command registration complete
+Initialization complete!
+Type 'help' for available commands.
+
+> Workspace resized to 5x5x5 meters
+> Resolution set to 32cm
+> Placed 32cm voxel at (96cm, 96cm, 96cm)
+> Resolution set to 8cm
+> Position would overlap with existing voxel
+> Resolution set to 64cm
+> Placed 64cm voxel at (128cm, 128cm, 128cm)
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 64cm
+Workspace: 5x5x5 meters
+Voxels: 1
+Selected: 0 voxels
+Groups: 0
+Memory: 0.00206757 MB
+
+Smoothing Settings:
+  Level: 0
+  Preview: off
+
+> Goodbye!
+
+Shutting down...

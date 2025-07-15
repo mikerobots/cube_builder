@@ -14,8 +14,8 @@ TESTS_FAILED=0
 CURRENT_TEST=""
 
 # Paths
-CLI_PATH="../../build_ninja/bin/VoxelEditor_CLI"
-TOOLS_DIR="../../tools"
+CLI_PATH="../../../build_ninja/bin/VoxelEditor_CLI"
+TOOLS_DIR="../../../tools"
 OUTPUT_BASE="output"
 
 # Initialize test environment

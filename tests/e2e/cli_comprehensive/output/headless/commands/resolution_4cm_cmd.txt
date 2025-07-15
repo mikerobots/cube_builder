@@ -1,0 +1,3 @@
+resolution 4cm
+status
+quit

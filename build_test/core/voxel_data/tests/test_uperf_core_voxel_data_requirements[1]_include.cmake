@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/core/voxel_data/tests/test_uperf_core_voxel_data_requirements[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/core/voxel_data/tests/test_uperf_core_voxel_data_requirements[1]_tests.cmake")
+else()
+  add_test(test_uperf_core_voxel_data_requirements_NOT_BUILT test_uperf_core_voxel_data_requirements_NOT_BUILT)
+endif()

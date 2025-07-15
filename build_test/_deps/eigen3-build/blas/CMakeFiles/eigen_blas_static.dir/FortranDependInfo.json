@@ -1,0 +1,20 @@
+{
+	"bmi-installation" : null,
+	"compiler-id" : "GNU",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"dir-cur-bld" : "/Users/michaelhalloran/cube_edit/build_test/_deps/eigen3-build/blas",
+	"dir-cur-src" : "/Users/michaelhalloran/cube_edit/build_test/_deps/eigen3-src/blas",
+	"dir-top-bld" : "/Users/michaelhalloran/cube_edit/build_test",
+	"dir-top-src" : "/Users/michaelhalloran/cube_edit",
+	"exports" : [],
+	"include-dirs" : 
+	[
+		"_deps/eigen3-src"
+	],
+	"language" : "Fortran",
+	"linked-target-dirs" : [],
+	"module-dir" : "/Users/michaelhalloran/cube_edit/build_test/_deps/eigen3-build/blas",
+	"submodule-ext" : ".smod",
+	"submodule-sep" : "@"
+}

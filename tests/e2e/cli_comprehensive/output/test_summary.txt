@@ -1,10 +1,10 @@
 Comprehensive CLI Test Summary
-Generated: Mon Jun 23 09:54:28 EDT 2025
+Generated: Tue Jul 15 13:14:40 EDT 2025
 
 Headless Tests: FAILED
 Rendering Tests: FAILED
 
 Total test files:        6
-Screenshots generated:        0
+Screenshots generated:       17
 
 Detailed logs available in output/logs/

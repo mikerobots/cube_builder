@@ -139,7 +139,7 @@ Comprehensive CLI with auto-completion - see `apps/cli/CLI_GUIDE.md`
 place 0cm 0cm 0cm    # Place voxel at origin
 resolution 4cm       # Switch to 4cm voxels
 camera front         # Switch camera view
-save project.vox     # Save project
+save project.vxl     # Save project
 ```
 
 ## Development Workflow

@@ -1,0 +1,25 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at origin (0, 0, 0)
+Application::initialize() - Calling CommandRegistry::registerAllCommands
+CommandRegistry: Starting registration with 6 factories
+Registered 51 commands from 6 modules
+Application::initialize() - Command registration complete
+Initialization complete!
+Type 'help' for available commands.
+
+> Failed to load project: /nonexistent/path/file.vxl
+> Failed to save project
+> DualContouringSparse: Building active cells for 0 voxels
+DualContouringSparse::generateQuads() starting with 0 cells with intersections
+DualContouringSparse::generateQuads() completed after checking 0 potential quads
+Failed to export STL
+> Workspace resized to 5x5x5 meters
+> Placed 64cm voxel at (0cm, 0cm, 0cm)
+> Command failed: mutex lock failed: Invalid argument
+> Goodbye!
+
+Shutting down...

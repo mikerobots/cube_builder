@@ -33,7 +33,7 @@ rm -rf output/*
 mkdir -p output/headless output/rendering output/logs output/metrics
 
 # Build the CLI if needed
-if [ ! -f "../../build_ninja/bin/VoxelEditor_CLI" ]; then
+if [ ! -f "../../../build_ninja/bin/VoxelEditor_CLI" ]; then
     echo "Building voxel-cli..."
     cd ../..
     cmake --build build
@@ -41,7 +41,7 @@ if [ ! -f "../../build_ninja/bin/VoxelEditor_CLI" ]; then
 fi
 
 # Check CLI exists
-if [ ! -f "../../build_ninja/bin/VoxelEditor_CLI" ]; then
+if [ ! -f "../../../build_ninja/bin/VoxelEditor_CLI" ]; then
     echo "ERROR: voxel-cli not found. Please build the project first."
     exit 1
 fi

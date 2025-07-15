@@ -1,0 +1,31 @@
+Voxel Editor CLI v1.0
+====================
+
+Initializing Voxel Editor...
+Running in headless mode (no rendering)
+Camera set to view workspace center at origin (0, 0, 0)
+Application::initialize() - Calling CommandRegistry::registerAllCommands
+CommandRegistry: Starting registration with 6 factories
+Registered 51 commands from 6 modules
+Application::initialize() - Command registration complete
+Initialization complete!
+Type 'help' for available commands.
+
+> Resolution set to 4cm
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 4cm
+Workspace: 5x5x5 meters
+Voxels: 0
+Selected: 0 voxels
+Groups: 0
+Memory: 0.000541687 MB
+
+Smoothing Settings:
+  Level: 0
+  Preview: off
+
+> Goodbye!
+
+Shutting down...

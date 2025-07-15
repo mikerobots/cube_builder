@@ -1,0 +1,5 @@
+if(EXISTS "/Users/michaelhalloran/cube_edit/build_test/core/file_io/tests/test_unit_core_file_io_project[1]_tests.cmake")
+  include("/Users/michaelhalloran/cube_edit/build_test/core/file_io/tests/test_unit_core_file_io_project[1]_tests.cmake")
+else()
+  add_test(test_unit_core_file_io_project_NOT_BUILT test_unit_core_file_io_project_NOT_BUILT)
+endif()

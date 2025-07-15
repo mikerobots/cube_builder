@@ -62,7 +62,7 @@ fi
 SCREENSHOT_FILE="$ACTUAL_SCREENSHOT"
 
 echo "Analyzing colors in screenshot..."
-../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
+../../../tools/analyze_ppm_colors.py "$SCREENSHOT_FILE" > "$COLORS_FILE"
 
 # Count unique colors (should be more than just background)
 UNIQUE_COLORS=$(grep "Unique colors:" "$COLORS_FILE" | grep -oE '[0-9]+$')
