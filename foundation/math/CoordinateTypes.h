@@ -78,6 +78,11 @@ public:
     bool operator!=(const WorldCoordinates& other) const {
         return m_value != other.m_value;
     }
+    
+    // Allow comparison with Vector3f for convenience in tests
+    bool isEqualTo(const Vector3f& v) const {
+        return m_value == v;
+    }
 
     // Vector operations
     float length() const { return m_value.length(); }
@@ -93,6 +98,10 @@ public:
     static WorldCoordinates unitX() { return WorldCoordinates(Vector3f::UnitX()); }
     static WorldCoordinates unitY() { return WorldCoordinates(Vector3f::UnitY()); }
     static WorldCoordinates unitZ() { return WorldCoordinates(Vector3f::UnitZ()); }
+    
+    // Convenience factory methods for common conversions
+    static WorldCoordinates fromVector3f(const Vector3f& v) { return WorldCoordinates(v); }
+    static WorldCoordinates fromVector3f(float x, float y, float z) { return WorldCoordinates(Vector3f(x, y, z)); }
 
     // String conversion
     std::string toString() const {

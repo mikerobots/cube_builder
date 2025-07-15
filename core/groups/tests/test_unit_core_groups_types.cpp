@@ -3,8 +3,10 @@
 #include "../include/groups/GroupTypes.h"
 
 using namespace VoxelEditor::Groups;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 using namespace VoxelEditor::VoxelData;
+using VoxelEditor::Math::Vector3f;
+using VoxelEditor::Math::Vector3i;
 
 class GroupTypesTest : public ::testing::Test {
 protected:
@@ -57,7 +59,7 @@ TEST_F(GroupTypesTest, GroupMetadataConstruction) {
     EXPECT_TRUE(metadata.visible);
     EXPECT_FALSE(metadata.locked);
     EXPECT_FLOAT_EQ(metadata.opacity, 1.0f);
-    EXPECT_EQ(metadata.pivot, Vector3f(0, 0, 0));
+    EXPECT_TRUE(metadata.pivot.isEqualTo(Vector3f(0, 0, 0)));
     
     // Check that timestamps are set
     EXPECT_NE(metadata.created.time_since_epoch().count(), 0);
@@ -102,14 +104,15 @@ TEST_F(GroupTypesTest, GroupInfoConstruction) {
 
 TEST_F(GroupTypesTest, GroupTransformConstruction) {
     GroupTransform transform1;
-    EXPECT_EQ(transform1.translation, Vector3f(0, 0, 0));
+    EXPECT_TRUE(transform1.translation.isEqualTo(Vector3f(0, 0, 0)));
     EXPECT_EQ(transform1.rotation, Vector3f(0, 0, 0));
     EXPECT_EQ(transform1.scale, Vector3f(1, 1, 1));
     EXPECT_TRUE(transform1.isIdentity());
     
     Vector3f translation(1, 2, 3);
-    GroupTransform transform2(translation);
-    EXPECT_EQ(transform2.translation, translation);
+    Math::WorldCoordinates worldTranslation(translation);
+    GroupTransform transform2(worldTranslation);
+    EXPECT_TRUE(transform2.translation.isEqualTo(translation));
     EXPECT_FALSE(transform2.isIdentity());
 }
 
@@ -118,10 +121,10 @@ TEST_F(GroupTypesTest, GroupTransformIdentity) {
     EXPECT_TRUE(identity.isIdentity());
     
     GroupTransform nonIdentity;
-    nonIdentity.translation = Vector3f(0.1f, 0, 0);
+    nonIdentity.translation = Math::WorldCoordinates(Vector3f(0.1f, 0, 0));
     EXPECT_FALSE(nonIdentity.isIdentity());
     
-    nonIdentity.translation = Vector3f(0, 0, 0);
+    nonIdentity.translation = Math::WorldCoordinates(Vector3f(0, 0, 0));
     nonIdentity.rotation = Vector3f(0.1f, 0, 0);
     EXPECT_FALSE(nonIdentity.isIdentity());
     

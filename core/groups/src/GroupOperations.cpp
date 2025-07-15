@@ -35,12 +35,10 @@ bool MoveGroupOperation::execute() {
     for (const auto& voxel : voxelList) {
         // Use VoxelId's getWorldPosition() method which handles centered coordinate system
         Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
-        Math::Vector3f worldPos = worldCoords.value();
-        Math::Vector3f newWorldPos = worldPos + m_offset.value();
+        Math::WorldCoordinates newWorldCoords = worldCoords + m_offset;
         
         // Convert back to grid coordinates using the centralized converter
-        Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
-            Math::WorldCoordinates(newWorldPos));
+        Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(newWorldCoords);
         
         VoxelId newVoxel(newGridCoords, voxel.resolution);
         m_voxelMoves.emplace_back(voxel, newVoxel);
@@ -231,7 +229,7 @@ std::string CopyGroupOperation::getDescription() const {
 RotateGroupOperation::RotateGroupOperation(GroupManager* groupManager,
                                          VoxelData::VoxelDataManager* voxelManager,
                                          GroupId groupId, const Math::Vector3f& eulerAngles,
-                                         const Math::Vector3f& pivot)
+                                         const Math::WorldCoordinates& pivot)
     : m_groupManager(groupManager)
     , m_voxelManager(voxelManager)
     , m_groupId(groupId)
@@ -267,7 +265,7 @@ bool RotateGroupOperation::execute() {
         Math::Vector3f worldPos = worldCoords.value();
         
         // Translate to pivot
-        Math::Vector3f relPos = worldPos - m_pivot;
+        Math::Vector3f relPos = worldPos - m_pivot.value();
         
         // Apply rotation (ZYX order)
         Math::Vector3f rotated;
@@ -290,7 +288,7 @@ bool RotateGroupOperation::execute() {
         relPos.z = tempZ;
         
         // Translate back from pivot
-        Math::Vector3f newWorldPos = relPos + m_pivot;
+        Math::Vector3f newWorldPos = relPos + m_pivot.value();
         
         // Convert back to grid coordinates using the centralized converter
         Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
@@ -373,7 +371,7 @@ std::string RotateGroupOperation::getDescription() const {
 ScaleGroupOperation::ScaleGroupOperation(GroupManager* groupManager,
                                        VoxelData::VoxelDataManager* voxelManager,
                                        GroupId groupId, float scaleFactor,
-                                       const Math::Vector3f& pivot)
+                                       const Math::WorldCoordinates& pivot)
     : m_groupManager(groupManager)
     , m_voxelManager(voxelManager)
     , m_groupId(groupId)
@@ -416,14 +414,14 @@ bool ScaleGroupOperation::execute() {
             Math::Vector3f worldPos = worldCoords.value();
             float voxelSize = VoxelData::getVoxelSize(voxel.resolution);
             
-            Math::Vector3f relPos = worldPos - m_pivot;
+            Math::Vector3f relPos = worldPos - m_pivot.value();
             
             for (int dx = 0; dx < scale; ++dx) {
                 for (int dy = 0; dy < scale; ++dy) {
                     for (int dz = 0; dz < scale; ++dz) {
                         Math::Vector3f newRelPos = relPos * m_scaleFactor + 
                             Math::Vector3f(dx * voxelSize, dy * voxelSize, dz * voxelSize);
-                        Math::Vector3f newWorldPos = newRelPos + m_pivot;
+                        Math::Vector3f newWorldPos = newRelPos + m_pivot.value();
                         
                         // Convert back to grid coordinates using the centralized converter
                         Math::IncrementCoordinates newGridCoords = Math::CoordinateConverter::worldToIncrement(
@@ -694,7 +692,7 @@ VoxelId transformVoxel(const VoxelId& voxel, const GroupTransform& transform) {
     Math::Vector3f worldPos = worldCoords.value();
     
     // Apply transformation
-    worldPos = worldPos + transform.translation;
+    worldPos = worldPos + transform.translation.value();
     // TODO: Apply rotation and scale
     
     // Convert back to grid coordinates using the centralized converter
@@ -724,15 +722,13 @@ Math::BoundingBox calculateBounds(const std::vector<VoxelId>& voxels) {
     return Math::BoundingBox(minPos, maxPos);
 }
 
-Math::Vector3f calculateOptimalPivot(const std::vector<VoxelId>& voxels) {
+Math::WorldCoordinates calculateOptimalPivot(const std::vector<VoxelId>& voxels) {
     if (voxels.empty()) {
-        return Math::Vector3f(0, 0, 0);
+        return Math::WorldCoordinates::zero();
     }
     
     Math::Vector3f center(0, 0, 0);
     float totalWeight = 0;
-    
-    Math::Vector3f workspaceSize(5.0f, 5.0f, 5.0f); // Default workspace size
     
     for (const auto& voxel : voxels) {
         Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
@@ -746,7 +742,7 @@ Math::Vector3f calculateOptimalPivot(const std::vector<VoxelId>& voxels) {
         totalWeight += 1.0f;
     }
     
-    return center / totalWeight;
+    return Math::WorldCoordinates(center / totalWeight);
 }
 
 bool validateVoxelPositions(const std::vector<VoxelId>& voxels,

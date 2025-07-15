@@ -4,8 +4,11 @@
 #include "RenderState.h"
 #include "GroundPlaneGrid.h"
 #include "../voxel_data/VoxelGrid.h"
+#include "../voxel_data/VoxelTypes.h"
 #include "../../foundation/logging/Logger.h"
 #include "../../foundation/math/Matrix4f.h"
+#include "../../foundation/math/CoordinateConverter.h"
+#include "../../foundation/math/CoordinateTypes.h"
 #include <sstream>
 #include <algorithm>
 #include <cmath>
@@ -300,7 +303,7 @@ void RenderEngine::renderMeshInternal(const Mesh& mesh, const Transform& transfo
         }
         
         // Normal matrix (inverse transpose of model-view)
-        Math::Matrix4f normalMatrix = (m_currentCamera->getViewMatrix() * modelMatrix).inverse().transposed();
+        // Math::Matrix4f normalMatrix = (m_currentCamera->getViewMatrix() * modelMatrix).inverse().transposed();
         // Note: The shader doesn't use u_normalMatrix, it calculates the normal matrix inline
         // m_glRenderer->setUniform("u_normalMatrix", UniformValue(normalMatrix));
     }
@@ -1014,14 +1017,46 @@ void RenderEngine::renderBounds(const Transform& transform) {
     (void)transform;
 }
 
-// Voxel rendering (stub for now)
+// Voxel rendering (basic implementation for testing)
 void RenderEngine::renderVoxels(const VoxelData::VoxelGrid& grid, 
                                VoxelData::VoxelResolution resolution, 
                                const RenderSettings& settings) {
-    // TODO: Implement voxel rendering
-    (void)grid;
-    (void)resolution;
-    (void)settings;
+    if (!m_glRenderer || !m_currentCamera) return;
+    
+    // Get voxel size for this resolution
+    float voxelSize = VoxelData::getVoxelSize(resolution) / 100.0f; // Convert to meters
+    
+    // Create a reusable cube mesh (could be cached)
+    Mesh cubeMesh = createCubeMesh(voxelSize);
+    
+    // Set up material based on render settings
+    Material material;
+    material.shader = getBuiltinShader(settings.renderMode == RenderMode::Wireframe ? "basic" : "enhanced");
+    material.albedo = Color(0.7f, 0.7f, 0.7f, 1.0f);
+    material.doubleSided = false;
+    
+    // Iterate through all voxels in the grid
+    // VoxelGrid doesn't have getBounds(), so we'll iterate through a reasonable range
+    const int maxRange = 50; // Reasonable range for testing
+    for (int x = -maxRange; x <= maxRange; ++x) {
+        for (int y = 0; y <= maxRange; ++y) { // Y starts at 0 (ground plane)
+            for (int z = -maxRange; z <= maxRange; ++z) {
+                Math::IncrementCoordinates voxelPos(x, y, z);
+                if (grid.getVoxel(voxelPos)) {
+                    // Convert to world coordinates
+                    auto worldPos = Math::CoordinateConverter::incrementToWorld(voxelPos);
+                    
+                    // Create transform for this voxel
+                    Transform transform;
+                    transform.position = worldPos;
+                    transform.scale = Math::Vector3f(1.0f, 1.0f, 1.0f);
+                    
+                    // Render the cube
+                    renderMesh(cubeMesh, transform, material);
+                }
+            }
+        }
+    }
 }
 
 // Direct OpenGL access methods
@@ -1189,6 +1224,70 @@ std::string RenderEngine::findShaderDirectory() const {
     
     Logging::Logger::getInstance().warning("Could not find shader directory, will use built-in shaders");
     return "";
+}
+
+// Helper method to create a cube mesh
+Mesh RenderEngine::createCubeMesh(float size) const {
+    Mesh mesh;
+    const float half = size * 0.5f;
+    
+    // Define the 8 vertices of a cube
+    const Math::Vector3f vertices[8] = {
+        Math::Vector3f(-half, -half, -half), // 0
+        Math::Vector3f( half, -half, -half), // 1
+        Math::Vector3f( half,  half, -half), // 2
+        Math::Vector3f(-half,  half, -half), // 3
+        Math::Vector3f(-half, -half,  half), // 4
+        Math::Vector3f( half, -half,  half), // 5
+        Math::Vector3f( half,  half,  half), // 6
+        Math::Vector3f(-half,  half,  half)  // 7
+    };
+    
+    // Define the 6 face normals
+    const Math::Vector3f normals[6] = {
+        Math::Vector3f( 0.0f,  0.0f, -1.0f), // Front
+        Math::Vector3f( 0.0f,  0.0f,  1.0f), // Back
+        Math::Vector3f(-1.0f,  0.0f,  0.0f), // Left
+        Math::Vector3f( 1.0f,  0.0f,  0.0f), // Right
+        Math::Vector3f( 0.0f, -1.0f,  0.0f), // Bottom
+        Math::Vector3f( 0.0f,  1.0f,  0.0f)  // Top
+    };
+    
+    // Define the face indices (2 triangles per face)
+    const int faces[6][4] = {
+        {0, 1, 2, 3}, // Front
+        {5, 4, 7, 6}, // Back
+        {4, 0, 3, 7}, // Left
+        {1, 5, 6, 2}, // Right
+        {4, 5, 1, 0}, // Bottom
+        {3, 2, 6, 7}  // Top
+    };
+    
+    // Build the mesh
+    for (int face = 0; face < 6; ++face) {
+        const int* f = faces[face];
+        int baseIndex = mesh.vertices.size();
+        
+        // Add 4 vertices for this face
+        for (int i = 0; i < 4; ++i) {
+            Vertex v;
+            v.position = Math::WorldCoordinates(vertices[f[i]]);
+            v.normal = normals[face];
+            v.color = Color(0.7f, 0.7f, 0.7f, 1.0f); // Gray color
+            mesh.vertices.push_back(v);
+        }
+        
+        // Add 2 triangles for this face
+        mesh.indices.push_back(baseIndex + 0);
+        mesh.indices.push_back(baseIndex + 1);
+        mesh.indices.push_back(baseIndex + 2);
+        
+        mesh.indices.push_back(baseIndex + 0);
+        mesh.indices.push_back(baseIndex + 2);
+        mesh.indices.push_back(baseIndex + 3);
+    }
+    
+    return mesh;
 }
 
 } // namespace Rendering

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 # Define the voxel math library
 add_library(VoxelEditor_VoxelMath STATIC
     src/VoxelBounds.cpp
-    src/VoxelGrid.cpp
+    src/VoxelGridMath.cpp
     src/FaceOperations.cpp
     src/WorkspaceValidation.cpp
     src/VoxelCollision.cpp

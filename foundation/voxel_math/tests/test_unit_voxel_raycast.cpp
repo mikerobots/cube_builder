@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/voxel_math/VoxelRaycast.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../../core/voxel_data/VoxelGrid.h"
 #include "../../math/Ray.h"
 #include <memory>

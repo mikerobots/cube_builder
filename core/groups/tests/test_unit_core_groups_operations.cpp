@@ -6,8 +6,11 @@
 #include "../include/groups/VoxelGroup.h"
 
 using namespace VoxelEditor::Groups;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 using namespace VoxelEditor::VoxelData;
+using VoxelEditor::Math::IncrementCoordinates;
+using VoxelEditor::Math::Vector3f;
+using VoxelEditor::Math::Vector3i;
 
 // Mock VoxelDataManager for testing
 class MockVoxelDataManager {
@@ -111,7 +114,7 @@ TEST_F(GroupOperationsTest, SplitGroupOperation) {
 TEST_F(GroupOperationsTest, GroupOperationUtils_TransformVoxel) {
     // REQ: Group operations: move, hide/show, lock, copy/duplicate
     VoxelId voxel(IncrementCoordinates(1, 0, 0), VoxelResolution::Size_32cm);
-    GroupTransform transform(Vector3f(1.0f, 0.0f, 0.0f));
+    GroupTransform transform(Math::WorldCoordinates(Vector3f(1.0f, 0.0f, 0.0f)));
     
     VoxelId transformed = GroupOperationUtils::transformVoxel(voxel, transform);
     
@@ -176,9 +179,9 @@ TEST_F(GroupOperationsTest, GroupOperationUtils_CalculateOptimalPivot) {
     }
     expectedPivot = expectedPivot / 3.0f; // Average of 3 voxels
     
-    EXPECT_FLOAT_EQ(pivot.x, expectedPivot.x);
-    EXPECT_FLOAT_EQ(pivot.y, expectedPivot.y);
-    EXPECT_FLOAT_EQ(pivot.z, expectedPivot.z);
+    EXPECT_FLOAT_EQ(pivot.x(), expectedPivot.x);
+    EXPECT_FLOAT_EQ(pivot.y(), expectedPivot.y);
+    EXPECT_FLOAT_EQ(pivot.z(), expectedPivot.z);
 }
 
 TEST_F(GroupOperationsTest, GroupOperationUtils_ValidateVoxelPositions) {

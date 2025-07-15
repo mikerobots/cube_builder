@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../math/Vector3f.h"
-#include "../../math/Vector3i.h"
-#include "../../math/CoordinateTypes.h"
+#include "../../../math/Vector3f.h"
+#include "../../../math/Vector3i.h"
+#include "../../../math/CoordinateTypes.h"
 #include "../../../core/voxel_data/VoxelTypes.h"
 #include <array>
 
@@ -12,8 +12,9 @@ namespace Math {
 /**
  * Handles all grid-related calculations and snapping operations.
  * Provides consistent grid alignment and coordinate conversions.
+ * Named VoxelGridMath to avoid conflict with VoxelData::VoxelGrid.
  */
-class VoxelGrid {
+class VoxelGridMath {
 public:
     // Constants
     static constexpr float CM_TO_METERS = 0.01f;

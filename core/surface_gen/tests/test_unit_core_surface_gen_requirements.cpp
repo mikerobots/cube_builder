@@ -10,21 +10,21 @@
 
 using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::VoxelData;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 
 // Test fixture for Surface Generation requirements
 class SurfaceGenRequirementsTest : public ::testing::Test {
 protected:
     void SetUp() override {
         // Create test grid with smaller workspace for faster tests
-        workspaceSize = Vector3f(2.0f, 2.0f, 2.0f);
+        workspaceSize = Math::Vector3f(2.0f, 2.0f, 2.0f);
         testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_32cm, workspaceSize);
         
         // Add minimal test voxels (2x2x2 cube instead of 3x3x3)
         for (int z = 0; z < 2; ++z) {
             for (int y = 0; y < 2; ++y) {
                 for (int x = 0; x < 2; ++x) {
-                    testGrid->setVoxel(IncrementCoordinates(x * 32, y * 32, z * 32), true);
+                    testGrid->setVoxel(Math::IncrementCoordinates(x * 32, y * 32, z * 32), true);
                 }
             }
         }
@@ -35,21 +35,21 @@ protected:
         testGrid->clear();
         // Minimal L-shape: just 3 voxels
         // Horizontal part
-        testGrid->setVoxel(IncrementCoordinates(0, 0, 0), true);
-        testGrid->setVoxel(IncrementCoordinates(32, 0, 0), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(0, 0, 0), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(32, 0, 0), true);
         // Vertical part
-        testGrid->setVoxel(IncrementCoordinates(0, 32, 0), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(0, 32, 0), true);
     }
     
-    Vector3f workspaceSize;
+    Math::Vector3f workspaceSize;
     std::unique_ptr<VoxelGrid> testGrid;
 };
 
 // REQ-10.1.1: System shall use Dual Contouring algorithm for surface generation
 TEST_F(SurfaceGenRequirementsTest, DualContouringAlgorithm) {
     // Create minimal test case with single voxel
-    VoxelGrid singleVoxelGrid(VoxelResolution::Size_32cm, Vector3f(1.0f, 1.0f, 1.0f));
-    singleVoxelGrid.setVoxel(IncrementCoordinates(32, 32, 32), true);
+    VoxelGrid singleVoxelGrid(VoxelResolution::Size_32cm, Math::Vector3f(1.0f, 1.0f, 1.0f));
+    singleVoxelGrid.setVoxel(Math::IncrementCoordinates(32, 32, 32), true);
     
     // Verify that DualContouring class exists and can generate meshes
     // Use DualContouringSparse for speed in tests
@@ -137,9 +137,9 @@ TEST_F(SurfaceGenRequirementsTest, MultiResolutionLOD) {
     }
     
     // Verify LOD calculation based on distance
-    BoundingBox bounds;
-    bounds.min = Vector3f(0, 0, 0);
-    bounds.max = Vector3f(10, 10, 10);
+    Math::BoundingBox bounds;
+    bounds.min = Math::Vector3f(0, 0, 0);
+    bounds.max = Math::Vector3f(10, 10, 10);
     
     int nearLOD = generator.calculateLOD(5.0f, bounds);
     int farLOD = generator.calculateLOD(500.0f, bounds);  // Use larger distance
@@ -228,7 +228,7 @@ TEST_F(SurfaceGenRequirementsTest, SharpEdgePreservation) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x <= y; ++x) {
             for (int z = 1; z < 3; ++z) {
-                testGrid->setVoxel(IncrementCoordinates((x + 2) * 32, (y + 2) * 32, z * 32), true);
+                testGrid->setVoxel(Math::IncrementCoordinates((x + 2) * 32, (y + 2) * 32, z * 32), true);
             }
         }
     }
@@ -270,7 +270,7 @@ TEST_F(SurfaceGenRequirementsTest, DISABLED_MemoryConstraints) {
     // Generate multiple meshes to fill cache
     for (int i = 0; i < 10; ++i) {
         // Modify grid slightly each time
-        testGrid->setVoxel(IncrementCoordinates((i % 8) * 32, (i % 8) * 32, (i % 8) * 32), true);
+        testGrid->setVoxel(Math::IncrementCoordinates((i % 8) * 32, (i % 8) * 32, (i % 8) * 32), true);
         
         Mesh mesh = generator.generateSurface(*testGrid);
         EXPECT_TRUE(mesh.isValid());
@@ -314,9 +314,9 @@ TEST_F(SurfaceGenRequirementsTest, STLExportSupport) {
     
     // 3. Non-degenerate triangles (we'll check a few)
     for (size_t i = 0; i < std::min(size_t(10), mesh.indices.size() / 3); i += 3) {
-        Vector3f v0 = mesh.vertices[mesh.indices[i]].value();
-        Vector3f v1 = mesh.vertices[mesh.indices[i + 1]].value();
-        Vector3f v2 = mesh.vertices[mesh.indices[i + 2]].value();
+        Math::Vector3f v0 = mesh.vertices[mesh.indices[i]].value();
+        Math::Vector3f v1 = mesh.vertices[mesh.indices[i + 1]].value();
+        Math::Vector3f v2 = mesh.vertices[mesh.indices[i + 2]].value();
         
         // Vertices should be distinct
         EXPECT_NE(v0, v1);

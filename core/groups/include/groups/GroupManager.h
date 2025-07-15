@@ -5,7 +5,7 @@
 #include "GroupHierarchy.h"
 #include "GroupOperations.h"
 #include "GroupEvents.h"
-#include "voxel_data/VoxelDataManager.h"
+#include "../../voxel_data/VoxelDataManager.h"
 #include "events/EventDispatcher.h"
 #include <unordered_map>
 #include <memory>
@@ -62,13 +62,13 @@ public:
     bool isGroupLocked(GroupId id) const;
     
     // Group operations
-    bool moveGroup(GroupId id, const Math::Vector3f& offset);
+    bool moveGroup(GroupId id, const Math::WorldCoordinates& offset);
     GroupId copyGroup(GroupId id, const std::string& newName = "", 
-                     const Math::Vector3f& offset = Math::Vector3f(0, 0, 0));
+                     const Math::WorldCoordinates& offset = Math::WorldCoordinates::zero());
     bool rotateGroup(GroupId id, const Math::Vector3f& eulerAngles, 
-                    const Math::Vector3f& pivot = Math::Vector3f(0, 0, 0));
+                    const Math::WorldCoordinates& pivot = Math::WorldCoordinates::zero());
     bool scaleGroup(GroupId id, float scaleFactor, 
-                   const Math::Vector3f& pivot = Math::Vector3f(0, 0, 0));
+                   const Math::WorldCoordinates& pivot = Math::WorldCoordinates::zero());
     
     // Batch operations
     GroupId mergeGroups(const std::vector<GroupId>& sourceIds, const std::string& targetName);
@@ -161,9 +161,9 @@ private:
                                                        const Math::WorldCoordinates& offset);
     std::unique_ptr<GroupOperation> createRotateOperation(GroupId groupId, 
                                                          const Math::Vector3f& eulerAngles,
-                                                         const Math::Vector3f& pivot);
+                                                         const Math::WorldCoordinates& pivot);
     std::unique_ptr<GroupOperation> createScaleOperation(GroupId groupId, float scaleFactor,
-                                                        const Math::Vector3f& pivot);
+                                                        const Math::WorldCoordinates& pivot);
 };
 
 } // namespace Groups

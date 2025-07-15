@@ -5,6 +5,8 @@
 #include "../../foundation/math/Vector3i.h"
 #include "../../foundation/math/CoordinateTypes.h"
 #include "../../foundation/math/CoordinateConverter.h"
+// Note: voxel_math headers will be used in implementation file only to avoid
+// circular dependency issues with VoxelDataManager
 #include "../voxel_data/VoxelTypes.h"
 
 // Forward declarations for Phase 3 enhancements

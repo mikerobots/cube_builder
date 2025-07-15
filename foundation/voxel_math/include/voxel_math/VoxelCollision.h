@@ -1,11 +1,11 @@
 #pragma once
 
 #include <optional>
-#include "../../math/Vector3i.h"
-#include "../../math/CoordinateTypes.h"
+#include "../../../math/Vector3i.h"
+#include "../../../math/CoordinateTypes.h"
 #include "../../../core/voxel_data/VoxelTypes.h"
 #include "VoxelBounds.h"
-#include "VoxelGrid.h"
+#include "VoxelGridMath.h"
 #include <vector>
 #include <unordered_set>
 
@@ -31,7 +31,7 @@ public:
         VoxelBounds bounds;
         
         VoxelInfo(const IncrementCoordinates& pos, VoxelData::VoxelResolution res)
-            : position(pos), resolution(res), bounds(pos, VoxelEditor::Math::VoxelGrid::getVoxelSizeMeters(res)) {}
+            : position(pos), resolution(res), bounds(pos, VoxelGridMath::getVoxelSizeMeters(res)) {}
     };
     
     /**

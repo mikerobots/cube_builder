@@ -1,5 +1,8 @@
 #include "PlacementValidation.h"
 #include "../voxel_data/VoxelDataManager.h"
+#include "voxel_math/VoxelBounds.h"
+#include "voxel_math/VoxelCollision.h"
+#include "voxel_math/WorkspaceValidation.h"
 #include <cmath>
 
 namespace VoxelEditor {
@@ -30,30 +33,15 @@ PlacementValidationResult PlacementUtils::validatePlacement(const Math::Incremen
         return PlacementValidationResult::InvalidPosition;
     }
     
-    // Check Y >= 0 constraint first (before general bounds check)
-    if (incrementPos.y() < 0) {
+    // Use WorkspaceValidation to check ground plane constraint
+    if (!Math::WorkspaceValidation::isAboveGroundPlane(incrementPos)) {
         return PlacementValidationResult::InvalidYBelowZero;
     }
     
-    // Check if the entire voxel fits within workspace bounds
-    // Get the voxel size in centimeters
-    float voxelSizeMeters = VoxelData::getVoxelSize(resolution);
-    int voxelSizeCm = static_cast<int>(voxelSizeMeters * Math::CoordinateConverter::METERS_TO_CM);
+    // Create workspace bounds and check if voxel fits
+    Math::WorkspaceValidation::WorkspaceBounds bounds = Math::WorkspaceValidation::createBounds(workspaceSize);
     
-    // Convert workspace bounds to increment coordinates
-    int halfX_cm = static_cast<int>(workspaceSize.x * Math::CoordinateConverter::METERS_TO_CM * 0.5f);
-    int halfZ_cm = static_cast<int>(workspaceSize.z * Math::CoordinateConverter::METERS_TO_CM * 0.5f);
-    int height_cm = static_cast<int>(workspaceSize.y * Math::CoordinateConverter::METERS_TO_CM);
-    
-    // Check if voxel position is within bounds (centered coordinate system)
-    if (incrementPos.x() < -halfX_cm || incrementPos.x() > halfX_cm ||
-        incrementPos.z() < -halfZ_cm || incrementPos.z() > halfZ_cm) {
-        return PlacementValidationResult::InvalidOutOfBounds;
-    }
-    
-    // Check if the top of the voxel would exceed workspace height
-    // Voxel bottom is at incrementPos.y(), top is at incrementPos.y() + voxelSizeCm
-    if (incrementPos.y() + voxelSizeCm > height_cm) {
+    if (!Math::WorkspaceValidation::voxelFitsInBounds(incrementPos, resolution, bounds)) {
         return PlacementValidationResult::InvalidOutOfBounds;
     }
     
@@ -64,9 +52,8 @@ PlacementValidationResult PlacementUtils::validatePlacement(const Math::Incremen
 }
 
 bool PlacementUtils::isValidIncrementPosition(const Math::IncrementCoordinates& pos) {
-    // Basic validation: Y must be >= 0 (ground plane constraint)
-    // Workspace bounds check requires workspace size, so this method only checks the basic constraint
-    return pos.y() >= 0;
+    // Use WorkspaceValidation to check ground plane constraint
+    return Math::WorkspaceValidation::isAboveGroundPlane(pos);
 }
 
 PlacementContext PlacementUtils::getPlacementContext(const Math::WorldCoordinates& worldPos,
@@ -106,27 +93,20 @@ Math::IncrementCoordinates PlacementUtils::snapToSameSizeVoxel(const Math::World
     float voxelSize = VoxelData::getVoxelSize(resolution);
     (void)voxelSize; // Mark as unused
     
-    // Check for adjacent same-size voxels that we should align with
-    // Look in a 3x3x3 area around the proposed position
-    int searchRadius = 2; // Check 2 voxel widths in each direction
+    // Use VoxelCollision to find nearby voxels more efficiently
+    Math::VoxelBounds searchBounds(incrementPos, voxelSize * 3.0f); // Search in 3x voxel size radius
+    const VoxelData::VoxelGrid* grid = dataManager.getGrid(resolution);
+    if (!grid) {
+        // No grid for this resolution, use standard grid alignment
+        return incrementPos;
+    }
+    auto nearbyVoxels = Math::VoxelCollision::getVoxelsInRegion(searchBounds, *grid);
     
-    for (int dx = -searchRadius; dx <= searchRadius; ++dx) {
-        for (int dy = -searchRadius; dy <= searchRadius; ++dy) {
-            for (int dz = -searchRadius; dz <= searchRadius; ++dz) {
-                // Skip center position
-                if (dx == 0 && dy == 0 && dz == 0) continue;
-                
-                Math::IncrementCoordinates checkPos(incrementPos.x() + dx, incrementPos.y() + dy, incrementPos.z() + dz);
-                
-                // Check if there's a voxel at this position with the same resolution
-                if (dataManager.getVoxel(checkPos, resolution)) {
-                    // Found a same-size voxel nearby!
-                    // For same-size voxels, grid alignment is automatic
-                    // The grid-aligned position is already correct
-                    return incrementPos;
-                }
-            }
-        }
+    if (!nearbyVoxels.empty()) {
+        // Found same-size voxels nearby!
+        // For same-size voxels, grid alignment is automatic
+        // The grid-aligned position is already correct
+        return incrementPos;
     }
     
     // No same-size voxels found nearby, use standard grid alignment

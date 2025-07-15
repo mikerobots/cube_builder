@@ -1,4 +1,4 @@
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../math/CoordinateConverter.h"
 #include <cmath>
 
@@ -6,15 +6,15 @@ namespace VoxelEditor {
 namespace Math {
 
 // Define static constexpr members
-constexpr float VoxelGrid::VOXEL_SIZES_METERS[10];
-constexpr int VoxelGrid::VOXEL_SIZES_CM[10];
+constexpr float VoxelGridMath::VOXEL_SIZES_METERS[10];
+constexpr int VoxelGridMath::VOXEL_SIZES_CM[10];
 
-IncrementCoordinates VoxelGrid::snapToIncrementGrid(const WorldCoordinates& world) {
+IncrementCoordinates VoxelGridMath::snapToIncrementGrid(const WorldCoordinates& world) {
     // Use the coordinate converter which already implements proper rounding
     return CoordinateConverter::worldToIncrement(world);
 }
 
-IncrementCoordinates VoxelGrid::snapToVoxelGrid(const WorldCoordinates& world, 
+IncrementCoordinates VoxelGridMath::snapToVoxelGrid(const WorldCoordinates& world, 
                                                VoxelData::VoxelResolution resolution) {
     // First convert to increment coordinates
     IncrementCoordinates increment = snapToIncrementGrid(world);
@@ -23,7 +23,7 @@ IncrementCoordinates VoxelGrid::snapToVoxelGrid(const WorldCoordinates& world,
     return snapToVoxelGrid(increment, resolution);
 }
 
-IncrementCoordinates VoxelGrid::snapToVoxelGrid(const IncrementCoordinates& increment, 
+IncrementCoordinates VoxelGridMath::snapToVoxelGrid(const IncrementCoordinates& increment, 
                                                VoxelData::VoxelResolution resolution) {
     int voxelSizeCm = getVoxelSizeCm(resolution);
     const Vector3i& pos = increment.value();
@@ -57,7 +57,7 @@ IncrementCoordinates VoxelGrid::snapToVoxelGrid(const IncrementCoordinates& incr
     return IncrementCoordinates(snappedX, snappedY, snappedZ);
 }
 
-bool VoxelGrid::isAlignedToGrid(const IncrementCoordinates& pos, 
+bool VoxelGridMath::isAlignedToGrid(const IncrementCoordinates& pos, 
                                 VoxelData::VoxelResolution resolution) {
     int voxelSizeCm = getVoxelSizeCm(resolution);
     const Vector3i& p = pos.value();
@@ -68,7 +68,7 @@ bool VoxelGrid::isAlignedToGrid(const IncrementCoordinates& pos,
            (p.z % voxelSizeCm == 0);
 }
 
-bool VoxelGrid::isOnIncrementGrid(const WorldCoordinates& world) {
+bool VoxelGridMath::isOnIncrementGrid(const WorldCoordinates& world) {
     const Vector3f& w = world.value();
     
     // Convert to centimeters and check if the result is close to an integer
@@ -83,7 +83,7 @@ bool VoxelGrid::isOnIncrementGrid(const WorldCoordinates& world) {
            (std::abs(zCm - std::round(zCm)) < epsilon);
 }
 
-float VoxelGrid::getVoxelSizeMeters(VoxelData::VoxelResolution resolution) {
+float VoxelGridMath::getVoxelSizeMeters(VoxelData::VoxelResolution resolution) {
     // Use cached values for performance
     int index = static_cast<int>(resolution);
     if (index >= 0 && index < 10) {
@@ -93,7 +93,7 @@ float VoxelGrid::getVoxelSizeMeters(VoxelData::VoxelResolution resolution) {
     return 0.01f;
 }
 
-int VoxelGrid::getVoxelSizeCm(VoxelData::VoxelResolution resolution) {
+int VoxelGridMath::getVoxelSizeCm(VoxelData::VoxelResolution resolution) {
     // Use cached values for performance
     int index = static_cast<int>(resolution);
     if (index >= 0 && index < 10) {
@@ -103,7 +103,7 @@ int VoxelGrid::getVoxelSizeCm(VoxelData::VoxelResolution resolution) {
     return 1;
 }
 
-Vector3i VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection direction, int voxelSizeCm) {
+Vector3i VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection direction, int voxelSizeCm) {
     switch (direction) {
         case VoxelData::FaceDirection::PosX:
             return Vector3i(voxelSizeCm, 0, 0);
@@ -122,7 +122,7 @@ Vector3i VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection direction, i
     }
 }
 
-IncrementCoordinates VoxelGrid::getAdjacentPosition(const IncrementCoordinates& pos, 
+IncrementCoordinates VoxelGridMath::getAdjacentPosition(const IncrementCoordinates& pos, 
                                                    VoxelData::FaceDirection direction, 
                                                    VoxelData::VoxelResolution resolution) {
     int voxelSizeCm = getVoxelSizeCm(resolution);
@@ -132,7 +132,7 @@ IncrementCoordinates VoxelGrid::getAdjacentPosition(const IncrementCoordinates& 
     return IncrementCoordinates(p.x + offset.x, p.y + offset.y, p.z + offset.z);
 }
 
-void VoxelGrid::getAdjacentPositions(const IncrementCoordinates& pos,
+void VoxelGridMath::getAdjacentPositions(const IncrementCoordinates& pos,
                                     VoxelData::VoxelResolution resolution,
                                     IncrementCoordinates adjacentPositions[6]) {
     int voxelSizeCm = getVoxelSizeCm(resolution);

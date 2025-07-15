@@ -40,6 +40,7 @@ target_include_directories(VoxelEditor_Input PUBLIC
 # Link dependencies
 target_link_libraries(VoxelEditor_Input
     VoxelEditor_Math
+    VoxelEditor_VoxelMath  # Added for voxel math utilities
     VoxelEditor_Events
     VoxelEditor_Camera
     VoxelEditor_VoxelData

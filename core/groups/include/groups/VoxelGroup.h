@@ -52,14 +52,14 @@ public:
     void invalidateBounds() { m_boundsValid = false; }
     
     // Pivot point
-    Math::Vector3f getPivot() const { return m_metadata.pivot; }
-    void setPivot(const Math::Vector3f& pivot);
-    Math::Vector3f getCenter() const;
+    Math::WorldCoordinates getPivot() const { return m_metadata.pivot; }
+    void setPivot(const Math::WorldCoordinates& pivot);
+    Math::WorldCoordinates getCenter() const;
     
     // Transform operations
-    void translate(const Math::Vector3f& offset);
-    void rotate(const Math::Vector3f& eulerAngles, const Math::Vector3f& pivot);
-    void scale(float factor, const Math::Vector3f& pivot);
+    void translate(const Math::WorldCoordinates& offset);
+    void rotate(const Math::Vector3f& eulerAngles, const Math::WorldCoordinates& pivot);
+    void scale(float factor, const Math::WorldCoordinates& pivot);
     
     // Utility
     GroupInfo getInfo() const;

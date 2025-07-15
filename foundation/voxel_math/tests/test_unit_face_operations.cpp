@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "../include/voxel_math/FaceOperations.h"
 #include "../include/voxel_math/VoxelBounds.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include <cmath>
 
 using namespace VoxelEditor;

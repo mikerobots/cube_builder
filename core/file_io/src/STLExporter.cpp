@@ -241,7 +241,7 @@ Rendering::Mesh STLExporter::translateMesh(const Rendering::Mesh& mesh, const Ma
     Rendering::Mesh translatedMesh = mesh;
     
     for (auto& vertex : translatedMesh.vertices) {
-        vertex.position += Math::WorldCoordinates(translation);
+        vertex.position = VoxelEditor::Math::WorldCoordinates(vertex.position.value() + translation);
     }
     
     return translatedMesh;

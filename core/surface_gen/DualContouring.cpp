@@ -201,7 +201,7 @@ Mesh DualContouring::generateMesh(const VoxelData::VoxelGrid& grid, const Surfac
     m_sampler.isoValue = 0.5f; // Use default iso value
     
     Math::Vector3i dims = grid.getGridDimensions();
-    float voxelSize = grid.getVoxelSize();
+    float voxelSize = Math::VoxelGridMath::getVoxelSizeMeters(grid.getResolution());
     Logging::Logger::getInstance().debugfc("DualContouring", 
         "Starting dual contouring: grid=%dx%dx%d, voxelSize=%.3f", 
         dims.x, dims.y, dims.z, voxelSize);

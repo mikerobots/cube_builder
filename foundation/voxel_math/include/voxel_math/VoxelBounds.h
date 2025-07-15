@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../math/Vector3f.h"
-#include "../../math/CoordinateTypes.h"
-#include "../../math/BoundingBox.h"
-#include "../../math/Ray.h"
+#include "../../../math/Vector3f.h"
+#include "../../../math/CoordinateTypes.h"
+#include "../../../math/BoundingBox.h"
+#include "../../../math/Ray.h"
 #include "../../../core/voxel_data/VoxelTypes.h"
 
 namespace VoxelEditor {

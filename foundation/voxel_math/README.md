@@ -74,16 +74,16 @@ bool hit = bounds.intersectsRay(ray, tMin, tMax);
 ### VoxelGrid
 ```cpp
 // Snap to 1cm increment grid
-IncrementCoordinates snapped = VoxelGrid::snapToIncrementGrid(worldPos);
+IncrementCoordinates snapped = VoxelGridMath::snapToIncrementGrid(worldPos);
 
 // Snap to voxel grid for specific resolution
-IncrementCoordinates voxelSnapped = VoxelGrid::snapToVoxelGrid(worldPos, resolution);
+IncrementCoordinates voxelSnapped = VoxelGridMath::snapToVoxelGrid(worldPos, resolution);
 
 // Check grid alignment
-bool aligned = VoxelGrid::isAlignedToGrid(pos, resolution);
+bool aligned = VoxelGridMath::isAlignedToGrid(pos, resolution);
 
 // Get adjacent positions
-IncrementCoordinates adjacent = VoxelGrid::getAdjacentPosition(pos, direction, resolution);
+IncrementCoordinates adjacent = VoxelGridMath::getAdjacentPosition(pos, direction, resolution);
 ```
 
 ### FaceOperations

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/voxel_math/WorkspaceValidation.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../math/CoordinateConverter.h"
 
 using namespace VoxelEditor;

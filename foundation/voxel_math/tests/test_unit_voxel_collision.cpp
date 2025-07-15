@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/voxel_math/VoxelCollision.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../../core/voxel_data/VoxelGrid.h"
 #include "../../../core/voxel_data/VoxelDataManager.h"
 #include <memory>

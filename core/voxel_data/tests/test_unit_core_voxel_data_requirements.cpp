@@ -320,6 +320,11 @@ TEST_F(VoxelDataRequirementsTest, AdjacentPositionCalculation) {
     for (const auto& test : directions) {
         VoxelEditor::Math::Vector3i adjacentPos = manager->getAdjacentPosition(sourcePos, test.face, sourceRes, sourceRes);
         
+        // Debug: Log expected vs actual positions
+        VoxelEditor::Math::Vector3i expectedAdjacentPos = sourcePos + test.expectedOffset;
+        EXPECT_EQ(adjacentPos, expectedAdjacentPos) 
+            << "Adjacent position calculation incorrect for face " << static_cast<int>(test.face);
+        
         // Check if the adjacent position would be below Y=0 (which is not allowed)
         if (adjacentPos.y < 0) {
             // Verify that placement fails due to Y < 0 constraint
@@ -327,10 +332,23 @@ TEST_F(VoxelDataRequirementsTest, AdjacentPositionCalculation) {
             EXPECT_FALSE(placed) << "Should NOT be able to place voxel below Y=0 at position (" 
                                 << adjacentPos.x << ", " << adjacentPos.y << ", " << adjacentPos.z << ")";
         } else {
+            // For adjacent voxels that touch but don't overlap, we need to ensure proper spacing
+            // Adjacent voxels should touch at their boundaries but not overlap
+            // The test expects that two same-size voxels can be placed touching each other
+            
+            // Check position validation before attempting placement
+            auto validation = manager->validatePosition(VoxelEditor::Math::IncrementCoordinates(adjacentPos), sourceRes, true);
+            
             // Should be able to place a voxel at the adjacent position
             bool placed = manager->setVoxel(adjacentPos, sourceRes, true);
             EXPECT_TRUE(placed) << "Should be able to place voxel adjacent to face: " << static_cast<int>(test.face)
-                               << " at position (" << adjacentPos.x << ", " << adjacentPos.y << ", " << adjacentPos.z << ")";
+                               << " at position (" << adjacentPos.x << ", " << adjacentPos.y << ", " << adjacentPos.z << ")"
+                               << " Validation: valid=" << validation.valid 
+                               << ", withinBounds=" << validation.withinBounds
+                               << ", aboveGroundPlane=" << validation.aboveGroundPlane
+                               << ", noOverlap=" << validation.noOverlap
+                               << ", error: " << validation.errorMessage
+                               << "\nSource voxel at (" << sourcePos.x << "," << sourcePos.y << "," << sourcePos.z << ")";
             
             // Clean up for next iteration
             if (placed) {

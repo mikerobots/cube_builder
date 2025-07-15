@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../math/CoordinateTypes.h"
+#include "../../../math/CoordinateTypes.h"
 #include "../../../core/voxel_data/VoxelTypes.h"
 #include "VoxelBounds.h"
 #include <cstddef>

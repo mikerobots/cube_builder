@@ -1,5 +1,5 @@
 #include "../include/voxel_math/VoxelRaycast.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../include/voxel_math/FaceOperations.h"
 #include "../../../core/voxel_data/VoxelGrid.h"
 #include "../../math/CoordinateConverter.h"
@@ -16,7 +16,7 @@ VoxelRaycast::RaycastResult VoxelRaycast::raycastVoxel(const Ray& ray,
     RaycastResult result;
     
     // Create voxel bounds
-    VoxelBounds voxelBounds(voxelPos, VoxelGrid::getVoxelSizeMeters(resolution));
+    VoxelBounds voxelBounds(voxelPos, VoxelGridMath::getVoxelSizeMeters(resolution));
     
     // Test ray-box intersection
     float tMin, tMax;
@@ -240,14 +240,14 @@ void VoxelRaycast::initializeTraversal(const Ray& ray,
                                       VoxelData::VoxelResolution resolution,
                                       TraversalState& state) {
     // Get voxel size
-    float voxelSize = VoxelGrid::getVoxelSizeMeters(resolution);
-    int voxelSizeCm = VoxelGrid::getVoxelSizeCm(resolution);
+    float voxelSize = VoxelGridMath::getVoxelSizeMeters(resolution);
+    int voxelSizeCm = VoxelGridMath::getVoxelSizeCm(resolution);
     
     // Convert ray origin to increment coordinates and snap to voxel grid
     IncrementCoordinates rayIncrement = CoordinateConverter::worldToIncrement(WorldCoordinates(ray.origin));
     
     // Snap to voxel grid boundaries
-    state.current = VoxelGrid::snapToVoxelGrid(rayIncrement, resolution);
+    state.current = VoxelGridMath::snapToVoxelGrid(rayIncrement, resolution);
     
     // Calculate step direction
     state.step = Vector3i(

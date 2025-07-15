@@ -169,15 +169,14 @@ TEST_F(PlacementValidationTest, ValidatePlacementBasic) {
     // Test 7: Large voxel placement near boundary
     {
         // 64cm voxel at 2.2m position - voxel extends to 2.84m (past 2.5m bound)
-        // NOTE: Current implementation only checks if placement position is within bounds,
-        // not if the full voxel fits. This matches VoxelDataManager behavior.
+        // NOTE: Current implementation checks if the full voxel fits within bounds.
+        // This matches VoxelDataManager behavior which uses isVoxelExtentWithinBoundsInternal.
         IncrementCoordinates gridPos(220, 0, 220);
         auto result = PlacementUtils::validatePlacement(gridPos, 
             VoxelData::VoxelResolution::Size_64cm, m_workspaceSize);
-        // Since 2.2m is within the 2.5m bound, this is considered valid
-        // even though the voxel extends past the boundary
-        EXPECT_EQ(result, PlacementValidationResult::Valid)
-            << "Placement position within bounds should be valid (current behavior doesn't check full voxel)";
+        // Since the voxel would extend past the 2.5m boundary, this is invalid
+        EXPECT_EQ(result, PlacementValidationResult::InvalidOutOfBounds)
+            << "Voxel extending past bounds should be invalid";
     }
     
     // Test 8: Different resolution voxels at same position
@@ -194,11 +193,11 @@ TEST_F(PlacementValidationTest, ValidatePlacementBasic) {
             VoxelData::VoxelResolution::Size_32cm, m_workspaceSize);
         EXPECT_EQ(result32cm, PlacementValidationResult::Valid);
         
-        // 256cm voxel - current implementation only checks placement position
+        // 256cm voxel - current implementation checks if full voxel fits
         auto result256cm = PlacementUtils::validatePlacement(gridPos, 
             VoxelData::VoxelResolution::Size_256cm, m_workspaceSize);
-        // At position 1m,1m,1m placement is within bounds, so it's valid
-        // (even though the voxel would extend past bounds)
+        // At position 1m,1m,1m with 256cm size, voxel actually fits within bounds:
+        // X: -28cm to 228cm (within -250 to 250), Y: 100cm to 356cm (within 0 to 500), Z: -28cm to 228cm
         EXPECT_EQ(result256cm, PlacementValidationResult::Valid);
     }
 }

@@ -92,17 +92,17 @@ Math::BoundingBox VoxelGroup::getBoundingBox() const {
     return m_bounds;
 }
 
-void VoxelGroup::setPivot(const Math::Vector3f& pivot) {
+void VoxelGroup::setPivot(const Math::WorldCoordinates& pivot) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_metadata.pivot = pivot;
     m_metadata.updateModified();
 }
 
-Math::Vector3f VoxelGroup::getCenter() const {
-    return getBoundingBox().getCenter();
+Math::WorldCoordinates VoxelGroup::getCenter() const {
+    return Math::WorldCoordinates(getBoundingBox().getCenter());
 }
 
-void VoxelGroup::translate(const Math::Vector3f& offset) {
+void VoxelGroup::translate(const Math::WorldCoordinates& offset) {
     std::lock_guard<std::mutex> lock(m_mutex);
     
     // Create new voxel set with translated positions
@@ -113,12 +113,10 @@ void VoxelGroup::translate(const Math::Vector3f& offset) {
         // Use VoxelId's coordinate conversion method instead of direct multiplication
         // This ensures we use the centered coordinate system properly
         Math::WorldCoordinates worldCoords = voxel.getWorldPosition();
-        Math::Vector3f worldPos = worldCoords.value();
-        worldPos = worldPos + offset;
+        Math::WorldCoordinates newWorldCoords = worldCoords + offset;
         
         // Convert back to increment coordinates using the centralized converter
-        Math::IncrementCoordinates newIncrementCoords = Math::CoordinateConverter::worldToIncrement(
-            Math::WorldCoordinates(worldPos));
+        Math::IncrementCoordinates newIncrementCoords = Math::CoordinateConverter::worldToIncrement(newWorldCoords);
         
         newVoxel.position = newIncrementCoords;
         
@@ -130,7 +128,7 @@ void VoxelGroup::translate(const Math::Vector3f& offset) {
     m_metadata.updateModified();
 }
 
-void VoxelGroup::rotate(const Math::Vector3f& eulerAngles, const Math::Vector3f& pivot) {
+void VoxelGroup::rotate(const Math::Vector3f& eulerAngles, const Math::WorldCoordinates& pivot) {
     std::lock_guard<std::mutex> lock(m_mutex);
     
     // TODO: Implement rotation
@@ -143,7 +141,7 @@ void VoxelGroup::rotate(const Math::Vector3f& eulerAngles, const Math::Vector3f&
     m_metadata.updateModified();
 }
 
-void VoxelGroup::scale(float factor, const Math::Vector3f& pivot) {
+void VoxelGroup::scale(float factor, const Math::WorldCoordinates& pivot) {
     std::lock_guard<std::mutex> lock(m_mutex);
     
     // TODO: Implement scaling

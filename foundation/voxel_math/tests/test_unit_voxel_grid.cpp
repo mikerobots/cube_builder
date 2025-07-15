@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../math/CoordinateConverter.h"
 #include <cmath>
 
 using namespace VoxelEditor;
 using namespace VoxelEditor::Math;
 
-class VoxelGridTest : public ::testing::Test {
+class VoxelGridMathTest : public ::testing::Test {
 protected:
     void SetUp() override {
         // Common test data
@@ -14,11 +14,11 @@ protected:
 };
 
 // Test snap to increment grid
-TEST_F(VoxelGridTest, SnapToIncrementGrid) {
+TEST_F(VoxelGridMathTest, SnapToIncrementGrid) {
     // Test exact positions
     {
         WorldCoordinates world(Vector3f(1.0f, 2.0f, 3.0f));
-        IncrementCoordinates result = VoxelGrid::snapToIncrementGrid(world);
+        IncrementCoordinates result = VoxelGridMath::snapToIncrementGrid(world);
         EXPECT_EQ(result.x(), 100);
         EXPECT_EQ(result.y(), 200);
         EXPECT_EQ(result.z(), 300);
@@ -27,7 +27,7 @@ TEST_F(VoxelGridTest, SnapToIncrementGrid) {
     // Test positions that need rounding
     {
         WorldCoordinates world(Vector3f(1.234f, 2.567f, 3.891f));
-        IncrementCoordinates result = VoxelGrid::snapToIncrementGrid(world);
+        IncrementCoordinates result = VoxelGridMath::snapToIncrementGrid(world);
         EXPECT_EQ(result.x(), 123);  // Rounds to nearest cm
         EXPECT_EQ(result.y(), 257);
         EXPECT_EQ(result.z(), 389);
@@ -36,7 +36,7 @@ TEST_F(VoxelGridTest, SnapToIncrementGrid) {
     // Test negative positions
     {
         WorldCoordinates world(Vector3f(-1.234f, -2.567f, -3.891f));
-        IncrementCoordinates result = VoxelGrid::snapToIncrementGrid(world);
+        IncrementCoordinates result = VoxelGridMath::snapToIncrementGrid(world);
         EXPECT_EQ(result.x(), -123);
         EXPECT_EQ(result.y(), -257);
         EXPECT_EQ(result.z(), -389);
@@ -45,7 +45,7 @@ TEST_F(VoxelGridTest, SnapToIncrementGrid) {
     // Test very small positions
     {
         WorldCoordinates world(Vector3f(0.005f, 0.006f, 0.004f));
-        IncrementCoordinates result = VoxelGrid::snapToIncrementGrid(world);
+        IncrementCoordinates result = VoxelGridMath::snapToIncrementGrid(world);
         EXPECT_EQ(result.x(), 1);  // 0.5cm rounds to 1cm
         EXPECT_EQ(result.y(), 1);  // 0.6cm rounds to 1cm
         EXPECT_EQ(result.z(), 0);  // 0.4cm rounds to 0cm
@@ -53,11 +53,11 @@ TEST_F(VoxelGridTest, SnapToIncrementGrid) {
 }
 
 // Test snap to voxel grid from world coordinates
-TEST_F(VoxelGridTest, SnapToVoxelGridFromWorld) {
+TEST_F(VoxelGridMathTest, SnapToVoxelGridFromWorld) {
     // Test 16cm voxel grid
     {
         WorldCoordinates world(Vector3f(0.25f, 0.30f, 0.40f));  // 25cm, 30cm, 40cm
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(world, VoxelData::VoxelResolution::Size_16cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(world, VoxelData::VoxelResolution::Size_16cm);
         EXPECT_EQ(result.x(), 16);   // 25cm snaps to 16cm
         EXPECT_EQ(result.y(), 32);   // 30cm snaps to 32cm  
         EXPECT_EQ(result.z(), 32);   // 40cm snaps to 32cm
@@ -66,7 +66,7 @@ TEST_F(VoxelGridTest, SnapToVoxelGridFromWorld) {
     // Test 32cm voxel grid
     {
         WorldCoordinates world(Vector3f(0.50f, 0.60f, 0.70f));  // 50cm, 60cm, 70cm
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(world, VoxelData::VoxelResolution::Size_32cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(world, VoxelData::VoxelResolution::Size_32cm);
         EXPECT_EQ(result.x(), 32);   // 50cm snaps to 32cm
         EXPECT_EQ(result.y(), 64);   // 60cm snaps to 64cm
         EXPECT_EQ(result.z(), 64);   // 70cm snaps to 64cm
@@ -74,11 +74,11 @@ TEST_F(VoxelGridTest, SnapToVoxelGridFromWorld) {
 }
 
 // Test snap to voxel grid from increment coordinates
-TEST_F(VoxelGridTest, SnapToVoxelGridFromIncrement) {
+TEST_F(VoxelGridMathTest, SnapToVoxelGridFromIncrement) {
     // Test 16cm voxel grid
     {
         IncrementCoordinates increment(25, 30, 40);
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(increment, VoxelData::VoxelResolution::Size_16cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(increment, VoxelData::VoxelResolution::Size_16cm);
         EXPECT_EQ(result.x(), 16);   // 25cm snaps to 16cm
         EXPECT_EQ(result.y(), 32);   // 30cm snaps to 32cm  
         EXPECT_EQ(result.z(), 32);   // 40cm snaps to 32cm
@@ -87,7 +87,7 @@ TEST_F(VoxelGridTest, SnapToVoxelGridFromIncrement) {
     // Test negative coordinates
     {
         IncrementCoordinates increment(-25, -30, -40);
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(increment, VoxelData::VoxelResolution::Size_16cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(increment, VoxelData::VoxelResolution::Size_16cm);
         EXPECT_EQ(result.x(), -32);  // -25cm snaps to -32cm
         EXPECT_EQ(result.y(), -32);  // -30cm snaps to -32cm
         EXPECT_EQ(result.z(), -48);  // -40cm snaps to -48cm
@@ -96,7 +96,7 @@ TEST_F(VoxelGridTest, SnapToVoxelGridFromIncrement) {
     // Test already aligned positions
     {
         IncrementCoordinates increment(32, 64, 96);
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(increment, VoxelData::VoxelResolution::Size_32cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(increment, VoxelData::VoxelResolution::Size_32cm);
         EXPECT_EQ(result.x(), 32);   // Already aligned
         EXPECT_EQ(result.y(), 64);   // Already aligned
         EXPECT_EQ(result.z(), 96);   // Already aligned
@@ -104,103 +104,103 @@ TEST_F(VoxelGridTest, SnapToVoxelGridFromIncrement) {
 }
 
 // Test grid alignment check
-TEST_F(VoxelGridTest, IsAlignedToGrid) {
+TEST_F(VoxelGridMathTest, IsAlignedToGrid) {
     // Test aligned positions
-    EXPECT_TRUE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(16, 32, 48), 
+    EXPECT_TRUE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(16, 32, 48), 
                                           VoxelData::VoxelResolution::Size_16cm));
-    EXPECT_TRUE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(0, 0, 0), 
+    EXPECT_TRUE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(0, 0, 0), 
                                           VoxelData::VoxelResolution::Size_32cm));
-    EXPECT_TRUE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(64, 128, 192), 
+    EXPECT_TRUE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(64, 128, 192), 
                                           VoxelData::VoxelResolution::Size_64cm));
     
     // Test non-aligned positions
-    EXPECT_FALSE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(15, 32, 48), 
+    EXPECT_FALSE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(15, 32, 48), 
                                            VoxelData::VoxelResolution::Size_16cm));
-    EXPECT_FALSE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(16, 31, 48), 
+    EXPECT_FALSE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(16, 31, 48), 
                                            VoxelData::VoxelResolution::Size_16cm));
-    EXPECT_FALSE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(16, 32, 47), 
+    EXPECT_FALSE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(16, 32, 47), 
                                            VoxelData::VoxelResolution::Size_16cm));
     
     // Test negative aligned positions
-    EXPECT_TRUE(VoxelGrid::isAlignedToGrid(IncrementCoordinates(-16, -32, -48), 
+    EXPECT_TRUE(VoxelGridMath::isAlignedToGrid(IncrementCoordinates(-16, -32, -48), 
                                           VoxelData::VoxelResolution::Size_16cm));
 }
 
 // Test increment grid check
-TEST_F(VoxelGridTest, IsOnIncrementGrid) {
+TEST_F(VoxelGridMathTest, IsOnIncrementGrid) {
     // Test exact positions
-    EXPECT_TRUE(VoxelGrid::isOnIncrementGrid(WorldCoordinates(Vector3f(1.0f, 2.0f, 3.0f))));
-    EXPECT_TRUE(VoxelGrid::isOnIncrementGrid(WorldCoordinates(Vector3f(0.01f, 0.02f, 0.03f))));
+    EXPECT_TRUE(VoxelGridMath::isOnIncrementGrid(WorldCoordinates(Vector3f(1.0f, 2.0f, 3.0f))));
+    EXPECT_TRUE(VoxelGridMath::isOnIncrementGrid(WorldCoordinates(Vector3f(0.01f, 0.02f, 0.03f))));
     
     // Test non-grid positions
-    EXPECT_FALSE(VoxelGrid::isOnIncrementGrid(WorldCoordinates(Vector3f(1.005f, 2.0f, 3.0f))));
-    EXPECT_FALSE(VoxelGrid::isOnIncrementGrid(WorldCoordinates(Vector3f(1.0f, 2.015f, 3.0f))));
+    EXPECT_FALSE(VoxelGridMath::isOnIncrementGrid(WorldCoordinates(Vector3f(1.005f, 2.0f, 3.0f))));
+    EXPECT_FALSE(VoxelGridMath::isOnIncrementGrid(WorldCoordinates(Vector3f(1.0f, 2.015f, 3.0f))));
     
     // Test negative positions
-    EXPECT_TRUE(VoxelGrid::isOnIncrementGrid(WorldCoordinates(Vector3f(-1.0f, -2.0f, -3.0f))));
-    EXPECT_FALSE(VoxelGrid::isOnIncrementGrid(WorldCoordinates(Vector3f(-1.005f, -2.0f, -3.0f))));
+    EXPECT_TRUE(VoxelGridMath::isOnIncrementGrid(WorldCoordinates(Vector3f(-1.0f, -2.0f, -3.0f))));
+    EXPECT_FALSE(VoxelGridMath::isOnIncrementGrid(WorldCoordinates(Vector3f(-1.005f, -2.0f, -3.0f))));
 }
 
 // Test voxel size getters
-TEST_F(VoxelGridTest, VoxelSizeGetters) {
+TEST_F(VoxelGridMathTest, VoxelSizeGetters) {
     // Test meters
-    EXPECT_FLOAT_EQ(VoxelGrid::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_1cm), 0.01f);
-    EXPECT_FLOAT_EQ(VoxelGrid::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_16cm), 0.16f);
-    EXPECT_FLOAT_EQ(VoxelGrid::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_32cm), 0.32f);
-    EXPECT_FLOAT_EQ(VoxelGrid::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_512cm), 5.12f);
+    EXPECT_FLOAT_EQ(VoxelGridMath::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_1cm), 0.01f);
+    EXPECT_FLOAT_EQ(VoxelGridMath::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_16cm), 0.16f);
+    EXPECT_FLOAT_EQ(VoxelGridMath::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_32cm), 0.32f);
+    EXPECT_FLOAT_EQ(VoxelGridMath::getVoxelSizeMeters(VoxelData::VoxelResolution::Size_512cm), 5.12f);
     
     // Test centimeters
-    EXPECT_EQ(VoxelGrid::getVoxelSizeCm(VoxelData::VoxelResolution::Size_1cm), 1);
-    EXPECT_EQ(VoxelGrid::getVoxelSizeCm(VoxelData::VoxelResolution::Size_16cm), 16);
-    EXPECT_EQ(VoxelGrid::getVoxelSizeCm(VoxelData::VoxelResolution::Size_32cm), 32);
-    EXPECT_EQ(VoxelGrid::getVoxelSizeCm(VoxelData::VoxelResolution::Size_512cm), 512);
+    EXPECT_EQ(VoxelGridMath::getVoxelSizeCm(VoxelData::VoxelResolution::Size_1cm), 1);
+    EXPECT_EQ(VoxelGridMath::getVoxelSizeCm(VoxelData::VoxelResolution::Size_16cm), 16);
+    EXPECT_EQ(VoxelGridMath::getVoxelSizeCm(VoxelData::VoxelResolution::Size_32cm), 32);
+    EXPECT_EQ(VoxelGridMath::getVoxelSizeCm(VoxelData::VoxelResolution::Size_512cm), 512);
 }
 
 // Test face direction offset
-TEST_F(VoxelGridTest, FaceDirectionOffset) {
+TEST_F(VoxelGridMathTest, FaceDirectionOffset) {
     int voxelSize = 16;  // 16cm
     
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PosX, voxelSize), 
+    EXPECT_EQ(VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection::PosX, voxelSize), 
               Vector3i(16, 0, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegX, voxelSize), 
+    EXPECT_EQ(VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection::NegX, voxelSize), 
               Vector3i(-16, 0, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PosY, voxelSize), 
+    EXPECT_EQ(VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection::PosY, voxelSize), 
               Vector3i(0, 16, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegY, voxelSize), 
+    EXPECT_EQ(VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection::NegY, voxelSize), 
               Vector3i(0, -16, 0));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::PosZ, voxelSize), 
+    EXPECT_EQ(VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection::PosZ, voxelSize), 
               Vector3i(0, 0, 16));
-    EXPECT_EQ(VoxelGrid::getFaceDirectionOffset(VoxelData::FaceDirection::NegZ, voxelSize), 
+    EXPECT_EQ(VoxelGridMath::getFaceDirectionOffset(VoxelData::FaceDirection::NegZ, voxelSize), 
               Vector3i(0, 0, -16));
 }
 
 // Test adjacent position calculation
-TEST_F(VoxelGridTest, GetAdjacentPosition) {
+TEST_F(VoxelGridMathTest, GetAdjacentPosition) {
     IncrementCoordinates pos(32, 64, 96);
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_16cm;
     
     // Test each direction
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PosX, resolution),
+    EXPECT_EQ(VoxelGridMath::getAdjacentPosition(pos, VoxelData::FaceDirection::PosX, resolution),
               IncrementCoordinates(48, 64, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegX, resolution),
+    EXPECT_EQ(VoxelGridMath::getAdjacentPosition(pos, VoxelData::FaceDirection::NegX, resolution),
               IncrementCoordinates(16, 64, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PosY, resolution),
+    EXPECT_EQ(VoxelGridMath::getAdjacentPosition(pos, VoxelData::FaceDirection::PosY, resolution),
               IncrementCoordinates(32, 80, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegY, resolution),
+    EXPECT_EQ(VoxelGridMath::getAdjacentPosition(pos, VoxelData::FaceDirection::NegY, resolution),
               IncrementCoordinates(32, 48, 96));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::PosZ, resolution),
+    EXPECT_EQ(VoxelGridMath::getAdjacentPosition(pos, VoxelData::FaceDirection::PosZ, resolution),
               IncrementCoordinates(32, 64, 112));
-    EXPECT_EQ(VoxelGrid::getAdjacentPosition(pos, VoxelData::FaceDirection::NegZ, resolution),
+    EXPECT_EQ(VoxelGridMath::getAdjacentPosition(pos, VoxelData::FaceDirection::NegZ, resolution),
               IncrementCoordinates(32, 64, 80));
 }
 
 // Test bulk adjacent positions
-TEST_F(VoxelGridTest, GetAdjacentPositionsBulk) {
+TEST_F(VoxelGridMathTest, GetAdjacentPositionsBulk) {
     IncrementCoordinates pos(32, 64, 96);
     VoxelData::VoxelResolution resolution = VoxelData::VoxelResolution::Size_16cm;
     IncrementCoordinates adjacentPositions[6];
     
-    VoxelGrid::getAdjacentPositions(pos, resolution, adjacentPositions);
+    VoxelGridMath::getAdjacentPositions(pos, resolution, adjacentPositions);
     
     // Verify all 6 positions
     EXPECT_EQ(adjacentPositions[0], IncrementCoordinates(48, 64, 96));   // +X
@@ -212,18 +212,18 @@ TEST_F(VoxelGridTest, GetAdjacentPositionsBulk) {
 }
 
 // Test edge cases
-TEST_F(VoxelGridTest, EdgeCases) {
+TEST_F(VoxelGridMathTest, EdgeCases) {
     // Test very small voxels (1cm)
     {
         IncrementCoordinates pos(5, 5, 5);
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(pos, VoxelData::VoxelResolution::Size_1cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(pos, VoxelData::VoxelResolution::Size_1cm);
         EXPECT_EQ(result, pos);  // 1cm voxels should not change position
     }
     
     // Test very large voxels (512cm)
     {
         IncrementCoordinates pos(300, 400, 500);
-        IncrementCoordinates result = VoxelGrid::snapToVoxelGrid(pos, VoxelData::VoxelResolution::Size_512cm);
+        IncrementCoordinates result = VoxelGridMath::snapToVoxelGrid(pos, VoxelData::VoxelResolution::Size_512cm);
         EXPECT_EQ(result.x(), 0);    // 300cm snaps to 0cm (floor: 300/512=0)
         EXPECT_EQ(result.y(), 512);  // 400cm snaps to 512cm (Y rounds up)
         EXPECT_EQ(result.z(), 0);    // 500cm snaps to 0cm (floor: 500/512=0)
@@ -234,7 +234,7 @@ TEST_F(VoxelGridTest, EdgeCases) {
         IncrementCoordinates origin(0, 0, 0);
         for (int i = 0; i < 10; ++i) {
             auto resolution = static_cast<VoxelData::VoxelResolution>(i);
-            EXPECT_TRUE(VoxelGrid::isAlignedToGrid(origin, resolution));
+            EXPECT_TRUE(VoxelGridMath::isAlignedToGrid(origin, resolution));
         }
     }
 }

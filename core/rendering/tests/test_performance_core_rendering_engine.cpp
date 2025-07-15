@@ -112,7 +112,7 @@ protected:
             renderEngine->setCamera(camera);
             
             // Create mesh from voxel data for rendering
-            VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+            VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
             if (grid) {
                 RenderSettings settings;
                 settings.renderMode = RenderMode::Solid;
@@ -133,7 +133,7 @@ protected:
             renderEngine->beginFrame();
             renderEngine->setCamera(camera);
             
-            VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+            VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
             if (grid) {
                 RenderSettings settings;
                 settings.renderMode = RenderMode::Solid;
@@ -265,7 +265,7 @@ TEST_F(RenderPerformanceTest, RenderStatsAccuracy) {
     renderEngine->beginFrame();
     renderEngine->setCamera(camera);
     
-    VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+    VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
     if (grid) {
         RenderSettings settings;
         settings.renderMode = RenderMode::Solid;
@@ -315,7 +315,7 @@ TEST_F(RenderPerformanceTest, ConsistentFrameTiming) {
         renderEngine->beginFrame();
         renderEngine->setCamera(camera);
         
-        VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+        VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
         if (grid) {
             RenderSettings settings;
             settings.renderMode = RenderMode::Solid;

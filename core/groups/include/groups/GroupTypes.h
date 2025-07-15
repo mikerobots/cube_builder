@@ -96,7 +96,7 @@ struct GroupMetadata {
     bool visible = true;
     bool locked = false;
     float opacity = 1.0f;
-    Math::Vector3f pivot = Math::Vector3f(0, 0, 0);
+    Math::WorldCoordinates pivot = Math::WorldCoordinates::zero();
     std::string description;
     std::chrono::time_point<std::chrono::system_clock> created;
     std::chrono::time_point<std::chrono::system_clock> modified;
@@ -134,12 +134,12 @@ struct GroupInfo {
 
 // Transform structure for group operations
 struct GroupTransform {
-    Math::Vector3f translation = Math::Vector3f(0, 0, 0);
+    Math::WorldCoordinates translation = Math::WorldCoordinates::zero();
     Math::Vector3f rotation = Math::Vector3f(0, 0, 0); // Euler angles in degrees
     Math::Vector3f scale = Math::Vector3f(1, 1, 1);
     
     GroupTransform() = default;
-    GroupTransform(const Math::Vector3f& trans) : translation(trans) {}
+    GroupTransform(const Math::WorldCoordinates& trans) : translation(trans) {}
     
     bool isIdentity() const {
         return translation.length() < 0.0001f &&

@@ -7,22 +7,23 @@
 
 using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::VoxelData;
-using namespace VoxelEditor::Math;
+// Don't use Math namespace globally to avoid VoxelGrid conflict
+namespace Math = VoxelEditor::Math;
 
 class SurfaceGeneratorTest : public ::testing::Test {
 protected:
     void SetUp() override {
         // Create a simple test grid with smaller workspace for faster tests
-        gridDimensions = Vector3i(8, 8, 8);
-        workspaceSize = Vector3f(2.0f, 2.0f, 2.0f);
+        gridDimensions = Math::Vector3i(8, 8, 8);
+        workspaceSize = Math::Vector3f(2.0f, 2.0f, 2.0f);
         testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_32cm, workspaceSize);
         
         // Add a single test voxel for faster tests
-        testGrid->setVoxel(IncrementCoordinates(32, 32, 32), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(32, 32, 32), true);
     }
     
-    Vector3i gridDimensions;
-    Vector3f workspaceSize;
+    Math::Vector3i gridDimensions;
+    Math::Vector3f workspaceSize;
     std::unique_ptr<VoxelGrid> testGrid;
 };
 
@@ -114,7 +115,7 @@ TEST_F(SurfaceGeneratorTest, EmptyGrid) {
     SurfaceGenerator generator;
     
     // Create empty grid
-    VoxelGrid emptyGrid(VoxelResolution::Size_32cm, Vector3f(1.0f, 1.0f, 1.0f));
+    VoxelGrid emptyGrid(VoxelResolution::Size_32cm, Math::Vector3f(1.0f, 1.0f, 1.0f));
     
     // Generate surface from empty grid
     Mesh mesh = generator.generateSurface(emptyGrid, SurfaceSettings::Preview());
@@ -129,8 +130,8 @@ TEST_F(SurfaceGeneratorTest, SingleVoxel) {
     SurfaceGenerator generator;
     
     // Create grid with single voxel
-    VoxelGrid singleVoxelGrid(VoxelResolution::Size_32cm, Vector3f(1.0f, 1.0f, 1.0f));
-    singleVoxelGrid.setVoxel(IncrementCoordinates(32, 32, 32), true);
+    VoxelGrid singleVoxelGrid(VoxelResolution::Size_32cm, Math::Vector3f(1.0f, 1.0f, 1.0f));
+    singleVoxelGrid.setVoxel(Math::IncrementCoordinates(32, 32, 32), true);
     
     // Generate surface
     Mesh mesh = generator.generateSurface(singleVoxelGrid, SurfaceSettings::Preview());
@@ -253,9 +254,9 @@ TEST_F(SurfaceGeneratorTest, VoxelDataChanged) {
     
     // Notify of voxel data change in world coordinates
     // Grid coords (2,2,2) to (6,6,6) with voxel size 0.32m
-    BoundingBox changedRegion;
-    changedRegion.min = Vector3f(2 * 0.32f, 2 * 0.32f, 2 * 0.32f);
-    changedRegion.max = Vector3f(6 * 0.32f, 6 * 0.32f, 6 * 0.32f);
+    Math::BoundingBox changedRegion;
+    changedRegion.min = Math::Vector3f(2 * 0.32f, 2 * 0.32f, 2 * 0.32f);
+    changedRegion.max = Math::Vector3f(6 * 0.32f, 6 * 0.32f, 6 * 0.32f);
     generator.onVoxelDataChanged(changedRegion, VoxelResolution::Size_32cm);
     
     // Cache should be invalidated or at least not grown
@@ -275,9 +276,9 @@ TEST_F(SurfaceGeneratorTest, LODSettings) {
     EXPECT_FALSE(generator.isLODEnabled());
     
     // Test LOD calculation
-    BoundingBox bounds;
-    bounds.min = Vector3f(0, 0, 0);
-    bounds.max = Vector3f(10, 10, 10);
+    Math::BoundingBox bounds;
+    bounds.min = Math::Vector3f(0, 0, 0);
+    bounds.max = Math::Vector3f(10, 10, 10);
     
     int lod = generator.calculateLOD(50.0f, bounds);
     EXPECT_GE(lod, 0);
@@ -296,7 +297,7 @@ TEST_F(SurfaceGeneratorTest, CacheMemoryLimit) {
     // Generate multiple different meshes
     for (int i = 0; i < 5; ++i) {
         // Modify grid slightly
-        testGrid->setVoxel(IncrementCoordinates(i * 32, i * 32, i * 32), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(i * 32, i * 32, i * 32), true);
         Mesh mesh = generator.generateSurface(*testGrid, SurfaceSettings::Preview());
         EXPECT_TRUE(mesh.isValid());
     }

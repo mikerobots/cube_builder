@@ -7,7 +7,7 @@
 
 using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::VoxelData;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 
 // OPTIMIZATION SUGGESTIONS FOR test_unit_core_surface_gen_generator.cpp
 //
@@ -19,12 +19,12 @@ protected:
     void SetUp() override {
         // OPTIMIZATION 1: Use smaller test grids
         // Using minimal workspace and single voxel for fastest tests
-        gridDimensions = Vector3i(4, 4, 4);
-        workspaceSize = Vector3f(1.0f, 1.0f, 1.0f);  // Minimal workspace
+        gridDimensions = Math::Vector3i(4, 4, 4);
+        workspaceSize = Math::Vector3f(1.0f, 1.0f, 1.0f);  // Minimal workspace
         testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_32cm, workspaceSize);
         
         // Add single test voxel for minimal mesh generation
-        testGrid->setVoxel(IncrementCoordinates(32, 32, 32), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(32, 32, 32), true);
         
         // OPTIMIZATION 2: Create simplified settings for tests
         simplifiedSettings = SurfaceSettings::Preview();
@@ -34,8 +34,8 @@ protected:
         simplifiedSettings.simplificationRatio = 1.0f;  // No simplification
     }
     
-    Vector3i gridDimensions;
-    Vector3f workspaceSize;
+    Math::Vector3i gridDimensions;
+    Math::Vector3f workspaceSize;
     std::unique_ptr<VoxelGrid> testGrid;
     SurfaceSettings simplifiedSettings;
 };

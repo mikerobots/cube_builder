@@ -9,16 +9,16 @@
 
 using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::VoxelData;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 
 class SurfaceGenPerformanceTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        workspaceSize = Vector3f(1.0f, 1.0f, 1.0f);  // Smaller grid for faster tests
+        workspaceSize = Math::Vector3f(1.0f, 1.0f, 1.0f);  // Smaller grid for faster tests
         testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_32cm, workspaceSize);
     }
     
-    Vector3f workspaceSize;
+    Math::Vector3f workspaceSize;
     std::unique_ptr<VoxelGrid> testGrid;
 };
 
@@ -58,7 +58,7 @@ TEST_F(SurfaceGenPerformanceTest, DISABLED_EmptyGridPerformance) {
 TEST_F(SurfaceGenPerformanceTest, DISABLED_NEONPerformance) {
     // Create a medium-density grid for NEON testing
     for (int i = 0; i < 5; ++i) {
-        testGrid->setVoxel(IncrementCoordinates(i * 64, i * 32, i * 48), true);
+        testGrid->setVoxel(Math::IncrementCoordinates(i * 64, i * 32, i * 48), true);
     }
     
     DualContouring dcOriginal;
@@ -91,9 +91,9 @@ TEST_F(SurfaceGenPerformanceTest, DISABLED_NEONPerformance) {
 
 TEST_F(SurfaceGenPerformanceTest, DISABLED_SparseGridPerformance) {
     // Add a few scattered voxels
-    testGrid->setVoxel(IncrementCoordinates(32, 32, 32), true);
-    testGrid->setVoxel(IncrementCoordinates(96, 96, 96), true);
-    testGrid->setVoxel(IncrementCoordinates(160, 32, 160), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(32, 32, 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(96, 96, 96), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(160, 32, 160), true);
     
     DualContouring dcOriginal;
     DualContouringFast dcFast;
@@ -143,7 +143,7 @@ TEST_F(SurfaceGenPerformanceTest, DISABLED_DenseGridPerformance) {
     for (int z = 0; z < 2; ++z) {
         for (int y = 0; y < 2; ++y) {
             for (int x = 0; x < 2; ++x) {
-                testGrid->setVoxel(IncrementCoordinates(x * 32, y * 32, z * 32), true);
+                testGrid->setVoxel(Math::IncrementCoordinates(x * 32, y * 32, z * 32), true);
             }
         }
     }

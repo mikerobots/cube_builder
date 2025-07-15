@@ -89,12 +89,18 @@ TEST(CollisionSimple, ExactPositionMaintenance) {
     VoxelDataManager manager;
     
     // Test placing voxels at exact 1cm increment positions without any resolution-based snapping
+    // Ensure no overlaps between voxels:
+    // 1cm at (1,0,1): bounds (0.005-0.015, 0-0.01, 0.005-0.015)
+    // 2cm at (3,0,5): bounds (0.02-0.04, 0-0.02, 0.04-0.06)
+    // 4cm at (7,0,11): bounds (0.05-0.09, 0-0.04, 0.09-0.13)
+    // 8cm at (13,0,17): bounds (0.09-0.17, 0-0.08, 0.13-0.21)
+    // 16cm at (25,0,29): bounds (0.17-0.33, 0-0.16, 0.21-0.37) - moved from x=23 to x=25 to avoid overlap
     std::vector<std::pair<VoxelEditor::Math::IncrementCoordinates, VoxelResolution>> testCases = {
         {VoxelEditor::Math::IncrementCoordinates(1, 0, 1), VoxelResolution::Size_1cm},     // 1cm at (1,0,1)
         {VoxelEditor::Math::IncrementCoordinates(3, 0, 5), VoxelResolution::Size_2cm},     // 2cm at (3,0,5)  
         {VoxelEditor::Math::IncrementCoordinates(7, 0, 11), VoxelResolution::Size_4cm},    // 4cm at (7,0,11)
         {VoxelEditor::Math::IncrementCoordinates(13, 0, 17), VoxelResolution::Size_8cm},   // 8cm at (13,0,17)
-        {VoxelEditor::Math::IncrementCoordinates(23, 0, 29), VoxelResolution::Size_16cm}   // 16cm at (23,0,29)
+        {VoxelEditor::Math::IncrementCoordinates(25, 0, 29), VoxelResolution::Size_16cm}   // 16cm at (25,0,29)
     };
     
     // Place all voxels at their exact positions
@@ -104,7 +110,7 @@ TEST(CollisionSimple, ExactPositionMaintenance) {
         
         
         ASSERT_TRUE(manager.setVoxel(pos, resolution, true))
-            << "Failed to place " << static_cast<int>(resolution) << "cm voxel at position ("
+            << "Failed to place " << getVoxelSizeName(resolution) << " voxel at position ("
             << pos.x() << "," << pos.y() << "," << pos.z() << ")";
     }
     

@@ -8,26 +8,26 @@
 
 using namespace VoxelEditor::SurfaceGen;
 using namespace VoxelEditor::VoxelData;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 
 class DualContouringTest : public ::testing::Test {
 protected:
     void SetUp() override {
         // Create test grid
-        gridDimensions = Vector3i(8, 8, 8);
-        workspaceSize = Vector3f(2.0f, 2.0f, 2.0f);
+        gridDimensions = Math::Vector3i(8, 8, 8);
+        workspaceSize = Math::Vector3f(2.0f, 2.0f, 2.0f);
         testGrid = std::make_unique<VoxelGrid>(VoxelResolution::Size_32cm, workspaceSize);
     }
     
     // Helper to create a sphere of voxels
-    void createSphere(const Vector3i& center, float radius) {
+    void createSphere(const Math::Vector3i& center, float radius) {
         for (int z = 0; z < gridDimensions.z; ++z) {
             for (int y = 0; y < gridDimensions.y; ++y) {
                 for (int x = 0; x < gridDimensions.x; ++x) {
-                    Vector3i pos(x, y, z);
-                    Vector3f diff = Vector3f(pos.x - center.x, pos.y - center.y, pos.z - center.z);
+                    Math::Vector3i pos(x, y, z);
+                    Math::Vector3f diff = Math::Vector3f(pos.x - center.x, pos.y - center.y, pos.z - center.z);
                     if (diff.length() <= radius) {
-                        testGrid->setVoxel(IncrementCoordinates(pos.x * 32, pos.y * 32, pos.z * 32), true);
+                        testGrid->setVoxel(Math::IncrementCoordinates(pos.x * 32, pos.y * 32, pos.z * 32), true);
                     }
                 }
             }
@@ -35,18 +35,18 @@ protected:
     }
     
     // Helper to create a cube of voxels
-    void createCube(const Vector3i& min, const Vector3i& max) {
+    void createCube(const Math::Vector3i& min, const Math::Vector3i& max) {
         for (int z = min.z; z <= max.z; ++z) {
             for (int y = min.y; y <= max.y; ++y) {
                 for (int x = min.x; x <= max.x; ++x) {
-                    testGrid->setVoxel(IncrementCoordinates(x * 32, y * 32, z * 32), true);
+                    testGrid->setVoxel(Math::IncrementCoordinates(x * 32, y * 32, z * 32), true);
                 }
             }
         }
     }
     
-    Vector3i gridDimensions;
-    Vector3f workspaceSize;
+    Math::Vector3i gridDimensions;
+    Math::Vector3f workspaceSize;
     std::unique_ptr<VoxelGrid> testGrid;
 };
 
@@ -69,14 +69,14 @@ TEST_F(DualContouringTest, SingleVoxel) {
     
     // Add 2x2x2 cube instead of single voxel for better dual contouring results
     // Single isolated voxels don't create good boundary conditions for surface generation
-    testGrid->setVoxel(IncrementCoordinates(3 * 32, 3 * 32, 3 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(4 * 32, 3 * 32, 3 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(3 * 32, 4 * 32, 3 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(4 * 32, 4 * 32, 3 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(3 * 32, 3 * 32, 4 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(4 * 32, 3 * 32, 4 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(3 * 32, 4 * 32, 4 * 32), true);
-    testGrid->setVoxel(IncrementCoordinates(4 * 32, 4 * 32, 4 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(3 * 32, 3 * 32, 3 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(4 * 32, 3 * 32, 3 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(3 * 32, 4 * 32, 3 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(4 * 32, 4 * 32, 3 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(3 * 32, 3 * 32, 4 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(4 * 32, 3 * 32, 4 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(3 * 32, 4 * 32, 4 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(4 * 32, 4 * 32, 4 * 32), true);
     
     // Generate mesh using Preview settings for faster testing
     Mesh mesh = dc.generateMesh(*testGrid, SurfaceSettings::Preview());
@@ -93,7 +93,7 @@ TEST_F(DualContouringTest, SimpleCube) {
     
     // Create a 2x2x2 cube at center of grid
     // With centered coordinate system and 2m workspace, center should be safe
-    createCube(Vector3i(2, 1, 2), Vector3i(3, 2, 3));
+    createCube(Math::Vector3i(2, 1, 2), Math::Vector3i(3, 2, 3));
     
     // Generate mesh using Preview settings for faster testing
     Mesh mesh = dc.generateMesh(*testGrid, SurfaceSettings::Preview());
@@ -124,7 +124,7 @@ TEST_F(DualContouringTest, Sphere) {
     DualContouringSparse dc;  // Use sparse implementation for performance
     
     // Create a sphere
-    createSphere(Vector3i(4, 4, 4), 2.5f);
+    createSphere(Math::Vector3i(4, 4, 4), 2.5f);
     
     // Generate mesh using Preview settings for faster testing
     Mesh mesh = dc.generateMesh(*testGrid, SurfaceSettings::Preview());
@@ -140,7 +140,7 @@ TEST_F(DualContouringTest, AdaptiveError) {
     DualContouringSparse dc;  // Use sparse implementation for performance
     
     // Create test shape
-    createCube(Vector3i(2, 2, 2), Vector3i(5, 5, 5));
+    createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(5, 5, 5));
     
     // Test with different adaptive errors
     SurfaceSettings lowError = SurfaceSettings::Default();
@@ -166,8 +166,8 @@ TEST_F(DualContouringTest, EdgeCases) {
     DualContouringSparse dc;  // Use sparse implementation for performance
     
     // Test edge of grid
-    testGrid->setVoxel(IncrementCoordinates(0, 0, 0), true);
-    testGrid->setVoxel(IncrementCoordinates(7 * 32, 7 * 32, 7 * 32), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(0, 0, 0), true);
+    testGrid->setVoxel(Math::IncrementCoordinates(7 * 32, 7 * 32, 7 * 32), true);
     
     // Generate mesh using Preview settings for faster testing
     Mesh mesh = dc.generateMesh(*testGrid, SurfaceSettings::Preview());
@@ -183,8 +183,8 @@ TEST_F(DualContouringTest, ComplexShape) {
     DualContouringSparse dc;  // Use sparse implementation for performance
     
     // Create L-shaped structure
-    createCube(Vector3i(2, 2, 2), Vector3i(5, 3, 5));
-    createCube(Vector3i(2, 2, 2), Vector3i(3, 5, 5));
+    createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(5, 3, 5));
+    createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(3, 5, 5));
     
     // Generate mesh using Preview settings for faster testing
     Mesh mesh = dc.generateMesh(*testGrid, SurfaceSettings::Preview());
@@ -201,7 +201,7 @@ TEST_F(DualContouringTest, DISABLED_PerformanceSettings) {
     DualContouringSparse dc;  // Use sparse implementation to avoid debug output
     
     // Create smaller cube for faster test
-    createCube(Vector3i(2, 2, 2), Vector3i(4, 4, 4));  // 2x2x2 = 8 voxels instead of 125
+    createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(4, 4, 4));  // 2x2x2 = 8 voxels instead of 125
     
     // Test with performance-oriented settings
     SurfaceSettings perfSettings = SurfaceSettings::Preview();
@@ -214,7 +214,7 @@ TEST_F(DualContouringTest, NormalGeneration) {
     DualContouringSparse dc;  // Use sparse implementation for performance
     
     // Create simple shape
-    createCube(Vector3i(3, 3, 3), Vector3i(4, 4, 4));
+    createCube(Math::Vector3i(3, 3, 3), Math::Vector3i(4, 4, 4));
     
     // Generate with normals using Preview as base for speed
     SurfaceSettings settings = SurfaceSettings::Preview();
@@ -237,7 +237,7 @@ TEST_F(DualContouringTest, ConsistentWindingOrder) {
     DualContouringSparse dc;  // Use sparse implementation for performance
     
     // Create simple cube
-    createCube(Vector3i(3, 3, 3), Vector3i(4, 4, 4));
+    createCube(Math::Vector3i(3, 3, 3), Math::Vector3i(4, 4, 4));
     
     // Generate mesh using Preview settings for faster testing
     Mesh mesh = dc.generateMesh(*testGrid, SurfaceSettings::Preview());

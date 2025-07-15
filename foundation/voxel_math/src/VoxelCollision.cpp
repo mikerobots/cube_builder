@@ -1,5 +1,5 @@
 #include "../include/voxel_math/VoxelCollision.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../include/voxel_math/FaceOperations.h"
 #include "../../../core/voxel_data/VoxelGrid.h"
 #include "../../math/CoordinateConverter.h"
@@ -13,8 +13,8 @@ namespace Math {
 bool VoxelCollision::checkCollision(const IncrementCoordinates& pos1, VoxelData::VoxelResolution res1,
                                    const IncrementCoordinates& pos2, VoxelData::VoxelResolution res2) {
     // Create bounds for both voxels
-    VoxelBounds bounds1(pos1, VoxelGrid::getVoxelSizeMeters(res1));
-    VoxelBounds bounds2(pos2, VoxelGrid::getVoxelSizeMeters(res2));
+    VoxelBounds bounds1(pos1, VoxelGridMath::getVoxelSizeMeters(res1));
+    VoxelBounds bounds2(pos2, VoxelGridMath::getVoxelSizeMeters(res2));
     
     // Check if bounds overlap
     return boundsOverlap(bounds1, bounds2);
@@ -38,7 +38,7 @@ bool VoxelCollision::checkCollisionWithGrid(const IncrementCoordinates& pos,
                                            VoxelData::VoxelResolution resolution,
                                            const VoxelData::VoxelGrid& grid) {
     // Create bounds for the voxel we want to place
-    VoxelBounds placementBounds(pos, VoxelGrid::getVoxelSizeMeters(resolution));
+    VoxelBounds placementBounds(pos, VoxelGridMath::getVoxelSizeMeters(resolution));
     
     // Get all voxels from the grid
     auto allVoxels = grid.getAllVoxels();
@@ -61,7 +61,7 @@ std::vector<VoxelCollision::VoxelInfo> VoxelCollision::getCollidingVoxels(
     std::vector<VoxelInfo> collidingVoxels;
     
     // Create bounds for the voxel we want to place
-    VoxelBounds placementBounds(pos, VoxelGrid::getVoxelSizeMeters(resolution));
+    VoxelBounds placementBounds(pos, VoxelGridMath::getVoxelSizeMeters(resolution));
     
     // Get all voxels from the grid
     auto allVoxels = grid.getAllVoxels();
@@ -88,7 +88,7 @@ std::vector<VoxelCollision::VoxelInfo> VoxelCollision::getVoxelsInRegion(
     // Check each voxel to see if it's in the region
     for (const auto& voxelData : allVoxels) {
         VoxelBounds voxelBounds(voxelData.incrementPos, 
-                               VoxelGrid::getVoxelSizeMeters(voxelData.resolution));
+                               VoxelGridMath::getVoxelSizeMeters(voxelData.resolution));
         
         // Check if voxel bounds overlap with region
         if (boundsOverlap(voxelBounds, region)) {
@@ -133,7 +133,7 @@ std::optional<IncrementCoordinates> VoxelCollision::findNearestFreePosition(
     visited.insert(makeKey(desiredPos));
     
     // Get voxel size for search steps
-    int voxelSizeCm = VoxelGrid::getVoxelSizeCm(resolution);
+    int voxelSizeCm = VoxelGridMath::getVoxelSizeCm(resolution);
     
     while (!searchQueue.empty()) {
         SearchNode current = searchQueue.top();
@@ -184,7 +184,7 @@ bool VoxelCollision::isCompletelySurrounded(const IncrementCoordinates& pos,
     // Check all 6 faces
     for (int dir = 0; dir < 6; ++dir) {
         auto faceDir = FaceOperations::indexToFaceDirection(dir);
-        IncrementCoordinates adjacentPos = VoxelGrid::getAdjacentPosition(pos, faceDir, resolution);
+        IncrementCoordinates adjacentPos = VoxelGridMath::getAdjacentPosition(pos, faceDir, resolution);
         
         // If any adjacent position is empty, not surrounded
         if (!grid.getVoxel(adjacentPos)) {
@@ -205,15 +205,15 @@ std::vector<VoxelCollision::VoxelInfo> VoxelCollision::getConnectedVoxels(
     // Check all 6 adjacent positions
     for (int dir = 0; dir < 6; ++dir) {
         auto faceDir = FaceOperations::indexToFaceDirection(dir);
-        IncrementCoordinates adjacentPos = VoxelGrid::getAdjacentPosition(pos, faceDir, resolution);
+        IncrementCoordinates adjacentPos = VoxelGridMath::getAdjacentPosition(pos, faceDir, resolution);
         
         // Get all voxels at this position (might be different resolutions)
         auto voxelsAtPos = grid.getAllVoxels();
         for (const auto& voxelData : voxelsAtPos) {
             // Check if this voxel shares a face with our voxel
-            VoxelBounds ourBounds(pos, VoxelGrid::getVoxelSizeMeters(resolution));
+            VoxelBounds ourBounds(pos, VoxelGridMath::getVoxelSizeMeters(resolution));
             VoxelBounds theirBounds(voxelData.incrementPos, 
-                                   VoxelGrid::getVoxelSizeMeters(voxelData.resolution));
+                                   VoxelGridMath::getVoxelSizeMeters(voxelData.resolution));
             
             if (boundsOverlap(ourBounds, theirBounds)) {
                 // Additional check: they should share a face, not just overlap
@@ -231,8 +231,8 @@ float VoxelCollision::calculateIntersectionVolume(const IncrementCoordinates& po
                                                  const IncrementCoordinates& pos2, 
                                                  VoxelData::VoxelResolution res2) {
     // Create bounds for both voxels
-    VoxelBounds bounds1(pos1, VoxelGrid::getVoxelSizeMeters(res1));
-    VoxelBounds bounds2(pos2, VoxelGrid::getVoxelSizeMeters(res2));
+    VoxelBounds bounds1(pos1, VoxelGridMath::getVoxelSizeMeters(res1));
+    VoxelBounds bounds2(pos2, VoxelGridMath::getVoxelSizeMeters(res2));
     
     // Get min/max for both bounds
     const Vector3f& min1 = bounds1.min().value();
@@ -272,18 +272,18 @@ bool VoxelCollision::checkStability(const IncrementCoordinates& pos,
     }
     
     // Check if there's support underneath
-    IncrementCoordinates belowPos = VoxelGrid::getAdjacentPosition(
+    IncrementCoordinates belowPos = VoxelGridMath::getAdjacentPosition(
         pos, VoxelData::FaceDirection::NegY, resolution);
     
     // Check if there's any voxel below that could provide support
     auto allVoxels = grid.getAllVoxels();
-    VoxelBounds ourBounds(pos, VoxelGrid::getVoxelSizeMeters(resolution));
+    VoxelBounds ourBounds(pos, VoxelGridMath::getVoxelSizeMeters(resolution));
     
     for (const auto& voxelData : allVoxels) {
         // Check if this voxel is below us
         if (voxelData.incrementPos.y() < pos.y()) {
             VoxelBounds theirBounds(voxelData.incrementPos, 
-                                   VoxelGrid::getVoxelSizeMeters(voxelData.resolution));
+                                   VoxelGridMath::getVoxelSizeMeters(voxelData.resolution));
             
             // Check if their top face overlaps with our bottom face
             // Simplified check - in practice you'd want more precise support calculation
@@ -326,7 +326,7 @@ std::vector<IncrementCoordinates> VoxelCollision::getPotentialCollisionCandidate
     
     for (const auto& voxelData : allVoxels) {
         VoxelBounds voxelBounds(voxelData.incrementPos, 
-                               VoxelGrid::getVoxelSizeMeters(voxelData.resolution));
+                               VoxelGridMath::getVoxelSizeMeters(voxelData.resolution));
         
         if (boundsOverlap(voxelBounds, searchBounds)) {
             candidates.push_back(voxelData.incrementPos);

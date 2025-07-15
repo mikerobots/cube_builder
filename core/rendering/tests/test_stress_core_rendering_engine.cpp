@@ -134,7 +134,7 @@ TEST_F(RenderStressTest, FindMaximumVoxelCount) {
             renderEngine->beginFrame();
             renderEngine->setCamera(camera);
             
-            VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+            VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
             if (grid) {
                 RenderSettings settings;
                 settings.renderMode = RenderMode::Solid;
@@ -275,7 +275,7 @@ TEST_F(RenderStressTest, ComplexSceneRendering) {
         renderEngine->renderGroundPlaneGrid(Math::WorldCoordinates(Vector3f(0.0f, 0.0f, 0.0f)));
         
         // Render voxels
-        VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+        VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
         if (grid) {
             RenderSettings settings;
             settings.renderMode = RenderMode::Solid;
@@ -339,7 +339,7 @@ TEST_F(RenderStressTest, RapidSceneUpdates) {
         renderEngine->beginFrame();
         renderEngine->setCamera(camera);
         
-        VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+        VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
         if (grid) {
             RenderSettings settings;
             settings.renderMode = RenderMode::Solid;
@@ -396,7 +396,7 @@ TEST_F(RenderStressTest, MemoryUsageUnderStress) {
         renderEngine->beginFrame();
         renderEngine->setCamera(camera);
         
-        VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
+        VoxelData::VoxelGrid* grid = voxelData->getGrid(VoxelResolution::Size_8cm);
         if (grid) {
             RenderSettings settings;
             settings.renderMode = RenderMode::Solid;

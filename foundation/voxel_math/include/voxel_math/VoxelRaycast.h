@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../math/Vector3f.h"
-#include "../../math/Vector3i.h"
-#include "../../math/CoordinateTypes.h"
-#include "../../math/Ray.h"
+#include "../../../math/Vector3f.h"
+#include "../../../math/Vector3i.h"
+#include "../../../math/CoordinateTypes.h"
+#include "../../../math/Ray.h"
 #include "../../../core/voxel_data/VoxelTypes.h"
 #include "VoxelBounds.h"
 #include <vector>

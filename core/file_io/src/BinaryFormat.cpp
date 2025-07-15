@@ -521,9 +521,9 @@ bool BinaryFormat::writeGroupDataChunk(BinaryWriter& writer, const Groups::Group
             
             // Write pivot point (simplified transform)
             auto pivot = group->getPivot();
-            w.writeFloat(pivot.x);
-            w.writeFloat(pivot.y);
-            w.writeFloat(pivot.z);
+            w.writeFloat(pivot.x());
+            w.writeFloat(pivot.y());
+            w.writeFloat(pivot.z());
             
             // Write voxel IDs
             auto voxels = group->getVoxels();
@@ -602,7 +602,7 @@ bool BinaryFormat::readGroupDataChunk(BinaryReader& reader, Groups::GroupManager
         // Set pivot point
         Groups::VoxelGroup* newGroup = groupData.getGroup(newGroupId);
         if (newGroup) {
-            newGroup->setPivot(pivot);
+            newGroup->setPivot(Math::WorldCoordinates(pivot));
         }
         
         // Store parent mapping for second pass

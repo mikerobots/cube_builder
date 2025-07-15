@@ -148,20 +148,32 @@ save project.vox     # Save project
 **IMPORTANT**: Project uses **centered coordinate system** (origin at 0,0,0). If you see code using old coordinate system (not centered at zero), fix it immediately.
 
 ### Command Execution
-**CRITICAL**: When running executables in `build_ninja/` or local scripts, ALWAYS use:
+**SUPER CRITICAL - ALWAYS USE execute_command.sh**: 
+When running ANY executables, scripts, or programs, you MUST ALWAYS use execute_command.sh wrapper:
+
 ```bash
+# CORRECT - ALWAYS DO THIS:
 ./execute_command.sh ./build_ninja/path/to/executable
 ./execute_command.sh ./script.sh
+./execute_command.sh ./run_all_unit.sh
+./execute_command.sh ./fix_math_types.sh
+./execute_command.sh ./cmd.sh
+./execute_command.sh ./build_ninja/bin/test_unit_something
 
-When you run bash command, wrap with ./execute_command.sh and run from
-the root directory. This doesn't apply to bash commands in scripts you
-have written.
+# WRONG - NEVER DO THIS:
+./script.sh                    # NO! Use execute_command.sh
+./run_all_unit.sh             # NO! Use execute_command.sh
+chmod +x foo.sh && ./foo.sh   # NO! Use execute_command.sh
 
-
+# Exception: Basic commands like cd, ls, grep, sed, cmake don't need execute_command.sh
+# But ANY script or executable file MUST use execute_command.sh
+```
 
 **CRITICAL**: When running executables in root directory or local scripts, ALWAYS cd to the root directory first and use ./execute_command.sh
 
-```
+**When you run bash command, wrap with ./execute_command.sh and run from
+the root directory. This doesn't apply to bash commands in scripts you
+have written.**
 
 ### Testing Requirements
 - **ALWAYS PUT TIMEOUTS WHEN RUNNING TESTS**

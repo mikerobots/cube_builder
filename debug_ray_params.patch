@@ -1,0 +1,17 @@
+--- a/apps/cli/src/MouseInteraction.cpp
++++ b/apps/cli/src/MouseInteraction.cpp
+@@ -220,6 +220,14 @@ void MouseInteraction::updateHoverState() {
+     // Set ray for visualization if enabled (will be rendered during render phase)
+     if (m_rayVisualizationEnabled && m_feedbackRenderer) {
+         VisualFeedback::Ray vfRay(ray.origin, ray.direction);
++        
++        // DEBUG: Log ray parameters
++        std::cerr << "DEBUG RAY: origin=(" << ray.origin.x << ", " << ray.origin.y << ", " << ray.origin.z << ")" << std::endl;
++        std::cerr << "DEBUG RAY: direction=(" << ray.direction.x << ", " << ray.direction.y << ", " << ray.direction.z << ")" << std::endl;
++        Math::Vector3f rayEnd = ray.origin + ray.direction * 10.0f;
++        std::cerr << "DEBUG RAY: end=(" << rayEnd.x << ", " << rayEnd.y << ", " << rayEnd.z << ")" << std::endl;
++        std::cerr << "DEBUG RAY: length=10.0" << std::endl;
++        
+         m_feedbackRenderer->setDebugRay(vfRay, true);
+     } else if (m_feedbackRenderer) {
+         m_feedbackRenderer->clearDebugRay();

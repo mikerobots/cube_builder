@@ -292,8 +292,8 @@ bool GroupManager::isGroupLocked(GroupId id) const {
     return (it != m_groups.end()) ? it->second->isLocked() : false;
 }
 
-bool GroupManager::moveGroup(GroupId id, const Math::Vector3f& offset) {
-    auto operation = createMoveOperation(id, Math::WorldCoordinates(offset));
+bool GroupManager::moveGroup(GroupId id, const Math::WorldCoordinates& offset) {
+    auto operation = createMoveOperation(id, offset);
     if (operation && operation->execute()) {
         dispatchGroupModified(id, GroupModificationType::Moved);
         return true;
@@ -302,9 +302,9 @@ bool GroupManager::moveGroup(GroupId id, const Math::Vector3f& offset) {
 }
 
 GroupId GroupManager::copyGroup(GroupId id, const std::string& newName, 
-                               const Math::Vector3f& offset) {
+                               const Math::WorldCoordinates& offset) {
     std::string name = newName.empty() ? generateUniqueGroupName("Copy") : newName;
-    auto operation = createCopyOperation(id, name, Math::WorldCoordinates(offset));
+    auto operation = createCopyOperation(id, name, offset);
     
     if (operation && operation->execute()) {
         auto copyOp = static_cast<CopyGroupOperation*>(operation.get());
@@ -317,7 +317,7 @@ GroupId GroupManager::copyGroup(GroupId id, const std::string& newName,
 }
 
 bool GroupManager::rotateGroup(GroupId id, const Math::Vector3f& eulerAngles,
-                             const Math::Vector3f& pivot) {
+                             const Math::WorldCoordinates& pivot) {
     auto operation = createRotateOperation(id, eulerAngles, pivot);
     if (operation && operation->execute()) {
         dispatchGroupModified(id, GroupModificationType::Rotated);
@@ -327,7 +327,7 @@ bool GroupManager::rotateGroup(GroupId id, const Math::Vector3f& eulerAngles,
 }
 
 bool GroupManager::scaleGroup(GroupId id, float scaleFactor,
-                            const Math::Vector3f& pivot) {
+                            const Math::WorldCoordinates& pivot) {
     auto operation = createScaleOperation(id, scaleFactor, pivot);
     if (operation && operation->execute()) {
         dispatchGroupModified(id, GroupModificationType::Scaled);
@@ -770,13 +770,13 @@ std::unique_ptr<GroupOperation> GroupManager::createCopyOperation(GroupId source
 
 std::unique_ptr<GroupOperation> GroupManager::createRotateOperation(GroupId groupId,
                                                                   const Math::Vector3f& eulerAngles,
-                                                                  const Math::Vector3f& pivot) {
+                                                                  const Math::WorldCoordinates& pivot) {
     return std::make_unique<RotateGroupOperation>(this, m_voxelManager, groupId, eulerAngles, pivot);
 }
 
 std::unique_ptr<GroupOperation> GroupManager::createScaleOperation(GroupId groupId,
                                                                  float scaleFactor,
-                                                                 const Math::Vector3f& pivot) {
+                                                                 const Math::WorldCoordinates& pivot) {
     return std::make_unique<ScaleGroupOperation>(this, m_voxelManager, groupId, scaleFactor, pivot);
 }
 

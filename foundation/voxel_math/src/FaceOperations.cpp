@@ -1,5 +1,5 @@
 #include "../include/voxel_math/FaceOperations.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../../core/voxel_data/VoxelGrid.h"
 #include <cmath>
 #include <algorithm>
@@ -30,7 +30,7 @@ Vector3f FaceOperations::getFaceNormal(VoxelData::FaceDirection direction) {
 }
 
 Vector3i FaceOperations::getFaceOffset(VoxelData::FaceDirection direction, int voxelSizeCm) {
-    return VoxelGrid::getFaceDirectionOffset(direction, voxelSizeCm);
+    return VoxelGridMath::getFaceDirectionOffset(direction, voxelSizeCm);
 }
 
 VoxelData::FaceDirection FaceOperations::getOppositeFace(VoxelData::FaceDirection direction) {
@@ -122,7 +122,7 @@ IncrementCoordinates FaceOperations::calculatePlacementPosition(const IncrementC
                                                                VoxelData::FaceDirection face,
                                                                VoxelData::VoxelResolution resolution) {
     // Get the offset for the face direction
-    int voxelSizeCm = VoxelGrid::getVoxelSizeCm(resolution);
+    int voxelSizeCm = VoxelGridMath::getVoxelSizeCm(resolution);
     Vector3i offset = getFaceOffset(face, voxelSizeCm);
     
     // Calculate new position

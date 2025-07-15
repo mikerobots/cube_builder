@@ -3,8 +3,11 @@
 #include "../include/groups/VoxelGroup.h"
 
 using namespace VoxelEditor::Groups;
-using namespace VoxelEditor::Math;
+namespace Math = VoxelEditor::Math;
 using namespace VoxelEditor::VoxelData;
+using VoxelEditor::Math::IncrementCoordinates;
+using VoxelEditor::Math::Vector3f;
+using VoxelEditor::Math::Vector3i;
 
 class VoxelGroupTest : public ::testing::Test {
 protected:
@@ -186,9 +189,9 @@ TEST_F(VoxelGroupTest, BoundingBox) {
 
 TEST_F(VoxelGroupTest, PivotManagement) {
     Vector3f pivot(1.0f, 2.0f, 3.0f);
-    group->setPivot(pivot);
+    group->setPivot(Math::WorldCoordinates(pivot));
     
-    EXPECT_EQ(group->getPivot(), pivot);
+    EXPECT_EQ(group->getPivot().value(), pivot);
 }
 
 TEST_F(VoxelGroupTest, GroupInfo) {
@@ -219,7 +222,7 @@ TEST_F(VoxelGroupTest, Translation) {
     group->addVoxel(voxel);
     
     Vector3f offset(1.0f, 0.0f, 0.0f);
-    group->translate(offset);
+    group->translate(Math::WorldCoordinates(offset));
     
     // After translation, the voxel should be at a new position
     auto voxels = group->getVoxelList();

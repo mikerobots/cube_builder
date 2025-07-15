@@ -1,5 +1,5 @@
 #include "../include/voxel_math/WorkspaceValidation.h"
-#include "../include/voxel_math/VoxelGrid.h"
+#include "../include/voxel_math/VoxelGridMath.h"
 #include "../../math/CoordinateConverter.h"
 #include <algorithm>
 #include <cmath>
@@ -50,7 +50,7 @@ bool WorkspaceValidation::voxelFitsInBounds(const IncrementCoordinates& pos,
                                            VoxelData::VoxelResolution resolution,
                                            const WorkspaceBounds& bounds) {
     // Get voxel size in centimeters
-    int voxelSizeCm = VoxelGrid::getVoxelSizeCm(resolution);
+    int voxelSizeCm = VoxelGridMath::getVoxelSizeCm(resolution);
     
     const Vector3i& p = pos.value();
     const Vector3i& min = bounds.minIncrement.value();
@@ -126,7 +126,7 @@ WorkspaceValidation::Overhang WorkspaceValidation::calculateOverhang(
     Overhang overhang;
     
     // Get voxel size
-    int voxelSizeCm = VoxelGrid::getVoxelSizeCm(resolution);
+    int voxelSizeCm = VoxelGridMath::getVoxelSizeCm(resolution);
     int halfSize = voxelSizeCm / 2;
     
     const Vector3i& p = pos.value();

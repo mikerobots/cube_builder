@@ -76,7 +76,7 @@ class RotateGroupOperation : public GroupOperation {
 public:
     RotateGroupOperation(GroupManager* groupManager, VoxelData::VoxelDataManager* voxelManager,
                         GroupId groupId, const Math::Vector3f& eulerAngles, 
-                        const Math::Vector3f& pivot);
+                        const Math::WorldCoordinates& pivot);
     
     bool execute() override;
     bool undo() override;
@@ -88,7 +88,7 @@ private:
     VoxelData::VoxelDataManager* m_voxelManager;
     GroupId m_groupId;
     Math::Vector3f m_eulerAngles;
-    Math::Vector3f m_pivot;
+    Math::WorldCoordinates m_pivot;
     std::vector<std::pair<VoxelId, VoxelId>> m_voxelMoves;
     bool m_executed = false;
 };
@@ -97,7 +97,7 @@ private:
 class ScaleGroupOperation : public GroupOperation {
 public:
     ScaleGroupOperation(GroupManager* groupManager, VoxelData::VoxelDataManager* voxelManager,
-                       GroupId groupId, float scaleFactor, const Math::Vector3f& pivot);
+                       GroupId groupId, float scaleFactor, const Math::WorldCoordinates& pivot);
     
     bool execute() override;
     bool undo() override;
@@ -109,7 +109,7 @@ private:
     VoxelData::VoxelDataManager* m_voxelManager;
     GroupId m_groupId;
     float m_scaleFactor;
-    Math::Vector3f m_pivot;
+    Math::WorldCoordinates m_pivot;
     std::vector<std::pair<VoxelId, VoxelId>> m_voxelMoves;
     bool m_executed = false;
 };
@@ -169,7 +169,7 @@ namespace GroupOperationUtils {
     Math::BoundingBox calculateBounds(const std::vector<VoxelId>& voxels);
     
     // Find optimal pivot point for a group
-    Math::Vector3f calculateOptimalPivot(const std::vector<VoxelId>& voxels);
+    Math::WorldCoordinates calculateOptimalPivot(const std::vector<VoxelId>& voxels);
     
     // Validate that voxel positions are within workspace bounds
     bool validateVoxelPositions(const std::vector<VoxelId>& voxels, 

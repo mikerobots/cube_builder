@@ -731,7 +731,7 @@ TEST_F(VoxelDataManagerTest, CollisionDetection_MultipleResolutions) {
 
 TEST_F(VoxelDataManagerTest, CollisionDetection_64cmAnd32cmOverlap) {
     // Test the specific case: 64cm voxel at (0,0,0) and 32cm voxel at (30,30,0)
-    // This should fail due to overlap
+    // REQ-5.2.5 & REQ-4.3.4: Smaller voxels may be placed on larger voxels for detailed work
     
     // Place 64cm voxel at origin
     EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_64cm, true));
@@ -739,16 +739,20 @@ TEST_F(VoxelDataManagerTest, CollisionDetection_64cmAnd32cmOverlap) {
     // Check that 64cm voxel was placed
     EXPECT_TRUE(manager->getVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_64cm));
     
-    // Try to place 32cm voxel at (30,30,0) - should fail due to overlap
+    // Try to place 32cm voxel at (30,30,0) - should SUCCEED because 32cm < 64cm
     // 64cm voxel extends from 0 to 64 in each dimension
-    // 32cm voxel at (30,30,0) would extend from 30 to 62 - overlaps!
-    EXPECT_FALSE(manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, true));
+    // 32cm voxel at (30,30,0) would extend from 30 to 62 - overlaps but allowed!
+    EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, true));
     
-    // Verify the 32cm voxel was not placed
-    EXPECT_FALSE(manager->getVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
+    // Verify the 32cm voxel was placed
+    EXPECT_TRUE(manager->getVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
     
-    // Verify wouldOverlap returns true for this case
-    EXPECT_TRUE(manager->wouldOverlap(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
+    // Clean up the 32cm voxel before next test
+    manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, false);
+    
+    // Test reverse case: trying to place a larger voxel where smaller exists should fail
+    EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(100, 100, 0), VoxelResolution::Size_16cm, true));
+    EXPECT_FALSE(manager->setVoxel(IncrementCoordinates(100, 100, 0), VoxelResolution::Size_32cm, true));
     
     // Test edge case: 32cm voxel at (64,64,0) should NOT overlap (just touching)
     EXPECT_FALSE(manager->wouldOverlap(IncrementCoordinates(64, 64, 0), VoxelResolution::Size_32cm));

@@ -34,6 +34,7 @@ target_link_libraries(VoxelEditor_SurfaceGen
         VoxelEditor_Math
         VoxelEditor_Events
         VoxelEditor_VoxelData
+        VoxelEditor_VoxelMath
 )
 
 # Set compile features

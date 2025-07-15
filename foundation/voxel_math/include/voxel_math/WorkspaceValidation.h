@@ -1,8 +1,8 @@
 #pragma once
 
 #include <optional>
-#include "../../math/Vector3f.h"
-#include "../../math/CoordinateTypes.h"
+#include "../../../math/Vector3f.h"
+#include "../../../math/CoordinateTypes.h"
 #include "../../../core/voxel_data/VoxelTypes.h"
 
 namespace VoxelEditor {

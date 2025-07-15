@@ -178,6 +178,7 @@ private:
                           VoxelData::VoxelResolution resolution,
                           const RenderSettings& settings);
     Material createVoxelMaterial(VoxelData::VoxelResolution resolution, const RenderSettings& settings);
+    Mesh createCubeMesh(float size) const;
     
     // Built-in shader loading
     void loadBuiltinShaders();

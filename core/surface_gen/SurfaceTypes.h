@@ -8,6 +8,7 @@
 #include "../../foundation/math/BoundingBox.h"
 #include "../../foundation/math/CoordinateTypes.h"
 #include "../../foundation/math/CoordinateConverter.h"
+#include "../../foundation/voxel_math/include/voxel_math/VoxelMath.h"
 #include "../voxel_data/VoxelTypes.h"
 #include <vector>
 #include <cstdint>
