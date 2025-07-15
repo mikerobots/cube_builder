@@ -678,8 +678,7 @@ void OverlayRenderer::initializeLineRenderer() {
         out vec4 color;
         
         void main() {
-            // DEBUG: Force all line colors to bright yellow for testing
-            color = vec4(1.0, 1.0, 0.0, 1.0);
+            color = fragColor;
         }
     )";
     

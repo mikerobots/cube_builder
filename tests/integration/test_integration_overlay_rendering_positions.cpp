@@ -101,7 +101,26 @@ protected:
         
         // Set camera to top view
         camera->setViewPreset(ViewPreset::TOP);
-        camera->setDistance(5.0f);
+        // Don't override the default distance which is properly set for visibility
+        
+        // For top view looking down Y axis, we need to set up vector along Z
+        camera->setUp(Math::WorldCoordinates(Math::Vector3f(0, 0, -1)));
+        
+        // For top view, use orthographic projection for better visibility
+        camera->setProjectionType(ProjectionType::ORTHOGRAPHIC);
+        camera->setOrthographicSize(10.0f); // View 10m area
+        
+        // Force camera matrices to update
+        auto viewMatrix = camera->getViewMatrix();
+        auto projMatrix = camera->getProjectionMatrix();
+        
+        // Debug output camera info
+        auto pos = camera->getPosition();
+        auto target = camera->getTarget();
+        auto up = camera->getUp();
+        std::cerr << "Camera setup - Pos: (" << pos.x() << "," << pos.y() << "," << pos.z() 
+                  << ") Target: (" << target.x() << "," << target.y() << "," << target.z()
+                  << ") Up: (" << up.x() << "," << up.y() << "," << up.z() << ")" << std::endl;
         
         // Clear any OpenGL errors from setup
         while (glGetError() != GL_NO_ERROR) {}
@@ -247,6 +266,10 @@ TEST_F(OverlayRenderingPositionTest, OutlineBoxPositions) {
     };
     
     for (const auto& test : testCases) {
+        // Clear framebuffer for each test case
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         // Begin overlay frame
         overlayRenderer->beginFrame(width, height);
         
