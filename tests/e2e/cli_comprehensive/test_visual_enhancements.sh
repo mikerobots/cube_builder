@@ -104,16 +104,16 @@ cat > "$TEST_DIR/mixed_resolution_cmd.txt" << EOF
 workspace 8 8 8
 view iso
 resolution 128cm
-place 128cm 0cm 128cm
+place 0cm 0cm 0cm
 resolution 64cm
-place 128cm 128cm 128cm
+place 64cm 0cm 0cm
 resolution 32cm
-place 128cm 192cm 128cm
+place 96cm 0cm 0cm
 resolution 16cm
-place 128cm 224cm 128cm
+place 112cm 0cm 0cm
 resolution 8cm
-place 128cm 240cm 128cm
-zoom 1.2
+place 120cm 0cm 0cm
+zoom 0.8
 screenshot $TEST_DIR/mixed_resolutions.ppm
 quit
 EOF

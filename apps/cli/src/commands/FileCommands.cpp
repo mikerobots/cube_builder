@@ -88,6 +88,15 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
                 }
                 
                 FileIO::Project project;
+                // Initialize project components before loading
+                // This is required because BinaryFormat expects these to be non-null
+                // Use a temporary EventDispatcher to avoid conflicts
+                auto tempEventDispatcher = std::make_shared<Events::EventDispatcher>();
+                project.voxelData = std::make_shared<VoxelData::VoxelDataManager>(tempEventDispatcher.get());
+                project.groupData = std::make_shared<Groups::GroupManager>(project.voxelData.get(), tempEventDispatcher.get());
+                project.camera = std::make_shared<Camera::OrbitCamera>();
+                project.currentSelection = std::make_shared<Selection::SelectionSet>();
+                
                 FileIO::LoadOptions options;
                 auto result = m_fileManager->loadProject(filename, project, options);
                 if (result.success) {
@@ -96,16 +105,18 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
                         auto resolution = static_cast<VoxelData::VoxelResolution>(i);
                         auto voxels = m_voxelManager->getAllVoxels(resolution);
                         for (const auto& voxelPos : voxels) {
-                            m_voxelManager->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, false);
+                            m_voxelManager->setVoxel(voxelPos.incrementPos, voxelPos.resolution, false);
                         }
                     }
                     
                     // Copy loaded voxel data to app's voxel manager
+                    size_t totalVoxelsLoaded = 0;
                     for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
                         auto resolution = static_cast<VoxelData::VoxelResolution>(i);
                         auto voxels = project.voxelData->getAllVoxels(resolution);
                         for (const auto& voxelPos : voxels) {
-                            m_voxelManager->setVoxel(voxelPos.incrementPos.value(), voxelPos.resolution, true);
+                            m_voxelManager->setVoxel(voxelPos.incrementPos, voxelPos.resolution, true);
+                            totalVoxelsLoaded++;
                         }
                     }
                     
@@ -123,6 +134,10 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
                     
                     m_currentProject = filename;
                     m_app->setCurrentProject(filename);
+                    
+                    // Request mesh update to render loaded voxels
+                    requestMeshUpdate();
+                    
                     return CommandResult::Success("Project loaded: " + filename);
                 }
                 return CommandResult::Error("Failed to load project: " + filename);
@@ -154,7 +169,18 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
                 
                 // Create project from current state
                 FileIO::Project project;
-                project.initializeDefaults();
+                // Don't call initializeDefaults() - it creates a dangling EventDispatcher
+                // Instead, manually initialize the shared_ptrs with proper objects
+                project.voxelData = std::make_shared<VoxelData::VoxelDataManager>(m_eventDispatcher);
+                project.groupData = std::make_shared<Groups::GroupManager>(project.voxelData.get(), m_eventDispatcher);
+                project.camera = std::make_shared<Camera::OrbitCamera>();
+                project.currentSelection = std::make_shared<Selection::SelectionSet>();
+                
+                // Initialize metadata
+                project.metadata.created = std::chrono::system_clock::now();
+                project.metadata.modified = project.metadata.created;
+                project.metadata.version = FileIO::FileVersion::Current();
+                project.metadata.applicationVersion = "1.0.0";
                 
                 // Populate project with current application state
                 // Copy voxel data
@@ -218,7 +244,18 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
                 
                 // Create project from current state
                 FileIO::Project project;
-                project.initializeDefaults();
+                // Don't call initializeDefaults() - it creates a dangling EventDispatcher
+                // Instead, manually initialize the shared_ptrs with proper objects
+                project.voxelData = std::make_shared<VoxelData::VoxelDataManager>(m_eventDispatcher);
+                project.groupData = std::make_shared<Groups::GroupManager>(project.voxelData.get(), m_eventDispatcher);
+                project.camera = std::make_shared<Camera::OrbitCamera>();
+                project.currentSelection = std::make_shared<Selection::SelectionSet>();
+                
+                // Initialize metadata
+                project.metadata.created = std::chrono::system_clock::now();
+                project.metadata.modified = project.metadata.created;
+                project.metadata.version = FileIO::FileVersion::Current();
+                project.metadata.applicationVersion = "1.0.0";
                 
                 // Populate project with current application state
                 // Copy voxel data

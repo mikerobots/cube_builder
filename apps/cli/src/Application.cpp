@@ -153,7 +153,6 @@ void Application::shutdown() {
     m_commandProcessor.reset();
     
     // Core systems
-    m_fileManager.reset();
     m_groupManager.reset();
     m_feedbackRenderer.reset();
     m_surfaceGenerator.reset();
@@ -163,6 +162,12 @@ void Application::shutdown() {
     m_renderEngine.reset();
     m_openGLRenderer.reset();
     m_cameraController.reset();
+    
+    // IMPORTANT: Destruction order matters!
+    // FileManager depends on VoxelDataManager during save/load operations.
+    // FileManager must be destroyed BEFORE VoxelDataManager to prevent
+    // accessing destroyed mutex (causes "mutex lock failed: Invalid argument")
+    m_fileManager.reset();
     m_voxelManager.reset();
     
     // Foundation (singletons don't need reset, only EventDispatcher)

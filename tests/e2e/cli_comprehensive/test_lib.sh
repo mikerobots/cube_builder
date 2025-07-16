@@ -14,9 +14,12 @@ TESTS_FAILED=0
 CURRENT_TEST=""
 
 # Paths
-CLI_PATH="../../../build_ninja/bin/VoxelEditor_CLI"
-TOOLS_DIR="../../../tools"
-OUTPUT_BASE="output"
+# Get absolute path to script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+CLI_PATH="$ROOT_DIR/build_ninja/bin/VoxelEditor_CLI"
+TOOLS_DIR="$ROOT_DIR/tools"
+OUTPUT_BASE="$SCRIPT_DIR/output"
 
 # Initialize test environment
 init_test() {

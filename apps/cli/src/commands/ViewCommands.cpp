@@ -381,8 +381,12 @@ std::vector<CommandRegistration> ViewCommands::getCommands() {
                     return CommandResult::Error("Filename required");
                 }
                 
-                // Add .png extension if not present
-                if (filename.find(".png") == std::string::npos) {
+                // Check if filename already has an extension
+                size_t dotPos = filename.find_last_of('.');
+                bool hasExtension = (dotPos != std::string::npos) && (dotPos != filename.length() - 1);
+                
+                // Add .png extension only if no extension is present
+                if (!hasExtension) {
                     filename += ".png";
                 }
                 

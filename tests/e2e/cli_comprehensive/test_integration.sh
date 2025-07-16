@@ -35,6 +35,7 @@ redo
 screenshot $TEST_DIR/workflow_redo.ppm
 save $TEST_DIR/workflow_project.vxl
 clear
+grid off
 screenshot $TEST_DIR/workflow_clear.ppm
 load $TEST_DIR/workflow_project.vxl
 screenshot $TEST_DIR/workflow_loaded.ppm

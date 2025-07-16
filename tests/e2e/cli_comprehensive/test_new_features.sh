@@ -82,8 +82,8 @@ quit
 EOF
 
 if execute_cli_capture "$TEST_DIR/ground_constraint_cmd.txt" "$TEST_DIR/ground_output.txt" 30; then
-    # Should only have 2 voxels (Y=0 and Y=10)
-    if expect_output "$TEST_DIR/ground_output.txt" "Total voxels: 2"; then
+    # Should only have 2 voxels (Y=0 and Y=32cm)
+    if expect_output "$TEST_DIR/ground_output.txt" "Voxels: 2"; then
         pass_test "Y >= 0 constraint enforced"
     else
         fail_test "Ground plane constraint not working"
@@ -107,8 +107,8 @@ quit
 EOF
 
 if execute_cli_capture "$TEST_DIR/overlap_test_cmd.txt" "$TEST_DIR/overlap_output.txt" 30; then
-    # Should only have 1 voxel due to overlap prevention
-    if expect_output "$TEST_DIR/overlap_output.txt" "Total voxels: 1"; then
+    # Should have 2 voxels (first and third succeed, second fails overlap, fourth fails bounds)
+    if expect_output "$TEST_DIR/overlap_output.txt" "Voxels: 2"; then
         pass_test "Overlap prevention working"
     else
         fail_test "Overlapping voxels were allowed"
@@ -135,8 +135,8 @@ EOF
 
 if execute_cli_capture "$TEST_DIR/enhanced_undo_cmd.txt" "$TEST_DIR/undo_output.txt" 30; then
     # Invalid placement shouldn't affect undo/redo count
-    if expect_output "$TEST_DIR/undo_output.txt" "Total voxels: 2" && \
-       expect_output "$TEST_DIR/undo_output.txt" "Total voxels: 1"; then
+    if expect_output "$TEST_DIR/undo_output.txt" "Voxels: 2" && \
+       expect_output "$TEST_DIR/undo_output.txt" "Voxels: 1"; then
         pass_test "Enhanced undo/redo with validation working"
     else
         fail_test "Undo/redo not handling validation correctly"
