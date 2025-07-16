@@ -65,6 +65,8 @@ bool RenderWindow::create(int width, int height, const std::string& title) {
     glfwSetScrollCallback(m_window, onMouseScroll);
     glfwSetKeyCallback(m_window, onKey);
     glfwSetFramebufferSizeCallback(m_window, onResize);
+    glfwSetWindowFocusCallback(m_window, onWindowFocus);
+    glfwSetCursorEnterCallback(m_window, onCursorEnter);
     
     // Make context current
     makeContextCurrent();
@@ -273,6 +275,62 @@ bool RenderWindow::saveScreenshot(const std::string& filename) {
     // Use RenderEngine's capture frame functionality
     m_renderEngine->captureFrame(filename);
     return true; // Assume success if no exception thrown
+}
+
+void RenderWindow::onWindowFocus(GLFWwindow* window, int focused) {
+    RenderWindow* self = static_cast<RenderWindow*>(glfwGetWindowUserPointer(window));
+    if (!self || !self->m_mouseCallback) return;
+    
+    if (!focused) {
+        // Window lost focus - simulate mouse button release to prevent stuck panning/orbiting
+        MouseEvent event;
+        event.x = static_cast<float>(self->m_mouseX);
+        event.y = static_cast<float>(self->m_mouseY);
+        event.deltaX = 0.0f;
+        event.deltaY = 0.0f;
+        event.button = MouseButton::Left;
+        event.pressed = false;
+        event.shift = false;
+        event.ctrl = false;
+        event.alt = false;
+        
+        // Send release event for all buttons to ensure no stuck states
+        self->m_mouseCallback(event);
+        
+        event.button = MouseButton::Middle;
+        self->m_mouseCallback(event);
+        
+        event.button = MouseButton::Right;
+        self->m_mouseCallback(event);
+    }
+}
+
+void RenderWindow::onCursorEnter(GLFWwindow* window, int entered) {
+    RenderWindow* self = static_cast<RenderWindow*>(glfwGetWindowUserPointer(window));
+    if (!self || !self->m_mouseCallback) return;
+    
+    if (!entered) {
+        // Cursor left window - simulate mouse button release to prevent stuck panning/orbiting
+        MouseEvent event;
+        event.x = static_cast<float>(self->m_mouseX);
+        event.y = static_cast<float>(self->m_mouseY);
+        event.deltaX = 0.0f;
+        event.deltaY = 0.0f;
+        event.button = MouseButton::Left;
+        event.pressed = false;
+        event.shift = false;
+        event.ctrl = false;
+        event.alt = false;
+        
+        // Send release event for all buttons
+        self->m_mouseCallback(event);
+        
+        event.button = MouseButton::Middle;
+        self->m_mouseCallback(event);
+        
+        event.button = MouseButton::Right;
+        self->m_mouseCallback(event);
+    }
 }
 
 } // namespace VoxelEditor
