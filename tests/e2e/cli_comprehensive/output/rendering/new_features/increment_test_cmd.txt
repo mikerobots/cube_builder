@@ -6,6 +6,6 @@ place 104cm 0cm 104cm
 place 112cm 0cm 112cm
 place 120cm 0cm 120cm
 zoom 0.5
-screenshot output/rendering/new_features/increment_placement.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/new_features/increment_placement.ppm
 status
 quit

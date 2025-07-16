@@ -2,7 +2,7 @@ workspace 5 5 5
 view iso
 zoom 1.5
 grid on
-screenshot output/rendering/enhancements/grid_on.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/enhancements/grid_on.ppm
 grid off
-screenshot output/rendering/enhancements/grid_off.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/enhancements/grid_off.ppm
 quit

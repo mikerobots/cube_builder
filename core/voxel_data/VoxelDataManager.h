@@ -116,13 +116,13 @@ public:
     bool setVoxel(const Math::IncrementCoordinates& pos, VoxelResolution resolution, bool value) {
         std::lock_guard<std::mutex> lock(m_mutex);
         
-        // Validate 1cm increment position (includes Y >= 0 check)
-        if (!isValidIncrementPosition(pos)) {
-            return false;
-        }
-        
+        // Use grid's position validation which includes bounds checking
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) return false;
+        
+        if (!grid->isValidIncrementPosition(pos)) {
+            return false;
+        }
         
         // Use the VoxelGrid to handle coordinate validation and conversion
         bool oldValue = grid->getVoxel(pos);
@@ -201,15 +201,15 @@ public:
         
         // Removed verbose debug logging for performance
         
-        // Validate 1cm increment position for world coordinates
-        if (!isValidIncrementPosition(worldPos)) {
-            // Position validation failed
-            return false;
-        }
-        
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) {
             // Failed to get grid
+            return false;
+        }
+        
+        // Use grid's world position validation which includes bounds checking
+        if (!grid->isValidWorldPosition(worldPos)) {
+            // Position validation failed
             return false;
         }
         
@@ -882,15 +882,23 @@ private:
                 voxelPos.getWorldBounds(existingMin, existingMax);
                 
                 // Check for AABB overlap (same algorithm as VoxelCollision::boundsOverlap)
-                // Add small epsilon to handle floating point precision for adjacent voxels
-                const float epsilon = 0.0001f;
+                // Use proper epsilon for floating point comparison - must be smaller than smallest voxel gap
+                // The smallest possible gap between voxels is 1cm = 0.01m, so use much smaller epsilon
+                const float epsilon = 0.00001f;  // 0.01mm - much smaller than 1cm minimum voxel spacing
                 bool overlaps = (newVoxelMin.x < existingMax.x - epsilon && newVoxelMax.x > existingMin.x + epsilon) &&
                                (newVoxelMin.y < existingMax.y - epsilon && newVoxelMax.y > existingMin.y + epsilon) &&
                                (newVoxelMin.z < existingMax.z - epsilon && newVoxelMax.z > existingMin.z + epsilon);
                 
                 if (overlaps) {
-                    // REQ-5.2.5: Allow smaller voxels to be placed on or inside larger voxels for detailed work
-                    float existingSize = getVoxelSize(voxelPos.resolution);
+                    // REQ-5.2.5: Voxels shall not be placed inside other voxels, regardless of size difference
+                    // REQ-4.3.6: Smaller voxels may be placed adjacent to (but not inside) larger voxels
+                    
+                    Logging::Logger::getInstance().debugfc("VoxelDataManager", 
+                        "Overlap detected: new voxel bounds (%.4f,%.4f,%.4f)-(%.4f,%.4f,%.4f) overlaps with existing (%.4f,%.4f,%.4f)-(%.4f,%.4f,%.4f)",
+                        newVoxelMin.x, newVoxelMin.y, newVoxelMin.z,
+                        newVoxelMax.x, newVoxelMax.y, newVoxelMax.z,
+                        existingMin.x, existingMin.y, existingMin.z,
+                        existingMax.x, existingMax.y, existingMax.z);
                     
                     // Check if voxels are at the exact same position - this should always be considered an overlap
                     if (pos == voxelPos.incrementPos) {
@@ -900,23 +908,15 @@ private:
                         return true; // Same position always overlaps
                     }
                     
-                    // If the new voxel is smaller than the existing one, allow the placement
-                    // This enables detailed work on larger voxels
-                    if (voxelSize < existingSize) {
-                        Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                            "Allowing placement: smaller voxel (%dcm) on/inside larger voxel (%dcm)",
-                            static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM),
-                            static_cast<int>(existingSize * Math::CoordinateConverter::METERS_TO_CM));
-                        continue; // Allow placement, check next voxel
-                    }
-                    
-                    // Otherwise, overlap is not allowed
+                    // REQ-5.2.5: All overlaps are prohibited, regardless of size difference
+                    // This prevents placing voxels inside other voxels
+                    float existingSize = getVoxelSize(voxelPos.resolution);
                     Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                        "Overlap detected: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d) size %dcm",
+                        "Overlap detected per REQ-5.2.5: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d) size %dcm",
                         pos.x(), pos.y(), pos.z(), static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM),
                         voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
                         static_cast<int>(existingSize * Math::CoordinateConverter::METERS_TO_CM));
-                    return true; // Would overlap
+                    return true; // Would overlap - not allowed per REQ-5.2.5
                 }
             }
         }

@@ -1,7 +1,0 @@
-load /nonexistent/path/file.vxl
-save /root/cannot_write_here.vxl
-export /dev/null/cannot_write.stl
-workspace 5.0 5.0 5.0
-place 0cm 0cm 0cm
-save output/headless/errors/valid_save.vxl
-quit

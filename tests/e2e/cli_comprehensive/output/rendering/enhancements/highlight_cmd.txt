@@ -3,5 +3,5 @@ resolution 64cm
 view front
 place 192cm 64cm 192cm
 zoom 0.7
-screenshot output/rendering/enhancements/voxel_for_highlight.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/enhancements/voxel_for_highlight.ppm
 quit

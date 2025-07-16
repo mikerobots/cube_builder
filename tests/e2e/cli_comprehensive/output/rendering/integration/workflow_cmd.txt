@@ -5,27 +5,28 @@ resolution 64cm
 place 192cm 0cm 192cm
 place 256cm 0cm 192cm
 place 192cm 0cm 256cm
-screenshot output/rendering/integration/workflow_1.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_1.ppm
 resolution 32cm
 place 192cm 64cm 192cm
 place 224cm 64cm 192cm
 place 192cm 64cm 224cm
-screenshot output/rendering/integration/workflow_2.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_2.ppm
 resolution 16cm
 place 208cm 96cm 208cm
-screenshot output/rendering/integration/workflow_3.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_3.ppm
 undo
 undo
 undo
-screenshot output/rendering/integration/workflow_undo.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_undo.ppm
 redo
 redo
-screenshot output/rendering/integration/workflow_redo.ppm
-save output/rendering/integration/workflow_project.vxl
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_redo.ppm
+save /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_project.vxl
 clear
-screenshot output/rendering/integration/workflow_clear.ppm
-load output/rendering/integration/workflow_project.vxl
-screenshot output/rendering/integration/workflow_loaded.ppm
-export output/rendering/integration/workflow_export.stl
+grid off
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_clear.ppm
+load /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_project.vxl
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_loaded.ppm
+export /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/integration/workflow_export.stl
 status
 quit

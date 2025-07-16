@@ -115,6 +115,29 @@ void MouseInteraction::onMouseMove(float x, float y) {
     }
     
     // Camera controls
+    // Additional safety check: verify button is still pressed
+    bool leftPressed = false;
+    bool middlePressed = false;
+    if (m_renderWindow && m_renderWindow->getWindow()) {
+        GLFWwindow* window = m_renderWindow->getWindow();
+        leftPressed = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+        middlePressed = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS;
+    }
+    
+    // If we're in orbit mode but no relevant button is pressed, clear the mode
+    if (m_orbitMode && !leftPressed && !middlePressed) {
+        m_orbitMode = false;
+        Logging::Logger::getInstance().debug("MouseInteraction", 
+            "Clearing stuck orbit mode - no mouse button pressed");
+    }
+    
+    // If we're in pan mode but left button is not pressed, clear the mode
+    if (m_panMode && !leftPressed) {
+        m_panMode = false;
+        Logging::Logger::getInstance().debug("MouseInteraction", 
+            "Clearing stuck pan mode - left button not pressed");
+    }
+    
     if (m_orbitMode) {
         // Orbit mode (either middle mouse or Ctrl/Cmd+left mouse)
         glm::vec2 delta = m_mousePos - oldPos;
@@ -808,6 +831,17 @@ void MouseInteraction::centerCameraOnVoxels() {
         // No voxels, keep current position
         Logging::Logger::getInstance().debug("MouseInteraction", "No voxels to center on");
     }
+}
+
+void MouseInteraction::resetMouseState() {
+    // Reset all mouse button and drag states
+    m_mousePressed = false;
+    m_middlePressed = false;
+    m_orbitMode = false;
+    m_panMode = false;
+    
+    Logging::Logger::getInstance().debug("MouseInteraction", 
+        "Reset mouse state - clearing all button and drag states");
 }
 
 } // namespace VoxelEditor

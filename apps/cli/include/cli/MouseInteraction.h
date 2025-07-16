@@ -56,6 +56,9 @@ public:
     bool hasHoverFace() const { return m_hasHoverFace; }
     const VisualFeedback::Face& getHoverFace() const { return m_hoverFace; }
     
+    // Reset mouse state (called when window loses focus or cursor leaves)
+    void resetMouseState();
+    
 private:
     Application* m_app;
     

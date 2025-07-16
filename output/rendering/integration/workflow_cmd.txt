@@ -6,7 +6,7 @@ place 192cm 0cm 192cm
 place 256cm 0cm 192cm
 place 192cm 0cm 256cm
 screenshot output/rendering/integration/workflow_1.ppm
-resolution 64cm
+resolution 32cm
 place 192cm 64cm 192cm
 place 224cm 64cm 192cm
 place 192cm 64cm 224cm
@@ -21,10 +21,11 @@ screenshot output/rendering/integration/workflow_undo.ppm
 redo
 redo
 screenshot output/rendering/integration/workflow_redo.ppm
-save output/rendering/integration/workflow_project.vox
+save output/rendering/integration/workflow_project.vxl
 clear
+grid off
 screenshot output/rendering/integration/workflow_clear.ppm
-load output/rendering/integration/workflow_project.vox
+load output/rendering/integration/workflow_project.vxl
 screenshot output/rendering/integration/workflow_loaded.ppm
 export output/rendering/integration/workflow_export.stl
 status

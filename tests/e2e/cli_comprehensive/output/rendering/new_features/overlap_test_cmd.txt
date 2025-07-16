@@ -1,0 +1,9 @@
+workspace 5 5 5
+resolution 64cm
+place 192cm 0cm 192cm
+place 192cm 0cm 192cm
+place 128cm 0cm 128cm
+place 256cm 0cm 256cm
+status
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/new_features/overlap_test.ppm
+quit

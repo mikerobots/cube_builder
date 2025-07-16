@@ -1,0 +1,11 @@
+workspace 5 5 5
+resolution 32cm
+place 96cm 0cm 96cm
+place 96cm -32cm 96cm
+place 192cm 0cm 192cm
+status
+undo
+status
+redo
+status
+quit

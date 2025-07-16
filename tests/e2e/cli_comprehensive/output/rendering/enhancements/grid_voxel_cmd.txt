@@ -5,5 +5,5 @@ view iso
 place 0cm 0cm 0cm
 place 32cm 0cm 0cm
 place 0cm 0cm 32cm
-screenshot output/rendering/enhancements/grid_with_voxels.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/enhancements/grid_with_voxels.ppm
 quit

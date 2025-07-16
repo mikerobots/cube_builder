@@ -168,8 +168,9 @@
   - *Subsystems: **Voxel Data** (multi-resolution collision detection)*
 - **REQ-4.3.5**: Failed placement or fill commands shall make no state changes (atomic operations)
   - *Subsystems: **Voxel Data** (transaction safety), **Input** (atomic command execution)*
-- **REQ-4.3.6**: Smaller voxels may be placed on the faces of larger voxels for detailed work
+- **REQ-4.3.6**: Smaller voxels may be placed adjacent to (but not inside) larger voxels for detailed work
   - *Subsystems: **Voxel Data** (overlap rules), **Input** (placement logic)*
+  - *Note: Placement must be on exterior faces only, not within the volume of larger voxels*
 
 #### 4.4 Fill Command Behavior
 - **REQ-4.4.1**: Fill command shall create multiple voxels of the current resolution size within the specified bounds
@@ -205,6 +206,9 @@
 - **REQ-5.2.4**: Redundant operations (placing/removing at same position with same value) shall fail
   - *Subsystems: **Voxel Data** (redundant operation detection), **Input** (operation validation)*
   - *Note: This applies to all operations including place, remove, and fill commands*
+- **REQ-5.2.5**: Voxels shall not be placed inside other voxels, regardless of size difference
+  - *Subsystems: **Voxel Data** (interior collision detection), **Input** (placement validation)*
+  - *Note: Smaller voxels may only be placed adjacent to larger voxels, not within their volume*
 
 #### 5.3 Resolution Selection
 - **REQ-5.3.1**: Current voxel size controlled by active resolution setting

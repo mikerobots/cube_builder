@@ -1,0 +1,7 @@
+workspace 5 5 5
+view iso
+grid on
+resolution 32cm
+place 192cm 0cm 192cm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/new_features/preview_test.ppm
+quit

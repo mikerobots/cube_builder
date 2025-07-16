@@ -1,0 +1,11 @@
+workspace 3 3 3
+view iso
+zoom 2.0
+grid on
+resolution 32cm
+place 0cm 0cm 0cm
+place 288cm 0cm 0cm
+place 0cm 0cm 288cm
+place 288cm 0cm 288cm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/enhancements/workspace_bounds.ppm
+quit

@@ -7,31 +7,31 @@ Successfully loaded OpenGL VAO functions
 Successfully created and bound default VAO: 1
 Successfully loaded OpenGL VAO functions
 Successfully created and bound default VAO: 2
-[2025-07-16 07:51:26.166] [INFO ] RenderEngine: Loading built-in shaders...
-[2025-07-16 07:51:26.167] [INFO ] Found shader directory at: ../../../core/rendering/shaders/
-[2025-07-16 07:51:26.167] [INFO ] Compiling shader program: basic
+[2025-07-16 07:51:27.195] [INFO ] RenderEngine: Loading built-in shaders...
+[2025-07-16 07:51:27.195] [INFO ] Found shader directory at: ../../../core/rendering/shaders/
+[2025-07-16 07:51:27.195] [INFO ] Compiling shader program: basic
 Shader attribute locations after linking: pos=0 normal=1 color=2
-[2025-07-16 07:51:26.169] [INFO ] Successfully created shader program: basic (ID: 3)
-[2025-07-16 07:51:26.169] [INFO ] Compiling shader program: enhanced
+[2025-07-16 07:51:27.197] [INFO ] Successfully created shader program: basic (ID: 3)
+[2025-07-16 07:51:27.197] [INFO ] Compiling shader program: enhanced
 Shader attribute locations after linking: pos=0 normal=1 color=2
-[2025-07-16 07:51:26.171] [INFO ] Successfully created shader program: enhanced (ID: 6)
-[2025-07-16 07:51:26.171] [INFO ] Compiling shader program: flat
+[2025-07-16 07:51:27.199] [INFO ] Successfully created shader program: enhanced (ID: 6)
+[2025-07-16 07:51:27.199] [INFO ] Compiling shader program: flat
 Program linking warning: WARNING: Output of vertex shader 'FragPos' not read by fragment shader
 
 Shader attribute locations after linking: pos=0 normal=1 color=2
-[2025-07-16 07:51:26.173] [INFO ] Successfully created shader program: flat (ID: 9)
-[2025-07-16 07:51:26.173] [INFO ] Successfully loaded shaders from files
-[2025-07-16 07:51:26.173] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
-[2025-07-16 07:51:26.173] [WARN ] Could not find ground plane shader files in any expected location
-[2025-07-16 07:51:26.173] [WARN ] Failed to load ground plane shader from files, using inline version
-[2025-07-16 07:51:26.173] [INFO ] Compiling shader program: GroundPlaneGrid
+[2025-07-16 07:51:27.202] [INFO ] Successfully created shader program: flat (ID: 9)
+[2025-07-16 07:51:27.202] [INFO ] Successfully loaded shaders from files
+[2025-07-16 07:51:27.202] [INFO ] GroundPlaneGrid: Loading ground plane grid shader from files...
+[2025-07-16 07:51:27.202] [WARN ] Could not find ground plane shader files in any expected location
+[2025-07-16 07:51:27.202] [WARN ] Failed to load ground plane shader from files, using inline version
+[2025-07-16 07:51:27.202] [INFO ] Compiling shader program: GroundPlaneGrid
 Shader attribute locations after linking: pos=-1 normal=-1 color=-1
-[2025-07-16 07:51:26.173] [INFO ] Successfully created shader program: GroundPlaneGrid (ID: 12)
-[2025-07-16 07:51:26.173] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
-[2025-07-16 07:51:26.173] [INFO ] Ground plane grid renderer initialized
-[2025-07-16 07:51:26.173] [INFO ] RenderEngine initialized successfully
-[2025-07-16 07:51:26.173] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
-[2025-07-16 07:51:26.173] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
+[2025-07-16 07:51:27.202] [INFO ] Successfully created shader program: GroundPlaneGrid (ID: 12)
+[2025-07-16 07:51:27.202] [INFO ] GroundPlaneGrid: Shader created successfully with ID: 12
+[2025-07-16 07:51:27.202] [INFO ] Ground plane grid renderer initialized
+[2025-07-16 07:51:27.202] [INFO ] RenderEngine initialized successfully
+[2025-07-16 07:51:27.202] [INFO ] Renderer: OpenGL 4.1 Metal - 89.3 - Apple M2 (Apple)
+[2025-07-16 07:51:27.202] [INFO ] Generated ground plane grid mesh: 34 lines, workspace size: (5.000000, 5.000000, 5.000000)
 Creating scene...
 Scene created successfully!
 Application::initialize() - Calling CommandRegistry::registerAllCommands
@@ -41,11 +41,10 @@ Application::initialize() - Command registration complete
 Initialization complete!
 Type 'help' for available commands.
 
-2025-07-16 07:51:26.192 VoxelEditor_CLI[65055:26656164] +[IMKClient subclass]: chose IMKClient_Legacy
-2025-07-16 07:51:26.192 VoxelEditor_CLI[65055:26656164] +[IMKInputSession subclass]: chose IMKInputSession_Legacy
+2025-07-16 07:51:27.219 VoxelEditor_CLI[65063:26656233] +[IMKClient subclass]: chose IMKClient_Legacy
+2025-07-16 07:51:27.219 VoxelEditor_CLI[65063:26656233] +[IMKInputSession subclass]: chose IMKInputSession_Legacy
 > Workspace resized to 5x5x5 meters
 > Resolution set to 32cm
-> Position is below ground plane (Y must be >= 0)
 > Enabled attribute 0 for Position at offset 0
 Enabled attribute 1 for Normal at offset 12
 Enabled attribute 2 for Color at offset 32
@@ -83,13 +82,40 @@ drawElements called: count=24, type=1, offset=0 (expected 8 triangles)
   Depth test: ON
   Blending: OFF
   Face culling: OFF
+> Position is below ground plane (Y must be >= 0)
+bindMaterial: Using shader ID 6 (material shader: 6)
+Vertex 0 transform: world(0.808,0,0.808) -> clip(-2.73525e-08,-1.59255,6.36824,6.56695) -> NDC(-4.16517e-09,-0.24251,0.969741) -> Screen(640,447.304) [VISIBLE]
+  Triangle bounds: (640,434.877) to (680.075,466.576) Size: 40.0746 x 31.6985 pixels
+Drawing mesh with 36 indices (12 triangles)
+drawElements called: count=36, type=4, offset=0 (expected 12 triangles)
+  Current program: 4
+  Program validation: PASSED
+  Program linked: YES
+  VAO=8, VBO=0, IBO=10
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
+drawElements called: count=24, type=1, offset=0 (expected 8 triangles)
+  Current program: 3
+  Program validation: PASSED
+  Program linked: YES
+  VAO=9, VBO=0, IBO=12
+  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
+  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
+  Depth test: ON
+  Blending: OFF
+  Face culling: OFF
 > Enabled attribute 0 for Position at offset 0
 Enabled attribute 1 for Normal at offset 12
 Enabled attribute 2 for Color at offset 32
 Enabled attribute 0 for Position at offset 0
 Enabled attribute 1 for Normal at offset 12
 Enabled attribute 2 for Color at offset 32
-Placed 32cm voxel at (96cm, 32cm, 96cm)
+Placed 32cm voxel at (192cm, 0cm, 192cm)
 bindMaterial: Using shader ID 6 (material shader: 6)
 Vertex 0 transform: world(0.808,0,0.808) -> clip(-2.73525e-08,-1.59255,6.36824,6.56695) -> NDC(-4.16517e-09,-0.24251,0.969741) -> Screen(640,447.304) [VISIBLE]
   Triangle bounds: (640,434.877) to (680.075,466.576) Size: 40.0746 x 31.6985 pixels
@@ -105,17 +131,6 @@ drawElements called: count=72, type=4, offset=0 (expected 24 triangles)
   Depth test: ON
   Blending: OFF
   Face culling: OFF
-drawElements called: count=48, type=1, offset=0 (expected 16 triangles)
-  Current program: 3
-  Program validation: PASSED
-  Program linked: YES
-  VAO=11, VBO=15, IBO=16
-  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
-  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
-  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
-  Depth test: ON
-  Blending: OFF
-  Face culling: OFF
 > Voxel Editor Status
 ==================
 Project: <unsaved>
@@ -124,34 +139,59 @@ Workspace: 5x5x5 meters
 Voxels: 2
 Selected: 0 voxels
 Groups: 0
-Memory: 0.00176239 MB
+Memory: 0.00191498 MB
 
 Smoothing Settings:
   Level: 0
   Preview: off
 
 bindMaterial: Using shader ID 6 (material shader: 6)
-Vertex 0 transform: world(0.808,0,0.808) -> clip(-2.73525e-08,-1.59255,6.36824,6.56695) -> NDC(-4.16517e-09,-0.24251,0.969741) -> Screen(640,447.304) [VISIBLE]
-  Triangle bounds: (640,434.877) to (680.075,466.576) Size: 40.0746 x 31.6985 pixels
 Drawing mesh with 72 indices (24 triangles)
-drawElements called: count=72, type=4, offset=0 (expected 24 triangles)
-  Current program: 4
-  Program validation: PASSED
-  Program linked: YES
-  VAO=10, VBO=0, IBO=14
-  Attrib 0: enabled, size=3, type=5126, stride=48, normalized=0
-  Attrib 1: enabled, size=3, type=5126, stride=48, normalized=0
-  Attrib 2: enabled, size=4, type=5126, stride=48, normalized=0
-  Depth test: ON
-  Blending: OFF
-  Face culling: OFF
-> bindMaterial: Using shader ID 6 (material shader: 6)
-Drawing mesh with 72 indices (24 triangles)
-[2025-07-16 07:51:26.395] [INFO ] Screenshot saved: /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/new_features/ground_constraint.ppm
-Screenshot saved: /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/new_features/ground_constraint.ppm
+> Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Undo completed
 bindMaterial: Using shader ID 6 (material shader: 6)
-Drawing mesh with 72 indices (24 triangles)
+Drawing mesh with 36 indices (12 triangles)
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 32cm
+Workspace: 5x5x5 meters
+Voxels: 1
+Selected: 0 voxels
+Groups: 0
+Memory: 0.00130463 MB
+
+Smoothing Settings:
+  Level: 0
+  Preview: off
+
+> Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Enabled attribute 0 for Position at offset 0
+Enabled attribute 1 for Normal at offset 12
+Enabled attribute 2 for Color at offset 32
+Redo completed
+> Voxel Editor Status
+==================
+Project: <unsaved>
+Resolution: 32cm
+Workspace: 5x5x5 meters
+Voxels: 2
+Selected: 0 voxels
+Groups: 0
+Memory: 0.00191498 MB
+
+Smoothing Settings:
+  Level: 0
+  Preview: off
+
 > Goodbye!
 
 Shutting down...
-[2025-07-16 07:51:26.542] [INFO ] RenderEngine shut down
+[2025-07-16 07:51:27.341] [INFO ] RenderEngine shut down

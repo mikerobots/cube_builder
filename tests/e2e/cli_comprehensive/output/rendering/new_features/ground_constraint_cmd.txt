@@ -4,5 +4,5 @@ place 96cm -32cm 96cm
 place 96cm 0cm 96cm
 place 96cm 32cm 96cm
 status
-screenshot output/rendering/new_features/ground_constraint.ppm
+screenshot /Users/michaelhalloran/cube_edit/tests/e2e/cli_comprehensive/output/rendering/new_features/ground_constraint.ppm
 quit

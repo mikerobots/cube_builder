@@ -1,3 +1,0 @@
-resolution 512cm
-status
-quit

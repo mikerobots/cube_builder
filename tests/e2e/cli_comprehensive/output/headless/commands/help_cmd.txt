@@ -1,4 +1,0 @@
-help
-quit
-help
-quit
