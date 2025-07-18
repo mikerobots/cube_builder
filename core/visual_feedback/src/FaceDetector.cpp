@@ -1,5 +1,6 @@
 #include "../include/visual_feedback/FaceDetector.h"
 #include "../include/visual_feedback/GeometricFaceDetector.h"
+#include "../../voxel_data/VoxelDataManager.h"
 #include "../../foundation/logging/Logger.h"
 #include <algorithm>
 #include <limits>
@@ -54,6 +55,67 @@ Face FaceDetector::detectFaceOrGround(const Ray& ray, const VoxelData::VoxelGrid
     
     // If no voxel face hit, check ground plane
     return detectGroundPlane(ray);
+}
+
+Face FaceDetector::detectFaceAcrossAllResolutions(const Ray& ray, const VoxelData::VoxelDataManager& voxelManager) {
+    Face closestFace;
+    float closestDistance = std::numeric_limits<float>::max();
+    
+    // Check all resolution levels
+    for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+        VoxelData::VoxelResolution resolution = static_cast<VoxelData::VoxelResolution>(i);
+        const VoxelData::VoxelGrid* grid = voxelManager.getGrid(resolution);
+        
+        if (!grid || grid->getVoxelCount() == 0) {
+            continue;
+        }
+        
+        // Detect face in this resolution
+        Face face = detectFace(ray, *grid, resolution);
+        
+        if (face.isValid()) {
+            // Calculate distance to this face
+            Math::IncrementCoordinates voxelPos = face.getVoxelPosition();
+            Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(voxelPos);
+            float voxelSize = VoxelData::getVoxelSize(resolution);
+            
+            // Calculate the face plane position based on face direction
+            Math::Vector3f facePos = worldPos.value();
+            Math::Vector3f normal = face.getNormal();
+            
+            // Offset to the face (voxels use bottom-center coordinates)
+            if (std::abs(normal.y) > 0.5f) {
+                // Top/bottom face
+                if (normal.y > 0) facePos.y += voxelSize; // Top face
+                // Bottom face stays at voxelPos.y
+            } else if (std::abs(normal.x) > 0.5f) {
+                // Left/right face
+                float halfSize = voxelSize * 0.5f;
+                if (normal.x > 0) facePos.x += halfSize; // Right face
+                else facePos.x -= halfSize; // Left face
+            } else if (std::abs(normal.z) > 0.5f) {
+                // Front/back face
+                float halfSize = voxelSize * 0.5f;
+                if (normal.z > 0) facePos.z += halfSize; // Front face
+                else facePos.z -= halfSize; // Back face
+            }
+            
+            // Calculate distance from ray origin to face
+            float distance = (facePos - ray.origin.value()).length();
+            
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestFace = face;
+            }
+        }
+    }
+    
+    // If no voxel face was hit, check ground plane
+    if (!closestFace.isValid()) {
+        return detectGroundPlane(ray);
+    }
+    
+    return closestFace;
 }
 
 Face FaceDetector::detectFace(const Ray& ray, const VoxelData::VoxelGrid& grid, 
@@ -205,7 +267,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
             result.hit = true;
             result.distance = hit->distance;
             result.position = Math::WorldCoordinates(hit->point);
-            result.face = Face(faceInfo.voxelPos, resolution, faceInfo.faceDir);
+            result.face = Face(faceInfo.voxelPos, resolution, faceInfo.faceDir, Math::WorldCoordinates(hit->point));
             
             // Set normal based on face direction
             switch (faceInfo.faceDir) {
@@ -324,7 +386,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                                 result.hit = true;
                                 result.distance = hitT;
                                 result.position = ray.pointAt(hitT);
-                                result.face = Face(testIncrement, resolution, hitFace);
+                                result.face = Face(testIncrement, resolution, hitFace, result.position);
                                 
                                 // Set normal based on face direction
                                 switch (hitFace) {
@@ -411,7 +473,8 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                 closestHit.valid = true;
                 closestHit.voxel = previousVoxel.value();
                 closestHit.distance = currentDistance;
-                closestHit.face = Face(previousVoxel, resolution, exitFace);
+                Math::WorldCoordinates exitHitPoint = ray.pointAt(currentDistance);
+                closestHit.face = Face(previousVoxel, resolution, exitFace, exitHitPoint);
                 
                 // Set normal based on exit face
                 switch (exitFace) {
@@ -473,7 +536,7 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                         
                         // Use simplified face direction determination
                         FaceDirection hitFaceDir = determineFaceDirection(ray, voxelBox, hitT);
-                        closestHit.face = Face(traversal.current, resolution, hitFaceDir);
+                        closestHit.face = Face(traversal.current, resolution, hitFaceDir, Math::WorldCoordinates(hitPoint));
                         
                         // Set normal based on face direction
                         switch (hitFaceDir) {
@@ -667,17 +730,17 @@ FaceDirection FaceDetector::determineFaceDirection(const Ray& ray, const Math::B
     
     // Return the face direction based on which plane we're closest to
     // Note: When ray hits a face, the face direction should match the face normal
-    if (minDist == distToMinX && distToMinX < epsilon) {
+    if (minDist == distToMinX) {
         return FaceDirection::NegativeX;  // Left face (normal points -X)
-    } else if (minDist == distToMaxX && distToMaxX < epsilon) {
+    } else if (minDist == distToMaxX) {
         return FaceDirection::PositiveX;  // Right face (normal points +X)
-    } else if (minDist == distToMinY && distToMinY < epsilon) {
+    } else if (minDist == distToMinY) {
         return FaceDirection::NegativeY;  // Bottom face (normal points -Y)
-    } else if (minDist == distToMaxY && distToMaxY < epsilon) {
+    } else if (minDist == distToMaxY) {
         return FaceDirection::PositiveY;  // Top face (normal points +Y)
-    } else if (minDist == distToMinZ && distToMinZ < epsilon) {
+    } else if (minDist == distToMinZ) {
         return FaceDirection::NegativeZ;  // Front face (normal points -Z)
-    } else if (minDist == distToMaxZ && distToMaxZ < epsilon) {
+    } else if (minDist == distToMaxZ) {
         return FaceDirection::PositiveZ;  // Back face (normal points +Z)
     }
     

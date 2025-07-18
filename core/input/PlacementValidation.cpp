@@ -251,18 +251,81 @@ PlacementContext PlacementUtils::getSmartPlacementContext(const Math::WorldCoord
                                                          VoxelData::FaceDirection surfaceFaceDir) {
     // Mark unused parameters (kept for API compatibility)
     (void)dataManager;
-    (void)surfaceFaceVoxelPos;
-    (void)surfaceFaceVoxelRes;
-    (void)surfaceFaceDir;
     
     PlacementContext context;
     context.worldPosition = worldPos;
     context.resolution = resolution;
     context.shiftPressed = shiftPressed;
     
-    // SIMPLIFIED: Always use basic 1cm increment snapping regardless of context
-    // This implements the new requirement that all voxels place at exact 1cm positions
-    context.snappedIncrementPos = snapToValidIncrement(worldPos);
+    // Check if we're placing on a surface face
+    if (surfaceFaceVoxelPos != nullptr) {
+        // Validate that the hit point is within the bounds of the surface face
+        float surfaceVoxelSize = VoxelData::getVoxelSize(surfaceFaceVoxelRes);
+        Math::WorldCoordinates surfaceWorldPos = Math::CoordinateConverter::incrementToWorld(*surfaceFaceVoxelPos);
+        
+        // Calculate surface voxel bounds (bottom-center coordinate system)
+        float halfSize = surfaceVoxelSize * 0.5f;
+        Math::Vector3f surfaceMin(
+            surfaceWorldPos.value().x - halfSize,
+            surfaceWorldPos.value().y,
+            surfaceWorldPos.value().z - halfSize
+        );
+        Math::Vector3f surfaceMax(
+            surfaceWorldPos.value().x + halfSize,
+            surfaceWorldPos.value().y + surfaceVoxelSize,
+            surfaceWorldPos.value().z + halfSize
+        );
+        
+        // Check if hit point is within surface face bounds
+        // The bounds check depends on which face we're placing on
+        const Math::Vector3f& hitPos = worldPos.value();
+        const float epsilon = 0.0001f;  // Small tolerance for floating-point comparison
+        
+        bool withinBounds = false;
+        switch (surfaceFaceDir) {
+            case VoxelData::FaceDirection::PosY:
+            case VoxelData::FaceDirection::NegY:
+                // For top/bottom faces, check XZ bounds
+                withinBounds = (hitPos.x >= surfaceMin.x - epsilon && hitPos.x <= surfaceMax.x + epsilon) &&
+                              (hitPos.z >= surfaceMin.z - epsilon && hitPos.z <= surfaceMax.z + epsilon);
+                break;
+            case VoxelData::FaceDirection::PosX:
+            case VoxelData::FaceDirection::NegX:
+                // For left/right faces, check YZ bounds
+                withinBounds = (hitPos.y >= surfaceMin.y - epsilon && hitPos.y <= surfaceMax.y + epsilon) &&
+                              (hitPos.z >= surfaceMin.z - epsilon && hitPos.z <= surfaceMax.z + epsilon);
+                break;
+            case VoxelData::FaceDirection::PosZ:
+            case VoxelData::FaceDirection::NegZ:
+                // For front/back faces, check XY bounds
+                withinBounds = (hitPos.x >= surfaceMin.x - epsilon && hitPos.x <= surfaceMax.x + epsilon) &&
+                              (hitPos.y >= surfaceMin.y - epsilon && hitPos.y <= surfaceMax.y + epsilon);
+                break;
+        }
+        
+        if (!withinBounds) {
+            // Hit point is outside surface face bounds
+            context.snappedIncrementPos = Math::IncrementCoordinates(0, 0, 0);
+            context.validation = PlacementValidationResult::InvalidOutOfBounds;
+            return context;
+        }
+    }
+    
+    // Use appropriate snapping based on context
+    if (surfaceFaceVoxelPos != nullptr) {
+        // Placing on a surface face - use surface face grid snapping
+        // This allows placement at any 1cm increment position on the face
+        context.snappedIncrementPos = snapToSurfaceFaceGrid(
+            worldPos,
+            *surfaceFaceVoxelPos,
+            surfaceFaceVoxelRes,
+            surfaceFaceDir,
+            resolution
+        );
+    } else {
+        // Placing on ground or in open space - use basic 1cm increment snapping
+        context.snappedIncrementPos = snapToValidIncrement(worldPos);
+    }
     
     // Validate the placement
     context.validation = validatePlacement(context.snappedIncrementPos, resolution, workspaceSize);

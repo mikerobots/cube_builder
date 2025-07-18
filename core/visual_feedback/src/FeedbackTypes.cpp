@@ -12,7 +12,18 @@ Face::Face(const Math::IncrementCoordinates& voxelPos, VoxelData::VoxelResolutio
     , m_direction(dir)
     , m_valid(true)
     , m_isGroundPlane(false)
-    , m_groundHitPoint(Math::WorldCoordinates::zero()) {
+    , m_groundHitPoint(Math::WorldCoordinates::zero())
+    , m_hitPoint(Math::WorldCoordinates::zero()) {
+}
+
+Face::Face(const Math::IncrementCoordinates& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir, const Math::WorldCoordinates& hitPoint)
+    : m_voxelPosition(voxelPos)
+    , m_resolution(res)
+    , m_direction(dir)
+    , m_valid(true)
+    , m_isGroundPlane(false)
+    , m_groundHitPoint(Math::WorldCoordinates::zero())
+    , m_hitPoint(hitPoint) {
 }
 
 // Enhancement: Create a ground plane face
@@ -21,6 +32,7 @@ Face Face::GroundPlane(const Math::WorldCoordinates& hitPoint) {
     face.m_valid = true;
     face.m_isGroundPlane = true;
     face.m_groundHitPoint = hitPoint;
+    face.m_hitPoint = hitPoint;  // Store hit point for all faces
     face.m_direction = FaceDirection::PositiveY; // Ground plane faces up
     face.m_resolution = VoxelData::VoxelResolution::Size_1cm; // Default resolution
     

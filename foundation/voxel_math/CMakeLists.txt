@@ -105,4 +105,15 @@ if(BUILD_TESTING)
         GTest::gtest_main
     )
     add_test(NAME test_unit_voxel_math_simd COMMAND test_unit_voxel_math_simd)
+
+    add_executable(test_unit_foundation_voxel_math_large_voxel_raycast
+        tests/test_unit_foundation_voxel_math_large_voxel_raycast.cpp
+    )
+    target_link_libraries(test_unit_foundation_voxel_math_large_voxel_raycast
+        VoxelEditor_VoxelMath
+        VoxelEditor_Math
+        VoxelEditor_VoxelData
+        GTest::gtest_main
+    )
+    add_test(NAME test_unit_foundation_voxel_math_large_voxel_raycast COMMAND test_unit_foundation_voxel_math_large_voxel_raycast)
 endif()

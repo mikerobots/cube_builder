@@ -68,6 +68,9 @@ public:
     // Special constructor for ground plane (Enhancement)
     static Face GroundPlane(const Math::WorldCoordinates& hitPoint);
     
+    // Constructor with hit point for voxel faces
+    Face(const Math::IncrementCoordinates& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir, const Math::WorldCoordinates& hitPoint);
+    
     // Face identification
     FaceId getId() const;
     bool isValid() const { return m_valid; }
@@ -92,6 +95,9 @@ public:
     // Ground plane specific (Enhancement)
     Math::WorldCoordinates getGroundPlaneHitPoint() const { return m_groundHitPoint; }
     
+    // Get hit point for any face (ground or voxel)
+    Math::WorldCoordinates getHitPoint() const { return m_hitPoint; }
+    
     // Backward compatibility wrapper methods (to be removed in Phase 7)
     Face(const Math::Vector3i& voxelPos, VoxelData::VoxelResolution res, FaceDirection dir)
         : Face(Math::IncrementCoordinates(voxelPos), res, dir) {}
@@ -109,6 +115,7 @@ private:
     bool m_valid = false;
     bool m_isGroundPlane = false;  // Enhancement
     Math::WorldCoordinates m_groundHitPoint;  // Enhancement
+    Math::WorldCoordinates m_hitPoint;  // Actual ray hit point
     
     float getVoxelSize() const;
 };

@@ -124,17 +124,20 @@ public:
             return false;
         }
         
+        // Validate position is within workspace bounds if setting a voxel
+        if (value) {
+            auto validation = validatePositionInternal(pos, resolution, true);
+            if (!validation.valid) {
+                return false;
+            }
+        }
+        
         // Use the VoxelGrid to handle coordinate validation and conversion
         bool oldValue = grid->getVoxel(pos);
         
         // Handle redundant operations (setting same value as current)
         if (oldValue == value) {
             // Redundant operation - fail to indicate no change was made
-            return false;
-        }
-        
-        // Check for overlaps if we're setting a voxel (not removing)
-        if (value && wouldOverlapInternal(pos, resolution)) {
             return false;
         }
         
@@ -199,7 +202,19 @@ public:
     bool setVoxelAtWorldPos(const Math::Vector3f& worldPos, VoxelResolution resolution, bool value) {
         std::lock_guard<std::mutex> lock(m_mutex);
         
-        // Removed verbose debug logging for performance
+        // Validate that world position is on a 1cm increment
+        // Check if the position in centimeters is a whole number
+        const float CM_TOLERANCE = 0.0001f; // 0.01mm tolerance
+        float xCm = worldPos.x * 100.0f;
+        float yCm = worldPos.y * 100.0f;
+        float zCm = worldPos.z * 100.0f;
+        
+        if (std::abs(xCm - std::round(xCm)) > CM_TOLERANCE ||
+            std::abs(yCm - std::round(yCm)) > CM_TOLERANCE ||
+            std::abs(zCm - std::round(zCm)) > CM_TOLERANCE) {
+            // Not on a 1cm increment
+            return false;
+        }
         
         VoxelGrid* grid = getGrid(resolution);
         if (!grid) {
@@ -890,8 +905,8 @@ private:
                                (newVoxelMin.z < existingMax.z - epsilon && newVoxelMax.z > existingMin.z + epsilon);
                 
                 if (overlaps) {
-                    // REQ-5.2.5: Voxels shall not be placed inside other voxels, regardless of size difference
-                    // REQ-4.3.6: Smaller voxels may be placed adjacent to (but not inside) larger voxels
+                    // REQ-5.2.5 (core/voxel_data): Smaller voxels may be placed on the faces of larger voxels for detailed work
+                    // REQ-4.3.4: Collision detection shall apply between voxels of different resolutions (smaller voxels allowed on larger ones)
                     
                     Logging::Logger::getInstance().debugfc("VoxelDataManager", 
                         "Overlap detected: new voxel bounds (%.4f,%.4f,%.4f)-(%.4f,%.4f,%.4f) overlaps with existing (%.4f,%.4f,%.4f)-(%.4f,%.4f,%.4f)",
@@ -908,15 +923,12 @@ private:
                         return true; // Same position always overlaps
                     }
                     
-                    // REQ-5.2.5: All overlaps are prohibited, regardless of size difference
-                    // This prevents placing voxels inside other voxels
-                    float existingSize = getVoxelSize(voxelPos.resolution);
+                    // Any overlap is not allowed - voxels must be placed adjacent, not inside
                     Logging::Logger::getInstance().debugfc("VoxelDataManager", 
-                        "Overlap detected per REQ-5.2.5: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d) size %dcm",
+                        "Overlap not allowed: new voxel at (%d,%d,%d) size %dcm would overlap with existing voxel at (%d,%d,%d)",
                         pos.x(), pos.y(), pos.z(), static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM),
-                        voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z(),
-                        static_cast<int>(existingSize * Math::CoordinateConverter::METERS_TO_CM));
-                    return true; // Would overlap - not allowed per REQ-5.2.5
+                        voxelPos.incrementPos.x(), voxelPos.incrementPos.y(), voxelPos.incrementPos.z());
+                    return true; // Would overlap - not allowed
                 }
             }
         }

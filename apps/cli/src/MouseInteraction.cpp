@@ -446,30 +446,36 @@ bool MouseInteraction::performRaycast(const Math::Ray& ray, VisualFeedback::Face
     // Create VisualFeedback::Ray from Math::Ray
     VisualFeedback::Ray vfRay(ray.origin, ray.direction);
     
-    // Get active grid
-    const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(m_voxelManager->getActiveResolution());
-    if (!grid) {
-        Logging::Logger::getInstance().debug("MouseInteraction", "No grid available for raycast");
-        return false;
-    }
-    
-    // Debug: Check if grid has any voxels
+    // Debug: Count total voxels across all resolutions
     static int raycastCount = 0;
     if (raycastCount++ % 60 == 0) {
-        size_t voxelCount = grid->getVoxelCount();
+        size_t totalVoxels = 0;
+        for (int i = 0; i < static_cast<int>(VoxelData::VoxelResolution::COUNT); ++i) {
+            const VoxelData::VoxelGrid* grid = m_voxelManager->getGrid(static_cast<VoxelData::VoxelResolution>(i));
+            if (grid) {
+                totalVoxels += grid->getVoxelCount();
+            }
+        }
         Logging::Logger::getInstance().debugfc("MouseInteraction",
-            "Raycasting against grid with %zu voxels", voxelCount);
+            "Raycasting against %zu total voxels across all resolutions", totalVoxels);
     }
     
-    // Cast ray and find nearest face or ground plane
-    hitFace = detector.detectFaceOrGround(vfRay, *grid, m_voxelManager->getActiveResolution());
+    // Cast ray against ALL resolution grids to find any face
+    hitFace = detector.detectFaceAcrossAllResolutions(vfRay, *m_voxelManager);
     
     static int hitCheckCount = 0;
     if (hitCheckCount++ % 60 == 0) {
         if (hitFace.isValid()) {
-            auto voxelPos = hitFace.getVoxelPosition();
-            Logging::Logger::getInstance().debugfc("MouseInteraction",
-                "Hit face at voxel (%d,%d,%d)", voxelPos.x(), voxelPos.y(), voxelPos.z());
+            if (hitFace.isGroundPlane()) {
+                Logging::Logger::getInstance().debug("MouseInteraction", "Hit ground plane");
+            } else {
+                auto voxelPos = hitFace.getVoxelPosition();
+                auto resolution = hitFace.getResolution();
+                float voxelSize = VoxelData::getVoxelSize(resolution);
+                Logging::Logger::getInstance().debugfc("MouseInteraction",
+                    "Hit face at voxel (%d,%d,%d) size=%.2fm", 
+                    voxelPos.x(), voxelPos.y(), voxelPos.z(), voxelSize);
+            }
         }
     }
     
@@ -493,37 +499,8 @@ glm::ivec3 MouseInteraction::getPlacementPosition(const VisualFeedback::Face& fa
     VoxelResolution resolution = m_voxelManager->getActiveResolution();
     Math::Vector3f workspaceSize = m_voxelManager->getWorkspaceManager()->getSize();
     
-    // Get the hit point on the face for smart snapping
-    Math::Vector3f hitPoint;
-    if (face.isGroundPlane()) {
-        hitPoint = face.getGroundPlaneHitPoint().value();
-    } else {
-        // For voxel faces, calculate hit point based on face center
-        Math::Vector3i voxelPos = face.getVoxelPosition().value();
-        Math::Vector3f voxelWorldPos = Math::CoordinateConverter::incrementToWorld(Math::IncrementCoordinates(voxelPos)).value();
-        // IMPORTANT: Use the clicked voxel's size, not the active resolution's size!
-        float clickedVoxelSize = getVoxelSize(face.getResolution());
-        
-        // For proper same-size voxel alignment, we want to maintain the clicked voxel's
-        // position in the non-normal axes. Only offset along the face normal.
-        Math::Vector3f normal = face.getNormal();
-        
-        // Start with the clicked voxel's position (bottom-center)
-        hitPoint = voxelWorldPos;
-        
-        // Only offset in the direction of the face normal
-        // This ensures adjacent voxels align perfectly
-        if (std::abs(normal.y) > 0.5f) {
-            // For top/bottom faces, offset Y to the face
-            hitPoint.y += (normal.y > 0) ? clickedVoxelSize : 0;
-        } else if (std::abs(normal.x) > 0.5f) {
-            // For left/right faces, offset X to the face
-            hitPoint.x += (normal.x > 0) ? clickedVoxelSize : 0;
-        } else if (std::abs(normal.z) > 0.5f) {
-            // For front/back faces, offset Z to the face
-            hitPoint.z += (normal.z > 0) ? clickedVoxelSize : 0;
-        }
-    }
+    // Get the actual hit point on the face
+    Math::Vector3f hitPoint = face.getHitPoint().value();
     
     Math::Vector3i snappedPos;
     

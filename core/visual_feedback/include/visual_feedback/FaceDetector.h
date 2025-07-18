@@ -6,6 +6,9 @@
 #include "../../voxel_data/VoxelGrid.h"
 
 namespace VoxelEditor {
+namespace VoxelData {
+    class VoxelDataManager;
+}
 namespace VisualFeedback {
 
 class FaceDetector {
@@ -23,6 +26,9 @@ public:
     // Combined face/ground detection (Enhancement)
     Face detectFaceOrGround(const Ray& ray, const VoxelData::VoxelGrid& grid,
                            VoxelData::VoxelResolution resolution);
+    
+    // Multi-resolution face detection - checks all resolution grids
+    Face detectFaceAcrossAllResolutions(const Ray& ray, const VoxelData::VoxelDataManager& voxelManager);
     
     std::vector<Face> detectFacesInRegion(const Math::BoundingBox& region, 
                                          const VoxelData::VoxelGrid& grid, 

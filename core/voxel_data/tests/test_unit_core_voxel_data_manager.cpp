@@ -739,16 +739,16 @@ TEST_F(VoxelDataManagerTest, CollisionDetection_64cmAnd32cmOverlap) {
     // Check that 64cm voxel was placed
     EXPECT_TRUE(manager->getVoxel(IncrementCoordinates(0, 0, 0), VoxelResolution::Size_64cm));
     
-    // Try to place 32cm voxel at (30,30,0) - should SUCCEED because 32cm < 64cm
-    // 64cm voxel extends from 0 to 64 in each dimension
-    // 32cm voxel at (30,30,0) would extend from 30 to 62 - overlaps but allowed!
-    EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, true));
+    // Try to place 32cm voxel at (30,30,0)
+    // With bottom-center coordinates:
+    // - 64cm voxel at (0,0,0) extends from (-32,-32) to (32,32) in X,Z
+    // - 32cm voxel at (30,30,0) extends from (14,14) to (46,46) in X,Z
+    // These DO overlap (14 to 32 overlaps with -32 to 32)
+    // But per REQ-5.2.5, voxels should NOT be placed inside other voxels
+    EXPECT_FALSE(manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, true));
     
-    // Verify the 32cm voxel was placed
-    EXPECT_TRUE(manager->getVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
-    
-    // Clean up the 32cm voxel before next test
-    manager->setVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm, false);
+    // Verify the 32cm voxel was NOT placed
+    EXPECT_FALSE(manager->getVoxel(IncrementCoordinates(30, 30, 0), VoxelResolution::Size_32cm));
     
     // Test reverse case: trying to place a larger voxel where smaller exists should fail
     EXPECT_TRUE(manager->setVoxel(IncrementCoordinates(100, 100, 0), VoxelResolution::Size_16cm, true));
