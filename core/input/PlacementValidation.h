@@ -87,7 +87,8 @@ public:
                                                const Math::IncrementCoordinates& surfaceFaceVoxelPos,
                                                VoxelData::VoxelResolution surfaceFaceVoxelRes,
                                                VoxelData::FaceDirection surfaceFaceDir,
-                                               VoxelData::VoxelResolution placementResolution);
+                                               VoxelData::VoxelResolution placementResolution,
+                                               bool shiftPressed = false);
     
     // Phase 3 Enhancement: Smart placement context with voxel data awareness
     static PlacementContext getSmartPlacementContext(const Math::WorldCoordinates& worldPos,

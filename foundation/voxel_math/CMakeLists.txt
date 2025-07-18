@@ -9,6 +9,7 @@ add_library(VoxelEditor_VoxelMath STATIC
     src/VoxelCollision.cpp
     src/VoxelRaycast.cpp
     src/VoxelMathOptimized.cpp
+    src/VoxelPlacementMath.cpp
 )
 
 # Set include directories
@@ -116,4 +117,15 @@ if(BUILD_TESTING)
         GTest::gtest_main
     )
     add_test(NAME test_unit_foundation_voxel_math_large_voxel_raycast COMMAND test_unit_foundation_voxel_math_large_voxel_raycast)
+
+    add_executable(test_unit_voxel_placement_math
+        tests/test_unit_voxel_placement_math.cpp
+    )
+    target_link_libraries(test_unit_voxel_placement_math
+        VoxelEditor_VoxelMath
+        VoxelEditor_Math
+        VoxelEditor_VoxelData
+        GTest::gtest_main
+    )
+    add_test(NAME test_unit_voxel_placement_math COMMAND test_unit_voxel_placement_math)
 endif()

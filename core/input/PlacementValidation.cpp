@@ -3,26 +3,22 @@
 #include "voxel_math/VoxelBounds.h"
 #include "voxel_math/VoxelCollision.h"
 #include "voxel_math/WorkspaceValidation.h"
+#include "voxel_math/VoxelPlacementMath.h"
 #include <cmath>
 
 namespace VoxelEditor {
 namespace Input {
 
 Math::IncrementCoordinates PlacementUtils::snapToValidIncrement(const Math::WorldCoordinates& worldPos) {
-    // Use centralized coordinate converter for consistent snapping
-    return Math::CoordinateConverter::worldToIncrement(worldPos);
+    // Delegate to voxel_math library
+    return Math::VoxelPlacementMath::snapToValidIncrement(worldPos);
 }
 
 Math::IncrementCoordinates PlacementUtils::snapToGridAligned(const Math::WorldCoordinates& worldPos, 
                                                 VoxelData::VoxelResolution resolution,
                                                 bool shiftPressed) {
-    // With the new requirements, all voxels are placed at exact 1cm increment positions
-    // No resolution-based snapping occurs. The shift parameter and resolution are no longer used for snapping.
-    (void)resolution;   // Mark as intentionally unused
-    (void)shiftPressed; // Mark as intentionally unused
-    
-    // Always snap to 1cm increment grid - no voxel-size specific snapping
-    return snapToValidIncrement(worldPos);
+    // Delegate to voxel_math library
+    return Math::VoxelPlacementMath::snapToGridAligned(worldPos, resolution, shiftPressed);
 }
 
 PlacementValidationResult PlacementUtils::validatePlacement(const Math::IncrementCoordinates& incrementPos,
@@ -52,8 +48,8 @@ PlacementValidationResult PlacementUtils::validatePlacement(const Math::Incremen
 }
 
 bool PlacementUtils::isValidIncrementPosition(const Math::IncrementCoordinates& pos) {
-    // Use WorkspaceValidation to check ground plane constraint
-    return Math::WorkspaceValidation::isAboveGroundPlane(pos);
+    // Delegate to voxel_math library
+    return Math::VoxelPlacementMath::isValidIncrementPosition(pos);
 }
 
 PlacementContext PlacementUtils::getPlacementContext(const Math::WorldCoordinates& worldPos,
@@ -118,126 +114,21 @@ Math::IncrementCoordinates PlacementUtils::snapToSurfaceFaceGrid(const Math::Wor
                                                    const Math::IncrementCoordinates& surfaceFaceVoxelPos,
                                                    VoxelData::VoxelResolution surfaceFaceVoxelRes,
                                                    VoxelData::FaceDirection surfaceFaceDir,
-                                                   VoxelData::VoxelResolution placementResolution) {
-    using namespace VoxelData;
+                                                   VoxelData::VoxelResolution placementResolution,
+                                                   bool shiftPressed) {
+    // Delegate to voxel_math library
+    // Allow overhangs for smaller voxels
+    bool allowOverhang = (VoxelData::getVoxelSize(placementResolution) < VoxelData::getVoxelSize(surfaceFaceVoxelRes));
     
-    float surfaceFaceVoxelSize = getVoxelSize(surfaceFaceVoxelRes);
-    float placementVoxelSize = getVoxelSize(placementResolution);
-    
-    // Convert surface face voxel position to world coordinates
-    Math::WorldCoordinates surfaceFaceWorldCoords = Math::CoordinateConverter::incrementToWorld(surfaceFaceVoxelPos);
-    Math::Vector3f surfaceFaceWorldPos = surfaceFaceWorldCoords.value();
-    
-    // Calculate the surface face plane position
-    Math::Vector3f surfaceFacePlanePos = surfaceFaceWorldPos;
-    switch (surfaceFaceDir) {
-        case FaceDirection::PosX:
-            surfaceFacePlanePos.x += surfaceFaceVoxelSize;
-            break;
-        case FaceDirection::NegX:
-            // Plane is at the left edge
-            break;
-        case FaceDirection::PosY:
-            surfaceFacePlanePos.y += surfaceFaceVoxelSize;
-            break;
-        case FaceDirection::NegY:
-            // Plane is at the bottom edge
-            break;
-        case FaceDirection::PosZ:
-            surfaceFacePlanePos.z += surfaceFaceVoxelSize;
-            break;
-        case FaceDirection::NegZ:
-            // Plane is at the front edge
-            break;
-    }
-    
-    // Project the hit point onto the surface face plane and find the nearest 1cm grid position
-    Math::Vector3f snappedPos = hitPoint.value();
-    
-    // Constrain the position to the surface face plane
-    switch (surfaceFaceDir) {
-        case FaceDirection::PosX:
-        case FaceDirection::NegX:
-            snappedPos.x = surfaceFacePlanePos.x;
-            break;
-        case FaceDirection::PosY:
-        case FaceDirection::NegY:
-            snappedPos.y = surfaceFacePlanePos.y;
-            break;
-        case FaceDirection::PosZ:
-        case FaceDirection::NegZ:
-            snappedPos.z = surfaceFacePlanePos.z;
-            break;
-    }
-    
-    // Snap to 1cm increments
-    Math::IncrementCoordinates incrementPos = snapToValidIncrement(Math::WorldCoordinates(snappedPos));
-    
-    // Ensure the smaller voxel fits within the surface face bounds
-    Math::WorldCoordinates gridWorldCoords = Math::CoordinateConverter::incrementToWorld(incrementPos);
-    Math::Vector3f gridWorldPos = gridWorldCoords.value();
-    Math::Vector3f surfaceFaceMin = surfaceFaceWorldPos;
-    Math::Vector3f surfaceFaceMax = surfaceFaceWorldPos + Math::Vector3f(surfaceFaceVoxelSize, surfaceFaceVoxelSize, surfaceFaceVoxelSize);
-    
-    // Clamp to surface face bounds (except in the surface face normal direction)
-    switch (surfaceFaceDir) {
-        case FaceDirection::PosX:
-        case FaceDirection::NegX:
-            // Y and Z must be within surface face bounds
-            if (gridWorldPos.y < surfaceFaceMin.y) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.y, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
-            } else if (gridWorldPos.y + placementVoxelSize > surfaceFaceMax.y) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.y - placementVoxelSize, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
-            }
-            if (gridWorldPos.z < surfaceFaceMin.z) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.z));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
-            } else if (gridWorldPos.z + placementVoxelSize > surfaceFaceMax.z) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.z - placementVoxelSize));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
-            }
-            break;
-        case FaceDirection::PosY:
-        case FaceDirection::NegY:
-            // X and Z must be within surface face bounds
-            if (gridWorldPos.x < surfaceFaceMin.x) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMin.x, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
-            } else if (gridWorldPos.x + placementVoxelSize > surfaceFaceMax.x) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMax.x - placementVoxelSize, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
-            }
-            if (gridWorldPos.z < surfaceFaceMin.z) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.z));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
-            } else if (gridWorldPos.z + placementVoxelSize > surfaceFaceMax.z) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.z - placementVoxelSize));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), incrementPos.y(), newPos.z());
-            }
-            break;
-        case FaceDirection::PosZ:
-        case FaceDirection::NegZ:
-            // X and Y must be within surface face bounds
-            if (gridWorldPos.x < surfaceFaceMin.x) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMin.x, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
-            } else if (gridWorldPos.x + placementVoxelSize > surfaceFaceMax.x) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(surfaceFaceMax.x - placementVoxelSize, incrementPos.y() * Math::CoordinateConverter::CM_TO_METERS, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(newPos.x(), incrementPos.y(), incrementPos.z());
-            }
-            if (gridWorldPos.y < surfaceFaceMin.y) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMin.y, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
-            } else if (gridWorldPos.y + placementVoxelSize > surfaceFaceMax.y) {
-                Math::IncrementCoordinates newPos = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(incrementPos.x() * Math::CoordinateConverter::CM_TO_METERS, surfaceFaceMax.y - placementVoxelSize, incrementPos.z() * Math::CoordinateConverter::CM_TO_METERS));
-                incrementPos = Math::IncrementCoordinates(incrementPos.x(), newPos.y(), incrementPos.z());
-            }
-            break;
-    }
-    
-    return incrementPos;
+    return Math::VoxelPlacementMath::snapToSurfaceFaceGrid(
+        hitPoint,
+        surfaceFaceVoxelPos,
+        surfaceFaceVoxelRes,
+        surfaceFaceDir,
+        placementResolution,
+        allowOverhang,
+        shiftPressed
+    );
 }
 
 // Simplified placement context - uses basic 1cm snapping per new requirements
@@ -250,7 +141,6 @@ PlacementContext PlacementUtils::getSmartPlacementContext(const Math::WorldCoord
                                                          VoxelData::VoxelResolution surfaceFaceVoxelRes,
                                                          VoxelData::FaceDirection surfaceFaceDir) {
     // Mark unused parameters (kept for API compatibility)
-    (void)dataManager;
     
     PlacementContext context;
     context.worldPosition = worldPos;
@@ -260,48 +150,12 @@ PlacementContext PlacementUtils::getSmartPlacementContext(const Math::WorldCoord
     // Check if we're placing on a surface face
     if (surfaceFaceVoxelPos != nullptr) {
         // Validate that the hit point is within the bounds of the surface face
-        float surfaceVoxelSize = VoxelData::getVoxelSize(surfaceFaceVoxelRes);
-        Math::WorldCoordinates surfaceWorldPos = Math::CoordinateConverter::incrementToWorld(*surfaceFaceVoxelPos);
-        
-        // Calculate surface voxel bounds (bottom-center coordinate system)
-        float halfSize = surfaceVoxelSize * 0.5f;
-        Math::Vector3f surfaceMin(
-            surfaceWorldPos.value().x - halfSize,
-            surfaceWorldPos.value().y,
-            surfaceWorldPos.value().z - halfSize
+        bool withinBounds = Math::VoxelPlacementMath::isWithinFaceBounds(
+            worldPos,
+            *surfaceFaceVoxelPos,
+            surfaceFaceVoxelRes,
+            surfaceFaceDir
         );
-        Math::Vector3f surfaceMax(
-            surfaceWorldPos.value().x + halfSize,
-            surfaceWorldPos.value().y + surfaceVoxelSize,
-            surfaceWorldPos.value().z + halfSize
-        );
-        
-        // Check if hit point is within surface face bounds
-        // The bounds check depends on which face we're placing on
-        const Math::Vector3f& hitPos = worldPos.value();
-        const float epsilon = 0.0001f;  // Small tolerance for floating-point comparison
-        
-        bool withinBounds = false;
-        switch (surfaceFaceDir) {
-            case VoxelData::FaceDirection::PosY:
-            case VoxelData::FaceDirection::NegY:
-                // For top/bottom faces, check XZ bounds
-                withinBounds = (hitPos.x >= surfaceMin.x - epsilon && hitPos.x <= surfaceMax.x + epsilon) &&
-                              (hitPos.z >= surfaceMin.z - epsilon && hitPos.z <= surfaceMax.z + epsilon);
-                break;
-            case VoxelData::FaceDirection::PosX:
-            case VoxelData::FaceDirection::NegX:
-                // For left/right faces, check YZ bounds
-                withinBounds = (hitPos.y >= surfaceMin.y - epsilon && hitPos.y <= surfaceMax.y + epsilon) &&
-                              (hitPos.z >= surfaceMin.z - epsilon && hitPos.z <= surfaceMax.z + epsilon);
-                break;
-            case VoxelData::FaceDirection::PosZ:
-            case VoxelData::FaceDirection::NegZ:
-                // For front/back faces, check XY bounds
-                withinBounds = (hitPos.x >= surfaceMin.x - epsilon && hitPos.x <= surfaceMax.x + epsilon) &&
-                              (hitPos.y >= surfaceMin.y - epsilon && hitPos.y <= surfaceMax.y + epsilon);
-                break;
-        }
         
         if (!withinBounds) {
             // Hit point is outside surface face bounds
@@ -313,14 +167,15 @@ PlacementContext PlacementUtils::getSmartPlacementContext(const Math::WorldCoord
     
     // Use appropriate snapping based on context
     if (surfaceFaceVoxelPos != nullptr) {
-        // Placing on a surface face - use surface face grid snapping
-        // This allows placement at any 1cm increment position on the face
+        // Placing on a surface face - always use surface face grid snapping
+        // This ensures alignment to the specific voxel face we clicked on
         context.snappedIncrementPos = snapToSurfaceFaceGrid(
             worldPos,
             *surfaceFaceVoxelPos,
             surfaceFaceVoxelRes,
             surfaceFaceDir,
-            resolution
+            resolution,
+            shiftPressed
         );
     } else {
         // Placing on ground or in open space - use basic 1cm increment snapping
@@ -335,18 +190,8 @@ PlacementContext PlacementUtils::getSmartPlacementContext(const Math::WorldCoord
 
 bool PlacementUtils::isValidForIncrementPlacement(const Math::WorldCoordinates& worldPos, VoxelData::VoxelResolution resolution) {
     (void)resolution; // Mark as unused
-    // Check if position is not NaN or infinite
-    const Math::Vector3f& pos = worldPos.value();
-    if (!std::isfinite(pos.x) || !std::isfinite(pos.y) || !std::isfinite(pos.z)) {
-        return false;
-    }
-    
-    // Position itself doesn't need Y >= 0 constraint at increment level
-    // Workspace bounds checking will be handled by validatePlacement()
-    
-    // The position itself is valid from an increment perspective
-    // VoxelDataManager will handle workspace bounds and overlap checking
-    return true;
+    // Delegate to voxel_math library
+    return Math::VoxelPlacementMath::isValidForIncrementPlacement(worldPos);
 }
 
 }
