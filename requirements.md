@@ -408,7 +408,71 @@
 - **REQ-10.1.14**: System shall maintain minimum feature size constraints for 3D printing (default 1mm)
   - *Subsystems: **Surface Generation** (feature size validation)*
 
-### 11. Testing and Validation Requirements
+### 14. Smooth Preview Mode Requirements [TODO]
+
+#### 14.1 Preview Mode Activation
+- **REQ-14.1.1** [TODO]: System shall provide smooth preview mode through both `smooth preview on/off` toggle and dedicated `preview` command
+  - *Subsystems: **CLI Application** (preview commands), **Rendering** (preview mode state)*
+- **REQ-14.1.2** [TODO]: Preview mode shall be disabled by default on application startup
+  - *Subsystems: **CLI Application** (initial state)*
+- **REQ-14.1.3** [TODO]: System shall provide keyboard shortcut 'P' to toggle preview mode
+  - *Subsystems: **Input** (keyboard handling), **CLI Application** (mode toggle)*
+
+#### 14.2 Visual Presentation
+- **REQ-14.2.1** [TODO]: Preview mode shall hide ground grid and voxel edges
+  - *Subsystems: **Rendering** (grid visibility), **Visual Feedback** (edge rendering)*
+- **REQ-14.2.2** [TODO]: Preview mode shall use different lighting with more ambient light and softer shadows
+  - *Subsystems: **Rendering** (lighting configuration)*
+- **REQ-14.2.3** [TODO]: System shall display smoothed mesh using current smoothing level and algorithm settings
+  - *Subsystems: **Surface Generation** (mesh generation), **Rendering** (smooth mesh display)*
+
+#### 14.3 Real-time Updates
+- **REQ-14.3.1** [TODO]: Preview shall update automatically when smoothing level is changed
+  - *Subsystems: **Surface Generation** (regeneration), **CLI Application** (setting changes)*
+- **REQ-14.3.2** [TODO]: Preview shall update automatically when smoothing algorithm is changed
+  - *Subsystems: **Surface Generation** (algorithm switch), **CLI Application** (setting changes)*
+- **REQ-14.3.3** [TODO]: Preview shall reflect current voxel state when re-entering preview mode after edits
+  - *Subsystems: **Surface Generation** (voxel data sync), **Voxel Data** (current state)*
+
+#### 14.4 Camera Controls
+- **REQ-14.4.1** [TODO]: Preview mode shall maintain all standard camera controls (pan, zoom, rotate)
+  - *Subsystems: **Camera** (control preservation), **Input** (mouse/keyboard handling)*
+- **REQ-14.4.2** [TODO]: System shall provide `preview fit` command to auto-frame smoothed mesh
+  - *Subsystems: **Camera** (auto-framing), **Surface Generation** (mesh bounds)*
+- **REQ-14.4.3** [TODO]: Camera position shall be preserved when switching between preview and edit modes
+  - *Subsystems: **Camera** (state preservation)*
+
+#### 14.5 Interaction Restrictions
+- **REQ-14.5.1** [TODO]: All voxel editing operations shall be disabled in preview mode
+  - *Subsystems: **Input** (click handling), **CLI Application** (command filtering)*
+- **REQ-14.5.2** [TODO]: Editing commands shall return error "Exit preview mode to edit voxels" when attempted
+  - *Subsystems: **CLI Application** (error messages)*
+- **REQ-14.5.3** [TODO]: Mouse clicks for voxel placement/removal shall be ignored in preview mode
+  - *Subsystems: **Input** (mouse event filtering)*
+
+#### 14.6 Available Commands
+- **REQ-14.6.1** [TODO]: Camera commands shall remain available in preview mode
+  - *Subsystems: **CLI Application** (command availability)*
+- **REQ-14.6.2** [TODO]: Smoothing setting commands shall remain available in preview mode
+  - *Subsystems: **CLI Application** (settings access)*
+- **REQ-14.6.3** [TODO]: Export commands shall remain available in preview mode
+  - *Subsystems: **CLI Application** (export functionality)*
+- **REQ-14.6.4** [TODO]: Info and status commands shall remain available in preview mode
+  - *Subsystems: **CLI Application** (info commands)*
+
+#### 14.7 Error Handling
+- **REQ-14.7.1** [TODO]: If mesh generation fails, system shall display error message and show unsmoothed mesh
+  - *Subsystems: **Surface Generation** (error handling), **Rendering** (fallback display)*
+- **REQ-14.7.2** [TODO]: System shall remain in preview mode after errors to allow setting adjustments
+  - *Subsystems: **CLI Application** (mode persistence)*
+
+#### 14.8 Performance (Future Enhancement)
+- **REQ-14.8.1** [TODO-FUTURE]: System may implement simplified preview quality for better performance
+  - *Subsystems: **Surface Generation** (quality levels)*
+- **REQ-14.8.2** [TODO-FUTURE]: System may implement progressive mesh updates for large voxel counts
+  - *Subsystems: **Surface Generation** (progressive updates)*
+
+### 12. Testing and Validation Requirements
 
 #### 11.1 Unit Testing
 - **REQ-11.1.1**: System shall maintain 895+ unit tests across all subsystems

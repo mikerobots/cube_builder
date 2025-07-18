@@ -85,29 +85,34 @@
 > export model.stl       # Export for 3D printing
 ```
 
-### Surface Smoothing (For 3D Printing) - ⚠️ PLANNED FEATURE
-**Note: These commands are documented but NOT YET IMPLEMENTED. Currently, all exports produce blocky voxel geometry only.**
+### Surface Smoothing (For 3D Printing)
 
 ```
-> smooth                    # [NOT IMPLEMENTED] Show current smoothing level
-> smooth 0                  # [NOT IMPLEMENTED] No smoothing (blocky voxel look)
-> smooth 5                  # [NOT IMPLEMENTED] Medium smoothing (balanced)
-> smooth 10                 # [NOT IMPLEMENTED] Maximum smoothing (very smooth)
-> smooth preview on         # [NOT IMPLEMENTED] Enable real-time preview
-> smooth preview off        # [NOT IMPLEMENTED] Disable preview (better performance)
-> smooth algorithm taubin   # [NOT IMPLEMENTED] Use Taubin algorithm
-> smooth algorithm laplacian # [NOT IMPLEMENTED] Use Laplacian algorithm
-> mesh validate             # [NOT IMPLEMENTED] Check if mesh is printable
-> mesh info                 # [NOT IMPLEMENTED] Show mesh statistics
+> smooth                    # Show current smoothing level and settings
+> smooth 0                  # No smoothing (blocky voxel look)
+> smooth 5                  # Medium smoothing (balanced)
+> smooth 10                 # Maximum smoothing (very smooth)
+> smooth preview on         # Enable real-time preview
+> smooth preview off        # Disable preview (better performance)
+> smooth algorithm taubin   # Use Taubin algorithm (feature-preserving)
+> smooth algorithm laplacian # Use Laplacian algorithm (basic smoothing)
+> smooth algorithm bilaplacian # Use BiLaplacian algorithm (aggressive)
+> mesh validate             # Check if mesh is printable
+> mesh info                 # Show mesh statistics
 ```
 
-**Planned Smoothing Levels** (when implemented):
+**Smoothing Levels**:
 - **0**: Raw voxel edges (minecraft-like)
 - **1-3**: Light smoothing, retains blocky character
 - **4-7**: Medium smoothing, good for toys/models
 - **8-10+**: Heavy smoothing, organic shapes
 
-**Current Status**: The `export` command works but only exports raw voxel geometry as blocky STL files. Smoothing functionality is planned for a future release.
+**Smoothing Algorithms**:
+- **Taubin** (default): Feature-preserving, prevents shrinkage
+- **Laplacian**: Basic smoothing, may shrink features
+- **BiLaplacian**: Aggressive smoothing for very smooth results
+
+**Note**: Smoothing is applied during export operations. Higher levels increase processing time.
 
 ## Advanced Tips
 
@@ -149,8 +154,8 @@
 | `camera` | Change view | `camera front` |
 | `grid` | Toggle ground plane | `grid on/off/toggle` |
 | `edges` | Toggle voxel edges | `edges on/off/toggle` |
-| `smooth` | [NOT IMPLEMENTED] Set smoothing level | `smooth 5` |
-| `mesh` | [NOT IMPLEMENTED] Mesh operations | `mesh validate` |
+| `smooth` | Set smoothing level | `smooth 5` |
+| `mesh` | Mesh operations | `mesh validate` |
 | `save` | Save project | `save project.cvef` |
 | `export` | Export STL | `export model.stl` |
 | `build` | Show build info | `build` |
@@ -209,10 +214,9 @@
 > place 0cm 8cm 0cm        # Add details on top
 > resolution 2cm           # Finest details
 > place 2cm 12cm 2cm       # Fine detail work
-# Note: smooth commands below are NOT IMPLEMENTED - export will be blocky
-> smooth 7                  # [NOT WORKING] Would apply smoothing
-> mesh validate            # [NOT WORKING] Would check printability
-> export sculpture.stl     # Exports blocky voxel model (no smoothing)
+> smooth 7                  # Apply medium-high smoothing
+> mesh validate            # Check if mesh is printable
+> export sculpture.stl     # Export smoothed model
 ```
 
 ### Creating a Toy (Without Smoothing)
@@ -223,8 +227,7 @@
 > place 0cm 80cm 0cm       # Add head
 > selectbox -48cm 32cm -16cm -32cm 48cm 16cm  # Select arm area
 > group "left_arm"         # Group it
-# Note: No smoothing available yet - design with voxels in mind
+> smooth 5                  # Apply medium smoothing for toy
 > camera iso               # Check from all angles
-> export toy.stl           # Exports blocky voxel model
-# For smooth toys, you'll need to use external 3D software to smooth the STL
+> export toy.stl           # Export smoothed toy model
 ```
