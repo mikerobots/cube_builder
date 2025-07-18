@@ -101,6 +101,19 @@ public:
                                    VoxelData::FaceDirection faceDir,
                                    float epsilon = 0.0001f);
     
+    /**
+     * Calculate the grid origin (bottom-left corner) for a given face.
+     * This is used to align placement grids to face corners.
+     * 
+     * @param surfaceVoxelPos Position of the surface voxel in increments
+     * @param surfaceResolution Resolution of the surface voxel
+     * @param faceDir Which face we're calculating the origin for
+     * @return World coordinates of the face's bottom-left corner
+     */
+    static Vector3f calculateFaceGridOrigin(const IncrementCoordinates& surfaceVoxelPos,
+                                           VoxelData::VoxelResolution surfaceResolution,
+                                           VoxelData::FaceDirection faceDir);
+
 private:
     // Maximum reasonable coordinate value to prevent overflow
     static constexpr int MAX_INCREMENT_COORD = 1000000;

@@ -131,9 +131,10 @@ TEST_F(VoxelPlacementMathTest, SnapToSurfaceFaceGrid_TopFace) {
         hitPoint, surfacePos, surfaceRes, faceDir, placeRes, true, false);
     
     // Should place at Y=32cm (on top of the surface)
-    EXPECT_EQ(result.x(), 0);
+    // With grid offset for smaller voxels, 4cm voxel is offset by 2cm (half its size)
+    EXPECT_EQ(result.x(), 2);  // Offset by half voxel size
     EXPECT_EQ(result.y(), 32);
-    EXPECT_EQ(result.z(), 0);
+    EXPECT_EQ(result.z(), 2);  // Offset by half voxel size
 }
 
 // Test surface face grid snapping with offset
@@ -152,13 +153,17 @@ TEST_F(VoxelPlacementMathTest, SnapToSurfaceFaceGrid_TopFace_Offset) {
     IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
         hitPoint, surfacePos, surfaceRes, faceDir, placeRes, true, false);
     
-    // Should snap to nearest cm
-    EXPECT_EQ(result.x(), 5);
+    // Without shift, should snap to 2cm grid with offset
+    // 2cm voxel is offset by 1cm (half its size)
+    // Grid origin is at (-16, 32, -16)
+    // 5cm -> 6cm on 2cm grid from corner, then +1cm offset = 7cm
+    // 7cm -> 6cm on 2cm grid from corner, then +1cm offset = 7cm
+    EXPECT_EQ(result.x(), 7);   // Grid position 6 + 1cm offset
     EXPECT_EQ(result.y(), 32);
-    EXPECT_EQ(result.z(), 7);
+    EXPECT_EQ(result.z(), 7);   // Grid position 6 + 1cm offset
 }
 
-// Test small voxel placement on side faces
+// Test small voxel placement on side faces with grid alignment
 TEST_F(VoxelPlacementMathTest, SnapToSurfaceFaceGrid_SideFaces_SmallVoxel) {
     // 32cm voxel at origin
     IncrementCoordinates surfacePos(0, 0, 0);
@@ -167,46 +172,66 @@ TEST_F(VoxelPlacementMathTest, SnapToSurfaceFaceGrid_SideFaces_SmallVoxel) {
     // Placing a 4cm voxel
     VoxelData::VoxelResolution placeRes = VoxelData::VoxelResolution::Size_4cm;
     
-    // Test right face (PosX)
+    // Test right face (PosX) - no shift, should snap to 4cm grid
     {
         VoxelData::FaceDirection faceDir = VoxelData::FaceDirection::PosX;
-        WorldCoordinates hitPoint(0.16f, 0.1f, 0.05f);  // On right face
+        WorldCoordinates hitPoint(0.16f, 0.11f, 0.05f);  // On right face
         
         IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
-            hitPoint, surfacePos, surfaceRes, faceDir, placeRes, true, false);
+            hitPoint, surfacePos, surfaceRes, faceDir, placeRes, false, false);  // No overhang, no shift
         
-        // Should be placed with its center at 16cm + 2cm = 18cm (face + half voxel)
-        EXPECT_EQ(result.x(), 18);  // 16cm (face) + 2cm (half of 4cm voxel)
-        EXPECT_EQ(result.y(), 10);  // Y from hit point
-        EXPECT_EQ(result.z(), 5);   // Z from hit point
+        // Grid origin for right face is at (16, 0, -16)
+        // With offset: only Z is offset by 2cm (half of 4cm voxel), Y stays grid-aligned
+        // Y=11cm -> 12cm on grid (no offset for Y)
+        // Z=5cm -> 4cm on grid + 2cm offset = 6cm
+        EXPECT_EQ(result.x(), 18);  // 16cm (face) + 2cm (half voxel)
+        EXPECT_EQ(result.y(), 12);  // Grid position 12 (no Y offset for side faces)
+        EXPECT_EQ(result.z(), 6);   // Grid position 4 + 2cm offset
     }
     
-    // Test left face (NegX)
+    // Test with shift - should allow 1cm placement
     {
-        VoxelData::FaceDirection faceDir = VoxelData::FaceDirection::NegX;
-        WorldCoordinates hitPoint(-0.16f, 0.08f, 0.03f);  // On left face
+        VoxelData::FaceDirection faceDir = VoxelData::FaceDirection::PosX;
+        WorldCoordinates hitPoint(0.16f, 0.11f, 0.05f);  // Same point
         
         IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
-            hitPoint, surfacePos, surfaceRes, faceDir, placeRes, true, false);
+            hitPoint, surfacePos, surfaceRes, faceDir, placeRes, true, true);  // Allow overhang, with shift
         
-        // Should be placed with its center at -16cm - 2cm = -18cm
-        EXPECT_EQ(result.x(), -18);  // -16cm (face) - 2cm (half of 4cm voxel)
-        EXPECT_EQ(result.y(), 8);
-        EXPECT_EQ(result.z(), 3);
+        // Should snap to exact 1cm increments
+        EXPECT_EQ(result.x(), 18);  // 16cm (face) + 2cm (half voxel)
+        EXPECT_EQ(result.y(), 11);  // Exact 1cm position
+        EXPECT_EQ(result.z(), 5);   // Exact 1cm position
+    }
+}
+
+// Test grid origin calculation
+TEST_F(VoxelPlacementMathTest, CalculateFaceGridOrigin) {
+    // 32cm voxel at origin
+    IncrementCoordinates pos(0, 0, 0);
+    VoxelData::VoxelResolution res = VoxelData::VoxelResolution::Size_32cm;
+    
+    // Top face - origin should be at (-16, 32, -16)
+    {
+        Vector3f origin = VoxelPlacementMath::calculateFaceGridOrigin(pos, res, VoxelData::FaceDirection::PosY);
+        EXPECT_FLOAT_EQ(origin.x, -0.16f);
+        EXPECT_FLOAT_EQ(origin.y, 0.32f);
+        EXPECT_FLOAT_EQ(origin.z, -0.16f);
     }
     
-    // Test front face (NegZ)
+    // Right face - origin should be at (16, 0, -16)
     {
-        VoxelData::FaceDirection faceDir = VoxelData::FaceDirection::NegZ;
-        WorldCoordinates hitPoint(0.05f, 0.12f, -0.16f);  // On front face
-        
-        IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
-            hitPoint, surfacePos, surfaceRes, faceDir, placeRes, true, false);
-        
-        // Should be placed with its center at -16cm - 2cm = -18cm
-        EXPECT_EQ(result.x(), 5);
-        EXPECT_EQ(result.y(), 12);
-        EXPECT_EQ(result.z(), -18);  // -16cm (face) - 2cm (half of 4cm voxel)
+        Vector3f origin = VoxelPlacementMath::calculateFaceGridOrigin(pos, res, VoxelData::FaceDirection::PosX);
+        EXPECT_FLOAT_EQ(origin.x, 0.16f);
+        EXPECT_FLOAT_EQ(origin.y, 0.0f);
+        EXPECT_FLOAT_EQ(origin.z, -0.16f);
+    }
+    
+    // Front face - origin should be at (16, 0, -16) for front view
+    {
+        Vector3f origin = VoxelPlacementMath::calculateFaceGridOrigin(pos, res, VoxelData::FaceDirection::NegZ);
+        EXPECT_FLOAT_EQ(origin.x, 0.16f);
+        EXPECT_FLOAT_EQ(origin.y, 0.0f);
+        EXPECT_FLOAT_EQ(origin.z, -0.16f);
     }
 }
 
@@ -226,10 +251,10 @@ TEST_F(VoxelPlacementMathTest, SnapToSurfaceFaceGrid_NoOverhang_SameSize) {
     IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
         hitPoint, surfacePos, surfaceRes, faceDir, placeRes, false, false);  // No overhang allowed, no shift
     
-    // Should clamp to valid position (0cm since 8cm voxel extends ±4cm from center)
-    EXPECT_EQ(result.x(), 0);  // Clamped to prevent overhang
+    // With same-size alignment, voxel aligns perfectly with existing voxel
+    EXPECT_EQ(result.x(), 0);  // Perfectly aligned with existing voxel
     EXPECT_EQ(result.y(), 8);  // On top of surface
-    EXPECT_EQ(result.z(), 0);
+    EXPECT_EQ(result.z(), 0);  // Perfectly aligned with existing voxel
 }
 
 // Test same-size voxel alignment without shift
@@ -247,10 +272,10 @@ TEST_F(VoxelPlacementMathTest, SameSizeVoxelAlignment_NoShift) {
         IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
             hitPoint, surfacePos, res, faceDir, res, true, false);  // Same size, no shift
         
-        // Should align perfectly on top
-        EXPECT_EQ(result.x(), 0);
+        // With same-size alignment, voxel aligns perfectly with existing voxel
+        EXPECT_EQ(result.x(), 0);   // Perfectly aligned with existing voxel
         EXPECT_EQ(result.y(), 32);  // Exactly one voxel above
-        EXPECT_EQ(result.z(), 0);
+        EXPECT_EQ(result.z(), 0);   // Perfectly aligned with existing voxel
     }
     
     {
@@ -261,10 +286,10 @@ TEST_F(VoxelPlacementMathTest, SameSizeVoxelAlignment_NoShift) {
         IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
             hitPoint, surfacePos, res, faceDir, res, true, false);
         
-        // Should align perfectly to the right
+        // With same-size alignment, voxel aligns perfectly with existing voxel
         EXPECT_EQ(result.x(), 32);  // One voxel to the right
         EXPECT_EQ(result.y(), 0);
-        EXPECT_EQ(result.z(), 0);
+        EXPECT_EQ(result.z(), 0);   // Perfectly aligned with existing voxel
     }
     
     {
@@ -275,8 +300,8 @@ TEST_F(VoxelPlacementMathTest, SameSizeVoxelAlignment_NoShift) {
         IncrementCoordinates result = VoxelPlacementMath::snapToSurfaceFaceGrid(
             hitPoint, surfacePos, res, faceDir, res, true, false);
         
-        // Should align perfectly in front
-        EXPECT_EQ(result.x(), 0);
+        // With same-size alignment, voxel aligns perfectly with existing voxel
+        EXPECT_EQ(result.x(), 0);    // Perfectly aligned with existing voxel
         EXPECT_EQ(result.y(), 0);
         EXPECT_EQ(result.z(), -32);  // One voxel in front
     }

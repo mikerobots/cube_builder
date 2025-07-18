@@ -82,10 +82,10 @@
 ### 2. Voxel Placement System
 
 #### 2.1 Placement Precision
-- **REQ-2.1.1**: Voxels shall be placed at any 1cm increment position without resolution-based snapping
+- **REQ-2.1.1**: On ground plane, voxels shall snap to their own grid size by default (e.g., 4cm voxels snap to 4cm grid)
   - *Subsystems: **Voxel Data** (position validation), **Input** (placement logic)*
-- **REQ-2.1.2**: Voxels of all sizes shall maintain their exact placement position in 1cm increments
-  - *Subsystems: **Voxel Data** (coordinate system), **Visual Feedback** (preview positioning)*
+- **REQ-2.1.2**: Holding Shift shall allow placement at any 1cm increment position on ground plane
+  - *Subsystems: **Input** (modifier key handling), **Voxel Data** (1cm increment placement)*
 - **REQ-2.1.3**: Voxels shall always be axis-aligned (no rotation)
   - *Subsystems: **Voxel Data** (voxel representation), **Rendering** (mesh generation)*
 - **REQ-2.1.4**: No voxels shall be placed below Y=0
@@ -100,8 +100,8 @@
   - *Subsystems: **Input** (position calculation), **Visual Feedback** (preview positioning)*
 - **REQ-2.2.3**: The preview shall update in real-time as the mouse moves
   - *Subsystems: **Input** (mouse tracking), **Visual Feedback** (preview updates), **Rendering** (frame updates)*
-- **REQ-2.2.4**: Voxels of any size (1cm to 512cm) shall be placeable at any 1cm increment position
-  - *Subsystems: **Voxel Data** (multi-resolution positioning), **Input** (1cm increment placement), **Visual Feedback** (varying size preview)*
+- **REQ-2.2.4**: Ground plane placement follows standard placement rules (voxel-size grid by default, 1cm with Shift)
+  - *Subsystems: **Voxel Data** (multi-resolution positioning), **Input** (grid-based placement), **Visual Feedback** (varying size preview)*
 
 #### 2.3 Placement on Existing Voxels
 - **REQ-2.3.1**: When hovering over an existing voxel, the face under the cursor shall be highlighted
@@ -113,27 +113,42 @@
 
 ### 3. Voxel Size Relationships
 
+#### 3.0 General Placement Rules Summary
+- **Default behavior (no Shift)**:
+  - Placement snaps to the placement voxel's own grid size
+  - Grid is aligned to the bottom-left corner of the target face
+  - No overhangs allowed - voxel must fit entirely within face bounds
+  - Exception: Larger voxels on smaller faces use 1cm increments
+- **Shift key behavior**:
+  - All placements use 1cm increment positioning
+  - Overhangs are permitted
+  - No bounds constraints (except workspace bounds)
+
 #### 3.1 Same-Size Voxel Placement
-- **REQ-3.1.1**: When placing a same-size voxel on an existing voxel's face, the new voxel shall automatically align so its edges match perfectly with the clicked face (e.g., a 4cm voxel placed on a 4cm voxel's face will be positioned so all edges align)
+- **REQ-3.1.1**: When placing a same-size voxel on an existing voxel's face, the new voxel shall align to the placement voxel's grid size (which results in perfect edge alignment for same-size voxels)
   - *Subsystems: **Input** (face-based alignment logic), **Voxel Data** (alignment calculation)*
-- **REQ-3.1.2**: Holding Shift shall override auto-alignment, allowing placement at any valid 1cm increment position on the face
+- **REQ-3.1.2**: Holding Shift shall allow placement at any valid 1cm increment position on the face with overhangs permitted
   - *Subsystems: **Input** (modifier key handling), **Visual Feedback** (preview behavior)*
-- **REQ-3.1.3**: Auto-aligned placement ensures the new voxel is positioned adjacent to the clicked face with edges matching perfectly
-  - *Subsystems: **Voxel Data** (adjacent position calculation), **Visual Feedback** (preview alignment)*
+- **REQ-3.1.3**: Without Shift, placement must fit entirely within the face bounds (no overhangs)
+  - *Subsystems: **Voxel Data** (bounds validation), **Visual Feedback** (preview constraints)*
 
 #### 3.2 Smaller Voxel on Larger Voxel
 - **REQ-3.2.1**: A green outline preview shall show exact placement position
   - *Subsystems: **Visual Feedback** (OutlineRenderer), **Voxel Data** (size relationships)*
-- **REQ-3.2.2**: Placement shall respect 1cm increment positions on the target face
-  - *Subsystems: **Voxel Data** (sub-grid positioning), **Input** (position calculation)*
-- **REQ-3.2.3**: The preview shall snap to nearest valid position
-  - *Subsystems: **Input** (snap calculation), **Visual Feedback** (preview positioning)*
+- **REQ-3.2.2**: Without Shift, placement shall snap to the smaller voxel's grid size, with grid aligned to the face's bottom-left corner
+  - *Subsystems: **Voxel Data** (sub-grid positioning), **Input** (grid alignment)*
+  - *Note: Grid origin is at the bottom-left corner of each face when viewed perpendicular to the face*
+- **REQ-3.2.3**: Without Shift, the placed voxel must fit entirely within the face bounds (no overhangs)
+  - *Subsystems: **Voxel Data** (bounds validation), **Input** (position constraints)*
+- **REQ-3.2.4**: Holding Shift shall allow placement at any 1cm increment position with overhangs permitted
+  - *Subsystems: **Input** (modifier key handling), **Visual Feedback** (preview behavior)*
 
 #### 3.3 Larger Voxel on Smaller Voxel
-- **REQ-3.3.1**: Placement plane shall snap to the smaller voxel's face
+- **REQ-3.3.1**: Placement shall use 1cm increment positions by default (both with and without Shift)
+  - *Subsystems: **Input** (placement logic), **Voxel Data** (position calculation)*
+  - *Note: Since larger voxels typically won't fit within smaller face bounds, grid snapping is not practical*
+- **REQ-3.3.2**: Placement plane shall snap to the smaller voxel's face
   - *Subsystems: **Input** (plane detection), **Visual Feedback** (plane visualization)*
-- **REQ-3.3.2**: Placement plane shall maintain height while preview overlaps any voxel at current height
-  - *Subsystems: **Input** (plane persistence logic), **Voxel Data** (collision detection)*
 - **REQ-3.3.3**: When multiple voxels at different heights are under cursor, highest takes precedence
   - *Subsystems: **Input** (height sorting), **Voxel Data** (spatial queries)*
 - **REQ-3.3.4**: Plane only changes when preview completely clears current height voxels
@@ -231,6 +246,15 @@
   - *Subsystems: **Input** (modifier key state), **Visual Feedback** (snap behavior)*
 - **REQ-5.4.2**: No rotation controls (voxels always axis-aligned)
   - *Subsystems: **Voxel Data** (no rotation support), **Input** (no rotation controls)*
+
+#### 5.5 Keyboard Shortcuts
+- **REQ-5.5.1**: Number keys 1-9 and 0 shall switch between voxel resolutions
+  - *Subsystems: **Input** (keyboard handling), **Voxel Data** (resolution switching)*
+  - *Mapping: 1=1cm, 2=2cm, 3=4cm, 4=8cm, 5=16cm, 6=32cm, 7=64cm, 8=128cm, 9=256cm, 0=512cm*
+- **REQ-5.5.2**: Resolution changes via keyboard shall provide immediate visual feedback
+  - *Subsystems: **CLI Application** (console output), **Visual Feedback** (preview update)*
+- **REQ-5.5.3**: Keyboard shortcuts shall only respond to key press events (not release or repeat)
+  - *Subsystems: **Input** (event filtering)*
 
 ### 6. Performance Requirements
 

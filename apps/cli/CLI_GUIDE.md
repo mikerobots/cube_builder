@@ -53,6 +53,31 @@
 - Middle-mouse drag to rotate view
 - Scroll to zoom
 
+#### Placement Behavior
+- **Default (no shift)**: Voxels snap to their own grid size
+  - 4cm voxels snap to 4cm grid
+  - 32cm voxels snap to 32cm grid
+  - Same-size voxels align perfectly when placed on each other
+- **With Shift key**: 1cm precise placement
+  - Hold Shift while clicking for fine-grained control
+  - Allows placement at any 1cm position
+  - Useful for creating overhangs or precise alignments
+- **Special case**: Large voxels on smaller faces always use 1cm placement
+
+### Keyboard Shortcuts
+#### Resolution Switching
+Quick resolution changes using number keys:
+- **1** - 1cm voxels (finest detail)
+- **2** - 2cm voxels
+- **3** - 4cm voxels
+- **4** - 8cm voxels
+- **5** - 16cm voxels
+- **6** - 32cm voxels
+- **7** - 64cm voxels
+- **8** - 128cm voxels
+- **9** - 256cm voxels
+- **0** - 512cm voxels (largest)
+
 ### Working with Groups
 ```
 > selectbox -1m 0m -1m 1m 2m 1m  # Select a centered region
@@ -167,10 +192,10 @@
 - `default` - Default perspective view
 
 ### Resolution Sizes
-- `1cm` - Finest detail
-- `2cm`, `4cm`, `8cm` - Common sizes
-- `16cm`, `32cm`, `64cm` - Medium sizes
-- `128cm`, `256cm`, `512cm` - Large blocks
+- `1cm` - Finest detail (press 1)
+- `2cm`, `4cm`, `8cm` - Common sizes (press 2, 3, 4)
+- `16cm`, `32cm`, `64cm` - Medium sizes (press 5, 6, 7)
+- `128cm`, `256cm`, `512cm` - Large blocks (press 8, 9, 0)
 
 ## Troubleshooting
 

@@ -58,55 +58,79 @@ TEST_F(PlacementSnappingTest, BasicIncrementSnapping) {
     }
 }
 
-TEST_F(PlacementSnappingTest, GridAlignedSnappingIgnoresParameters) {
-    // Test that snapToGridAligned ignores resolution and shift parameters
+TEST_F(PlacementSnappingTest, GridAlignedSnappingRespectsParameters) {
+    // Test that snapToGridAligned respects resolution and shift parameters
     WorldCoordinates worldPos(Vector3f(0.123f, 0.456f, 0.789f));
     
-    // Try with different resolutions and shift states
-    auto result1 = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_1cm, false);
-    auto result2 = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_32cm, false);
-    auto result3 = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_1cm, true);
-    auto result4 = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_32cm, true);
+    // Test 1cm voxel without shift (1cm grid)
+    auto result1cm = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_1cm, false);
+    EXPECT_EQ(result1cm.x(), 12);  // 0.123m -> 12cm (1cm grid)
+    EXPECT_EQ(result1cm.y(), 46);  // 0.456m -> 46cm (1cm grid)
+    EXPECT_EQ(result1cm.z(), 79);  // 0.789m -> 79cm (1cm grid)
     
-    // All should produce the same result (1cm snapping)
-    EXPECT_EQ(result1.value(), result2.value()) << "Resolution should not affect snapping";
-    EXPECT_EQ(result1.value(), result3.value()) << "Shift key should not affect snapping";
-    EXPECT_EQ(result1.value(), result4.value()) << "Both parameters should be ignored";
+    // Test 32cm voxel without shift (32cm grid)
+    auto result32cm = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_32cm, false);
+    EXPECT_EQ(result32cm.x(), 0);   // 0.123m -> 0cm (nearest 32cm grid center)
+    EXPECT_EQ(result32cm.y(), 32);  // 0.456m -> 32cm (nearest 32cm grid bottom)
+    EXPECT_EQ(result32cm.z(), 64);  // 0.789m -> 64cm (nearest 32cm grid center)
     
-    // Verify the actual snapped position
-    EXPECT_EQ(result1.x(), 12);  // 0.123m -> 12.3cm -> 12cm
-    EXPECT_EQ(result1.y(), 46);  // 0.456m -> 45.6cm -> 46cm
-    EXPECT_EQ(result1.z(), 79);  // 0.789m -> 78.9cm -> 79cm
+    // Test with shift key (always 1cm)
+    auto result1cmShift = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_1cm, true);
+    auto result32cmShift = PlacementUtils::snapToGridAligned(worldPos, VoxelResolution::Size_32cm, true);
+    
+    // Both should produce 1cm snapping with shift
+    EXPECT_EQ(result1cmShift.x(), 12);
+    EXPECT_EQ(result1cmShift.y(), 46);
+    EXPECT_EQ(result1cmShift.z(), 79);
+    
+    EXPECT_EQ(result32cmShift.x(), 12);
+    EXPECT_EQ(result32cmShift.y(), 46);
+    EXPECT_EQ(result32cmShift.z(), 79);
 }
 
-TEST_F(PlacementSnappingTest, PlacementContextUsesBasicSnapping) {
-    // Test that getPlacementContext uses basic 1cm snapping
+TEST_F(PlacementSnappingTest, PlacementContextUsesGridAlignedSnapping) {
+    // Test that getPlacementContext uses grid-aligned snapping based on resolution
     WorldCoordinates worldPos(Vector3f(0.234f, 0.567f, 0.891f));
     
-    // Test with different resolutions
+    // Test with different resolutions (no shift)
     auto context1cm = PlacementUtils::getPlacementContext(worldPos, VoxelResolution::Size_1cm, false, m_workspaceSize);
     auto context32cm = PlacementUtils::getPlacementContext(worldPos, VoxelResolution::Size_32cm, false, m_workspaceSize);
     
-    // Both should snap to same 1cm increment
-    EXPECT_EQ(context1cm.snappedIncrementPos.value(), context32cm.snappedIncrementPos.value())
-        << "Different resolutions should still snap to same 1cm increment";
+    // Different resolutions should snap to different grids
+    EXPECT_NE(context1cm.snappedIncrementPos.value(), context32cm.snappedIncrementPos.value())
+        << "Different resolutions should snap to different grids";
     
-    // Verify the snapped position
-    EXPECT_EQ(context1cm.snappedIncrementPos.x(), 23);  // 0.234m -> 23.4cm -> 23cm
-    EXPECT_EQ(context1cm.snappedIncrementPos.y(), 57);  // 0.567m -> 56.7cm -> 57cm
-    EXPECT_EQ(context1cm.snappedIncrementPos.z(), 89);  // 0.891m -> 89.1cm -> 89cm
+    // Verify 1cm snapping
+    EXPECT_EQ(context1cm.snappedIncrementPos.x(), 23);  // 0.234m -> 23cm (1cm grid)
+    EXPECT_EQ(context1cm.snappedIncrementPos.y(), 57);  // 0.567m -> 57cm (1cm grid)
+    EXPECT_EQ(context1cm.snappedIncrementPos.z(), 89);  // 0.891m -> 89cm (1cm grid)
+    
+    // Verify 32cm snapping
+    EXPECT_EQ(context32cm.snappedIncrementPos.x(), 32);  // 0.234m -> 32cm (nearest 32cm grid)
+    EXPECT_EQ(context32cm.snappedIncrementPos.y(), 32);  // 0.567m -> 32cm (nearest 32cm grid bottom)
+    EXPECT_EQ(context32cm.snappedIncrementPos.z(), 96);  // 0.891m -> 96cm (nearest 32cm grid)
 }
 
 TEST_F(PlacementSnappingTest, ShiftKeyBehaviorInBasicContext) {
-    // Test that shift key doesn't change snapping in basic context
+    // Test that shift key changes snapping to 1cm in basic context
     WorldCoordinates worldPos(Vector3f(0.345f, 0.678f, 0.912f));
     
     auto contextNoShift = PlacementUtils::getPlacementContext(worldPos, VoxelResolution::Size_4cm, false, m_workspaceSize);
     auto contextWithShift = PlacementUtils::getPlacementContext(worldPos, VoxelResolution::Size_4cm, true, m_workspaceSize);
     
-    // Both should produce same result
-    EXPECT_EQ(contextNoShift.snappedIncrementPos.value(), contextWithShift.snappedIncrementPos.value())
-        << "Shift key should not affect basic snapping";
+    // Should produce different results (4cm grid vs 1cm grid)
+    EXPECT_NE(contextNoShift.snappedIncrementPos.value(), contextWithShift.snappedIncrementPos.value())
+        << "Shift key should change snapping from 4cm to 1cm";
+    
+    // Without shift - 4cm grid
+    EXPECT_EQ(contextNoShift.snappedIncrementPos.x(), 36);  // 0.345m -> 36cm (nearest 4cm grid)
+    EXPECT_EQ(contextNoShift.snappedIncrementPos.y(), 68);  // 0.678m -> 68cm (nearest 4cm grid)
+    EXPECT_EQ(contextNoShift.snappedIncrementPos.z(), 92);  // 0.912m -> 92cm (nearest 4cm grid)
+    
+    // With shift - 1cm grid
+    EXPECT_EQ(contextWithShift.snappedIncrementPos.x(), 35);  // 0.345m -> 35cm (1cm grid)
+    EXPECT_EQ(contextWithShift.snappedIncrementPos.y(), 68);  // 0.678m -> 68cm (1cm grid)
+    EXPECT_EQ(contextWithShift.snappedIncrementPos.z(), 91);  // 0.912m -> 91cm (1cm grid)
     
     EXPECT_FALSE(contextNoShift.shiftPressed);
     EXPECT_TRUE(contextWithShift.shiftPressed);

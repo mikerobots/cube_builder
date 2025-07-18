@@ -18,6 +18,9 @@
 #include <unistd.h>
 #endif
 
+// GLFW for key codes
+#include <GLFW/glfw3.h>
+
 // Application headers
 #include "cli/Application.h"
 #include "cli/CommandProcessor.h"
@@ -328,6 +331,66 @@ bool Application::initializeRendering() {
         });
         
         m_renderWindow->setKeyCallback([this](const KeyEvent& event) {
+            // Handle resolution switching with number keys (only on key press, not release)
+            if (event.pressed && !event.repeat) {
+                VoxelData::VoxelResolution newResolution;
+                bool resolutionChanged = false;
+                
+                // Map number keys to resolutions
+                // 1-9 for 1cm to 256cm, 0 for 512cm
+                switch (event.key) {
+                    case GLFW_KEY_1:
+                        newResolution = VoxelData::VoxelResolution::Size_1cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_2:
+                        newResolution = VoxelData::VoxelResolution::Size_2cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_3:
+                        newResolution = VoxelData::VoxelResolution::Size_4cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_4:
+                        newResolution = VoxelData::VoxelResolution::Size_8cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_5:
+                        newResolution = VoxelData::VoxelResolution::Size_16cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_6:
+                        newResolution = VoxelData::VoxelResolution::Size_32cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_7:
+                        newResolution = VoxelData::VoxelResolution::Size_64cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_8:
+                        newResolution = VoxelData::VoxelResolution::Size_128cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_9:
+                        newResolution = VoxelData::VoxelResolution::Size_256cm;
+                        resolutionChanged = true;
+                        break;
+                    case GLFW_KEY_0:
+                        newResolution = VoxelData::VoxelResolution::Size_512cm;
+                        resolutionChanged = true;
+                        break;
+                }
+                
+                if (resolutionChanged) {
+                    m_voxelManager->setActiveResolution(newResolution);
+                    // Log the change
+                    float sizeInCm = VoxelData::getVoxelSize(newResolution) * 100.0f;
+                    std::cout << "Resolution changed to " << static_cast<int>(sizeInCm) << "cm" << std::endl;
+                    return; // Don't pass to InputManager
+                }
+            }
+            
+            // Pass all other key events to InputManager
             Input::KeyEvent coreEvent;
             coreEvent.key = static_cast<Input::KeyCode>(event.key);
             coreEvent.type = event.pressed ? Input::KeyEventType::Press : Input::KeyEventType::Release;

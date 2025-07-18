@@ -274,17 +274,7 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
     if (button == 0) { // Left click
         m_mousePressed = pressed;
         
-        if (shiftPressed) {
-            // Shift + Left click for pan
-            if (pressed) {
-                m_dragStart = m_mousePos;
-                m_panMode = true;
-                Logging::Logger::getInstance().debug("MouseInteraction", "Starting pan mode");
-            } else {
-                m_panMode = false;
-                Logging::Logger::getInstance().debug("MouseInteraction", "Ending pan mode");
-            }
-        } else if (modifierPressed) {
+        if (modifierPressed) {
             // Ctrl/Cmd + Left click for orbit
             if (pressed) {
                 m_dragStart = m_mousePos;
@@ -298,8 +288,11 @@ void MouseInteraction::onMouseClick(int button, bool pressed, float x, float y) 
                 Logging::Logger::getInstance().debug("MouseInteraction", "Ending orbit mode");
             }
         } else if (pressed && m_hasHoverFace) {
-            // Regular left click for voxel placement
-            Logging::Logger::getInstance().debug("MouseInteraction", "Placing voxel at hover position");
+            // Left click (with or without Shift) for voxel placement
+            // Shift modifies snapping behavior but doesn't prevent placement
+            const char* snapMode = shiftPressed ? " (1cm snapping)" : " (grid snapping)";
+            Logging::Logger::getInstance().debugfc("MouseInteraction", 
+                "Placing voxel at hover position%s", snapMode);
             placeVoxel();
         }
     } else if (button == 1) { // Right click
@@ -637,36 +630,15 @@ void MouseInteraction::updateHoverState() {
         
         // For ground plane, show outline at snapped grid position
         if (m_hoverFace.isGroundPlane()) {
-            Math::WorldCoordinates hitPoint = m_hoverFace.getGroundPlaneHitPoint();
+            // Use the already calculated preview position which has proper grid-aligned snapping
+            // m_previewPos was set by getPlacementPosition() which respects the current resolution and shift state
+            Math::IncrementCoordinates previewIncCoords(m_previewPos.x, m_previewPos.y, m_previewPos.z);
+            Math::WorldCoordinates previewWorld = Math::CoordinateConverter::incrementToWorld(previewIncCoords);
+            
             float voxelSize = VoxelData::getVoxelSize(currentResolution);
-            
-            // Snap the hit point to the grid (similar to how grid lines are aligned)
-            Math::Vector3f hitPos = hitPoint.value();
-            
-            // Snap to grid cells - round to nearest voxel center
-            // The voxel system uses bottom-center positioning, so we need to:
-            // 1. Find which voxel cell the hit point is in
-            // 2. Calculate the bottom-center position of that cell
-            
-            // For a voxel at increment position (ix, iy, iz), its world position is:
-            // worldX = ix * 0.01m (since increments are in cm)
-            // This is the center of the voxel on X and Z axes
-            
-            // Convert world position to increment coordinates and back to get proper snapping
-            Math::IncrementCoordinates hitIncrement = Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(hitPos));
-            
-            // For ground plane, always snap to 1cm increments for fine control
-            // This allows precise placement regardless of the active voxel resolution
-            int snappedIncrementX = hitIncrement.x();  // Already in 1cm increments
-            int snappedIncrementZ = hitIncrement.z();  // Already in 1cm increments
-            
-            // Convert back to world coordinates
-            Math::WorldCoordinates snappedWorld = Math::CoordinateConverter::incrementToWorld(
-                Math::IncrementCoordinates(snappedIncrementX, 0, snappedIncrementZ));
-            
-            float snappedX = snappedWorld.x();
-            float snappedZ = snappedWorld.z();
-            float snappedY = 0.0f; // Ground plane is always at Y=0
+            float snappedX = previewWorld.x();
+            float snappedY = previewWorld.y();
+            float snappedZ = previewWorld.z();
             
             // Create a bounding box centered on X/Z but starting at Y
             // This matches how voxels are positioned (bottom-center)
@@ -677,9 +649,11 @@ void MouseInteraction::updateHoverState() {
             );
             
             // Debug logging
+            Math::WorldCoordinates hitPoint = m_hoverFace.getGroundPlaneHitPoint();
             Logging::Logger::getInstance().debugfc("MouseInteraction",
-                "Ground plane outline: worldHit=(%.3f,%.3f,%.3f) snapped=(%.3f,%.3f,%.3f) boxMin=(%.3f,%.3f,%.3f) boxMax=(%.3f,%.3f,%.3f)",
+                "Ground plane outline: worldHit=(%.3f,%.3f,%.3f) preview=(%d,%d,%d) snapped=(%.3f,%.3f,%.3f) boxMin=(%.3f,%.3f,%.3f) boxMax=(%.3f,%.3f,%.3f)",
                 hitPoint.x(), hitPoint.y(), hitPoint.z(),
+                m_previewPos.x, m_previewPos.y, m_previewPos.z,
                 snappedX, snappedY, snappedZ,
                 outlineBox.min.x, outlineBox.min.y, outlineBox.min.z,
                 outlineBox.max.x, outlineBox.max.y, outlineBox.max.z);

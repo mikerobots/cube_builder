@@ -64,29 +64,30 @@ TEST_F(SurfaceFaceGridSnappingTest, SnappingToSurfaceGrid_SmallOnLargeTopFace) {
     };
     
     std::vector<SnapTest> snapTests = {
-        // Corner positions - snap to nearest 1cm increment
+        // Corner positions - snap to 4cm grid
         // 64cm voxel extends from -0.32 to +0.32 in X and Z
+        // Grid origin is at (-32, 64, -32) for top face
         {Vector3f(-0.319f, largeVoxelSize, -0.319f), Vector3i(-32, 64, -32), "Near corner (-32,-32)"},
         {Vector3f(0.319f, largeVoxelSize, -0.319f), Vector3i(32, 64, -32), "Near corner (32,-32)"},
         {Vector3f(-0.319f, largeVoxelSize, 0.319f), Vector3i(-32, 64, 32), "Near corner (-32,32)"},
         {Vector3f(0.319f, largeVoxelSize, 0.319f), Vector3i(32, 64, 32), "Near corner (32,32)"},
         
-        // Grid-aligned positions
+        // Grid-aligned positions - already on 4cm grid
         {Vector3f(0.04f, largeVoxelSize, 0.04f), Vector3i(4, 64, 4), "4cm grid position"},
         {Vector3f(0.16f, largeVoxelSize, 0.16f), Vector3i(16, 64, 16), "16cm grid position"},
         {Vector3f(-0.16f, largeVoxelSize, -0.16f), Vector3i(-16, 64, -16), "Negative 16cm grid position"},
         {Vector3f(0.0f, largeVoxelSize, 0.0f), Vector3i(0, 64, 0), "Center position"},
         
-        // Off-grid positions that should snap to nearest 1cm
-        {Vector3f(0.033f, largeVoxelSize, 0.033f), Vector3i(3, 64, 3), "Off-grid near 3cm"},
+        // Off-grid positions that should snap to nearest 4cm grid
+        {Vector3f(0.033f, largeVoxelSize, 0.033f), Vector3i(4, 64, 4), "Off-grid near 3cm -> 4cm"},
         {Vector3f(0.157f, largeVoxelSize, 0.157f), Vector3i(16, 64, 16), "Off-grid near 16cm"},
         {Vector3f(-0.243f, largeVoxelSize, -0.243f), Vector3i(-24, 64, -24), "Off-grid near -24cm"},
-        {Vector3f(0.285f, largeVoxelSize, 0.285f), Vector3i(29, 64, 29), "Off-grid near 29cm"},
+        {Vector3f(0.285f, largeVoxelSize, 0.285f), Vector3i(28, 64, 28), "Off-grid near 29cm -> 28cm"},
         
-        // Various positions within bounds
+        // Various positions within bounds - snap to 4cm grid
         {Vector3f(0.0f, largeVoxelSize, 0.0f), Vector3i(0, 64, 0), "Center of face"},
-        {Vector3f(0.1f, largeVoxelSize, -0.2f), Vector3i(10, 64, -20), "Asymmetric position"},
-        {Vector3f(-0.15f, largeVoxelSize, 0.25f), Vector3i(-15, 64, 25), "Another asymmetric position"},
+        {Vector3f(0.1f, largeVoxelSize, -0.2f), Vector3i(12, 64, -20), "Asymmetric position"},
+        {Vector3f(-0.15f, largeVoxelSize, 0.25f), Vector3i(-16, 64, 24), "Another asymmetric position"},
     };
     
     for (const auto& test : snapTests) {
@@ -140,25 +141,26 @@ TEST_F(SurfaceFaceGridSnappingTest, SnappingToSurfaceGrid_SmallOnLargeSideFace) 
         // Edge positions
         // 128cm voxel at origin has bottom at Y=0, extends to Y=1.28
         // In Z direction, extends from -0.64 to +0.64
-        {Vector3f(largeVoxelSize, 0.001f, -0.639f), Vector3i(128, 0, -64), "Bottom-front edge"},
-        {Vector3f(largeVoxelSize, 1.279f, -0.639f), Vector3i(128, 128, -64), "Top-front edge"},
-        {Vector3f(largeVoxelSize, 0.001f, 0.639f), Vector3i(128, 0, 64), "Bottom-back edge"},
-        {Vector3f(largeVoxelSize, 1.279f, 0.639f), Vector3i(128, 128, 64), "Top-back edge"},
+        // Right face is at X = 64cm, voxel center will be at 68cm (64 + 4cm half-size)
+        {Vector3f(largeVoxelSize, 0.001f, -0.639f), Vector3i(68, 0, -64), "Bottom-front edge"},
+        {Vector3f(largeVoxelSize, 1.279f, -0.639f), Vector3i(68, 128, -64), "Top-front edge"},
+        {Vector3f(largeVoxelSize, 0.001f, 0.639f), Vector3i(68, 0, 64), "Bottom-back edge"},
+        {Vector3f(largeVoxelSize, 1.279f, 0.639f), Vector3i(68, 128, 64), "Top-back edge"},
         
         // Grid-aligned positions
-        {Vector3f(largeVoxelSize, 0.08f, 0.08f), Vector3i(128, 8, 8), "8cm grid position"},
-        {Vector3f(largeVoxelSize, 0.32f, 0.32f), Vector3i(128, 32, 32), "32cm grid position"},
-        {Vector3f(largeVoxelSize, 0.64f, 0.0f), Vector3i(128, 64, 0), "64cm grid position"},
-        {Vector3f(largeVoxelSize, 1.12f, -0.48f), Vector3i(128, 112, -48), "112cm grid position"},
+        {Vector3f(largeVoxelSize, 0.08f, 0.08f), Vector3i(68, 8, 8), "8cm grid position"},
+        {Vector3f(largeVoxelSize, 0.32f, 0.32f), Vector3i(68, 32, 32), "32cm grid position"},
+        {Vector3f(largeVoxelSize, 0.64f, 0.0f), Vector3i(68, 64, 0), "64cm grid position"},
+        {Vector3f(largeVoxelSize, 1.12f, -0.48f), Vector3i(68, 112, -48), "112cm grid position"},
         
-        // Off-grid positions that should snap
-        {Vector3f(largeVoxelSize, 0.077f, 0.077f), Vector3i(128, 8, 8), "Off-grid near 8cm"},
-        {Vector3f(largeVoxelSize, 0.323f, 0.323f), Vector3i(128, 32, 32), "Off-grid near 32cm"},
-        {Vector3f(largeVoxelSize, 0.643f, -0.357f), Vector3i(128, 64, -36), "Off-grid near 64cm"},
+        // Off-grid positions that should snap to 8cm grid
+        {Vector3f(largeVoxelSize, 0.077f, 0.077f), Vector3i(68, 8, 8), "Off-grid near 8cm"},
+        {Vector3f(largeVoxelSize, 0.323f, 0.323f), Vector3i(68, 32, 32), "Off-grid near 32cm"},
+        {Vector3f(largeVoxelSize, 0.643f, -0.357f), Vector3i(68, 64, -32), "Off-grid near 64cm -> snap to -32"},
         
         // Center and various positions
-        {Vector3f(largeVoxelSize, 0.64f, 0.0f), Vector3i(128, 64, 0), "Center of face"},
-        {Vector3f(largeVoxelSize, 0.24f, -0.12f), Vector3i(128, 24, -12), "Asymmetric position"},
+        {Vector3f(largeVoxelSize, 0.64f, 0.0f), Vector3i(68, 64, 0), "Center of face"},
+        {Vector3f(largeVoxelSize, 0.24f, -0.12f), Vector3i(68, 24, -8), "Asymmetric position -> snap to grid"},
     };
     
     for (const auto& test : snapTests) {
@@ -194,16 +196,17 @@ TEST_F(SurfaceFaceGridSnappingTest, GridAlignmentCalculation_DifferentResolution
     struct ResolutionTest {
         VoxelResolution surfaceRes;
         VoxelResolution placementRes;
+        int expectedGridSize;  // Expected grid size in cm
         std::string description;
     };
     
     std::vector<ResolutionTest> resolutionTests = {
-        {VoxelResolution::Size_32cm, VoxelResolution::Size_1cm, "1cm on 32cm"},
-        {VoxelResolution::Size_64cm, VoxelResolution::Size_2cm, "2cm on 64cm"},
-        {VoxelResolution::Size_128cm, VoxelResolution::Size_4cm, "4cm on 128cm"},
-        {VoxelResolution::Size_256cm, VoxelResolution::Size_8cm, "8cm on 256cm"},
-        {VoxelResolution::Size_64cm, VoxelResolution::Size_16cm, "16cm on 64cm"},
-        {VoxelResolution::Size_128cm, VoxelResolution::Size_32cm, "32cm on 128cm"},
+        {VoxelResolution::Size_32cm, VoxelResolution::Size_1cm, 1, "1cm on 32cm"},
+        {VoxelResolution::Size_64cm, VoxelResolution::Size_2cm, 2, "2cm on 64cm"},
+        {VoxelResolution::Size_128cm, VoxelResolution::Size_4cm, 4, "4cm on 128cm"},
+        {VoxelResolution::Size_256cm, VoxelResolution::Size_8cm, 8, "8cm on 256cm"},
+        {VoxelResolution::Size_64cm, VoxelResolution::Size_16cm, 16, "16cm on 64cm"},
+        {VoxelResolution::Size_128cm, VoxelResolution::Size_32cm, 32, "32cm on 128cm"},
     };
     
     for (const auto& resTest : resolutionTests) {
@@ -244,9 +247,9 @@ TEST_F(SurfaceFaceGridSnappingTest, GridAlignmentCalculation_DifferentResolution
             int expectedY = static_cast<int>(surfaceVoxelSize * 100); // Convert to cm
             EXPECT_EQ(snappedPos.y, expectedY) << "Y position incorrect for " << resTest.description;
             
-            // All voxels snap to 1cm increments regardless of size
-            EXPECT_EQ(snappedPos.x % 1, 0) << "X should be snapped to 1cm grid for " << resTest.description;
-            EXPECT_EQ(snappedPos.z % 1, 0) << "Z should be snapped to 1cm grid for " << resTest.description;
+            // Voxels snap to their own grid size (not 1cm) without shift
+            EXPECT_EQ(snappedPos.x % resTest.expectedGridSize, 0) << "X should be snapped to " << resTest.expectedGridSize << "cm grid for " << resTest.description;
+            EXPECT_EQ(snappedPos.z % resTest.expectedGridSize, 0) << "Z should be snapped to " << resTest.expectedGridSize << "cm grid for " << resTest.description;
         }
         
         // Clear for next test
@@ -282,16 +285,20 @@ TEST_F(SurfaceFaceGridSnappingTest, SurfaceFaceCoordinateMapping_AllFaces) {
         // {VoxelData::FaceDirection::NegY, Vector3f(0.0f, -0.04f, 0.0f), Vector3i(0, -4, 0), "Bottom face center"},
         
         // Right face (+X) - 64cm voxel extends from -0.32 to +0.32
-        {VoxelData::FaceDirection::PosX, Vector3f(surfaceVoxelSize, 0.32f, 0.0f), Vector3i(64, 32, 0), "Right face center"},
+        // Right face is at X = 32cm, 4cm voxel center will be at 34cm (32 + 2cm half-size)
+        {VoxelData::FaceDirection::PosX, Vector3f(surfaceVoxelSize, 0.32f, 0.0f), Vector3i(34, 32, 0), "Right face center"},
         
         // Left face (-X)
-        {VoxelData::FaceDirection::NegX, Vector3f(-0.04f, 0.32f, 0.0f), Vector3i(-4, 32, 0), "Left face center"},
+        // Left face is at X = -32cm, 4cm voxel center will be at -34cm (-32 - 2cm half-size)
+        {VoxelData::FaceDirection::NegX, Vector3f(-surfaceVoxelSize, 0.32f, 0.0f), Vector3i(-34, 32, 0), "Left face center"},
         
-        // Front face (+Z)
-        {VoxelData::FaceDirection::PosZ, Vector3f(0.0f, 0.32f, surfaceVoxelSize), Vector3i(0, 32, 64), "Front face center"},
+        // Front face (-Z)
+        // Front face is at Z = -32cm, 4cm voxel center will be at -34cm (-32 - 2cm half-size)
+        {VoxelData::FaceDirection::NegZ, Vector3f(0.0f, 0.32f, -surfaceVoxelSize), Vector3i(0, 32, -34), "Front face center"},
         
-        // Back face (-Z)
-        {VoxelData::FaceDirection::NegZ, Vector3f(0.0f, 0.32f, -0.04f), Vector3i(0, 32, -4), "Back face center"},
+        // Back face (+Z)
+        // Back face is at Z = 32cm, 4cm voxel center will be at 34cm (32 + 2cm half-size)
+        {VoxelData::FaceDirection::PosZ, Vector3f(0.0f, 0.32f, surfaceVoxelSize), Vector3i(0, 32, 34), "Back face center"},
     };
     
     for (const auto& test : faceTests) {
@@ -355,17 +362,17 @@ TEST_F(SurfaceFaceGridSnappingTest, EdgeCasePositioning_CornersAndEdges) {
         {Vector3f(-0.319f, surfaceVoxelSize, 0.0f), Vector3i(-32, 64, 0), "Top face left edge center"},
         {Vector3f(0.319f, surfaceVoxelSize, 0.0f), Vector3i(32, 64, 0), "Top face right edge center"},
         
-        // Positions very close to edges (should snap to nearest 1cm)
-        {Vector3f(0.011f, surfaceVoxelSize, 0.011f), Vector3i(1, 64, 1), "Near corner, should snap to 1cm"},
-        {Vector3f(0.021f, surfaceVoxelSize, 0.021f), Vector3i(2, 64, 2), "Near corner, should snap to 2cm"},
-        {Vector3f(0.031f, surfaceVoxelSize, 0.031f), Vector3i(3, 64, 3), "Near corner, should snap to 3cm"},
+        // Positions very close to edges (should snap to nearest 2cm grid)
+        {Vector3f(0.011f, surfaceVoxelSize, 0.011f), Vector3i(2, 64, 2), "Near corner, should snap to 2cm grid"},
+        {Vector3f(0.021f, surfaceVoxelSize, 0.021f), Vector3i(2, 64, 2), "Near corner, should snap to 2cm grid"},
+        {Vector3f(0.031f, surfaceVoxelSize, 0.031f), Vector3i(4, 64, 4), "Near corner, should snap to 4cm grid"},
         
         // Positions at exact grid boundaries
         {Vector3f(0.02f, surfaceVoxelSize, 0.02f), Vector3i(2, 64, 2), "Exact 2cm grid position"},
         {Vector3f(0.04f, surfaceVoxelSize, 0.04f), Vector3i(4, 64, 4), "Exact 4cm grid position"},
         {Vector3f(0.06f, surfaceVoxelSize, 0.06f), Vector3i(6, 64, 6), "Exact 6cm grid position"},
         
-        // Off-center positions (within bounds)
+        // Off-center positions (within bounds) - snap to 2cm grid
         {Vector3f(0.123f, surfaceVoxelSize, -0.156f), Vector3i(12, 64, -16), "Off-center position 1"},
         {Vector3f(-0.255f, surfaceVoxelSize, 0.222f), Vector3i(-26, 64, 22), "Off-center position 2"},
     };
@@ -469,7 +476,7 @@ TEST_F(SurfaceFaceGridSnappingTest, SnapValidation_OutOfBounds) {
                 // Should be placed on top of the surface voxel
                 EXPECT_EQ(snappedPos.y, 32) << "Y position incorrect for " << test.description;
                 
-                // Should be snapped to 1cm grid
+                // With no shift, 1cm voxels snap to their own 1cm grid
                 EXPECT_EQ(snappedPos.x % 1, 0) << "X should be snapped to 1cm grid for " << test.description;
                 EXPECT_EQ(snappedPos.z % 1, 0) << "Z should be snapped to 1cm grid for " << test.description;
             }

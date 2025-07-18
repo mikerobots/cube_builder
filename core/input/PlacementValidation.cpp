@@ -116,9 +116,75 @@ Math::IncrementCoordinates PlacementUtils::snapToSurfaceFaceGrid(const Math::Wor
                                                    VoxelData::FaceDirection surfaceFaceDir,
                                                    VoxelData::VoxelResolution placementResolution,
                                                    bool shiftPressed) {
-    // Delegate to voxel_math library
-    // Allow overhangs for smaller voxels
-    bool allowOverhang = (VoxelData::getVoxelSize(placementResolution) < VoxelData::getVoxelSize(surfaceFaceVoxelRes));
+    // Check if we're placing a larger voxel on a smaller face
+    float placementSize = VoxelData::getVoxelSize(placementResolution);
+    float surfaceSize = VoxelData::getVoxelSize(surfaceFaceVoxelRes);
+    
+    if (placementSize > surfaceSize) {
+        // Larger voxel on smaller face - always use 1cm increments
+        // Project hit point to face plane and snap to 1cm
+        Math::Vector3f projectedHit = hitPoint.value();
+        Math::WorldCoordinates surfaceWorldPos = Math::CoordinateConverter::incrementToWorld(surfaceFaceVoxelPos);
+        float halfSurfaceSize = surfaceSize * 0.5f;
+        
+        // Project to face plane
+        switch (surfaceFaceDir) {
+            case VoxelData::FaceDirection::PosX:
+                projectedHit.x = surfaceWorldPos.value().x + halfSurfaceSize;
+                break;
+            case VoxelData::FaceDirection::NegX:
+                projectedHit.x = surfaceWorldPos.value().x - halfSurfaceSize;
+                break;
+            case VoxelData::FaceDirection::PosY:
+                projectedHit.y = surfaceWorldPos.value().y + surfaceSize;
+                break;
+            case VoxelData::FaceDirection::NegY:
+                projectedHit.y = surfaceWorldPos.value().y;
+                break;
+            case VoxelData::FaceDirection::PosZ:
+                projectedHit.z = surfaceWorldPos.value().z + halfSurfaceSize;
+                break;
+            case VoxelData::FaceDirection::NegZ:
+                projectedHit.z = surfaceWorldPos.value().z - halfSurfaceSize;
+                break;
+        }
+        
+        // Snap to 1cm and adjust for placement voxel offset
+        Math::IncrementCoordinates snapped = Math::VoxelPlacementMath::snapToValidIncrement(Math::WorldCoordinates(projectedHit));
+        
+        // Adjust for placement voxel's bottom-center positioning
+        float halfPlacementSize = placementSize * 0.5f;
+        Math::WorldCoordinates adjustedWorld = Math::CoordinateConverter::incrementToWorld(snapped);
+        Math::Vector3f adjusted = adjustedWorld.value();
+        
+        switch (surfaceFaceDir) {
+            case VoxelData::FaceDirection::PosX:
+                adjusted.x += halfPlacementSize;
+                break;
+            case VoxelData::FaceDirection::NegX:
+                adjusted.x -= halfPlacementSize;
+                break;
+            case VoxelData::FaceDirection::PosY:
+                // No adjustment needed for top face
+                break;
+            case VoxelData::FaceDirection::NegY:
+                adjusted.y -= placementSize;
+                break;
+            case VoxelData::FaceDirection::PosZ:
+                adjusted.z += halfPlacementSize;
+                break;
+            case VoxelData::FaceDirection::NegZ:
+                adjusted.z -= halfPlacementSize;
+                break;
+        }
+        
+        return Math::CoordinateConverter::worldToIncrement(Math::WorldCoordinates(adjusted));
+    }
+    
+    // For same-size or smaller voxels, use the standard logic
+    // With shift: Allow overhangs
+    // Without shift: No overhangs allowed
+    bool allowOverhang = shiftPressed;
     
     return Math::VoxelPlacementMath::snapToSurfaceFaceGrid(
         hitPoint,
@@ -178,8 +244,9 @@ PlacementContext PlacementUtils::getSmartPlacementContext(const Math::WorldCoord
             shiftPressed
         );
     } else {
-        // Placing on ground or in open space - use basic 1cm increment snapping
-        context.snappedIncrementPos = snapToValidIncrement(worldPos);
+        // Placing on ground or in open space - use grid-aligned snapping based on resolution
+        // This ensures consistent behavior whether placing on ground or on voxel faces
+        context.snappedIncrementPos = snapToGridAligned(worldPos, resolution, shiftPressed);
     }
     
     // Validate the placement
