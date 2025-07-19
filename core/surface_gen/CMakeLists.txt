@@ -14,12 +14,12 @@ add_library(VoxelEditor_SurfaceGen STATIC
     DualContouring.cpp
     DualContouringFast.h
     DualContouringFast.cpp
-    DualContouringSparse.h
-    DualContouringSparse.cpp
     DualContouringNEON.h
     DualContouringNEON.cpp
     DualContouringTables.h
     EdgeCache.h
+    SimpleMesher.h
+    SimpleMesher.cpp
     SurfaceGenerator.h
     SurfaceGenerator.cpp
 )

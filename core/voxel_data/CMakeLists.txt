@@ -1,5 +1,6 @@
 set(VOXEL_DATA_SOURCES
     SparseOctree.cpp
+    VoxelGrid.cpp
 )
 
 set(VOXEL_DATA_HEADERS

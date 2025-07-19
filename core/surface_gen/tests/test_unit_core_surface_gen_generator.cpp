@@ -40,6 +40,29 @@ TEST_F(SurfaceGeneratorTest, BasicGeneration) {
     EXPECT_EQ(mesh.indices.size() % 3, 0); // Should be triangles
 }
 
+TEST_F(SurfaceGeneratorTest, SimpleMesherIntegration) {
+    // Test that SimpleMesher is used when smoothing level is 0
+    SurfaceGenerator generator;
+    
+    // Create settings with smoothing level 0
+    SurfaceSettings settings = SurfaceSettings::Default();
+    settings.smoothingLevel = 0;
+    settings.generateNormals = false; // Simplify test
+    
+    // Generate surface - should use SimpleMesher
+    Mesh mesh = generator.generateSurface(*testGrid, settings);
+    
+    // Verify mesh is valid
+    EXPECT_TRUE(mesh.isValid());
+    EXPECT_GT(mesh.vertices.size(), 0);
+    EXPECT_GT(mesh.indices.size(), 0);
+    EXPECT_EQ(mesh.indices.size() % 3, 0); // Should be triangles
+    
+    // A single voxel with SimpleMesher should generate predictable vertex count
+    // With subdivision, it will be more than 8 vertices
+    EXPECT_GE(mesh.vertices.size(), 8);
+}
+
 TEST_F(SurfaceGeneratorTest, PreviewMeshGeneration) {
     // REQ-10.1.4: System shall support multi-resolution surface generation (LOD)
     // REQ-10.1.5: System shall provide real-time preview with simplified mesh

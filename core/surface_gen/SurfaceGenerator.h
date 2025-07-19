@@ -2,6 +2,7 @@
 
 #include "SurfaceTypes.h"
 #include "DualContouring.h"
+#include "SimpleMesher.h"
 #include "MeshBuilder.h"
 #include "MeshSmoother.h"
 #include "MeshValidator.h"
@@ -86,6 +87,7 @@ public:
 private:
     // Core components
     std::unique_ptr<DualContouring> m_dualContouring;
+    std::unique_ptr<SimpleMesher> m_simpleMesher;
     std::unique_ptr<MeshBuilder> m_meshBuilder;
     std::unique_ptr<LODManager> m_lodManager;
     std::unique_ptr<MeshCache> m_meshCache;

@@ -772,3 +772,124 @@ set_tests_properties(test_integration_overlay_rendering_positions PROPERTIES
     LABELS "integration;overlay;rendering;position"
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
+# STL Export Integration Test
+add_executable(test_integration_core_stl_export
+    test_integration_core_stl_export.cpp
+)
+
+target_link_libraries(test_integration_core_stl_export
+    VoxelEditor_VoxelData
+    VoxelEditor_FileIO
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_stl_export COMMAND test_integration_core_stl_export)
+set_tests_properties(test_integration_core_stl_export PROPERTIES
+    LABELS "integration;core;stl;export"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Dual Contouring Adjacent Voxels Test
+add_executable(test_integration_core_dual_contouring_adjacent
+    test_integration_core_dual_contouring_adjacent.cpp
+)
+
+target_link_libraries(test_integration_core_dual_contouring_adjacent
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_dual_contouring_adjacent COMMAND test_integration_core_dual_contouring_adjacent)
+set_tests_properties(test_integration_core_dual_contouring_adjacent PROPERTIES
+    LABELS "integration;core;dual_contouring;mesh"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Dual Contouring Vertex Validation Test
+add_executable(test_integration_core_dual_contouring_vertex_validation
+    test_integration_core_dual_contouring_vertex_validation.cpp
+)
+
+target_link_libraries(test_integration_core_dual_contouring_vertex_validation
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_dual_contouring_vertex_validation COMMAND test_integration_core_dual_contouring_vertex_validation)
+set_tests_properties(test_integration_core_dual_contouring_vertex_validation PROPERTIES
+    LABELS "integration;core;dual_contouring;vertex_validation"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Dual Contouring Debug Test
+add_executable(test_integration_core_dual_contouring_debug
+    test_integration_core_dual_contouring_debug.cpp
+)
+
+target_link_libraries(test_integration_core_dual_contouring_debug
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_dual_contouring_debug COMMAND test_integration_core_dual_contouring_debug)
+set_tests_properties(test_integration_core_dual_contouring_debug PROPERTIES
+    LABELS "integration;core;dual_contouring;debug"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Dual Contouring Simple Test
+add_executable(test_integration_core_dual_contouring_simple
+    test_integration_core_dual_contouring_simple.cpp
+)
+
+target_link_libraries(test_integration_core_dual_contouring_simple
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_dual_contouring_simple COMMAND test_integration_core_dual_contouring_simple)
+set_tests_properties(test_integration_core_dual_contouring_simple PROPERTIES
+    LABELS "integration;core;dual_contouring;simple"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Dual Contouring Dense Test
+add_executable(test_integration_core_dual_contouring_dense
+    test_integration_core_dual_contouring_dense.cpp
+)
+
+target_link_libraries(test_integration_core_dual_contouring_dense
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_dual_contouring_dense COMMAND test_integration_core_dual_contouring_dense)
+set_tests_properties(test_integration_core_dual_contouring_dense PROPERTIES
+    LABELS "integration;core;dual_contouring;dense"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)

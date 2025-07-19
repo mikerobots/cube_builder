@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.16)
+
+# Add executable for debug single voxel
+add_executable(debug_single_voxel_test debug_single_voxel_test.cpp)
+
+# Link with required libraries
+target_link_libraries(debug_single_voxel_test 
+    VoxelEditor_SurfaceGen
+    VoxelEditor_VoxelData
+    VoxelEditor_VoxelMath
+)
+
+# Include directories
+target_include_directories(debug_single_voxel_test PRIVATE
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/foundation/voxel_math/include
+)

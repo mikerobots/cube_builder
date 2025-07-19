@@ -109,3 +109,15 @@ if(BUILD_DOCUMENTATION)
             VERBATIM)
     endif()
 endif()
+
+# Debug executable for single voxel testing
+add_executable(debug_single_voxel_test debug_single_voxel_test.cpp)
+target_link_libraries(debug_single_voxel_test 
+    VoxelEditor_SurfaceGen
+    VoxelEditor_VoxelData
+    VoxelEditor_VoxelMath
+)
+target_include_directories(debug_single_voxel_test PRIVATE
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/foundation/voxel_math/include
+)

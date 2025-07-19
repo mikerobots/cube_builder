@@ -11,6 +11,7 @@
 // Include core types we need
 #include "../../core/rendering/RenderTypes.h"
 #include "../../core/surface_gen/MeshSmoother.h"
+#include "../../core/surface_gen/SurfaceTypes.h"
 
 // Forward declarations of core systems
 namespace VoxelEditor {
@@ -97,6 +98,10 @@ public:
     bool isSmoothPreviewEnabled() const { return m_smoothPreviewEnabled; }
     void setSmoothPreviewEnabled(bool enabled) { m_smoothPreviewEnabled = enabled; }
     
+    // Mesh resolution settings
+    SurfaceGen::PreviewQuality getMeshResolution() const { return m_meshResolution; }
+    void setMeshResolution(SurfaceGen::PreviewQuality quality) { m_meshResolution = quality; }
+    
     // Rendering settings access
     Rendering::ShaderId getDefaultShaderId() const { return m_defaultShaderId; }
     void setDefaultShaderId(Rendering::ShaderId id) { m_defaultShaderId = id; }
@@ -137,6 +142,9 @@ private:
     int m_smoothingLevel = 0;  // 0-10+ smoothing level
     SurfaceGen::MeshSmoother::Algorithm m_smoothingAlgorithm = SurfaceGen::MeshSmoother::Algorithm::None;
     bool m_smoothPreviewEnabled = false;
+    
+    // Mesh resolution settings
+    SurfaceGen::PreviewQuality m_meshResolution = SurfaceGen::PreviewQuality::Disabled; // Default to auto (8cm)
     
     // Current scene data for rendering
     std::vector<Rendering::Mesh> m_voxelMeshes;

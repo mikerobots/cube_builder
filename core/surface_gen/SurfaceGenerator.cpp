@@ -1,5 +1,6 @@
 #include "SurfaceGenerator.h"
-#include "DualContouringSparse.h"
+#include "DualContouring.h"
+#include "SimpleMesher.h"
 #include <thread>
 #include <sstream>
 #include <algorithm>
@@ -17,7 +18,8 @@ SurfaceGenerator::SurfaceGenerator(Events::EventDispatcher* eventDispatcher)
     , m_cacheEnabled(true)
     , m_cancelRequested(false) {
     
-    m_dualContouring = std::make_unique<DualContouringSparse>();
+    m_dualContouring = std::make_unique<DualContouring>();
+    m_simpleMesher = std::make_unique<SimpleMesher>();
     m_meshBuilder = std::make_unique<MeshBuilder>();
     m_lodManager = std::make_unique<LODManager>();
     m_meshCache = std::make_unique<MeshCache>();
@@ -192,8 +194,31 @@ Mesh SurfaceGenerator::generateInternal(const VoxelData::VoxelGrid& grid,
     
     if (lod == LODLevel::LOD0) {
         // Full resolution
-        Logging::Logger::getInstance().debug("Generating full resolution mesh", "SurfaceGenerator");
-        mesh = m_dualContouring->generateMesh(grid, settings);
+        if (settings.smoothingLevel == 0) {
+            // Use SimpleMesher for unsmoothed box meshes
+            Logging::Logger::getInstance().debug("Generating box mesh with SimpleMesher", "SurfaceGenerator");
+            
+            // Map preview quality to mesh resolution
+            SimpleMesher::MeshResolution meshRes = SimpleMesher::MeshResolution::Res_8cm;
+            if (settings.previewQuality == PreviewQuality::Fast) {
+                meshRes = SimpleMesher::MeshResolution::Res_16cm;
+            } else if (settings.previewQuality == PreviewQuality::Balanced) {
+                meshRes = SimpleMesher::MeshResolution::Res_8cm;
+            } else if (settings.previewQuality == PreviewQuality::HighQuality) {
+                meshRes = SimpleMesher::MeshResolution::Res_4cm;
+            }
+            
+            // Set progress callback
+            m_simpleMesher->setProgressCallback([this](float progress) {
+                reportProgress(progress * 0.8f, "Generating box mesh");
+            });
+            
+            mesh = m_simpleMesher->generateMesh(grid, settings, meshRes);
+        } else {
+            // Use DualContouring for smoothed meshes
+            Logging::Logger::getInstance().debug("Generating smooth mesh with DualContouring", "SurfaceGenerator");
+            mesh = m_dualContouring->generateMesh(grid, settings);
+        }
     } else {
         // Generate LOD
         Logging::Logger::getInstance().debugfc("SurfaceGenerator", "Generating LOD%d mesh", static_cast<int>(lod));

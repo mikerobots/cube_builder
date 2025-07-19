@@ -307,6 +307,13 @@ std::vector<CommandRegistration> FileCommands::getCommands() {
                 
                 // Generate surface mesh
                 SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                
+                // Configure surface settings with mesh resolution
+                SurfaceGen::SurfaceSettings settings = SurfaceGen::SurfaceSettings::Default();
+                settings.smoothingLevel = m_app->getSmoothingLevel();
+                settings.previewQuality = m_app->getMeshResolution();
+                surfaceGen.setSurfaceSettings(settings);
+                
                 auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                 
                 // Apply smoothing if enabled

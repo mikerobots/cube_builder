@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "../DualContouring.h"
 #include "../DualContouringFast.h"
-#include "../DualContouringSparse.h"
 #include "../SurfaceTypes.h"
 #include "../../voxel_data/VoxelGrid.h"
 #include <cmath>
@@ -65,7 +64,7 @@ TEST_F(DualContouringTest, EmptyGrid) {
 
 TEST_F(DualContouringTest, SingleVoxel) {
     // REQ-10.1.1: System shall use Dual Contouring algorithm for surface generation
-    DualContouringSparse dc;  // Use sparse implementation for best performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Add 2x2x2 cube instead of single voxel for better dual contouring results
     // Single isolated voxels don't create good boundary conditions for surface generation
@@ -89,7 +88,7 @@ TEST_F(DualContouringTest, SingleVoxel) {
 }
 
 TEST_F(DualContouringTest, SimpleCube) {
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create a 2x2x2 cube at center of grid
     // With centered coordinate system and 2m workspace, center should be safe
@@ -121,7 +120,7 @@ TEST_F(DualContouringTest, SimpleCube) {
 }
 
 TEST_F(DualContouringTest, Sphere) {
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create a sphere
     createSphere(Math::Vector3i(4, 4, 4), 2.5f);
@@ -137,7 +136,7 @@ TEST_F(DualContouringTest, Sphere) {
 
 TEST_F(DualContouringTest, AdaptiveError) {
     // REQ-10.1.3: System shall support adaptive mesh generation based on voxel resolution
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create test shape
     createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(5, 5, 5));
@@ -163,7 +162,7 @@ TEST_F(DualContouringTest, AdaptiveError) {
 }
 
 TEST_F(DualContouringTest, EdgeCases) {
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Test edge of grid
     testGrid->setVoxel(Math::IncrementCoordinates(0, 0, 0), true);
@@ -180,7 +179,7 @@ TEST_F(DualContouringTest, EdgeCases) {
 TEST_F(DualContouringTest, ComplexShape) {
     // REQ-10.1.2: Algorithm shall provide better feature preservation than Marching Cubes
     // REQ-10.1.7: System shall preserve sharp edges for architectural details
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create L-shaped structure
     createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(5, 3, 5));
@@ -198,7 +197,7 @@ TEST_F(DualContouringTest, ComplexShape) {
 TEST_F(DualContouringTest, DISABLED_PerformanceSettings) {
     // This test creates a dense 5x5x5 cube (125 voxels), so DualContouring might be faster
     // than sparse for such dense grids. But let's still optimize it.
-    DualContouringSparse dc;  // Use sparse implementation to avoid debug output
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create smaller cube for faster test
     createCube(Math::Vector3i(2, 2, 2), Math::Vector3i(4, 4, 4));  // 2x2x2 = 8 voxels instead of 125
@@ -211,7 +210,7 @@ TEST_F(DualContouringTest, DISABLED_PerformanceSettings) {
 }
 
 TEST_F(DualContouringTest, NormalGeneration) {
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create simple shape
     createCube(Math::Vector3i(3, 3, 3), Math::Vector3i(4, 4, 4));
@@ -234,7 +233,7 @@ TEST_F(DualContouringTest, NormalGeneration) {
 }
 
 TEST_F(DualContouringTest, ConsistentWindingOrder) {
-    DualContouringSparse dc;  // Use sparse implementation for performance
+    DualContouring dc;  // Now uses sparse implementation by default
     
     // Create simple cube
     createCube(Math::Vector3i(3, 3, 3), Math::Vector3i(4, 4, 4));

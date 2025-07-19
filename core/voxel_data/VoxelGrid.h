@@ -98,6 +98,9 @@ public:
         return result;
     }
     
+    // Check if a 1cm position is inside any voxel
+    bool isInsideVoxel(const Math::IncrementCoordinates& pos) const;
+    
     // World space operations
     bool setVoxelAtWorldPos(const Math::WorldCoordinates& worldPos, bool value) {
         Math::IncrementCoordinates incrementPos = worldToIncrement(worldPos);

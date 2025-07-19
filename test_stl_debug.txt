@@ -1,0 +1,4 @@
+resolution 32cm
+place 0cm 0cm 0cm
+export test_voxel_debug.stl
+exit

@@ -260,6 +260,17 @@ The CLI (Command Line Interface) application provides an interactive terminal-ba
 3. Large workspaces (>100k voxels) may impact performance
 4. No texture or color export support
 
+### 11. Mesh Resolution Control (New)
+
+#### CLI-REQ-021: Mesh Resolution Control
+- **Description**: Users shall be able to control mesh subdivision resolution for surface generation
+- **Status**: 🚧 In Development
+- **Commands**:
+  - `mesh resolution` - Show current mesh resolution setting
+  - `mesh resolution <1cm|2cm|4cm|8cm|16cm>` - Set mesh subdivision resolution
+  - `mesh resolution auto` - Use automatic resolution based on quality settings
+- **Note**: Affects subdivision detail when smoothing level is 0 (SimpleMesher)
+
 ## Future Enhancements
 
 1. **Phase 1**: Complete mesh smoothing implementation

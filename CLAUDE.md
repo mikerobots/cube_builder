@@ -147,6 +147,12 @@ save project.vxl     # Save project
 ### Coordinate System
 **IMPORTANT**: Project uses **centered coordinate system** (origin at 0,0,0). If you see code using old coordinate system (not centered at zero), fix it immediately.
 
+**Voxel Placement Coordinates**:
+- Voxels are placed using their **bottom-left-back corner** position (minimum corner)
+- A voxel at IncrementCoordinates(0,0,0) occupies space from (0,0,0) to (voxelSize,voxelSize,voxelSize)
+- Example: 32cm voxel at (0,0,0) fills the space from (0,0,0) to (32,32,32) in increment units
+- All placement coordinates are in 1cm increments (IncrementCoordinates)
+
 ### Command Execution
 **SUPER CRITICAL - ALWAYS USE execute_command.sh**: 
 When running ANY executables, scripts, or programs, you MUST ALWAYS use execute_command.sh wrapper:
@@ -246,4 +252,5 @@ THAT IS SUBPAR OR DOESN'T MAKE SENSE!
 DON'T ADD SKIPS TO FIX TESTS!!!
 We are in the process of fixing integration tests. DON'T RUN THE CLI!
 
-If I have told you to work on the TODO.md list. Don't request feedback until all items on the list are done! Keep working on the list!
+If I have told you to work on the TODO.md list. Don't request feedback
+until all items on the list are done! Keep working on the list!

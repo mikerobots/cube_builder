@@ -124,13 +124,21 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
             .withDescription("Mesh validation and information")
             .withCategory(CommandCategory::MESH)
             .withAlias("mesh-info")
-            .withArg("subcommand", "validate|info|repair", "string", true, "")
+            .withArg("subcommand", "validate|info|repair|resolution", "string", true, "")
+            .withArg("value", "For resolution: 1cm|2cm|4cm|8cm|16cm|auto", "string", false, "")
             .withHandler([this](const CommandContext& ctx) {
                 std::string subcommand = ctx.getArg(0);
                 
                 if (subcommand == "validate" || subcommand == "mesh-validate") {
                     // Generate mesh first
                     SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                    
+                    // Configure surface settings with mesh resolution
+                    SurfaceGen::SurfaceSettings settings = SurfaceGen::SurfaceSettings::Default();
+                    settings.smoothingLevel = m_app->getSmoothingLevel();
+                    settings.previewQuality = m_app->getMeshResolution();
+                    surfaceGen.setSurfaceSettings(settings);
+                    
                     auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                     
                     // Apply smoothing if enabled
@@ -176,6 +184,13 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                 } else if (subcommand == "info" || subcommand == "mesh-info") {
                     // Generate mesh first
                     SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                    
+                    // Configure surface settings with mesh resolution
+                    SurfaceGen::SurfaceSettings settings = SurfaceGen::SurfaceSettings::Default();
+                    settings.smoothingLevel = m_app->getSmoothingLevel();
+                    settings.previewQuality = m_app->getMeshResolution();
+                    surfaceGen.setSurfaceSettings(settings);
+                    
                     auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                     
                     // Apply smoothing if enabled
@@ -232,8 +247,55 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                 } else if (subcommand == "repair") {
                     // Note: MeshBuilder repair functions need to be implemented
                     return CommandResult::Success("Mesh repair functionality is pending implementation in MeshBuilder");
+                } else if (subcommand == "resolution") {
+                    // Handle mesh resolution setting
+                    if (ctx.getArgCount() == 1) {
+                        // Show current resolution
+                        auto currentRes = m_app->getMeshResolution();
+                        std::string resStr;
+                        switch (currentRes) {
+                            case SurfaceGen::PreviewQuality::Fast:
+                                resStr = "16cm (fast preview)";
+                                break;
+                            case SurfaceGen::PreviewQuality::Balanced:
+                                resStr = "8cm (balanced)";
+                                break;
+                            case SurfaceGen::PreviewQuality::HighQuality:
+                                resStr = "4cm (high quality)";
+                                break;
+                            case SurfaceGen::PreviewQuality::Disabled:
+                            default:
+                                resStr = "8cm (default)";
+                                break;
+                        }
+                        return CommandResult::Success("Current mesh resolution: " + resStr + "\nNote: Only affects mesh generation when smoothing level is 0");
+                    } else {
+                        // Set resolution
+                        std::string value = ctx.getArg(1);
+                        if (value == "1cm") {
+                            m_app->setMeshResolution(SurfaceGen::PreviewQuality::HighQuality);
+                            return CommandResult::Success("Mesh resolution set to 1cm (not available in SimpleMesher, using 4cm)");
+                        } else if (value == "2cm") {
+                            m_app->setMeshResolution(SurfaceGen::PreviewQuality::HighQuality);
+                            return CommandResult::Success("Mesh resolution set to 2cm (not available in SimpleMesher, using 4cm)");
+                        } else if (value == "4cm") {
+                            m_app->setMeshResolution(SurfaceGen::PreviewQuality::HighQuality);
+                            return CommandResult::Success("Mesh resolution set to 4cm (high quality)");
+                        } else if (value == "8cm") {
+                            m_app->setMeshResolution(SurfaceGen::PreviewQuality::Balanced);
+                            return CommandResult::Success("Mesh resolution set to 8cm (balanced)");
+                        } else if (value == "16cm") {
+                            m_app->setMeshResolution(SurfaceGen::PreviewQuality::Fast);
+                            return CommandResult::Success("Mesh resolution set to 16cm (fast preview)");
+                        } else if (value == "auto") {
+                            m_app->setMeshResolution(SurfaceGen::PreviewQuality::Disabled);
+                            return CommandResult::Success("Mesh resolution set to auto (8cm default)");
+                        } else {
+                            return CommandResult::Error("Invalid resolution. Use: 1cm, 2cm, 4cm, 8cm, 16cm, or auto");
+                        }
+                    }
                 } else {
-                    return CommandResult::Error("Invalid subcommand. Use: validate, info, or repair");
+                    return CommandResult::Error("Invalid subcommand. Use: validate, info, repair, or resolution");
                 }
             }),
 
@@ -252,6 +314,13 @@ std::vector<CommandRegistration> MeshCommands::getCommands() {
                 
                 // Generate surface mesh
                 SurfaceGen::SurfaceGenerator surfaceGen(m_eventDispatcher);
+                
+                // Configure surface settings with mesh resolution
+                SurfaceGen::SurfaceSettings settings = SurfaceGen::SurfaceSettings::Default();
+                settings.smoothingLevel = m_app->getSmoothingLevel();
+                settings.previewQuality = m_app->getMeshResolution();
+                surfaceGen.setSurfaceSettings(settings);
+                
                 auto surfaceMesh = surfaceGen.generateMultiResMesh(*m_voxelManager, m_voxelManager->getActiveResolution());
                 
                 // Apply smoothing if enabled
