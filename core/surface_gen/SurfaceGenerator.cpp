@@ -65,25 +65,10 @@ Mesh SurfaceGenerator::generatePreviewMesh(const VoxelData::VoxelGrid& grid, int
 
 Mesh SurfaceGenerator::generateMultiResMesh(const VoxelData::VoxelDataManager& voxelManager,
                                            VoxelData::VoxelResolution targetRes) {
-    // Get grid at target resolution
-    const VoxelData::VoxelGrid* targetGrid = voxelManager.getGrid(targetRes);
-    if (!targetGrid) {
-        return Mesh();
-    }
-    
-    // Generate base mesh for target resolution
-    Mesh baseMesh = generateSurface(*targetGrid, m_settings);
-    
-    // Check if we need to incorporate details from higher resolutions
-    if (targetRes == VoxelData::VoxelResolution::Size_1cm) {
-        // Already at highest resolution
-        return baseMesh;
-    }
-    
-    // Find all resolutions with data
+    // Find all resolutions with data - check ALL resolutions, not just up to targetRes
     std::vector<VoxelData::VoxelResolution> activeResolutions;
     for (int res = static_cast<int>(VoxelData::VoxelResolution::Size_1cm); 
-         res <= static_cast<int>(targetRes); ++res) {
+         res <= static_cast<int>(VoxelData::VoxelResolution::Size_512cm); ++res) {
         auto resolution = static_cast<VoxelData::VoxelResolution>(res);
         const VoxelData::VoxelGrid* grid = voxelManager.getGrid(resolution);
         if (grid && !grid->isEmpty()) {
@@ -92,7 +77,7 @@ Mesh SurfaceGenerator::generateMultiResMesh(const VoxelData::VoxelDataManager& v
     }
     
     if (activeResolutions.empty()) {
-        return baseMesh;
+        return Mesh();
     }
     
     // Generate meshes for each active resolution
@@ -100,9 +85,20 @@ Mesh SurfaceGenerator::generateMultiResMesh(const VoxelData::VoxelDataManager& v
     for (auto resolution : activeResolutions) {
         const VoxelData::VoxelGrid* grid = voxelManager.getGrid(resolution);
         if (grid) {
+            // DEBUG: Log which resolution we're processing
+            float voxelSizeCm = VoxelData::getVoxelSize(resolution) * 100.0f;
+            Logging::Logger::getInstance().debugfc("SurfaceGenerator",
+                "Generating mesh for resolution %d (%gcm voxels)",
+                static_cast<int>(resolution), voxelSizeCm);
+            
             Mesh mesh = generateSurface(*grid, m_settings);
             if (mesh.isValid()) {
                 meshes.push_back(mesh);
+                
+                // DEBUG: Log mesh details
+                Logging::Logger::getInstance().debugfc("SurfaceGenerator",
+                    "Generated mesh with %zu vertices for %gcm resolution",
+                    mesh.vertices.size(), voxelSizeCm);
             }
         }
     }
@@ -114,7 +110,7 @@ Mesh SurfaceGenerator::generateMultiResMesh(const VoxelData::VoxelDataManager& v
         return meshes[0];
     }
     
-    return baseMesh;
+    return Mesh();
 }
 
 std::vector<Mesh> SurfaceGenerator::generateAllResolutions(const VoxelData::VoxelDataManager& voxelManager) {
@@ -198,14 +194,39 @@ Mesh SurfaceGenerator::generateInternal(const VoxelData::VoxelGrid& grid,
             // Use SimpleMesher for unsmoothed box meshes
             Logging::Logger::getInstance().debug("Generating box mesh with SimpleMesher", "SurfaceGenerator");
             
-            // Map preview quality to mesh resolution
+            // Map voxel grid resolution to mesh resolution
+            // The mesh resolution should match the voxel resolution for accurate representation
             SimpleMesher::MeshResolution meshRes = SimpleMesher::MeshResolution::Res_8cm;
-            if (settings.previewQuality == PreviewQuality::Fast) {
-                meshRes = SimpleMesher::MeshResolution::Res_16cm;
-            } else if (settings.previewQuality == PreviewQuality::Balanced) {
-                meshRes = SimpleMesher::MeshResolution::Res_8cm;
-            } else if (settings.previewQuality == PreviewQuality::HighQuality) {
-                meshRes = SimpleMesher::MeshResolution::Res_4cm;
+            VoxelData::VoxelResolution voxelRes = grid.getResolution();
+            
+            // Convert voxel resolution to mesh resolution
+            switch (voxelRes) {
+                case VoxelData::VoxelResolution::Size_1cm:
+                    meshRes = SimpleMesher::MeshResolution::Res_1cm;
+                    break;
+                case VoxelData::VoxelResolution::Size_2cm:
+                    meshRes = SimpleMesher::MeshResolution::Res_2cm;
+                    break;
+                case VoxelData::VoxelResolution::Size_4cm:
+                    meshRes = SimpleMesher::MeshResolution::Res_4cm;
+                    break;
+                case VoxelData::VoxelResolution::Size_8cm:
+                    meshRes = SimpleMesher::MeshResolution::Res_8cm;
+                    break;
+                case VoxelData::VoxelResolution::Size_16cm:
+                    meshRes = SimpleMesher::MeshResolution::Res_16cm;
+                    break;
+                case VoxelData::VoxelResolution::Size_32cm:
+                case VoxelData::VoxelResolution::Size_64cm:
+                case VoxelData::VoxelResolution::Size_128cm:
+                case VoxelData::VoxelResolution::Size_256cm:
+                case VoxelData::VoxelResolution::Size_512cm:
+                    // For larger voxels, use 16cm mesh resolution as SimpleMesher doesn't support larger
+                    meshRes = SimpleMesher::MeshResolution::Res_16cm;
+                    break;
+                default:
+                    meshRes = SimpleMesher::MeshResolution::Res_8cm;
+                    break;
             }
             
             // Set progress callback

@@ -140,6 +140,11 @@ Mesh SimpleMesher::generateMesh(const VoxelGrid& grid,
         // Get voxel size from the voxel's resolution
         int voxelSize = static_cast<int>(VoxelData::getVoxelSize(voxelPos.resolution) * 100.0f); // Convert to cm
         
+        // DEBUG: Log voxel information
+        VoxelEditor::Logging::Logger::getInstance().debugfc("SimpleMesher",
+            "Processing voxel %d: increment pos (%d, %d, %d), size %dcm, resolution %d",
+            voxelId, pos.x(), pos.y(), pos.z(), voxelSize, static_cast<int>(voxelPos.resolution));
+        
         voxels.push_back({pos, voxelSize});
         spatialIndex.insert(voxelId++, pos, voxelSize);
     }
@@ -604,6 +609,17 @@ void SimpleMesher::generateVoxelMesh(
         
         // Get visible regions
         std::vector<Rectangle> visibleRects = occlusionTracker.computeVisibleRectangles();
+        
+        // DEBUG: Log face visibility
+        if (face == FaceDirection::POS_Y && voxelId == 0) { // Top face of first voxel
+            VoxelEditor::Logging::Logger::getInstance().debugfc("SimpleMesher",
+                "Voxel %d top face: %zu visible rectangles", voxelId, visibleRects.size());
+            for (size_t i = 0; i < visibleRects.size(); ++i) {
+                const auto& rect = visibleRects[i];
+                VoxelEditor::Logging::Logger::getInstance().debugfc("SimpleMesher",
+                    "  Rect %zu: pos(%d,%d) size(%dx%d)", i, rect.x, rect.y, rect.width, rect.height);
+            }
+        }
         
         if (!visibleRects.empty()) {
             FaceData faceData = createFaceData(position, size, face, visibleRects);

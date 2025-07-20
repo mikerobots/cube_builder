@@ -372,8 +372,37 @@ Mesh MeshBuilder::combineMeshes(const std::vector<Mesh>& meshes) {
     MeshBuilder builder;
     builder.beginMesh();
     
-    for (const auto& mesh : meshes) {
+    // DEBUG: Log mesh combination details
+    Logging::Logger::getInstance().debugfc("MeshBuilder", 
+        "Combining %zu meshes", meshes.size());
+    
+    for (size_t meshIdx = 0; meshIdx < meshes.size(); ++meshIdx) {
+        const auto& mesh = meshes[meshIdx];
         uint32_t vertexOffset = static_cast<uint32_t>(builder.m_vertices.size());
+        
+        // DEBUG: Analyze mesh bounds before adding
+        if (!mesh.vertices.empty()) {
+            Math::WorldCoordinates minPos = mesh.vertices[0];
+            Math::WorldCoordinates maxPos = mesh.vertices[0];
+            for (const auto& v : mesh.vertices) {
+                minPos = Math::WorldCoordinates(
+                    std::min(minPos.x(), v.x()),
+                    std::min(minPos.y(), v.y()),
+                    std::min(minPos.z(), v.z())
+                );
+                maxPos = Math::WorldCoordinates(
+                    std::max(maxPos.x(), v.x()),
+                    std::max(maxPos.y(), v.y()),
+                    std::max(maxPos.z(), v.z())
+                );
+            }
+            
+            Logging::Logger::getInstance().debugfc("MeshBuilder", 
+                "Mesh %zu: %zu vertices, bounds: (%.3f,%.3f,%.3f) to (%.3f,%.3f,%.3f) meters",
+                meshIdx, mesh.vertices.size(),
+                minPos.x(), minPos.y(), minPos.z(),
+                maxPos.x(), maxPos.y(), maxPos.z());
+        }
         
         // Add vertices
         for (size_t i = 0; i < mesh.vertices.size(); ++i) {
@@ -398,7 +427,32 @@ Mesh MeshBuilder::combineMeshes(const std::vector<Mesh>& meshes) {
         }
     }
     
-    return builder.endMesh();
+    // DEBUG: Log combined mesh details
+    Mesh result = builder.endMesh();
+    if (!result.vertices.empty()) {
+        Math::WorldCoordinates minPos = result.vertices[0];
+        Math::WorldCoordinates maxPos = result.vertices[0];
+        for (const auto& v : result.vertices) {
+            minPos = Math::WorldCoordinates(
+                std::min(minPos.x(), v.x()),
+                std::min(minPos.y(), v.y()),
+                std::min(minPos.z(), v.z())
+            );
+            maxPos = Math::WorldCoordinates(
+                std::max(maxPos.x(), v.x()),
+                std::max(maxPos.y(), v.y()),
+                std::max(maxPos.z(), v.z())
+            );
+        }
+        
+        Logging::Logger::getInstance().debugfc("MeshBuilder", 
+            "Combined mesh: %zu vertices, bounds: (%.3f,%.3f,%.3f) to (%.3f,%.3f,%.3f) meters",
+            result.vertices.size(),
+            minPos.x(), minPos.y(), minPos.z(),
+            maxPos.x(), maxPos.y(), maxPos.z());
+    }
+    
+    return result;
 }
 
 Mesh MeshBuilder::smoothMesh(const Mesh& mesh, int iterations, float factor) {

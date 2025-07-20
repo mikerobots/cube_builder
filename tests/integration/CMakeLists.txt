@@ -893,3 +893,160 @@ set_tests_properties(test_integration_core_dual_contouring_dense PROPERTIES
     LABELS "integration;core;dual_contouring;dense"
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
+# SimpleMesher Scene Integration Test
+add_executable(test_integration_core_surface_gen_simple_mesher_scenes
+    test_integration_core_surface_gen_simple_mesher_scenes.cpp
+)
+
+target_link_libraries(test_integration_core_surface_gen_simple_mesher_scenes
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_FileIO
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_surface_gen_simple_mesher_scenes COMMAND test_integration_core_surface_gen_simple_mesher_scenes)
+set_tests_properties(test_integration_core_surface_gen_simple_mesher_scenes PROPERTIES
+    LABELS "integration;core;surface_gen;simple_mesher"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# STL Export with SimpleMesher Test
+add_executable(test_integration_core_stl_export_simple_mesher
+    test_integration_core_stl_export_simple_mesher.cpp
+)
+
+target_link_libraries(test_integration_core_stl_export_simple_mesher
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_FileIO
+    VoxelEditor_Rendering
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_stl_export_simple_mesher COMMAND test_integration_core_stl_export_simple_mesher)
+set_tests_properties(test_integration_core_stl_export_simple_mesher PROPERTIES
+    LABELS "integration;core;stl;export;simple_mesher"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# STL Export Voxel Alignment Test
+add_executable(test_integration_core_stl_export_voxel_alignment
+    test_integration_core_stl_export_voxel_alignment.cpp
+)
+
+target_link_libraries(test_integration_core_stl_export_voxel_alignment
+    VoxelEditor_SurfaceGen
+    VoxelEditor_VoxelData
+    VoxelEditor_FileIO
+    VoxelEditor_Rendering
+    VoxelEditor_VoxelMath
+    VoxelEditor_Events
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+
+add_test(NAME test_integration_core_stl_export_voxel_alignment COMMAND test_integration_core_stl_export_voxel_alignment)
+set_tests_properties(test_integration_core_stl_export_voxel_alignment PROPERTIES
+    LABELS "integration;core;stl;export;alignment"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Multi-resolution STL export test
+add_executable(test_integration_multiresolution_stl_export
+    test_integration_multiresolution_stl_export.cpp
+)
+target_link_libraries(test_integration_multiresolution_stl_export
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_FileIO
+    VoxelEditor_Rendering
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+add_test(NAME test_integration_multiresolution_stl_export COMMAND test_integration_multiresolution_stl_export)
+set_tests_properties(test_integration_multiresolution_stl_export PROPERTIES
+    LABELS "integration;core;stl;export;multiresolution"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# STL Voxel Position Accuracy Test
+add_executable(test_integration_stl_voxel_position_accuracy
+    test_integration_stl_voxel_position_accuracy.cpp
+)
+target_link_libraries(test_integration_stl_voxel_position_accuracy
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_FileIO
+    VoxelEditor_Rendering
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+add_test(NAME test_integration_stl_voxel_position_accuracy COMMAND test_integration_stl_voxel_position_accuracy)
+set_tests_properties(test_integration_stl_voxel_position_accuracy PROPERTIES
+    LABELS "integration;core;stl;export;position"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Simple Mesh Debug Test
+add_executable(test_simple_mesh_debug
+    ../../test_simple_mesh_debug.cpp
+)
+target_link_libraries(test_simple_mesh_debug
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+add_test(NAME test_simple_mesh_debug COMMAND test_simple_mesh_debug)
+set_tests_properties(test_simple_mesh_debug PROPERTIES
+    LABELS "debug;mesh;position"
+)
+
+# Multi-resolution Debug Test
+add_executable(test_multi_resolution_debug
+    ../../test_multi_resolution_debug.cpp
+)
+target_link_libraries(test_multi_resolution_debug
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+add_test(NAME test_multi_resolution_debug COMMAND test_multi_resolution_debug)
+set_tests_properties(test_multi_resolution_debug PROPERTIES
+    LABELS "debug;mesh;multiresolution"
+)
+
+# Voxel Position Check Test
+add_executable(test_voxel_position_check
+    ../../test_voxel_position_check.cpp
+)
+target_link_libraries(test_voxel_position_check
+    VoxelEditor_VoxelData
+    VoxelEditor_SurfaceGen
+    VoxelEditor_Math
+    VoxelEditor_Logging
+    gtest
+    gtest_main
+)
+add_test(NAME test_voxel_position_check COMMAND test_voxel_position_check)
+set_tests_properties(test_voxel_position_check PROPERTIES
+    LABELS "debug;position;accuracy"
+)
