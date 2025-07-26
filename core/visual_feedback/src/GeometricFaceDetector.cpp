@@ -12,11 +12,12 @@ GeometricFace GeometricFace::fromVertices(const std::vector<Math::Vector3f>& ver
     face.id = faceId;
     
     // Compute normal using cross product of first two edges
-    // For counter-clockwise vertices viewed from outside,
-    // (v1-v0) × (v2-v0) gives outward normal
+    // IMPORTANT: The vertices are in counter-clockwise order when viewed from outside,
+    // so we use standard cross product to get outward normal
     if (verts.size() >= 3) {
         Math::Vector3f v1 = verts[1] - verts[0];
         Math::Vector3f v2 = verts[2] - verts[0];
+        // Standard cross product for counter-clockwise vertices
         face.normal = v1.cross(v2).normalized();
     }
     
@@ -35,6 +36,12 @@ RayFaceHit GeometricFaceDetector::rayFaceIntersection(const Ray& ray, const Geom
     }
     center /= static_cast<float>(face.vertices.size());
     
+    // Debug: Log face details for first few faces (reduced output)
+    if (face.id < 3) {
+        std::cout << "Face " << face.id << " center(" << center.x << ", " << center.y << ", " << center.z 
+                  << ") normal(" << face.normal.x << ", " << face.normal.y << ", " << face.normal.z << ")" << std::endl;
+    }
+    
     // Ray-plane intersection
     auto t = rayPlaneIntersection(ray, center, face.normal);
     if (!t.has_value()) {
@@ -45,7 +52,12 @@ RayFaceHit GeometricFaceDetector::rayFaceIntersection(const Ray& ray, const Geom
     Math::Vector3f point = ray.origin.value() + ray.direction * t.value();
     
     // Check if point is inside the polygon
-    if (pointInConvexPolygon(point, face.vertices, face.normal)) {
+    bool inPolygon = pointInConvexPolygon(point, face.vertices, face.normal);
+    if (face.id < 6) {
+        std::cout << "Face " << face.id << " hit: " << (inPolygon ? "YES" : "NO") << " at t=" << t.value() << std::endl;
+    }
+    
+    if (inPolygon) {
         result.hit = true;
         result.distance = t.value();
         result.point = point;
@@ -82,7 +94,6 @@ std::optional<float> GeometricFaceDetector::rayPlaneIntersection(const Ray& ray,
     if (t > epsilon && denom > 0) {
         return std::nullopt;  // Ray is hitting the back of the face from far away, ignore it
     }
-    
     return t;
 }
 
@@ -93,20 +104,29 @@ bool GeometricFaceDetector::pointInConvexPolygon(const Math::Vector3f& point,
         return false;
     }
     
+    
     // Use cross product method for convex polygons
-    // All cross products should point in the same direction (aligned with normal)
+    // IMPORTANT: For counter-clockwise vertices with outward normal, the cross products
+    // will point in the SAME direction as the normal. So we need to check for positive dot product.
     for (size_t i = 0; i < vertices.size(); ++i) {
         size_t j = (i + 1) % vertices.size();
         
         Math::Vector3f edge = vertices[j] - vertices[i];
         Math::Vector3f toPoint = point - vertices[i];
         Math::Vector3f cross = edge.cross(toPoint);
+        float dotProduct = cross.dot(normal);
         
-        // Check if cross product is aligned with normal
-        if (cross.dot(normal) < 0) {
+        // For counter-clockwise vertices viewed from outside:
+        // - If point is to the RIGHT of edge (outside), cross product points OPPOSITE to normal
+        // - If point is to the LEFT of edge (inside), cross product points SAME as normal
+        // So a point is OUTSIDE if ANY cross product has negative dot with normal
+        // Use small epsilon to handle floating-point precision errors
+        const float epsilon = 1e-6f;
+        if (dotProduct < -epsilon) {
             return false;
         }
     }
+    
     
     return true;
 }
@@ -119,9 +139,44 @@ std::optional<RayFaceHit> GeometricFaceDetector::detectClosestFace(const Ray& ra
     // Debug logging
     Logging::Logger& logger = Logging::Logger::getInstance();
     
+    std::cout << "=== DEBUG: Testing " << faces.size() << " faces for ray origin(" 
+              << ray.origin.x() << ", " << ray.origin.y() << ", " << ray.origin.z() 
+              << ") dir(" << ray.direction.x << ", " << ray.direction.y << ", " << ray.direction.z << ") ===" << std::endl;
+    
+    int hitCount = 0;
     for (const auto& face : faces) {
         RayFaceHit hit = rayFaceIntersection(ray, face);
+        
         if (hit.hit) {
+            hitCount++;
+            std::cout << "=== DEBUG: HIT face " << face.id << " at distance " << hit.distance;
+            if (hit.distance < minDistance) {
+                std::cout << " (NEW CLOSEST)";
+                minDistance = hit.distance;
+                closestHit = hit;
+            } else if (std::abs(hit.distance - minDistance) < 1e-6f) {
+                std::cout << " (SAME DISTANCE)";
+                // Tie-breaking: prefer faces that are closer to the ray line
+                // Calculate distance from hit point to ray line
+                Math::Vector3f rayToHit = hit.point - ray.origin.value();
+                Math::Vector3f projection = ray.direction * rayToHit.dot(ray.direction);
+                Math::Vector3f perpendicular = rayToHit - projection;
+                float distanceToRayLine = perpendicular.length();
+                
+                if (closestHit.has_value()) {
+                    Math::Vector3f rayToClosest = closestHit->point - ray.origin.value();
+                    Math::Vector3f closestProjection = ray.direction * rayToClosest.dot(ray.direction);
+                    Math::Vector3f closestPerpendicular = rayToClosest - closestProjection;
+                    float closestDistanceToRayLine = closestPerpendicular.length();
+                    
+                    if (distanceToRayLine < closestDistanceToRayLine) {
+                        std::cout << " (BETTER TIE-BREAK)";
+                        closestHit = hit;
+                    }
+                }
+            }
+            std::cout << " ===" << std::endl;
+            
             // Log face hits for debugging
             if (face.id >= 0 && face.id < 6) {
                 const char* faceNames[] = {"+X", "-X", "+Y", "-Y", "+Z", "-Z"};
@@ -130,13 +185,10 @@ std::optional<RayFaceHit> GeometricFaceDetector::detectClosestFace(const Ray& ra
                     face.id, faceNames[face.id % 6], hit.distance,
                     face.normal.x, face.normal.y, face.normal.z);
             }
-            
-            if (hit.distance < minDistance) {
-                minDistance = hit.distance;
-                closestHit = hit;
-            }
         }
     }
+    
+    std::cout << "=== DEBUG: Total hits: " << hitCount << " out of " << faces.size() << " faces ===" << std::endl;
     
     if (closestHit.has_value() && closestHit->faceId >= 0 && closestHit->faceId < 6) {
         const char* faceNames[] = {"+X", "-X", "+Y", "-Y", "+Z", "-Z"};
@@ -193,12 +245,11 @@ std::vector<GeometricFace> GeometricFaceDetector::createBoxFaces(const Math::Vec
 }
 
 std::vector<GeometricFace> GeometricFaceDetector::createVoxelFaces(const Math::Vector3f& worldPos, float voxelSize) {
-    // For a voxel placed on the ground plane:
-    // - worldPos.x and worldPos.z are the CENTER coordinates
-    // - worldPos.y is the BOTTOM of the voxel
-    // So we only need to adjust Y to get the center
-    Math::Vector3f center(worldPos.x, worldPos.y + voxelSize * 0.5f, worldPos.z);
-    
+    // CONFIRMED: worldPos from incrementToWorld() is the bottom-left-back corner of the voxel
+    // This is the standard coordinate system used throughout the project
+    // To get the center for box creation, add half the voxel size in all dimensions
+    float halfSize = voxelSize * 0.5f;
+    Math::Vector3f center(worldPos.x + halfSize, worldPos.y + halfSize, worldPos.z + halfSize);
     
     return createBoxFaces(center, voxelSize);
 }

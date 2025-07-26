@@ -10,35 +10,57 @@ IncrementCoordinates VoxelPlacementMath::snapToValidIncrement(const WorldCoordin
     return CoordinateConverter::worldToIncrement(worldPos);
 }
 
+/**
+ * Snaps a world position to valid voxel placement position
+ * @param worldPos - Position to snap to grid (no center-to-corner conversion)
+ * @param resolution - voxel size to place
+ * @param shiftPressed - true for 1cm increments, false for resolution-based grid
+ * @return IncrementCoordinates - snapped position
+ * 
+ * Without shift: Snaps to resolution-based grid (e.g., 4cm voxels snap to 4cm grid)
+ * With shift: Snaps to 1cm increment grid
+ */
 IncrementCoordinates VoxelPlacementMath::snapToGridAligned(const WorldCoordinates& worldPos,
                                                            VoxelData::VoxelResolution resolution,
                                                            bool shiftPressed) {
     // If shift is pressed, use 1cm increments
     if (shiftPressed) {
+        // With shift, snap directly to 1cm increments without any offset
         return snapToValidIncrement(worldPos);
     }
     
-    // Otherwise, snap to the voxel resolution grid
+    // Without shift: snap directly to the voxel resolution grid without center-to-corner conversion
     float voxelSize = VoxelData::getVoxelSize(resolution);
     int voxelSizeIncrements = static_cast<int>(voxelSize * CoordinateConverter::METERS_TO_CM);
     
     // Convert to increment coordinates
     IncrementCoordinates baseIncrement = CoordinateConverter::worldToIncrement(worldPos);
     
-    // For bottom-center coordinates, we need to align voxel centers, not bottoms
-    // This means we need to offset by half voxel size when snapping
-    int halfVoxelIncrements = voxelSizeIncrements / 2;
-    
-    // Snap X and Z to voxel grid (centered)
-    int snappedX = ((baseIncrement.x() + halfVoxelIncrements) / voxelSizeIncrements) * voxelSizeIncrements;
-    int snappedZ = ((baseIncrement.z() + halfVoxelIncrements) / voxelSizeIncrements) * voxelSizeIncrements;
-    
-    // For Y, just snap to voxel size increments (bottom alignment)
-    int snappedY = (baseIncrement.y() / voxelSizeIncrements) * voxelSizeIncrements;
+    // Snap to the nearest voxel size grid point
+    // For Y axis (vertical), use floor to snap to bottom of grid cell (voxels are bottom-aligned)
+    // For X and Z axes (horizontal), use round to snap to nearest grid point
+    int snappedX = static_cast<int>(std::round(static_cast<float>(baseIncrement.x()) / voxelSizeIncrements)) * voxelSizeIncrements;
+    int snappedY = static_cast<int>(std::floor(static_cast<float>(baseIncrement.y()) / voxelSizeIncrements)) * voxelSizeIncrements;
+    int snappedZ = static_cast<int>(std::round(static_cast<float>(baseIncrement.z()) / voxelSizeIncrements)) * voxelSizeIncrements;
     
     return IncrementCoordinates(snappedX, snappedY, snappedZ);
 }
 
+/**
+ * Snaps placement position when placing on an existing voxel face
+ * @param hitPoint - ray hit position on face (center-bottom of desired placement)
+ * @param surfaceFaceVoxelPos - position of voxel being placed on
+ * @param surfaceFaceVoxelRes - resolution of voxel being placed on
+ * @param surfaceFaceDir - which face (PosX, NegX, PosY, etc.)
+ * @param placementResolution - resolution of voxel being placed
+ * @param allowOverhang - whether placement can extend beyond face bounds
+ * @param shiftPressed - true for 1cm increments with overhang, false for grid snap
+ * @return IncrementCoordinates - bottom-left-back corner of new voxel
+ *
+ * Same-size voxels without shift: Fixed position adjacent to face (ignores hitPoint)
+ * Different-size without shift: Snaps to placement voxel's grid, no overhang
+ * With shift: 1cm increments, cursor-centered, overhang allowed
+ */
 IncrementCoordinates VoxelPlacementMath::snapToSurfaceFaceGrid(const WorldCoordinates& hitPoint,
                                                                const IncrementCoordinates& surfaceFaceVoxelPos,
                                                                VoxelData::VoxelResolution surfaceFaceVoxelRes,
@@ -87,7 +109,10 @@ IncrementCoordinates VoxelPlacementMath::snapToSurfaceFaceGrid(const WorldCoordi
         // Special case for same-size voxels: align directly with the existing voxel
         if (placementVoxelSize == surfaceFaceVoxelSize) {
             // For same-size voxels, we want perfect alignment
-            // Simply place at the adjacent position without grid offset
+            // Use the existing voxel's position to ensure alignment
+            
+            // For now, simply place at the adjacent position
+            // This ensures perfect alignment without any mouse-based offset
             Vector3f alignedPos = surfaceFaceWorldPos;
             
             // Adjust position based on face direction
@@ -255,37 +280,60 @@ IncrementCoordinates VoxelPlacementMath::snapToSurfaceFaceGrid(const WorldCoordi
         return snappedIncrement;
     }
     
-    // Project the hit point onto the surface face plane
-    Vector3f snappedPos = hitPoint.value();
+    // With shift key: cursor-centered placement with 1cm increments
+    // The hit point represents where we want the voxel to be centered based on the face
     
-    // Constrain the position to the surface face plane and adjust for placement voxel size
-    // In bottom-center coordinates, we need to offset by the placement voxel's half-size
-    // for side faces to ensure the voxel is placed adjacent to the face
+    // First, project the hit point to the surface face plane
+    Vector3f projectedHit = hitPoint.value();
+    switch (surfaceFaceDir) {
+        case FaceDirection::PosX:
+        case FaceDirection::NegX:
+            projectedHit.x = surfaceFacePlanePos.x;
+            break;
+        case FaceDirection::PosY:
+        case FaceDirection::NegY:
+            projectedHit.y = surfaceFacePlanePos.y;
+            break;
+        case FaceDirection::PosZ:
+        case FaceDirection::NegZ:
+            projectedHit.z = surfaceFacePlanePos.z;
+            break;
+    }
+    
+    // Apply face-specific offset to position voxel adjacent to face
+    Vector3f offset = calculateFacePlacementOffset(surfaceFaceDir, placementVoxelSize);
+    projectedHit += offset;
+    
+    // For shift key placement, handle cursor-centered placement based on face type
+    Vector3f bottomLeftBack;
     float halfPlacementSize = placementVoxelSize * 0.5f;
     
     switch (surfaceFaceDir) {
-        case FaceDirection::PosX:
-            snappedPos.x = surfaceFacePlanePos.x + halfPlacementSize;  // Offset right
-            break;
-        case FaceDirection::NegX:
-            snappedPos.x = surfaceFacePlanePos.x - halfPlacementSize;  // Offset left
-            break;
         case FaceDirection::PosY:
-            snappedPos.y = surfaceFacePlanePos.y;  // No offset needed (bottom-aligned)
-            break;
         case FaceDirection::NegY:
-            snappedPos.y = surfaceFacePlanePos.y - placementVoxelSize;  // Offset down by full size
+            // Top/bottom faces: cursor represents center-bottom of voxel
+            bottomLeftBack = Vector3f(
+                projectedHit.x - halfPlacementSize,
+                projectedHit.y,  // Y stays as-is (bottom-aligned)
+                projectedHit.z - halfPlacementSize
+            );
             break;
+            
+        case FaceDirection::PosX:
+        case FaceDirection::NegX:
         case FaceDirection::PosZ:
-            snappedPos.z = surfaceFacePlanePos.z + halfPlacementSize;  // Offset back
-            break;
         case FaceDirection::NegZ:
-            snappedPos.z = surfaceFacePlanePos.z - halfPlacementSize;  // Offset front
+            // Side faces: cursor represents center of the voxel in all dimensions
+            bottomLeftBack = Vector3f(
+                projectedHit.x - halfPlacementSize,
+                projectedHit.y - halfPlacementSize,  // Center Y on cursor
+                projectedHit.z - halfPlacementSize
+            );
             break;
     }
     
     // Snap to 1cm increments
-    IncrementCoordinates incrementPos = snapToValidIncrement(WorldCoordinates(snappedPos));
+    IncrementCoordinates incrementPos = snapToValidIncrement(WorldCoordinates(bottomLeftBack));
     
     // If overhang is not allowed and placement voxel is same size or larger, clamp to bounds
     if (!allowOverhang && placementVoxelSize >= surfaceFaceVoxelSize) {
@@ -439,23 +487,19 @@ void VoxelPlacementMath::calculateVoxelWorldBounds(const IncrementCoordinates& i
                                                    Vector3f& maxCorner) {
     // Convert increment position to world coordinates
     WorldCoordinates worldPos = CoordinateConverter::incrementToWorld(incrementPos);
-    Vector3f centerBottom = worldPos.value();
+    Vector3f bottomLeftBack = worldPos.value();  // This is the bottom-left-back corner
     
     // Get voxel size
     float voxelSize = VoxelData::getVoxelSize(resolution);
-    float halfSize = voxelSize * 0.5f;
     
-    // Calculate bounds (bottom-center coordinate system)
-    minCorner = Vector3f(
-        centerBottom.x - halfSize,
-        centerBottom.y,
-        centerBottom.z - halfSize
-    );
+    // Calculate bounds (bottom-left-back corner coordinate system)
+    // The voxel extends from bottomLeftBack to bottomLeftBack + voxelSize in all dimensions
+    minCorner = bottomLeftBack;
     
     maxCorner = Vector3f(
-        centerBottom.x + halfSize,
-        centerBottom.y + voxelSize,
-        centerBottom.z + halfSize
+        bottomLeftBack.x + voxelSize,
+        bottomLeftBack.y + voxelSize,
+        bottomLeftBack.z + voxelSize
     );
 }
 
@@ -554,6 +598,60 @@ Vector3f VoxelPlacementMath::calculateFaceGridOrigin(const IncrementCoordinates&
     }
     
     return origin;
+}
+
+WorldCoordinates VoxelPlacementMath::convertCenterBottomToBottomLeftBack(const WorldCoordinates& centerBottom,
+                                                                         float voxelSize) {
+    // Convert from center-bottom to bottom-left-back
+    // The cursor position represents the center of the bottom face of the voxel
+    // We need to subtract half the voxel size from X and Z to get the bottom-left-back corner
+    const Vector3f& center = centerBottom.value();
+    float halfSize = voxelSize * 0.5f;
+    
+    Vector3f bottomLeftBack(
+        center.x - halfSize,  // Move left by half size
+        center.y,             // Y stays the same (bottom)
+        center.z - halfSize   // Move back by half size
+    );
+    
+    return WorldCoordinates(bottomLeftBack);
+}
+
+Vector3f VoxelPlacementMath::calculateFacePlacementOffset(VoxelData::FaceDirection faceDir,
+                                                         float voxelSize) {
+    // Calculate the offset needed to position a voxel adjacent to a face
+    // The offset depends on which face we're placing against
+    float halfSize = voxelSize * 0.5f;
+    
+    switch (faceDir) {
+        case VoxelData::FaceDirection::PosX:
+            // Right face: offset by half size to the right
+            return Vector3f(halfSize, 0.0f, 0.0f);
+            
+        case VoxelData::FaceDirection::NegX:
+            // Left face: offset by half size to the left
+            return Vector3f(-halfSize, 0.0f, 0.0f);
+            
+        case VoxelData::FaceDirection::PosY:
+            // Top face: no offset needed (bottom-aligned)
+            return Vector3f(0.0f, 0.0f, 0.0f);
+            
+        case VoxelData::FaceDirection::NegY:
+            // Bottom face: offset down by full voxel size
+            return Vector3f(0.0f, -voxelSize, 0.0f);
+            
+        case VoxelData::FaceDirection::PosZ:
+            // Back face: offset by half size backward
+            return Vector3f(0.0f, 0.0f, halfSize);
+            
+        case VoxelData::FaceDirection::NegZ:
+            // Front face: offset by half size forward
+            return Vector3f(0.0f, 0.0f, -halfSize);
+            
+        default:
+            // Should not happen
+            return Vector3f(0.0f, 0.0f, 0.0f);
+    }
 }
 
 } // namespace Math
