@@ -12,38 +12,50 @@ IncrementCoordinates VoxelPlacementMath::snapToValidIncrement(const WorldCoordin
 
 /**
  * Snaps a world position to valid voxel placement position
- * @param worldPos - Position to snap to grid (no center-to-corner conversion)
+ * @param worldPos - Position to snap to grid (center-bottom click position)
  * @param resolution - voxel size to place
  * @param shiftPressed - true for 1cm increments, false for resolution-based grid
- * @return IncrementCoordinates - snapped position
+ * @return IncrementCoordinates - snapped position (bottom-left-back corner)
  * 
  * Without shift: Snaps to resolution-based grid (e.g., 4cm voxels snap to 4cm grid)
- * With shift: Snaps to 1cm increment grid
+ * With shift: Converts center-bottom to bottom-left-back, then snaps to 1cm increments
  */
 IncrementCoordinates VoxelPlacementMath::snapToGridAligned(const WorldCoordinates& worldPos,
                                                            VoxelData::VoxelResolution resolution,
                                                            bool shiftPressed) {
-    // If shift is pressed, use 1cm increments
+    // If shift is pressed, use 1cm increments with center-to-corner conversion
     if (shiftPressed) {
-        // With shift, snap directly to 1cm increments without any offset
-        return snapToValidIncrement(worldPos);
+        // Convert from center-bottom to bottom-left-back corner
+        float voxelSize = VoxelData::getVoxelSize(resolution);
+        WorldCoordinates bottomLeftBack = convertCenterBottomToBottomLeftBack(worldPos, voxelSize);
+        
+        // Snap to 1cm increments
+        return snapToValidIncrement(bottomLeftBack);
     }
     
-    // Without shift: snap directly to the voxel resolution grid without center-to-corner conversion
+    // Without shift: snap center to voxel resolution grid, then convert to corner
+    // This snaps the center-bottom position to the voxel size grid
     float voxelSize = VoxelData::getVoxelSize(resolution);
     int voxelSizeIncrements = static_cast<int>(voxelSize * CoordinateConverter::METERS_TO_CM);
     
     // Convert to increment coordinates
     IncrementCoordinates baseIncrement = CoordinateConverter::worldToIncrement(worldPos);
     
-    // Snap to the nearest voxel size grid point
+    // Snap center position to the voxel size grid
     // For Y axis (vertical), use floor to snap to bottom of grid cell (voxels are bottom-aligned)
     // For X and Z axes (horizontal), use round to snap to nearest grid point
-    int snappedX = static_cast<int>(std::round(static_cast<float>(baseIncrement.x()) / voxelSizeIncrements)) * voxelSizeIncrements;
-    int snappedY = static_cast<int>(std::floor(static_cast<float>(baseIncrement.y()) / voxelSizeIncrements)) * voxelSizeIncrements;
-    int snappedZ = static_cast<int>(std::round(static_cast<float>(baseIncrement.z()) / voxelSizeIncrements)) * voxelSizeIncrements;
+    int snappedCenterX = static_cast<int>(std::round(static_cast<float>(baseIncrement.x()) / voxelSizeIncrements)) * voxelSizeIncrements;
+    int snappedCenterY = static_cast<int>(std::floor(static_cast<float>(baseIncrement.y()) / voxelSizeIncrements)) * voxelSizeIncrements;
+    int snappedCenterZ = static_cast<int>(std::round(static_cast<float>(baseIncrement.z()) / voxelSizeIncrements)) * voxelSizeIncrements;
     
-    return IncrementCoordinates(snappedX, snappedY, snappedZ);
+    // Convert snapped center to bottom-left-back corner
+    int halfVoxelIncrements = voxelSizeIncrements / 2;
+    
+    return IncrementCoordinates(
+        snappedCenterX - halfVoxelIncrements,
+        snappedCenterY,
+        snappedCenterZ - halfVoxelIncrements
+    );
 }
 
 /**
@@ -182,30 +194,9 @@ IncrementCoordinates VoxelPlacementMath::snapToSurfaceFaceGrid(const WorldCoordi
         snappedWorldPos.y += gridY * placementGridIncrements * CoordinateConverter::CM_TO_METERS;
         snappedWorldPos.z += gridZ * placementGridIncrements * CoordinateConverter::CM_TO_METERS;
         
-        // For better visual alignment of smaller voxels on larger faces,
-        // offset the grid by half the placement voxel size
-        // This centers the grid on the face rather than starting at the corner
-        if (placementVoxelSize < surfaceFaceVoxelSize) {
-            float gridOffset = halfPlacementSize;
-            switch (surfaceFaceDir) {
-                case FaceDirection::PosY:
-                case FaceDirection::NegY:
-                    // Offset X and Z for top/bottom faces
-                    snappedWorldPos.x += gridOffset;
-                    snappedWorldPos.z += gridOffset;
-                    break;
-                case FaceDirection::PosX:
-                case FaceDirection::NegX:
-                    // For side faces, only offset Z (not Y, since voxels are bottom-aligned)
-                    snappedWorldPos.z += gridOffset;
-                    break;
-                case FaceDirection::PosZ:
-                case FaceDirection::NegZ:
-                    // For front/back faces, only offset X (not Y, since voxels are bottom-aligned)
-                    snappedWorldPos.x += gridOffset;
-                    break;
-            }
-        }
+        // NOTE: Removed grid offset that was causing half-voxel placement issues
+        // The grid should align naturally from the face corner without additional offsets
+        // This ensures smaller voxels snap correctly to their grid positions
         
         // Account for placement voxel offset (same as before)
         // halfPlacementSize already calculated above

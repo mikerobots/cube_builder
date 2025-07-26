@@ -2,6 +2,8 @@
 #include "../include/visual_feedback/GeometricFaceDetector.h"
 #include "../../voxel_data/VoxelDataManager.h"
 #include "../../foundation/logging/Logger.h"
+#include "voxel_math/VoxelFaceGeometry.h"
+#include "voxel_math/VoxelPlacementMath.h"
 #include <algorithm>
 #include <limits>
 #include <cmath>
@@ -79,25 +81,32 @@ Face FaceDetector::detectFaceAcrossAllResolutions(const Ray& ray, const VoxelDat
             Math::WorldCoordinates worldPos = Math::CoordinateConverter::incrementToWorld(voxelPos);
             float voxelSize = VoxelData::getVoxelSize(resolution);
             
-            // Calculate the face plane position based on face direction
-            Math::Vector3f facePos = worldPos.value();
+            // Calculate the face plane position using VoxelFaceGeometry
+            float facePlanePos = 0.0f;
             Math::Vector3f normal = face.getNormal();
             
-            // Offset to the face (voxels use bottom-center coordinates)
             if (std::abs(normal.y) > 0.5f) {
                 // Top/bottom face
-                if (normal.y > 0) facePos.y += voxelSize; // Top face
-                // Bottom face stays at voxelPos.y
+                VoxelData::FaceDirection faceDir = (normal.y > 0) ? VoxelData::FaceDirection::PosY : VoxelData::FaceDirection::NegY;
+                facePlanePos = Math::VoxelFaceGeometry::getFacePlanePosition(voxelPos, voxelSize, faceDir);
             } else if (std::abs(normal.x) > 0.5f) {
                 // Left/right face
-                float halfSize = voxelSize * 0.5f;
-                if (normal.x > 0) facePos.x += halfSize; // Right face
-                else facePos.x -= halfSize; // Left face
+                VoxelData::FaceDirection faceDir = (normal.x > 0) ? VoxelData::FaceDirection::PosX : VoxelData::FaceDirection::NegX;
+                facePlanePos = Math::VoxelFaceGeometry::getFacePlanePosition(voxelPos, voxelSize, faceDir);
             } else if (std::abs(normal.z) > 0.5f) {
                 // Front/back face
-                float halfSize = voxelSize * 0.5f;
-                if (normal.z > 0) facePos.z += halfSize; // Front face
-                else facePos.z -= halfSize; // Back face
+                VoxelData::FaceDirection faceDir = (normal.z > 0) ? VoxelData::FaceDirection::PosZ : VoxelData::FaceDirection::NegZ;
+                facePlanePos = Math::VoxelFaceGeometry::getFacePlanePosition(voxelPos, voxelSize, faceDir);
+            }
+            
+            // Create face position vector based on which axis the face is on
+            Math::Vector3f facePos = worldPos.value();
+            if (std::abs(normal.x) > 0.5f) {
+                facePos.x = facePlanePos;
+            } else if (std::abs(normal.y) > 0.5f) {
+                facePos.y = facePlanePos;
+            } else if (std::abs(normal.z) > 0.5f) {
+                facePos.z = facePlanePos;
             }
             
             // Calculate distance from ray origin to face
@@ -172,35 +181,64 @@ bool FaceDetector::isValidFaceForPlacement(const Face& face, const VoxelData::Vo
 }
 
 Math::IncrementCoordinates FaceDetector::calculatePlacementPosition(const Face& face) {
-    // Enhancement: Handle ground plane faces
+    // This method provides a simple adjacent position calculation
+    // For sophisticated placement with snapping and shift key behavior,
+    // use PlacementUtils::getSmartPlacementContext() instead
+    
     if (face.isGroundPlane()) {
-        // For ground plane, use coordinate converter to snap to nearest increment position
+        // For ground plane, use VoxelPlacementMath to snap to 1cm increments
         Math::WorldCoordinates hitPoint = face.getGroundPlaneHitPoint();
-        
-        // Convert to increment coordinates (which snaps to 1cm increments)
-        Math::IncrementCoordinates incrementPos = Math::CoordinateConverter::worldToIncrement(hitPoint);
+        Math::IncrementCoordinates snapped = Math::VoxelPlacementMath::snapToValidIncrement(hitPoint);
         
         // Ensure Y=0 for ground plane placement
-        return Math::IncrementCoordinates(incrementPos.x(), 0, incrementPos.z());
+        return Math::IncrementCoordinates(snapped.x(), 0, snapped.z());
     }
     
-    // Original voxel face logic
-    Math::IncrementCoordinates pos = face.getVoxelPosition();
-    Math::Vector3i offset(0, 0, 0);
+    // For voxel faces, calculate simple adjacent position
+    // This is useful for basic face-to-face placement without sophisticated snapping
+    Math::IncrementCoordinates surfacePos = face.getVoxelPosition();
+    VoxelData::VoxelResolution surfaceRes = face.getResolution();
+    float voxelSize = VoxelData::getVoxelSize(surfaceRes);
     
-    // Calculate the voxel size in centimeters for proper offset
-    int voxelSize_cm = static_cast<int>(VoxelData::getVoxelSize(face.getResolution()) * Math::CoordinateConverter::METERS_TO_CM);
-    
+    // Convert face direction enum
+    VoxelData::FaceDirection faceDir;
     switch (face.getDirection()) {
-        case FaceDirection::PositiveX: offset.x = voxelSize_cm; break;
-        case FaceDirection::NegativeX: offset.x = -voxelSize_cm; break;
-        case FaceDirection::PositiveY: offset.y = voxelSize_cm; break;
-        case FaceDirection::NegativeY: offset.y = -voxelSize_cm; break;
-        case FaceDirection::PositiveZ: offset.z = voxelSize_cm; break;
-        case FaceDirection::NegativeZ: offset.z = -voxelSize_cm; break;
+        case FaceDirection::PositiveX: faceDir = VoxelData::FaceDirection::PosX; break;
+        case FaceDirection::NegativeX: faceDir = VoxelData::FaceDirection::NegX; break;
+        case FaceDirection::PositiveY: faceDir = VoxelData::FaceDirection::PosY; break;
+        case FaceDirection::NegativeY: faceDir = VoxelData::FaceDirection::NegY; break;
+        case FaceDirection::PositiveZ: faceDir = VoxelData::FaceDirection::PosZ; break;
+        case FaceDirection::NegativeZ: faceDir = VoxelData::FaceDirection::NegZ; break;
     }
     
-    return Math::IncrementCoordinates(pos.value() + offset);
+    // Calculate the offset to place adjacent to the face
+    // For adjacent placement, we need full voxel size offset, not just half
+    int voxelSizeIncrements = static_cast<int>(voxelSize * Math::CoordinateConverter::METERS_TO_CM);
+    
+    Math::IncrementCoordinates offset(0, 0, 0);
+    switch (faceDir) {
+        case VoxelData::FaceDirection::PosX:
+            offset = Math::IncrementCoordinates(voxelSizeIncrements, 0, 0);
+            break;
+        case VoxelData::FaceDirection::NegX:
+            offset = Math::IncrementCoordinates(-voxelSizeIncrements, 0, 0);
+            break;
+        case VoxelData::FaceDirection::PosY:
+            offset = Math::IncrementCoordinates(0, voxelSizeIncrements, 0);
+            break;
+        case VoxelData::FaceDirection::NegY:
+            offset = Math::IncrementCoordinates(0, -voxelSizeIncrements, 0);
+            break;
+        case VoxelData::FaceDirection::PosZ:
+            offset = Math::IncrementCoordinates(0, 0, voxelSizeIncrements);
+            break;
+        case VoxelData::FaceDirection::NegZ:
+            offset = Math::IncrementCoordinates(0, 0, -voxelSizeIncrements);
+            break;
+    }
+    
+    // Add offset directly in increment coordinates
+    return surfacePos + offset;
 }
 
 RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::VoxelGrid& grid, 
@@ -214,8 +252,12 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
     const bool USE_GEOMETRIC_DETECTION = true;
     
     if (USE_GEOMETRIC_DETECTION) {
+        Logging::Logger::getInstance().debugfc("FaceDetector", "Using GeometricFaceDetector");
+        
         // Get all voxels in the grid
         auto allVoxels = grid.getAllVoxels();
+        
+        Logging::Logger::getInstance().debugfc("FaceDetector", "Found %zu voxels in grid", allVoxels.size());
         
         
         // Store voxel info with faces for efficient lookup
@@ -232,12 +274,14 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                 Math::WorldCoordinates voxelWorld = Math::CoordinateConverter::incrementToWorld(voxelInfo.incrementPos);
                 
                 
-                // Create faces for this voxel (voxels are placed with bottom at Y coordinate)
+                
+                // Create faces for this voxel (voxelWorld is the bottom-left-back corner)
                 auto voxelFaces = GeometricFaceDetector::createVoxelFaces(voxelWorld.value(), voxelSize);
                 
                 // Add faces with proper tracking
                 for (size_t i = 0; i < voxelFaces.size(); ++i) {
-                    voxelFaces[i].id = static_cast<int>(allFaces.size()); // Unique ID for each face
+                    // Assign unique global ID for mapping back
+                    voxelFaces[i].id = static_cast<int>(allFaces.size());
                     allFaces.push_back(voxelFaces[i]);
                     
                     // Map face index to direction
@@ -258,11 +302,41 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
         }
         
         
+        
         // Find closest face hit
+        Logging::Logger::getInstance().debugfc("FaceDetector", "Testing ray against %zu faces", allFaces.size());
         auto hit = GeometricFaceDetector::detectClosestFace(ray, allFaces);
+        Logging::Logger::getInstance().debugfc("FaceDetector", "Hit result: %s", (hit.has_value() ? "HIT" : "MISS"));
+        
+        // Debug: Log the hit details
+        if (hit.has_value()) {
+            Logging::Logger::getInstance().debugfc("GeometricFaceDetector", 
+                "Ray hit face %d at distance %.3f, point: (%.3f, %.3f, %.3f)",
+                hit->faceId, hit->distance, hit->point.x, hit->point.y, hit->point.z);
+        }
+        
+        // Debug: Show all faces at minimum distance
+        if (hit.has_value()) {
+            Logging::Logger::getInstance().debugfc("FaceDetector", "Checking all faces at distance %.5f", hit->distance);
+            int faceCount = 0;
+            for (size_t i = 0; i < faceInfos.size(); ++i) {
+                if (std::abs(hit->distance - 1.68f) < 1e-6f) { // Show faces at distance 1.68
+                    const auto& faceInfo = faceInfos[i];
+                    Logging::Logger::getInstance().debugfc("FaceDetector", "Face %zu -> voxel (%d, %d, %d) dir %d", 
+                                                          i, faceInfo.voxelPos.x(), faceInfo.voxelPos.y(), faceInfo.voxelPos.z(), 
+                                                          static_cast<int>(faceInfo.faceDir));
+                    faceCount++;
+                    if (faceCount >= 10) break; // Limit output
+                }
+            }
+        }
         
         if (hit.has_value() && hit->faceId >= 0 && hit->faceId < static_cast<int>(faceInfos.size())) {
             const auto& faceInfo = faceInfos[hit->faceId];
+            
+            Logging::Logger::getInstance().debugfc("FaceDetector", "Selected Face %d belongs to voxel (%d, %d, %d) direction %d", 
+                                                  hit->faceId, faceInfo.voxelPos.x(), faceInfo.voxelPos.y(), faceInfo.voxelPos.z(), 
+                                                  static_cast<int>(faceInfo.faceDir));
             
             result.hit = true;
             result.distance = hit->distance;
@@ -369,12 +443,8 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
                         // Check if this voxel exists
                         if (grid.isValidIncrementPosition(testIncrement) && grid.getVoxel(testIncrement)) {
                             // Found a voxel! Now check if the ray actually intersects its bounding box
-                            Math::WorldCoordinates voxelWorld = Math::CoordinateConverter::incrementToWorld(testIncrement);
-                            float halfSize = voxelSize * 0.5f;
-                            
-                            Math::Vector3f voxelMin(voxelWorld.x() - halfSize, voxelWorld.y(), voxelWorld.z() - halfSize);
-                            Math::Vector3f voxelMax(voxelWorld.x() + halfSize, voxelWorld.y() + voxelSize, voxelWorld.z() + halfSize);
-                            Math::BoundingBox voxelBox(voxelMin, voxelMax);
+                            auto [minCorner, maxCorner] = Math::VoxelFaceGeometry::getVoxelCorners(testIncrement, voxelSize);
+                            Math::BoundingBox voxelBox(minCorner.value(), maxCorner.value());
                             
                             float voxelTMin, voxelTMax;
                             if (rayIntersectsBox(ray, voxelBox, voxelTMin, voxelTMax)) {
@@ -495,26 +565,9 @@ RaycastHit FaceDetector::raycastVoxelGrid(const Ray& ray, const VoxelData::Voxel
             
             // Normal case: ray hits a voxel from outside
             if (isCurrentVoxel && !wasInsideStartVoxel) {
-                // Convert voxel increment position to world coordinates (bottom-center)
-                Math::WorldCoordinates voxelWorldPos = Math::CoordinateConverter::incrementToWorld(traversal.current);
-                Math::Vector3f voxelBottomCenter = voxelWorldPos.value();
-                
-                // Calculate actual voxel bounding box from bottom-center position
-                // The voxel extends from -halfSize to +halfSize in X and Z, and from 0 to voxelSize in Y
-                float halfSize = voxelSize * 0.5f;
-                Math::Vector3f voxelWorldMin = Math::Vector3f(
-                    voxelBottomCenter.x - halfSize,
-                    voxelBottomCenter.y,  // Y is already at bottom
-                    voxelBottomCenter.z - halfSize
-                );
-                Math::Vector3f voxelWorldMax = Math::Vector3f(
-                    voxelBottomCenter.x + halfSize,
-                    voxelBottomCenter.y + voxelSize,
-                    voxelBottomCenter.z + halfSize
-                );
-                
-                // Calculate exact intersection with voxel box in world space
-                Math::BoundingBox voxelBox(voxelWorldMin, voxelWorldMax);
+                // Calculate voxel bounding box using VoxelFaceGeometry
+                auto [minCorner, maxCorner] = Math::VoxelFaceGeometry::getVoxelCorners(traversal.current, voxelSize);
+                Math::BoundingBox voxelBox(minCorner.value(), maxCorner.value());
                 
                 float tMin, tMax;
                 if (rayIntersectsBox(ray, voxelBox, tMin, tMax)) {

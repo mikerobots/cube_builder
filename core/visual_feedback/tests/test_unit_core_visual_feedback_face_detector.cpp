@@ -230,6 +230,7 @@ TEST_F(FaceDetectorTest, FaceDirection_AllDirections) {
     IncrementCoordinates testVoxelPos(96, 96, 96);  // 3 voxels from origin in each direction
     testGrid->setVoxel(testVoxelPos, true);
     
+    
     // Test each face direction
     struct TestCase {
         Vector3f rayOrigin;
@@ -240,20 +241,21 @@ TEST_F(FaceDetectorTest, FaceDirection_AllDirections) {
     float voxelSize = getVoxelSize(resolution);
     Vector3f voxelWorldPos = testGrid->incrementToWorld(testVoxelPos).value();
     
-    // Use voxel center height to avoid hitting bottom face accidentally
-    Vector3f voxelCenter = voxelWorldPos + Vector3f(0, voxelSize/2, 0);
+    // Calculate voxel center from bottom-left-back corner
+    Vector3f voxelCenter = voxelWorldPos + Vector3f(voxelSize/2, voxelSize/2, voxelSize/2);
     
     TestCase testCases[] = {
         {voxelCenter + Vector3f(-2 * voxelSize, 0, 0), Vector3f(1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeX},
         {voxelCenter + Vector3f(2 * voxelSize, 0, 0), Vector3f(-1, 0, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveX},
-        {voxelWorldPos + Vector3f(0, -2 * voxelSize, 0), Vector3f(0, 1, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeY},
-        {voxelWorldPos + Vector3f(0, 2 * voxelSize, 0), Vector3f(0, -1, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveY},
+        {voxelCenter + Vector3f(0, -2 * voxelSize, 0), Vector3f(0, 1, 0), VoxelEditor::VisualFeedback::FaceDirection::NegativeY},
+        {voxelCenter + Vector3f(0, 2 * voxelSize, 0), Vector3f(0, -1, 0), VoxelEditor::VisualFeedback::FaceDirection::PositiveY},
         {voxelCenter + Vector3f(0, 0, -2 * voxelSize), Vector3f(0, 0, 1), VoxelEditor::VisualFeedback::FaceDirection::NegativeZ},
         {voxelCenter + Vector3f(0, 0, 2 * voxelSize), Vector3f(0, 0, -1), VoxelEditor::VisualFeedback::FaceDirection::PositiveZ}
     };
     
     for (const auto& test : testCases) {
         VoxelEditor::VisualFeedback::Ray ray(test.rayOrigin, test.rayDir);
+        
         Face face = detector->detectFace(ray, *testGrid, resolution);
         
         EXPECT_TRUE(face.isValid());
@@ -531,22 +533,23 @@ TEST_F(FaceDetectorTest, NonAlignedVoxelPositions_MixedAlignedAndNonAligned) {
     // Test with both aligned and non-aligned voxels
     testGrid->clear();
     
-    // Place aligned voxels (multiples of 32cm)
-    testGrid->setVoxel(IncrementCoordinates(0, 0, 0), true);      // Aligned at origin
-    testGrid->setVoxel(IncrementCoordinates(32, 0, 0), true);     // Aligned
-    testGrid->setVoxel(IncrementCoordinates(64, 0, 0), true);     // Aligned
+    // Place voxels that don't overlap (32cm voxels need 32cm spacing)
+    testGrid->setVoxel(IncrementCoordinates(0, 0, 0), true);      // At origin
+    testGrid->setVoxel(IncrementCoordinates(64, 0, 0), true);     // Far enough to not overlap
+    testGrid->setVoxel(IncrementCoordinates(128, 0, 0), true);    // Even farther
     
-    // Place non-aligned voxels
-    testGrid->setVoxel(IncrementCoordinates(7, 0, 0), true);      // Non-aligned
-    testGrid->setVoxel(IncrementCoordinates(23, 0, 0), true);     // Non-aligned
-    testGrid->setVoxel(IncrementCoordinates(91, 0, 0), true);     // Non-aligned
+    // Place non-aligned voxel that doesn't overlap with origin voxel
+    // Origin voxel occupies [0, 32), so we need to start at 32 or later
+    testGrid->setVoxel(IncrementCoordinates(35, 0, 0), true);     // Non-aligned, no overlap
+    testGrid->setVoxel(IncrementCoordinates(100, 0, 0), true);    // Non-aligned
+    testGrid->setVoxel(IncrementCoordinates(163, 0, 0), true);    // Non-aligned
     
-    // Test ray that should hit the non-aligned voxel at x=7
-    Vector3f voxelWorldPos = testGrid->incrementToWorld(IncrementCoordinates(7, 0, 0)).value();
+    // Test ray that should hit the non-aligned voxel at x=35
+    Vector3f voxelWorldPos = testGrid->incrementToWorld(IncrementCoordinates(35, 0, 0)).value();
     float voxelSize = getVoxelSize(resolution);
     
     std::cout << "\nMixedAlignedAndNonAligned test:" << std::endl;
-    std::cout << "Target voxel at increment (7,0,0) = world (" 
+    std::cout << "Target voxel at increment (35,0,0) = world (" 
               << voxelWorldPos.x << "," << voxelWorldPos.y << "," << voxelWorldPos.z << ")" << std::endl;
     
     // Debug: show all voxel positions
@@ -554,16 +557,15 @@ TEST_F(FaceDetectorTest, NonAlignedVoxelPositions_MixedAlignedAndNonAligned) {
     std::cout << "Origin voxel at increment (0,0,0) = world (" 
               << originVoxelPos.x << "," << originVoxelPos.y << "," << originVoxelPos.z << ")" << std::endl;
     std::cout << "Voxel size: " << voxelSize << "m" << std::endl;
-    std::cout << "Origin voxel bounds: X[" << (originVoxelPos.x - voxelSize/2) << ", " << (originVoxelPos.x + voxelSize/2) << "]" << std::endl;
-    std::cout << "Target voxel bounds: X[" << (voxelWorldPos.x - voxelSize/2) << ", " << (voxelWorldPos.x + voxelSize/2) << "]" << std::endl;
+    // In bottom-left-back coordinate system:
+    std::cout << "Origin voxel bounds: X[" << originVoxelPos.x << ", " << (originVoxelPos.x + voxelSize) << "]" << std::endl;
+    std::cout << "Target voxel bounds: X[" << voxelWorldPos.x << ", " << (voxelWorldPos.x + voxelSize) << "]" << std::endl;
     
-    // Ray should avoid the origin voxel and hit the target voxel
-    // Origin voxel is at (0,0,0), target voxel is at (7,0,0) = world (0.07,0,0)
-    // Use a ray that passes through the target voxel but misses the origin voxel
-    // by offsetting in Y direction: origin voxel Y=[0,0.32], target voxel Y=[0,0.32]
-    // Offset ray to Y=0.4 (above both voxels) and shoot downward to hit target from above
-    Vector3f rayOrigin = Vector3f(0.20f, 0.4f, voxelWorldPos.z); // x=0.20 is outside origin voxel but within target voxel
-    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, -1, 0)); // Shoot downward
+    // Ray should hit the non-aligned voxel at x=35
+    // Origin voxel: X[0.00, 0.32], target voxel: X[0.35, 0.67]
+    // No overlap, so we can shoot a ray that hits only the target
+    Vector3f rayOrigin = Vector3f(0.50f, 0.16f, -0.5f); // x=0.50 is inside target voxel only
+    VoxelEditor::VisualFeedback::Ray ray(rayOrigin, Vector3f(0, 0, 1)); // Shoot in +Z direction
     
     std::cout << "Ray origin: (" << rayOrigin.x << ", " << rayOrigin.y << ", " << rayOrigin.z << ")" << std::endl;
     
@@ -575,7 +577,7 @@ TEST_F(FaceDetectorTest, NonAlignedVoxelPositions_MixedAlignedAndNonAligned) {
                   << face.getVoxelPosition().value().y << ", " 
                   << face.getVoxelPosition().value().z << ")" << std::endl;
     }
-    EXPECT_EQ(face.getVoxelPosition().value(), Vector3i(7, 0, 0)) << "Should hit non-aligned voxel first";
+    EXPECT_EQ(face.getVoxelPosition().value(), Vector3i(35, 0, 0)) << "Should hit non-aligned voxel";
 }
 
 TEST_F(FaceDetectorTest, NonAlignedVoxelPositions_PlacementCalculation) {
